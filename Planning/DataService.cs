@@ -10,12 +10,41 @@ using Dapper;
 
 namespace Planning
 {
-    public static class DataService
+    public enum EntityState
     {
-        public static List<Shipment> GetAll()
+        Unchanged,
+        Added,
+        Deleted,
+        Edit
+
+    }
+    public class DictColumn
+    {
+        public string Id;
+        public string DataField;
+        public string Title;
+        public bool IsPK;
+        public SqlDbType DataType;
+        public int Length;
+        public int Width = 100;
+        public bool IsVisible;
+    }
+    public class DictSimple
+    {
+        public string Name;
+        public string Title;
+        public List<DictColumn> Columns = new List<DictColumn>();
+        public string TableName;
+    }
+
+    public class DataService
+    {
+         static string connectionString = @"Data Source=ПОЛЬЗОВАТЕЛЬ-ПК\SQLEXPRESS2017;Initial Catalog=Planning;User ID=SYSADM; Password = SYSADM";
+
+        public List<Shipment> GetAll()
         {
             
-            using (IDbConnection db = new SqlConnection("Data Source =ПОЛЬЗОВАТЕЛЬ-ПК\\SQLEXPRESS2017; Initial Catalog = Planning; User ID = SYSADM; Password = SYSADM;"))
+            using (IDbConnection db = new SqlConnection(connectionString))
 
             {
                 if (db.State == ConnectionState.Closed)
@@ -28,5 +57,69 @@ namespace Planning
                                                     delay_reasons_id,delay_comment,depositor_id FROM shipments").ToList();
             }
         }
+
+        public static Shipment Get(int Id)
+        { 
+            Shipment shipment = null;
+            using (IDbConnection db = new SqlConnection(connectionString))
+            {
+                shipment = db.Query<Shipment>("SELECT * FROM shipments WHERE id = @id", new { Id }).FirstOrDefault();
+            }
+            return shipment;
+        }
+
+        public Shipment Add(Shipment shipment)
+        {
+            using (IDbConnection db = new SqlConnection(connectionString))
+            {
+                var sqlQuery = @"INSERT INTO shipments (lv_id,time_slot_id,s_comment,o_comment,gate_id,sp_condition,driver_phone,driver_fio,
+                                                    vehicle_number,trailer_number,attorney_number,attorney_date,submission_time,start_time,end_time_plan,end_time_fact,
+                                                    delay_reasons_id,delay_comment,depositor_id) 
+                                VALUES(@lv_id,@time_slot_id,@s_comment,@o_comment,@gate_id,@sp_condition,@driver_phone,@driver_fio,
+                                                    @vehicle_number,@trailer_number,@attorney_number,@attorney_date,@submission_time,@start_time,@end_time_plan,@end_time_fact,
+                                                    @delay_reasons_id,@delay_comment,@depositor_id); 
+                                SELECT CAST(SCOPE_IDENTITY() as int)";
+/*
+                var sqlQuery = @"INSERT INTO shipments (lv_id,time_slot_id,s_comment,o_comment,gate_id,sp_condition,driver_phone,driver_fio,
+                                                    vehicle_number,trailer_number,attorney_number,submission_time,start_time,end_time_plan,
+                                                    delay_reasons_id,delay_comment,depositor_id) 
+                                VALUES(@lv_id,@time_slot_id,@s_comment,@o_comment,@gate_id,@sp_condition,@driver_phone,@driver_fio,
+                                                    @vehicle_number,@trailer_number,@attorney_number,@submission_time,@start_time,@end_time_plan,
+                                                    @delay_reasons_id,@delay_comment,@depositor_id); 
+                                SELECT CAST(SCOPE_IDENTITY() as int)";
+*/
+                int? Id = db.Query<int>(sqlQuery, shipment).FirstOrDefault();
+                shipment.id = (int)Id;
+            }
+
+            return shipment;
+        }
+
+        public void Update(Shipment shipment)
+        {
+            using (IDbConnection db = new SqlConnection(connectionString))
+            {
+                var sqlQuery = @"UPDATE shipments SET lv_id = @lv_id,time_slot_id = @time_slot_id,s_comment = @s_comment,o_comment = @o_comment,gate_id = @gate_id,
+                                                    sp_condition =@sp_condition,driver_phone = @driver_phone,driver_fio =@driver_fio, vehicle_number = @vehicle_number,
+                                                    trailer_number = @trailer_number,attorney_number = @attorney_number,
+                                                    attorney_date = @attorney_date,submission_time = @submission_time,start_time = @start_time,end_time_plan = @end_time_plan,
+                                                    end_time_fact = @end_time_fact,
+                                                    delay_reasons_id = @delay_reasons_id,delay_comment = @delay_comment,depositor_id = @depositor_id,
+                                                    is_courier = @is_courier
+                                WHERE id = @Id";
+                db.Execute(sqlQuery, shipment);
+            }
+        }
+
+        public void Delete(int id)
+        {
+            using (IDbConnection db = new SqlConnection(connectionString))
+            {
+                var sqlQuery = "DELETE FROM shipments WHERE id = @id";
+                db.Execute(sqlQuery, new { id });
+            }
+        }
+
+
     }
 }

@@ -22,6 +22,7 @@ namespace Planning
 	    public string vehicle_number { get; set; }
 	    public string trailer_number { get; set; }
 	    public string attorney_number { get; set; }
+        public string attorney_issued { get; set; }
         public DateTime attorney_date { get; set; }
 	    public DateTime submission_time { get; set; }
         public DateTime	start_time { get; set; }
@@ -30,5 +31,8 @@ namespace Planning
     	public int delay_reasons_id { get; set; }
     	public string delay_comment { get; set; }
         public int depositor_id { get; set; }
+        public bool is_courier { get; set; }
+        public string forwarder_fio { get; set; }
+        public string stamp_number { get; set; }
     }
 }

@@ -32,14 +32,18 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
             this.cbTransportCompany = new System.Windows.Forms.ComboBox();
             this.edShipmentComment = new System.Windows.Forms.TextBox();
-            this.cmDelayReasons = new System.Windows.Forms.ComboBox();
+            this.cbDelayReasons = new System.Windows.Forms.ComboBox();
             this.edDelayComment = new System.Windows.Forms.TextBox();
-            this.cbCourierService = new System.Windows.Forms.ComboBox();
             this.gbTransport = new System.Windows.Forms.GroupBox();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.cmbTimeSlot = new System.Windows.Forms.ComboBox();
+            this.label20 = new System.Windows.Forms.Label();
+            this.cmbGate = new System.Windows.Forms.ComboBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.edAttorneyIssued = new System.Windows.Forms.TextBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.dtAttorneyDate = new System.Windows.Forms.DateTimePicker();
             this.label17 = new System.Windows.Forms.Label();
             this.edAttorneyNumber = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
@@ -63,14 +67,9 @@
             this.label7 = new System.Windows.Forms.Label();
             this.dtSubmissionTime = new System.Windows.Forms.DateTimePicker();
             this.label6 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.edAttorneyIssued = new System.Windows.Forms.TextBox();
-            this.label19 = new System.Windows.Forms.Label();
-            this.cmbGate = new System.Windows.Forms.ComboBox();
-            this.label20 = new System.Windows.Forms.Label();
-            this.cmbTimeSlot = new System.Windows.Forms.ComboBox();
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.cbIsCourier = new System.Windows.Forms.CheckBox();
             this.gbTransport.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -110,15 +109,6 @@
             this.label4.TabIndex = 3;
             this.label4.Text = "Комментарий по опозданию";
             // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(12, 156);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(107, 13);
-            this.label5.TabIndex = 4;
-            this.label5.Text = "Курьерская служба";
-            // 
             // cbTransportCompany
             // 
             this.cbTransportCompany.FormattingEnabled = true;
@@ -136,13 +126,13 @@
             this.edShipmentComment.Size = new System.Drawing.Size(680, 61);
             this.edShipmentComment.TabIndex = 6;
             // 
-            // cmDelayReasons
+            // cbDelayReasons
             // 
-            this.cmDelayReasons.FormattingEnabled = true;
-            this.cmDelayReasons.Location = new System.Drawing.Point(125, 100);
-            this.cmDelayReasons.Name = "cmDelayReasons";
-            this.cmDelayReasons.Size = new System.Drawing.Size(332, 21);
-            this.cmDelayReasons.TabIndex = 7;
+            this.cbDelayReasons.FormattingEnabled = true;
+            this.cbDelayReasons.Location = new System.Drawing.Point(125, 100);
+            this.cbDelayReasons.Name = "cbDelayReasons";
+            this.cbDelayReasons.Size = new System.Drawing.Size(332, 21);
+            this.cbDelayReasons.TabIndex = 7;
             // 
             // edDelayComment
             // 
@@ -152,14 +142,6 @@
             this.edDelayComment.Size = new System.Drawing.Size(670, 20);
             this.edDelayComment.TabIndex = 8;
             // 
-            // cbCourierService
-            // 
-            this.cbCourierService.FormattingEnabled = true;
-            this.cbCourierService.Location = new System.Drawing.Point(125, 153);
-            this.cbCourierService.Name = "cbCourierService";
-            this.cbCourierService.Size = new System.Drawing.Size(290, 21);
-            this.cbCourierService.TabIndex = 9;
-            // 
             // gbTransport
             // 
             this.gbTransport.Controls.Add(this.cmbTimeSlot);
@@ -168,7 +150,7 @@
             this.gbTransport.Controls.Add(this.label19);
             this.gbTransport.Controls.Add(this.edAttorneyIssued);
             this.gbTransport.Controls.Add(this.label18);
-            this.gbTransport.Controls.Add(this.dateTimePicker1);
+            this.gbTransport.Controls.Add(this.dtAttorneyDate);
             this.gbTransport.Controls.Add(this.label17);
             this.gbTransport.Controls.Add(this.edAttorneyNumber);
             this.gbTransport.Controls.Add(this.label16);
@@ -198,13 +180,63 @@
             this.gbTransport.TabIndex = 10;
             this.gbTransport.TabStop = false;
             // 
-            // dateTimePicker1
+            // cmbTimeSlot
             // 
-            this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTimePicker1.Location = new System.Drawing.Point(422, 174);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
-            this.dateTimePicker1.TabIndex = 23;
+            this.cmbTimeSlot.FormattingEnabled = true;
+            this.cmbTimeSlot.Location = new System.Drawing.Point(231, 226);
+            this.cmbTimeSlot.Name = "cmbTimeSlot";
+            this.cmbTimeSlot.Size = new System.Drawing.Size(121, 21);
+            this.cmbTimeSlot.TabIndex = 29;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(203, 229);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(31, 13);
+            this.label20.TabIndex = 28;
+            this.label20.Text = "Слот";
+            // 
+            // cmbGate
+            // 
+            this.cmbGate.FormattingEnabled = true;
+            this.cmbGate.Location = new System.Drawing.Point(60, 226);
+            this.cmbGate.Name = "cmbGate";
+            this.cmbGate.Size = new System.Drawing.Size(121, 21);
+            this.cmbGate.TabIndex = 27;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(11, 228);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(43, 13);
+            this.label19.TabIndex = 26;
+            this.label19.Text = "Ворота";
+            // 
+            // edAttorneyIssued
+            // 
+            this.edAttorneyIssued.Location = new System.Drawing.Point(128, 200);
+            this.edAttorneyIssued.Name = "edAttorneyIssued";
+            this.edAttorneyIssued.Size = new System.Drawing.Size(494, 20);
+            this.edAttorneyIssued.TabIndex = 25;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(11, 203);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(104, 13);
+            this.label18.TabIndex = 24;
+            this.label18.Text = "Кем выдана дов-ть";
+            // 
+            // dtAttorneyDate
+            // 
+            this.dtAttorneyDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtAttorneyDate.Location = new System.Drawing.Point(422, 174);
+            this.dtAttorneyDate.Name = "dtAttorneyDate";
+            this.dtAttorneyDate.Size = new System.Drawing.Size(200, 20);
+            this.dtAttorneyDate.TabIndex = 23;
             // 
             // label17
             // 
@@ -395,56 +427,6 @@
             this.label6.TabIndex = 0;
             this.label6.Text = "Время подачи док.";
             // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(11, 203);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(104, 13);
-            this.label18.TabIndex = 24;
-            this.label18.Text = "Кем выдана дов-ть";
-            // 
-            // edAttorneyIssued
-            // 
-            this.edAttorneyIssued.Location = new System.Drawing.Point(128, 200);
-            this.edAttorneyIssued.Name = "edAttorneyIssued";
-            this.edAttorneyIssued.Size = new System.Drawing.Size(494, 20);
-            this.edAttorneyIssued.TabIndex = 25;
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(11, 228);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(43, 13);
-            this.label19.TabIndex = 26;
-            this.label19.Text = "Ворота";
-            // 
-            // cmbGate
-            // 
-            this.cmbGate.FormattingEnabled = true;
-            this.cmbGate.Location = new System.Drawing.Point(60, 226);
-            this.cmbGate.Name = "cmbGate";
-            this.cmbGate.Size = new System.Drawing.Size(121, 21);
-            this.cmbGate.TabIndex = 27;
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(203, 229);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(31, 13);
-            this.label20.TabIndex = 28;
-            this.label20.Text = "Слот";
-            // 
-            // cmbTimeSlot
-            // 
-            this.cmbTimeSlot.FormattingEnabled = true;
-            this.cmbTimeSlot.Location = new System.Drawing.Point(231, 226);
-            this.cmbTimeSlot.Name = "cmbTimeSlot";
-            this.cmbTimeSlot.Size = new System.Drawing.Size(121, 21);
-            this.cmbTimeSlot.TabIndex = 29;
-            // 
             // btnOK
             // 
             this.btnOK.Location = new System.Drawing.Point(791, 613);
@@ -453,6 +435,7 @@
             this.btnOK.TabIndex = 11;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
+            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
             // btnCancel
             // 
@@ -462,21 +445,31 @@
             this.btnCancel.TabIndex = 12;
             this.btnCancel.Text = "Отмена";
             this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
+            // cbIsCourier
+            // 
+            this.cbIsCourier.AutoSize = true;
+            this.cbIsCourier.Location = new System.Drawing.Point(511, 9);
+            this.cbIsCourier.Name = "cbIsCourier";
+            this.cbIsCourier.Size = new System.Drawing.Size(126, 17);
+            this.cbIsCourier.TabIndex = 13;
+            this.cbIsCourier.Text = "Курьерская служба";
+            this.cbIsCourier.UseVisualStyleBackColor = true;
             // 
             // shipmen_edit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(955, 648);
+            this.Controls.Add(this.cbIsCourier);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.gbTransport);
-            this.Controls.Add(this.cbCourierService);
             this.Controls.Add(this.edDelayComment);
-            this.Controls.Add(this.cmDelayReasons);
+            this.Controls.Add(this.cbDelayReasons);
             this.Controls.Add(this.edShipmentComment);
             this.Controls.Add(this.cbTransportCompany);
-            this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -496,12 +489,10 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox cbTransportCompany;
         private System.Windows.Forms.TextBox edShipmentComment;
-        private System.Windows.Forms.ComboBox cmDelayReasons;
+        private System.Windows.Forms.ComboBox cbDelayReasons;
         private System.Windows.Forms.TextBox edDelayComment;
-        private System.Windows.Forms.ComboBox cbCourierService;
         private System.Windows.Forms.GroupBox gbTransport;
         private System.Windows.Forms.TextBox edDriverPhone;
         private System.Windows.Forms.Label label11;
@@ -526,7 +517,7 @@
         private System.Windows.Forms.TextBox edAttorneyNumber;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.DateTimePicker dtAttorneyDate;
         private System.Windows.Forms.TextBox edAttorneyIssued;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.ComboBox cmbTimeSlot;
@@ -535,5 +526,6 @@
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.CheckBox cbIsCourier;
     }
 }

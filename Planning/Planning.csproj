@@ -51,11 +51,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DelayReasons.cs">
+    <Compile Include="SimpleDict.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DelayReasons.Designer.cs">
-      <DependentUpon>DelayReasons.cs</DependentUpon>
+    <Compile Include="SimpleDict.Designer.cs">
+      <DependentUpon>SimpleDict.cs</DependentUpon>
     </Compile>
     <Compile Include="PlanningDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -64,11 +64,11 @@
     </Compile>
     <Compile Include="Shipment.cs" />
     <Compile Include="DataService.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -78,11 +78,11 @@
     <Compile Include="shipmen_edit.Designer.cs">
       <DependentUpon>shipmen_edit.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="DelayReasons.resx">
-      <DependentUpon>DelayReasons.cs</DependentUpon>
+    <EmbeddedResource Include="SimpleDict.resx">
+      <DependentUpon>SimpleDict.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -109,6 +109,7 @@
     <None Include="PlanningDataSet.xss">
       <DependentUpon>PlanningDataSet.xsd</DependentUpon>
     </None>
+    <None Include="Properties\DataSources\Shipment.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -120,7 +121,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\check_6445.ico" />
@@ -139,6 +142,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\018_4212.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\page_white_edit_7305.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Edit.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

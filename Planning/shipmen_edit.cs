@@ -12,9 +12,105 @@ namespace Planning
 {
     public partial class shipmen_edit : Form
     {
-        public shipmen_edit()
+        Shipment _shipment;
+
+        string IsNull(string Value, string NullValue)
         {
+            return (Value == "") ? NullValue : Value;
+        }
+
+        public void ClearFields()
+        {
+            cbTransportCompany.Text = "";
+            edShipmentComment.Text = "";
+            cbDelayReasons.Text = "";
+            edDelayComment.Text = "";
+            cbIsCourier.Checked = false;
+            dtSubmissionTime.Value = DateTime.Now;
+            dtStartTime.Value = DateTime.Now;
+            dtEndDatePlan.Value = DateTime.Now;
+            dtEndDateFact.Value = DateTime.Now;
+            edDriverFIO.Text = "";
+            edDriverPhone.Text = "";
+            edForwarderFIO.Text = "";
+            edVehicleNumber.Text = "";
+            edTrailerNumber.Text = "";
+            edStamp.Text = "";
+            edAttorneyNumber.Text = "";
+            dtAttorneyDate.Value = DateTime.Now;
+            edAttorneyIssued.Text = "";
+            cmbGate.Text = "";
+            cmbTimeSlot.Text = "";
+            
+            
+
+        }
+
+        public void Populate()
+        {
+            cbTransportCompany.Text = "";
+            edShipmentComment.Text = _shipment.s_comment;
+            cbDelayReasons.Text = _shipment.delay_reasons_id.ToString();
+            edDelayComment.Text = _shipment.delay_comment;
+            cbIsCourier.Checked = _shipment.is_courier;
+            //dtSubmissionTime.Value = _shipment.submission_time;
+            dtStartTime.Value = _shipment.start_time;
+            dtEndDatePlan.Value = _shipment.end_time_plan;
+            dtEndDateFact.Value = _shipment.end_time_fact;
+            edDriverFIO.Text = _shipment.driver_fio;
+            edDriverPhone.Text = _shipment.driver_phone;
+            edForwarderFIO.Text = _shipment.forwarder_fio;
+            edVehicleNumber.Text = _shipment.vehicle_number;
+            edTrailerNumber.Text = _shipment.trailer_number;
+            edStamp.Text = _shipment.stamp_number;
+            edAttorneyNumber.Text = _shipment.attorney_number;
+            dtAttorneyDate.Value = _shipment.attorney_date;
+            edAttorneyIssued.Text = _shipment.attorney_issued;
+            cmbGate.Text = _shipment.gate_id.ToString();
+            cmbTimeSlot.Text = _shipment.time_slot_id.ToString();
+            cbIsCourier.Checked = _shipment.is_courier;
+        }
+
+
+        void CopyToShipment()
+        {
+            //cbTransportCompany.Text = "";
+            _shipment.s_comment = edShipmentComment.Text;
+            _shipment.delay_reasons_id = Convert.ToInt32(IsNull(cbDelayReasons.Text, "0"));
+            _shipment.delay_comment = edDelayComment.Text;
+            _shipment.is_courier = cbIsCourier.Checked;
+            _shipment.submission_time = Convert.ToDateTime(dtSubmissionTime.Value.ToString("yyyy-MM-dd hh:mm:ss"));
+            _shipment.start_time = Convert.ToDateTime(dtStartTime.Value.ToString("yyyy-MM-dd hh:mm:ss"));
+            _shipment.end_time_plan = dtEndDatePlan.Value;
+            _shipment.end_time_fact =dtEndDateFact.Value;
+            _shipment.driver_fio = edDriverFIO.Text;
+            _shipment.driver_phone = edDriverPhone.Text;
+            _shipment.forwarder_fio = edForwarderFIO.Text;
+            _shipment.vehicle_number = edVehicleNumber.Text;
+            _shipment.trailer_number = edTrailerNumber.Text;
+            _shipment.stamp_number = edStamp.Text;
+            _shipment.attorney_number = edAttorneyNumber.Text;
+            _shipment.attorney_date = dtAttorneyDate.Value;
+            _shipment.attorney_issued = edAttorneyIssued.Text;
+            _shipment.gate_id =Convert.ToInt32(IsNull(cmbGate.Text,"0"));
+            _shipment.time_slot_id =Convert.ToInt32(IsNull(cmbTimeSlot.Text,"0"));
+        }
+        public shipmen_edit(Shipment shipment)
+        {
+            _shipment = shipment;
             InitializeComponent();
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
+            Close();
+        }
+
+        private void btnOK_Click(object sender, EventArgs e)
+        {
+            CopyToShipment();
+            DialogResult = DialogResult.OK;
         }
     }
 }
