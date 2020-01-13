@@ -23,7 +23,7 @@ namespace Planning
         {
             cbTransportCompany.Text = "";
             edShipmentComment.Text = "";
-            cbDelayReasons.Text = "";
+            cmbDelayReasons.Text = "";
             edDelayComment.Text = "";
             cbIsCourier.Checked = false;
             dtSubmissionTime.Value = DateTime.Now;
@@ -46,11 +46,26 @@ namespace Planning
 
         }
 
+        
+        void PopulateFromList(List<DictData> ListSource, ComboBox ComboBoxTaget)
+        {
+            if (ListSource == null || ComboBoxTaget == null) return;
+            ComboBoxTaget.Items.Clear();
+            foreach(DictData dt in ListSource)
+            {
+                ComboBoxTaget.Items.Add(dt.name);
+            }
+        }
+
         public void Populate()
         {
+            PopulateFromList(DataService.GetDictAll("Причины_задержки"), cmbDelayReasons);
+            PopulateFromList(DataService.GetDictAll("Ворота"), cmbGate);
+            //PopulateFromList(DataService.GetDictAll(""))
+
             cbTransportCompany.Text = "";
             edShipmentComment.Text = _shipment.s_comment;
-            cbDelayReasons.Text = _shipment.delay_reasons_id.ToString();
+            cmbDelayReasons.Text = DataService.GetDictNameById("Причины_задержки", _shipment.delay_reasons_id);
             edDelayComment.Text = _shipment.delay_comment;
             cbIsCourier.Checked = _shipment.is_courier;
             //dtSubmissionTime.Value = _shipment.submission_time;
@@ -66,9 +81,12 @@ namespace Planning
             edAttorneyNumber.Text = _shipment.attorney_number;
             dtAttorneyDate.Value = _shipment.attorney_date;
             edAttorneyIssued.Text = _shipment.attorney_issued;
-            cmbGate.Text = _shipment.gate_id.ToString();
+            cmbGate.Text = DataService.GetDictNameById("Ворота",_shipment.gate_id);
             cmbTimeSlot.Text = _shipment.time_slot_id.ToString();
             cbIsCourier.Checked = _shipment.is_courier;
+
+            
+
         }
 
 
@@ -76,7 +94,7 @@ namespace Planning
         {
             //cbTransportCompany.Text = "";
             _shipment.s_comment = edShipmentComment.Text;
-            _shipment.delay_reasons_id = Convert.ToInt32(IsNull(cbDelayReasons.Text, "0"));
+            _shipment.delay_reasons_id = DataService.GetDictIdByName("Причины_задержки", cmbDelayReasons.Text);//Convert.ToInt32(IsNull(cmbDelayReasons.Text, "0"));
             _shipment.delay_comment = edDelayComment.Text;
             _shipment.is_courier = cbIsCourier.Checked;
             _shipment.submission_time = Convert.ToDateTime(dtSubmissionTime.Value.ToString("yyyy-MM-dd hh:mm:ss"));

@@ -34,7 +34,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.cbTransportCompany = new System.Windows.Forms.ComboBox();
             this.edShipmentComment = new System.Windows.Forms.TextBox();
-            this.cbDelayReasons = new System.Windows.Forms.ComboBox();
+            this.cmbDelayReasons = new System.Windows.Forms.ComboBox();
             this.edDelayComment = new System.Windows.Forms.TextBox();
             this.gbTransport = new System.Windows.Forms.GroupBox();
             this.cmbTimeSlot = new System.Windows.Forms.ComboBox();
@@ -70,7 +70,12 @@
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.cbIsCourier = new System.Windows.Forms.CheckBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.blShipmentOrders = new System.Windows.Forms.DataGridView();
             this.gbTransport.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.blShipmentOrders)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -126,13 +131,13 @@
             this.edShipmentComment.Size = new System.Drawing.Size(680, 61);
             this.edShipmentComment.TabIndex = 6;
             // 
-            // cbDelayReasons
+            // cmbDelayReasons
             // 
-            this.cbDelayReasons.FormattingEnabled = true;
-            this.cbDelayReasons.Location = new System.Drawing.Point(125, 100);
-            this.cbDelayReasons.Name = "cbDelayReasons";
-            this.cbDelayReasons.Size = new System.Drawing.Size(332, 21);
-            this.cbDelayReasons.TabIndex = 7;
+            this.cmbDelayReasons.FormattingEnabled = true;
+            this.cmbDelayReasons.Location = new System.Drawing.Point(125, 100);
+            this.cmbDelayReasons.Name = "cmbDelayReasons";
+            this.cmbDelayReasons.Size = new System.Drawing.Size(332, 21);
+            this.cmbDelayReasons.TabIndex = 7;
             // 
             // edDelayComment
             // 
@@ -174,9 +179,9 @@
             this.gbTransport.Controls.Add(this.label7);
             this.gbTransport.Controls.Add(this.dtSubmissionTime);
             this.gbTransport.Controls.Add(this.label6);
-            this.gbTransport.Location = new System.Drawing.Point(15, 180);
+            this.gbTransport.Location = new System.Drawing.Point(15, 153);
             this.gbTransport.Name = "gbTransport";
-            this.gbTransport.Size = new System.Drawing.Size(824, 293);
+            this.gbTransport.Size = new System.Drawing.Size(824, 252);
             this.gbTransport.TabIndex = 10;
             this.gbTransport.TabStop = false;
             // 
@@ -369,6 +374,7 @@
             // 
             // dtEndDatePlan
             // 
+            this.dtEndDatePlan.CustomFormat = "\" \"";
             this.dtEndDatePlan.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtEndDatePlan.Location = new System.Drawing.Point(128, 44);
             this.dtEndDatePlan.Name = "dtEndDatePlan";
@@ -412,6 +418,7 @@
             // 
             // dtSubmissionTime
             // 
+            this.dtSubmissionTime.CustomFormat = "\" \"";
             this.dtSubmissionTime.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtSubmissionTime.Location = new System.Drawing.Point(128, 18);
             this.dtSubmissionTime.Name = "dtSubmissionTime";
@@ -429,7 +436,7 @@
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(791, 613);
+            this.btnOK.Location = new System.Drawing.Point(767, 710);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 11;
@@ -439,7 +446,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(872, 613);
+            this.btnCancel.Location = new System.Drawing.Point(848, 710);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(71, 23);
             this.btnCancel.TabIndex = 12;
@@ -457,17 +464,45 @@
             this.cbIsCourier.Text = "Курьерская служба";
             this.cbIsCourier.UseVisualStyleBackColor = true;
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.blShipmentOrders);
+            this.groupBox1.Controls.Add(this.toolStrip1);
+            this.groupBox1.Location = new System.Drawing.Point(15, 411);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(827, 214);
+            this.groupBox1.TabIndex = 14;
+            this.groupBox1.TabStop = false;
+            // 
+            // toolStrip1
+            // 
+            this.toolStrip1.Location = new System.Drawing.Point(3, 16);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(821, 25);
+            this.toolStrip1.TabIndex = 0;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // blShipmentOrders
+            // 
+            this.blShipmentOrders.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.blShipmentOrders.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.blShipmentOrders.Location = new System.Drawing.Point(3, 41);
+            this.blShipmentOrders.Name = "blShipmentOrders";
+            this.blShipmentOrders.Size = new System.Drawing.Size(821, 170);
+            this.blShipmentOrders.TabIndex = 1;
+            // 
             // shipmen_edit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(955, 648);
+            this.ClientSize = new System.Drawing.Size(1056, 745);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.cbIsCourier);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.gbTransport);
             this.Controls.Add(this.edDelayComment);
-            this.Controls.Add(this.cbDelayReasons);
+            this.Controls.Add(this.cmbDelayReasons);
             this.Controls.Add(this.edShipmentComment);
             this.Controls.Add(this.cbTransportCompany);
             this.Controls.Add(this.label4);
@@ -478,6 +513,9 @@
             this.Text = "Редактирование погрузки";
             this.gbTransport.ResumeLayout(false);
             this.gbTransport.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.blShipmentOrders)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -491,7 +529,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox cbTransportCompany;
         private System.Windows.Forms.TextBox edShipmentComment;
-        private System.Windows.Forms.ComboBox cbDelayReasons;
+        private System.Windows.Forms.ComboBox cmbDelayReasons;
         private System.Windows.Forms.TextBox edDelayComment;
         private System.Windows.Forms.GroupBox gbTransport;
         private System.Windows.Forms.TextBox edDriverPhone;
@@ -527,5 +565,8 @@
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.CheckBox cbIsCourier;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.DataGridView blShipmentOrders;
+        private System.Windows.Forms.ToolStrip toolStrip1;
     }
 }

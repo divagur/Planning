@@ -25,9 +25,13 @@ namespace Planning
 
         private void frmMain_Load(object sender, EventArgs e)
         {
-            DataService dataService = new DataService();
+            //DataService dataService = new DataService();
+            DataService.Dicts.Add("Причины_задержки", new DictInfo{ TableName = "delay_reasons", NameColumn = "name" });
+            DataService.Dicts.Add("Типы_операций", new DictInfo { TableName = "opers_type", NameColumn = "name" });
+            DataService.Dicts.Add("Ворота",new DictInfo {TableName= "gateways", NameColumn = "gateway_num" });
+            //dataService.Dicts.Add("Ворота", "gateways");
             tblShipments.AutoGenerateColumns = false;
-            tblShipments.DataSource = dataService.GetAll();
+            tblShipments.DataSource = DataService.GetAll();
         }
 
         private void miDictDelayReasons_Click(object sender, EventArgs e)
@@ -77,13 +81,13 @@ namespace Planning
             frmShipmentEdit.ClearFields();
             if (frmShipmentEdit.ShowDialog()==DialogResult.OK)
             {
-                dataService.Add(shipment);
+                DataService.Add(shipment);
             }
         }
 
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
-            tblShipments.DataSource = dataService.GetAll();
+            tblShipments.DataSource = DataService.GetAll();
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
@@ -95,8 +99,18 @@ namespace Planning
             frmShipmentEdit.Populate();
             if (frmShipmentEdit.ShowDialog() == DialogResult.OK)
             {
-                dataService.Update(shipment);
+                DataService.Update(shipment);
             }
+        }
+
+        private void miDictUser_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void miDictTimeSlot_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

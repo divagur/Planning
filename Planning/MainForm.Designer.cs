@@ -45,9 +45,8 @@
             this.btnAdd = new System.Windows.Forms.ToolStripButton();
             this.btnEdit = new System.Windows.Forms.ToolStripButton();
             this.btnDel = new System.Windows.Forms.ToolStripButton();
-            this.tblShipments = new System.Windows.Forms.DataGridView();
             this.btnRefresh = new System.Windows.Forms.ToolStripButton();
-            this.shipmentBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.tblShipments = new System.Windows.Forms.DataGridView();
             this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colIdNakl = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -102,6 +101,7 @@
             this.iscourierDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.forwarderfioDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.stampnumberDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.shipmentBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tblShipments)).BeginInit();
@@ -151,12 +151,14 @@
             this.miDictUser.Name = "miDictUser";
             this.miDictUser.Size = new System.Drawing.Size(201, 22);
             this.miDictUser.Text = "Пользователи";
+            this.miDictUser.Click += new System.EventHandler(this.miDictUser_Click);
             // 
             // miDictTimeSlot
             // 
             this.miDictTimeSlot.Name = "miDictTimeSlot";
             this.miDictTimeSlot.Size = new System.Drawing.Size(201, 22);
             this.miDictTimeSlot.Text = "Тайм слоты";
+            this.miDictTimeSlot.Click += new System.EventHandler(this.miDictTimeSlot_Click);
             // 
             // miDictDepositor
             // 
@@ -233,8 +235,19 @@
             this.btnDel.Size = new System.Drawing.Size(23, 22);
             this.btnDel.Text = "toolStripButton3";
             // 
+            // btnRefresh
+            // 
+            this.btnRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnRefresh.Image = ((System.Drawing.Image)(resources.GetObject("btnRefresh.Image")));
+            this.btnRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(23, 22);
+            this.btnRefresh.Text = "toolStripButton1";
+            this.btnRefresh.Click += new System.EventHandler(this.toolStripButton1_Click);
+            // 
             // tblShipments
             // 
+            this.tblShipments.AllowUserToOrderColumns = true;
             this.tblShipments.AutoGenerateColumns = false;
             this.tblShipments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.tblShipments.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -302,20 +315,6 @@
             this.tblShipments.Size = new System.Drawing.Size(1016, 503);
             this.tblShipments.TabIndex = 2;
             this.tblShipments.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tblShipments_CellContentClick);
-            // 
-            // btnRefresh
-            // 
-            this.btnRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnRefresh.Image = ((System.Drawing.Image)(resources.GetObject("btnRefresh.Image")));
-            this.btnRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(23, 22);
-            this.btnRefresh.Text = "toolStripButton1";
-            this.btnRefresh.Click += new System.EventHandler(this.toolStripButton1_Click);
-            // 
-            // shipmentBindingSource
-            // 
-            this.shipmentBindingSource.DataSource = typeof(Planning.Shipment);
             // 
             // colId
             // 
@@ -612,6 +611,10 @@
             this.stampnumberDataGridViewTextBoxColumn.DataPropertyName = "stamp_number";
             this.stampnumberDataGridViewTextBoxColumn.HeaderText = "stamp_number";
             this.stampnumberDataGridViewTextBoxColumn.Name = "stampnumberDataGridViewTextBoxColumn";
+            // 
+            // shipmentBindingSource
+            // 
+            this.shipmentBindingSource.DataSource = typeof(Planning.Shipment);
             // 
             // frmMain
             // 

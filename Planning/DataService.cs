@@ -37,11 +37,25 @@ namespace Planning
         public string TableName;
     }
 
+    public class DictData
+    {
+        public int id { get; set; }
+        public string name { get; set; }
+        //public string gateway_num { get; set; }
+    }
+
+    public class DictInfo
+    {
+        public string TableName;
+        public string NameColumn;
+    }
+
     public class DataService
     {
-         static string connectionString = @"Data Source=ПОЛЬЗОВАТЕЛЬ-ПК\SQLEXPRESS2017;Initial Catalog=Planning;User ID=SYSADM; Password = SYSADM";
+        static string connectionString = @"Data Source=ПОЛЬЗОВАТЕЛЬ-ПК\SQLEXPRESS2017;Initial Catalog=Planning;User ID=SYSADM; Password = SYSADM";
+        public static Dictionary<string, DictInfo> Dicts = new Dictionary<string, DictInfo>();
 
-        public List<Shipment> GetAll()
+        public static List<Shipment> GetAll()
         {
             
             using (IDbConnection db = new SqlConnection(connectionString))
@@ -68,7 +82,7 @@ namespace Planning
             return shipment;
         }
 
-        public Shipment Add(Shipment shipment)
+        public static Shipment Add(Shipment shipment)
         {
             using (IDbConnection db = new SqlConnection(connectionString))
             {
@@ -95,7 +109,7 @@ namespace Planning
             return shipment;
         }
 
-        public void Update(Shipment shipment)
+        public static void Update(Shipment shipment)
         {
             using (IDbConnection db = new SqlConnection(connectionString))
             {
@@ -111,7 +125,7 @@ namespace Planning
             }
         }
 
-        public void Delete(int id)
+        public static void Delete(int id)
         {
             using (IDbConnection db = new SqlConnection(connectionString))
             {
@@ -120,6 +134,59 @@ namespace Planning
             }
         }
 
+        public static List<DictData> GetDictAll(string DictName)
+        {
 
+            DictInfo DictInfo;
+                
+             if (!Dicts.TryGetValue(DictName, out DictInfo))
+                return null;
+
+            using (IDbConnection db = new SqlConnection(connectionString))
+            {
+                if (db.State == ConnectionState.Closed)
+                {
+                    db.Open();
+                }
+                //
+                return db.Query<DictData>($"SELECT id, name FROM {DictInfo.TableName}").ToList();
+            }
+        }
+
+        public static int GetDictIdByName(string DictName, string NameValue)
+        {
+            DictInfo DictInfo;
+
+            if (!Dicts.TryGetValue(DictName, out DictInfo))
+                return 0;
+
+            using (IDbConnection db = new SqlConnection(connectionString))
+            {
+                if (db.State == ConnectionState.Closed)
+                {
+                    db.Open();
+                }
+                //
+                return db.Query<int>($"SELECT id FROM {DictInfo.TableName} where name = '{NameValue}'").FirstOrDefault();
+            }
+        }
+
+        public static string GetDictNameById(string DictName, int IdValue)
+        {
+            DictInfo DictInfo;
+
+            if (!Dicts.TryGetValue(DictName, out DictInfo))
+                return "???";
+
+            using (IDbConnection db = new SqlConnection(connectionString))
+            {
+                if (db.State == ConnectionState.Closed)
+                {
+                    db.Open();
+                }
+                //
+                return db.Query<string>($"SELECT name FROM {DictInfo.TableName} where id = '{IdValue}'").FirstOrDefault();
+            }
+        }
     }
 }
