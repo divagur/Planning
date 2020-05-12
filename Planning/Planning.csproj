@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.0\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.0\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -13,6 +14,8 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -34,12 +37,30 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Dapper, Version=1.60.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dapper.1.60.6\lib\net451\Dapper.dll</HintPath>
+    <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.2.0.30\lib\net461\Dapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MDIWindowManager, Version=2.1.2521.32075, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MDIWindowManager.2.1.0\lib\MDIWindowManager.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MetroFramework">
+      <HintPath>..\..\DBProject\packages\MetroModernUI.1.4.0.0\lib\net\MetroFramework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -51,6 +72,75 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DbPlaning.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DbPlaning.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbPlaning.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DbPlaning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbPlaning.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DbPlaning.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DelayReason.cs">
+      <DependentUpon>DbPlaning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Depositor.cs">
+      <DependentUpon>DbPlaning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PlanningDataSet1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PlanningDataSet1.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="ShipmentAdd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ShipmentAdd.Designer.cs">
+      <DependentUpon>ShipmentAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ShipmentOrderEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ShipmentOrderEdit.Designer.cs">
+      <DependentUpon>ShipmentOrderEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TimeSlots.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TimeSlots.Designer.cs">
+      <DependentUpon>TimeSlots.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormEdit.Designer.cs">
+      <DependentUpon>FormEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gateway.cs">
+      <DependentUpon>DbPlaning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OperType.cs">
+      <DependentUpon>DbPlaning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Planing.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Planing.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Planing.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Planing.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ShipmentOrder.cs">
+      <DependentUpon>DbPlaning.tt</DependentUpon>
+    </Compile>
     <Compile Include="SimpleDict.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -62,7 +152,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PlanningDataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Shipment.cs" />
+    <Compile Include="Shipment.cs">
+      <DependentUpon>DbPlaning.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataService.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -78,6 +170,42 @@
     <Compile Include="shipmen_edit.Designer.cs">
       <DependentUpon>shipmen_edit.cs</DependentUpon>
     </Compile>
+    <Compile Include="TimeSlot.cs">
+      <DependentUpon>DbPlaning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TimeSlotEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TimeSlotEdit.Designer.cs">
+      <DependentUpon>TimeSlotEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TimeSlotsEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TimeSlotsEdit.Designer.cs">
+      <DependentUpon>TimeSlotsEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="User.cs">
+      <DependentUpon>DbPlaning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserGroup.cs">
+      <DependentUpon>DbPlaning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VShipments.cs">
+      <DependentUpon>DbPlaning.tt</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="ShipmentAdd.resx">
+      <DependentUpon>ShipmentAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ShipmentOrderEdit.resx">
+      <DependentUpon>ShipmentOrderEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TimeSlots.resx">
+      <DependentUpon>TimeSlots.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormEdit.resx">
+      <DependentUpon>FormEdit.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SimpleDict.resx">
       <DependentUpon>SimpleDict.cs</DependentUpon>
     </EmbeddedResource>
@@ -97,6 +225,19 @@
     <EmbeddedResource Include="shipmen_edit.resx">
       <DependentUpon>shipmen_edit.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="TimeSlotEdit.resx">
+      <DependentUpon>TimeSlotEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TimeSlotsEdit.resx">
+      <DependentUpon>TimeSlotsEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EntityDeploy Include="DbPlaning.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>DbPlaning.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="DbPlaning.edmx.diagram">
+      <DependentUpon>DbPlaning.edmx</DependentUpon>
+    </None>
     <None Include="packages.config" />
     <None Include="PlanningDataSet.xsc">
       <DependentUpon>PlanningDataSet.xsd</DependentUpon>
@@ -108,6 +249,17 @@
     </None>
     <None Include="PlanningDataSet.xss">
       <DependentUpon>PlanningDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="PlanningDataSet1.xsc">
+      <DependentUpon>PlanningDataSet1.xsd</DependentUpon>
+    </None>
+    <None Include="PlanningDataSet1.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>PlanningDataSet1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="PlanningDataSet1.xss">
+      <DependentUpon>PlanningDataSet1.xsd</DependentUpon>
     </None>
     <None Include="Properties\DataSources\Shipment.datasource" />
     <None Include="Properties\Settings.settings">
@@ -152,7 +304,40 @@
   <ItemGroup>
     <None Include="Resources\Edit.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="DbPlaning.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DbPlaning.edmx</DependentUpon>
+      <LastGenOutput>DbPlaning.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="DbPlaning.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DbPlaning.edmx</DependentUpon>
+      <LastGenOutput>DbPlaning.cs</LastGenOutput>
+    </Content>
+    <Content Include="MDIWindowManager.xml" />
+    <Content Include="Planing.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Planing.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Planing.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Planing.cs</LastGenOutput>
+    </Content>
+    <Content Include="Resources\calendar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.0\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.0\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.0\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.0\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.4.0\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.0\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

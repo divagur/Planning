@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
+using System.Windows.Forms;
 using Dapper;
 
 namespace Planning
@@ -52,7 +53,7 @@ namespace Planning
 
     public class DataService
     {
-        static string connectionString = @"Data Source=ПОЛЬЗОВАТЕЛЬ-ПК\SQLEXPRESS2017;Initial Catalog=Planning;User ID=SYSADM; Password = SYSADM";
+        public static string connectionString = @"Data Source=ПОЛЬЗОВАТЕЛЬ-ПК\SQLEXPRESS2017;Initial Catalog=Planning;User ID=SYSADM; Password = SYSADM";
         public static Dictionary<string, DictInfo> Dicts = new Dictionary<string, DictInfo>();
 
         public static List<Shipment> GetAll()
@@ -103,14 +104,15 @@ namespace Planning
                                 SELECT CAST(SCOPE_IDENTITY() as int)";
 */
                 int? Id = db.Query<int>(sqlQuery, shipment).FirstOrDefault();
-                shipment.id = (int)Id;
+                //shipment.id = (int)Id;
             }
 
             return shipment;
         }
 
-        public static void Update(Shipment shipment)
+        public static bool Update(Shipment shipment)
         {
+            int updateRowCount;
             using (IDbConnection db = new SqlConnection(connectionString))
             {
                 var sqlQuery = @"UPDATE shipments SET lv_id = @lv_id,time_slot_id = @time_slot_id,s_comment = @s_comment,o_comment = @o_comment,gate_id = @gate_id,
@@ -121,8 +123,9 @@ namespace Planning
                                                     delay_reasons_id = @delay_reasons_id,delay_comment = @delay_comment,depositor_id = @depositor_id,
                                                     is_courier = @is_courier
                                 WHERE id = @Id";
-                db.Execute(sqlQuery, shipment);
+                updateRowCount = db.Execute(sqlQuery, shipment);
             }
+            return updateRowCount > 0;
         }
 
         public static void Delete(int id)
@@ -149,11 +152,36 @@ namespace Planning
                     db.Open();
                 }
                 //
-                return db.Query<DictData>($"SELECT id, name FROM {DictInfo.TableName}").ToList();
+                return db.Query<DictData>($"SELECT id, {DictInfo.NameColumn} FROM {DictInfo.TableName}").ToList();
             }
         }
+        public static void PopulateFromList(List<DictData> ListSource, ComboBox ComboBoxTaget)
+        {
+            if (ListSource == null || ComboBoxTaget == null) return;
+            ComboBoxTaget.Items.Clear();
+            foreach (DictData dt in ListSource)
+            {
+                ComboBoxTaget.Items.Add(dt.name);
+            }
+        }
+        public static int? GetDictIdByName(string DictName, string NameValue)
+        {
+            DictInfo DictInfo;
 
-        public static int GetDictIdByName(string DictName, string NameValue)
+            if (!Dicts.TryGetValue(DictName, out DictInfo))
+                return null;
+
+            using (IDbConnection db = new SqlConnection(connectionString))
+            {
+                if (db.State == ConnectionState.Closed)
+                {
+                    db.Open();
+                }
+                //
+                return db.Query<int?>($"SELECT id FROM {DictInfo.TableName} where name = '{NameValue}'").FirstOrDefault();
+            }
+        }
+        public static int? GetDictIdByCondition(string DictName, string Condition)
         {
             DictInfo DictInfo;
 
@@ -167,11 +195,10 @@ namespace Planning
                     db.Open();
                 }
                 //
-                return db.Query<int>($"SELECT id FROM {DictInfo.TableName} where name = '{NameValue}'").FirstOrDefault();
+                return db.Query<int?>("SELECT id FROM "+DictInfo.TableName+" where "+Condition).FirstOrDefault();
             }
         }
-
-        public static string GetDictNameById(string DictName, int IdValue)
+        public static string GetDictNameById(string DictName, int? IdValue)
         {
             DictInfo DictInfo;
 
@@ -187,6 +214,40 @@ namespace Planning
                 //
                 return db.Query<string>($"SELECT name FROM {DictInfo.TableName} where id = '{IdValue}'").FirstOrDefault();
             }
+        }
+
+        public static int? SQLGetIntValue(string SQLExpr)
+        {
+
+            using (IDbConnection db = new SqlConnection(connectionString))
+            {
+                if (db.State == ConnectionState.Closed)
+                {
+                    db.Open();
+                }
+                //
+                return db.Query<int>(SQLExpr).FirstOrDefault();
+            }
+            
+        }
+
+        public static bool AddShipmentToLV(int ShipmentId)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                if (connection.State == ConnectionState.Closed)
+                    connection.Open();
+
+                string sqlText = "SP_PL_CreateShipmentInLV";
+
+                SqlCommand command = new SqlCommand(sqlText, connection);
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.Add(new SqlParameter { ParameterName = "@ShID", Value = ShipmentId });
+
+                command.ExecuteScalar();
+            }
+            return true;
         }
     }
 }

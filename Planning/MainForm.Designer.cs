@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.справочникиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -41,12 +42,21 @@
             this.miDictDelayReasons = new System.Windows.Forms.ToolStripMenuItem();
             this.miDictGates = new System.Windows.Forms.ToolStripMenuItem();
             this.miDictTC = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.delay_reasonsTableAdapter1 = new Planning.PlanningDataSetTableAdapters.delay_reasonsTableAdapter();
+            this.tabMain = new System.Windows.Forms.TabPage();
+            this.edCurrDay = new System.Windows.Forms.DateTimePicker();
+            this.tblShipments = new System.Windows.Forms.DataGridView();
+            this.tbMain = new System.Windows.Forms.ToolStrip();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.tabForms = new System.Windows.Forms.TabControl();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.btnAdd = new System.Windows.Forms.ToolStripButton();
             this.btnEdit = new System.Windows.Forms.ToolStripButton();
             this.btnDel = new System.Windows.Forms.ToolStripButton();
             this.btnRefresh = new System.Windows.Forms.ToolStripButton();
-            this.tblShipments = new System.Windows.Forms.DataGridView();
+            this.shipmentBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.UniqueKey = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colIdNakl = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -56,10 +66,11 @@
             this.colOrderType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colKlientId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colKlientName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colComment = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colOrderComment = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colCopmletePct = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDoneShare = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colComment = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colOrderComment = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colGate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colSpecCond = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDriverPhone = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -76,35 +87,15 @@
             this.colDelayReason = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDelayComment = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDepositor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.lvidDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.timeslotidDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sdateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.scommentDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ocommentDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gateidDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.spconditionDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.driverphoneDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.driverfioDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.vehiclenumberDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.trailernumberDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.attorneynumberDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.attorneyissuedDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.attorneydateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.submissiontimeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.starttimeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.endtimeplanDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.endtimefactDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.delayreasonsidDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.delaycommentDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.depositoridDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.iscourierDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.forwarderfioDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.stampnumberDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.shipmentBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.FontColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.BackgroundColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.menuStrip1.SuspendLayout();
-            this.toolStrip1.SuspendLayout();
+            this.tabMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tblShipments)).BeginInit();
+            this.tbMain.SuspendLayout();
+            this.tabForms.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.shipmentBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
@@ -115,7 +106,7 @@
             this.справочникиToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1016, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1276, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -165,6 +156,7 @@
             this.miDictDepositor.Name = "miDictDepositor";
             this.miDictDepositor.Size = new System.Drawing.Size(201, 22);
             this.miDictDepositor.Text = "Депозиторы";
+            this.miDictDepositor.Click += new System.EventHandler(this.miDictDepositor_Click);
             // 
             // miDictOpersType
             // 
@@ -193,18 +185,133 @@
             this.miDictTC.Size = new System.Drawing.Size(201, 22);
             this.miDictTC.Text = "Справочник ТК";
             // 
-            // toolStrip1
+            // delay_reasonsTableAdapter1
             // 
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.delay_reasonsTableAdapter1.ClearBeforeFill = true;
+            // 
+            // tabMain
+            // 
+            this.tabMain.Controls.Add(this.panel2);
+            this.tabMain.Controls.Add(this.panel1);
+            this.tabMain.Location = new System.Drawing.Point(4, 22);
+            this.tabMain.Name = "tabMain";
+            this.tabMain.Padding = new System.Windows.Forms.Padding(3);
+            this.tabMain.Size = new System.Drawing.Size(1268, 581);
+            this.tabMain.TabIndex = 0;
+            this.tabMain.Text = "Отгрузки";
+            this.tabMain.UseVisualStyleBackColor = true;
+            // 
+            // edCurrDay
+            // 
+            this.edCurrDay.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.edCurrDay.Location = new System.Drawing.Point(101, 3);
+            this.edCurrDay.Name = "edCurrDay";
+            this.edCurrDay.Size = new System.Drawing.Size(95, 20);
+            this.edCurrDay.TabIndex = 3;
+            this.edCurrDay.ValueChanged += new System.EventHandler(this.edCurrDay_ValueChanged);
+            // 
+            // tblShipments
+            // 
+            this.tblShipments.AllowUserToAddRows = false;
+            this.tblShipments.AllowUserToDeleteRows = false;
+            this.tblShipments.AllowUserToOrderColumns = true;
+            this.tblShipments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.tblShipments.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.UniqueKey,
+            this.colId,
+            this.colIdNakl,
+            this.colDate,
+            this.colTime,
+            this.colDirection,
+            this.colOrderId,
+            this.colOrderType,
+            this.colKlientId,
+            this.colKlientName,
+            this.colStatus,
+            this.colCopmletePct,
+            this.colDoneShare,
+            this.colComment,
+            this.colOrderComment,
+            this.colGate,
+            this.colSpecCond,
+            this.colDriverPhone,
+            this.colDriverName,
+            this.colTransComp,
+            this.colTrackNumber,
+            this.colTrailerNumber,
+            this.colAttorneyNumber,
+            this.colAttorneyDate,
+            this.colSubmissionTime,
+            this.colStartTime,
+            this.colEndTimePlan,
+            this.colEndTimeFact,
+            this.colDelayReason,
+            this.colDelayComment,
+            this.colDepositor,
+            this.FontColor,
+            this.BackgroundColor});
+            this.tblShipments.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tblShipments.Location = new System.Drawing.Point(0, 0);
+            this.tblShipments.Name = "tblShipments";
+            this.tblShipments.ReadOnly = true;
+            this.tblShipments.RowHeadersVisible = false;
+            this.tblShipments.RowHeadersWidth = 20;
+            this.tblShipments.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.tblShipments.Size = new System.Drawing.Size(1262, 547);
+            this.tblShipments.TabIndex = 2;
+            this.tblShipments.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tblShipments_CellContentClick);
+            this.tblShipments.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.tblShipments_CellPainting);
+            this.tblShipments.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.tblShipments_RowPostPaint);
+            this.tblShipments.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.tblShipments_RowPrePaint);
+            // 
+            // tbMain
+            // 
+            this.tbMain.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.tbMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnAdd,
             this.btnEdit,
             this.btnDel,
-            this.btnRefresh});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 24);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1016, 25);
-            this.toolStrip1.TabIndex = 1;
-            this.toolStrip1.Text = "toolStrip1";
+            this.btnRefresh,
+            this.toolStripSeparator1});
+            this.tbMain.Location = new System.Drawing.Point(0, 0);
+            this.tbMain.Name = "tbMain";
+            this.tbMain.Size = new System.Drawing.Size(1262, 25);
+            this.tbMain.TabIndex = 1;
+            this.tbMain.Text = "toolStrip1";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // tabForms
+            // 
+            this.tabForms.Controls.Add(this.tabMain);
+            this.tabForms.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabForms.Location = new System.Drawing.Point(0, 24);
+            this.tabForms.Name = "tabForms";
+            this.tabForms.SelectedIndex = 0;
+            this.tabForms.Size = new System.Drawing.Size(1276, 607);
+            this.tabForms.TabIndex = 4;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.edCurrDay);
+            this.panel1.Controls.Add(this.tbMain);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(3, 3);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1262, 28);
+            this.panel1.TabIndex = 4;
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.tblShipments);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(3, 31);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(1262, 547);
+            this.panel2.TabIndex = 5;
             // 
             // btnAdd
             // 
@@ -234,6 +341,7 @@
             this.btnDel.Name = "btnDel";
             this.btnDel.Size = new System.Drawing.Size(23, 22);
             this.btnDel.Text = "toolStripButton3";
+            this.btnDel.Click += new System.EventHandler(this.btnDel_Click);
             // 
             // btnRefresh
             // 
@@ -245,385 +353,256 @@
             this.btnRefresh.Text = "toolStripButton1";
             this.btnRefresh.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
-            // tblShipments
+            // shipmentBindingSource
             // 
-            this.tblShipments.AllowUserToOrderColumns = true;
-            this.tblShipments.AutoGenerateColumns = false;
-            this.tblShipments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.tblShipments.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colId,
-            this.colIdNakl,
-            this.colDate,
-            this.colTime,
-            this.colDirection,
-            this.colOrderId,
-            this.colOrderType,
-            this.colKlientId,
-            this.colKlientName,
-            this.colComment,
-            this.colOrderComment,
-            this.colStatus,
-            this.colCopmletePct,
-            this.colGate,
-            this.colSpecCond,
-            this.colDriverPhone,
-            this.colDriverName,
-            this.colTransComp,
-            this.colTrackNumber,
-            this.colTrailerNumber,
-            this.colAttorneyNumber,
-            this.colAttorneyDate,
-            this.colSubmissionTime,
-            this.colStartTime,
-            this.colEndTimePlan,
-            this.colEndTimeFact,
-            this.colDelayReason,
-            this.colDelayComment,
-            this.colDepositor,
-            this.idDataGridViewTextBoxColumn,
-            this.lvidDataGridViewTextBoxColumn,
-            this.timeslotidDataGridViewTextBoxColumn,
-            this.sdateDataGridViewTextBoxColumn,
-            this.scommentDataGridViewTextBoxColumn,
-            this.ocommentDataGridViewTextBoxColumn,
-            this.gateidDataGridViewTextBoxColumn,
-            this.spconditionDataGridViewCheckBoxColumn,
-            this.driverphoneDataGridViewTextBoxColumn,
-            this.driverfioDataGridViewTextBoxColumn,
-            this.vehiclenumberDataGridViewTextBoxColumn,
-            this.trailernumberDataGridViewTextBoxColumn,
-            this.attorneynumberDataGridViewTextBoxColumn,
-            this.attorneyissuedDataGridViewTextBoxColumn,
-            this.attorneydateDataGridViewTextBoxColumn,
-            this.submissiontimeDataGridViewTextBoxColumn,
-            this.starttimeDataGridViewTextBoxColumn,
-            this.endtimeplanDataGridViewTextBoxColumn,
-            this.endtimefactDataGridViewTextBoxColumn,
-            this.delayreasonsidDataGridViewTextBoxColumn,
-            this.delaycommentDataGridViewTextBoxColumn,
-            this.depositoridDataGridViewTextBoxColumn,
-            this.iscourierDataGridViewCheckBoxColumn,
-            this.forwarderfioDataGridViewTextBoxColumn,
-            this.stampnumberDataGridViewTextBoxColumn});
-            this.tblShipments.DataSource = this.shipmentBindingSource;
-            this.tblShipments.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tblShipments.Location = new System.Drawing.Point(0, 49);
-            this.tblShipments.Name = "tblShipments";
-            this.tblShipments.RowHeadersVisible = false;
-            this.tblShipments.RowHeadersWidth = 20;
-            this.tblShipments.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.tblShipments.Size = new System.Drawing.Size(1016, 503);
-            this.tblShipments.TabIndex = 2;
-            this.tblShipments.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tblShipments_CellContentClick);
+            this.shipmentBindingSource.DataSource = typeof(Planning.Shipment);
+            // 
+            // UniqueKey
+            // 
+            this.UniqueKey.HeaderText = "UniqueKey";
+            this.UniqueKey.Name = "UniqueKey";
+            this.UniqueKey.ReadOnly = true;
+            this.UniqueKey.Visible = false;
             // 
             // colId
             // 
-            this.colId.DataPropertyName = "id";
+            this.colId.DataPropertyName = "ShpId";
             this.colId.HeaderText = "ID погр.";
             this.colId.Name = "colId";
+            this.colId.ReadOnly = true;
             // 
             // colIdNakl
             // 
+            this.colIdNakl.DataPropertyName = "OrdId";
             this.colIdNakl.HeaderText = "ID накл.";
             this.colIdNakl.Name = "colIdNakl";
+            this.colIdNakl.ReadOnly = true;
             // 
             // colDate
             // 
+            this.colDate.DataPropertyName = "ShpDate";
             this.colDate.HeaderText = "Дата";
             this.colDate.Name = "colDate";
+            this.colDate.ReadOnly = true;
             // 
             // colTime
             // 
+            this.colTime.DataPropertyName = "SlotTime";
             this.colTime.HeaderText = "Время";
             this.colTime.Name = "colTime";
+            this.colTime.ReadOnly = true;
             // 
             // colDirection
             // 
+            this.colDirection.DataPropertyName = "InOut";
             this.colDirection.HeaderText = "Напр.";
             this.colDirection.Name = "colDirection";
+            this.colDirection.ReadOnly = true;
             // 
             // colOrderId
             // 
+            this.colOrderId.DataPropertyName = "OrdLVCode";
             this.colOrderId.HeaderText = "Код заказа";
             this.colOrderId.Name = "colOrderId";
+            this.colOrderId.ReadOnly = true;
             // 
             // colOrderType
             // 
+            this.colOrderType.DataPropertyName = "OrdLVType";
             this.colOrderType.HeaderText = "Тип заказа";
             this.colOrderType.Name = "colOrderType";
+            this.colOrderType.ReadOnly = true;
             // 
             // colKlientId
             // 
             this.colKlientId.HeaderText = "Код клиента";
             this.colKlientId.Name = "colKlientId";
+            this.colKlientId.ReadOnly = true;
+            this.colKlientId.Visible = false;
             // 
             // colKlientName
             // 
+            this.colKlientName.DataPropertyName = "KlientName";
             this.colKlientName.HeaderText = "Клиент";
             this.colKlientName.Name = "colKlientName";
-            // 
-            // colComment
-            // 
-            this.colComment.HeaderText = "Комментарий по загрузке";
-            this.colComment.Name = "colComment";
-            // 
-            // colOrderComment
-            // 
-            this.colOrderComment.HeaderText = "Комментарий по заказу";
-            this.colOrderComment.Name = "colOrderComment";
+            this.colKlientName.ReadOnly = true;
             // 
             // colStatus
             // 
+            this.colStatus.DataPropertyName = "OrderStatus";
             this.colStatus.HeaderText = "Статус";
             this.colStatus.Name = "colStatus";
+            this.colStatus.ReadOnly = true;
             // 
             // colCopmletePct
             // 
+            this.colCopmletePct.DataPropertyName = "PrcReady";
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.colCopmletePct.DefaultCellStyle = dataGridViewCellStyle1;
             this.colCopmletePct.HeaderText = "Собран (в %)";
             this.colCopmletePct.Name = "colCopmletePct";
+            this.colCopmletePct.ReadOnly = true;
+            // 
+            // colDoneShare
+            // 
+            this.colDoneShare.DataPropertyName = "DoneShare";
+            this.colDoneShare.HeaderText = "DoneShare";
+            this.colDoneShare.Name = "colDoneShare";
+            this.colDoneShare.ReadOnly = true;
+            this.colDoneShare.Visible = false;
+            // 
+            // colComment
+            // 
+            this.colComment.DataPropertyName = "ShpComment";
+            this.colComment.HeaderText = "Комментарий по загрузке";
+            this.colComment.Name = "colComment";
+            this.colComment.ReadOnly = true;
+            // 
+            // colOrderComment
+            // 
+            this.colOrderComment.DataPropertyName = "OrdComment";
+            this.colOrderComment.HeaderText = "Комментарий по заказу";
+            this.colOrderComment.Name = "colOrderComment";
+            this.colOrderComment.ReadOnly = true;
             // 
             // colGate
             // 
+            this.colGate.DataPropertyName = "GateName";
             this.colGate.HeaderText = "Ворота";
             this.colGate.Name = "colGate";
+            this.colGate.ReadOnly = true;
             // 
             // colSpecCond
             // 
+            this.colSpecCond.DataPropertyName = "ShpSpecialCon";
             this.colSpecCond.HeaderText = "Спец. Условия";
             this.colSpecCond.Name = "colSpecCond";
+            this.colSpecCond.ReadOnly = true;
             // 
             // colDriverPhone
             // 
+            this.colDriverPhone.DataPropertyName = "ShpDriverPhone";
             this.colDriverPhone.HeaderText = "Телефон водителя";
             this.colDriverPhone.Name = "colDriverPhone";
+            this.colDriverPhone.ReadOnly = true;
             // 
             // colDriverName
             // 
+            this.colDriverName.DataPropertyName = "ShpDriverFio";
             this.colDriverName.HeaderText = "ФИО водителя";
             this.colDriverName.Name = "colDriverName";
+            this.colDriverName.ReadOnly = true;
+            this.colDriverName.Width = 150;
             // 
             // colTransComp
             // 
+            this.colTransComp.DataPropertyName = "TransportCompany";
             this.colTransComp.HeaderText = "Транспортная компания";
             this.colTransComp.Name = "colTransComp";
+            this.colTransComp.ReadOnly = true;
             // 
             // colTrackNumber
             // 
+            this.colTrackNumber.DataPropertyName = "ShpVehicleNumber";
             this.colTrackNumber.HeaderText = "Номер ТС";
             this.colTrackNumber.Name = "colTrackNumber";
+            this.colTrackNumber.ReadOnly = true;
             // 
             // colTrailerNumber
             // 
+            this.colTrailerNumber.DataPropertyName = "ShpTrailerNumber";
             this.colTrailerNumber.HeaderText = "Номер прицепа";
             this.colTrailerNumber.Name = "colTrailerNumber";
+            this.colTrailerNumber.ReadOnly = true;
             // 
             // colAttorneyNumber
             // 
+            this.colAttorneyNumber.DataPropertyName = "ShpAttorneyNumber";
             this.colAttorneyNumber.HeaderText = "Номер доверенности";
             this.colAttorneyNumber.Name = "colAttorneyNumber";
+            this.colAttorneyNumber.ReadOnly = true;
             // 
             // colAttorneyDate
             // 
-            this.colAttorneyDate.HeaderText = "Дата довереннсоти";
+            this.colAttorneyDate.DataPropertyName = "ShpAttorneyDate";
+            this.colAttorneyDate.HeaderText = "Дата доверенности";
             this.colAttorneyDate.Name = "colAttorneyDate";
+            this.colAttorneyDate.ReadOnly = true;
             // 
             // colSubmissionTime
             // 
+            this.colSubmissionTime.DataPropertyName = "ShpSubmissionTime";
             this.colSubmissionTime.HeaderText = "Время подачи документов";
             this.colSubmissionTime.Name = "colSubmissionTime";
+            this.colSubmissionTime.ReadOnly = true;
             // 
             // colStartTime
             // 
+            this.colStartTime.DataPropertyName = "ShpStartTime";
             this.colStartTime.HeaderText = "Время начала";
             this.colStartTime.Name = "colStartTime";
+            this.colStartTime.ReadOnly = true;
             // 
             // colEndTimePlan
             // 
+            this.colEndTimePlan.DataPropertyName = "ShpEndTimePlan";
             this.colEndTimePlan.HeaderText = "Время окончания";
             this.colEndTimePlan.Name = "colEndTimePlan";
+            this.colEndTimePlan.ReadOnly = true;
             // 
             // colEndTimeFact
             // 
+            this.colEndTimeFact.DataPropertyName = "ShpEndTimeFact";
             this.colEndTimeFact.HeaderText = "Убытие по факту";
             this.colEndTimeFact.Name = "colEndTimeFact";
+            this.colEndTimeFact.ReadOnly = true;
             // 
             // colDelayReason
             // 
+            this.colDelayReason.DataPropertyName = "ShpDelayReasonName";
             this.colDelayReason.HeaderText = "Причина опоздания";
             this.colDelayReason.Name = "colDelayReason";
+            this.colDelayReason.ReadOnly = true;
             // 
             // colDelayComment
             // 
+            this.colDelayComment.DataPropertyName = "ShpDelayComment";
             this.colDelayComment.HeaderText = "Комментарий по опозданию";
             this.colDelayComment.Name = "colDelayComment";
+            this.colDelayComment.ReadOnly = true;
             // 
             // colDepositor
             // 
+            this.colDepositor.DataPropertyName = "DepName";
             this.colDepositor.HeaderText = "Депозитор";
             this.colDepositor.Name = "colDepositor";
+            this.colDepositor.ReadOnly = true;
             // 
-            // idDataGridViewTextBoxColumn
+            // FontColor
             // 
-            this.idDataGridViewTextBoxColumn.DataPropertyName = "id";
-            this.idDataGridViewTextBoxColumn.HeaderText = "id";
-            this.idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
+            this.FontColor.DataPropertyName = "FontColor";
+            this.FontColor.HeaderText = "FontColor";
+            this.FontColor.Name = "FontColor";
+            this.FontColor.ReadOnly = true;
+            this.FontColor.Visible = false;
             // 
-            // lvidDataGridViewTextBoxColumn
+            // BackgroundColor
             // 
-            this.lvidDataGridViewTextBoxColumn.DataPropertyName = "lv_id";
-            this.lvidDataGridViewTextBoxColumn.HeaderText = "lv_id";
-            this.lvidDataGridViewTextBoxColumn.Name = "lvidDataGridViewTextBoxColumn";
-            // 
-            // timeslotidDataGridViewTextBoxColumn
-            // 
-            this.timeslotidDataGridViewTextBoxColumn.DataPropertyName = "time_slot_id";
-            this.timeslotidDataGridViewTextBoxColumn.HeaderText = "time_slot_id";
-            this.timeslotidDataGridViewTextBoxColumn.Name = "timeslotidDataGridViewTextBoxColumn";
-            // 
-            // sdateDataGridViewTextBoxColumn
-            // 
-            this.sdateDataGridViewTextBoxColumn.DataPropertyName = "s_date";
-            this.sdateDataGridViewTextBoxColumn.HeaderText = "s_date";
-            this.sdateDataGridViewTextBoxColumn.Name = "sdateDataGridViewTextBoxColumn";
-            // 
-            // scommentDataGridViewTextBoxColumn
-            // 
-            this.scommentDataGridViewTextBoxColumn.DataPropertyName = "s_comment";
-            this.scommentDataGridViewTextBoxColumn.HeaderText = "s_comment";
-            this.scommentDataGridViewTextBoxColumn.Name = "scommentDataGridViewTextBoxColumn";
-            // 
-            // ocommentDataGridViewTextBoxColumn
-            // 
-            this.ocommentDataGridViewTextBoxColumn.DataPropertyName = "o_comment";
-            this.ocommentDataGridViewTextBoxColumn.HeaderText = "o_comment";
-            this.ocommentDataGridViewTextBoxColumn.Name = "ocommentDataGridViewTextBoxColumn";
-            // 
-            // gateidDataGridViewTextBoxColumn
-            // 
-            this.gateidDataGridViewTextBoxColumn.DataPropertyName = "gate_id";
-            this.gateidDataGridViewTextBoxColumn.HeaderText = "gate_id";
-            this.gateidDataGridViewTextBoxColumn.Name = "gateidDataGridViewTextBoxColumn";
-            // 
-            // spconditionDataGridViewCheckBoxColumn
-            // 
-            this.spconditionDataGridViewCheckBoxColumn.DataPropertyName = "sp_condition";
-            this.spconditionDataGridViewCheckBoxColumn.HeaderText = "sp_condition";
-            this.spconditionDataGridViewCheckBoxColumn.Name = "spconditionDataGridViewCheckBoxColumn";
-            // 
-            // driverphoneDataGridViewTextBoxColumn
-            // 
-            this.driverphoneDataGridViewTextBoxColumn.DataPropertyName = "driver_phone";
-            this.driverphoneDataGridViewTextBoxColumn.HeaderText = "driver_phone";
-            this.driverphoneDataGridViewTextBoxColumn.Name = "driverphoneDataGridViewTextBoxColumn";
-            // 
-            // driverfioDataGridViewTextBoxColumn
-            // 
-            this.driverfioDataGridViewTextBoxColumn.DataPropertyName = "driver_fio";
-            this.driverfioDataGridViewTextBoxColumn.HeaderText = "driver_fio";
-            this.driverfioDataGridViewTextBoxColumn.Name = "driverfioDataGridViewTextBoxColumn";
-            // 
-            // vehiclenumberDataGridViewTextBoxColumn
-            // 
-            this.vehiclenumberDataGridViewTextBoxColumn.DataPropertyName = "vehicle_number";
-            this.vehiclenumberDataGridViewTextBoxColumn.HeaderText = "vehicle_number";
-            this.vehiclenumberDataGridViewTextBoxColumn.Name = "vehiclenumberDataGridViewTextBoxColumn";
-            // 
-            // trailernumberDataGridViewTextBoxColumn
-            // 
-            this.trailernumberDataGridViewTextBoxColumn.DataPropertyName = "trailer_number";
-            this.trailernumberDataGridViewTextBoxColumn.HeaderText = "trailer_number";
-            this.trailernumberDataGridViewTextBoxColumn.Name = "trailernumberDataGridViewTextBoxColumn";
-            // 
-            // attorneynumberDataGridViewTextBoxColumn
-            // 
-            this.attorneynumberDataGridViewTextBoxColumn.DataPropertyName = "attorney_number";
-            this.attorneynumberDataGridViewTextBoxColumn.HeaderText = "attorney_number";
-            this.attorneynumberDataGridViewTextBoxColumn.Name = "attorneynumberDataGridViewTextBoxColumn";
-            // 
-            // attorneyissuedDataGridViewTextBoxColumn
-            // 
-            this.attorneyissuedDataGridViewTextBoxColumn.DataPropertyName = "attorney_issued";
-            this.attorneyissuedDataGridViewTextBoxColumn.HeaderText = "attorney_issued";
-            this.attorneyissuedDataGridViewTextBoxColumn.Name = "attorneyissuedDataGridViewTextBoxColumn";
-            // 
-            // attorneydateDataGridViewTextBoxColumn
-            // 
-            this.attorneydateDataGridViewTextBoxColumn.DataPropertyName = "attorney_date";
-            this.attorneydateDataGridViewTextBoxColumn.HeaderText = "attorney_date";
-            this.attorneydateDataGridViewTextBoxColumn.Name = "attorneydateDataGridViewTextBoxColumn";
-            // 
-            // submissiontimeDataGridViewTextBoxColumn
-            // 
-            this.submissiontimeDataGridViewTextBoxColumn.DataPropertyName = "submission_time";
-            this.submissiontimeDataGridViewTextBoxColumn.HeaderText = "submission_time";
-            this.submissiontimeDataGridViewTextBoxColumn.Name = "submissiontimeDataGridViewTextBoxColumn";
-            // 
-            // starttimeDataGridViewTextBoxColumn
-            // 
-            this.starttimeDataGridViewTextBoxColumn.DataPropertyName = "start_time";
-            this.starttimeDataGridViewTextBoxColumn.HeaderText = "start_time";
-            this.starttimeDataGridViewTextBoxColumn.Name = "starttimeDataGridViewTextBoxColumn";
-            // 
-            // endtimeplanDataGridViewTextBoxColumn
-            // 
-            this.endtimeplanDataGridViewTextBoxColumn.DataPropertyName = "end_time_plan";
-            this.endtimeplanDataGridViewTextBoxColumn.HeaderText = "end_time_plan";
-            this.endtimeplanDataGridViewTextBoxColumn.Name = "endtimeplanDataGridViewTextBoxColumn";
-            // 
-            // endtimefactDataGridViewTextBoxColumn
-            // 
-            this.endtimefactDataGridViewTextBoxColumn.DataPropertyName = "end_time_fact";
-            this.endtimefactDataGridViewTextBoxColumn.HeaderText = "end_time_fact";
-            this.endtimefactDataGridViewTextBoxColumn.Name = "endtimefactDataGridViewTextBoxColumn";
-            // 
-            // delayreasonsidDataGridViewTextBoxColumn
-            // 
-            this.delayreasonsidDataGridViewTextBoxColumn.DataPropertyName = "delay_reasons_id";
-            this.delayreasonsidDataGridViewTextBoxColumn.HeaderText = "delay_reasons_id";
-            this.delayreasonsidDataGridViewTextBoxColumn.Name = "delayreasonsidDataGridViewTextBoxColumn";
-            // 
-            // delaycommentDataGridViewTextBoxColumn
-            // 
-            this.delaycommentDataGridViewTextBoxColumn.DataPropertyName = "delay_comment";
-            this.delaycommentDataGridViewTextBoxColumn.HeaderText = "delay_comment";
-            this.delaycommentDataGridViewTextBoxColumn.Name = "delaycommentDataGridViewTextBoxColumn";
-            // 
-            // depositoridDataGridViewTextBoxColumn
-            // 
-            this.depositoridDataGridViewTextBoxColumn.DataPropertyName = "depositor_id";
-            this.depositoridDataGridViewTextBoxColumn.HeaderText = "depositor_id";
-            this.depositoridDataGridViewTextBoxColumn.Name = "depositoridDataGridViewTextBoxColumn";
-            // 
-            // iscourierDataGridViewCheckBoxColumn
-            // 
-            this.iscourierDataGridViewCheckBoxColumn.DataPropertyName = "is_courier";
-            this.iscourierDataGridViewCheckBoxColumn.HeaderText = "is_courier";
-            this.iscourierDataGridViewCheckBoxColumn.Name = "iscourierDataGridViewCheckBoxColumn";
-            // 
-            // forwarderfioDataGridViewTextBoxColumn
-            // 
-            this.forwarderfioDataGridViewTextBoxColumn.DataPropertyName = "forwarder_fio";
-            this.forwarderfioDataGridViewTextBoxColumn.HeaderText = "forwarder_fio";
-            this.forwarderfioDataGridViewTextBoxColumn.Name = "forwarderfioDataGridViewTextBoxColumn";
-            // 
-            // stampnumberDataGridViewTextBoxColumn
-            // 
-            this.stampnumberDataGridViewTextBoxColumn.DataPropertyName = "stamp_number";
-            this.stampnumberDataGridViewTextBoxColumn.HeaderText = "stamp_number";
-            this.stampnumberDataGridViewTextBoxColumn.Name = "stampnumberDataGridViewTextBoxColumn";
-            // 
-            // shipmentBindingSource
-            // 
-            this.shipmentBindingSource.DataSource = typeof(Planning.Shipment);
+            this.BackgroundColor.DataPropertyName = "BackgroundColor";
+            this.BackgroundColor.HeaderText = "BackgroudColor";
+            this.BackgroundColor.Name = "BackgroundColor";
+            this.BackgroundColor.ReadOnly = true;
+            this.BackgroundColor.Visible = false;
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1016, 552);
-            this.Controls.Add(this.tblShipments);
-            this.Controls.Add(this.toolStrip1);
+            this.ClientSize = new System.Drawing.Size(1276, 631);
+            this.Controls.Add(this.tabForms);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "frmMain";
             this.RightToLeftLayout = true;
@@ -631,9 +610,14 @@
             this.Load += new System.EventHandler(this.frmMain_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
+            this.tabMain.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.tblShipments)).EndInit();
+            this.tbMain.ResumeLayout(false);
+            this.tbMain.PerformLayout();
+            this.tabForms.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.shipmentBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -645,8 +629,6 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem справочникиToolStripMenuItem;
-        private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.DataGridView tblShipments;
         private System.Windows.Forms.ToolStripMenuItem miDictUserGroup;
         private System.Windows.Forms.ToolStripMenuItem miDictUser;
         private System.Windows.Forms.ToolStripMenuItem miDictTimeSlot;
@@ -655,10 +637,21 @@
         private System.Windows.Forms.ToolStripMenuItem miDictDelayReasons;
         private System.Windows.Forms.ToolStripMenuItem miDictGates;
         private System.Windows.Forms.ToolStripMenuItem miDictTC;
+        private System.Windows.Forms.BindingSource shipmentBindingSource;
+        private PlanningDataSetTableAdapters.delay_reasonsTableAdapter delay_reasonsTableAdapter1;
+        private System.Windows.Forms.TabPage tabMain;
+        private System.Windows.Forms.DataGridView tblShipments;
+        private System.Windows.Forms.ToolStrip tbMain;
         private System.Windows.Forms.ToolStripButton btnAdd;
         private System.Windows.Forms.ToolStripButton btnEdit;
         private System.Windows.Forms.ToolStripButton btnDel;
         private System.Windows.Forms.ToolStripButton btnRefresh;
+        private System.Windows.Forms.TabControl tabForms;
+        private System.Windows.Forms.DateTimePicker edCurrDay;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn UniqueKey;
         private System.Windows.Forms.DataGridViewTextBoxColumn colId;
         private System.Windows.Forms.DataGridViewTextBoxColumn colIdNakl;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDate;
@@ -668,10 +661,11 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colOrderType;
         private System.Windows.Forms.DataGridViewTextBoxColumn colKlientId;
         private System.Windows.Forms.DataGridViewTextBoxColumn colKlientName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colComment;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colOrderComment;
         private System.Windows.Forms.DataGridViewTextBoxColumn colStatus;
         private System.Windows.Forms.DataGridViewTextBoxColumn colCopmletePct;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDoneShare;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colComment;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colOrderComment;
         private System.Windows.Forms.DataGridViewTextBoxColumn colGate;
         private System.Windows.Forms.DataGridViewTextBoxColumn colSpecCond;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDriverPhone;
@@ -688,32 +682,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colDelayReason;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDelayComment;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDepositor;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn lvidDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn timeslotidDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn sdateDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn scommentDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ocommentDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gateidDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn spconditionDataGridViewCheckBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn driverphoneDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn driverfioDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn vehiclenumberDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn trailernumberDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn attorneynumberDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn attorneyissuedDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn attorneydateDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn submissiontimeDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn starttimeDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn endtimeplanDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn endtimefactDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn delayreasonsidDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn delaycommentDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn depositoridDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn iscourierDataGridViewCheckBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn forwarderfioDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn stampnumberDataGridViewTextBoxColumn;
-        private System.Windows.Forms.BindingSource shipmentBindingSource;
+        private System.Windows.Forms.DataGridViewTextBoxColumn FontColor;
+        private System.Windows.Forms.DataGridViewTextBoxColumn BackgroundColor;
     }
 }
 

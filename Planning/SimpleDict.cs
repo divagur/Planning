@@ -17,6 +17,7 @@ namespace Planning
         DictSimple _dict;
         SqlDataAdapter adapter;
         SqlCommandBuilder commandBuilder;
+        Form _editForm;
         string connectionString = @"Data Source=ПОЛЬЗОВАТЕЛЬ-ПК\SQLEXPRESS2017;Initial Catalog=Planning;User ID=SYSADM; Password = SYSADM";
         string sql = "";
 
@@ -24,6 +25,12 @@ namespace Planning
         {
             InitializeComponent();
             _dict = dict;
+           // _editForm = EditForm;
+            if (_editForm != null)
+            {
+                tblDelayReasons.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                btnEdit.Visible = true; 
+            }
             this.Text = _dict.Title;
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -41,6 +48,7 @@ namespace Planning
                     tblDelayReasons.Columns.Add(column);
                     sqlColumns = (sqlColumns == "") ? dictColumn.DataField : sqlColumns + "," + dictColumn.DataField;
                 }
+
                 sql = String.Format("select {0} from {1}", sqlColumns, _dict.TableName);
                 connection.Open();
                 adapter = new SqlDataAdapter(sql, connection);
@@ -125,7 +133,7 @@ namespace Planning
 
                 adapter.InsertCommand.CommandText = String.Format("insert into {0} ({1}) values ({2})", _dict.TableName, insertColumns, insertValues);
                 adapter.UpdateCommand.CommandText = String.Format("update {0} set {1} where {2}", _dict.TableName, updateColumns, pkCondition);
-                adapter.DeleteCommand.CommandText = String.Format("delete {0} where {1}", _dict.TableName, pkCondition);
+                adapter.DeleteCommand.CommandText = String.Format("delete from {0} where {1}", _dict.TableName, pkCondition);
                 try
                 {
                     adapter.Update(ds);
@@ -144,6 +152,14 @@ namespace Planning
             foreach (DataGridViewRow row in tblDelayReasons.SelectedRows)
             {
                 tblDelayReasons.Rows.Remove(row);
+            }
+        }
+
+        private void btnEdit_Click(object sender, EventArgs e)
+        {
+            if (_editForm != null)
+            {
+                _editForm.ShowDialog();
             }
         }
     }

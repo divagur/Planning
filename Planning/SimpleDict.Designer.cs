@@ -38,6 +38,7 @@
             this.planningDataSet = new Planning.PlanningDataSet();
             this.delayreasonsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.delay_reasonsTableAdapter = new Planning.PlanningDataSetTableAdapters.delay_reasonsTableAdapter();
+            this.btnEdit = new System.Windows.Forms.ToolStripButton();
             this.tbMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tblDelayReasons)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.planningDataSet)).BeginInit();
@@ -48,6 +49,7 @@
             // 
             this.tbMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnAddRow,
+            this.btnEdit,
             this.btnDelRow,
             this.btnSave});
             this.tbMain.Location = new System.Drawing.Point(0, 0);
@@ -65,6 +67,7 @@
             this.btnAddRow.Size = new System.Drawing.Size(23, 22);
             this.btnAddRow.Text = "toolStripButton1";
             this.btnAddRow.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnAddRow.ToolTipText = "Добавить";
             this.btnAddRow.Click += new System.EventHandler(this.btnAddRow_Click);
             // 
             // btnDelRow
@@ -75,6 +78,7 @@
             this.btnDelRow.Name = "btnDelRow";
             this.btnDelRow.Size = new System.Drawing.Size(23, 22);
             this.btnDelRow.Text = "toolStripButton2";
+            this.btnDelRow.ToolTipText = "Удалить";
             this.btnDelRow.Click += new System.EventHandler(this.btnDelRow_Click);
             // 
             // btnSave
@@ -85,6 +89,7 @@
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(23, 22);
             this.btnSave.Text = "toolStripButton1";
+            this.btnSave.ToolTipText = "Сохранить";
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // tblDelayReasons
@@ -109,6 +114,18 @@
             // delay_reasonsTableAdapter
             // 
             this.delay_reasonsTableAdapter.ClearBeforeFill = true;
+            // 
+            // btnEdit
+            // 
+            this.btnEdit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnEdit.Image = global::Planning.Properties.Resources.Edit;
+            this.btnEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnEdit.Name = "btnEdit";
+            this.btnEdit.Size = new System.Drawing.Size(23, 22);
+            this.btnEdit.Text = "toolStripButton1";
+            this.btnEdit.ToolTipText = "Изменить";
+            this.btnEdit.Visible = false;
+            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
             // 
             // SimpleDict
             // 
@@ -140,5 +157,6 @@
         private System.Windows.Forms.BindingSource delayreasonsBindingSource;
         private PlanningDataSetTableAdapters.delay_reasonsTableAdapter delay_reasonsTableAdapter;
         private System.Windows.Forms.ToolStripButton btnSave;
+        private System.Windows.Forms.ToolStripButton btnEdit;
     }
 }

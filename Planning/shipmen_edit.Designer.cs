@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(shipmen_edit));
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -43,7 +44,6 @@
             this.label19 = new System.Windows.Forms.Label();
             this.edAttorneyIssued = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
-            this.dtAttorneyDate = new System.Windows.Forms.DateTimePicker();
             this.label17 = new System.Windows.Forms.Label();
             this.edAttorneyNumber = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
@@ -59,29 +59,58 @@
             this.label11 = new System.Windows.Forms.Label();
             this.edDriverFIO = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.dtEndDateFact = new System.Windows.Forms.DateTimePicker();
-            this.dtEndDatePlan = new System.Windows.Forms.DateTimePicker();
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.dtStartTime = new System.Windows.Forms.DateTimePicker();
             this.label7 = new System.Windows.Forms.Label();
-            this.dtSubmissionTime = new System.Windows.Forms.DateTimePicker();
             this.label6 = new System.Windows.Forms.Label();
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.cbIsCourier = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.tblShipmentOrders = new System.Windows.Forms.DataGridView();
+            this.colOrderId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colOrderType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colOrderComment = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colManualLoad = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colManualUnload = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPalletCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colBindingId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colShipmentId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.blShipmentOrders = new System.Windows.Forms.DataGridView();
+            this.label5 = new System.Windows.Forms.Label();
+            this.edSDate = new System.Windows.Forms.MaskedTextBox();
+            this.cbSpecCondition = new System.Windows.Forms.CheckBox();
+            this.dtSpecialCond = new System.Windows.Forms.DateTimePicker();
+            this.edSubmissionTime = new System.Windows.Forms.TextBox();
+            this.tbtnAdd = new System.Windows.Forms.ToolStripButton();
+            this.tbtnEdit = new System.Windows.Forms.ToolStripButton();
+            this.tbtnDel = new System.Windows.Forms.ToolStripButton();
+            this.btnSubmissionTime = new System.Windows.Forms.Button();
+            this.pnGetDateTime = new System.Windows.Forms.Panel();
+            this.monthCalendarSpecial = new System.Windows.Forms.MonthCalendar();
+            this.dtSpecialTime = new System.Windows.Forms.DateTimePicker();
+            this.btnCalendarOk = new System.Windows.Forms.Button();
+            this.btnCalendarCancel = new System.Windows.Forms.Button();
+            this.edEndDate = new System.Windows.Forms.TextBox();
+            this.btnEndDate = new System.Windows.Forms.Button();
+            this.edStartTime = new System.Windows.Forms.TextBox();
+            this.btnStartTime = new System.Windows.Forms.Button();
+            this.edLeaveTime = new System.Windows.Forms.TextBox();
+            this.btnLeaveTime = new System.Windows.Forms.Button();
+            this.edAttorneyDate = new System.Windows.Forms.TextBox();
+            this.btnAttorneyDate = new System.Windows.Forms.Button();
             this.gbTransport.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.blShipmentOrders)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tblShipmentOrders)).BeginInit();
+            this.toolStrip1.SuspendLayout();
+            this.pnGetDateTime.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Location = new System.Drawing.Point(8, 37);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(132, 13);
             this.label1.TabIndex = 0;
@@ -90,7 +119,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 33);
+            this.label2.Location = new System.Drawing.Point(8, 61);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(141, 13);
             this.label2.TabIndex = 1;
@@ -99,7 +128,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 103);
+            this.label3.Location = new System.Drawing.Point(8, 131);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(107, 13);
             this.label3.TabIndex = 2;
@@ -108,7 +137,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 130);
+            this.label4.Location = new System.Drawing.Point(8, 158);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(151, 13);
             this.label4.TabIndex = 3;
@@ -117,14 +146,14 @@
             // cbTransportCompany
             // 
             this.cbTransportCompany.FormattingEnabled = true;
-            this.cbTransportCompany.Location = new System.Drawing.Point(150, 6);
+            this.cbTransportCompany.Location = new System.Drawing.Point(146, 34);
             this.cbTransportCompany.Name = "cbTransportCompany";
             this.cbTransportCompany.Size = new System.Drawing.Size(341, 21);
             this.cbTransportCompany.TabIndex = 5;
             // 
             // edShipmentComment
             // 
-            this.edShipmentComment.Location = new System.Drawing.Point(159, 33);
+            this.edShipmentComment.Location = new System.Drawing.Point(155, 61);
             this.edShipmentComment.MaxLength = 500;
             this.edShipmentComment.Multiline = true;
             this.edShipmentComment.Name = "edShipmentComment";
@@ -134,14 +163,14 @@
             // cmbDelayReasons
             // 
             this.cmbDelayReasons.FormattingEnabled = true;
-            this.cmbDelayReasons.Location = new System.Drawing.Point(125, 100);
+            this.cmbDelayReasons.Location = new System.Drawing.Point(121, 128);
             this.cmbDelayReasons.Name = "cmbDelayReasons";
             this.cmbDelayReasons.Size = new System.Drawing.Size(332, 21);
             this.cmbDelayReasons.TabIndex = 7;
             // 
             // edDelayComment
             // 
-            this.edDelayComment.Location = new System.Drawing.Point(169, 127);
+            this.edDelayComment.Location = new System.Drawing.Point(165, 155);
             this.edDelayComment.MaxLength = 200;
             this.edDelayComment.Name = "edDelayComment";
             this.edDelayComment.Size = new System.Drawing.Size(670, 20);
@@ -149,13 +178,22 @@
             // 
             // gbTransport
             // 
-            this.gbTransport.Controls.Add(this.cmbTimeSlot);
+            this.gbTransport.Controls.Add(this.btnEndDate);
+            this.gbTransport.Controls.Add(this.btnAttorneyDate);
+            this.gbTransport.Controls.Add(this.btnLeaveTime);
+            this.gbTransport.Controls.Add(this.btnStartTime);
+            this.gbTransport.Controls.Add(this.btnSubmissionTime);
+            this.gbTransport.Controls.Add(this.edAttorneyDate);
+            this.gbTransport.Controls.Add(this.edEndDate);
+            this.gbTransport.Controls.Add(this.edLeaveTime);
+            this.gbTransport.Controls.Add(this.edStartTime);
+            this.gbTransport.Controls.Add(this.edSubmissionTime);
+            this.gbTransport.Controls.Add(this.cbSpecCondition);
             this.gbTransport.Controls.Add(this.label20);
             this.gbTransport.Controls.Add(this.cmbGate);
             this.gbTransport.Controls.Add(this.label19);
             this.gbTransport.Controls.Add(this.edAttorneyIssued);
             this.gbTransport.Controls.Add(this.label18);
-            this.gbTransport.Controls.Add(this.dtAttorneyDate);
             this.gbTransport.Controls.Add(this.label17);
             this.gbTransport.Controls.Add(this.edAttorneyNumber);
             this.gbTransport.Controls.Add(this.label16);
@@ -171,15 +209,13 @@
             this.gbTransport.Controls.Add(this.label11);
             this.gbTransport.Controls.Add(this.edDriverFIO);
             this.gbTransport.Controls.Add(this.label10);
-            this.gbTransport.Controls.Add(this.dtEndDateFact);
-            this.gbTransport.Controls.Add(this.dtEndDatePlan);
             this.gbTransport.Controls.Add(this.label9);
             this.gbTransport.Controls.Add(this.label8);
-            this.gbTransport.Controls.Add(this.dtStartTime);
             this.gbTransport.Controls.Add(this.label7);
-            this.gbTransport.Controls.Add(this.dtSubmissionTime);
             this.gbTransport.Controls.Add(this.label6);
-            this.gbTransport.Location = new System.Drawing.Point(15, 153);
+            this.gbTransport.Controls.Add(this.dtSpecialCond);
+            this.gbTransport.Controls.Add(this.cmbTimeSlot);
+            this.gbTransport.Location = new System.Drawing.Point(11, 181);
             this.gbTransport.Name = "gbTransport";
             this.gbTransport.Size = new System.Drawing.Size(824, 252);
             this.gbTransport.TabIndex = 10;
@@ -196,7 +232,7 @@
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(203, 229);
+            this.label20.Location = new System.Drawing.Point(194, 230);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(31, 13);
             this.label20.TabIndex = 28;
@@ -234,14 +270,6 @@
             this.label18.Size = new System.Drawing.Size(104, 13);
             this.label18.TabIndex = 24;
             this.label18.Text = "Кем выдана дов-ть";
-            // 
-            // dtAttorneyDate
-            // 
-            this.dtAttorneyDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtAttorneyDate.Location = new System.Drawing.Point(422, 174);
-            this.dtAttorneyDate.Name = "dtAttorneyDate";
-            this.dtAttorneyDate.Size = new System.Drawing.Size(200, 20);
-            this.dtAttorneyDate.TabIndex = 23;
             // 
             // label17
             // 
@@ -364,23 +392,6 @@
             this.label10.TabIndex = 8;
             this.label10.Text = "Ф.И.О. водителя";
             // 
-            // dtEndDateFact
-            // 
-            this.dtEndDateFact.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtEndDateFact.Location = new System.Drawing.Point(409, 45);
-            this.dtEndDateFact.Name = "dtEndDateFact";
-            this.dtEndDateFact.Size = new System.Drawing.Size(200, 20);
-            this.dtEndDateFact.TabIndex = 7;
-            // 
-            // dtEndDatePlan
-            // 
-            this.dtEndDatePlan.CustomFormat = "\" \"";
-            this.dtEndDatePlan.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtEndDatePlan.Location = new System.Drawing.Point(128, 44);
-            this.dtEndDatePlan.Name = "dtEndDatePlan";
-            this.dtEndDatePlan.Size = new System.Drawing.Size(171, 20);
-            this.dtEndDatePlan.TabIndex = 6;
-            // 
             // label9
             // 
             this.label9.AutoSize = true;
@@ -399,14 +410,6 @@
             this.label8.TabIndex = 4;
             this.label8.Text = "Время окончания";
             // 
-            // dtStartTime
-            // 
-            this.dtStartTime.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtStartTime.Location = new System.Drawing.Point(409, 19);
-            this.dtStartTime.Name = "dtStartTime";
-            this.dtStartTime.Size = new System.Drawing.Size(200, 20);
-            this.dtStartTime.TabIndex = 3;
-            // 
             // label7
             // 
             this.label7.AutoSize = true;
@@ -415,15 +418,6 @@
             this.label7.Size = new System.Drawing.Size(78, 13);
             this.label7.TabIndex = 2;
             this.label7.Text = "Время начала";
-            // 
-            // dtSubmissionTime
-            // 
-            this.dtSubmissionTime.CustomFormat = "\" \"";
-            this.dtSubmissionTime.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtSubmissionTime.Location = new System.Drawing.Point(128, 18);
-            this.dtSubmissionTime.Name = "dtSubmissionTime";
-            this.dtSubmissionTime.Size = new System.Drawing.Size(171, 20);
-            this.dtSubmissionTime.TabIndex = 1;
             // 
             // label6
             // 
@@ -436,7 +430,7 @@
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(767, 710);
+            this.btnOK.Location = new System.Drawing.Point(686, 659);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 11;
@@ -446,7 +440,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(848, 710);
+            this.btnCancel.Location = new System.Drawing.Point(767, 659);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(71, 23);
             this.btnCancel.TabIndex = 12;
@@ -457,7 +451,7 @@
             // cbIsCourier
             // 
             this.cbIsCourier.AutoSize = true;
-            this.cbIsCourier.Location = new System.Drawing.Point(511, 9);
+            this.cbIsCourier.Location = new System.Drawing.Point(507, 37);
             this.cbIsCourier.Name = "cbIsCourier";
             this.cbIsCourier.Size = new System.Drawing.Size(126, 17);
             this.cbIsCourier.TabIndex = 13;
@@ -466,38 +460,328 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.blShipmentOrders);
+            this.groupBox1.Controls.Add(this.tblShipmentOrders);
             this.groupBox1.Controls.Add(this.toolStrip1);
-            this.groupBox1.Location = new System.Drawing.Point(15, 411);
+            this.groupBox1.Location = new System.Drawing.Point(11, 439);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(827, 214);
             this.groupBox1.TabIndex = 14;
             this.groupBox1.TabStop = false;
             // 
+            // tblShipmentOrders
+            // 
+            this.tblShipmentOrders.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.tblShipmentOrders.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colOrderId,
+            this.colOrderType,
+            this.colOrderComment,
+            this.colManualLoad,
+            this.colManualUnload,
+            this.colPalletCount,
+            this.colId,
+            this.colBindingId,
+            this.colShipmentId});
+            this.tblShipmentOrders.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tblShipmentOrders.Location = new System.Drawing.Point(3, 41);
+            this.tblShipmentOrders.Name = "tblShipmentOrders";
+            this.tblShipmentOrders.ReadOnly = true;
+            this.tblShipmentOrders.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.tblShipmentOrders.Size = new System.Drawing.Size(821, 170);
+            this.tblShipmentOrders.TabIndex = 1;
+            // 
+            // colOrderId
+            // 
+            this.colOrderId.DataPropertyName = "OrderId";
+            this.colOrderId.HeaderText = "Код заказа";
+            this.colOrderId.Name = "colOrderId";
+            this.colOrderId.ReadOnly = true;
+            this.colOrderId.Width = 120;
+            // 
+            // colOrderType
+            // 
+            this.colOrderType.DataPropertyName = "OrderType";
+            this.colOrderType.HeaderText = "Тип заказа";
+            this.colOrderType.Name = "colOrderType";
+            this.colOrderType.ReadOnly = true;
+            // 
+            // colOrderComment
+            // 
+            this.colOrderComment.DataPropertyName = "Comment";
+            this.colOrderComment.HeaderText = "Комментарий по заказу";
+            this.colOrderComment.Name = "colOrderComment";
+            this.colOrderComment.ReadOnly = true;
+            // 
+            // colManualLoad
+            // 
+            this.colManualLoad.DataPropertyName = "ManualLoad";
+            this.colManualLoad.HeaderText = "Ручная загрузка коробов";
+            this.colManualLoad.Name = "colManualLoad";
+            this.colManualLoad.ReadOnly = true;
+            // 
+            // colManualUnload
+            // 
+            this.colManualUnload.DataPropertyName = "ManualUnload";
+            this.colManualUnload.HeaderText = "Ручная разрузка коробов";
+            this.colManualUnload.Name = "colManualUnload";
+            this.colManualUnload.ReadOnly = true;
+            // 
+            // colPalletCount
+            // 
+            this.colPalletCount.DataPropertyName = "PalletAmount";
+            this.colPalletCount.HeaderText = "Кол-во паллет";
+            this.colPalletCount.Name = "colPalletCount";
+            this.colPalletCount.ReadOnly = true;
+            // 
+            // colId
+            // 
+            this.colId.DataPropertyName = "id";
+            this.colId.HeaderText = "colId";
+            this.colId.Name = "colId";
+            this.colId.ReadOnly = true;
+            this.colId.Visible = false;
+            // 
+            // colBindingId
+            // 
+            this.colBindingId.DataPropertyName = "binding_id";
+            this.colBindingId.HeaderText = "colBindingId";
+            this.colBindingId.Name = "colBindingId";
+            this.colBindingId.ReadOnly = true;
+            this.colBindingId.Visible = false;
+            // 
+            // colShipmentId
+            // 
+            this.colShipmentId.DataPropertyName = "shipment_id";
+            this.colShipmentId.HeaderText = "colShipmentId";
+            this.colShipmentId.Name = "colShipmentId";
+            this.colShipmentId.ReadOnly = true;
+            this.colShipmentId.Visible = false;
+            // 
             // toolStrip1
             // 
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tbtnAdd,
+            this.tbtnEdit,
+            this.tbtnDel});
             this.toolStrip1.Location = new System.Drawing.Point(3, 16);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(821, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // blShipmentOrders
+            // label5
             // 
-            this.blShipmentOrders.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.blShipmentOrders.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.blShipmentOrders.Location = new System.Drawing.Point(3, 41);
-            this.blShipmentOrders.Name = "blShipmentOrders";
-            this.blShipmentOrders.Size = new System.Drawing.Size(821, 170);
-            this.blShipmentOrders.TabIndex = 1;
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(8, 9);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(84, 13);
+            this.label5.TabIndex = 15;
+            this.label5.Text = "Дата создания";
+            // 
+            // edSDate
+            // 
+            this.edSDate.Location = new System.Drawing.Point(98, 6);
+            this.edSDate.Mask = "00.00.0000";
+            this.edSDate.Name = "edSDate";
+            this.edSDate.Size = new System.Drawing.Size(106, 20);
+            this.edSDate.TabIndex = 30;
+            // 
+            // cbSpecCondition
+            // 
+            this.cbSpecCondition.AutoSize = true;
+            this.cbSpecCondition.Location = new System.Drawing.Point(358, 229);
+            this.cbSpecCondition.Name = "cbSpecCondition";
+            this.cbSpecCondition.Size = new System.Drawing.Size(98, 17);
+            this.cbSpecCondition.TabIndex = 31;
+            this.cbSpecCondition.Text = "Спец. условия";
+            this.cbSpecCondition.UseVisualStyleBackColor = true;
+            this.cbSpecCondition.CheckedChanged += new System.EventHandler(this.cbSpecCondition_CheckedChanged);
+            // 
+            // dtSpecialCond
+            // 
+            this.dtSpecialCond.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            this.dtSpecialCond.Location = new System.Drawing.Point(231, 226);
+            this.dtSpecialCond.Name = "dtSpecialCond";
+            this.dtSpecialCond.ShowUpDown = true;
+            this.dtSpecialCond.Size = new System.Drawing.Size(121, 20);
+            this.dtSpecialCond.TabIndex = 32;
+            this.dtSpecialCond.Visible = false;
+            // 
+            // edSubmissionTime
+            // 
+            this.edSubmissionTime.Location = new System.Drawing.Point(128, 18);
+            this.edSubmissionTime.Name = "edSubmissionTime";
+            this.edSubmissionTime.Size = new System.Drawing.Size(118, 20);
+            this.edSubmissionTime.TabIndex = 33;
+            // 
+            // tbtnAdd
+            // 
+            this.tbtnAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbtnAdd.Image = global::Planning.Properties.Resources.Add;
+            this.tbtnAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbtnAdd.Name = "tbtnAdd";
+            this.tbtnAdd.Size = new System.Drawing.Size(23, 22);
+            this.tbtnAdd.Text = "toolStripButton1";
+            this.tbtnAdd.Click += new System.EventHandler(this.tbtnAdd_Click);
+            // 
+            // tbtnEdit
+            // 
+            this.tbtnEdit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbtnEdit.Image = global::Planning.Properties.Resources.Edit;
+            this.tbtnEdit.ImageTransparentColor = System.Drawing.Color.White;
+            this.tbtnEdit.Name = "tbtnEdit";
+            this.tbtnEdit.Size = new System.Drawing.Size(23, 22);
+            this.tbtnEdit.Text = "toolStripButton2";
+            this.tbtnEdit.Click += new System.EventHandler(this.tbtnEdit_Click);
+            // 
+            // tbtnDel
+            // 
+            this.tbtnDel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbtnDel.Image = global::Planning.Properties.Resources.Delete;
+            this.tbtnDel.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbtnDel.Name = "tbtnDel";
+            this.tbtnDel.Size = new System.Drawing.Size(23, 22);
+            this.tbtnDel.Text = "toolStripButton3";
+            this.tbtnDel.Click += new System.EventHandler(this.tbtnDel_Click);
+            // 
+            // btnSubmissionTime
+            // 
+            this.btnSubmissionTime.Image = global::Planning.Properties.Resources.calendar;
+            this.btnSubmissionTime.Location = new System.Drawing.Point(252, 16);
+            this.btnSubmissionTime.Name = "btnSubmissionTime";
+            this.btnSubmissionTime.Size = new System.Drawing.Size(31, 22);
+            this.btnSubmissionTime.TabIndex = 34;
+            this.btnSubmissionTime.UseVisualStyleBackColor = true;
+            this.btnSubmissionTime.Click += new System.EventHandler(this.btnShowCalendar_Click);
+            // 
+            // pnGetDateTime
+            // 
+            this.pnGetDateTime.Controls.Add(this.btnCalendarCancel);
+            this.pnGetDateTime.Controls.Add(this.btnCalendarOk);
+            this.pnGetDateTime.Controls.Add(this.dtSpecialTime);
+            this.pnGetDateTime.Controls.Add(this.monthCalendarSpecial);
+            this.pnGetDateTime.Location = new System.Drawing.Point(17, 33);
+            this.pnGetDateTime.Name = "pnGetDateTime";
+            this.pnGetDateTime.Size = new System.Drawing.Size(163, 210);
+            this.pnGetDateTime.TabIndex = 35;
+            this.pnGetDateTime.Visible = false;
+            // 
+            // monthCalendarSpecial
+            // 
+            this.monthCalendarSpecial.Dock = System.Windows.Forms.DockStyle.Top;
+            this.monthCalendarSpecial.Location = new System.Drawing.Point(0, 0);
+            this.monthCalendarSpecial.MaxSelectionCount = 1;
+            this.monthCalendarSpecial.Name = "monthCalendarSpecial";
+            this.monthCalendarSpecial.TabIndex = 0;
+            this.monthCalendarSpecial.DateSelected += new System.Windows.Forms.DateRangeEventHandler(this.monthCalendarSpecial_DateSelected);
+            // 
+            // dtSpecialTime
+            // 
+            this.dtSpecialTime.Dock = System.Windows.Forms.DockStyle.Top;
+            this.dtSpecialTime.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            this.dtSpecialTime.Location = new System.Drawing.Point(0, 162);
+            this.dtSpecialTime.Name = "dtSpecialTime";
+            this.dtSpecialTime.ShowUpDown = true;
+            this.dtSpecialTime.Size = new System.Drawing.Size(163, 20);
+            this.dtSpecialTime.TabIndex = 1;
+            // 
+            // btnCalendarOk
+            // 
+            this.btnCalendarOk.Location = new System.Drawing.Point(3, 184);
+            this.btnCalendarOk.Name = "btnCalendarOk";
+            this.btnCalendarOk.Size = new System.Drawing.Size(75, 23);
+            this.btnCalendarOk.TabIndex = 2;
+            this.btnCalendarOk.Text = "ОК";
+            this.btnCalendarOk.UseVisualStyleBackColor = true;
+            this.btnCalendarOk.Click += new System.EventHandler(this.btnCalendarOk_Click);
+            // 
+            // btnCalendarCancel
+            // 
+            this.btnCalendarCancel.Location = new System.Drawing.Point(84, 184);
+            this.btnCalendarCancel.Name = "btnCalendarCancel";
+            this.btnCalendarCancel.Size = new System.Drawing.Size(75, 22);
+            this.btnCalendarCancel.TabIndex = 3;
+            this.btnCalendarCancel.Text = "Отмена";
+            this.btnCalendarCancel.UseVisualStyleBackColor = true;
+            this.btnCalendarCancel.Click += new System.EventHandler(this.btnCalendarCancel_Click);
+            // 
+            // edEndDate
+            // 
+            this.edEndDate.Location = new System.Drawing.Point(128, 45);
+            this.edEndDate.Name = "edEndDate";
+            this.edEndDate.Size = new System.Drawing.Size(118, 20);
+            this.edEndDate.TabIndex = 33;
+            // 
+            // btnEndDate
+            // 
+            this.btnEndDate.Image = global::Planning.Properties.Resources.calendar;
+            this.btnEndDate.Location = new System.Drawing.Point(252, 43);
+            this.btnEndDate.Name = "btnEndDate";
+            this.btnEndDate.Size = new System.Drawing.Size(31, 22);
+            this.btnEndDate.TabIndex = 34;
+            this.btnEndDate.UseVisualStyleBackColor = true;
+            this.btnEndDate.Click += new System.EventHandler(this.btnShowCalendar_Click);
+            // 
+            // edStartTime
+            // 
+            this.edStartTime.Location = new System.Drawing.Point(410, 18);
+            this.edStartTime.Name = "edStartTime";
+            this.edStartTime.Size = new System.Drawing.Size(118, 20);
+            this.edStartTime.TabIndex = 33;
+            // 
+            // btnStartTime
+            // 
+            this.btnStartTime.Image = global::Planning.Properties.Resources.calendar;
+            this.btnStartTime.Location = new System.Drawing.Point(534, 16);
+            this.btnStartTime.Name = "btnStartTime";
+            this.btnStartTime.Size = new System.Drawing.Size(31, 22);
+            this.btnStartTime.TabIndex = 34;
+            this.btnStartTime.UseVisualStyleBackColor = true;
+            this.btnStartTime.Click += new System.EventHandler(this.btnShowCalendar_Click);
+            // 
+            // edLeaveTime
+            // 
+            this.edLeaveTime.Location = new System.Drawing.Point(410, 44);
+            this.edLeaveTime.Name = "edLeaveTime";
+            this.edLeaveTime.Size = new System.Drawing.Size(118, 20);
+            this.edLeaveTime.TabIndex = 33;
+            // 
+            // btnLeaveTime
+            // 
+            this.btnLeaveTime.Image = global::Planning.Properties.Resources.calendar;
+            this.btnLeaveTime.Location = new System.Drawing.Point(534, 43);
+            this.btnLeaveTime.Name = "btnLeaveTime";
+            this.btnLeaveTime.Size = new System.Drawing.Size(31, 22);
+            this.btnLeaveTime.TabIndex = 34;
+            this.btnLeaveTime.UseVisualStyleBackColor = true;
+            this.btnLeaveTime.Click += new System.EventHandler(this.btnShowCalendar_Click);
+            // 
+            // edAttorneyDate
+            // 
+            this.edAttorneyDate.Location = new System.Drawing.Point(421, 173);
+            this.edAttorneyDate.Name = "edAttorneyDate";
+            this.edAttorneyDate.Size = new System.Drawing.Size(118, 20);
+            this.edAttorneyDate.TabIndex = 33;
+            // 
+            // btnAttorneyDate
+            // 
+            this.btnAttorneyDate.Image = global::Planning.Properties.Resources.calendar;
+            this.btnAttorneyDate.Location = new System.Drawing.Point(545, 172);
+            this.btnAttorneyDate.Name = "btnAttorneyDate";
+            this.btnAttorneyDate.Size = new System.Drawing.Size(31, 22);
+            this.btnAttorneyDate.TabIndex = 34;
+            this.btnAttorneyDate.UseVisualStyleBackColor = true;
+            this.btnAttorneyDate.Click += new System.EventHandler(this.btnShowCalendar_Click);
             // 
             // shipmen_edit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1056, 745);
+            this.ClientSize = new System.Drawing.Size(847, 694);
+            this.Controls.Add(this.pnGetDateTime);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.cbIsCourier);
+            this.Controls.Add(this.edSDate);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.gbTransport);
@@ -509,13 +793,19 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "shipmen_edit";
+            this.ShowInTaskbar = false;
             this.Text = "Редактирование погрузки";
+            this.Load += new System.EventHandler(this.shipmen_edit_Load);
             this.gbTransport.ResumeLayout(false);
             this.gbTransport.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.blShipmentOrders)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tblShipmentOrders)).EndInit();
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
+            this.pnGetDateTime.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -536,13 +826,9 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox edDriverFIO;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.DateTimePicker dtEndDateFact;
-        private System.Windows.Forms.DateTimePicker dtEndDatePlan;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.DateTimePicker dtStartTime;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.DateTimePicker dtSubmissionTime;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox edForwarderFIO;
         private System.Windows.Forms.Label label12;
@@ -555,7 +841,6 @@
         private System.Windows.Forms.TextBox edAttorneyNumber;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.DateTimePicker dtAttorneyDate;
         private System.Windows.Forms.TextBox edAttorneyIssued;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.ComboBox cmbTimeSlot;
@@ -566,7 +851,38 @@
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.CheckBox cbIsCourier;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.DataGridView blShipmentOrders;
+        private System.Windows.Forms.DataGridView tblShipmentOrders;
         private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripButton tbtnAdd;
+        private System.Windows.Forms.ToolStripButton tbtnEdit;
+        private System.Windows.Forms.ToolStripButton tbtnDel;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colOrderId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colOrderType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colOrderComment;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colManualLoad;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colManualUnload;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPalletCount;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colBindingId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colShipmentId;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.MaskedTextBox edSDate;
+        private System.Windows.Forms.CheckBox cbSpecCondition;
+        private System.Windows.Forms.DateTimePicker dtSpecialCond;
+        private System.Windows.Forms.Button btnSubmissionTime;
+        private System.Windows.Forms.TextBox edSubmissionTime;
+        private System.Windows.Forms.Panel pnGetDateTime;
+        private System.Windows.Forms.DateTimePicker dtSpecialTime;
+        private System.Windows.Forms.MonthCalendar monthCalendarSpecial;
+        private System.Windows.Forms.Button btnCalendarCancel;
+        private System.Windows.Forms.Button btnCalendarOk;
+        private System.Windows.Forms.Button btnEndDate;
+        private System.Windows.Forms.Button btnLeaveTime;
+        private System.Windows.Forms.Button btnStartTime;
+        private System.Windows.Forms.TextBox edEndDate;
+        private System.Windows.Forms.TextBox edLeaveTime;
+        private System.Windows.Forms.TextBox edStartTime;
+        private System.Windows.Forms.Button btnAttorneyDate;
+        private System.Windows.Forms.TextBox edAttorneyDate;
     }
 }

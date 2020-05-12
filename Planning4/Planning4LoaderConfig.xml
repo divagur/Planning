@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Parameters>
+  <SourceFolder>c:\Projects\Planning4\BuildFolder</SourceFolder>
+  <DestinationFolder>Planning4</DestinationFolder>
+  <Executable>Planning4.exe</Executable>
+  <File>
+    <Name>Planning4.exe</Name>
+  </File>
+  <File>
+    <Name>Planning4.exe.config</Name>
+  </File>
+  <File>
+    <Name>Planning4Core.dll</Name>
+  </File>
+  <File>
+    <Name>Planning4Core.dll.config</Name>
+  </File>
+  <File>
+    <Name>Planning4Reclamation.dll</Name>
+  </File>
+  <File>
+    <Name>Planning4Reclamation.dll.config</Name>
+  </File>
+</Parameters>

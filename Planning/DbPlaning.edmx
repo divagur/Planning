@@ -1,0 +1,831 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="PlanningModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="delay_reasons">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="254" />
+        </EntityType>
+        <EntityType Name="depositors">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="254" />
+          <Property Name="lv_base" Type="nvarchar" MaxLength="128" />
+          <Property Name="lv_id" Type="int" />
+        </EntityType>
+        <EntityType Name="gateways">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="int" />
+        </EntityType>
+        <EntityType Name="opers_type">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="shipment_orders">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="order_id" Type="varchar" MaxLength="32" />
+          <Property Name="shipment_id" Type="int" />
+          <Property Name="order_type" Type="varchar" MaxLength="64" />
+          <Property Name="comment" Type="varchar" MaxLength="500" />
+          <Property Name="is_binding" Type="bit" />
+          <Property Name="manual_load" Type="int" />
+          <Property Name="manual_unload" Type="int" />
+          <Property Name="pallet_amount" Type="int" />
+          <Property Name="binding_id" Type="int" />
+          <Property Name="lv_order_id" Type="int" />
+          <Property Name="lv_order_code" Type="varchar" MaxLength="32" />
+        </EntityType>
+        <EntityType Name="shipments">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="lv_id" Type="int" />
+          <Property Name="time_slot_id" Type="int" />
+          <Property Name="s_date" Type="datetime" />
+          <Property Name="s_comment" Type="varchar" MaxLength="500" />
+          <Property Name="o_comment" Type="varchar" MaxLength="500" />
+          <Property Name="gate_id" Type="int" />
+          <Property Name="sp_condition" Type="bit" />
+          <Property Name="driver_phone" Type="varchar" MaxLength="30" />
+          <Property Name="driver_fio" Type="varchar" MaxLength="80" />
+          <Property Name="vehicle_number" Type="varchar" MaxLength="10" />
+          <Property Name="trailer_number" Type="varchar" MaxLength="10" />
+          <Property Name="attorney_number" Type="varchar" MaxLength="30" />
+          <Property Name="attorney_date" Type="date" />
+          <Property Name="submission_time" Type="datetime" />
+          <Property Name="start_time" Type="datetime" />
+          <Property Name="end_time" Type="datetime" />
+          <Property Name="leave_time" Type="datetime" />
+          <Property Name="delay_reasons_id" Type="int" />
+          <Property Name="delay_comment" Type="varchar" MaxLength="200" />
+          <Property Name="depositor_id" Type="int" />
+          <Property Name="is_courier" Type="bit" />
+          <Property Name="forwarder_fio" Type="varchar" MaxLength="80" />
+          <Property Name="stamp_number" Type="varchar" MaxLength="25" />
+          <Property Name="attorney_issued" Type="varchar" MaxLength="150" />
+          <Property Name="s_in" Type="bit" />
+          <Property Name="special_time" Type="time" Precision="0" />
+        </EntityType>
+        <EntityType Name="time_slot">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="depositor_id" Type="int" />
+          <Property Name="name" Type="varchar" MaxLength="5" />
+          <Property Name="slot_time" Type="time" Precision="0" />
+        </EntityType>
+        <EntityType Name="user_group_lnk">
+          <Key>
+            <PropertyRef Name="user_id" />
+            <PropertyRef Name="group_id" />
+          </Key>
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="group_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="login" Type="varchar" MaxLength="50" />
+          <Property Name="password" Type="varchar" MaxLength="20" />
+          <Property Name="first_name" Type="varchar" MaxLength="20" />
+          <Property Name="second_name" Type="varchar" MaxLength="20" />
+          <Property Name="last_name" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="users_group">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="254" />
+          <Property Name="access" Type="tinyint" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Planning.dbo.v_shipments' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="v_shipments">
+          <Key>
+            <PropertyRef Name="shp_id" />
+          </Key>
+          <Property Name="shp_id" Type="int" Nullable="false" />
+          <Property Name="lv_id" Type="int" />
+          <Property Name="s_date" Type="datetime" />
+          <Property Name="time_slot_name" Type="varchar" MaxLength="5" />
+          <Property Name="oper_type" Type="int" />
+          <Property Name="order_id" Type="int" />
+          <Property Name="order_type" Type="int" />
+          <Property Name="klient" Type="int" />
+          <Property Name="order_status" Type="int" />
+          <Property Name="prc_ready" Type="int" />
+          <Property Name="s_comment" Type="varchar" MaxLength="500" />
+          <Property Name="o_comment" Type="varchar" MaxLength="500" />
+          <Property Name="gate_name" Type="int" />
+          <Property Name="sp_condition" Type="bit" />
+          <Property Name="driver_phone" Type="varchar" MaxLength="30" />
+          <Property Name="driver_fio" Type="varchar" MaxLength="80" />
+          <Property Name="transport_company" Type="int" />
+          <Property Name="vehicle_number" Type="varchar" MaxLength="10" />
+          <Property Name="trailer_number" Type="varchar" MaxLength="10" />
+          <Property Name="attorney_number" Type="varchar" MaxLength="30" />
+          <Property Name="attorney_date" Type="date" />
+          <Property Name="submission_time" Type="datetime" />
+          <Property Name="start_time" Type="datetime" />
+          <Property Name="end_time_plan" Type="datetime" />
+          <Property Name="end_time_fact" Type="datetime" />
+          <Property Name="delay_reason_name" Type="varchar" MaxLength="254" />
+          <Property Name="delay_comment" Type="varchar" MaxLength="200" />
+          <Property Name="forwarder_fio" Type="varchar" MaxLength="80" />
+          <Property Name="s_in" Type="bit" />
+          <Property Name="dep_lv_id" Type="int" />
+          <Property Name="dep_lv_db" Type="nvarchar" MaxLength="128" />
+          <Property Name="time_slot_id" Type="int" />
+          <Property Name="gate_id" Type="int" />
+          <Property Name="is_courier" Type="bit" />
+          <Property Name="dep_id" Type="int" />
+          <Property Name="dep_name" Type="varchar" MaxLength="254" />
+        </EntityType>
+        <Association Name="FK_shipment_orders_shipments">
+          <End Role="shipments" Type="Self.shipments" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="shipment_orders" Type="Self.shipment_orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="shipments">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="shipment_orders">
+              <PropertyRef Name="shipment_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_shipments_delay_reasons">
+          <End Role="delay_reasons" Type="Self.delay_reasons" Multiplicity="0..1" />
+          <End Role="shipments" Type="Self.shipments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="delay_reasons">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="shipments">
+              <PropertyRef Name="delay_reasons_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_shipments_depositor">
+          <End Role="depositors" Type="Self.depositors" Multiplicity="0..1" />
+          <End Role="shipments" Type="Self.shipments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="depositors">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="shipments">
+              <PropertyRef Name="depositor_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_shipments_gate">
+          <End Role="gateways" Type="Self.gateways" Multiplicity="0..1" />
+          <End Role="shipments" Type="Self.shipments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="gateways">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="shipments">
+              <PropertyRef Name="gate_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_shipments_time_slot">
+          <End Role="time_slot" Type="Self.time_slot" Multiplicity="0..1" />
+          <End Role="shipments" Type="Self.shipments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="time_slot">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="shipments">
+              <PropertyRef Name="time_slot_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_time_slot_depositors">
+          <End Role="depositors" Type="Self.depositors" Multiplicity="0..1" />
+          <End Role="time_slot" Type="Self.time_slot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="depositors">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="time_slot">
+              <PropertyRef Name="depositor_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_user_group_lnk_users">
+          <End Role="users" Type="Self.users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="user_group_lnk" Type="Self.user_group_lnk" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="user_group_lnk">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_user_group_lnk_users_group">
+          <End Role="users_group" Type="Self.users_group" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="user_group_lnk" Type="Self.user_group_lnk" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users_group">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="user_group_lnk">
+              <PropertyRef Name="group_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PlanningModelStoreContainer">
+          <EntitySet Name="delay_reasons" EntityType="Self.delay_reasons" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="depositors" EntityType="Self.depositors" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="gateways" EntityType="Self.gateways" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="opers_type" EntityType="Self.opers_type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="shipment_orders" EntityType="Self.shipment_orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="shipments" EntityType="Self.shipments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="time_slot" EntityType="Self.time_slot" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="user_group_lnk" EntityType="Self.user_group_lnk" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="users_group" EntityType="Self.users_group" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="v_shipments" EntityType="Self.v_shipments" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [v_shipments].[shp_id] AS [shp_id], 
+    [v_shipments].[lv_id] AS [lv_id], 
+    [v_shipments].[s_date] AS [s_date], 
+    [v_shipments].[time_slot_name] AS [time_slot_name], 
+    [v_shipments].[oper_type] AS [oper_type], 
+    [v_shipments].[order_id] AS [order_id], 
+    [v_shipments].[order_type] AS [order_type], 
+    [v_shipments].[klient] AS [klient], 
+    [v_shipments].[order_status] AS [order_status], 
+    [v_shipments].[prc_ready] AS [prc_ready], 
+    [v_shipments].[s_comment] AS [s_comment], 
+    [v_shipments].[o_comment] AS [o_comment], 
+    [v_shipments].[gate_name] AS [gate_name], 
+    [v_shipments].[sp_condition] AS [sp_condition], 
+    [v_shipments].[driver_phone] AS [driver_phone], 
+    [v_shipments].[driver_fio] AS [driver_fio], 
+    [v_shipments].[transport_company] AS [transport_company], 
+    [v_shipments].[vehicle_number] AS [vehicle_number], 
+    [v_shipments].[trailer_number] AS [trailer_number], 
+    [v_shipments].[attorney_number] AS [attorney_number], 
+    [v_shipments].[attorney_date] AS [attorney_date], 
+    [v_shipments].[submission_time] AS [submission_time], 
+    [v_shipments].[start_time] AS [start_time], 
+    [v_shipments].[end_time_plan] AS [end_time_plan], 
+    [v_shipments].[end_time_fact] AS [end_time_fact], 
+    [v_shipments].[delay_reason_name] AS [delay_reason_name], 
+    [v_shipments].[delay_comment] AS [delay_comment], 
+    [v_shipments].[forwarder_fio] AS [forwarder_fio], 
+    [v_shipments].[s_in] AS [s_in], 
+    [v_shipments].[dep_lv_id] AS [dep_lv_id], 
+    [v_shipments].[dep_lv_db] AS [dep_lv_db], 
+    [v_shipments].[time_slot_id] AS [time_slot_id], 
+    [v_shipments].[gate_id] AS [gate_id], 
+    [v_shipments].[is_courier] AS [is_courier], 
+    [v_shipments].[dep_id] AS [dep_id], 
+    [v_shipments].[dep_name] AS [dep_name]
+    FROM [dbo].[v_shipments] AS [v_shipments]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_shipment_orders_shipments" Association="Self.FK_shipment_orders_shipments">
+            <End Role="shipments" EntitySet="shipments" />
+            <End Role="shipment_orders" EntitySet="shipment_orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_shipments_delay_reasons" Association="Self.FK_shipments_delay_reasons">
+            <End Role="delay_reasons" EntitySet="delay_reasons" />
+            <End Role="shipments" EntitySet="shipments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_shipments_depositor" Association="Self.FK_shipments_depositor">
+            <End Role="depositors" EntitySet="depositors" />
+            <End Role="shipments" EntitySet="shipments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_shipments_gate" Association="Self.FK_shipments_gate">
+            <End Role="gateways" EntitySet="gateways" />
+            <End Role="shipments" EntitySet="shipments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_shipments_time_slot" Association="Self.FK_shipments_time_slot">
+            <End Role="time_slot" EntitySet="time_slot" />
+            <End Role="shipments" EntitySet="shipments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_time_slot_depositors" Association="Self.FK_time_slot_depositors">
+            <End Role="depositors" EntitySet="depositors" />
+            <End Role="time_slot" EntitySet="time_slot" />
+          </AssociationSet>
+          <AssociationSet Name="FK_user_group_lnk_users" Association="Self.FK_user_group_lnk_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="user_group_lnk" EntitySet="user_group_lnk" />
+          </AssociationSet>
+          <AssociationSet Name="FK_user_group_lnk_users_group" Association="Self.FK_user_group_lnk_users_group">
+            <End Role="users_group" EntitySet="users_group" />
+            <End Role="user_group_lnk" EntitySet="user_group_lnk" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PlanningModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="DelayReason">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Shipments" Relationship="PlanningModel.FK_shipments_delay_reasons" FromRole="delay_reasons" ToRole="shipments" />
+        </EntityType>
+        <EntityType Name="Depositor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Shipments" Relationship="PlanningModel.FK_shipments_depositor" FromRole="depositors" ToRole="shipments" />
+          <NavigationProperty Name="TimeSlots" Relationship="PlanningModel.FK_time_slot_depositors" FromRole="Depositor" ToRole="time_slot" />
+          <Property Name="lv_base" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="lv_id" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Gateway">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="Int32" />
+          <NavigationProperty Name="Shipments" Relationship="PlanningModel.FK_shipments_gate" FromRole="gateways" ToRole="shipments" />
+        </EntityType>
+        <EntityType Name="OperType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ShipmentOrder">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderId" Type="String" MaxLength="32" Unicode="false" FixedLength="false" />
+          <Property Name="ShipmentId" Type="Int32" />
+          <Property Name="OrderType" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="Comment" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="IsBinding" Type="Boolean" />
+          <Property Name="ManualLoad" Type="Int32" />
+          <Property Name="ManualUnload" Type="Int32" />
+          <Property Name="PalletAmount" Type="Int32" />
+          <Property Name="BindingId" Type="Int32" />
+          <NavigationProperty Name="Shipment" Relationship="Self.FK_shipment_orders_shipments" FromRole="shipment_orders" ToRole="shipments" />
+          <Property Name="LVOrderId" Type="Int32" />
+          <Property Name="lv_order_code" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Shipment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LvId" Type="Int32" />
+          <Property Name="TimeSlotId" Type="Int32" />
+          <Property Name="SDate" Type="DateTime" Precision="3" />
+          <Property Name="SComment" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="OComment" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="GateId" Type="Int32" />
+          <Property Name="SpCondition" Type="Boolean" />
+          <Property Name="DriverPhone" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="DriverFio" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="VehicleNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TrailerNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="AttorneyNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="AttorneyDate" Type="DateTime" Precision="0" />
+          <Property Name="SubmissionTime" Type="DateTime" Precision="3" />
+          <Property Name="StartTime" Type="DateTime" Precision="3" />
+          <Property Name="DelayReasonsId" Type="Int32" />
+          <Property Name="DelayComment" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="DepositorId" Type="Int32" />
+          <Property Name="IsCourier" Type="Boolean" />
+          <Property Name="ForwarderFio" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="StampNumber" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="AttorneyIssued" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ShipmentOrders" Relationship="Self.FK_shipment_orders_shipments" FromRole="shipments" ToRole="shipment_orders" />
+          <NavigationProperty Name="DelayReason" Relationship="PlanningModel.FK_shipments_delay_reasons" FromRole="shipments" ToRole="delay_reasons" />
+          <NavigationProperty Name="Depositor" Relationship="PlanningModel.FK_shipments_depositor" FromRole="shipments" ToRole="depositors" />
+          <NavigationProperty Name="Gateway" Relationship="PlanningModel.FK_shipments_gate" FromRole="shipments" ToRole="gateways" />
+          <NavigationProperty Name="TimeSlot" Relationship="PlanningModel.FK_shipments_time_slot" FromRole="Shipment" ToRole="time_slot" />
+          <Property Name="ShIn" Type="Boolean" />
+          <Property Name="SpecialTime" Type="Time" Precision="0" />
+          <Property Name="EndTime" Type="DateTime" Precision="3" />
+          <Property Name="LeaveTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FirstName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="SecondName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="UserGroups" Relationship="Self.user_group_lnk" FromRole="users" ToRole="users_group" />
+        </EntityType>
+        <EntityType Name="UserGroup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+          <Property Name="Access" Type="Byte" />
+          <NavigationProperty Name="Users" Relationship="Self.user_group_lnk" FromRole="users_group" ToRole="users" />
+        </EntityType>
+        <Association Name="FK_shipment_orders_shipments">
+          <End Role="shipments" Type="PlanningModel.Shipment" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="shipment_orders" Type="PlanningModel.ShipmentOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="shipments">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="shipment_orders">
+              <PropertyRef Name="ShipmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="user_group_lnk">
+          <End Role="users" Type="PlanningModel.User" Multiplicity="*" />
+          <End Role="users_group" Type="PlanningModel.UserGroup" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="PlanningDbContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="DelayReasons" EntityType="PlanningModel.DelayReason" />
+          <EntitySet Name="Depositors" EntityType="PlanningModel.Depositor" />
+          <EntitySet Name="Gateways" EntityType="PlanningModel.Gateway" />
+          <EntitySet Name="OperTypes" EntityType="PlanningModel.OperType" />
+          <EntitySet Name="ShipmentOrders" EntityType="PlanningModel.ShipmentOrder" />
+          <EntitySet Name="Shipments" EntityType="PlanningModel.Shipment" />
+          <EntitySet Name="Users" EntityType="PlanningModel.User" />
+          <EntitySet Name="UserGroups" EntityType="PlanningModel.UserGroup" />
+          <AssociationSet Name="FK_shipment_orders_shipments" Association="Self.FK_shipment_orders_shipments">
+            <End Role="shipments" EntitySet="Shipments" />
+            <End Role="shipment_orders" EntitySet="ShipmentOrders" />
+          </AssociationSet>
+          <AssociationSet Name="user_group_lnk" Association="Self.user_group_lnk">
+            <End Role="users" EntitySet="Users" />
+            <End Role="users_group" EntitySet="UserGroups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_shipments_delay_reasons" Association="PlanningModel.FK_shipments_delay_reasons">
+            <End Role="delay_reasons" EntitySet="DelayReasons" />
+            <End Role="shipments" EntitySet="Shipments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_shipments_depositor" Association="PlanningModel.FK_shipments_depositor">
+            <End Role="depositors" EntitySet="Depositors" />
+            <End Role="shipments" EntitySet="Shipments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_shipments_gate" Association="PlanningModel.FK_shipments_gate">
+            <End Role="gateways" EntitySet="Gateways" />
+            <End Role="shipments" EntitySet="Shipments" />
+          </AssociationSet>
+          <EntitySet Name="TimeSlots" EntityType="PlanningModel.TimeSlot" />
+          <AssociationSet Name="FK_time_slot_depositors" Association="PlanningModel.FK_time_slot_depositors">
+            <End Role="Depositor" EntitySet="Depositors" />
+            <End Role="time_slot" EntitySet="TimeSlots" />
+          </AssociationSet>
+          <AssociationSet Name="FK_shipments_time_slot" Association="PlanningModel.FK_shipments_time_slot">
+            <End Role="time_slot" EntitySet="TimeSlots" />
+            <End Role="Shipment" EntitySet="Shipments" />
+          </AssociationSet>
+          <EntitySet Name="VShipments" EntityType="PlanningModel.VShipments" />
+        </EntityContainer>
+        <Association Name="FK_shipments_delay_reasons">
+          <End Type="PlanningModel.DelayReason" Role="delay_reasons" Multiplicity="0..1" />
+          <End Type="PlanningModel.Shipment" Role="shipments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="delay_reasons">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="shipments">
+              <PropertyRef Name="DelayReasonsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_shipments_depositor">
+          <End Type="PlanningModel.Depositor" Role="depositors" Multiplicity="0..1" />
+          <End Type="PlanningModel.Shipment" Role="shipments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="depositors">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="shipments">
+              <PropertyRef Name="DepositorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_shipments_gate">
+          <End Type="PlanningModel.Gateway" Role="gateways" Multiplicity="0..1" />
+          <End Type="PlanningModel.Shipment" Role="shipments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="gateways">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="shipments">
+              <PropertyRef Name="GateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TimeSlot">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DepositorId" Type="Int32" />
+          <NavigationProperty Name="Depositors" Relationship="PlanningModel.FK_time_slot_depositors" FromRole="time_slot" ToRole="Depositor" />
+          <NavigationProperty Name="Shipments" Relationship="PlanningModel.FK_shipments_time_slot" FromRole="time_slot" ToRole="Shipment" />
+          <Property Name="Name" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="SlotTime" Type="Time" Precision="0" />
+        </EntityType>
+        <Association Name="FK_time_slot_depositors">
+          <End Type="PlanningModel.Depositor" Role="Depositor" Multiplicity="0..1" />
+          <End Type="PlanningModel.TimeSlot" Role="time_slot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Depositor">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="time_slot">
+              <PropertyRef Name="DepositorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_shipments_time_slot">
+          <End Type="PlanningModel.TimeSlot" Role="time_slot" Multiplicity="0..1" />
+          <End Type="PlanningModel.Shipment" Role="Shipment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="time_slot">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Shipment">
+              <PropertyRef Name="TimeSlotId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="VShipments">
+          <Key>
+            <PropertyRef Name="ShpId" />
+          </Key>
+          <Property Name="LvId" Type="Int32" />
+          <Property Name="OperType" Type="Int32" />
+          <Property Name="OrderId" Type="Int32" />
+          <Property Name="OrderType" Type="Int32" />
+          <Property Name="Klient" Type="Int32" />
+          <Property Name="OrderStatus" Type="Int32" />
+          <Property Name="PrcReady" Type="Int32" />
+          <Property Name="SComment" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="OComment" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="GateName" Type="Int32" />
+          <Property Name="SpCondition" Type="Boolean" />
+          <Property Name="DriverPhone" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="DriverFio" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="TransportCompany" Type="Int32" />
+          <Property Name="VehicleNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TrailerNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="AttorneyNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="AttorneyDate" Type="DateTime" Precision="0" />
+          <Property Name="SubmissionTime" Type="DateTime" Precision="3" />
+          <Property Name="StartTime" Type="DateTime" Precision="3" />
+          <Property Name="EndTimePlan" Type="DateTime" Precision="3" />
+          <Property Name="EndTimeFact" Type="DateTime" Precision="3" />
+          <Property Name="DelayReasonName" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+          <Property Name="DelayComment" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ForwarderFio" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="TimeSlotName" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="SDate" Type="DateTime" Precision="3" />
+          <Property Name="ShpId" Type="Int32" Nullable="false" />
+          <Property Name="SIn" Type="Boolean" />
+          <Property Name="DepLvId" Type="Int32" />
+          <Property Name="DepLvDb" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="time_slot_id" Type="Int32" />
+          <Property Name="gate_id" Type="Int32" />
+          <Property Name="is_courier" Type="Boolean" />
+          <Property Name="dep_id" Type="Int32" />
+          <Property Name="dep_name" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PlanningModelStoreContainer" CdmEntityContainer="PlanningDbContext">
+          <EntitySetMapping Name="DelayReasons">
+            <EntityTypeMapping TypeName="PlanningModel.DelayReason">
+              <MappingFragment StoreEntitySet="delay_reasons">
+                <ScalarProperty Name="Id" ColumnName="id" />
+                <ScalarProperty Name="Name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Depositors">
+            <EntityTypeMapping TypeName="PlanningModel.Depositor">
+              <MappingFragment StoreEntitySet="depositors">
+                <ScalarProperty Name="lv_id" ColumnName="lv_id" />
+                <ScalarProperty Name="lv_base" ColumnName="lv_base" />
+                <ScalarProperty Name="Id" ColumnName="id" />
+                <ScalarProperty Name="Name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Gateways">
+            <EntityTypeMapping TypeName="PlanningModel.Gateway">
+              <MappingFragment StoreEntitySet="gateways">
+                <ScalarProperty Name="Id" ColumnName="id" />
+                <ScalarProperty Name="Name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OperTypes">
+            <EntityTypeMapping TypeName="PlanningModel.OperType">
+              <MappingFragment StoreEntitySet="opers_type">
+                <ScalarProperty Name="Id" ColumnName="id" />
+                <ScalarProperty Name="Name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ShipmentOrders">
+            <EntityTypeMapping TypeName="PlanningModel.ShipmentOrder">
+              <MappingFragment StoreEntitySet="shipment_orders">
+                <ScalarProperty Name="lv_order_code" ColumnName="lv_order_code" />
+                <ScalarProperty Name="LVOrderId" ColumnName="lv_order_id" />
+                <ScalarProperty Name="Id" ColumnName="id" />
+                <ScalarProperty Name="OrderId" ColumnName="order_id" />
+                <ScalarProperty Name="ShipmentId" ColumnName="shipment_id" />
+                <ScalarProperty Name="OrderType" ColumnName="order_type" />
+                <ScalarProperty Name="Comment" ColumnName="comment" />
+                <ScalarProperty Name="IsBinding" ColumnName="is_binding" />
+                <ScalarProperty Name="ManualLoad" ColumnName="manual_load" />
+                <ScalarProperty Name="ManualUnload" ColumnName="manual_unload" />
+                <ScalarProperty Name="PalletAmount" ColumnName="pallet_amount" />
+                <ScalarProperty Name="BindingId" ColumnName="binding_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Shipments">
+            <EntityTypeMapping TypeName="PlanningModel.Shipment">
+              <MappingFragment StoreEntitySet="shipments">
+                <ScalarProperty Name="LeaveTime" ColumnName="leave_time" />
+                <ScalarProperty Name="EndTime" ColumnName="end_time" />
+                <ScalarProperty Name="SpecialTime" ColumnName="special_time" />
+                <ScalarProperty Name="ShIn" ColumnName="s_in" />
+                <ScalarProperty Name="Id" ColumnName="id" />
+                <ScalarProperty Name="LvId" ColumnName="lv_id" />
+                <ScalarProperty Name="TimeSlotId" ColumnName="time_slot_id" />
+                <ScalarProperty Name="SDate" ColumnName="s_date" />
+                <ScalarProperty Name="SComment" ColumnName="s_comment" />
+                <ScalarProperty Name="OComment" ColumnName="o_comment" />
+                <ScalarProperty Name="GateId" ColumnName="gate_id" />
+                <ScalarProperty Name="SpCondition" ColumnName="sp_condition" />
+                <ScalarProperty Name="DriverPhone" ColumnName="driver_phone" />
+                <ScalarProperty Name="DriverFio" ColumnName="driver_fio" />
+                <ScalarProperty Name="VehicleNumber" ColumnName="vehicle_number" />
+                <ScalarProperty Name="TrailerNumber" ColumnName="trailer_number" />
+                <ScalarProperty Name="AttorneyNumber" ColumnName="attorney_number" />
+                <ScalarProperty Name="AttorneyDate" ColumnName="attorney_date" />
+                <ScalarProperty Name="SubmissionTime" ColumnName="submission_time" />
+                <ScalarProperty Name="StartTime" ColumnName="start_time" />
+                <ScalarProperty Name="DelayReasonsId" ColumnName="delay_reasons_id" />
+                <ScalarProperty Name="DelayComment" ColumnName="delay_comment" />
+                <ScalarProperty Name="DepositorId" ColumnName="depositor_id" />
+                <ScalarProperty Name="IsCourier" ColumnName="is_courier" />
+                <ScalarProperty Name="ForwarderFio" ColumnName="forwarder_fio" />
+                <ScalarProperty Name="StampNumber" ColumnName="stamp_number" />
+                <ScalarProperty Name="AttorneyIssued" ColumnName="attorney_issued" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="PlanningModel.User">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="Id" ColumnName="id" />
+                <ScalarProperty Name="Login" ColumnName="login" />
+                <ScalarProperty Name="Password" ColumnName="password" />
+                <ScalarProperty Name="FirstName" ColumnName="first_name" />
+                <ScalarProperty Name="SecondName" ColumnName="second_name" />
+                <ScalarProperty Name="LastName" ColumnName="last_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserGroups">
+            <EntityTypeMapping TypeName="PlanningModel.UserGroup">
+              <MappingFragment StoreEntitySet="users_group">
+                <ScalarProperty Name="Id" ColumnName="id" />
+                <ScalarProperty Name="Name" ColumnName="name" />
+                <ScalarProperty Name="Access" ColumnName="access" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="user_group_lnk" TypeName="PlanningModel.user_group_lnk" StoreEntitySet="user_group_lnk">
+            <EndProperty Name="users">
+              <ScalarProperty Name="Id" ColumnName="user_id" />
+            </EndProperty>
+            <EndProperty Name="users_group">
+              <ScalarProperty Name="Id" ColumnName="group_id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="TimeSlots">
+            <EntityTypeMapping TypeName="PlanningModel.TimeSlot">
+              <MappingFragment StoreEntitySet="time_slot">
+                <ScalarProperty Name="SlotTime" ColumnName="slot_time" />
+                <ScalarProperty Name="Name" ColumnName="name" />
+                <ScalarProperty Name="DepositorId" ColumnName="depositor_id" />
+                <ScalarProperty Name="Id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VShipments">
+            <EntityTypeMapping TypeName="PlanningModel.VShipments">
+              <MappingFragment StoreEntitySet="v_shipments">
+                <ScalarProperty Name="dep_name" ColumnName="dep_name" />
+                <ScalarProperty Name="dep_id" ColumnName="dep_id" />
+                <ScalarProperty Name="is_courier" ColumnName="is_courier" />
+                <ScalarProperty Name="gate_id" ColumnName="gate_id" />
+                <ScalarProperty Name="time_slot_id" ColumnName="time_slot_id" />
+                <ScalarProperty Name="DepLvDb" ColumnName="dep_lv_db" />
+                <ScalarProperty Name="DepLvId" ColumnName="dep_lv_id" />
+                <ScalarProperty Name="SIn" ColumnName="s_in" />
+                <ScalarProperty Name="ShpId" ColumnName="shp_id" />
+                <ScalarProperty Name="SDate" ColumnName="s_date" />
+                <ScalarProperty Name="TimeSlotName" ColumnName="time_slot_name" />
+                <ScalarProperty Name="ForwarderFio" ColumnName="forwarder_fio" />
+                <ScalarProperty Name="DelayComment" ColumnName="delay_comment" />
+                <ScalarProperty Name="DelayReasonName" ColumnName="delay_reason_name" />
+                <ScalarProperty Name="EndTimeFact" ColumnName="end_time_fact" />
+                <ScalarProperty Name="EndTimePlan" ColumnName="end_time_plan" />
+                <ScalarProperty Name="StartTime" ColumnName="start_time" />
+                <ScalarProperty Name="SubmissionTime" ColumnName="submission_time" />
+                <ScalarProperty Name="AttorneyDate" ColumnName="attorney_date" />
+                <ScalarProperty Name="AttorneyNumber" ColumnName="attorney_number" />
+                <ScalarProperty Name="TrailerNumber" ColumnName="trailer_number" />
+                <ScalarProperty Name="VehicleNumber" ColumnName="vehicle_number" />
+                <ScalarProperty Name="TransportCompany" ColumnName="transport_company" />
+                <ScalarProperty Name="DriverFio" ColumnName="driver_fio" />
+                <ScalarProperty Name="DriverPhone" ColumnName="driver_phone" />
+                <ScalarProperty Name="SpCondition" ColumnName="sp_condition" />
+                <ScalarProperty Name="GateName" ColumnName="gate_name" />
+                <ScalarProperty Name="OComment" ColumnName="o_comment" />
+                <ScalarProperty Name="SComment" ColumnName="s_comment" />
+                <ScalarProperty Name="PrcReady" ColumnName="prc_ready" />
+                <ScalarProperty Name="OrderStatus" ColumnName="order_status" />
+                <ScalarProperty Name="Klient" ColumnName="klient" />
+                <ScalarProperty Name="OrderType" ColumnName="order_type" />
+                <ScalarProperty Name="OrderId" ColumnName="order_id" />
+                <ScalarProperty Name="OperType" ColumnName="oper_type" />
+                <ScalarProperty Name="LvId" ColumnName="lv_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
