@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="7005c0b70f324a0e9757893b6912d2e6" Name="Diagram1" ZoomLevel="116">
+      <Diagram DiagramId="7005c0b70f324a0e9757893b6912d2e6" Name="Diagram1" ZoomLevel="97">
         <EntityTypeShape EntityType="PlanningModel.DelayReason" Width="1.5" PointX="7.125" PointY="8.75" IsExpanded="true" />
         <EntityTypeShape EntityType="PlanningModel.Depositor" Width="1.5" PointX="9.5" PointY="0.625" IsExpanded="true" />
         <EntityTypeShape EntityType="PlanningModel.Gateway" Width="1.5" PointX="0.5" PointY="4.5" IsExpanded="true" />
@@ -21,7 +21,6 @@
         <EntityTypeShape EntityType="PlanningModel.TimeSlot" Width="1.5" PointX="12.25" PointY="4.375" />
         <AssociationConnector Association="PlanningModel.FK_time_slot_depositors" />
         <AssociationConnector Association="PlanningModel.FK_shipments_time_slot" />
-        <EntityTypeShape EntityType="PlanningModel.VShipments" Width="2.625" PointX="16.625" PointY="3" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

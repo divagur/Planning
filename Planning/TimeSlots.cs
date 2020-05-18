@@ -40,6 +40,7 @@ namespace Planning
                             }
                             MessageBox.Show(errorText);
                         }
+                         
             TimeSlotLoad();
         }
         private void btnAddRow_Click(object sender, EventArgs e)
@@ -92,7 +93,12 @@ namespace Planning
 
         private void btnDelRow_Click(object sender, EventArgs e)
         {
-
+            if (MessageBox.Show("Удалить запись?","Подтверждение удаления", MessageBoxButtons.OKCancel)==DialogResult.OK)
+            {
+                TimeSlot timeSlot = _context.TimeSlots.Find(tblTimeSlot.Rows[tblTimeSlot.CurrentCell.RowIndex].Cells["colId"].Value);
+                _context.TimeSlots.Remove(timeSlot);
+                Save();
+            }
         }
     }
 }

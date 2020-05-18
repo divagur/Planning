@@ -59,7 +59,7 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="lv_id" Type="int" />
           <Property Name="time_slot_id" Type="int" />
-          <Property Name="s_date" Type="datetime" />
+          <Property Name="s_date" Type="date" />
           <Property Name="s_comment" Type="varchar" MaxLength="500" />
           <Property Name="o_comment" Type="varchar" MaxLength="500" />
           <Property Name="gate_id" Type="int" />
@@ -122,47 +122,6 @@
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'Planning.dbo.v_shipments' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="v_shipments">
-          <Key>
-            <PropertyRef Name="shp_id" />
-          </Key>
-          <Property Name="shp_id" Type="int" Nullable="false" />
-          <Property Name="lv_id" Type="int" />
-          <Property Name="s_date" Type="datetime" />
-          <Property Name="time_slot_name" Type="varchar" MaxLength="5" />
-          <Property Name="oper_type" Type="int" />
-          <Property Name="order_id" Type="int" />
-          <Property Name="order_type" Type="int" />
-          <Property Name="klient" Type="int" />
-          <Property Name="order_status" Type="int" />
-          <Property Name="prc_ready" Type="int" />
-          <Property Name="s_comment" Type="varchar" MaxLength="500" />
-          <Property Name="o_comment" Type="varchar" MaxLength="500" />
-          <Property Name="gate_name" Type="int" />
-          <Property Name="sp_condition" Type="bit" />
-          <Property Name="driver_phone" Type="varchar" MaxLength="30" />
-          <Property Name="driver_fio" Type="varchar" MaxLength="80" />
-          <Property Name="transport_company" Type="int" />
-          <Property Name="vehicle_number" Type="varchar" MaxLength="10" />
-          <Property Name="trailer_number" Type="varchar" MaxLength="10" />
-          <Property Name="attorney_number" Type="varchar" MaxLength="30" />
-          <Property Name="attorney_date" Type="date" />
-          <Property Name="submission_time" Type="datetime" />
-          <Property Name="start_time" Type="datetime" />
-          <Property Name="end_time_plan" Type="datetime" />
-          <Property Name="end_time_fact" Type="datetime" />
-          <Property Name="delay_reason_name" Type="varchar" MaxLength="254" />
-          <Property Name="delay_comment" Type="varchar" MaxLength="200" />
-          <Property Name="forwarder_fio" Type="varchar" MaxLength="80" />
-          <Property Name="s_in" Type="bit" />
-          <Property Name="dep_lv_id" Type="int" />
-          <Property Name="dep_lv_db" Type="nvarchar" MaxLength="128" />
-          <Property Name="time_slot_id" Type="int" />
-          <Property Name="gate_id" Type="int" />
-          <Property Name="is_courier" Type="bit" />
-          <Property Name="dep_id" Type="int" />
-          <Property Name="dep_name" Type="varchar" MaxLength="254" />
-        </EntityType>
         <Association Name="FK_shipment_orders_shipments">
           <End Role="shipments" Type="Self.shipments" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -276,46 +235,6 @@ warning 6002: The table/view 'Planning.dbo.v_shipments' does not have a primary 
           <EntitySet Name="user_group_lnk" EntityType="Self.user_group_lnk" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="users_group" EntityType="Self.users_group" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="v_shipments" EntityType="Self.v_shipments" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [v_shipments].[shp_id] AS [shp_id], 
-    [v_shipments].[lv_id] AS [lv_id], 
-    [v_shipments].[s_date] AS [s_date], 
-    [v_shipments].[time_slot_name] AS [time_slot_name], 
-    [v_shipments].[oper_type] AS [oper_type], 
-    [v_shipments].[order_id] AS [order_id], 
-    [v_shipments].[order_type] AS [order_type], 
-    [v_shipments].[klient] AS [klient], 
-    [v_shipments].[order_status] AS [order_status], 
-    [v_shipments].[prc_ready] AS [prc_ready], 
-    [v_shipments].[s_comment] AS [s_comment], 
-    [v_shipments].[o_comment] AS [o_comment], 
-    [v_shipments].[gate_name] AS [gate_name], 
-    [v_shipments].[sp_condition] AS [sp_condition], 
-    [v_shipments].[driver_phone] AS [driver_phone], 
-    [v_shipments].[driver_fio] AS [driver_fio], 
-    [v_shipments].[transport_company] AS [transport_company], 
-    [v_shipments].[vehicle_number] AS [vehicle_number], 
-    [v_shipments].[trailer_number] AS [trailer_number], 
-    [v_shipments].[attorney_number] AS [attorney_number], 
-    [v_shipments].[attorney_date] AS [attorney_date], 
-    [v_shipments].[submission_time] AS [submission_time], 
-    [v_shipments].[start_time] AS [start_time], 
-    [v_shipments].[end_time_plan] AS [end_time_plan], 
-    [v_shipments].[end_time_fact] AS [end_time_fact], 
-    [v_shipments].[delay_reason_name] AS [delay_reason_name], 
-    [v_shipments].[delay_comment] AS [delay_comment], 
-    [v_shipments].[forwarder_fio] AS [forwarder_fio], 
-    [v_shipments].[s_in] AS [s_in], 
-    [v_shipments].[dep_lv_id] AS [dep_lv_id], 
-    [v_shipments].[dep_lv_db] AS [dep_lv_db], 
-    [v_shipments].[time_slot_id] AS [time_slot_id], 
-    [v_shipments].[gate_id] AS [gate_id], 
-    [v_shipments].[is_courier] AS [is_courier], 
-    [v_shipments].[dep_id] AS [dep_id], 
-    [v_shipments].[dep_name] AS [dep_name]
-    FROM [dbo].[v_shipments] AS [v_shipments]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK_shipment_orders_shipments" Association="Self.FK_shipment_orders_shipments">
             <End Role="shipments" EntitySet="shipments" />
             <End Role="shipment_orders" EntitySet="shipment_orders" />
@@ -412,7 +331,7 @@ warning 6002: The table/view 'Planning.dbo.v_shipments' does not have a primary 
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="LvId" Type="Int32" />
           <Property Name="TimeSlotId" Type="Int32" />
-          <Property Name="SDate" Type="DateTime" Precision="3" />
+          <Property Name="SDate" Type="DateTime" Precision="0" />
           <Property Name="SComment" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="OComment" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="GateId" Type="Int32" />
@@ -519,7 +438,6 @@ warning 6002: The table/view 'Planning.dbo.v_shipments' does not have a primary 
             <End Role="time_slot" EntitySet="TimeSlots" />
             <End Role="Shipment" EntitySet="Shipments" />
           </AssociationSet>
-          <EntitySet Name="VShipments" EntityType="PlanningModel.VShipments" />
         </EntityContainer>
         <Association Name="FK_shipments_delay_reasons">
           <End Type="PlanningModel.DelayReason" Role="delay_reasons" Multiplicity="0..1" />
@@ -592,47 +510,6 @@ warning 6002: The table/view 'Planning.dbo.v_shipments' does not have a primary 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="VShipments">
-          <Key>
-            <PropertyRef Name="ShpId" />
-          </Key>
-          <Property Name="LvId" Type="Int32" />
-          <Property Name="OperType" Type="Int32" />
-          <Property Name="OrderId" Type="Int32" />
-          <Property Name="OrderType" Type="Int32" />
-          <Property Name="Klient" Type="Int32" />
-          <Property Name="OrderStatus" Type="Int32" />
-          <Property Name="PrcReady" Type="Int32" />
-          <Property Name="SComment" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="OComment" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="GateName" Type="Int32" />
-          <Property Name="SpCondition" Type="Boolean" />
-          <Property Name="DriverPhone" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="DriverFio" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
-          <Property Name="TransportCompany" Type="Int32" />
-          <Property Name="VehicleNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="TrailerNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="AttorneyNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="AttorneyDate" Type="DateTime" Precision="0" />
-          <Property Name="SubmissionTime" Type="DateTime" Precision="3" />
-          <Property Name="StartTime" Type="DateTime" Precision="3" />
-          <Property Name="EndTimePlan" Type="DateTime" Precision="3" />
-          <Property Name="EndTimeFact" Type="DateTime" Precision="3" />
-          <Property Name="DelayReasonName" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
-          <Property Name="DelayComment" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="ForwarderFio" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
-          <Property Name="TimeSlotName" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Name="SDate" Type="DateTime" Precision="3" />
-          <Property Name="ShpId" Type="Int32" Nullable="false" />
-          <Property Name="SIn" Type="Boolean" />
-          <Property Name="DepLvId" Type="Int32" />
-          <Property Name="DepLvDb" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="time_slot_id" Type="Int32" />
-          <Property Name="gate_id" Type="Int32" />
-          <Property Name="is_courier" Type="Boolean" />
-          <Property Name="dep_id" Type="Int32" />
-          <Property Name="dep_name" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -760,48 +637,6 @@ warning 6002: The table/view 'Planning.dbo.v_shipments' does not have a primary 
                 <ScalarProperty Name="Name" ColumnName="name" />
                 <ScalarProperty Name="DepositorId" ColumnName="depositor_id" />
                 <ScalarProperty Name="Id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="VShipments">
-            <EntityTypeMapping TypeName="PlanningModel.VShipments">
-              <MappingFragment StoreEntitySet="v_shipments">
-                <ScalarProperty Name="dep_name" ColumnName="dep_name" />
-                <ScalarProperty Name="dep_id" ColumnName="dep_id" />
-                <ScalarProperty Name="is_courier" ColumnName="is_courier" />
-                <ScalarProperty Name="gate_id" ColumnName="gate_id" />
-                <ScalarProperty Name="time_slot_id" ColumnName="time_slot_id" />
-                <ScalarProperty Name="DepLvDb" ColumnName="dep_lv_db" />
-                <ScalarProperty Name="DepLvId" ColumnName="dep_lv_id" />
-                <ScalarProperty Name="SIn" ColumnName="s_in" />
-                <ScalarProperty Name="ShpId" ColumnName="shp_id" />
-                <ScalarProperty Name="SDate" ColumnName="s_date" />
-                <ScalarProperty Name="TimeSlotName" ColumnName="time_slot_name" />
-                <ScalarProperty Name="ForwarderFio" ColumnName="forwarder_fio" />
-                <ScalarProperty Name="DelayComment" ColumnName="delay_comment" />
-                <ScalarProperty Name="DelayReasonName" ColumnName="delay_reason_name" />
-                <ScalarProperty Name="EndTimeFact" ColumnName="end_time_fact" />
-                <ScalarProperty Name="EndTimePlan" ColumnName="end_time_plan" />
-                <ScalarProperty Name="StartTime" ColumnName="start_time" />
-                <ScalarProperty Name="SubmissionTime" ColumnName="submission_time" />
-                <ScalarProperty Name="AttorneyDate" ColumnName="attorney_date" />
-                <ScalarProperty Name="AttorneyNumber" ColumnName="attorney_number" />
-                <ScalarProperty Name="TrailerNumber" ColumnName="trailer_number" />
-                <ScalarProperty Name="VehicleNumber" ColumnName="vehicle_number" />
-                <ScalarProperty Name="TransportCompany" ColumnName="transport_company" />
-                <ScalarProperty Name="DriverFio" ColumnName="driver_fio" />
-                <ScalarProperty Name="DriverPhone" ColumnName="driver_phone" />
-                <ScalarProperty Name="SpCondition" ColumnName="sp_condition" />
-                <ScalarProperty Name="GateName" ColumnName="gate_name" />
-                <ScalarProperty Name="OComment" ColumnName="o_comment" />
-                <ScalarProperty Name="SComment" ColumnName="s_comment" />
-                <ScalarProperty Name="PrcReady" ColumnName="prc_ready" />
-                <ScalarProperty Name="OrderStatus" ColumnName="order_status" />
-                <ScalarProperty Name="Klient" ColumnName="klient" />
-                <ScalarProperty Name="OrderType" ColumnName="order_type" />
-                <ScalarProperty Name="OrderId" ColumnName="order_id" />
-                <ScalarProperty Name="OperType" ColumnName="oper_type" />
-                <ScalarProperty Name="LvId" ColumnName="lv_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

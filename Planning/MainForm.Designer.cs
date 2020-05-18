@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.справочникиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.miDicts = new System.Windows.Forms.ToolStripMenuItem();
             this.miDictUserGroup = new System.Windows.Forms.ToolStripMenuItem();
             this.miDictUser = new System.Windows.Forms.ToolStripMenuItem();
             this.miDictTimeSlot = new System.Windows.Forms.ToolStripMenuItem();
@@ -44,18 +44,8 @@
             this.miDictTC = new System.Windows.Forms.ToolStripMenuItem();
             this.delay_reasonsTableAdapter1 = new Planning.PlanningDataSetTableAdapters.delay_reasonsTableAdapter();
             this.tabMain = new System.Windows.Forms.TabPage();
-            this.edCurrDay = new System.Windows.Forms.DateTimePicker();
-            this.tblShipments = new System.Windows.Forms.DataGridView();
-            this.tbMain = new System.Windows.Forms.ToolStrip();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.tabForms = new System.Windows.Forms.TabControl();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.btnAdd = new System.Windows.Forms.ToolStripButton();
-            this.btnEdit = new System.Windows.Forms.ToolStripButton();
-            this.btnDel = new System.Windows.Forms.ToolStripButton();
-            this.btnRefresh = new System.Windows.Forms.ToolStripButton();
-            this.shipmentBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.tblShipments = new System.Windows.Forms.DataGridView();
             this.UniqueKey = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colIdNakl = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -89,13 +79,25 @@
             this.colDepositor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FontColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.BackgroundColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.edCurrDay = new System.Windows.Forms.DateTimePicker();
+            this.tbMain = new System.Windows.Forms.ToolStrip();
+            this.btnAdd = new System.Windows.Forms.ToolStripButton();
+            this.btnEdit = new System.Windows.Forms.ToolStripButton();
+            this.btnDel = new System.Windows.Forms.ToolStripButton();
+            this.btnRefresh = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.tabForms = new System.Windows.Forms.TabControl();
+            this.metroTabControl1 = new MetroFramework.Controls.MetroTabControl();
+            this.shipmentBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.miSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tabMain.SuspendLayout();
+            this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tblShipments)).BeginInit();
+            this.panel1.SuspendLayout();
             this.tbMain.SuspendLayout();
             this.tabForms.SuspendLayout();
-            this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.shipmentBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
@@ -103,7 +105,7 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem1,
-            this.справочникиToolStripMenuItem});
+            this.miDicts});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1276, 24);
@@ -112,13 +114,15 @@
             // 
             // toolStripMenuItem1
             // 
+            this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miSettings});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(48, 20);
             this.toolStripMenuItem1.Text = "Файл";
             // 
-            // справочникиToolStripMenuItem
+            // miDicts
             // 
-            this.справочникиToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miDicts.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.miDictUserGroup,
             this.miDictUser,
             this.miDictTimeSlot,
@@ -127,15 +131,16 @@
             this.miDictDelayReasons,
             this.miDictGates,
             this.miDictTC});
-            this.справочникиToolStripMenuItem.Name = "справочникиToolStripMenuItem";
-            this.справочникиToolStripMenuItem.Size = new System.Drawing.Size(94, 20);
-            this.справочникиToolStripMenuItem.Text = "Справочники";
+            this.miDicts.Name = "miDicts";
+            this.miDicts.Size = new System.Drawing.Size(94, 20);
+            this.miDicts.Text = "Справочники";
             // 
             // miDictUserGroup
             // 
             this.miDictUserGroup.Name = "miDictUserGroup";
             this.miDictUserGroup.Size = new System.Drawing.Size(201, 22);
             this.miDictUserGroup.Text = "Группы пользователей";
+            this.miDictUserGroup.Click += new System.EventHandler(this.miDictUserGroup_Click);
             // 
             // miDictUser
             // 
@@ -193,22 +198,22 @@
             // 
             this.tabMain.Controls.Add(this.panel2);
             this.tabMain.Controls.Add(this.panel1);
-            this.tabMain.Location = new System.Drawing.Point(4, 22);
+            this.tabMain.Location = new System.Drawing.Point(4, 24);
             this.tabMain.Name = "tabMain";
             this.tabMain.Padding = new System.Windows.Forms.Padding(3);
-            this.tabMain.Size = new System.Drawing.Size(1268, 581);
+            this.tabMain.Size = new System.Drawing.Size(1268, 579);
             this.tabMain.TabIndex = 0;
             this.tabMain.Text = "Отгрузки";
             this.tabMain.UseVisualStyleBackColor = true;
             // 
-            // edCurrDay
+            // panel2
             // 
-            this.edCurrDay.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.edCurrDay.Location = new System.Drawing.Point(101, 3);
-            this.edCurrDay.Name = "edCurrDay";
-            this.edCurrDay.Size = new System.Drawing.Size(95, 20);
-            this.edCurrDay.TabIndex = 3;
-            this.edCurrDay.ValueChanged += new System.EventHandler(this.edCurrDay_ValueChanged);
+            this.panel2.Controls.Add(this.tblShipments);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(3, 31);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(1262, 545);
+            this.panel2.TabIndex = 5;
             // 
             // tblShipments
             // 
@@ -257,105 +262,13 @@
             this.tblShipments.RowHeadersVisible = false;
             this.tblShipments.RowHeadersWidth = 20;
             this.tblShipments.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.tblShipments.Size = new System.Drawing.Size(1262, 547);
+            this.tblShipments.Size = new System.Drawing.Size(1262, 545);
             this.tblShipments.TabIndex = 2;
             this.tblShipments.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tblShipments_CellContentClick);
+            this.tblShipments.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tblShipments_CellDoubleClick);
             this.tblShipments.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.tblShipments_CellPainting);
             this.tblShipments.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.tblShipments_RowPostPaint);
             this.tblShipments.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.tblShipments_RowPrePaint);
-            // 
-            // tbMain
-            // 
-            this.tbMain.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.tbMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnAdd,
-            this.btnEdit,
-            this.btnDel,
-            this.btnRefresh,
-            this.toolStripSeparator1});
-            this.tbMain.Location = new System.Drawing.Point(0, 0);
-            this.tbMain.Name = "tbMain";
-            this.tbMain.Size = new System.Drawing.Size(1262, 25);
-            this.tbMain.TabIndex = 1;
-            this.tbMain.Text = "toolStrip1";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-            // 
-            // tabForms
-            // 
-            this.tabForms.Controls.Add(this.tabMain);
-            this.tabForms.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabForms.Location = new System.Drawing.Point(0, 24);
-            this.tabForms.Name = "tabForms";
-            this.tabForms.SelectedIndex = 0;
-            this.tabForms.Size = new System.Drawing.Size(1276, 607);
-            this.tabForms.TabIndex = 4;
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.edCurrDay);
-            this.panel1.Controls.Add(this.tbMain);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(3, 3);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1262, 28);
-            this.panel1.TabIndex = 4;
-            // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.tblShipments);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(3, 31);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1262, 547);
-            this.panel2.TabIndex = 5;
-            // 
-            // btnAdd
-            // 
-            this.btnAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnAdd.Image = global::Planning.Properties.Resources.Add;
-            this.btnAdd.ImageTransparentColor = System.Drawing.Color.Transparent;
-            this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(23, 22);
-            this.btnAdd.Text = "btnAdd";
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
-            // 
-            // btnEdit
-            // 
-            this.btnEdit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnEdit.Image = ((System.Drawing.Image)(resources.GetObject("btnEdit.Image")));
-            this.btnEdit.ImageTransparentColor = System.Drawing.Color.Transparent;
-            this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(23, 22);
-            this.btnEdit.Text = "toolStripButton2";
-            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
-            // 
-            // btnDel
-            // 
-            this.btnDel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnDel.Image = global::Planning.Properties.Resources.Delete;
-            this.btnDel.ImageTransparentColor = System.Drawing.Color.Transparent;
-            this.btnDel.Name = "btnDel";
-            this.btnDel.Size = new System.Drawing.Size(23, 22);
-            this.btnDel.Text = "toolStripButton3";
-            this.btnDel.Click += new System.EventHandler(this.btnDel_Click);
-            // 
-            // btnRefresh
-            // 
-            this.btnRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnRefresh.Image = ((System.Drawing.Image)(resources.GetObject("btnRefresh.Image")));
-            this.btnRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(23, 22);
-            this.btnRefresh.Text = "toolStripButton1";
-            this.btnRefresh.Click += new System.EventHandler(this.toolStripButton1_Click);
-            // 
-            // shipmentBindingSource
-            // 
-            this.shipmentBindingSource.DataSource = typeof(Planning.Shipment);
             // 
             // UniqueKey
             // 
@@ -437,8 +350,8 @@
             // colCopmletePct
             // 
             this.colCopmletePct.DataPropertyName = "PrcReady";
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.colCopmletePct.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.colCopmletePct.DefaultCellStyle = dataGridViewCellStyle2;
             this.colCopmletePct.HeaderText = "Собран (в %)";
             this.colCopmletePct.Name = "colCopmletePct";
             this.colCopmletePct.ReadOnly = true;
@@ -594,6 +507,120 @@
             this.BackgroundColor.ReadOnly = true;
             this.BackgroundColor.Visible = false;
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.edCurrDay);
+            this.panel1.Controls.Add(this.tbMain);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(3, 3);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1262, 28);
+            this.panel1.TabIndex = 4;
+            // 
+            // edCurrDay
+            // 
+            this.edCurrDay.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.edCurrDay.Location = new System.Drawing.Point(101, 3);
+            this.edCurrDay.Name = "edCurrDay";
+            this.edCurrDay.Size = new System.Drawing.Size(95, 20);
+            this.edCurrDay.TabIndex = 3;
+            this.edCurrDay.ValueChanged += new System.EventHandler(this.edCurrDay_ValueChanged);
+            // 
+            // tbMain
+            // 
+            this.tbMain.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.tbMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnAdd,
+            this.btnEdit,
+            this.btnDel,
+            this.btnRefresh,
+            this.toolStripSeparator1});
+            this.tbMain.Location = new System.Drawing.Point(0, 0);
+            this.tbMain.Name = "tbMain";
+            this.tbMain.Size = new System.Drawing.Size(1262, 25);
+            this.tbMain.TabIndex = 1;
+            this.tbMain.Text = "toolStrip1";
+            // 
+            // btnAdd
+            // 
+            this.btnAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnAdd.Image = global::Planning.Properties.Resources.Add;
+            this.btnAdd.ImageTransparentColor = System.Drawing.Color.Transparent;
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(23, 22);
+            this.btnAdd.Text = "Добавить";
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            // 
+            // btnEdit
+            // 
+            this.btnEdit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnEdit.Image = ((System.Drawing.Image)(resources.GetObject("btnEdit.Image")));
+            this.btnEdit.ImageTransparentColor = System.Drawing.Color.Transparent;
+            this.btnEdit.Name = "btnEdit";
+            this.btnEdit.Size = new System.Drawing.Size(23, 22);
+            this.btnEdit.Text = "Редактировать";
+            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
+            // 
+            // btnDel
+            // 
+            this.btnDel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnDel.Image = global::Planning.Properties.Resources.Delete;
+            this.btnDel.ImageTransparentColor = System.Drawing.Color.Transparent;
+            this.btnDel.Name = "btnDel";
+            this.btnDel.Size = new System.Drawing.Size(23, 22);
+            this.btnDel.Text = "Удалить";
+            this.btnDel.Click += new System.EventHandler(this.btnDel_Click);
+            // 
+            // btnRefresh
+            // 
+            this.btnRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnRefresh.Image = ((System.Drawing.Image)(resources.GetObject("btnRefresh.Image")));
+            this.btnRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(23, 22);
+            this.btnRefresh.Text = "toolStripButton1";
+            this.btnRefresh.Visible = false;
+            this.btnRefresh.Click += new System.EventHandler(this.toolStripButton1_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // tabForms
+            // 
+            this.tabForms.Controls.Add(this.tabMain);
+            this.tabForms.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabForms.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
+            this.tabForms.ItemSize = new System.Drawing.Size(150, 20);
+            this.tabForms.Location = new System.Drawing.Point(0, 24);
+            this.tabForms.Name = "tabForms";
+            this.tabForms.SelectedIndex = 0;
+            this.tabForms.Size = new System.Drawing.Size(1276, 607);
+            this.tabForms.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
+            this.tabForms.TabIndex = 4;
+            this.tabForms.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.tabForms_DrawItem);
+            this.tabForms.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tabForms_MouseDown);
+            // 
+            // metroTabControl1
+            // 
+            this.metroTabControl1.Location = new System.Drawing.Point(0, 0);
+            this.metroTabControl1.Name = "metroTabControl1";
+            this.metroTabControl1.Padding = new System.Drawing.Point(6, 8);
+            this.metroTabControl1.TabIndex = 0;
+            this.metroTabControl1.UseSelectable = true;
+            // 
+            // shipmentBindingSource
+            // 
+            this.shipmentBindingSource.DataSource = typeof(Planning.Shipment);
+            // 
+            // miSettings
+            // 
+            this.miSettings.Name = "miSettings";
+            this.miSettings.Size = new System.Drawing.Size(152, 22);
+            this.miSettings.Text = "Настройки";
+            this.miSettings.Click += new System.EventHandler(this.miSettings_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -607,17 +634,18 @@
             this.Name = "frmMain";
             this.RightToLeftLayout = true;
             this.Text = "Planning";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.frmMain_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.tabMain.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.tblShipments)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.tbMain.ResumeLayout(false);
             this.tbMain.PerformLayout();
             this.tabForms.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.shipmentBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -628,7 +656,7 @@
 
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem справочникиToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem miDicts;
         private System.Windows.Forms.ToolStripMenuItem miDictUserGroup;
         private System.Windows.Forms.ToolStripMenuItem miDictUser;
         private System.Windows.Forms.ToolStripMenuItem miDictTimeSlot;
@@ -684,6 +712,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colDepositor;
         private System.Windows.Forms.DataGridViewTextBoxColumn FontColor;
         private System.Windows.Forms.DataGridViewTextBoxColumn BackgroundColor;
+        private MetroFramework.Controls.MetroTabControl metroTabControl1;
+        private System.Windows.Forms.ToolStripMenuItem miSettings;
     }
 }
 

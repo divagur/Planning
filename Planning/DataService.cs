@@ -53,7 +53,8 @@ namespace Planning
 
     public class DataService
     {
-        public static string connectionString = @"Data Source=ПОЛЬЗОВАТЕЛЬ-ПК\SQLEXPRESS2017;Initial Catalog=Planning;User ID=SYSADM; Password = SYSADM";
+        //public static string connectionString = @"Data Source=ПОЛЬЗОВАТЕЛЬ-ПК\SQLEXPRESS2017;Initial Catalog=Planning;User ID=SYSADM; Password = SYSADM";
+        public static string connectionString = "";
         public static Dictionary<string, DictInfo> Dicts = new Dictionary<string, DictInfo>();
 
         public static List<Shipment> GetAll()

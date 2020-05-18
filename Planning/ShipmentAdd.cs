@@ -44,10 +44,10 @@ namespace Planning
                 cmbDepositor.Items.Add(d.Name);
 
             cmbDepositor.SelectedIndex = 0;
-
+            int? depositorId = DataService.GetDictIdByName("Депозиторы", cmbDepositor.Text);
             cmbTimeSlot.Items.Clear();
-            foreach (var ts in _context.TimeSlots.ToList())
-                cmbTimeSlot.Items.Add(ts.Name);
+            foreach (var ts in _context.TimeSlots.Where(x=>x.DepositorId ==depositorId).OrderBy(x=>x.SlotTime).ToList())
+                cmbTimeSlot.Items.Add(ts.SlotTime.ToString());
 
         }
         private void PopulateOrders(/*int DepositorLVId, int Type*/)
@@ -149,9 +149,9 @@ namespace Planning
         {
             //
             _shipment.SDate = dtSDate.Value;
-            _shipment.ShIn = cmbDepositor.Text == "Вход" ? true : false;
+            _shipment.ShIn = cmbType.Text == "Вход" ? true : false;
             _shipment.DepositorId = DataService.GetDictIdByName("Депозиторы", cmbDepositor.Text);
-            _shipment.TimeSlotId = DataService.GetDictIdByCondition("ТаймСлоты", $"depositor_id = {_shipment.DepositorId} and name = '{cmbTimeSlot.Text}'");
+            _shipment.TimeSlotId = DataService.GetDictIdByCondition("ТаймСлоты", $"depositor_id = {_shipment.DepositorId} and slot_time = '{cmbTimeSlot.Text}'");
 
             for (int i = 0;i<tblShipmentItem.RowCount;i++)
             {
@@ -181,7 +181,8 @@ namespace Planning
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-
+            DialogResult = DialogResult.Cancel;
+            Close();
         }
 
         private void ShipmentAdd_Load(object sender, EventArgs e)

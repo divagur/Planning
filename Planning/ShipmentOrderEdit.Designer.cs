@@ -59,7 +59,7 @@
             this.txtOrderId.Location = new System.Drawing.Point(98, 6);
             this.txtOrderId.Name = "txtOrderId";
             this.txtOrderId.Size = new System.Drawing.Size(229, 20);
-            this.txtOrderId.TabIndex = 1;
+            this.txtOrderId.TabIndex = 0;
             // 
             // label2
             // 
@@ -75,7 +75,7 @@
             this.txtOrderType.Location = new System.Drawing.Point(477, 6);
             this.txtOrderType.Name = "txtOrderType";
             this.txtOrderType.Size = new System.Drawing.Size(163, 20);
-            this.txtOrderType.TabIndex = 3;
+            this.txtOrderType.TabIndex = 1;
             // 
             // label3
             // 
@@ -92,7 +92,7 @@
             this.txtOrderComment.Multiline = true;
             this.txtOrderComment.Name = "txtOrderComment";
             this.txtOrderComment.Size = new System.Drawing.Size(542, 71);
-            this.txtOrderComment.TabIndex = 5;
+            this.txtOrderComment.TabIndex = 2;
             // 
             // label4
             // 
@@ -126,25 +126,25 @@
             this.txtManualLoad.Location = new System.Drawing.Point(154, 138);
             this.txtManualLoad.Name = "txtManualLoad";
             this.txtManualLoad.Size = new System.Drawing.Size(100, 20);
-            this.txtManualLoad.TabIndex = 7;
+            this.txtManualLoad.TabIndex = 3;
             // 
             // txtManualUnload
             // 
             this.txtManualUnload.Location = new System.Drawing.Point(154, 166);
             this.txtManualUnload.Name = "txtManualUnload";
             this.txtManualUnload.Size = new System.Drawing.Size(100, 20);
-            this.txtManualUnload.TabIndex = 7;
+            this.txtManualUnload.TabIndex = 4;
             // 
             // txtPalletAmount
             // 
             this.txtPalletAmount.Location = new System.Drawing.Point(154, 191);
             this.txtPalletAmount.Name = "txtPalletAmount";
             this.txtPalletAmount.Size = new System.Drawing.Size(100, 20);
-            this.txtPalletAmount.TabIndex = 7;
+            this.txtPalletAmount.TabIndex = 5;
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(565, 238);
+            this.btnClose.Location = new System.Drawing.Point(565, 212);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
             this.btnClose.TabIndex = 8;
@@ -154,7 +154,7 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(484, 238);
+            this.btnSave.Location = new System.Drawing.Point(484, 212);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 8;
@@ -166,7 +166,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(652, 273);
+            this.ClientSize = new System.Drawing.Size(652, 242);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.txtPalletAmount);

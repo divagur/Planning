@@ -39,6 +39,11 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
             this.tblShipmentItem = new System.Windows.Forms.DataGridView();
+            this.colItemId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colItemStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colItemDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colItemKlient = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colLVOrdId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel6 = new System.Windows.Forms.Panel();
             this.cmbTimeSlot = new System.Windows.Forms.ComboBox();
             this.dtSDate = new System.Windows.Forms.DateTimePicker();
@@ -49,6 +54,11 @@
             this.btnFromShipment = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.tblOrders = new System.Windows.Forms.DataGridView();
+            this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colState = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colKlient = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colLVOrderId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel5 = new System.Windows.Forms.Panel();
             this.btnFind = new System.Windows.Forms.Button();
             this.txtOrderId = new System.Windows.Forms.TextBox();
@@ -57,16 +67,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colState = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colKlient = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colLVOrderId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colItemId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colItemStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colItemDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colItemKlient = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colLVOrdId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pnlToolBar.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel4.SuspendLayout();
@@ -159,6 +159,41 @@
             this.tblShipmentItem.RowHeadersVisible = false;
             this.tblShipmentItem.Size = new System.Drawing.Size(475, 454);
             this.tblShipmentItem.TabIndex = 1;
+            // 
+            // colItemId
+            // 
+            this.colItemId.HeaderText = "colItem";
+            this.colItemId.Name = "colItemId";
+            this.colItemId.ReadOnly = true;
+            this.colItemId.Width = 200;
+            // 
+            // colItemStatus
+            // 
+            this.colItemStatus.HeaderText = "Status";
+            this.colItemStatus.Name = "colItemStatus";
+            this.colItemStatus.ReadOnly = true;
+            this.colItemStatus.Visible = false;
+            // 
+            // colItemDate
+            // 
+            this.colItemDate.HeaderText = "Date";
+            this.colItemDate.Name = "colItemDate";
+            this.colItemDate.ReadOnly = true;
+            this.colItemDate.Visible = false;
+            // 
+            // colItemKlient
+            // 
+            this.colItemKlient.HeaderText = "Klient";
+            this.colItemKlient.Name = "colItemKlient";
+            this.colItemKlient.ReadOnly = true;
+            this.colItemKlient.Visible = false;
+            // 
+            // colLVOrdId
+            // 
+            this.colLVOrdId.HeaderText = "LVOrdId";
+            this.colLVOrdId.Name = "colLVOrdId";
+            this.colLVOrdId.ReadOnly = true;
+            this.colLVOrdId.Visible = false;
             // 
             // panel6
             // 
@@ -292,6 +327,42 @@
             this.tblOrders.TabIndex = 1;
             this.tblOrders.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tblOrders_CellDoubleClick);
             // 
+            // colId
+            // 
+            this.colId.DataPropertyName = "LVCode";
+            this.colId.HeaderText = "Код";
+            this.colId.Name = "colId";
+            this.colId.ReadOnly = true;
+            // 
+            // colState
+            // 
+            this.colState.DataPropertyName = "LVStatus";
+            this.colState.HeaderText = "Статус";
+            this.colState.Name = "colState";
+            this.colState.ReadOnly = true;
+            // 
+            // colDate
+            // 
+            this.colDate.DataPropertyName = "ExpDate";
+            this.colDate.HeaderText = "Ожид. дата";
+            this.colDate.Name = "colDate";
+            this.colDate.ReadOnly = true;
+            // 
+            // colKlient
+            // 
+            this.colKlient.DataPropertyName = "Company";
+            this.colKlient.HeaderText = "Клиент";
+            this.colKlient.Name = "colKlient";
+            this.colKlient.ReadOnly = true;
+            this.colKlient.Width = 200;
+            // 
+            // colLVOrderId
+            // 
+            this.colLVOrderId.HeaderText = "LVOrderId";
+            this.colLVOrderId.Name = "colLVOrderId";
+            this.colLVOrderId.ReadOnly = true;
+            this.colLVOrderId.Visible = false;
+            // 
             // panel5
             // 
             this.panel5.Controls.Add(this.btnFind);
@@ -371,85 +442,16 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Депозитор";
             // 
-            // colId
-            // 
-            this.colId.DataPropertyName = "LVCode";
-            this.colId.HeaderText = "Код";
-            this.colId.Name = "colId";
-            this.colId.ReadOnly = true;
-            // 
-            // colState
-            // 
-            this.colState.DataPropertyName = "LVStatus";
-            this.colState.HeaderText = "Статус";
-            this.colState.Name = "colState";
-            this.colState.ReadOnly = true;
-            // 
-            // colDate
-            // 
-            this.colDate.DataPropertyName = "ExpDate";
-            this.colDate.HeaderText = "Ожид. дата";
-            this.colDate.Name = "colDate";
-            this.colDate.ReadOnly = true;
-            // 
-            // colKlient
-            // 
-            this.colKlient.DataPropertyName = "Company";
-            this.colKlient.HeaderText = "Клиент";
-            this.colKlient.Name = "colKlient";
-            this.colKlient.ReadOnly = true;
-            this.colKlient.Width = 200;
-            // 
-            // colLVOrderId
-            // 
-            this.colLVOrderId.HeaderText = "LVOrderId";
-            this.colLVOrderId.Name = "colLVOrderId";
-            this.colLVOrderId.ReadOnly = true;
-            this.colLVOrderId.Visible = false;
-            // 
-            // colItemId
-            // 
-            this.colItemId.HeaderText = "colItem";
-            this.colItemId.Name = "colItemId";
-            this.colItemId.ReadOnly = true;
-            this.colItemId.Width = 200;
-            // 
-            // colItemStatus
-            // 
-            this.colItemStatus.HeaderText = "Status";
-            this.colItemStatus.Name = "colItemStatus";
-            this.colItemStatus.ReadOnly = true;
-            this.colItemStatus.Visible = false;
-            // 
-            // colItemDate
-            // 
-            this.colItemDate.HeaderText = "Date";
-            this.colItemDate.Name = "colItemDate";
-            this.colItemDate.ReadOnly = true;
-            this.colItemDate.Visible = false;
-            // 
-            // colItemKlient
-            // 
-            this.colItemKlient.HeaderText = "Klient";
-            this.colItemKlient.Name = "colItemKlient";
-            this.colItemKlient.ReadOnly = true;
-            this.colItemKlient.Visible = false;
-            // 
-            // colLVOrdId
-            // 
-            this.colLVOrdId.HeaderText = "LVOrdId";
-            this.colLVOrdId.Name = "colLVOrdId";
-            this.colLVOrdId.ReadOnly = true;
-            this.colLVOrdId.Visible = false;
-            // 
             // ShipmentAdd
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1049, 604);
+            this.ControlBox = false;
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.pnlToolBar);
             this.Name = "ShipmentAdd";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Создание погрузки";
             this.Load += new System.EventHandler(this.ShipmentAdd_Load);
             this.pnlToolBar.ResumeLayout(false);

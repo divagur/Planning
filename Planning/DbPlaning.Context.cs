@@ -34,6 +34,5 @@ namespace Planning
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserGroup> UserGroups { get; set; }
         public virtual DbSet<TimeSlot> TimeSlots { get; set; }
-        public virtual DbSet<VShipments> VShipments { get; set; }
     }
 }

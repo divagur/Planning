@@ -108,7 +108,7 @@ namespace Planning
 
 
             cbTransportCompany.Text = "";
-            edSDate.Text = _shipment.SDate ==null?DateTime.Now.ToString():_shipment.SDate.ToString();
+            edSDate.Text = _shipment.SDate ==null?DateTime.Now.ToShortDateString():_shipment.SDate.Value.ToShortDateString();
             edShipmentComment.Text = _shipment.SComment;
             cmbDelayReasons.Text = DataService.GetDictNameById("Причины_задержки", _shipment.DelayReasonsId);
             edDelayComment.Text = _shipment.DelayComment;
@@ -145,26 +145,49 @@ namespace Planning
 
         }
 
-        private DateTime? GetDate(string stringDate)
+        private bool IsValidDate(TextBox dateControl)
         {
+            DateTime date;
 
-            return stringDate ==""?(DateTime?)null:Convert.ToDateTime(stringDate);
+            if (dateControl.Text != "" && !DateTime.TryParse(dateControl.Text, out date))
+            {
+                MessageBox.Show("Не верный формат даты", "Ошибка даты");
+                dateControl.Focus();
+                return false;
+            }
+            return true;
         }
 
-        void CopyToShipment()
+        private DateTime? GetDate(TextBox dateControl)
         {
+            DateTime date;
+            if (dateControl.Text!="" && !DateTime.TryParse(dateControl.Text, out date))
+            {
+                MessageBox.Show("Не верный формат даты","Ошибка сохранения даты");
+                dateControl.Focus();
+                return (DateTime?)null;
+            }
+            return dateControl.Text == ""?(DateTime?)null:Convert.ToDateTime(dateControl.Text);
+        }
+
+        bool CopyToShipment()
+        {
+            bool success = IsValidDate(edSDate) && IsValidDate(edSubmissionTime) && IsValidDate(edStartTime) && IsValidDate(edEndDate) && IsValidDate(edLeaveTime);
+            if (!success)
+                return false;
+
             //cbTransportCompany.Text = "";
-            _shipment.SDate = GetDate(edSDate.Text);
+            _shipment.SDate = GetDate(edSDate);
             _shipment.SComment = edShipmentComment.Text;
             _shipment.DelayReasonsId = DataService.GetDictIdByName("Причины_задержки", cmbDelayReasons.Text);//Convert.ToInt32(IsNull(cmbDelayReasons.Text, "0"));
-            _shipment.TimeSlotId = cbSpecCondition.Checked?(int?)null:DataService.GetDictIdByName("ТаймСлоты", cmbTimeSlot.Text);
+            _shipment.TimeSlotId = cbSpecCondition.Checked?(int?)null:DataService.GetDictIdByCondition("ТаймСлоты", $"slot_time='{cmbTimeSlot.Text}'");
             _shipment.SpecialTime = cbSpecCondition.Checked ? TimeSpan.Parse(dtSpecialCond.Value.ToShortTimeString()):(TimeSpan?)null;
             _shipment.DelayComment = edDelayComment.Text;
             _shipment.IsCourier = cbIsCourier.Checked;
-            _shipment.SubmissionTime = GetDate(edSubmissionTime.Text);
-            _shipment.StartTime = GetDate(edStartTime.Text);
-            _shipment.EndTime = GetDate(edEndDate.Text);
-            _shipment.LeaveTime = GetDate(edLeaveTime.Text);
+            _shipment.SubmissionTime = GetDate(edSubmissionTime);
+            _shipment.StartTime = GetDate(edStartTime);
+            _shipment.EndTime = GetDate(edEndDate);
+            _shipment.LeaveTime = GetDate(edLeaveTime);
             _shipment.DriverFio = edDriverFIO.Text;
             _shipment.DriverPhone = edDriverPhone.Text;
             _shipment.ForwarderFio = edForwarderFIO.Text;
@@ -172,11 +195,11 @@ namespace Planning
             _shipment.TrailerNumber = edTrailerNumber.Text;
             _shipment.StampNumber = edStamp.Text;
             _shipment.AttorneyNumber = edAttorneyNumber.Text;
-            _shipment.AttorneyDate = GetDate(edAttorneyDate.Text);
+            _shipment.AttorneyDate = GetDate(edAttorneyDate);
             _shipment.AttorneyIssued = edAttorneyIssued.Text;
-            _shipment.GateId = DataService.GetDictIdByName("Ворота", cmbGate.Text); 
-           // _shipment.TimeSlotId =Convert.ToInt32(IsNull(cmbTimeSlot.Text,null));
-            
+            _shipment.GateId = DataService.GetDictIdByName("Ворота", cmbGate.Text);
+            // _shipment.TimeSlotId =Convert.ToInt32(IsNull(cmbTimeSlot.Text,null));
+            return true;
         }
         public shipmen_edit(Shipment shipment, PlanningDbContext context)
         {
@@ -195,20 +218,34 @@ namespace Planning
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            CopyToShipment();
-            DialogResult = DialogResult.OK;
+            if (CopyToShipment())
+                DialogResult = DialogResult.OK;
         }
 
         private void tbtnAdd_Click(object sender, EventArgs e)
         {
             DataRow row = ds.Tables[0].NewRow(); // добавляем новую строку в DataTable
             ds.Tables[0].Rows.Add(row);
+
+            ShipmentOrder shipmentOrder = new ShipmentOrder();
+            var frmShipmentOrderEdit = new ShipmentOrderEdit(shipmentOrder);
+
+            frmShipmentOrderEdit.ShowDialog();
+            if (frmShipmentOrderEdit.DialogResult == DialogResult.Cancel)
+                return;
+            _context.ShipmentOrders.Add(shipmentOrder);
             //row["shipment_id"] =_shipment.id;
-         }
+        }
 
         private void tbtnEdit_Click(object sender, EventArgs e)
         {
+            ShipmentOrder shipmentOrder = _context.ShipmentOrders.Find(tblShipmentOrders.Rows[tblShipmentOrders.CurrentCell.RowIndex].Cells["colId"].Value);
+            var frmShipmentOrderEdit = new ShipmentOrderEdit(shipmentOrder);
 
+            frmShipmentOrderEdit.ShowDialog();
+            if (frmShipmentOrderEdit.DialogResult == DialogResult.Cancel)
+                return;
+            tblShipmentOrders.Refresh();
         }
 
         private void tbtnDel_Click(object sender, EventArgs e)
@@ -349,6 +386,7 @@ namespace Planning
             btnStartTime.Tag = edStartTime;
             btnEndDate.Tag = edEndDate;
             btnLeaveTime.Tag = edLeaveTime;
+            btnSDate.Tag = edSDate;
         }
 
         private void monthCalendarSpecial_DateSelected(object sender, DateRangeEventArgs e)

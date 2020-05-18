@@ -19,9 +19,14 @@ namespace Planning
 
         DataService dataService = new DataService();
         PlanningDbContext context = new PlanningDbContext();
+
+        private int Xwid = 6;//координаты ширины по диагонали крестика
+        private const int tab_margin = 5;//координаты по высоте крестика
+        Settings setting = new Settings(); 
         public frmMain()
         {
             InitializeComponent();
+
         }
 
         private void tblShipments_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -34,7 +39,23 @@ namespace Planning
             using (SqlConnection connection = new SqlConnection(DataService.connectionString))
             {
                 if (connection.State == ConnectionState.Closed)
-                    connection.Open();
+                {
+                    try
+                    {
+                        connection.Open();
+                    }
+                    catch(SqlException ex)
+                    {
+                        MessageBox.Show("Ошибка подключения:" + ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        tbMain.Enabled = false;
+                        miDicts.Enabled = false;
+
+                        return;
+                    }
+
+                    tbMain.Enabled = true;
+                    miDicts.Enabled = true;
+                }
 
                 string sqlText = "SP_PL_MainQueryP";
 
@@ -65,7 +86,20 @@ namespace Planning
 
         private void frmMain_Load(object sender, EventArgs e)
         {
-           
+
+            setting = SettingsHandle.Load();
+            if (setting == null)
+            {
+                setting = new Settings();
+                SettingsEdit frmSettingsEdit = new SettingsEdit(setting);
+                if (frmSettingsEdit.ShowDialog() == DialogResult.OK)
+                    SettingsHandle.Save(setting);
+                else
+                    this.Close();
+            }
+
+
+            DataService.connectionString = $"Data Source={setting.ServerName};Initial Catalog={setting.BaseName};User ID={setting.UserName}; Password = {setting.Password}";
             //DataService dataService = new DataService();
             DataService.Dicts.Add("Причины_задержки", new DictInfo{ TableName = "delay_reasons", NameColumn = "name" });
             DataService.Dicts.Add("Типы_операций", new DictInfo { TableName = "opers_type", NameColumn = "name" });
@@ -75,6 +109,7 @@ namespace Planning
             //dataService.Dicts.Add("Ворота", "gateways");
             tblShipments.AutoGenerateColumns = false;
             ShipmentsLoad();
+ 
         }
 
         private void miDictDelayReasons_Click(object sender, EventArgs e)
@@ -136,8 +171,27 @@ namespace Planning
             //frmOperType.Show();
             */
         }
+        
+        void AddShToLV(Shipment shipment)
+        {
+            if (shipment.ShIn == false)
+            {
+                DataService.AddShipmentToLV(shipment.Id);
+            }
+        }
+
+        private void ShipmentRowEdit()
+        {
+            if (tblShipments.SelectedRows.Count <= 0)
+                return;
+
+            Shipment shipment = context.Shipments.Find(tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colId"].Value);
+            ShipmentEdit(shipment);
+            ShipmentsLoad();
+        }
         private void ShipmentEdit(Shipment shipment)
         {
+            
             shipmen_edit frmShipmentEdit = new shipmen_edit(shipment, context);
             frmShipmentEdit.ClearFields();
             frmShipmentEdit.Populate();
@@ -145,7 +199,7 @@ namespace Planning
             {
                 context.SaveChanges();
 
-                DataService.AddShipmentToLV(shipment.Id);
+               AddShToLV(shipment);
 
                 tblShipments.Refresh();
             }
@@ -169,8 +223,8 @@ namespace Planning
             {
                 context.Shipments.Add(shipment);
                 context.SaveChanges();
+                AddShToLV(shipment);
 
-                DataService.AddShipmentToLV(shipment.Id);
 
                 if (result == DialogResult.Retry)
                 {
@@ -187,22 +241,15 @@ namespace Planning
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
+            /*
             if (tblShipments.SelectedRows.Count <= 0)
                 return;
 
-            //Shipment shipment = DataService.Get((int)tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colId"].Value);
             Shipment shipment = context.Shipments.Find(tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colId"].Value);
             ShipmentEdit(shipment);
             ShipmentsLoad();
-            /* shipmen_edit frmShipmentEdit = new shipmen_edit(shipment, context);
-            frmShipmentEdit.ClearFields();
-            frmShipmentEdit.Populate();
-            if (frmShipmentEdit.ShowDialog() == DialogResult.OK)
-            {
-                context.SaveChanges();
-                tblShipments.Refresh();
-            }
             */
+            ShipmentRowEdit();
         }
 
         private void miDictUser_Click(object sender, EventArgs e)
@@ -323,6 +370,169 @@ namespace Planning
                 Shipment shipment = context.Shipments.Find(tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colId"].Value);
                 context.Shipments.Remove(shipment);
                 context.SaveChanges();
+                ShipmentsLoad();
+            }
+        }
+
+        private void tabForms_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            Brush text_brush, //Текст во вкладке
+                box_brush;   //Рамка вокруг крестика
+            Pen box_pen;
+
+
+
+            // Рисуем в tabControlTablica (tabPage) рамку
+            // Потом будем использовать в событии MouseDown.
+            Rectangle tab_rect = tabForms.GetTabRect(e.Index);
+
+            // Рисуем фон
+            // Подбираем соответствующие кисти и перья
+            //Вкладка открыта фон изменён
+            if (e.State == DrawItemState.Selected)
+            {
+                e.Graphics.FillRectangle(Brushes.LightBlue, tab_rect);
+                e.DrawFocusRectangle();
+                text_brush = Brushes.Black;
+                box_brush = Brushes.Black;
+                box_pen = Pens.Red;  //Цвет крестика при включенной кнопке tabPage
+
+            }
+            else
+            {
+                e.Graphics.FillRectangle(Brushes.LightGray, tab_rect);
+                text_brush = Brushes.Gray;
+                box_brush = Brushes.Black;
+                box_pen = Pens.Gray;  //Цвет крестика при выключенной кнопке tabPage
+            }
+            
+            // Allow room for margins.
+            Rectangle layout_rect = new Rectangle(
+                tab_rect.Left + tab_margin,
+                tab_rect.Y + 2 + tab_margin,  //Координаты смещения крестика
+                tab_rect.Width - 1 * 5 - tab_margin, //Координаты смещения крестика
+                tab_rect.Height - 2 * tab_margin);
+            Rectangle layuot_text = new Rectangle(
+                tab_rect.Left + tab_margin,
+                tab_rect.Y + 2,
+                tab_rect.Width - 1 * 5 - tab_margin, 
+                tab_rect.Height
+                );
+            using (StringFormat string_format = new StringFormat())
+            {
+                /*
+                // Цифры рисуем во вкладке в нижнем правом углу 
+                using (Font small_font = new Font(this.Font.FontFamily, 6, FontStyle.Regular))
+                {
+                    string_format.Alignment = StringAlignment.Far;
+                    string_format.LineAlignment = StringAlignment.Far;
+                    e.Graphics.DrawString(
+                        e.Index.ToString(),
+                        small_font,
+                        text_brush,
+                        layout_rect,
+                        string_format);
+                }
+                */
+                // Рисуем текст во вкладка tabControlTablica
+                Font font;
+                Brush br = Brushes.Black;
+                StringFormat strF = new StringFormat(StringFormat.GenericDefault);
+                if (tabForms.SelectedTab == tabForms.TabPages[e.Index])
+                {
+                    //Формат текста во вкладках tabControl
+                    //e.Graphics.DrawImage(closeImageAct, imageRec);
+                    string_format.Alignment = StringAlignment.Near;
+                    string_format.LineAlignment = StringAlignment.Near;
+                    font = new Font("Microsoft Sans Serif", 8, FontStyle.Bold);
+                    e.Graphics.DrawString(tabForms.TabPages[e.Index].Text,
+                        font, text_brush,
+                        layuot_text,
+                        string_format);
+                }
+                else
+                {
+                    //Формат текста во вкладках tabControl
+                    string_format.Alignment = StringAlignment.Near;
+                    string_format.LineAlignment = StringAlignment.Near;
+                    font = new Font("Microsoft Sans Serif", 8, FontStyle.Regular);
+                    e.Graphics.DrawString(tabForms.TabPages[e.Index].Text,
+                       font,
+                        text_brush,
+                        layuot_text,
+                        string_format);
+                }
+
+                // //Рисуем рамку вокруг крестика
+                //Rectangle rect = tabControlTablica.GetTabRect(e.Index);
+                //e.Graphics.FillRectangle(box_brush,
+                //    layout_rect.Right - Xwid,
+                //    layout_rect.Top,
+                //    Xwid,
+                //    Xwid);
+
+                //e.Graphics.DrawRectangle(box_pen,
+                //    layout_rect.Right - Xwid,
+                //    layout_rect.Top,
+                //    Xwid,
+                //    Xwid);
+
+                if (e.Index > 0)
+                {
+                    //Рисуем крестик
+                    e.Graphics.DrawLine(box_pen,
+                        layout_rect.Right - Xwid,
+                        layout_rect.Top,
+                        layout_rect.Right,
+                        layout_rect.Top + Xwid);
+                    e.Graphics.DrawLine(box_pen,
+                        layout_rect.Right - Xwid,
+                        layout_rect.Top + Xwid,
+                        layout_rect.Right,
+                        layout_rect.Top);
+                }
+            }
+        }
+
+        private void tabForms_MouseDown(object sender, MouseEventArgs e)
+        {
+            // При нажатии закрыть вкладку
+            for (int i = 0; i < tabForms.TabPages.Count; i++)
+            {
+                Rectangle tab_rect = tabForms.GetTabRect(i);
+                RectangleF rect = new RectangleF(
+                    tab_rect.Left - 2 + tab_margin,
+                    tab_rect.Y + 2 + tab_margin,
+                    tab_rect.Width - 2 * tab_margin,
+                    tab_rect.Height - 2 * tab_margin);
+                if (e.X >= rect.Right - Xwid &&
+                    e.X <= rect.Right &&
+                    e.Y >= rect.Top - 1 &&
+                    e.Y <= rect.Top + Xwid && i>0)
+                {
+                    tabForms.TabPages.Remove(tabForms.TabPages[i]);
+                    tabForms.SelectedIndex = tabForms.TabPages.Count - 1;
+                }
+            }
+        }
+
+        private void miDictUserGroup_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tblShipments_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            ShipmentRowEdit();
+        }
+
+        private void miSettings_Click(object sender, EventArgs e)
+        {
+            SettingsEdit frmSettingsEdit = new SettingsEdit(setting);
+            if (frmSettingsEdit.ShowDialog()==DialogResult.OK)
+            {
+                SettingsHandle.Save(setting);
+                DataService.connectionString = $"Data Source={setting.ServerName};Initial Catalog={setting.BaseName};User ID={setting.UserName}; Password = {setting.Password}";
                 ShipmentsLoad();
             }
         }

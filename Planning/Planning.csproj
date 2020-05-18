@@ -37,8 +37,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BetterTabControl, Version=1.0.19295.1523, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\BetterTabControl.1.0.19295.1523\lib\net461\BetterTabControl.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dapper.2.0.30\lib\net461\Dapper.dll</HintPath>
+      <HintPath>..\packages\Dapper.2.0.35\lib\net461\Dapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -56,11 +60,19 @@
     <Reference Include="MetroFramework">
       <HintPath>..\..\DBProject\packages\MetroModernUI.1.4.0.0\lib\net\MetroFramework.dll</HintPath>
     </Reference>
+    <Reference Include="PagedControl, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedControl.2.2.0\lib\net35\PagedControl.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="PresentationFramework.Aero" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -70,8 +82,16 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="TabControl, Version=2.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\TabControl.2.1.2\lib\net35\TabControl.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CloseableTabControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="DbPlaning.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -97,6 +117,13 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>PlanningDataSet1.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Settings.cs" />
+    <Compile Include="SettingsEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SettingsEdit.Designer.cs">
+      <DependentUpon>SettingsEdit.cs</DependentUpon>
     </Compile>
     <Compile Include="ShipmentAdd.cs">
       <SubType>Form</SubType>
@@ -191,9 +218,9 @@
     <Compile Include="UserGroup.cs">
       <DependentUpon>DbPlaning.tt</DependentUpon>
     </Compile>
-    <Compile Include="VShipments.cs">
-      <DependentUpon>DbPlaning.tt</DependentUpon>
-    </Compile>
+    <EmbeddedResource Include="SettingsEdit.resx">
+      <DependentUpon>SettingsEdit.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ShipmentAdd.resx">
       <DependentUpon>ShipmentAdd.cs</DependentUpon>
     </EmbeddedResource>
