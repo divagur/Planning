@@ -23,7 +23,6 @@ namespace Planning
         DictSimple _dict;
         SqlDataAdapter adapter;
         SqlCommandBuilder commandBuilder;
-        string connectionString = @"Data Source=ПОЛЬЗОВАТЕЛЬ-ПК\SQLEXPRESS2017;Initial Catalog=Planning;User ID=SYSADM; Password = SYSADM";
         string sql = "";
 
 
@@ -114,12 +113,9 @@ namespace Planning
             edDelayComment.Text = _shipment.DelayComment;
             cbIsCourier.Checked = _shipment.IsCourier == null?false:(bool)_shipment.IsCourier;
             edSubmissionTime.Text = _shipment.SubmissionTime.ToString();
-            //dtSubmissionTime.Text = _shipment.SubmissionTime.ToString();
             edStartTime.Text = _shipment.StartTime.ToString();
             edEndDate.Text = _shipment.EndTime.ToString();
             edLeaveTime.Text = _shipment.LeaveTime.ToString();
-            //dtEndDatePlan.Text = _shipment.EndTimePlan.ToString();
-            //dtEndDateFact.Text = _shipment.EndTimeFact.ToString();
             edDriverFIO.Text = _shipment.DriverFio;
             edDriverPhone.Text = _shipment.DriverPhone;
             edForwarderFIO.Text = _shipment.ForwarderFio;
@@ -127,11 +123,10 @@ namespace Planning
             edTrailerNumber.Text = _shipment.TrailerNumber;
             edStamp.Text = _shipment.StampNumber;
             edAttorneyNumber.Text = _shipment.AttorneyNumber;
-            //dtAttorneyDate.Text = _shipment.AttorneyDate.ToString();
             edAttorneyDate.Text = _shipment.AttorneyDate.ToString();
             edAttorneyIssued.Text = _shipment.AttorneyIssued;
             cmbGate.Text = DataService.GetDictNameById("Ворота",_shipment.GateId);
-            cmbTimeSlot.Text = DataService.GetDictNameById("ТаймСлоты", _shipment.TimeSlotId);
+            cmbTimeSlot.Text = _shipment.TimeSlot.SlotTime.ToString();//DataService.GetDictValueById("ТаймСлоты","slot_time", _shipment.TimeSlotId);
             //cbIsCourier.Checked = (bool)_shipment.IsCourier;
             tblShipmentOrders.AutoGenerateColumns = false;
             tblShipmentOrders.DataSource = _shipment.ShipmentOrders.ToList();
@@ -259,7 +254,7 @@ namespace Planning
 
         public void SaveOrders()
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(DataService.connectionString))
             {
                 adapter.InsertCommand = new SqlCommand();
                 adapter.UpdateCommand = new SqlCommand();

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
+using System.Data.Entity.Core.EntityClient;
 using System.Configuration;
 using System.Windows.Forms;
 using Dapper;
@@ -216,6 +217,23 @@ namespace Planning
                 return db.Query<string>($"SELECT name FROM {DictInfo.TableName} where id = '{IdValue}'").FirstOrDefault();
             }
         }
+        public static string GetDictValueById(string DictName,string FieldValue, int? IdValue)
+        {
+            DictInfo DictInfo;
+
+            if (!Dicts.TryGetValue(DictName, out DictInfo))
+                return "???";
+
+            using (IDbConnection db = new SqlConnection(connectionString))
+            {
+                if (db.State == ConnectionState.Closed)
+                {
+                    db.Open();
+                }
+                //
+                return db.Query<string>($"SELECT {FieldValue} FROM {DictInfo.TableName} where id = '{IdValue}'").FirstOrDefault();
+            }
+        }
 
         public static int? SQLGetIntValue(string SQLExpr)
         {
@@ -249,6 +267,19 @@ namespace Planning
                 command.ExecuteScalar();
             }
             return true;
+        }
+
+        public static string GetEntityConnectionString(string connectionString)
+        {
+            var entityBuilder = new EntityConnectionStringBuilder();
+
+            // WARNING
+            // Check app config and set the appropriate DBModel
+            entityBuilder.Provider = "System.Data.SqlClient";
+            entityBuilder.ProviderConnectionString = connectionString + ";MultipleActiveResultSets=True;App=EntityFramework;";
+            entityBuilder.Metadata = @"res://*/DbPlaning.csdl|res://*/DbPlaning.ssdl|res://*/DbPlaning.msl";
+            
+            return entityBuilder.ToString();
         }
     }
 }

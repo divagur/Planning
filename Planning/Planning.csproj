@@ -36,11 +36,10 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>iop_cryptocurrency_logo_icon_131430.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BetterTabControl, Version=1.0.19295.1523, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\BetterTabControl.1.0.19295.1523\lib\net461\BetterTabControl.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Dapper.2.0.35\lib\net461\Dapper.dll</HintPath>
       <Private>True</Private>
@@ -342,6 +341,7 @@
       <DependentUpon>DbPlaning.edmx</DependentUpon>
       <LastGenOutput>DbPlaning.cs</LastGenOutput>
     </Content>
+    <Content Include="iop_cryptocurrency_logo_icon_131430.ico" />
     <Content Include="MDIWindowManager.xml" />
     <Content Include="Planing.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

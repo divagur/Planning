@@ -14,7 +14,6 @@ namespace Planning
 {
     public partial class ShipmentAdd : Form
     {
-        string connectionString = @"Data Source=ПОЛЬЗОВАТЕЛЬ-ПК\SQLEXPRESS2017;Initial Catalog=Planning;User ID=SYSADM; Password = SYSADM";
         DataSet ds;
         SqlDataAdapter adapter;
         SqlCommandBuilder commandBuilder;
@@ -55,7 +54,7 @@ namespace Planning
             int? DepositorLVId = DataService.GetDictIdByName("Депозиторы", cmbDepositor.Text);
             int Type = cmbType.SelectedIndex;
 
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(DataService.connectionString))
             {
                 if (connection.State == ConnectionState.Closed)
                     connection.Open();

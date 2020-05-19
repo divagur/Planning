@@ -612,7 +612,6 @@
             // 
             // shipmentBindingSource
             // 
-            this.shipmentBindingSource.DataSource = typeof(Planning.Shipment);
             // 
             // miSettings
             // 

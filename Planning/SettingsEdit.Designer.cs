@@ -81,14 +81,14 @@
             // 
             this.edServer.Location = new System.Drawing.Point(90, 6);
             this.edServer.Name = "edServer";
-            this.edServer.Size = new System.Drawing.Size(177, 20);
+            this.edServer.Size = new System.Drawing.Size(256, 20);
             this.edServer.TabIndex = 0;
             // 
             // edBase
             // 
             this.edBase.Location = new System.Drawing.Point(90, 33);
             this.edBase.Name = "edBase";
-            this.edBase.Size = new System.Drawing.Size(177, 20);
+            this.edBase.Size = new System.Drawing.Size(256, 20);
             this.edBase.TabIndex = 1;
             // 
             // edUser
@@ -108,7 +108,7 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(111, 110);
+            this.btnSave.Location = new System.Drawing.Point(190, 115);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 4;
@@ -118,7 +118,7 @@
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(192, 110);
+            this.btnClose.Location = new System.Drawing.Point(271, 115);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
             this.btnClose.TabIndex = 5;
@@ -130,7 +130,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(274, 140);
+            this.ClientSize = new System.Drawing.Size(356, 144);
             this.ControlBox = false;
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnSave);
@@ -142,6 +142,7 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "SettingsEdit";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;

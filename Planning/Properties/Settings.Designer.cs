@@ -27,7 +27,7 @@ namespace Planning.Properties {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
         [global::System.Configuration.DefaultSettingValueAttribute("Data Source=ПОЛЬЗОВАТЕЛЬ-ПК\\SQLEXPRESS2017;Initial Catalog=Planning;User ID=SYSAD" +
-            "M")]
+            "M; Password = SYSADM")]
         public string ConnectionString {
             get {
                 return ((string)(this["ConnectionString"]));

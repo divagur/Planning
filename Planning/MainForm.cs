@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Configuration;
 using MDIWindowManager;
 using System.Data.SqlClient;
+using System.Configuration;
 
 namespace Planning
 {
@@ -18,7 +19,7 @@ namespace Planning
        private string CR = Environment.NewLine;
 
         DataService dataService = new DataService();
-        PlanningDbContext context = new PlanningDbContext();
+        PlanningDbContext context;// = new PlanningDbContext();
 
         private int Xwid = 6;//координаты ширины по диагонали крестика
         private const int tab_margin = 5;//координаты по высоте крестика
@@ -84,22 +85,54 @@ namespace Planning
             }
         }
 
+        private void UpdateSetting()
+        {
+        /*    SettingsEdit frmSettingsEdit = new SettingsEdit(setting);
+            if (frmSettingsEdit.ShowDialog() == DialogResult.OK)
+            {
+                SettingsHandle.Save(setting);
+                DataService.connectionString = $"Data Source={setting.ServerName};Initial Catalog={setting.BaseName};User ID={setting.UserName}; Password = {setting.Password}";
+                context = new PlanningDbContext(DataService.GetEntityConnectionString(DataService.connectionString));
+                ShipmentsLoad();
+            }
+            */
+            DataService.connectionString = $"Data Source={setting.ServerName};Initial Catalog={setting.BaseName};User ID={setting.UserName}; Password = {setting.Password}";
+            context = new PlanningDbContext(DataService.GetEntityConnectionString(DataService.connectionString));
+            ShipmentsLoad();
+        }
+
         private void frmMain_Load(object sender, EventArgs e)
         {
 
             setting = SettingsHandle.Load();
+            /*
+            if(setting == null)
+            {
+                setting = new Settings();
+                UpdateSetting();
+            }
+            */
             if (setting == null)
             {
                 setting = new Settings();
+
                 SettingsEdit frmSettingsEdit = new SettingsEdit(setting);
+
+
+
                 if (frmSettingsEdit.ShowDialog() == DialogResult.OK)
                     SettingsHandle.Save(setting);
                 else
                     this.Close();
             }
 
-
+            UpdateSetting();
+            /*
             DataService.connectionString = $"Data Source={setting.ServerName};Initial Catalog={setting.BaseName};User ID={setting.UserName}; Password = {setting.Password}";
+            context = new PlanningDbContext(DataService.GetEntityConnectionString(DataService.connectionString));
+           */
+
+
             //DataService dataService = new DataService();
             DataService.Dicts.Add("Причины_задержки", new DictInfo{ TableName = "delay_reasons", NameColumn = "name" });
             DataService.Dicts.Add("Типы_операций", new DictInfo { TableName = "opers_type", NameColumn = "name" });
@@ -107,8 +140,8 @@ namespace Planning
             DataService.Dicts.Add("Депозиторы", new DictInfo { TableName = "depositors", NameColumn = "name" });
             DataService.Dicts.Add("ТаймСлоты", new DictInfo { TableName = "time_slot", NameColumn = "name" });
             //dataService.Dicts.Add("Ворота", "gateways");
-            tblShipments.AutoGenerateColumns = false;
-            ShipmentsLoad();
+            
+            
  
         }
 
@@ -532,8 +565,11 @@ namespace Planning
             if (frmSettingsEdit.ShowDialog()==DialogResult.OK)
             {
                 SettingsHandle.Save(setting);
+                /*
                 DataService.connectionString = $"Data Source={setting.ServerName};Initial Catalog={setting.BaseName};User ID={setting.UserName}; Password = {setting.Password}";
-                ShipmentsLoad();
+                context = new PlanningDbContext(DataService.GetEntityConnectionString(DataService.connectionString));
+                ShipmentsLoad();*/
+                UpdateSetting();
             }
         }
     }

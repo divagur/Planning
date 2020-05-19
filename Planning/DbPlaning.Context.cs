@@ -16,7 +16,12 @@ namespace Planning
     public partial class PlanningDbContext : DbContext
     {
         public PlanningDbContext()
-            : base("name=PlanningDbContext")
+            : base("name = PlanningDbContext")
+        {
+        }
+       
+        public PlanningDbContext(string connectionString)
+            : base(connectionString)
         {
         }
     

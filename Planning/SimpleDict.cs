@@ -18,7 +18,6 @@ namespace Planning
         SqlDataAdapter adapter;
         SqlCommandBuilder commandBuilder;
         Form _editForm;
-        string connectionString = @"Data Source=ПОЛЬЗОВАТЕЛЬ-ПК\SQLEXPRESS2017;Initial Catalog=Planning;User ID=SYSADM; Password = SYSADM";
         string sql = "";
 
         public SimpleDict(DictSimple dict)
@@ -32,7 +31,7 @@ namespace Planning
                 btnEdit.Visible = true; 
             }
             this.Text = _dict.Title;
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(DataService.connectionString))
             {
                 string sqlColumns = "";
 
@@ -89,7 +88,7 @@ namespace Planning
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(DataService.connectionString))
             {
                 adapter.InsertCommand = new SqlCommand();
                 adapter.UpdateCommand = new SqlCommand();
