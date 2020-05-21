@@ -263,8 +263,16 @@ namespace Planning
                 command.CommandType = CommandType.StoredProcedure;
 
                 command.Parameters.Add(new SqlParameter { ParameterName = "@ShID", Value = ShipmentId });
-
-                command.ExecuteScalar();
+                try
+                {
+                    command.ExecuteScalar();
+                }
+                catch (SqlException ex)
+                {
+                    MessageBox.Show("Ошибка при создании отгрузки: "+ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+                
             }
             return true;
         }

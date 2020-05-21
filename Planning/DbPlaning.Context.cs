@@ -16,15 +16,15 @@ namespace Planning
     public partial class PlanningDbContext : DbContext
     {
         public PlanningDbContext()
-            : base("name = PlanningDbContext")
+            : base("name=PlanningDbContext")
         {
         }
-       
+
         public PlanningDbContext(string connectionString)
             : base(connectionString)
         {
         }
-    
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();

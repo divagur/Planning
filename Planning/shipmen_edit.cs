@@ -126,7 +126,7 @@ namespace Planning
             edAttorneyDate.Text = _shipment.AttorneyDate.ToString();
             edAttorneyIssued.Text = _shipment.AttorneyIssued;
             cmbGate.Text = DataService.GetDictNameById("Ворота",_shipment.GateId);
-            cmbTimeSlot.Text = _shipment.TimeSlot.SlotTime.ToString();//DataService.GetDictValueById("ТаймСлоты","slot_time", _shipment.TimeSlotId);
+            cmbTimeSlot.Text = _shipment.TimeSlot==null?"":_shipment.TimeSlot.SlotTime.ToString();//DataService.GetDictValueById("ТаймСлоты","slot_time", _shipment.TimeSlotId);
             //cbIsCourier.Checked = (bool)_shipment.IsCourier;
             tblShipmentOrders.AutoGenerateColumns = false;
             tblShipmentOrders.DataSource = _shipment.ShipmentOrders.ToList();
@@ -219,16 +219,16 @@ namespace Planning
 
         private void tbtnAdd_Click(object sender, EventArgs e)
         {
-            DataRow row = ds.Tables[0].NewRow(); // добавляем новую строку в DataTable
-            ds.Tables[0].Rows.Add(row);
 
             ShipmentOrder shipmentOrder = new ShipmentOrder();
             var frmShipmentOrderEdit = new ShipmentOrderEdit(shipmentOrder);
 
-            frmShipmentOrderEdit.ShowDialog();
-            if (frmShipmentOrderEdit.DialogResult == DialogResult.Cancel)
-                return;
-            _context.ShipmentOrders.Add(shipmentOrder);
+            if (frmShipmentOrderEdit.ShowDialog() == DialogResult.OK)
+            {
+                shipmentOrder.ShipmentId = _shipment.Id;
+                _context.ShipmentOrders.Add(shipmentOrder);
+                tblShipmentOrders.DataSource = _shipment.ShipmentOrders.ToList();
+            }
             //row["shipment_id"] =_shipment.id;
         }
 
@@ -245,10 +245,11 @@ namespace Planning
 
         private void tbtnDel_Click(object sender, EventArgs e)
         {
-            // удаляем выделенные строки из dataGridView1
-            foreach (DataGridViewRow row in tblShipmentOrders.SelectedRows)
+            if (MessageBox.Show("Удалить заказ?", "Подверждение", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
-                tblShipmentOrders.Rows.Remove(row);
+                ShipmentOrder shipmentOrder = _context.ShipmentOrders.Find(tblShipmentOrders.Rows[tblShipmentOrders.CurrentCell.RowIndex].Cells["colId"].Value);
+                _context.ShipmentOrders.Remove(shipmentOrder);
+                tblShipmentOrders.DataSource = _shipment.ShipmentOrders.ToList();
             }
         }
 
@@ -382,10 +383,25 @@ namespace Planning
             btnEndDate.Tag = edEndDate;
             btnLeaveTime.Tag = edLeaveTime;
             btnSDate.Tag = edSDate;
+            if (_shipment.ShIn == null || _shipment.ShIn == true)
+            {
+                btnAddToLV.Visible = false;
+            }
         }
 
         private void monthCalendarSpecial_DateSelected(object sender, DateRangeEventArgs e)
         {
+            
+        }
+
+        private void btnAddToLV_Click(object sender, EventArgs e)
+        {
+
+                
+            if (DataService.AddShipmentToLV(_shipment.Id))
+            {
+                _shipment.IsAddLv = true;
+            }
             
         }
     }

@@ -47,6 +47,7 @@ namespace Planning
         public Nullable<System.TimeSpan> SpecialTime { get; set; }
         public Nullable<System.DateTime> EndTime { get; set; }
         public Nullable<System.DateTime> LeaveTime { get; set; }
+        public Nullable<bool> IsAddLv { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ShipmentOrder> ShipmentOrders { get; set; }

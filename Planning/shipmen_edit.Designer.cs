@@ -38,11 +38,6 @@
             this.cmbDelayReasons = new System.Windows.Forms.ComboBox();
             this.edDelayComment = new System.Windows.Forms.TextBox();
             this.gbTransport = new System.Windows.Forms.GroupBox();
-            this.btnEndDate = new System.Windows.Forms.Button();
-            this.btnAttorneyDate = new System.Windows.Forms.Button();
-            this.btnLeaveTime = new System.Windows.Forms.Button();
-            this.btnStartTime = new System.Windows.Forms.Button();
-            this.btnSubmissionTime = new System.Windows.Forms.Button();
             this.edAttorneyDate = new System.Windows.Forms.TextBox();
             this.edEndDate = new System.Windows.Forms.TextBox();
             this.edLeaveTime = new System.Windows.Forms.TextBox();
@@ -90,9 +85,6 @@
             this.colBindingId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colShipmentId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.tbtnAdd = new System.Windows.Forms.ToolStripButton();
-            this.tbtnEdit = new System.Windows.Forms.ToolStripButton();
-            this.tbtnDel = new System.Windows.Forms.ToolStripButton();
             this.label5 = new System.Windows.Forms.Label();
             this.pnGetDateTime = new System.Windows.Forms.Panel();
             this.btnCalendarCancel = new System.Windows.Forms.Button();
@@ -100,7 +92,16 @@
             this.dtSpecialTime = new System.Windows.Forms.DateTimePicker();
             this.monthCalendarSpecial = new System.Windows.Forms.MonthCalendar();
             this.edSDate = new System.Windows.Forms.TextBox();
+            this.tbtnAdd = new System.Windows.Forms.ToolStripButton();
+            this.tbtnEdit = new System.Windows.Forms.ToolStripButton();
+            this.tbtnDel = new System.Windows.Forms.ToolStripButton();
             this.btnSDate = new System.Windows.Forms.Button();
+            this.btnEndDate = new System.Windows.Forms.Button();
+            this.btnAttorneyDate = new System.Windows.Forms.Button();
+            this.btnLeaveTime = new System.Windows.Forms.Button();
+            this.btnStartTime = new System.Windows.Forms.Button();
+            this.btnSubmissionTime = new System.Windows.Forms.Button();
+            this.btnAddToLV = new System.Windows.Forms.Button();
             this.gbTransport.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tblShipmentOrders)).BeginInit();
@@ -223,56 +224,6 @@
             this.gbTransport.Size = new System.Drawing.Size(824, 252);
             this.gbTransport.TabIndex = 10;
             this.gbTransport.TabStop = false;
-            // 
-            // btnEndDate
-            // 
-            this.btnEndDate.Image = global::Planning.Properties.Resources.calendar;
-            this.btnEndDate.Location = new System.Drawing.Point(252, 43);
-            this.btnEndDate.Name = "btnEndDate";
-            this.btnEndDate.Size = new System.Drawing.Size(31, 22);
-            this.btnEndDate.TabIndex = 5;
-            this.btnEndDate.UseVisualStyleBackColor = true;
-            this.btnEndDate.Click += new System.EventHandler(this.btnShowCalendar_Click);
-            // 
-            // btnAttorneyDate
-            // 
-            this.btnAttorneyDate.Image = global::Planning.Properties.Resources.calendar;
-            this.btnAttorneyDate.Location = new System.Drawing.Point(545, 172);
-            this.btnAttorneyDate.Name = "btnAttorneyDate";
-            this.btnAttorneyDate.Size = new System.Drawing.Size(31, 22);
-            this.btnAttorneyDate.TabIndex = 16;
-            this.btnAttorneyDate.UseVisualStyleBackColor = true;
-            this.btnAttorneyDate.Click += new System.EventHandler(this.btnShowCalendar_Click);
-            // 
-            // btnLeaveTime
-            // 
-            this.btnLeaveTime.Image = global::Planning.Properties.Resources.calendar;
-            this.btnLeaveTime.Location = new System.Drawing.Point(534, 43);
-            this.btnLeaveTime.Name = "btnLeaveTime";
-            this.btnLeaveTime.Size = new System.Drawing.Size(31, 22);
-            this.btnLeaveTime.TabIndex = 7;
-            this.btnLeaveTime.UseVisualStyleBackColor = true;
-            this.btnLeaveTime.Click += new System.EventHandler(this.btnShowCalendar_Click);
-            // 
-            // btnStartTime
-            // 
-            this.btnStartTime.Image = global::Planning.Properties.Resources.calendar;
-            this.btnStartTime.Location = new System.Drawing.Point(534, 16);
-            this.btnStartTime.Name = "btnStartTime";
-            this.btnStartTime.Size = new System.Drawing.Size(31, 22);
-            this.btnStartTime.TabIndex = 3;
-            this.btnStartTime.UseVisualStyleBackColor = true;
-            this.btnStartTime.Click += new System.EventHandler(this.btnShowCalendar_Click);
-            // 
-            // btnSubmissionTime
-            // 
-            this.btnSubmissionTime.Image = global::Planning.Properties.Resources.calendar;
-            this.btnSubmissionTime.Location = new System.Drawing.Point(252, 16);
-            this.btnSubmissionTime.Name = "btnSubmissionTime";
-            this.btnSubmissionTime.Size = new System.Drawing.Size(31, 22);
-            this.btnSubmissionTime.TabIndex = 1;
-            this.btnSubmissionTime.UseVisualStyleBackColor = true;
-            this.btnSubmissionTime.Click += new System.EventHandler(this.btnShowCalendar_Click);
             // 
             // edAttorneyDate
             // 
@@ -677,36 +628,6 @@
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // tbtnAdd
-            // 
-            this.tbtnAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tbtnAdd.Image = global::Planning.Properties.Resources.Add;
-            this.tbtnAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tbtnAdd.Name = "tbtnAdd";
-            this.tbtnAdd.Size = new System.Drawing.Size(23, 22);
-            this.tbtnAdd.Text = "toolStripButton1";
-            this.tbtnAdd.Click += new System.EventHandler(this.tbtnAdd_Click);
-            // 
-            // tbtnEdit
-            // 
-            this.tbtnEdit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tbtnEdit.Image = global::Planning.Properties.Resources.Edit;
-            this.tbtnEdit.ImageTransparentColor = System.Drawing.Color.White;
-            this.tbtnEdit.Name = "tbtnEdit";
-            this.tbtnEdit.Size = new System.Drawing.Size(23, 22);
-            this.tbtnEdit.Text = "toolStripButton2";
-            this.tbtnEdit.Click += new System.EventHandler(this.tbtnEdit_Click);
-            // 
-            // tbtnDel
-            // 
-            this.tbtnDel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tbtnDel.Image = global::Planning.Properties.Resources.Delete;
-            this.tbtnDel.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tbtnDel.Name = "tbtnDel";
-            this.tbtnDel.Size = new System.Drawing.Size(23, 22);
-            this.tbtnDel.Text = "toolStripButton3";
-            this.tbtnDel.Click += new System.EventHandler(this.tbtnDel_Click);
-            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -774,6 +695,39 @@
             this.edSDate.Size = new System.Drawing.Size(118, 20);
             this.edSDate.TabIndex = 0;
             // 
+            // tbtnAdd
+            // 
+            this.tbtnAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbtnAdd.Image = global::Planning.Properties.Resources.Add;
+            this.tbtnAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbtnAdd.Name = "tbtnAdd";
+            this.tbtnAdd.Size = new System.Drawing.Size(23, 22);
+            this.tbtnAdd.Text = "toolStripButton1";
+            this.tbtnAdd.ToolTipText = "Добавить заказ";
+            this.tbtnAdd.Click += new System.EventHandler(this.tbtnAdd_Click);
+            // 
+            // tbtnEdit
+            // 
+            this.tbtnEdit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbtnEdit.Image = global::Planning.Properties.Resources.Edit;
+            this.tbtnEdit.ImageTransparentColor = System.Drawing.Color.White;
+            this.tbtnEdit.Name = "tbtnEdit";
+            this.tbtnEdit.Size = new System.Drawing.Size(23, 22);
+            this.tbtnEdit.Text = "toolStripButton2";
+            this.tbtnEdit.ToolTipText = "Редактировать заказ";
+            this.tbtnEdit.Click += new System.EventHandler(this.tbtnEdit_Click);
+            // 
+            // tbtnDel
+            // 
+            this.tbtnDel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbtnDel.Image = global::Planning.Properties.Resources.Delete;
+            this.tbtnDel.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbtnDel.Name = "tbtnDel";
+            this.tbtnDel.Size = new System.Drawing.Size(23, 22);
+            this.tbtnDel.Text = "toolStripButton3";
+            this.tbtnDel.ToolTipText = "Удалить заказ";
+            this.tbtnDel.Click += new System.EventHandler(this.tbtnDel_Click);
+            // 
             // btnSDate
             // 
             this.btnSDate.Image = global::Planning.Properties.Resources.calendar;
@@ -784,11 +738,72 @@
             this.btnSDate.UseVisualStyleBackColor = true;
             this.btnSDate.Click += new System.EventHandler(this.btnShowCalendar_Click);
             // 
+            // btnEndDate
+            // 
+            this.btnEndDate.Image = global::Planning.Properties.Resources.calendar;
+            this.btnEndDate.Location = new System.Drawing.Point(252, 43);
+            this.btnEndDate.Name = "btnEndDate";
+            this.btnEndDate.Size = new System.Drawing.Size(31, 22);
+            this.btnEndDate.TabIndex = 5;
+            this.btnEndDate.UseVisualStyleBackColor = true;
+            this.btnEndDate.Click += new System.EventHandler(this.btnShowCalendar_Click);
+            // 
+            // btnAttorneyDate
+            // 
+            this.btnAttorneyDate.Image = global::Planning.Properties.Resources.calendar;
+            this.btnAttorneyDate.Location = new System.Drawing.Point(545, 172);
+            this.btnAttorneyDate.Name = "btnAttorneyDate";
+            this.btnAttorneyDate.Size = new System.Drawing.Size(31, 22);
+            this.btnAttorneyDate.TabIndex = 16;
+            this.btnAttorneyDate.UseVisualStyleBackColor = true;
+            this.btnAttorneyDate.Click += new System.EventHandler(this.btnShowCalendar_Click);
+            // 
+            // btnLeaveTime
+            // 
+            this.btnLeaveTime.Image = global::Planning.Properties.Resources.calendar;
+            this.btnLeaveTime.Location = new System.Drawing.Point(534, 43);
+            this.btnLeaveTime.Name = "btnLeaveTime";
+            this.btnLeaveTime.Size = new System.Drawing.Size(31, 22);
+            this.btnLeaveTime.TabIndex = 7;
+            this.btnLeaveTime.UseVisualStyleBackColor = true;
+            this.btnLeaveTime.Click += new System.EventHandler(this.btnShowCalendar_Click);
+            // 
+            // btnStartTime
+            // 
+            this.btnStartTime.Image = global::Planning.Properties.Resources.calendar;
+            this.btnStartTime.Location = new System.Drawing.Point(534, 16);
+            this.btnStartTime.Name = "btnStartTime";
+            this.btnStartTime.Size = new System.Drawing.Size(31, 22);
+            this.btnStartTime.TabIndex = 3;
+            this.btnStartTime.UseVisualStyleBackColor = true;
+            this.btnStartTime.Click += new System.EventHandler(this.btnShowCalendar_Click);
+            // 
+            // btnSubmissionTime
+            // 
+            this.btnSubmissionTime.Image = global::Planning.Properties.Resources.calendar;
+            this.btnSubmissionTime.Location = new System.Drawing.Point(252, 16);
+            this.btnSubmissionTime.Name = "btnSubmissionTime";
+            this.btnSubmissionTime.Size = new System.Drawing.Size(31, 22);
+            this.btnSubmissionTime.TabIndex = 1;
+            this.btnSubmissionTime.UseVisualStyleBackColor = true;
+            this.btnSubmissionTime.Click += new System.EventHandler(this.btnShowCalendar_Click);
+            // 
+            // btnAddToLV
+            // 
+            this.btnAddToLV.Location = new System.Drawing.Point(556, 659);
+            this.btnAddToLV.Name = "btnAddToLV";
+            this.btnAddToLV.Size = new System.Drawing.Size(124, 23);
+            this.btnAddToLV.TabIndex = 36;
+            this.btnAddToLV.Text = "Создать в LV";
+            this.btnAddToLV.UseVisualStyleBackColor = true;
+            this.btnAddToLV.Click += new System.EventHandler(this.btnAddToLV_Click);
+            // 
             // shipmen_edit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(847, 694);
+            this.Controls.Add(this.btnAddToLV);
             this.Controls.Add(this.pnGetDateTime);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.groupBox1);
@@ -900,5 +915,6 @@
         private System.Windows.Forms.TextBox edAttorneyDate;
         private System.Windows.Forms.TextBox edSDate;
         private System.Windows.Forms.Button btnSDate;
+        private System.Windows.Forms.Button btnAddToLV;
     }
 }

@@ -66,8 +66,8 @@
           <Property Name="sp_condition" Type="bit" />
           <Property Name="driver_phone" Type="varchar" MaxLength="30" />
           <Property Name="driver_fio" Type="varchar" MaxLength="80" />
-          <Property Name="vehicle_number" Type="varchar" MaxLength="10" />
-          <Property Name="trailer_number" Type="varchar" MaxLength="10" />
+          <Property Name="vehicle_number" Type="varchar" MaxLength="20" />
+          <Property Name="trailer_number" Type="varchar" MaxLength="20" />
           <Property Name="attorney_number" Type="varchar" MaxLength="30" />
           <Property Name="attorney_date" Type="date" />
           <Property Name="submission_time" Type="datetime" />
@@ -83,6 +83,7 @@
           <Property Name="attorney_issued" Type="varchar" MaxLength="150" />
           <Property Name="s_in" Type="bit" />
           <Property Name="special_time" Type="time" Precision="0" />
+          <Property Name="is_add_lv" Type="bit" />
         </EntityType>
         <EntityType Name="time_slot">
           <Key>
@@ -120,8 +121,6 @@
           <Property Name="name" Type="varchar" MaxLength="254" />
           <Property Name="access" Type="tinyint" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'Planning.dbo.v_shipments' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <Association Name="FK_shipment_orders_shipments">
           <End Role="shipments" Type="Self.shipments" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -338,8 +337,8 @@ warning 6002: The table/view 'Planning.dbo.v_shipments' does not have a primary 
           <Property Name="SpCondition" Type="Boolean" />
           <Property Name="DriverPhone" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="DriverFio" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
-          <Property Name="VehicleNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="TrailerNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="VehicleNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="TrailerNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="AttorneyNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="AttorneyDate" Type="DateTime" Precision="0" />
           <Property Name="SubmissionTime" Type="DateTime" Precision="3" />
@@ -360,6 +359,7 @@ warning 6002: The table/view 'Planning.dbo.v_shipments' does not have a primary 
           <Property Name="SpecialTime" Type="Time" Precision="0" />
           <Property Name="EndTime" Type="DateTime" Precision="3" />
           <Property Name="LeaveTime" Type="DateTime" Precision="3" />
+          <Property Name="IsAddLv" Type="Boolean" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -571,6 +571,7 @@ warning 6002: The table/view 'Planning.dbo.v_shipments' does not have a primary 
           <EntitySetMapping Name="Shipments">
             <EntityTypeMapping TypeName="PlanningModel.Shipment">
               <MappingFragment StoreEntitySet="shipments">
+                <ScalarProperty Name="IsAddLv" ColumnName="is_add_lv" />
                 <ScalarProperty Name="LeaveTime" ColumnName="leave_time" />
                 <ScalarProperty Name="EndTime" ColumnName="end_time" />
                 <ScalarProperty Name="SpecialTime" ColumnName="special_time" />

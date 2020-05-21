@@ -151,6 +151,7 @@ namespace Planning
             _shipment.ShIn = cmbType.Text == "Вход" ? true : false;
             _shipment.DepositorId = DataService.GetDictIdByName("Депозиторы", cmbDepositor.Text);
             _shipment.TimeSlotId = DataService.GetDictIdByCondition("ТаймСлоты", $"depositor_id = {_shipment.DepositorId} and slot_time = '{cmbTimeSlot.Text}'");
+            _shipment.IsAddLv = false;
 
             for (int i = 0;i<tblShipmentItem.RowCount;i++)
             {
@@ -158,6 +159,7 @@ namespace Planning
                 
                 shipmentOrder.OrderId = tblShipmentItem.Rows[i].Cells["colItemId"].Value.ToString();
                 shipmentOrder.LVOrderId = (int?)tblShipmentItem.Rows[i].Cells["colLVOrdId"].Value;
+                shipmentOrder.lv_order_code = tblShipmentItem.Rows[i].Cells["colItemId"].Value.ToString();
                 _shipment.ShipmentOrders.Add(shipmentOrder);
             }
 

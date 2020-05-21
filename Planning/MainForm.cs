@@ -231,8 +231,10 @@ namespace Planning
             if (frmShipmentEdit.ShowDialog() == DialogResult.OK)
             {
                 context.SaveChanges();
-
-               AddShToLV(shipment);
+                if (shipment.IsAddLv == true)
+                {
+                    AddShToLV(shipment);
+                }
 
                 tblShipments.Refresh();
             }
@@ -256,7 +258,7 @@ namespace Planning
             {
                 context.Shipments.Add(shipment);
                 context.SaveChanges();
-                AddShToLV(shipment);
+                //AddShToLV(shipment);
 
 
                 if (result == DialogResult.Retry)
@@ -269,7 +271,7 @@ namespace Planning
 
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
-            tblShipments.DataSource = DataService.GetAll();
+            ShipmentsLoad();
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
@@ -326,55 +328,61 @@ namespace Planning
 
         private void tblShipments_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
-            
-            if (e.ColumnIndex == ((DataGridView)sender).Columns["colCopmletePct"].Index && e.RowIndex>=0)
+            if (e.RowIndex >= 0)
             {
-         
-
-                using (
-                    Brush gridBrush = new SolidBrush(this.tblShipments.GridColor),
-                    backColorBrush = new SolidBrush(e.CellStyle.BackColor))
+                if (e.ColumnIndex == ((DataGridView)sender).Columns["colCopmletePct"].Index)
                 {
-                    using (Pen gridLinePen = new Pen(gridBrush))
+
+
+                    using (
+                        Brush gridBrush = new SolidBrush(this.tblShipments.GridColor),
+                        backColorBrush = new SolidBrush(e.CellStyle.BackColor))
                     {
-                        // Erase the cell.
-                        e.Graphics.FillRectangle(backColorBrush, e.CellBounds);
-                        
-                        // Draw the grid lines (only the right and bottom lines;
-                        // DataGridView takes care of the others).
-                        e.Graphics.DrawLine(gridLinePen, e.CellBounds.Left,
-                            e.CellBounds.Bottom - 1, e.CellBounds.Right - 1,
-                            e.CellBounds.Bottom - 1);
-                        e.Graphics.DrawLine(gridLinePen, e.CellBounds.Right - 1,
-                            e.CellBounds.Top, e.CellBounds.Right - 1,
-                            e.CellBounds.Bottom);
-
-                        // Draw the inset highlight box.
-                        //e.Graphics.DrawRectangle(Pens.Blue, newRect);
-                        
-                        // Draw the text content of the cell, ignoring alignment.
-                        if (e.Value !=DBNull.Value)
+                        using (Pen gridLinePen = new Pen(gridBrush))
                         {
-                            decimal doneShare =(decimal)((DataGridView)sender).Rows[e.RowIndex].Cells["colDoneShare"].Value*100;
+                            // Erase the cell.
+                            e.Graphics.FillRectangle(backColorBrush, e.CellBounds);
 
-                            int progressWidth = (Convert.ToInt32(doneShare) * e.CellBounds.Width) / 100;
+                            // Draw the grid lines (only the right and bottom lines;
+                            // DataGridView takes care of the others).
+                            e.Graphics.DrawLine(gridLinePen, e.CellBounds.Left,
+                                e.CellBounds.Bottom - 1, e.CellBounds.Right - 1,
+                                e.CellBounds.Bottom - 1);
+                            e.Graphics.DrawLine(gridLinePen, e.CellBounds.Right - 1,
+                                e.CellBounds.Top, e.CellBounds.Right - 1,
+                                e.CellBounds.Bottom);
 
-                            Rectangle newRect = new Rectangle(e.CellBounds.X + 0,
-                                e.CellBounds.Y + 0, progressWidth,
-                                e.CellBounds.Height - 1);
+                            // Draw the inset highlight box.
+                            //e.Graphics.DrawRectangle(Pens.Blue, newRect);
 
-                            StringFormat stringFormat = new StringFormat();
-                            stringFormat.Alignment = StringAlignment.Center;
-                            stringFormat.LineAlignment = StringAlignment.Center;
+                            // Draw the text content of the cell, ignoring alignment.
+                            if (e.Value != DBNull.Value)
+                            {
+                                decimal doneShare = (decimal)((DataGridView)sender).Rows[e.RowIndex].Cells["colDoneShare"].Value * 100;
 
-                            e.Graphics.FillRectangle(new SolidBrush(Color.DarkGreen), newRect);
-                            e.Graphics.DrawString((String)e.Value, e.CellStyle.Font,
-                                Brushes.Black, e.CellBounds, stringFormat);// e.CellBounds.X + 2,e.CellBounds.Y + 2 StringFormat.GenericDefault
+                                int progressWidth = (Convert.ToInt32(doneShare) * e.CellBounds.Width) / 100;
+
+                                Rectangle newRect = new Rectangle(e.CellBounds.X + 0,
+                                    e.CellBounds.Y + 0, progressWidth,
+                                    e.CellBounds.Height - 1);
+
+                                StringFormat stringFormat = new StringFormat();
+                                stringFormat.Alignment = StringAlignment.Center;
+                                stringFormat.LineAlignment = StringAlignment.Center;
+
+                                e.Graphics.FillRectangle(new SolidBrush(Color.LightGreen), newRect);
+                                e.Graphics.DrawString((String)e.Value, e.CellStyle.Font,
+                                    Brushes.Black, e.CellBounds, stringFormat);// e.CellBounds.X + 2,e.CellBounds.Y + 2 StringFormat.GenericDefault
+                            }
+                            e.Handled = true;
                         }
-                        e.Handled = true;
                     }
                 }
-            }
+                else if ((bool)((DataGridView)sender).Rows[e.RowIndex].Cells["IsAddLv"].Value != true)
+                {
+                    e.CellStyle.ForeColor = Color.Blue;
+                }
+             }
         }
 
         private void edCurrDay_ValueChanged(object sender, EventArgs e)

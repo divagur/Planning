@@ -16,7 +16,8 @@ namespace Planning
         DataSet ds;
         DictSimple _dict;
         SqlDataAdapter adapter;
-        SqlCommandBuilder commandBuilder;
+        //SqlConnection connection;
+        string connectionString;// = @"Data Source=ПОЛЬЗОВАТЕЛЬ-ПК\SQLEXPRESS2017;Initial Catalog=Planning;User ID=SYSADM; Password = SYSADM";
         Form _editForm;
         string sql = "";
 
@@ -31,7 +32,8 @@ namespace Planning
                 btnEdit.Visible = true; 
             }
             this.Text = _dict.Title;
-            using (SqlConnection connection = new SqlConnection(DataService.connectionString))
+            connectionString = DataService.connectionString;
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 string sqlColumns = "";
 
@@ -43,15 +45,15 @@ namespace Planning
                     column.DataPropertyName = dictColumn.DataField;
                     column.Visible = dictColumn.IsVisible;
                     column.Width = dictColumn.Width;
-                    
+
                     tblDelayReasons.Columns.Add(column);
                     sqlColumns = (sqlColumns == "") ? dictColumn.DataField : sqlColumns + "," + dictColumn.DataField;
                 }
 
                 sql = String.Format("select {0} from {1}", sqlColumns, _dict.TableName);
                 connection.Open();
-                adapter = new SqlDataAdapter(sql, connection);
 
+                adapter = new SqlDataAdapter(sql, connection);
                 ds = new DataSet();
 
                 adapter.Fill(ds);
@@ -62,7 +64,7 @@ namespace Planning
 
                 // делаем недоступным столбец id для изменения
                 //tblDelayReasons.Columns["id"].Visible = false;
-            }
+            }   
         }
 /*
         public DelayReasons()
@@ -90,6 +92,9 @@ namespace Planning
         {
             using (SqlConnection connection = new SqlConnection(DataService.connectionString))
             {
+
+                tblDelayReasons.EndEdit();
+                tblDelayReasons.BindingContext[tblDelayReasons.DataSource].EndCurrentEdit();
                 adapter.InsertCommand = new SqlCommand();
                 adapter.UpdateCommand = new SqlCommand();
                 adapter.DeleteCommand = new SqlCommand();
@@ -98,7 +103,7 @@ namespace Planning
                 string insertValues = "";
                 string pkCondition = "";
                 string updateColumns = "";
-                foreach(DictColumn column in _dict.Columns)
+                foreach (DictColumn column in _dict.Columns)
                 {
                     if (!column.IsPK)
                     {
@@ -118,11 +123,9 @@ namespace Planning
                 }
                 /*adapter.InsertCommand = new SqlCommand("Insert into delay_reasons(name) values(@Name)", connection);
                 adapter.InsertCommand.Parameters.Add(new SqlParameter("@Name", SqlDbType.NVarChar, 254, "name"));
-
                 adapter.UpdateCommand = new SqlCommand("update delay_reasons set name = @Name where id = @Id", connection);
                 adapter.UpdateCommand.Parameters.Add(new SqlParameter("@Name", SqlDbType.NVarChar, 254, "name"));
                 adapter.UpdateCommand.Parameters.Add(new SqlParameter("@Id", SqlDbType.Int, 0, "id"));
-
                 adapter.DeleteCommand = new SqlCommand("delete delay_reasons where id = @Id", connection);
                 adapter.DeleteCommand.Parameters.Add(new SqlParameter("@Id", SqlDbType.Int, 0, "id"));
                 */
@@ -139,9 +142,9 @@ namespace Planning
                 }
                 catch (System.Data.SqlClient.SqlException ex)
                 {
-                    MessageBox.Show(ex.Message,"Ошибка",MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-                
+
             }
         }
 

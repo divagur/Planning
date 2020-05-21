@@ -351,6 +351,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Planing.cs</LastGenOutput>
     </Content>
+    <None Include="Resources\arrow_refresh_8563.png" />
     <Content Include="Resources\calendar.png" />
   </ItemGroup>
   <ItemGroup>
