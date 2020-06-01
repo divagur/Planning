@@ -19,12 +19,13 @@ namespace Planning
             : base("name=PlanningDbContext")
         {
         }
+    
 
         public PlanningDbContext(string connectionString)
-            : base(connectionString)
+            :base(connectionString)
         {
-        }
 
+        }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
@@ -39,5 +40,7 @@ namespace Planning
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserGroup> UserGroups { get; set; }
         public virtual DbSet<TimeSlot> TimeSlots { get; set; }
+        public virtual DbSet<LvAttr> LvAttr { get; set; }
+        public virtual DbSet<ShipmentElement> ShipmentElements { get; set; }
     }
 }

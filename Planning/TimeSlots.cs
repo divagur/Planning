@@ -15,10 +15,10 @@ namespace Planning
     public partial class TimeSlots : Form
     {
         PlanningDbContext _context;
-        public TimeSlots(PlanningDbContext Context)
+        public TimeSlots()
         {
             InitializeComponent();
-            _context = Context;
+            _context = DataService.context;
         }
         private void Save()
         {
@@ -46,12 +46,12 @@ namespace Planning
         private void btnAddRow_Click(object sender, EventArgs e)
         {
             TimeSlot timeSlot = new TimeSlot();
-            var frmTimeSlotEdit = new TimeSlotEdit(timeSlot, _context);
+            var frmTimeSlotEdit = new TimeSlotEdit(timeSlot);
 
             frmTimeSlotEdit.ShowDialog();
             if (frmTimeSlotEdit.DialogResult == DialogResult.Cancel)
                 return;
-            _context.TimeSlots.Add(timeSlot);
+            DataService.context.TimeSlots.Add(timeSlot);
             Save();
             
         }
@@ -59,7 +59,7 @@ namespace Planning
         private void btnEdit_Click(object sender, EventArgs e)
         {
             TimeSlot timeSlot = _context.TimeSlots.Find(tblTimeSlot.Rows[tblTimeSlot.CurrentCell.RowIndex].Cells["colId"].Value);
-            var frmTimeSlotEdit = new TimeSlotEdit(timeSlot, _context);
+            var frmTimeSlotEdit = new TimeSlotEdit(timeSlot);
 
             frmTimeSlotEdit.ShowDialog();
             if (frmTimeSlotEdit.DialogResult == DialogResult.Cancel)

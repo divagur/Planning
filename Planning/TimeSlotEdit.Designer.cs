@@ -40,7 +40,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 21);
+            this.label1.Location = new System.Drawing.Point(11, 15);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(63, 13);
             this.label1.TabIndex = 0;
@@ -49,7 +49,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 49);
+            this.label2.Location = new System.Drawing.Point(11, 43);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(31, 13);
             this.label2.TabIndex = 1;
@@ -58,14 +58,14 @@
             // cmbDepositor
             // 
             this.cmbDepositor.FormattingEnabled = true;
-            this.cmbDepositor.Location = new System.Drawing.Point(81, 18);
+            this.cmbDepositor.Location = new System.Drawing.Point(80, 12);
             this.cmbDepositor.Name = "cmbDepositor";
             this.cmbDepositor.Size = new System.Drawing.Size(240, 21);
             this.cmbDepositor.TabIndex = 2;
             // 
             // edTimeSlot
             // 
-            this.edTimeSlot.Location = new System.Drawing.Point(81, 45);
+            this.edTimeSlot.Location = new System.Drawing.Point(80, 39);
             this.edTimeSlot.Mask = "00:00:00";
             this.edTimeSlot.Name = "edTimeSlot";
             this.edTimeSlot.Size = new System.Drawing.Size(100, 20);
@@ -73,7 +73,7 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(15, 85);
+            this.btnSave.Location = new System.Drawing.Point(164, 65);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 4;
@@ -83,7 +83,7 @@
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(96, 85);
+            this.btnClose.Location = new System.Drawing.Point(245, 65);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
             this.btnClose.TabIndex = 5;
@@ -95,7 +95,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(323, 115);
+            this.ClientSize = new System.Drawing.Size(330, 96);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.edTimeSlot);

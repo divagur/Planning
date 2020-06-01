@@ -12,6 +12,7 @@ using Dapper;
 
 namespace Planning
 {
+    
     public enum EntityState
     {
         Unchanged,
@@ -30,6 +31,7 @@ namespace Planning
         public int Length;
         public int Width = 100;
         public bool IsVisible;
+        public List<string> ItemValues;
     }
     public class DictSimple
     {
@@ -54,6 +56,7 @@ namespace Planning
 
     public class DataService
     {
+        public static PlanningDbContext context;
         //public static string connectionString = @"Data Source=ПОЛЬЗОВАТЕЛЬ-ПК\SQLEXPRESS2017;Initial Catalog=Planning;User ID=SYSADM; Password = SYSADM";
         public static string connectionString = "";
         public static Dictionary<string, DictInfo> Dicts = new Dictionary<string, DictInfo>();

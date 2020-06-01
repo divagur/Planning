@@ -1,6 +1,6 @@
 ﻿namespace Planning
 {
-    partial class TimeSlots
+    partial class ShipmentElements
     {
         /// <summary>
         /// Required designer variable.
@@ -28,26 +28,38 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TimeSlots));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ShipmentElements));
+            this.tblElements = new System.Windows.Forms.DataGridView();
             this.tbMain = new System.Windows.Forms.ToolStrip();
             this.btnAddRow = new System.Windows.Forms.ToolStripButton();
             this.btnEdit = new System.Windows.Forms.ToolStripButton();
             this.btnDelRow = new System.Windows.Forms.ToolStripButton();
             this.btnSave = new System.Windows.Forms.ToolStripButton();
-            this.tblTimeSlot = new System.Windows.Forms.DataGridView();
             this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDepositor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colTimeSlot = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.depId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.depositorsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.planningDataSet1 = new Planning.PlanningDataSet1();
-            this.depositorsTableAdapter = new Planning.PlanningDataSet1TableAdapters.depositorsTableAdapter();
+            this.colFieldName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colFieldDbName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colFieldType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)(this.tblElements)).BeginInit();
             this.tbMain.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tblTimeSlot)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.depositorsBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.planningDataSet1)).BeginInit();
             this.SuspendLayout();
+            // 
+            // tblElements
+            // 
+            this.tblElements.AllowUserToAddRows = false;
+            this.tblElements.AllowUserToDeleteRows = false;
+            this.tblElements.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.tblElements.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colId,
+            this.colFieldName,
+            this.colFieldDbName,
+            this.colFieldType});
+            this.tblElements.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tblElements.Location = new System.Drawing.Point(0, 25);
+            this.tblElements.Name = "tblElements";
+            this.tblElements.ReadOnly = true;
+            this.tblElements.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.tblElements.Size = new System.Drawing.Size(766, 394);
+            this.tblElements.TabIndex = 4;
             // 
             // tbMain
             // 
@@ -58,8 +70,8 @@
             this.btnSave});
             this.tbMain.Location = new System.Drawing.Point(0, 0);
             this.tbMain.Name = "tbMain";
-            this.tbMain.Size = new System.Drawing.Size(829, 25);
-            this.tbMain.TabIndex = 1;
+            this.tbMain.Size = new System.Drawing.Size(766, 25);
+            this.tbMain.TabIndex = 3;
             this.tbMain.Text = "toolStrip1";
             // 
             // btnAddRow
@@ -107,86 +119,52 @@
             this.btnSave.ToolTipText = "Сохранить";
             this.btnSave.Visible = false;
             // 
-            // tblTimeSlot
-            // 
-            this.tblTimeSlot.AllowUserToAddRows = false;
-            this.tblTimeSlot.AllowUserToDeleteRows = false;
-            this.tblTimeSlot.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.tblTimeSlot.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colId,
-            this.colDepositor,
-            this.colTimeSlot,
-            this.depId});
-            this.tblTimeSlot.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tblTimeSlot.Location = new System.Drawing.Point(0, 25);
-            this.tblTimeSlot.Name = "tblTimeSlot";
-            this.tblTimeSlot.ReadOnly = true;
-            this.tblTimeSlot.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.tblTimeSlot.Size = new System.Drawing.Size(829, 444);
-            this.tblTimeSlot.TabIndex = 2;
-            // 
             // colId
             // 
-            this.colId.DataPropertyName = "ts_id";
+            this.colId.DataPropertyName = "id";
             this.colId.HeaderText = "Id";
             this.colId.Name = "colId";
             this.colId.ReadOnly = true;
             this.colId.Visible = false;
             // 
-            // colDepositor
+            // colFieldName
             // 
-            this.colDepositor.DataPropertyName = "dep_name";
-            this.colDepositor.HeaderText = "Депозитор";
-            this.colDepositor.Name = "colDepositor";
-            this.colDepositor.ReadOnly = true;
-            this.colDepositor.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colDepositor.Width = 200;
+            this.colFieldName.DataPropertyName = "field_name";
+            this.colFieldName.HeaderText = "Наименование";
+            this.colFieldName.Name = "colFieldName";
+            this.colFieldName.ReadOnly = true;
+            this.colFieldName.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colFieldName.Width = 300;
             // 
-            // colTimeSlot
+            // colFieldDbName
             // 
-            this.colTimeSlot.DataPropertyName = "slot_time";
-            this.colTimeSlot.HeaderText = "Тайм слот";
-            this.colTimeSlot.Name = "colTimeSlot";
-            this.colTimeSlot.ReadOnly = true;
+            this.colFieldDbName.DataPropertyName = "field_db_name";
+            this.colFieldDbName.HeaderText = "Поле БД";
+            this.colFieldDbName.Name = "colFieldDbName";
+            this.colFieldDbName.ReadOnly = true;
+            this.colFieldDbName.Width = 300;
             // 
-            // depId
+            // colFieldType
             // 
-            this.depId.DataPropertyName = "dep_id";
-            this.depId.HeaderText = "depId";
-            this.depId.Name = "depId";
-            this.depId.ReadOnly = true;
-            this.depId.Visible = false;
+            this.colFieldType.DataPropertyName = "field_type_name";
+            this.colFieldType.HeaderText = "Тип данных";
+            this.colFieldType.Name = "colFieldType";
+            this.colFieldType.ReadOnly = true;
+            this.colFieldType.Width = 150;
             // 
-            // depositorsBindingSource
-            // 
-            this.depositorsBindingSource.DataMember = "depositors";
-            this.depositorsBindingSource.DataSource = this.planningDataSet1;
-            // 
-            // planningDataSet1
-            // 
-            this.planningDataSet1.DataSetName = "PlanningDataSet1";
-            this.planningDataSet1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // depositorsTableAdapter
-            // 
-            this.depositorsTableAdapter.ClearBeforeFill = true;
-            // 
-            // TimeSlots
+            // ShipmentElements
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(829, 469);
-            this.Controls.Add(this.tblTimeSlot);
+            this.ClientSize = new System.Drawing.Size(766, 419);
+            this.Controls.Add(this.tblElements);
             this.Controls.Add(this.tbMain);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "TimeSlots";
-            this.Text = "Тайм слоты";
-            this.Load += new System.EventHandler(this.TimeSlots_Load);
+            this.Name = "ShipmentElements";
+            this.Text = "Справочник: Элементы отгрузки";
+            this.Load += new System.EventHandler(this.ShipmentElements_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.tblElements)).EndInit();
             this.tbMain.ResumeLayout(false);
             this.tbMain.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tblTimeSlot)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.depositorsBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.planningDataSet1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -194,18 +172,15 @@
 
         #endregion
 
+        private System.Windows.Forms.DataGridView tblElements;
         private System.Windows.Forms.ToolStrip tbMain;
         private System.Windows.Forms.ToolStripButton btnAddRow;
         private System.Windows.Forms.ToolStripButton btnEdit;
         private System.Windows.Forms.ToolStripButton btnDelRow;
         private System.Windows.Forms.ToolStripButton btnSave;
-        private System.Windows.Forms.DataGridView tblTimeSlot;
-        private PlanningDataSet1 planningDataSet1;
-        private System.Windows.Forms.BindingSource depositorsBindingSource;
-        private PlanningDataSet1TableAdapters.depositorsTableAdapter depositorsTableAdapter;
         private System.Windows.Forms.DataGridViewTextBoxColumn colId;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colDepositor;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colTimeSlot;
-        private System.Windows.Forms.DataGridViewTextBoxColumn depId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colFieldName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colFieldDbName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colFieldType;
     }
 }

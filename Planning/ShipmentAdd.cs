@@ -29,10 +29,10 @@ namespace Planning
             cmbType.Enabled = !Lock;
             
         }
-        public ShipmentAdd(Shipment shipment, PlanningDbContext context)
+        public ShipmentAdd(Shipment shipment)
         {
             InitializeComponent();
-            _context = context;
+            _context = DataService.context;
             _shipment = shipment;
             SelectedId = new List<string>();
         }

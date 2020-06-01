@@ -36,14 +36,26 @@ namespace Planning
             CopyToShipmentOrder();
         }
 
+        private int? GetNumber(TextBox dateControl)
+        {
+            int value;
+            if (dateControl.Text != "" && !Int32.TryParse(dateControl.Text, out value))
+            {
+                MessageBox.Show("Не верный формат числа", "Ошибка сохранения числового значения", MessageBoxButtons.OK,MessageBoxIcon.Error);
+                dateControl.Focus();
+                return (int?)null;
+            }
+            return dateControl.Text == "" ? (int?)null : Convert.ToInt32(dateControl.Text);
+        }
+
         private void CopyToShipmentOrder()
         {
             _shipmentOrder.OrderId = txtOrderId.Text;
             _shipmentOrder.OrderType = txtOrderType.Text;
             _shipmentOrder.Comment = txtOrderComment.Text;
-            _shipmentOrder.ManualLoad = Convert.ToInt16(txtManualLoad.Text);
-            _shipmentOrder.ManualUnload = Convert.ToInt16(txtManualUnload.Text);
-            _shipmentOrder.PalletAmount = Convert.ToInt16(txtPalletAmount.Text);
+            _shipmentOrder.ManualLoad = GetNumber(txtManualLoad);
+            _shipmentOrder.ManualUnload = GetNumber(txtManualUnload);
+            _shipmentOrder.PalletAmount = GetNumber(txtPalletAmount);
         }
 
         private void btnClose_Click(object sender, EventArgs e)

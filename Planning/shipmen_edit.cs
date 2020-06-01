@@ -196,12 +196,12 @@ namespace Planning
             // _shipment.TimeSlotId =Convert.ToInt32(IsNull(cmbTimeSlot.Text,null));
             return true;
         }
-        public shipmen_edit(Shipment shipment, PlanningDbContext context)
+        public shipmen_edit(Shipment shipment)
         {
             
             InitializeComponent();
 
-            _context = context;
+            _context = DataService.context;
             _shipment = shipment;
         }
 

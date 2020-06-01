@@ -15,11 +15,11 @@ namespace Planning
         TimeSlot _timeSlot;
         PlanningDbContext _context;
 
-        public TimeSlotEdit(TimeSlot timeSlot, PlanningDbContext context)
+        public TimeSlotEdit(TimeSlot timeSlot)
         {
             InitializeComponent();
             _timeSlot = timeSlot;
-            _context = context;
+            _context = DataService.context;
             DataService.PopulateFromList(DataService.GetDictAll("Депозиторы"), cmbDepositor);
 
         }

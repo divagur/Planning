@@ -28,12 +28,35 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="int" />
         </EntityType>
+        <EntityType Name="lv_attr">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="she_id" Type="int" />
+          <Property Name="lva_in" Type="bit" />
+          <Property Name="lva_attr_lv_id" Type="int" />
+          <Property Name="lva_use_ord_attr" Type="bit" />
+          <Property Name="lva_DB" Type="nvarchar" MaxLength="128" />
+          <Property Name="lva_field" Type="nvarchar" MaxLength="128" />
+          <Property Name="pl_dep_id" Type="int" />
+          <Property Name="pl_elem_id" Type="int" />
+        </EntityType>
         <EntityType Name="opers_type">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="shipment_element">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="field_name" Type="varchar" MaxLength="50" />
+          <Property Name="field_db_name" Type="varchar" MaxLength="50" />
+          <Property Name="field_type" Type="int" />
         </EntityType>
         <EntityType Name="shipment_orders">
           <Key>
@@ -227,7 +250,9 @@
           <EntitySet Name="delay_reasons" EntityType="Self.delay_reasons" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="depositors" EntityType="Self.depositors" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="gateways" EntityType="Self.gateways" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="lv_attr" EntityType="Self.lv_attr" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="opers_type" EntityType="Self.opers_type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="shipment_element" EntityType="Self.shipment_element" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="shipment_orders" EntityType="Self.shipment_orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="shipments" EntityType="Self.shipments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="time_slot" EntityType="Self.time_slot" Schema="dbo" store:Type="Tables" />
@@ -438,6 +463,8 @@
             <End Role="time_slot" EntitySet="TimeSlots" />
             <End Role="Shipment" EntitySet="Shipments" />
           </AssociationSet>
+          <EntitySet Name="LvAttr" EntityType="PlanningModel.LvAttr" />
+          <EntitySet Name="ShipmentElement" EntityType="PlanningModel.ShipmentElement" />
         </EntityContainer>
         <Association Name="FK_shipments_delay_reasons">
           <End Type="PlanningModel.DelayReason" Role="delay_reasons" Multiplicity="0..1" />
@@ -510,6 +537,29 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="LvAttr">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SheId" Type="Int32" />
+          <Property Name="LvaIn" Type="Boolean" />
+          <Property Name="LvaAttrLvId" Type="Int32" />
+          <Property Name="LvaUseOrdAttr" Type="Boolean" />
+          <Property Name="LvaDB" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="LvaField" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="PlDepId" Type="Int32" />
+          <Property Name="PlElemId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="ShipmentElement">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FieldName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FieldDbName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FieldType" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -637,6 +687,31 @@
                 <ScalarProperty Name="SlotTime" ColumnName="slot_time" />
                 <ScalarProperty Name="Name" ColumnName="name" />
                 <ScalarProperty Name="DepositorId" ColumnName="depositor_id" />
+                <ScalarProperty Name="Id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LvAttr">
+            <EntityTypeMapping TypeName="PlanningModel.LvAttr">
+              <MappingFragment StoreEntitySet="lv_attr">
+                <ScalarProperty Name="PlElemId" ColumnName="pl_elem_id" />
+                <ScalarProperty Name="PlDepId" ColumnName="pl_dep_id" />
+                <ScalarProperty Name="LvaField" ColumnName="lva_field" />
+                <ScalarProperty Name="LvaDB" ColumnName="lva_DB" />
+                <ScalarProperty Name="LvaUseOrdAttr" ColumnName="lva_use_ord_attr" />
+                <ScalarProperty Name="LvaAttrLvId" ColumnName="lva_attr_lv_id" />
+                <ScalarProperty Name="LvaIn" ColumnName="lva_in" />
+                <ScalarProperty Name="SheId" ColumnName="she_id" />
+                <ScalarProperty Name="Id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ShipmentElement">
+            <EntityTypeMapping TypeName="PlanningModel.ShipmentElement">
+              <MappingFragment StoreEntitySet="shipment_element">
+                <ScalarProperty Name="FieldType" ColumnName="field_type" />
+                <ScalarProperty Name="FieldDbName" ColumnName="field_db_name" />
+                <ScalarProperty Name="FieldName" ColumnName="field_name" />
                 <ScalarProperty Name="Id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

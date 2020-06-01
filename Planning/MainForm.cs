@@ -18,8 +18,8 @@ namespace Planning
     {
        private string CR = Environment.NewLine;
 
-        DataService dataService = new DataService();
-        PlanningDbContext context;// = new PlanningDbContext();
+        //DataService dataService = new DataService();
+        // = new PlanningDbContext();
 
         private int Xwid = 6;//координаты ширины по диагонали крестика
         private const int tab_margin = 5;//координаты по высоте крестика
@@ -97,7 +97,7 @@ namespace Planning
             }
             */
             DataService.connectionString = $"Data Source={setting.ServerName};Initial Catalog={setting.BaseName};User ID={setting.UserName}; Password = {setting.Password}";
-            context = new PlanningDbContext(DataService.GetEntityConnectionString(DataService.connectionString));
+            DataService.context = new PlanningDbContext(DataService.GetEntityConnectionString(DataService.connectionString));
             ShipmentsLoad();
         }
 
@@ -218,19 +218,19 @@ namespace Planning
             if (tblShipments.SelectedRows.Count <= 0)
                 return;
 
-            Shipment shipment = context.Shipments.Find(tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colId"].Value);
+            Shipment shipment = DataService.context.Shipments.Find(tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colId"].Value);
             ShipmentEdit(shipment);
             ShipmentsLoad();
         }
         private void ShipmentEdit(Shipment shipment)
         {
             
-            shipmen_edit frmShipmentEdit = new shipmen_edit(shipment, context);
+            shipmen_edit frmShipmentEdit = new shipmen_edit(shipment);
             frmShipmentEdit.ClearFields();
             frmShipmentEdit.Populate();
             if (frmShipmentEdit.ShowDialog() == DialogResult.OK)
             {
-                context.SaveChanges();
+                DataService.context.SaveChanges();
                 if (shipment.IsAddLv == true)
                 {
                     AddShToLV(shipment);
@@ -252,12 +252,12 @@ namespace Planning
             */
             
             Shipment shipment = new Shipment();
-            ShipmentAdd frmShipmentAdd = new ShipmentAdd(shipment, context);
+            ShipmentAdd frmShipmentAdd = new ShipmentAdd(shipment);
             DialogResult result = frmShipmentAdd.ShowDialog();
             if (result == DialogResult.OK || result == DialogResult.Retry)
             {
-                context.Shipments.Add(shipment);
-                context.SaveChanges();
+                DataService.context.Shipments.Add(shipment);
+                DataService.context.SaveChanges();
                 //AddShToLV(shipment);
 
 
@@ -306,7 +306,7 @@ namespace Planning
 
             SimpleDict frmDepositors = new SimpleDict(dict);
             */
-            var frmTimeSlot = new TimeSlots(context);
+            var frmTimeSlot = new TimeSlots();
             AddFormTab(frmTimeSlot, "Тайм слоты");
         }
 
@@ -316,13 +316,13 @@ namespace Planning
 
             dict.TableName = "depositors";
             dict.Title = "Справочник: Депозиторы";
-
+            
             dict.Columns.Add(new DictColumn { Id = "Id", IsPK = true, IsVisible = false, Title = "Код", DataField = "id", DataType = SqlDbType.Int });
             dict.Columns.Add(new DictColumn { Id = "Name", IsPK = false, IsVisible = true, Title = "Наименование", DataField = "name", Width = 254, DataType = SqlDbType.VarChar, Length = 20 });
             dict.Columns.Add(new DictColumn { Id = "DB", IsPK = false, IsVisible = true, Title = "База данных", DataField = "lv_base", Width = 128, DataType = SqlDbType.VarChar, Length = 128});
             dict.Columns.Add(new DictColumn { Id = "LVId", IsPK = false, IsVisible = true ,Title = "Код в LVision", DataField = "lv_id", Width = 80, DataType = SqlDbType.Int});
 
-            SimpleDict frmDepositors = new SimpleDict(dict);
+            Depositors frmDepositors = new Depositors();        
             AddFormTab(frmDepositors, "Депозиторы");
         }
 
@@ -408,9 +408,9 @@ namespace Planning
         {
             if (MessageBox.Show("Удалить запись?","Подверждение",MessageBoxButtons.OKCancel)==DialogResult.OK)
             {
-                Shipment shipment = context.Shipments.Find(tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colId"].Value);
-                context.Shipments.Remove(shipment);
-                context.SaveChanges();
+                Shipment shipment = DataService.context.Shipments.Find(tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colId"].Value);
+                DataService.context.Shipments.Remove(shipment);
+                DataService.context.SaveChanges();
                 ShipmentsLoad();
             }
         }
@@ -579,6 +579,28 @@ namespace Planning
                 ShipmentsLoad();*/
                 UpdateSetting();
             }
+        }
+
+        private void cbUpdate_CheckedChanged(object sender, EventArgs e)
+        {
+            tmUpdate.Interval = (int)edInterval.Value*1000;
+            tmUpdate.Enabled = cbUpdate.Checked;
+        }
+
+        private void edInterval_ValueChanged(object sender, EventArgs e)
+        {
+            tmUpdate.Interval = (int)edInterval.Value;
+        }
+
+        private void tmUpdate_Tick(object sender, EventArgs e)
+        {
+            ShipmentsLoad();
+        }
+
+        private void miAttributes_Click(object sender, EventArgs e)
+        {
+            var frmShimentElements = new ShipmentElements();
+            AddFormTab(frmShimentElements, "Элементы отгрузки");
         }
     }
 }

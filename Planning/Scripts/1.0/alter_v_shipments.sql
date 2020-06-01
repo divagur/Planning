@@ -4,7 +4,7 @@ SELECT        s.id shp_id, s.lv_id,s.s_date,
 				(case isnull(s.sp_condition,0) when 0 then ts.slot_time else s.special_time end) slot_time, 
 				NULL AS oper_type, NULL AS order_id,NULL as order_type,  NULL AS klient, NULL AS order_status, NULL AS prc_ready, 
 				s.s_comment, s.o_comment, g.name gate_name, s.sp_condition, s.driver_phone, s.driver_fio, NULL AS transport_company, s.vehicle_number, s.trailer_number, s.attorney_number, 
-				s.attorney_date, s.submission_time, s.start_time, s.end_time, s.leave_time, dr.name AS delay_reason_name, s.delay_comment,
+				s.attorney_date,s.attorney_issued,s.stamp_number, s.submission_time, s.start_time, s.end_time, s.leave_time, dr.name AS delay_reason_name, s.delay_comment,
 				s.forwarder_fio, s.s_in, d.lv_id dep_lv_id, d.lv_base dep_lv_db, s.time_slot_id, s.gate_id, s.is_courier, s.depositor_id dep_id, 
 				d.name dep_name, s.is_add_lv
 FROM            dbo.shipments AS s

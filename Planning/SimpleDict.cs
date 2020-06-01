@@ -21,16 +21,22 @@ namespace Planning
         Form _editForm;
         string sql = "";
 
+        public void SetEditForm(Form editForm)
+        {
+            _editForm = editForm;
+            if (_editForm != null)
+            {
+                tblDelayReasons.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                btnEdit.Visible = true;
+            }
+        }
+
         public SimpleDict(DictSimple dict)
         {
             InitializeComponent();
             _dict = dict;
            // _editForm = EditForm;
-            if (_editForm != null)
-            {
-                tblDelayReasons.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-                btnEdit.Visible = true; 
-            }
+          
             this.Text = _dict.Title;
             connectionString = DataService.connectionString;
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -39,7 +45,17 @@ namespace Planning
 
                 foreach (DictColumn dictColumn in _dict.Columns)
                 {
-                    DataGridViewTextBoxColumn column = new DataGridViewTextBoxColumn();
+                    DataGridViewColumn column;
+                    if (dictColumn.ItemValues == null)
+                    {
+                        column = new DataGridViewTextBoxColumn();
+                    }
+                    else
+                    {
+                        column = new DataGridViewComboBoxColumn();
+                        ((DataGridViewComboBoxColumn)column).Items.AddRange(dictColumn.ItemValues);
+                    }
+                    
                     column.Name = dictColumn.Id;
                     column.HeaderText = dictColumn.Title;
                     column.DataPropertyName = dictColumn.DataField;

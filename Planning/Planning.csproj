@@ -37,7 +37,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>iop_cryptocurrency_logo_icon_131430.ico</ApplicationIcon>
+    <ApplicationIcon>PlanningLogo.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -112,6 +112,27 @@
     <Compile Include="Depositor.cs">
       <DependentUpon>DbPlaning.tt</DependentUpon>
     </Compile>
+    <Compile Include="DepositorEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DepositorEdit.Designer.cs">
+      <DependentUpon>DepositorEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Depositors.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Depositors.Designer.cs">
+      <DependentUpon>Depositors.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DictForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DictForm.Designer.cs">
+      <DependentUpon>DictForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LvAttr.cs">
+      <DependentUpon>DbPlaning.tt</DependentUpon>
+    </Compile>
     <Compile Include="PlanningDataSet1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -129,6 +150,21 @@
     </Compile>
     <Compile Include="ShipmentAdd.Designer.cs">
       <DependentUpon>ShipmentAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ShipmentElement.cs">
+      <DependentUpon>DbPlaning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ShipmentElementEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ShipmentElementEdit.Designer.cs">
+      <DependentUpon>ShipmentElementEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ShipmentElements.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ShipmentElements.Designer.cs">
+      <DependentUpon>ShipmentElements.cs</DependentUpon>
     </Compile>
     <Compile Include="ShipmentOrderEdit.cs">
       <SubType>Form</SubType>
@@ -205,23 +241,32 @@
     <Compile Include="TimeSlotEdit.Designer.cs">
       <DependentUpon>TimeSlotEdit.cs</DependentUpon>
     </Compile>
-    <Compile Include="TimeSlotsEdit.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="TimeSlotsEdit.Designer.cs">
-      <DependentUpon>TimeSlotsEdit.cs</DependentUpon>
-    </Compile>
     <Compile Include="User.cs">
       <DependentUpon>DbPlaning.tt</DependentUpon>
     </Compile>
     <Compile Include="UserGroup.cs">
       <DependentUpon>DbPlaning.tt</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="DepositorEdit.resx">
+      <DependentUpon>DepositorEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Depositors.resx">
+      <DependentUpon>Depositors.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DictForm.resx">
+      <DependentUpon>DictForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SettingsEdit.resx">
       <DependentUpon>SettingsEdit.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ShipmentAdd.resx">
       <DependentUpon>ShipmentAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ShipmentElementEdit.resx">
+      <DependentUpon>ShipmentElementEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ShipmentElements.resx">
+      <DependentUpon>ShipmentElements.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ShipmentOrderEdit.resx">
       <DependentUpon>ShipmentOrderEdit.cs</DependentUpon>
@@ -253,9 +298,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TimeSlotEdit.resx">
       <DependentUpon>TimeSlotEdit.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TimeSlotsEdit.resx">
-      <DependentUpon>TimeSlotsEdit.cs</DependentUpon>
     </EmbeddedResource>
     <EntityDeploy Include="DbPlaning.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -352,6 +394,7 @@
       <LastGenOutput>Planing.cs</LastGenOutput>
     </Content>
     <None Include="Resources\arrow_refresh_8563.png" />
+    <Content Include="PlanningLogo.ico" />
     <Content Include="Resources\calendar.png" />
   </ItemGroup>
   <ItemGroup>

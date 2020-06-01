@@ -44,7 +44,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Location = new System.Drawing.Point(12, 12);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(44, 13);
             this.label1.TabIndex = 0;
@@ -53,7 +53,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 36);
+            this.label2.Location = new System.Drawing.Point(12, 39);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(72, 13);
             this.label2.TabIndex = 1;
@@ -62,7 +62,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 61);
+            this.label3.Location = new System.Drawing.Point(12, 64);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(80, 13);
             this.label3.TabIndex = 2;
@@ -71,7 +71,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 87);
+            this.label4.Location = new System.Drawing.Point(12, 90);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(45, 13);
             this.label4.TabIndex = 3;
@@ -79,28 +79,28 @@
             // 
             // edServer
             // 
-            this.edServer.Location = new System.Drawing.Point(90, 6);
+            this.edServer.Location = new System.Drawing.Point(90, 9);
             this.edServer.Name = "edServer";
             this.edServer.Size = new System.Drawing.Size(256, 20);
             this.edServer.TabIndex = 0;
             // 
             // edBase
             // 
-            this.edBase.Location = new System.Drawing.Point(90, 33);
+            this.edBase.Location = new System.Drawing.Point(90, 36);
             this.edBase.Name = "edBase";
             this.edBase.Size = new System.Drawing.Size(256, 20);
             this.edBase.TabIndex = 1;
             // 
             // edUser
             // 
-            this.edUser.Location = new System.Drawing.Point(90, 58);
+            this.edUser.Location = new System.Drawing.Point(90, 61);
             this.edUser.Name = "edUser";
             this.edUser.Size = new System.Drawing.Size(177, 20);
             this.edUser.TabIndex = 2;
             // 
             // edPassword
             // 
-            this.edPassword.Location = new System.Drawing.Point(90, 84);
+            this.edPassword.Location = new System.Drawing.Point(90, 87);
             this.edPassword.Name = "edPassword";
             this.edPassword.PasswordChar = '*';
             this.edPassword.Size = new System.Drawing.Size(177, 20);
@@ -108,7 +108,7 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(190, 115);
+            this.btnSave.Location = new System.Drawing.Point(190, 118);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 4;
@@ -118,7 +118,7 @@
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(271, 115);
+            this.btnClose.Location = new System.Drawing.Point(271, 118);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
             this.btnClose.TabIndex = 5;
@@ -130,7 +130,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(356, 144);
+            this.ClientSize = new System.Drawing.Size(357, 147);
             this.ControlBox = false;
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnSave);
