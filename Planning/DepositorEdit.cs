@@ -13,8 +13,6 @@ namespace Planning
 {
     public partial class DepositorEdit : Form
     {
-        Dictionary<int, string> LVAttr;
-        Dictionary<int, string> PLAttr;
         PlanningDbContext _context;
         Depositor _depositor;
 
@@ -24,56 +22,44 @@ namespace Planning
             _context = DataService.context;
             _depositor = depositor;
         }
-
-        private void GetAttr()
+      
+        void PopulateAttr()
         {
-            if (edDB.Text == "") return;
-
-            if (LVAttr == null)
-                LVAttr = new Dictionary<int, string>();
-
-            if (PLAttr == null)
-                PLAttr = new Dictionary<int, string>();
-
-
             using (SqlConnection connection = new SqlConnection(DataService.connectionString))
             {
                 if (connection.State == ConnectionState.Closed)
                     connection.Open();
 
-                string sqlText = "sp_LVAttrList";
+                string sqlText = "sp_PLAttrList";
 
                 SqlCommand command = new SqlCommand(sqlText, connection);
                 command.CommandType = CommandType.StoredProcedure;
 
-                command.Parameters.Add(new SqlParameter { ParameterName = "@LVBase",Value = edDB.Text});
+                command.Parameters.Add(new SqlParameter { ParameterName = "@DepId", Value = _depositor.Id });
 
-
+                /*
+                SqlDataAdapter adapter = new SqlDataAdapter(command);
+                DataSet ds = new DataSet();
+                adapter.Fill(ds);
+                tblAttr.AutoGenerateColumns = false;
+                tblAttr.DataSource = ds.Tables[0];
+                */
                 var reader = command.ExecuteReader();
+
                 if (reader.HasRows)
                 {
-                    LVAttr.Clear();
+                    tblAttr.Rows.Clear();
                     while (reader.Read())
                     {
-                        LVAttr.Add(reader.GetInt32(0), reader.GetString(1));
+                        int Row = tblAttr.Rows.Add();
+                        tblAttr.Rows[Row].Cells["Id"].Value = reader.GetInt32(0);
+                        tblAttr.Rows[Row].Cells["LVAttrName"].Value = reader.GetString(2);
+                        tblAttr.Rows[Row].Cells["PLField"].Value = reader.GetString(4);
 
                     }
                 }
-                
-            }
-            PLAttr.Clear();
-            foreach(ShipmentElement se in _context.ShipmentElements.ToList())
-            {
-                PLAttr.Add(se.Id, se.FieldName);
-            }
 
-            LVAttrId.Items.Clear();
-            foreach (string value in LVAttr.Values)
-                LVAttrId.Items.Add(value);
-            PLField.Items.Clear();
-            foreach(string value in PLAttr.Values)
-                PLField.Items.Add(value);
-
+            }
         }
 
         private void DepositorLoad()
@@ -82,7 +68,10 @@ namespace Planning
             edName.Text = _depositor.Name;
             edDB.Text = _depositor.lv_base;
             edLvId.Text = _depositor.lv_id.ToString();
-            GetAttr();
+
+            PopulateAttr();
+
+
 
         }
         private void DepositorEdit_Load(object sender, EventArgs e)
@@ -105,7 +94,66 @@ namespace Planning
             DialogResult = DialogResult.OK;
         }
 
-        private void tblAttr_CellValidated(object sender, DataGridViewCellEventArgs e)
+        void CreateEdtiForm(LvAttr attr, bool isNew)
+        {
+            List<string> attrName = new List<string>(2);
+            attrName.Add("");
+            attrName.Add("");
+            var frmAttrEdit = new LvAttrEdit(attr, _depositor.Id, attrName);
+            int rowIdx;
+            
+            frmAttrEdit.ShowDialog();
+            if (frmAttrEdit.DialogResult == DialogResult.Cancel)
+                return;
+            if (isNew)
+            {
+                _context.LvAttrs.Add(attr);
+                rowIdx = tblAttr.Rows.Add();
+            }
+            else
+            {
+                rowIdx = tblAttr.CurrentRow.Index;
+            }
+
+            tblAttr.Rows[rowIdx].Cells["Id"].Value = attr.Id;
+            tblAttr.Rows[rowIdx].Cells["LVAttrName"].Value = attrName[0];
+            tblAttr.Rows[rowIdx].Cells["PLField"].Value = attrName[1];
+
+            
+        }
+
+        private void tblAttr_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            LvAttr attr = new LvAttr();
+            CreateEdtiForm(attr, true);
+            //PopulateAttr();
+        }
+
+        private void btnEdit_Click(object sender, EventArgs e)
+        {
+            LvAttr attr = _context.LvAttrs.Find(tblAttr.Rows[tblAttr.CurrentCell.RowIndex].Cells["Id"].Value);
+            CreateEdtiForm(attr, false);
+           // PopulateAttr();
+        }
+
+        private void btnDel_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Удалить запись?", "Подтверждение удаления", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            {
+                LvAttr attr = _context.LvAttrs.Find(tblAttr.Rows[tblAttr.CurrentCell.RowIndex].Cells["Id"].Value);
+                _context.LvAttrs.Remove(attr);
+                PopulateAttr();
+
+
+            }
+        }
+
+        private void tblAttr_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }

@@ -33,7 +33,6 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="she_id" Type="int" />
           <Property Name="lva_in" Type="bit" />
           <Property Name="lva_attr_lv_id" Type="int" />
           <Property Name="lva_use_ord_attr" Type="bit" />
@@ -463,8 +462,8 @@
             <End Role="time_slot" EntitySet="TimeSlots" />
             <End Role="Shipment" EntitySet="Shipments" />
           </AssociationSet>
-          <EntitySet Name="LvAttr" EntityType="PlanningModel.LvAttr" />
-          <EntitySet Name="ShipmentElement" EntityType="PlanningModel.ShipmentElement" />
+          <EntitySet Name="LvAttrs" EntityType="PlanningModel.LvAttr" />
+          <EntitySet Name="ShipmentElements" EntityType="PlanningModel.ShipmentElement" />
         </EntityContainer>
         <Association Name="FK_shipments_delay_reasons">
           <End Type="PlanningModel.DelayReason" Role="delay_reasons" Multiplicity="0..1" />
@@ -542,7 +541,6 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SheId" Type="Int32" />
           <Property Name="LvaIn" Type="Boolean" />
           <Property Name="LvaAttrLvId" Type="Int32" />
           <Property Name="LvaUseOrdAttr" Type="Boolean" />
@@ -691,7 +689,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="LvAttr">
+          <EntitySetMapping Name="LvAttrs">
             <EntityTypeMapping TypeName="PlanningModel.LvAttr">
               <MappingFragment StoreEntitySet="lv_attr">
                 <ScalarProperty Name="PlElemId" ColumnName="pl_elem_id" />
@@ -701,12 +699,11 @@
                 <ScalarProperty Name="LvaUseOrdAttr" ColumnName="lva_use_ord_attr" />
                 <ScalarProperty Name="LvaAttrLvId" ColumnName="lva_attr_lv_id" />
                 <ScalarProperty Name="LvaIn" ColumnName="lva_in" />
-                <ScalarProperty Name="SheId" ColumnName="she_id" />
                 <ScalarProperty Name="Id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ShipmentElement">
+          <EntitySetMapping Name="ShipmentElements">
             <EntityTypeMapping TypeName="PlanningModel.ShipmentElement">
               <MappingFragment StoreEntitySet="shipment_element">
                 <ScalarProperty Name="FieldType" ColumnName="field_type" />

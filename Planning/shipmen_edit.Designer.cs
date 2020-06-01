@@ -75,15 +75,6 @@
             this.cbIsCourier = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tblShipmentOrders = new System.Windows.Forms.DataGridView();
-            this.colOrderId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colOrderType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colOrderComment = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colManualLoad = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colManualUnload = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPalletCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colBindingId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colShipmentId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.label5 = new System.Windows.Forms.Label();
             this.pnGetDateTime = new System.Windows.Forms.Panel();
@@ -92,6 +83,7 @@
             this.dtSpecialTime = new System.Windows.Forms.DateTimePicker();
             this.monthCalendarSpecial = new System.Windows.Forms.MonthCalendar();
             this.edSDate = new System.Windows.Forms.TextBox();
+            this.btnAddToLV = new System.Windows.Forms.Button();
             this.tbtnAdd = new System.Windows.Forms.ToolStripButton();
             this.tbtnEdit = new System.Windows.Forms.ToolStripButton();
             this.tbtnDel = new System.Windows.Forms.ToolStripButton();
@@ -101,7 +93,17 @@
             this.btnLeaveTime = new System.Windows.Forms.Button();
             this.btnStartTime = new System.Windows.Forms.Button();
             this.btnSubmissionTime = new System.Windows.Forms.Button();
-            this.btnAddToLV = new System.Windows.Forms.Button();
+            this.btnBindLV = new System.Windows.Forms.Button();
+            this.colOrderId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colOrderType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colOrderComment = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colManualLoad = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colManualUnload = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPalletCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colBinding = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colBindingId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colShipmentId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gbTransport.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tblShipmentOrders)).BeginInit();
@@ -538,6 +540,7 @@
             this.colManualLoad,
             this.colManualUnload,
             this.colPalletCount,
+            this.colBinding,
             this.colId,
             this.colBindingId,
             this.colShipmentId});
@@ -548,73 +551,6 @@
             this.tblShipmentOrders.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.tblShipmentOrders.Size = new System.Drawing.Size(821, 170);
             this.tblShipmentOrders.TabIndex = 1;
-            // 
-            // colOrderId
-            // 
-            this.colOrderId.DataPropertyName = "OrderId";
-            this.colOrderId.HeaderText = "Код заказа";
-            this.colOrderId.Name = "colOrderId";
-            this.colOrderId.ReadOnly = true;
-            this.colOrderId.Width = 120;
-            // 
-            // colOrderType
-            // 
-            this.colOrderType.DataPropertyName = "OrderType";
-            this.colOrderType.HeaderText = "Тип заказа";
-            this.colOrderType.Name = "colOrderType";
-            this.colOrderType.ReadOnly = true;
-            // 
-            // colOrderComment
-            // 
-            this.colOrderComment.DataPropertyName = "Comment";
-            this.colOrderComment.HeaderText = "Комментарий по заказу";
-            this.colOrderComment.Name = "colOrderComment";
-            this.colOrderComment.ReadOnly = true;
-            // 
-            // colManualLoad
-            // 
-            this.colManualLoad.DataPropertyName = "ManualLoad";
-            this.colManualLoad.HeaderText = "Ручная загрузка коробов";
-            this.colManualLoad.Name = "colManualLoad";
-            this.colManualLoad.ReadOnly = true;
-            // 
-            // colManualUnload
-            // 
-            this.colManualUnload.DataPropertyName = "ManualUnload";
-            this.colManualUnload.HeaderText = "Ручная разрузка коробов";
-            this.colManualUnload.Name = "colManualUnload";
-            this.colManualUnload.ReadOnly = true;
-            // 
-            // colPalletCount
-            // 
-            this.colPalletCount.DataPropertyName = "PalletAmount";
-            this.colPalletCount.HeaderText = "Кол-во паллет";
-            this.colPalletCount.Name = "colPalletCount";
-            this.colPalletCount.ReadOnly = true;
-            // 
-            // colId
-            // 
-            this.colId.DataPropertyName = "id";
-            this.colId.HeaderText = "colId";
-            this.colId.Name = "colId";
-            this.colId.ReadOnly = true;
-            this.colId.Visible = false;
-            // 
-            // colBindingId
-            // 
-            this.colBindingId.DataPropertyName = "binding_id";
-            this.colBindingId.HeaderText = "colBindingId";
-            this.colBindingId.Name = "colBindingId";
-            this.colBindingId.ReadOnly = true;
-            this.colBindingId.Visible = false;
-            // 
-            // colShipmentId
-            // 
-            this.colShipmentId.DataPropertyName = "shipment_id";
-            this.colShipmentId.HeaderText = "colShipmentId";
-            this.colShipmentId.Name = "colShipmentId";
-            this.colShipmentId.ReadOnly = true;
-            this.colShipmentId.Visible = false;
             // 
             // toolStrip1
             // 
@@ -694,6 +630,16 @@
             this.edSDate.Name = "edSDate";
             this.edSDate.Size = new System.Drawing.Size(118, 20);
             this.edSDate.TabIndex = 0;
+            // 
+            // btnAddToLV
+            // 
+            this.btnAddToLV.Location = new System.Drawing.Point(556, 659);
+            this.btnAddToLV.Name = "btnAddToLV";
+            this.btnAddToLV.Size = new System.Drawing.Size(124, 23);
+            this.btnAddToLV.TabIndex = 36;
+            this.btnAddToLV.Text = "Создать в LV";
+            this.btnAddToLV.UseVisualStyleBackColor = true;
+            this.btnAddToLV.Click += new System.EventHandler(this.btnAddToLV_Click);
             // 
             // tbtnAdd
             // 
@@ -788,21 +734,98 @@
             this.btnSubmissionTime.UseVisualStyleBackColor = true;
             this.btnSubmissionTime.Click += new System.EventHandler(this.btnShowCalendar_Click);
             // 
-            // btnAddToLV
+            // btnBindLV
             // 
-            this.btnAddToLV.Location = new System.Drawing.Point(556, 659);
-            this.btnAddToLV.Name = "btnAddToLV";
-            this.btnAddToLV.Size = new System.Drawing.Size(124, 23);
-            this.btnAddToLV.TabIndex = 36;
-            this.btnAddToLV.Text = "Создать в LV";
-            this.btnAddToLV.UseVisualStyleBackColor = true;
-            this.btnAddToLV.Click += new System.EventHandler(this.btnAddToLV_Click);
+            this.btnBindLV.Location = new System.Drawing.Point(401, 659);
+            this.btnBindLV.Name = "btnBindLV";
+            this.btnBindLV.Size = new System.Drawing.Size(150, 23);
+            this.btnBindLV.TabIndex = 36;
+            this.btnBindLV.Text = "Привязать заказы к LV";
+            this.btnBindLV.UseVisualStyleBackColor = true;
+            this.btnBindLV.Click += new System.EventHandler(this.btnBindLV_Click);
+            // 
+            // colOrderId
+            // 
+            this.colOrderId.DataPropertyName = "lv_order_code";
+            this.colOrderId.HeaderText = "Код заказа";
+            this.colOrderId.Name = "colOrderId";
+            this.colOrderId.ReadOnly = true;
+            this.colOrderId.Width = 120;
+            // 
+            // colOrderType
+            // 
+            this.colOrderType.DataPropertyName = "OrderType";
+            this.colOrderType.HeaderText = "Тип заказа";
+            this.colOrderType.Name = "colOrderType";
+            this.colOrderType.ReadOnly = true;
+            // 
+            // colOrderComment
+            // 
+            this.colOrderComment.DataPropertyName = "Comment";
+            this.colOrderComment.HeaderText = "Комментарий по заказу";
+            this.colOrderComment.Name = "colOrderComment";
+            this.colOrderComment.ReadOnly = true;
+            // 
+            // colManualLoad
+            // 
+            this.colManualLoad.DataPropertyName = "ManualLoad";
+            this.colManualLoad.HeaderText = "Ручная загрузка коробов";
+            this.colManualLoad.Name = "colManualLoad";
+            this.colManualLoad.ReadOnly = true;
+            // 
+            // colManualUnload
+            // 
+            this.colManualUnload.DataPropertyName = "ManualUnload";
+            this.colManualUnload.HeaderText = "Ручная разрузка коробов";
+            this.colManualUnload.Name = "colManualUnload";
+            this.colManualUnload.ReadOnly = true;
+            // 
+            // colPalletCount
+            // 
+            this.colPalletCount.DataPropertyName = "PalletAmount";
+            this.colPalletCount.HeaderText = "Кол-во паллет";
+            this.colPalletCount.Name = "colPalletCount";
+            this.colPalletCount.ReadOnly = true;
+            // 
+            // colBinding
+            // 
+            this.colBinding.DataPropertyName = "IsBinding";
+            this.colBinding.HeaderText = "Привязка";
+            this.colBinding.Name = "colBinding";
+            this.colBinding.ReadOnly = true;
+            this.colBinding.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colBinding.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // colId
+            // 
+            this.colId.DataPropertyName = "id";
+            this.colId.HeaderText = "colId";
+            this.colId.Name = "colId";
+            this.colId.ReadOnly = true;
+            this.colId.Visible = false;
+            // 
+            // colBindingId
+            // 
+            this.colBindingId.DataPropertyName = "binding_id";
+            this.colBindingId.HeaderText = "colBindingId";
+            this.colBindingId.Name = "colBindingId";
+            this.colBindingId.ReadOnly = true;
+            this.colBindingId.Visible = false;
+            // 
+            // colShipmentId
+            // 
+            this.colShipmentId.DataPropertyName = "shipment_id";
+            this.colShipmentId.HeaderText = "colShipmentId";
+            this.colShipmentId.Name = "colShipmentId";
+            this.colShipmentId.ReadOnly = true;
+            this.colShipmentId.Visible = false;
             // 
             // shipmen_edit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(847, 694);
+            this.Controls.Add(this.btnBindLV);
             this.Controls.Add(this.btnAddToLV);
             this.Controls.Add(this.pnGetDateTime);
             this.Controls.Add(this.label5);
@@ -886,15 +909,6 @@
         private System.Windows.Forms.ToolStripButton tbtnAdd;
         private System.Windows.Forms.ToolStripButton tbtnEdit;
         private System.Windows.Forms.ToolStripButton tbtnDel;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colOrderId;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colOrderType;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colOrderComment;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colManualLoad;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colManualUnload;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colPalletCount;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colId;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colBindingId;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colShipmentId;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.CheckBox cbSpecCondition;
         private System.Windows.Forms.DateTimePicker dtSpecialCond;
@@ -916,5 +930,16 @@
         private System.Windows.Forms.TextBox edSDate;
         private System.Windows.Forms.Button btnSDate;
         private System.Windows.Forms.Button btnAddToLV;
+        private System.Windows.Forms.Button btnBindLV;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colOrderId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colOrderType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colOrderComment;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colManualLoad;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colManualUnload;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPalletCount;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn colBinding;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colBindingId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colShipmentId;
     }
 }

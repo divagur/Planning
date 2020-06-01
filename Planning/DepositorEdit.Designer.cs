@@ -39,12 +39,16 @@
             this.btnClose = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tblAttr = new System.Windows.Forms.DataGridView();
-            this.LVAttrId = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.PLField = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.LVIn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tbAttr = new System.Windows.Forms.ToolStrip();
             this.btnAdd = new System.Windows.Forms.ToolStripButton();
             this.btnDel = new System.Windows.Forms.ToolStripButton();
+            this.btnEdit = new System.Windows.Forms.ToolStripButton();
+            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LVAttrName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PLField = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LVAttrId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PLFieldId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LVIn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tblAttr)).BeginInit();
             this.tbAttr.SuspendLayout();
@@ -131,53 +135,32 @@
             // 
             // tblAttr
             // 
+            this.tblAttr.AllowUserToAddRows = false;
+            this.tblAttr.AllowUserToDeleteRows = false;
             this.tblAttr.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.tblAttr.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.LVAttrId,
+            this.Id,
+            this.LVAttrName,
             this.PLField,
+            this.LVAttrId,
+            this.PLFieldId,
             this.LVIn});
             this.tblAttr.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tblAttr.Location = new System.Drawing.Point(3, 41);
             this.tblAttr.Name = "tblAttr";
+            this.tblAttr.ReadOnly = true;
+            this.tblAttr.RowHeadersVisible = false;
+            this.tblAttr.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.tblAttr.Size = new System.Drawing.Size(512, 263);
             this.tblAttr.TabIndex = 0;
-            this.tblAttr.CellValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.tblAttr_CellValidated);
-            // 
-            // LVAttrId
-            // 
-            this.LVAttrId.HeaderText = "Аттрибут Lvision";
-            this.LVAttrId.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3"});
-            this.LVAttrId.Name = "LVAttrId";
-            this.LVAttrId.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.LVAttrId.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.LVAttrId.Width = 200;
-            // 
-            // PLField
-            // 
-            this.PLField.HeaderText = "Аттрибут планинга";
-            this.PLField.Items.AddRange(new object[] {
-            "4",
-            "5",
-            "6"});
-            this.PLField.Name = "PLField";
-            this.PLField.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.PLField.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.PLField.Width = 200;
-            // 
-            // LVIn
-            // 
-            this.LVIn.HeaderText = "LvIn";
-            this.LVIn.Name = "LVIn";
-            this.LVIn.Visible = false;
+            this.tblAttr.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tblAttr_CellDoubleClick);
             // 
             // tbAttr
             // 
             this.tbAttr.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.tbAttr.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnAdd,
+            this.btnEdit,
             this.btnDel});
             this.tbAttr.Location = new System.Drawing.Point(3, 16);
             this.tbAttr.Name = "tbAttr";
@@ -189,21 +172,83 @@
             // 
             this.btnAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.btnAdd.Image = global::Planning.Properties.Resources.Add;
-            this.btnAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnAdd.ImageTransparentColor = System.Drawing.Color.White;
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(23, 22);
             this.btnAdd.Text = "toolStripButton1";
             this.btnAdd.ToolTipText = "Добавить аттрибут";
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // btnDel
             // 
             this.btnDel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.btnDel.Image = global::Planning.Properties.Resources.Delete;
-            this.btnDel.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnDel.ImageTransparentColor = System.Drawing.Color.White;
             this.btnDel.Name = "btnDel";
             this.btnDel.Size = new System.Drawing.Size(23, 22);
             this.btnDel.Text = "toolStripButton2";
             this.btnDel.ToolTipText = "Удалить аттрибут";
+            this.btnDel.Click += new System.EventHandler(this.btnDel_Click);
+            // 
+            // btnEdit
+            // 
+            this.btnEdit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnEdit.Image = global::Planning.Properties.Resources.Edit;
+            this.btnEdit.ImageTransparentColor = System.Drawing.Color.White;
+            this.btnEdit.Name = "btnEdit";
+            this.btnEdit.Size = new System.Drawing.Size(23, 22);
+            this.btnEdit.Text = "toolStripButton1";
+            this.btnEdit.ToolTipText = "Редактировать аттрибут";
+            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
+            // 
+            // Id
+            // 
+            this.Id.DataPropertyName = "id";
+            this.Id.HeaderText = "Id";
+            this.Id.Name = "Id";
+            this.Id.ReadOnly = true;
+            this.Id.Visible = false;
+            // 
+            // LVAttrName
+            // 
+            this.LVAttrName.DataPropertyName = "spa_Name";
+            this.LVAttrName.HeaderText = "Аттрибут Lvision";
+            this.LVAttrName.Name = "LVAttrName";
+            this.LVAttrName.ReadOnly = true;
+            this.LVAttrName.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.LVAttrName.Width = 200;
+            // 
+            // PLField
+            // 
+            this.PLField.DataPropertyName = "PLField";
+            this.PLField.HeaderText = "Аттрибут планинга";
+            this.PLField.Name = "PLField";
+            this.PLField.ReadOnly = true;
+            this.PLField.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.PLField.Width = 200;
+            // 
+            // LVAttrId
+            // 
+            this.LVAttrId.DataPropertyName = "spa_ID";
+            this.LVAttrId.HeaderText = "LVAttrId";
+            this.LVAttrId.Name = "LVAttrId";
+            this.LVAttrId.ReadOnly = true;
+            this.LVAttrId.Visible = false;
+            // 
+            // PLFieldId
+            // 
+            this.PLFieldId.DataPropertyName = "PLFieldId";
+            this.PLFieldId.HeaderText = "PLFieldId";
+            this.PLFieldId.Name = "PLFieldId";
+            this.PLFieldId.ReadOnly = true;
+            this.PLFieldId.Visible = false;
+            // 
+            // LVIn
+            // 
+            this.LVIn.HeaderText = "LvIn";
+            this.LVIn.Name = "LVIn";
+            this.LVIn.ReadOnly = true;
+            this.LVIn.Visible = false;
             // 
             // DepositorEdit
             // 
@@ -249,8 +294,12 @@
         private System.Windows.Forms.ToolStrip tbAttr;
         private System.Windows.Forms.ToolStripButton btnAdd;
         private System.Windows.Forms.ToolStripButton btnDel;
-        private System.Windows.Forms.DataGridViewComboBoxColumn LVAttrId;
-        private System.Windows.Forms.DataGridViewComboBoxColumn PLField;
+        private System.Windows.Forms.ToolStripButton btnEdit;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn LVAttrName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn PLField;
+        private System.Windows.Forms.DataGridViewTextBoxColumn LVAttrId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn PLFieldId;
         private System.Windows.Forms.DataGridViewTextBoxColumn LVIn;
     }
 }

@@ -160,6 +160,7 @@ namespace Planning
                 shipmentOrder.OrderId = tblShipmentItem.Rows[i].Cells["colItemId"].Value.ToString();
                 shipmentOrder.LVOrderId = (int?)tblShipmentItem.Rows[i].Cells["colLVOrdId"].Value;
                 shipmentOrder.lv_order_code = tblShipmentItem.Rows[i].Cells["colItemId"].Value.ToString();
+                shipmentOrder.IsBinding = true;
                 _shipment.ShipmentOrders.Add(shipmentOrder);
             }
 

@@ -226,6 +226,7 @@ namespace Planning
             if (frmShipmentOrderEdit.ShowDialog() == DialogResult.OK)
             {
                 shipmentOrder.ShipmentId = _shipment.Id;
+                shipmentOrder.IsBinding = false;
                 _context.ShipmentOrders.Add(shipmentOrder);
                 tblShipmentOrders.DataSource = _shipment.ShipmentOrders.ToList();
             }
@@ -401,8 +402,48 @@ namespace Planning
             if (DataService.AddShipmentToLV(_shipment.Id))
             {
                 _shipment.IsAddLv = true;
+                MessageBox.Show("Отгрузка создана в Lvision");
             }
             
+        }
+
+        private bool BindOrderToLV()
+        {
+            using (SqlConnection connection = new SqlConnection(DataService.connectionString))
+            {
+                if (connection.State == ConnectionState.Closed)
+                    connection.Open();
+
+                string sqlText = "SP_PL_BindAllOrders";
+
+                SqlCommand command = new SqlCommand(sqlText, connection);
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.Add(new SqlParameter { ParameterName = "@ShpID", Value = _shipment.Id });
+                try
+                {
+                    command.ExecuteScalar();
+                }
+                catch (SqlException ex)
+                {
+                    MessageBox.Show("Ошибка при связывании заказов: " + ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+
+            }
+            return true;
+        }
+
+        private void btnBindLV_Click(object sender, EventArgs e)
+        {
+            if (BindOrderToLV())
+            {
+                ShipmentOrder shipmentOrder;
+                shipmentOrder.s
+                _context.ShipmentOrders
+                tblShipmentOrders.DataSource = _shipment.ShipmentOrders.ToList();
+                MessageBox.Show("Все заказы привязаны к отгрузке");
+            }
         }
     }
 }

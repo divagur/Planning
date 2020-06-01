@@ -86,15 +86,15 @@
             this.edInterval = new System.Windows.Forms.NumericUpDown();
             this.edCurrDay = new System.Windows.Forms.DateTimePicker();
             this.tbMain = new System.Windows.Forms.ToolStrip();
-            this.btnAdd = new System.Windows.Forms.ToolStripButton();
-            this.btnEdit = new System.Windows.Forms.ToolStripButton();
-            this.btnDel = new System.Windows.Forms.ToolStripButton();
-            this.btnRefresh = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tabForms = new System.Windows.Forms.TabControl();
             this.metroTabControl1 = new MetroFramework.Controls.MetroTabControl();
             this.delay_reasonsTableAdapter1 = new Planning.PlanningDataSetTableAdapters.delay_reasonsTableAdapter();
             this.tmUpdate = new System.Windows.Forms.Timer(this.components);
+            this.btnAdd = new System.Windows.Forms.ToolStripButton();
+            this.btnEdit = new System.Windows.Forms.ToolStripButton();
+            this.btnDel = new System.Windows.Forms.ToolStripButton();
+            this.btnRefresh = new System.Windows.Forms.ToolStripButton();
             this.shipmentBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.menuStrip1.SuspendLayout();
             this.tabMain.SuspendLayout();
@@ -598,47 +598,6 @@
             this.tbMain.TabIndex = 1;
             this.tbMain.Text = "toolStrip1";
             // 
-            // btnAdd
-            // 
-            this.btnAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnAdd.Image = global::Planning.Properties.Resources.Add;
-            this.btnAdd.ImageTransparentColor = System.Drawing.Color.Transparent;
-            this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(23, 22);
-            this.btnAdd.Text = "Добавить";
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
-            // 
-            // btnEdit
-            // 
-            this.btnEdit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnEdit.Image = ((System.Drawing.Image)(resources.GetObject("btnEdit.Image")));
-            this.btnEdit.ImageTransparentColor = System.Drawing.Color.Transparent;
-            this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(23, 22);
-            this.btnEdit.Text = "Редактировать";
-            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
-            // 
-            // btnDel
-            // 
-            this.btnDel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnDel.Image = global::Planning.Properties.Resources.Delete;
-            this.btnDel.ImageTransparentColor = System.Drawing.Color.Transparent;
-            this.btnDel.Name = "btnDel";
-            this.btnDel.Size = new System.Drawing.Size(23, 22);
-            this.btnDel.Text = "Удалить";
-            this.btnDel.Click += new System.EventHandler(this.btnDel_Click);
-            // 
-            // btnRefresh
-            // 
-            this.btnRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnRefresh.Image = global::Planning.Properties.Resources.arrow_refresh_8563;
-            this.btnRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(23, 22);
-            this.btnRefresh.Text = "toolStripButton1";
-            this.btnRefresh.ToolTipText = "Обновить";
-            this.btnRefresh.Click += new System.EventHandler(this.toolStripButton1_Click);
-            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
@@ -674,6 +633,47 @@
             // tmUpdate
             // 
             this.tmUpdate.Tick += new System.EventHandler(this.tmUpdate_Tick);
+            // 
+            // btnAdd
+            // 
+            this.btnAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnAdd.Image = global::Planning.Properties.Resources.Add;
+            this.btnAdd.ImageTransparentColor = System.Drawing.Color.White;
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(23, 22);
+            this.btnAdd.Text = "Добавить";
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            // 
+            // btnEdit
+            // 
+            this.btnEdit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnEdit.Image = ((System.Drawing.Image)(resources.GetObject("btnEdit.Image")));
+            this.btnEdit.ImageTransparentColor = System.Drawing.Color.White;
+            this.btnEdit.Name = "btnEdit";
+            this.btnEdit.Size = new System.Drawing.Size(23, 22);
+            this.btnEdit.Text = "Редактировать";
+            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
+            // 
+            // btnDel
+            // 
+            this.btnDel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnDel.Image = global::Planning.Properties.Resources.Delete;
+            this.btnDel.ImageTransparentColor = System.Drawing.Color.White;
+            this.btnDel.Name = "btnDel";
+            this.btnDel.Size = new System.Drawing.Size(23, 22);
+            this.btnDel.Text = "Удалить";
+            this.btnDel.Click += new System.EventHandler(this.btnDel_Click);
+            // 
+            // btnRefresh
+            // 
+            this.btnRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnRefresh.Image = global::Planning.Properties.Resources.arrow_refresh_8563;
+            this.btnRefresh.ImageTransparentColor = System.Drawing.Color.White;
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(23, 22);
+            this.btnRefresh.Text = "toolStripButton1";
+            this.btnRefresh.ToolTipText = "Обновить";
+            this.btnRefresh.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
             // frmMain
             // 

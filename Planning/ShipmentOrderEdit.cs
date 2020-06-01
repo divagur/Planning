@@ -51,6 +51,7 @@ namespace Planning
         private void CopyToShipmentOrder()
         {
             _shipmentOrder.OrderId = txtOrderId.Text;
+            _shipmentOrder.lv_order_code = txtOrderId.Text;
             _shipmentOrder.OrderType = txtOrderType.Text;
             _shipmentOrder.Comment = txtOrderComment.Text;
             _shipmentOrder.ManualLoad = GetNumber(txtManualLoad);

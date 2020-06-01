@@ -15,7 +15,6 @@ namespace Planning
     public partial class LvAttr
     {
         public int Id { get; set; }
-        public Nullable<int> SheId { get; set; }
         public Nullable<bool> LvaIn { get; set; }
         public Nullable<int> LvaAttrLvId { get; set; }
         public Nullable<bool> LvaUseOrdAttr { get; set; }
