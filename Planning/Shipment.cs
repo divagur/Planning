@@ -48,6 +48,8 @@ namespace Planning
         public Nullable<System.DateTime> EndTime { get; set; }
         public Nullable<System.DateTime> LeaveTime { get; set; }
         public Nullable<bool> IsAddLv { get; set; }
+        public Nullable<int> TransportCompanyId { get; set; }
+        public Nullable<int> TransportTypeId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ShipmentOrder> ShipmentOrders { get; set; }
@@ -55,5 +57,7 @@ namespace Planning
         public virtual Depositor Depositor { get; set; }
         public virtual Gateway Gateway { get; set; }
         public virtual TimeSlot TimeSlot { get; set; }
+        public virtual TransportCompany TransportCompanies { get; set; }
+        public virtual TransportType TransportTypes { get; set; }
     }
 }

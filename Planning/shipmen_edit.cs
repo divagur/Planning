@@ -44,7 +44,7 @@ namespace Planning
         public void ClearFields()
         {
             edSDate.Text = "";
-            cbTransportCompany.Text = "";
+            cmbTransportCompany.Text = "";
             edShipmentComment.Text = "";
             cmbDelayReasons.Text = "";
             edDelayComment.Text = "";
@@ -105,8 +105,14 @@ namespace Planning
             foreach (var ts in _context.TimeSlots.ToList())
             cmbTimeSlot.Items.Add(ts.SlotTime.ToString());
 
+            cmbTransportCompany.Items.Clear();
+            foreach (var tc in _context.TransportCompanies.ToList())
+                cmbTransportCompany.Items.Add(tc.Name);
 
-            cbTransportCompany.Text = "";
+            cmbTransportType.Items.Clear();
+            foreach (var tt in _context.TransportTypes.ToList())
+                cmbTransportType.Items.Add(tt.Name);
+
             edSDate.Text = _shipment.SDate ==null?DateTime.Now.ToShortDateString():_shipment.SDate.Value.ToShortDateString();
             edShipmentComment.Text = _shipment.SComment;
             cmbDelayReasons.Text = DataService.GetDictNameById("Причины_задержки", _shipment.DelayReasonsId);
@@ -130,6 +136,8 @@ namespace Planning
             //cbIsCourier.Checked = (bool)_shipment.IsCourier;
             tblShipmentOrders.AutoGenerateColumns = false;
             tblShipmentOrders.DataSource = _shipment.ShipmentOrders.ToList();
+            cmbTransportCompany.Text = DataService.GetDictNameById("ТК", _shipment.TransportCompanyId);
+            cmbTransportType.Text = DataService.GetDictNameById("Типы_транспорта", _shipment.TransportTypeId);
 
             DateTime specTime;
             if (DateTime.TryParse(_shipment.SpecialTime.ToString(),out specTime))
@@ -193,6 +201,8 @@ namespace Planning
             _shipment.AttorneyDate = GetDate(edAttorneyDate);
             _shipment.AttorneyIssued = edAttorneyIssued.Text;
             _shipment.GateId = DataService.GetDictIdByName("Ворота", cmbGate.Text);
+            _shipment.TransportCompanyId = DataService.GetDictIdByName("ТК", cmbTransportCompany.Text);
+            _shipment.TransportTypeId = DataService.GetDictIdByName("Типы_транспорта", cmbTransportType.Text);
             // _shipment.TimeSlotId =Convert.ToInt32(IsNull(cmbTimeSlot.Text,null));
             return true;
         }
@@ -438,12 +448,19 @@ namespace Planning
         {
             if (BindOrderToLV())
             {
-                ShipmentOrder shipmentOrder;
-                shipmentOrder.s
-                _context.ShipmentOrders
                 tblShipmentOrders.DataSource = _shipment.ShipmentOrders.ToList();
                 MessageBox.Show("Все заказы привязаны к отгрузке");
             }
+        }
+
+        private void label14_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void edTrailerNumber_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

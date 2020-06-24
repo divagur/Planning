@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Planning", "Planning\Planning.csproj", "{653F12CE-5F2E-4830-AE17-8CE02435DFB3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Patcher", "Patcher\Patcher.csproj", "{F2966E8E-F655-4FA8-B932-0691DDE95C92}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{653F12CE-5F2E-4830-AE17-8CE02435DFB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{653F12CE-5F2E-4830-AE17-8CE02435DFB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{653F12CE-5F2E-4830-AE17-8CE02435DFB3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2966E8E-F655-4FA8-B932-0691DDE95C92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2966E8E-F655-4FA8-B932-0691DDE95C92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2966E8E-F655-4FA8-B932-0691DDE95C92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2966E8E-F655-4FA8-B932-0691DDE95C92}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

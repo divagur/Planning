@@ -23,6 +23,10 @@
         <AssociationConnector Association="PlanningModel.FK_shipments_time_slot" />
         <EntityTypeShape EntityType="PlanningModel.LvAttr" Width="1.5" PointX="14.75" PointY="0.875" />
         <EntityTypeShape EntityType="PlanningModel.ShipmentElement" Width="2.5" PointX="11.5" PointY="0.75" />
+        <EntityTypeShape EntityType="PlanningModel.TransportCompany" Width="2.125" PointX="0.75" PointY="10.625" />
+        <EntityTypeShape EntityType="PlanningModel.TransportType" Width="1.5" PointX="0.75" PointY="7.875" />
+        <AssociationConnector Association="PlanningModel.FK_shipments_tc" />
+        <AssociationConnector Association="PlanningModel.FK_shipments_transport_type" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -40,6 +40,7 @@
     <ApplicationIcon>PlanningLogo.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Accessibility" />
     <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Dapper.2.0.35\lib\net461\Dapper.dll</HintPath>
       <Private>True</Private>
@@ -50,6 +51,18 @@
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FastReport, Version=2020.3.4.0, Culture=neutral, PublicKeyToken=5ceb240df42bf6e8, processorArchitecture=MSIL">
+      <HintPath>..\packages\FastReport.OpenSource.2020.3.4\lib\net40\FastReport.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FastReport.Compat, Version=2020.3.2.0, Culture=neutral, PublicKeyToken=406e1f4c3c8ef97e, processorArchitecture=MSIL">
+      <HintPath>..\packages\FastReport.Compat.2020.3.2\lib\net40\FastReport.Compat.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FastReport.Data.MsSql, Version=2020.3.4.0, Culture=neutral, PublicKeyToken=b33a9a06fcc00c4c, processorArchitecture=MSIL">
+      <HintPath>..\packages\FastReport.OpenSource.Data.MsSql.2020.3.4\lib\net452\FastReport.Data.MsSql.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="MDIWindowManager, Version=2.1.2521.32075, Culture=neutral, processorArchitecture=MSIL">
@@ -69,6 +82,10 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.SqlClient, Version=4.2.0.2, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SqlClient.4.4.3\lib\net461\System.Data.SqlClient.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Xaml" />
@@ -127,6 +144,7 @@
     <Compile Include="DictForm.Designer.cs">
       <DependentUpon>DictForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ExcelPrint.cs" />
     <Compile Include="LvAttr.cs">
       <DependentUpon>DbPlaning.tt</DependentUpon>
     </Compile>
@@ -147,6 +165,12 @@
     </Compile>
     <Compile Include="SettingsEdit.Designer.cs">
       <DependentUpon>SettingsEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SettingsWizard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SettingsWizard.Designer.cs">
+      <DependentUpon>SettingsWizard.cs</DependentUpon>
     </Compile>
     <Compile Include="ShipmentAdd.cs">
       <SubType>Form</SubType>
@@ -244,6 +268,12 @@
     <Compile Include="TimeSlotEdit.Designer.cs">
       <DependentUpon>TimeSlotEdit.cs</DependentUpon>
     </Compile>
+    <Compile Include="TransportCompany.cs">
+      <DependentUpon>DbPlaning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TransportType.cs">
+      <DependentUpon>DbPlaning.tt</DependentUpon>
+    </Compile>
     <Compile Include="User.cs">
       <DependentUpon>DbPlaning.tt</DependentUpon>
     </Compile>
@@ -264,6 +294,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SettingsEdit.resx">
       <DependentUpon>SettingsEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SettingsWizard.resx">
+      <DependentUpon>SettingsWizard.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ShipmentAdd.resx">
       <DependentUpon>ShipmentAdd.cs</DependentUpon>
@@ -399,12 +432,43 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Planing.cs</LastGenOutput>
     </Content>
+    <None Include="Resources\Print.png" />
+    <Content Include="Resources\printer.png" />
     <None Include="Resources\arrow_refresh_8563.png" />
     <Content Include="PlanningLogo.ico" />
     <Content Include="Resources\calendar.png" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>7</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Interop.Excel">
+      <Guid>{00020813-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>8</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="VBIDE">
+      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
@@ -413,8 +477,10 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\EntityFramework.6.4.0\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.0\build\EntityFramework.props'))" />
     <Error Condition="!Exists('..\packages\EntityFramework.6.4.0\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.0\build\EntityFramework.targets'))" />
+    <Error Condition="!Exists('..\packages\FastReport.Compat.2020.3.2\build\FastReport.Compat.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\FastReport.Compat.2020.3.2\build\FastReport.Compat.targets'))" />
   </Target>
   <Import Project="..\packages\EntityFramework.6.4.0\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.0\build\EntityFramework.targets')" />
+  <Import Project="..\packages\FastReport.Compat.2020.3.2\build\FastReport.Compat.targets" Condition="Exists('..\packages\FastReport.Compat.2020.3.2\build\FastReport.Compat.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

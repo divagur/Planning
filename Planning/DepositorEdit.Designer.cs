@@ -39,25 +39,27 @@
             this.btnClose = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tblAttr = new System.Windows.Forms.DataGridView();
-            this.tbAttr = new System.Windows.Forms.ToolStrip();
-            this.btnAdd = new System.Windows.Forms.ToolStripButton();
-            this.btnDel = new System.Windows.Forms.ToolStripButton();
-            this.btnEdit = new System.Windows.Forms.ToolStripButton();
             this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.LVAttrName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PLField = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.LVAttrId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PLFieldId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.LVIn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tbAttr = new System.Windows.Forms.ToolStrip();
+            this.btnAdd = new System.Windows.Forms.ToolStripButton();
+            this.btnEdit = new System.Windows.Forms.ToolStripButton();
+            this.btnDel = new System.Windows.Forms.ToolStripButton();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tblAttr)).BeginInit();
             this.tbAttr.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Location = new System.Drawing.Point(13, 25);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(83, 13);
             this.label1.TabIndex = 0;
@@ -66,7 +68,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(11, 46);
+            this.label2.Location = new System.Drawing.Point(12, 51);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(72, 13);
             this.label2.TabIndex = 0;
@@ -75,36 +77,36 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 82);
+            this.label3.Location = new System.Drawing.Point(13, 77);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(71, 13);
+            this.label3.Size = new System.Drawing.Size(63, 13);
             this.label3.TabIndex = 0;
-            this.label3.Text = "Код в Lvision";
+            this.label3.Text = "ID в Lvision";
             // 
             // edName
             // 
-            this.edName.Location = new System.Drawing.Point(101, 6);
+            this.edName.Location = new System.Drawing.Point(102, 22);
             this.edName.Name = "edName";
             this.edName.Size = new System.Drawing.Size(226, 20);
             this.edName.TabIndex = 1;
             // 
             // edLvId
             // 
-            this.edLvId.Location = new System.Drawing.Point(101, 79);
+            this.edLvId.Location = new System.Drawing.Point(102, 74);
             this.edLvId.Name = "edLvId";
             this.edLvId.Size = new System.Drawing.Size(226, 20);
             this.edLvId.TabIndex = 1;
             // 
             // edDB
             // 
-            this.edDB.Location = new System.Drawing.Point(101, 43);
+            this.edDB.Location = new System.Drawing.Point(102, 48);
             this.edDB.Name = "edDB";
             this.edDB.Size = new System.Drawing.Size(226, 20);
             this.edDB.TabIndex = 1;
             // 
             // btnOk
             // 
-            this.btnOk.Location = new System.Drawing.Point(377, 431);
+            this.btnOk.Location = new System.Drawing.Point(368, 436);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
             this.btnOk.TabIndex = 2;
@@ -114,7 +116,7 @@
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(458, 431);
+            this.btnClose.Location = new System.Drawing.Point(449, 436);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
             this.btnClose.TabIndex = 2;
@@ -126,9 +128,9 @@
             // 
             this.groupBox1.Controls.Add(this.tblAttr);
             this.groupBox1.Controls.Add(this.tbAttr);
-            this.groupBox1.Location = new System.Drawing.Point(15, 118);
+            this.groupBox1.Location = new System.Drawing.Point(12, 123);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(518, 307);
+            this.groupBox1.Size = new System.Drawing.Size(515, 307);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Аттрибуты";
@@ -151,55 +153,9 @@
             this.tblAttr.ReadOnly = true;
             this.tblAttr.RowHeadersVisible = false;
             this.tblAttr.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.tblAttr.Size = new System.Drawing.Size(512, 263);
+            this.tblAttr.Size = new System.Drawing.Size(509, 263);
             this.tblAttr.TabIndex = 0;
             this.tblAttr.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tblAttr_CellDoubleClick);
-            // 
-            // tbAttr
-            // 
-            this.tbAttr.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.tbAttr.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnAdd,
-            this.btnEdit,
-            this.btnDel});
-            this.tbAttr.Location = new System.Drawing.Point(3, 16);
-            this.tbAttr.Name = "tbAttr";
-            this.tbAttr.Size = new System.Drawing.Size(512, 25);
-            this.tbAttr.TabIndex = 1;
-            this.tbAttr.Text = "toolStrip1";
-            // 
-            // btnAdd
-            // 
-            this.btnAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnAdd.Image = global::Planning.Properties.Resources.Add;
-            this.btnAdd.ImageTransparentColor = System.Drawing.Color.White;
-            this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(23, 22);
-            this.btnAdd.Text = "toolStripButton1";
-            this.btnAdd.ToolTipText = "Добавить аттрибут";
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
-            // 
-            // btnDel
-            // 
-            this.btnDel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnDel.Image = global::Planning.Properties.Resources.Delete;
-            this.btnDel.ImageTransparentColor = System.Drawing.Color.White;
-            this.btnDel.Name = "btnDel";
-            this.btnDel.Size = new System.Drawing.Size(23, 22);
-            this.btnDel.Text = "toolStripButton2";
-            this.btnDel.ToolTipText = "Удалить аттрибут";
-            this.btnDel.Click += new System.EventHandler(this.btnDel_Click);
-            // 
-            // btnEdit
-            // 
-            this.btnEdit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnEdit.Image = global::Planning.Properties.Resources.Edit;
-            this.btnEdit.ImageTransparentColor = System.Drawing.Color.White;
-            this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(23, 22);
-            this.btnEdit.Text = "toolStripButton1";
-            this.btnEdit.ToolTipText = "Редактировать аттрибут";
-            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
             // 
             // Id
             // 
@@ -250,20 +206,76 @@
             this.LVIn.ReadOnly = true;
             this.LVIn.Visible = false;
             // 
+            // tbAttr
+            // 
+            this.tbAttr.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.tbAttr.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnAdd,
+            this.btnEdit,
+            this.btnDel});
+            this.tbAttr.Location = new System.Drawing.Point(3, 16);
+            this.tbAttr.Name = "tbAttr";
+            this.tbAttr.Size = new System.Drawing.Size(509, 25);
+            this.tbAttr.TabIndex = 1;
+            this.tbAttr.Text = "toolStrip1";
+            // 
+            // btnAdd
+            // 
+            this.btnAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnAdd.Image = global::Planning.Properties.Resources.Add;
+            this.btnAdd.ImageTransparentColor = System.Drawing.Color.White;
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(23, 22);
+            this.btnAdd.Text = "toolStripButton1";
+            this.btnAdd.ToolTipText = "Добавить аттрибут";
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            // 
+            // btnEdit
+            // 
+            this.btnEdit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnEdit.Image = global::Planning.Properties.Resources.Edit;
+            this.btnEdit.ImageTransparentColor = System.Drawing.Color.White;
+            this.btnEdit.Name = "btnEdit";
+            this.btnEdit.Size = new System.Drawing.Size(23, 22);
+            this.btnEdit.Text = "toolStripButton1";
+            this.btnEdit.ToolTipText = "Редактировать аттрибут";
+            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
+            // 
+            // btnDel
+            // 
+            this.btnDel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnDel.Image = global::Planning.Properties.Resources.Delete;
+            this.btnDel.ImageTransparentColor = System.Drawing.Color.White;
+            this.btnDel.Name = "btnDel";
+            this.btnDel.Size = new System.Drawing.Size(23, 22);
+            this.btnDel.Text = "toolStripButton2";
+            this.btnDel.ToolTipText = "Удалить аттрибут";
+            this.btnDel.Click += new System.EventHandler(this.btnDel_Click);
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.label1);
+            this.groupBox2.Controls.Add(this.label2);
+            this.groupBox2.Controls.Add(this.label3);
+            this.groupBox2.Controls.Add(this.edName);
+            this.groupBox2.Controls.Add(this.edDB);
+            this.groupBox2.Controls.Add(this.edLvId);
+            this.groupBox2.Location = new System.Drawing.Point(12, 12);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(515, 105);
+            this.groupBox2.TabIndex = 4;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Данные депозитора";
+            // 
             // DepositorEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(545, 460);
+            this.ClientSize = new System.Drawing.Size(535, 467);
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnOk);
-            this.Controls.Add(this.edDB);
-            this.Controls.Add(this.edLvId);
-            this.Controls.Add(this.edName);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "DepositorEdit";
@@ -274,8 +286,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.tblAttr)).EndInit();
             this.tbAttr.ResumeLayout(false);
             this.tbAttr.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -301,5 +314,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn LVAttrId;
         private System.Windows.Forms.DataGridViewTextBoxColumn PLFieldId;
         private System.Windows.Forms.DataGridViewTextBoxColumn LVIn;
+        private System.Windows.Forms.GroupBox groupBox2;
     }
 }

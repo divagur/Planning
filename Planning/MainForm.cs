@@ -11,7 +11,7 @@ using System.Configuration;
 using MDIWindowManager;
 using System.Data.SqlClient;
 using System.Configuration;
-
+using Excel = Microsoft.Office.Interop.Excel;
 namespace Planning
 {
     public partial class frmMain : Form
@@ -35,27 +35,25 @@ namespace Planning
 
         }
 
-        private void ShipmentsLoad()
+        private SqlDataReader GetShipment(DateTime DateFrom, DateTime? DateTill, string ShpId, string OrdId)
         {
-            using (SqlConnection connection = new SqlConnection(DataService.connectionString))
-            {
+            SqlDataReader reader = null;
+            SqlConnection connection = new SqlConnection(DataService.connectionString);
                 if (connection.State == ConnectionState.Closed)
                 {
                     try
                     {
                         connection.Open();
                     }
-                    catch(SqlException ex)
+                    catch (SqlException ex)
                     {
                         MessageBox.Show("Ошибка подключения:" + ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        tbMain.Enabled = false;
-                        miDicts.Enabled = false;
 
-                        return;
+
+                        return null;
                     }
 
-                    tbMain.Enabled = true;
-                    miDicts.Enabled = true;
+
                 }
 
                 string sqlText = "SP_PL_MainQueryP";
@@ -63,26 +61,39 @@ namespace Planning
                 SqlCommand command = new SqlCommand(sqlText, connection);
                 command.CommandType = CommandType.StoredProcedure;
 
-                command.Parameters.Add(new SqlParameter { ParameterName = "@From", Value =edCurrDay.Value});
-                command.Parameters.Add(new SqlParameter { ParameterName = "@Till", Value = null });
-                command.Parameters.Add(new SqlParameter { ParameterName = "@ShpId", Value = null });
-                command.Parameters.Add(new SqlParameter { ParameterName = "@OrdID", Value = null });
-                SqlDataReader reader = null;
+                command.Parameters.Add(new SqlParameter { ParameterName = "@From", Value = DateFrom });
+                command.Parameters.Add(new SqlParameter { ParameterName = "@Till", Value = DateTill });
+                command.Parameters.Add(new SqlParameter { ParameterName = "@ShpId", Value = ShpId });
+                command.Parameters.Add(new SqlParameter { ParameterName = "@OrdID", Value = OrdId });
+                
                 try
                 {
                     reader = command.ExecuteReader();
                 }
-                catch(SqlException ex)
+                catch (SqlException ex)
                 {
-                    MessageBox.Show("Ошибка при заполнении таблицы: " + CR + ex.Message,"Ошибка", MessageBoxButtons.OK);
+                    MessageBox.Show("Ошибка при получении данных: " + CR + ex.Message, "Ошибка", MessageBoxButtons.OK);
                 }
-                DataSet ds = new DataSet();
-                ds.Tables.Add();
-                ds.Tables[0].Load(reader);
-                tblShipments.AutoGenerateColumns = false;
-                tblShipments.DataSource = ds.Tables[0];
+                return reader;
 
-            }
+            
+        }
+
+        private void ShipmentsLoad()
+        {
+            tbMain.Enabled = false;
+            miDicts.Enabled = false;
+            var reader = GetShipment(edCurrDay.Value, null, null,null);
+            tbMain.Enabled = true;
+            miDicts.Enabled = true;
+            DataSet ds = new DataSet();
+            ds.Tables.Add();
+            ds.Tables[0].Load(reader);
+
+            tblShipments.AutoGenerateColumns = false;
+            tblShipments.DataSource = ds.Tables[0];
+
+            
         }
 
         private void UpdateSetting()
@@ -139,10 +150,12 @@ namespace Planning
             DataService.Dicts.Add("Ворота",new DictInfo {TableName= "gateways", NameColumn = "name" });
             DataService.Dicts.Add("Депозиторы", new DictInfo { TableName = "depositors", NameColumn = "name" });
             DataService.Dicts.Add("ТаймСлоты", new DictInfo { TableName = "time_slot", NameColumn = "name" });
+            DataService.Dicts.Add("ТК", new DictInfo { TableName = "transport_company", NameColumn = "name" });
+            DataService.Dicts.Add("Типы_транспорта", new DictInfo { TableName = "transport_type", NameColumn = "name" });
             //dataService.Dicts.Add("Ворота", "gateways");
-            
-            
- 
+
+
+
         }
 
         private void miDictDelayReasons_Click(object sender, EventArgs e)
@@ -569,6 +582,11 @@ namespace Planning
 
         private void miSettings_Click(object sender, EventArgs e)
         {
+
+            SettingsWizard frmSettingsWizard = new SettingsWizard();
+            frmSettingsWizard.ShowDialog();
+            return;
+
             SettingsEdit frmSettingsEdit = new SettingsEdit(setting);
             if (frmSettingsEdit.ShowDialog()==DialogResult.OK)
             {
@@ -601,6 +619,153 @@ namespace Planning
         {
             var frmShimentElements = new ShipmentElements();
             AddFormTab(frmShimentElements, "Элементы отгрузки");
+        }
+
+        private void miTransportType_Click(object sender, EventArgs e)
+        {
+            DictSimple dict = new DictSimple();
+
+            dict.TableName = "transport_type";
+            dict.Title = "Справочник: Тип транспорта";
+
+            dict.Columns.Add(new DictColumn { Id = "Id", IsPK = true, IsVisible = false, Title = "Код", DataField = "id", DataType = SqlDbType.Int });
+            dict.Columns.Add(new DictColumn { Id = "Name", IsPK = false, IsVisible = true, Title = "Наименование", DataField = "name", Width = 254, DataType = SqlDbType.VarChar, Length = 20 });
+            dict.Columns.Add(new DictColumn { Id = "Tonnage", IsPK = false, IsVisible = true, Title = "Тоннаж", DataField = "tonnage", Width = 80, DataType = SqlDbType.Int });
+
+            var frmTypeTransport = new SimpleDict(dict);
+            AddFormTab(frmTypeTransport, "Типы транспорта");
+        }
+
+        private void miDictTC_Click(object sender, EventArgs e)
+        {
+            DictSimple dict = new DictSimple();
+
+            dict.TableName = "transport_company";
+            dict.Title = "Справочник: Транспортные компании";
+
+            dict.Columns.Add(new DictColumn { Id = "Id", IsPK = true, IsVisible = false, Title = "Код", DataField = "id", DataType = SqlDbType.Int });
+            dict.Columns.Add(new DictColumn { Id = "Name", IsPK = false, IsVisible = true, Title = "Наименование", DataField = "name", Width = 254, DataType = SqlDbType.VarChar, Length = 20 });
+            dict.Columns.Add(new DictColumn { Id = "IsActive", IsPK = false, IsVisible = true, Title = "Активная", DataField = "is_active", Width = 80, DataType = SqlDbType.Bit });
+            
+
+            var frmTransportCompany = new SimpleDict(dict);
+            AddFormTab(frmTransportCompany, "Транспортные компании");
+        }
+
+        private void mciPrint_Click(object sender, EventArgs e)
+        {
+            if (tblShipments.SelectedRows.Count <= 0)
+                return;
+
+            Shipment shipment = DataService.context.Shipments.Find(tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colId"].Value);
+            Excel.Range range;
+            if (shipment.ShIn == false)
+            {
+     
+                DataRow[] printRows = (tblShipments.DataSource as DataTable).Select("ShpId = "+ tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colId"].Value.ToString());
+                ExcelPrint excel = new ExcelPrint(Application.StartupPath + "\\Reports\\ЛистОтгрузки.xltx");
+                //Код отгрузки
+                excel.SetValue(1, 6, 2, "*"+printRows[0]["UniqueKey"] + "*");
+                excel.SetValue(1, 6, 3, printRows[0]["UniqueKey"]);
+                //Прибыл по плану
+                excel.SetValue(1, 3, 6, printRows[0]["ShpDate"].ToString().Substring(0,10)+" "+ printRows[0]["SlotTime"]);
+                //Прибыл по факту
+                excel.SetValue(1, 3, 7, printRows[0]["ShpSubmissionTime"]);
+                //ФИО
+                excel.SetValue(1, 3, 8, printRows[0]["ShpDriverFio"]);
+                //№ машины
+                excel.SetValue(1, 3, 9, printRows[0]["ShpVehicleNumber"]);
+                //№ телефона
+                excel.SetValue(1, 3, 10, printRows[0]["ShpDriverPhone"]);
+                //№ ворот, время постановки на ворота	
+                excel.SetValue(1, 3, 11, printRows[0]["GateName"] + ","+ printRows[0]["ShpStartTime"]);
+                //№ пломбы
+                excel.SetValue(1, 3, 12, printRows[0]["ShpStampNumber"]);
+                //Время окончание загрузки
+                excel.SetValue(1, 3, 13, printRows[0]["ShpEndTimePlan"]);
+                //Убыл: дата, время
+                excel.SetValue(1, 3, 14, printRows[0]["ShpEndTimeFact"]);
+
+                for(int i = 0;i<printRows.Count();i++)
+                {
+                    excel.SetValue(1, 1, 17 + i, printRows[i]["OrdLVCode"]);
+                    excel.SetValue(1, 2, 17 + i, printRows[i]["KlientName"]);
+                }
+                
+
+                range = excel.SelectCells(1, 1, 17, 1, 17 + printRows.Count());
+                range.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
+
+                range = excel.SelectCells(1, 2, 17, 2, 17 + printRows.Count());
+                range.HorizontalAlignment = Excel.XlHAlign.xlHAlignLeft;
+
+                range = excel.SelectCells(1, 1, 18, 6, 18 + printRows.Count()-1);
+                
+
+                range.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
+                range.EntireRow.Font.Bold = true;
+
+                range = excel.SelectCells(1, 1, 16, 6, 18 + printRows.Count()-1);
+              
+                range.Borders.Item[Excel.XlBordersIndex.xlEdgeLeft].Weight = Excel.XlBorderWeight.xlMedium;
+                range.Borders.Item[Excel.XlBordersIndex.xlEdgeTop].Weight = Excel.XlBorderWeight.xlMedium;
+                range.Borders.Item[Excel.XlBordersIndex.xlEdgeRight].Weight = Excel.XlBorderWeight.xlMedium;
+                range.Borders.Item[Excel.XlBordersIndex.xlEdgeBottom].Weight = Excel.XlBorderWeight.xlMedium;
+
+                excel.Merge(1, 1, 17 + printRows.Count() + 2, 1, 17 + printRows.Count() + 3);
+                range = excel.SelectCells(1, 1, 17 + printRows.Count() + 2, 2, 17 + printRows.Count() + 2);
+                range.Font.Bold = true;
+                range.HorizontalAlignment = Excel.XlHAlign.xlHAlignLeft;
+                range.VerticalAlignment = Excel.XlVAlign.xlVAlignTop;
+                range.WrapText = true;
+                excel.SetValue(1, 1, 17 + printRows.Count() + 2, "Комментарии к заказу:");
+                excel.SetValue(1, 2, 17 + printRows.Count() + 2, printRows[0]["ShpComment"]);
+
+                range = excel.SelectCells(1, 1, 17 + printRows.Count() + 2, 6, 17 + printRows.Count() + 6);
+                range.Borders.Item[Excel.XlBordersIndex.xlEdgeLeft].Weight = Excel.XlBorderWeight.xlMedium;
+                range.Borders.Item[Excel.XlBordersIndex.xlEdgeTop].Weight = Excel.XlBorderWeight.xlMedium;
+                range.Borders.Item[Excel.XlBordersIndex.xlEdgeRight].Weight = Excel.XlBorderWeight.xlMedium;
+                range.Borders.Item[Excel.XlBordersIndex.xlEdgeBottom].Weight = Excel.XlBorderWeight.xlMedium;
+
+                range = excel.SelectCells(1, 1, 1, 1,1);
+                range.Activate();
+
+                excel.Visible = true;
+            }
+           else
+            {
+                string filter = "ShpId = " + tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colId"].Value.ToString()+
+                                " and OrdId = "+ tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colIdNakl"].Value.ToString();
+                DataRow[] printRows = (tblShipments.DataSource as DataTable).Select(filter);
+                ExcelPrint excel = new ExcelPrint(Application.StartupPath + "\\Reports\\ЛистПрихода.xltx");
+                //Прибыл по плану
+                excel.SetValue(1, 2, 6, printRows[0]["ShpDate"].ToString().Substring(0, 10) + " " + printRows[0]["SlotTime"]);
+                //Прибыл по факту
+                excel.SetValue(1, 2, 7, printRows[0]["ShpSubmissionTime"]);
+                //ФИО
+                excel.SetValue(1, 2, 8, printRows[0]["ShpDriverFio"]);
+                //№ машины
+                excel.SetValue(1, 2, 9, printRows[0]["ShpVehicleNumber"]);
+                //№ телефона
+                excel.SetValue(1, 2, 10, printRows[0]["ShpDriverPhone"]);
+                //№ номер накладной
+                excel.SetValue(1, 2, 11, printRows[0]["OrdId"]);
+                //№ ворот, время постановки на ворота	
+                excel.SetValue(1, 2, 12, printRows[0]["GateName"] + "," + printRows[0]["ShpStartTime"]);
+                //№ пломбы
+                excel.SetValue(1, 2, 12, printRows[0]["ShpStampNumber"]);
+                //Время окончание загрузки
+                excel.SetValue(1, 2, 14, printRows[0]["ShpEndTimePlan"]);
+                //Убыл: дата, время
+                excel.SetValue(1, 2, 16, printRows[0]["ShpEndTimeFact"]);
+
+                range = excel.SelectCells(1, 1, 1, 1, 1);
+                range.Activate();
+
+                excel.Visible = true;
+            }
+
+            
         }
     }
 }

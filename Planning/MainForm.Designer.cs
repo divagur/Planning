@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -44,9 +44,22 @@
             this.miDictGates = new System.Windows.Forms.ToolStripMenuItem();
             this.miDictTC = new System.Windows.Forms.ToolStripMenuItem();
             this.miAttributes = new System.Windows.Forms.ToolStripMenuItem();
+            this.miTransportType = new System.Windows.Forms.ToolStripMenuItem();
             this.tabMain = new System.Windows.Forms.TabPage();
             this.panel2 = new System.Windows.Forms.Panel();
             this.tblShipments = new System.Windows.Forms.DataGridView();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.cbUpdate = new System.Windows.Forms.CheckBox();
+            this.edInterval = new System.Windows.Forms.NumericUpDown();
+            this.edCurrDay = new System.Windows.Forms.DateTimePicker();
+            this.tbMain = new System.Windows.Forms.ToolStrip();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.tabForms = new System.Windows.Forms.TabControl();
+            this.metroTabControl1 = new MetroFramework.Controls.MetroTabControl();
+            this.tmUpdate = new System.Windows.Forms.Timer(this.components);
+            this.mnuContext = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.mciPrint = new System.Windows.Forms.ToolStripMenuItem();
+            this.delay_reasonsTableAdapter1 = new Planning.PlanningDataSetTableAdapters.delay_reasonsTableAdapter();
             this.UniqueKey = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colIdNakl = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -67,6 +80,7 @@
             this.colDriverPhone = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDriverName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colTransComp = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colTransportType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colTrackNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colTrailerNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colAttorneyNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -78,24 +92,16 @@
             this.colDelayReason = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDelayComment = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDepositor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colStampNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FontColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.BackgroundColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.IsAddLv = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.cbUpdate = new System.Windows.Forms.CheckBox();
-            this.edInterval = new System.Windows.Forms.NumericUpDown();
-            this.edCurrDay = new System.Windows.Forms.DateTimePicker();
-            this.tbMain = new System.Windows.Forms.ToolStrip();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.tabForms = new System.Windows.Forms.TabControl();
-            this.metroTabControl1 = new MetroFramework.Controls.MetroTabControl();
-            this.delay_reasonsTableAdapter1 = new Planning.PlanningDataSetTableAdapters.delay_reasonsTableAdapter();
-            this.tmUpdate = new System.Windows.Forms.Timer(this.components);
             this.btnAdd = new System.Windows.Forms.ToolStripButton();
             this.btnEdit = new System.Windows.Forms.ToolStripButton();
             this.btnDel = new System.Windows.Forms.ToolStripButton();
             this.btnRefresh = new System.Windows.Forms.ToolStripButton();
             this.shipmentBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.btnPrint = new System.Windows.Forms.ToolStripButton();
             this.menuStrip1.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -104,6 +110,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.edInterval)).BeginInit();
             this.tbMain.SuspendLayout();
             this.tabForms.SuspendLayout();
+            this.mnuContext.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.shipmentBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
@@ -144,7 +151,8 @@
             this.miDictDelayReasons,
             this.miDictGates,
             this.miDictTC,
-            this.miAttributes});
+            this.miAttributes,
+            this.miTransportType});
             this.miDicts.Name = "miDicts";
             this.miDicts.Size = new System.Drawing.Size(94, 20);
             this.miDicts.Text = "Справочники";
@@ -152,64 +160,72 @@
             // miDictUserGroup
             // 
             this.miDictUserGroup.Name = "miDictUserGroup";
-            this.miDictUserGroup.Size = new System.Drawing.Size(201, 22);
+            this.miDictUserGroup.Size = new System.Drawing.Size(230, 22);
             this.miDictUserGroup.Text = "Группы пользователей";
             this.miDictUserGroup.Click += new System.EventHandler(this.miDictUserGroup_Click);
             // 
             // miDictUser
             // 
             this.miDictUser.Name = "miDictUser";
-            this.miDictUser.Size = new System.Drawing.Size(201, 22);
+            this.miDictUser.Size = new System.Drawing.Size(230, 22);
             this.miDictUser.Text = "Пользователи";
             this.miDictUser.Click += new System.EventHandler(this.miDictUser_Click);
             // 
             // miDictTimeSlot
             // 
             this.miDictTimeSlot.Name = "miDictTimeSlot";
-            this.miDictTimeSlot.Size = new System.Drawing.Size(201, 22);
+            this.miDictTimeSlot.Size = new System.Drawing.Size(230, 22);
             this.miDictTimeSlot.Text = "Тайм слоты";
             this.miDictTimeSlot.Click += new System.EventHandler(this.miDictTimeSlot_Click);
             // 
             // miDictDepositor
             // 
             this.miDictDepositor.Name = "miDictDepositor";
-            this.miDictDepositor.Size = new System.Drawing.Size(201, 22);
+            this.miDictDepositor.Size = new System.Drawing.Size(230, 22);
             this.miDictDepositor.Text = "Депозиторы";
             this.miDictDepositor.Click += new System.EventHandler(this.miDictDepositor_Click);
             // 
             // miDictOpersType
             // 
             this.miDictOpersType.Name = "miDictOpersType";
-            this.miDictOpersType.Size = new System.Drawing.Size(201, 22);
+            this.miDictOpersType.Size = new System.Drawing.Size(230, 22);
             this.miDictOpersType.Text = "Типы операций";
             this.miDictOpersType.Click += new System.EventHandler(this.miDictOpersType_Click);
             // 
             // miDictDelayReasons
             // 
             this.miDictDelayReasons.Name = "miDictDelayReasons";
-            this.miDictDelayReasons.Size = new System.Drawing.Size(201, 22);
+            this.miDictDelayReasons.Size = new System.Drawing.Size(230, 22);
             this.miDictDelayReasons.Text = "Причины задержки";
             this.miDictDelayReasons.Click += new System.EventHandler(this.miDictDelayReasons_Click);
             // 
             // miDictGates
             // 
             this.miDictGates.Name = "miDictGates";
-            this.miDictGates.Size = new System.Drawing.Size(201, 22);
+            this.miDictGates.Size = new System.Drawing.Size(230, 22);
             this.miDictGates.Text = "Ворота";
             this.miDictGates.Click += new System.EventHandler(this.miDictGates_Click);
             // 
             // miDictTC
             // 
             this.miDictTC.Name = "miDictTC";
-            this.miDictTC.Size = new System.Drawing.Size(201, 22);
+            this.miDictTC.Size = new System.Drawing.Size(230, 22);
             this.miDictTC.Text = "Справочник ТК";
+            this.miDictTC.Click += new System.EventHandler(this.miDictTC_Click);
             // 
             // miAttributes
             // 
             this.miAttributes.Name = "miAttributes";
-            this.miAttributes.Size = new System.Drawing.Size(201, 22);
+            this.miAttributes.Size = new System.Drawing.Size(230, 22);
             this.miAttributes.Text = "Аттрибуты";
             this.miAttributes.Click += new System.EventHandler(this.miAttributes_Click);
+            // 
+            // miTransportType
+            // 
+            this.miTransportType.Name = "miTransportType";
+            this.miTransportType.Size = new System.Drawing.Size(230, 22);
+            this.miTransportType.Text = "Типы транспортных средств";
+            this.miTransportType.Click += new System.EventHandler(this.miTransportType_Click);
             // 
             // tabMain
             // 
@@ -259,6 +275,7 @@
             this.colDriverPhone,
             this.colDriverName,
             this.colTransComp,
+            this.colTransportType,
             this.colTrackNumber,
             this.colTrailerNumber,
             this.colAttorneyNumber,
@@ -270,9 +287,11 @@
             this.colDelayReason,
             this.colDelayComment,
             this.colDepositor,
+            this.colStampNumber,
             this.FontColor,
             this.BackgroundColor,
             this.IsAddLv});
+            this.tblShipments.ContextMenuStrip = this.mnuContext;
             this.tblShipments.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tblShipments.Location = new System.Drawing.Point(0, 0);
             this.tblShipments.Name = "tblShipments";
@@ -287,6 +306,123 @@
             this.tblShipments.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.tblShipments_CellPainting);
             this.tblShipments.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.tblShipments_RowPostPaint);
             this.tblShipments.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.tblShipments_RowPrePaint);
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.cbUpdate);
+            this.panel1.Controls.Add(this.edInterval);
+            this.panel1.Controls.Add(this.edCurrDay);
+            this.panel1.Controls.Add(this.tbMain);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(3, 3);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1262, 28);
+            this.panel1.TabIndex = 4;
+            // 
+            // cbUpdate
+            // 
+            this.cbUpdate.AutoSize = true;
+            this.cbUpdate.Location = new System.Drawing.Point(295, 5);
+            this.cbUpdate.Name = "cbUpdate";
+            this.cbUpdate.Size = new System.Drawing.Size(110, 17);
+            this.cbUpdate.TabIndex = 5;
+            this.cbUpdate.Text = "Автообновление";
+            this.cbUpdate.UseVisualStyleBackColor = true;
+            this.cbUpdate.CheckedChanged += new System.EventHandler(this.cbUpdate_CheckedChanged);
+            // 
+            // edInterval
+            // 
+            this.edInterval.Location = new System.Drawing.Point(244, 4);
+            this.edInterval.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.edInterval.Name = "edInterval";
+            this.edInterval.Size = new System.Drawing.Size(45, 20);
+            this.edInterval.TabIndex = 4;
+            this.edInterval.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.edInterval.ValueChanged += new System.EventHandler(this.edInterval_ValueChanged);
+            // 
+            // edCurrDay
+            // 
+            this.edCurrDay.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.edCurrDay.Location = new System.Drawing.Point(143, 3);
+            this.edCurrDay.Name = "edCurrDay";
+            this.edCurrDay.Size = new System.Drawing.Size(95, 20);
+            this.edCurrDay.TabIndex = 3;
+            this.edCurrDay.ValueChanged += new System.EventHandler(this.edCurrDay_ValueChanged);
+            // 
+            // tbMain
+            // 
+            this.tbMain.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.tbMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnAdd,
+            this.btnEdit,
+            this.btnDel,
+            this.btnRefresh,
+            this.toolStripSeparator1,
+            this.btnPrint});
+            this.tbMain.Location = new System.Drawing.Point(0, 0);
+            this.tbMain.Name = "tbMain";
+            this.tbMain.Size = new System.Drawing.Size(1262, 25);
+            this.tbMain.TabIndex = 1;
+            this.tbMain.Text = "toolStrip1";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // tabForms
+            // 
+            this.tabForms.Controls.Add(this.tabMain);
+            this.tabForms.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabForms.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
+            this.tabForms.ItemSize = new System.Drawing.Size(180, 20);
+            this.tabForms.Location = new System.Drawing.Point(0, 24);
+            this.tabForms.Name = "tabForms";
+            this.tabForms.SelectedIndex = 0;
+            this.tabForms.Size = new System.Drawing.Size(1276, 607);
+            this.tabForms.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
+            this.tabForms.TabIndex = 4;
+            this.tabForms.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.tabForms_DrawItem);
+            this.tabForms.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tabForms_MouseDown);
+            // 
+            // metroTabControl1
+            // 
+            this.metroTabControl1.Location = new System.Drawing.Point(0, 0);
+            this.metroTabControl1.Name = "metroTabControl1";
+            this.metroTabControl1.Padding = new System.Drawing.Point(6, 8);
+            this.metroTabControl1.TabIndex = 0;
+            this.metroTabControl1.UseSelectable = true;
+            // 
+            // tmUpdate
+            // 
+            this.tmUpdate.Tick += new System.EventHandler(this.tmUpdate_Tick);
+            // 
+            // mnuContext
+            // 
+            this.mnuContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mciPrint});
+            this.mnuContext.Name = "mnuContext";
+            this.mnuContext.Size = new System.Drawing.Size(114, 26);
+            // 
+            // mciPrint
+            // 
+            this.mciPrint.Image = global::Planning.Properties.Resources.printer;
+            this.mciPrint.Name = "mciPrint";
+            this.mciPrint.Size = new System.Drawing.Size(113, 22);
+            this.mciPrint.Text = "Печать";
+            this.mciPrint.Click += new System.EventHandler(this.mciPrint_Click);
+            // 
+            // delay_reasonsTableAdapter1
+            // 
+            this.delay_reasonsTableAdapter1.ClearBeforeFill = true;
             // 
             // UniqueKey
             // 
@@ -368,8 +504,8 @@
             // colCopmletePct
             // 
             this.colCopmletePct.DataPropertyName = "PrcReady";
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.colCopmletePct.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.colCopmletePct.DefaultCellStyle = dataGridViewCellStyle2;
             this.colCopmletePct.HeaderText = "Собран (в %)";
             this.colCopmletePct.Name = "colCopmletePct";
             this.colCopmletePct.ReadOnly = true;
@@ -427,10 +563,17 @@
             // 
             // colTransComp
             // 
-            this.colTransComp.DataPropertyName = "TransportCompany";
+            this.colTransComp.DataPropertyName = "TransportCompanyName";
             this.colTransComp.HeaderText = "Транспортная компания";
             this.colTransComp.Name = "colTransComp";
             this.colTransComp.ReadOnly = true;
+            // 
+            // colTransportType
+            // 
+            this.colTransportType.DataPropertyName = "TransportTypeName";
+            this.colTransportType.HeaderText = "Марка ТС";
+            this.colTransportType.Name = "colTransportType";
+            this.colTransportType.ReadOnly = true;
             // 
             // colTrackNumber
             // 
@@ -509,6 +652,13 @@
             this.colDepositor.Name = "colDepositor";
             this.colDepositor.ReadOnly = true;
             // 
+            // colStampNumber
+            // 
+            this.colStampNumber.DataPropertyName = "ShpStampNumber";
+            this.colStampNumber.HeaderText = "№ пломбы";
+            this.colStampNumber.Name = "colStampNumber";
+            this.colStampNumber.ReadOnly = true;
+            // 
             // FontColor
             // 
             this.FontColor.DataPropertyName = "FontColor";
@@ -532,107 +682,6 @@
             this.IsAddLv.Name = "IsAddLv";
             this.IsAddLv.ReadOnly = true;
             this.IsAddLv.Visible = false;
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.cbUpdate);
-            this.panel1.Controls.Add(this.edInterval);
-            this.panel1.Controls.Add(this.edCurrDay);
-            this.panel1.Controls.Add(this.tbMain);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(3, 3);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1262, 28);
-            this.panel1.TabIndex = 4;
-            // 
-            // cbUpdate
-            // 
-            this.cbUpdate.AutoSize = true;
-            this.cbUpdate.Location = new System.Drawing.Point(267, 4);
-            this.cbUpdate.Name = "cbUpdate";
-            this.cbUpdate.Size = new System.Drawing.Size(110, 17);
-            this.cbUpdate.TabIndex = 5;
-            this.cbUpdate.Text = "Автообновление";
-            this.cbUpdate.UseVisualStyleBackColor = true;
-            this.cbUpdate.CheckedChanged += new System.EventHandler(this.cbUpdate_CheckedChanged);
-            // 
-            // edInterval
-            // 
-            this.edInterval.Location = new System.Drawing.Point(216, 3);
-            this.edInterval.Minimum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.edInterval.Name = "edInterval";
-            this.edInterval.Size = new System.Drawing.Size(45, 20);
-            this.edInterval.TabIndex = 4;
-            this.edInterval.Value = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.edInterval.ValueChanged += new System.EventHandler(this.edInterval_ValueChanged);
-            // 
-            // edCurrDay
-            // 
-            this.edCurrDay.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.edCurrDay.Location = new System.Drawing.Point(101, 3);
-            this.edCurrDay.Name = "edCurrDay";
-            this.edCurrDay.Size = new System.Drawing.Size(95, 20);
-            this.edCurrDay.TabIndex = 3;
-            this.edCurrDay.ValueChanged += new System.EventHandler(this.edCurrDay_ValueChanged);
-            // 
-            // tbMain
-            // 
-            this.tbMain.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.tbMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnAdd,
-            this.btnEdit,
-            this.btnDel,
-            this.btnRefresh,
-            this.toolStripSeparator1});
-            this.tbMain.Location = new System.Drawing.Point(0, 0);
-            this.tbMain.Name = "tbMain";
-            this.tbMain.Size = new System.Drawing.Size(1262, 25);
-            this.tbMain.TabIndex = 1;
-            this.tbMain.Text = "toolStrip1";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-            // 
-            // tabForms
-            // 
-            this.tabForms.Controls.Add(this.tabMain);
-            this.tabForms.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabForms.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
-            this.tabForms.ItemSize = new System.Drawing.Size(150, 20);
-            this.tabForms.Location = new System.Drawing.Point(0, 24);
-            this.tabForms.Name = "tabForms";
-            this.tabForms.SelectedIndex = 0;
-            this.tabForms.Size = new System.Drawing.Size(1276, 607);
-            this.tabForms.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
-            this.tabForms.TabIndex = 4;
-            this.tabForms.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.tabForms_DrawItem);
-            this.tabForms.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tabForms_MouseDown);
-            // 
-            // metroTabControl1
-            // 
-            this.metroTabControl1.Location = new System.Drawing.Point(0, 0);
-            this.metroTabControl1.Name = "metroTabControl1";
-            this.metroTabControl1.Padding = new System.Drawing.Point(6, 8);
-            this.metroTabControl1.TabIndex = 0;
-            this.metroTabControl1.UseSelectable = true;
-            // 
-            // delay_reasonsTableAdapter1
-            // 
-            this.delay_reasonsTableAdapter1.ClearBeforeFill = true;
-            // 
-            // tmUpdate
-            // 
-            this.tmUpdate.Tick += new System.EventHandler(this.tmUpdate_Tick);
             // 
             // btnAdd
             // 
@@ -675,6 +724,17 @@
             this.btnRefresh.ToolTipText = "Обновить";
             this.btnRefresh.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
+            // btnPrint
+            // 
+            this.btnPrint.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnPrint.Image = global::Planning.Properties.Resources.printer;
+            this.btnPrint.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnPrint.Name = "btnPrint";
+            this.btnPrint.Size = new System.Drawing.Size(23, 22);
+            this.btnPrint.Text = "toolStripButton1";
+            this.btnPrint.ToolTipText = "Печать";
+            this.btnPrint.Click += new System.EventHandler(this.mciPrint_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -701,6 +761,7 @@
             this.tbMain.ResumeLayout(false);
             this.tbMain.PerformLayout();
             this.tabForms.ResumeLayout(false);
+            this.mnuContext.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.shipmentBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -736,6 +797,13 @@
         private System.Windows.Forms.Panel panel2;
         private MetroFramework.Controls.MetroTabControl metroTabControl1;
         private System.Windows.Forms.ToolStripMenuItem miSettings;
+        private System.Windows.Forms.CheckBox cbUpdate;
+        private System.Windows.Forms.NumericUpDown edInterval;
+        private System.Windows.Forms.Timer tmUpdate;
+        private System.Windows.Forms.ToolStripMenuItem miAttributes;
+        private System.Windows.Forms.ToolStripMenuItem miTransportType;
+        private System.Windows.Forms.ContextMenuStrip mnuContext;
+        private System.Windows.Forms.ToolStripMenuItem mciPrint;
         private System.Windows.Forms.DataGridViewTextBoxColumn UniqueKey;
         private System.Windows.Forms.DataGridViewTextBoxColumn colId;
         private System.Windows.Forms.DataGridViewTextBoxColumn colIdNakl;
@@ -756,6 +824,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colDriverPhone;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDriverName;
         private System.Windows.Forms.DataGridViewTextBoxColumn colTransComp;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colTransportType;
         private System.Windows.Forms.DataGridViewTextBoxColumn colTrackNumber;
         private System.Windows.Forms.DataGridViewTextBoxColumn colTrailerNumber;
         private System.Windows.Forms.DataGridViewTextBoxColumn colAttorneyNumber;
@@ -767,13 +836,11 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colDelayReason;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDelayComment;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDepositor;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colStampNumber;
         private System.Windows.Forms.DataGridViewTextBoxColumn FontColor;
         private System.Windows.Forms.DataGridViewTextBoxColumn BackgroundColor;
         private System.Windows.Forms.DataGridViewTextBoxColumn IsAddLv;
-        private System.Windows.Forms.CheckBox cbUpdate;
-        private System.Windows.Forms.NumericUpDown edInterval;
-        private System.Windows.Forms.Timer tmUpdate;
-        private System.Windows.Forms.ToolStripMenuItem miAttributes;
+        private System.Windows.Forms.ToolStripButton btnPrint;
     }
 }
 

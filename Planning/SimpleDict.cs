@@ -48,7 +48,16 @@ namespace Planning
                     DataGridViewColumn column;
                     if (dictColumn.ItemValues == null)
                     {
-                        column = new DataGridViewTextBoxColumn();
+                        switch (dictColumn.DataType)
+                        {
+                            case SqlDbType.Bit:
+                                    column = new DataGridViewCheckBoxColumn();
+                                    break;
+                            default:
+                                    column = new DataGridViewTextBoxColumn();
+                                    break;
+                        }
+                        
                     }
                     else
                     {

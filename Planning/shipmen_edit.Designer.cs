@@ -33,11 +33,16 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.cbTransportCompany = new System.Windows.Forms.ComboBox();
+            this.cmbTransportCompany = new System.Windows.Forms.ComboBox();
             this.edShipmentComment = new System.Windows.Forms.TextBox();
             this.cmbDelayReasons = new System.Windows.Forms.ComboBox();
             this.edDelayComment = new System.Windows.Forms.TextBox();
             this.gbTransport = new System.Windows.Forms.GroupBox();
+            this.btnEndDate = new System.Windows.Forms.Button();
+            this.btnAttorneyDate = new System.Windows.Forms.Button();
+            this.btnLeaveTime = new System.Windows.Forms.Button();
+            this.btnStartTime = new System.Windows.Forms.Button();
+            this.btnSubmissionTime = new System.Windows.Forms.Button();
             this.edAttorneyDate = new System.Windows.Forms.TextBox();
             this.edEndDate = new System.Windows.Forms.TextBox();
             this.edLeaveTime = new System.Windows.Forms.TextBox();
@@ -75,25 +80,6 @@
             this.cbIsCourier = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tblShipmentOrders = new System.Windows.Forms.DataGridView();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.label5 = new System.Windows.Forms.Label();
-            this.pnGetDateTime = new System.Windows.Forms.Panel();
-            this.btnCalendarCancel = new System.Windows.Forms.Button();
-            this.btnCalendarOk = new System.Windows.Forms.Button();
-            this.dtSpecialTime = new System.Windows.Forms.DateTimePicker();
-            this.monthCalendarSpecial = new System.Windows.Forms.MonthCalendar();
-            this.edSDate = new System.Windows.Forms.TextBox();
-            this.btnAddToLV = new System.Windows.Forms.Button();
-            this.tbtnAdd = new System.Windows.Forms.ToolStripButton();
-            this.tbtnEdit = new System.Windows.Forms.ToolStripButton();
-            this.tbtnDel = new System.Windows.Forms.ToolStripButton();
-            this.btnSDate = new System.Windows.Forms.Button();
-            this.btnEndDate = new System.Windows.Forms.Button();
-            this.btnAttorneyDate = new System.Windows.Forms.Button();
-            this.btnLeaveTime = new System.Windows.Forms.Button();
-            this.btnStartTime = new System.Windows.Forms.Button();
-            this.btnSubmissionTime = new System.Windows.Forms.Button();
-            this.btnBindLV = new System.Windows.Forms.Button();
             this.colOrderId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colOrderType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colOrderComment = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -104,6 +90,22 @@
             this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colBindingId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colShipmentId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.tbtnAdd = new System.Windows.Forms.ToolStripButton();
+            this.tbtnEdit = new System.Windows.Forms.ToolStripButton();
+            this.tbtnDel = new System.Windows.Forms.ToolStripButton();
+            this.label5 = new System.Windows.Forms.Label();
+            this.pnGetDateTime = new System.Windows.Forms.Panel();
+            this.btnCalendarCancel = new System.Windows.Forms.Button();
+            this.btnCalendarOk = new System.Windows.Forms.Button();
+            this.dtSpecialTime = new System.Windows.Forms.DateTimePicker();
+            this.monthCalendarSpecial = new System.Windows.Forms.MonthCalendar();
+            this.edSDate = new System.Windows.Forms.TextBox();
+            this.btnAddToLV = new System.Windows.Forms.Button();
+            this.btnSDate = new System.Windows.Forms.Button();
+            this.btnBindLV = new System.Windows.Forms.Button();
+            this.label21 = new System.Windows.Forms.Label();
+            this.cmbTransportType = new System.Windows.Forms.ComboBox();
             this.gbTransport.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tblShipmentOrders)).BeginInit();
@@ -147,13 +149,13 @@
             this.label4.TabIndex = 3;
             this.label4.Text = "Комментарий по опозданию";
             // 
-            // cbTransportCompany
+            // cmbTransportCompany
             // 
-            this.cbTransportCompany.FormattingEnabled = true;
-            this.cbTransportCompany.Location = new System.Drawing.Point(146, 34);
-            this.cbTransportCompany.Name = "cbTransportCompany";
-            this.cbTransportCompany.Size = new System.Drawing.Size(341, 21);
-            this.cbTransportCompany.TabIndex = 1;
+            this.cmbTransportCompany.FormattingEnabled = true;
+            this.cmbTransportCompany.Location = new System.Drawing.Point(146, 34);
+            this.cmbTransportCompany.Name = "cmbTransportCompany";
+            this.cmbTransportCompany.Size = new System.Drawing.Size(341, 21);
+            this.cmbTransportCompany.TabIndex = 1;
             // 
             // edShipmentComment
             // 
@@ -184,6 +186,8 @@
             // 
             // gbTransport
             // 
+            this.gbTransport.Controls.Add(this.cmbTransportType);
+            this.gbTransport.Controls.Add(this.label21);
             this.gbTransport.Controls.Add(this.btnEndDate);
             this.gbTransport.Controls.Add(this.btnAttorneyDate);
             this.gbTransport.Controls.Add(this.btnLeaveTime);
@@ -226,6 +230,56 @@
             this.gbTransport.Size = new System.Drawing.Size(824, 252);
             this.gbTransport.TabIndex = 10;
             this.gbTransport.TabStop = false;
+            // 
+            // btnEndDate
+            // 
+            this.btnEndDate.Image = global::Planning.Properties.Resources.calendar;
+            this.btnEndDate.Location = new System.Drawing.Point(252, 43);
+            this.btnEndDate.Name = "btnEndDate";
+            this.btnEndDate.Size = new System.Drawing.Size(31, 22);
+            this.btnEndDate.TabIndex = 5;
+            this.btnEndDate.UseVisualStyleBackColor = true;
+            this.btnEndDate.Click += new System.EventHandler(this.btnShowCalendar_Click);
+            // 
+            // btnAttorneyDate
+            // 
+            this.btnAttorneyDate.Image = global::Planning.Properties.Resources.calendar;
+            this.btnAttorneyDate.Location = new System.Drawing.Point(545, 172);
+            this.btnAttorneyDate.Name = "btnAttorneyDate";
+            this.btnAttorneyDate.Size = new System.Drawing.Size(31, 22);
+            this.btnAttorneyDate.TabIndex = 16;
+            this.btnAttorneyDate.UseVisualStyleBackColor = true;
+            this.btnAttorneyDate.Click += new System.EventHandler(this.btnShowCalendar_Click);
+            // 
+            // btnLeaveTime
+            // 
+            this.btnLeaveTime.Image = global::Planning.Properties.Resources.calendar;
+            this.btnLeaveTime.Location = new System.Drawing.Point(534, 43);
+            this.btnLeaveTime.Name = "btnLeaveTime";
+            this.btnLeaveTime.Size = new System.Drawing.Size(31, 22);
+            this.btnLeaveTime.TabIndex = 7;
+            this.btnLeaveTime.UseVisualStyleBackColor = true;
+            this.btnLeaveTime.Click += new System.EventHandler(this.btnShowCalendar_Click);
+            // 
+            // btnStartTime
+            // 
+            this.btnStartTime.Image = global::Planning.Properties.Resources.calendar;
+            this.btnStartTime.Location = new System.Drawing.Point(534, 16);
+            this.btnStartTime.Name = "btnStartTime";
+            this.btnStartTime.Size = new System.Drawing.Size(31, 22);
+            this.btnStartTime.TabIndex = 3;
+            this.btnStartTime.UseVisualStyleBackColor = true;
+            this.btnStartTime.Click += new System.EventHandler(this.btnShowCalendar_Click);
+            // 
+            // btnSubmissionTime
+            // 
+            this.btnSubmissionTime.Image = global::Planning.Properties.Resources.calendar;
+            this.btnSubmissionTime.Location = new System.Drawing.Point(252, 16);
+            this.btnSubmissionTime.Name = "btnSubmissionTime";
+            this.btnSubmissionTime.Size = new System.Drawing.Size(31, 22);
+            this.btnSubmissionTime.TabIndex = 1;
+            this.btnSubmissionTime.UseVisualStyleBackColor = true;
+            this.btnSubmissionTime.Click += new System.EventHandler(this.btnShowCalendar_Click);
             // 
             // edAttorneyDate
             // 
@@ -358,19 +412,21 @@
             // 
             // edTrailerNumber
             // 
-            this.edTrailerNumber.Location = new System.Drawing.Point(421, 120);
+            this.edTrailerNumber.Location = new System.Drawing.Point(390, 122);
             this.edTrailerNumber.Name = "edTrailerNumber";
             this.edTrailerNumber.Size = new System.Drawing.Size(100, 20);
             this.edTrailerNumber.TabIndex = 12;
+            this.edTrailerNumber.TextChanged += new System.EventHandler(this.edTrailerNumber_TextChanged);
             // 
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(349, 125);
+            this.label14.Location = new System.Drawing.Point(318, 127);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(66, 13);
             this.label14.TabIndex = 16;
             this.label14.Text = " № прицепа";
+            this.label14.Click += new System.EventHandler(this.label14_Click);
             // 
             // edVehicleNumber
             // 
@@ -552,6 +608,82 @@
             this.tblShipmentOrders.Size = new System.Drawing.Size(821, 170);
             this.tblShipmentOrders.TabIndex = 1;
             // 
+            // colOrderId
+            // 
+            this.colOrderId.DataPropertyName = "lv_order_code";
+            this.colOrderId.HeaderText = "Код заказа";
+            this.colOrderId.Name = "colOrderId";
+            this.colOrderId.ReadOnly = true;
+            this.colOrderId.Width = 120;
+            // 
+            // colOrderType
+            // 
+            this.colOrderType.DataPropertyName = "OrderType";
+            this.colOrderType.HeaderText = "Тип заказа";
+            this.colOrderType.Name = "colOrderType";
+            this.colOrderType.ReadOnly = true;
+            // 
+            // colOrderComment
+            // 
+            this.colOrderComment.DataPropertyName = "Comment";
+            this.colOrderComment.HeaderText = "Комментарий по заказу";
+            this.colOrderComment.Name = "colOrderComment";
+            this.colOrderComment.ReadOnly = true;
+            // 
+            // colManualLoad
+            // 
+            this.colManualLoad.DataPropertyName = "ManualLoad";
+            this.colManualLoad.HeaderText = "Ручная загрузка коробов";
+            this.colManualLoad.Name = "colManualLoad";
+            this.colManualLoad.ReadOnly = true;
+            // 
+            // colManualUnload
+            // 
+            this.colManualUnload.DataPropertyName = "ManualUnload";
+            this.colManualUnload.HeaderText = "Ручная разрузка коробов";
+            this.colManualUnload.Name = "colManualUnload";
+            this.colManualUnload.ReadOnly = true;
+            // 
+            // colPalletCount
+            // 
+            this.colPalletCount.DataPropertyName = "PalletAmount";
+            this.colPalletCount.HeaderText = "Кол-во паллет";
+            this.colPalletCount.Name = "colPalletCount";
+            this.colPalletCount.ReadOnly = true;
+            // 
+            // colBinding
+            // 
+            this.colBinding.DataPropertyName = "IsBinding";
+            this.colBinding.HeaderText = "Привязка";
+            this.colBinding.Name = "colBinding";
+            this.colBinding.ReadOnly = true;
+            this.colBinding.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colBinding.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // colId
+            // 
+            this.colId.DataPropertyName = "id";
+            this.colId.HeaderText = "colId";
+            this.colId.Name = "colId";
+            this.colId.ReadOnly = true;
+            this.colId.Visible = false;
+            // 
+            // colBindingId
+            // 
+            this.colBindingId.DataPropertyName = "binding_id";
+            this.colBindingId.HeaderText = "colBindingId";
+            this.colBindingId.Name = "colBindingId";
+            this.colBindingId.ReadOnly = true;
+            this.colBindingId.Visible = false;
+            // 
+            // colShipmentId
+            // 
+            this.colShipmentId.DataPropertyName = "shipment_id";
+            this.colShipmentId.HeaderText = "colShipmentId";
+            this.colShipmentId.Name = "colShipmentId";
+            this.colShipmentId.ReadOnly = true;
+            this.colShipmentId.Visible = false;
+            // 
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -563,6 +695,39 @@
             this.toolStrip1.Size = new System.Drawing.Size(821, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
+            // 
+            // tbtnAdd
+            // 
+            this.tbtnAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbtnAdd.Image = global::Planning.Properties.Resources.Add;
+            this.tbtnAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbtnAdd.Name = "tbtnAdd";
+            this.tbtnAdd.Size = new System.Drawing.Size(23, 22);
+            this.tbtnAdd.Text = "toolStripButton1";
+            this.tbtnAdd.ToolTipText = "Добавить заказ";
+            this.tbtnAdd.Click += new System.EventHandler(this.tbtnAdd_Click);
+            // 
+            // tbtnEdit
+            // 
+            this.tbtnEdit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbtnEdit.Image = global::Planning.Properties.Resources.Edit;
+            this.tbtnEdit.ImageTransparentColor = System.Drawing.Color.White;
+            this.tbtnEdit.Name = "tbtnEdit";
+            this.tbtnEdit.Size = new System.Drawing.Size(23, 22);
+            this.tbtnEdit.Text = "toolStripButton2";
+            this.tbtnEdit.ToolTipText = "Редактировать заказ";
+            this.tbtnEdit.Click += new System.EventHandler(this.tbtnEdit_Click);
+            // 
+            // tbtnDel
+            // 
+            this.tbtnDel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbtnDel.Image = global::Planning.Properties.Resources.Delete;
+            this.tbtnDel.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbtnDel.Name = "tbtnDel";
+            this.tbtnDel.Size = new System.Drawing.Size(23, 22);
+            this.tbtnDel.Text = "toolStripButton3";
+            this.tbtnDel.ToolTipText = "Удалить заказ";
+            this.tbtnDel.Click += new System.EventHandler(this.tbtnDel_Click);
             // 
             // label5
             // 
@@ -641,39 +806,6 @@
             this.btnAddToLV.UseVisualStyleBackColor = true;
             this.btnAddToLV.Click += new System.EventHandler(this.btnAddToLV_Click);
             // 
-            // tbtnAdd
-            // 
-            this.tbtnAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tbtnAdd.Image = global::Planning.Properties.Resources.Add;
-            this.tbtnAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tbtnAdd.Name = "tbtnAdd";
-            this.tbtnAdd.Size = new System.Drawing.Size(23, 22);
-            this.tbtnAdd.Text = "toolStripButton1";
-            this.tbtnAdd.ToolTipText = "Добавить заказ";
-            this.tbtnAdd.Click += new System.EventHandler(this.tbtnAdd_Click);
-            // 
-            // tbtnEdit
-            // 
-            this.tbtnEdit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tbtnEdit.Image = global::Planning.Properties.Resources.Edit;
-            this.tbtnEdit.ImageTransparentColor = System.Drawing.Color.White;
-            this.tbtnEdit.Name = "tbtnEdit";
-            this.tbtnEdit.Size = new System.Drawing.Size(23, 22);
-            this.tbtnEdit.Text = "toolStripButton2";
-            this.tbtnEdit.ToolTipText = "Редактировать заказ";
-            this.tbtnEdit.Click += new System.EventHandler(this.tbtnEdit_Click);
-            // 
-            // tbtnDel
-            // 
-            this.tbtnDel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tbtnDel.Image = global::Planning.Properties.Resources.Delete;
-            this.tbtnDel.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tbtnDel.Name = "tbtnDel";
-            this.tbtnDel.Size = new System.Drawing.Size(23, 22);
-            this.tbtnDel.Text = "toolStripButton3";
-            this.tbtnDel.ToolTipText = "Удалить заказ";
-            this.tbtnDel.Click += new System.EventHandler(this.tbtnDel_Click);
-            // 
             // btnSDate
             // 
             this.btnSDate.Image = global::Planning.Properties.Resources.calendar;
@@ -683,56 +815,6 @@
             this.btnSDate.TabIndex = 1;
             this.btnSDate.UseVisualStyleBackColor = true;
             this.btnSDate.Click += new System.EventHandler(this.btnShowCalendar_Click);
-            // 
-            // btnEndDate
-            // 
-            this.btnEndDate.Image = global::Planning.Properties.Resources.calendar;
-            this.btnEndDate.Location = new System.Drawing.Point(252, 43);
-            this.btnEndDate.Name = "btnEndDate";
-            this.btnEndDate.Size = new System.Drawing.Size(31, 22);
-            this.btnEndDate.TabIndex = 5;
-            this.btnEndDate.UseVisualStyleBackColor = true;
-            this.btnEndDate.Click += new System.EventHandler(this.btnShowCalendar_Click);
-            // 
-            // btnAttorneyDate
-            // 
-            this.btnAttorneyDate.Image = global::Planning.Properties.Resources.calendar;
-            this.btnAttorneyDate.Location = new System.Drawing.Point(545, 172);
-            this.btnAttorneyDate.Name = "btnAttorneyDate";
-            this.btnAttorneyDate.Size = new System.Drawing.Size(31, 22);
-            this.btnAttorneyDate.TabIndex = 16;
-            this.btnAttorneyDate.UseVisualStyleBackColor = true;
-            this.btnAttorneyDate.Click += new System.EventHandler(this.btnShowCalendar_Click);
-            // 
-            // btnLeaveTime
-            // 
-            this.btnLeaveTime.Image = global::Planning.Properties.Resources.calendar;
-            this.btnLeaveTime.Location = new System.Drawing.Point(534, 43);
-            this.btnLeaveTime.Name = "btnLeaveTime";
-            this.btnLeaveTime.Size = new System.Drawing.Size(31, 22);
-            this.btnLeaveTime.TabIndex = 7;
-            this.btnLeaveTime.UseVisualStyleBackColor = true;
-            this.btnLeaveTime.Click += new System.EventHandler(this.btnShowCalendar_Click);
-            // 
-            // btnStartTime
-            // 
-            this.btnStartTime.Image = global::Planning.Properties.Resources.calendar;
-            this.btnStartTime.Location = new System.Drawing.Point(534, 16);
-            this.btnStartTime.Name = "btnStartTime";
-            this.btnStartTime.Size = new System.Drawing.Size(31, 22);
-            this.btnStartTime.TabIndex = 3;
-            this.btnStartTime.UseVisualStyleBackColor = true;
-            this.btnStartTime.Click += new System.EventHandler(this.btnShowCalendar_Click);
-            // 
-            // btnSubmissionTime
-            // 
-            this.btnSubmissionTime.Image = global::Planning.Properties.Resources.calendar;
-            this.btnSubmissionTime.Location = new System.Drawing.Point(252, 16);
-            this.btnSubmissionTime.Name = "btnSubmissionTime";
-            this.btnSubmissionTime.Size = new System.Drawing.Size(31, 22);
-            this.btnSubmissionTime.TabIndex = 1;
-            this.btnSubmissionTime.UseVisualStyleBackColor = true;
-            this.btnSubmissionTime.Click += new System.EventHandler(this.btnShowCalendar_Click);
             // 
             // btnBindLV
             // 
@@ -744,81 +826,22 @@
             this.btnBindLV.UseVisualStyleBackColor = true;
             this.btnBindLV.Click += new System.EventHandler(this.btnBindLV_Click);
             // 
-            // colOrderId
+            // label21
             // 
-            this.colOrderId.DataPropertyName = "lv_order_code";
-            this.colOrderId.HeaderText = "Код заказа";
-            this.colOrderId.Name = "colOrderId";
-            this.colOrderId.ReadOnly = true;
-            this.colOrderId.Width = 120;
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(510, 125);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(57, 13);
+            this.label21.TabIndex = 30;
+            this.label21.Text = "Марка ТС";
             // 
-            // colOrderType
+            // cmbTransportType
             // 
-            this.colOrderType.DataPropertyName = "OrderType";
-            this.colOrderType.HeaderText = "Тип заказа";
-            this.colOrderType.Name = "colOrderType";
-            this.colOrderType.ReadOnly = true;
-            // 
-            // colOrderComment
-            // 
-            this.colOrderComment.DataPropertyName = "Comment";
-            this.colOrderComment.HeaderText = "Комментарий по заказу";
-            this.colOrderComment.Name = "colOrderComment";
-            this.colOrderComment.ReadOnly = true;
-            // 
-            // colManualLoad
-            // 
-            this.colManualLoad.DataPropertyName = "ManualLoad";
-            this.colManualLoad.HeaderText = "Ручная загрузка коробов";
-            this.colManualLoad.Name = "colManualLoad";
-            this.colManualLoad.ReadOnly = true;
-            // 
-            // colManualUnload
-            // 
-            this.colManualUnload.DataPropertyName = "ManualUnload";
-            this.colManualUnload.HeaderText = "Ручная разрузка коробов";
-            this.colManualUnload.Name = "colManualUnload";
-            this.colManualUnload.ReadOnly = true;
-            // 
-            // colPalletCount
-            // 
-            this.colPalletCount.DataPropertyName = "PalletAmount";
-            this.colPalletCount.HeaderText = "Кол-во паллет";
-            this.colPalletCount.Name = "colPalletCount";
-            this.colPalletCount.ReadOnly = true;
-            // 
-            // colBinding
-            // 
-            this.colBinding.DataPropertyName = "IsBinding";
-            this.colBinding.HeaderText = "Привязка";
-            this.colBinding.Name = "colBinding";
-            this.colBinding.ReadOnly = true;
-            this.colBinding.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colBinding.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // colId
-            // 
-            this.colId.DataPropertyName = "id";
-            this.colId.HeaderText = "colId";
-            this.colId.Name = "colId";
-            this.colId.ReadOnly = true;
-            this.colId.Visible = false;
-            // 
-            // colBindingId
-            // 
-            this.colBindingId.DataPropertyName = "binding_id";
-            this.colBindingId.HeaderText = "colBindingId";
-            this.colBindingId.Name = "colBindingId";
-            this.colBindingId.ReadOnly = true;
-            this.colBindingId.Visible = false;
-            // 
-            // colShipmentId
-            // 
-            this.colShipmentId.DataPropertyName = "shipment_id";
-            this.colShipmentId.HeaderText = "colShipmentId";
-            this.colShipmentId.Name = "colShipmentId";
-            this.colShipmentId.ReadOnly = true;
-            this.colShipmentId.Visible = false;
+            this.cmbTransportType.FormattingEnabled = true;
+            this.cmbTransportType.Location = new System.Drawing.Point(573, 121);
+            this.cmbTransportType.Name = "cmbTransportType";
+            this.cmbTransportType.Size = new System.Drawing.Size(191, 21);
+            this.cmbTransportType.TabIndex = 31;
             // 
             // shipmen_edit
             // 
@@ -839,7 +862,7 @@
             this.Controls.Add(this.edDelayComment);
             this.Controls.Add(this.cmbDelayReasons);
             this.Controls.Add(this.edShipmentComment);
-            this.Controls.Add(this.cbTransportCompany);
+            this.Controls.Add(this.cmbTransportCompany);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -870,7 +893,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ComboBox cbTransportCompany;
+        private System.Windows.Forms.ComboBox cmbTransportCompany;
         private System.Windows.Forms.TextBox edShipmentComment;
         private System.Windows.Forms.ComboBox cmbDelayReasons;
         private System.Windows.Forms.TextBox edDelayComment;
@@ -941,5 +964,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colId;
         private System.Windows.Forms.DataGridViewTextBoxColumn colBindingId;
         private System.Windows.Forms.DataGridViewTextBoxColumn colShipmentId;
+        private System.Windows.Forms.ComboBox cmbTransportType;
+        private System.Windows.Forms.Label label21;
     }
 }

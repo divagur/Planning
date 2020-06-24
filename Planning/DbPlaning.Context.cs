@@ -41,5 +41,7 @@ namespace Planning
         public virtual DbSet<TimeSlot> TimeSlots { get; set; }
         public virtual DbSet<LvAttr> LvAttrs { get; set; }
         public virtual DbSet<ShipmentElement> ShipmentElements { get; set; }
+        public virtual DbSet<TransportCompany> TransportCompanies { get; set; }
+        public virtual DbSet<TransportType> TransportTypes { get; set; }
     }
 }
