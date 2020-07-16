@@ -13,28 +13,46 @@ namespace Planning
 {
     public partial class DictForm : Form
     {
-        PlanningDbContext _context;
-
+        protected PlanningDbContext _context;
         public DictForm()
         {
             InitializeComponent();
             _context = DataService.context;
         }
 
+        public void SetPrivilege(bool IsAppend, bool IsEdit, bool IsDelete)
+        {
+            btnAddRow.Enabled = IsAppend;
+            btnEdit.Enabled = IsEdit;
+            btnDelRow.Enabled = IsDelete;
+            btnSave.Enabled = IsAppend || IsEdit || IsDelete;
+        }
 
-        public virtual void AddRow()
-        {}
+        protected virtual void AddRow()
+        {
 
-        public virtual void Populate()
-        { }
+        }
 
-        public virtual void EditRow()
-        { }
+        protected virtual void EditRow()
+        {
 
-        public virtual void DeleteRow()
-        { }
+        }
 
-        private void Save()
+        protected virtual void DelRow()
+        {
+
+        }
+
+        protected virtual void SaveRow()
+        {
+
+        }
+        protected virtual void Populate()
+        {
+
+        }
+
+        protected virtual void Save()
         {
             try
             {
@@ -65,17 +83,22 @@ namespace Planning
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            EditRow();        
+            EditRow();
         }
 
         private void btnDelRow_Click(object sender, EventArgs e)
         {
-            DeleteRow();
+            DelRow();
         }
 
         private void DictForm_Load(object sender, EventArgs e)
         {
             Populate();
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            SaveRow();
         }
     }
 }

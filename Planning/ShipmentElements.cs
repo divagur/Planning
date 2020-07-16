@@ -13,16 +13,48 @@ using System.Windows.Forms;
 namespace Planning
 {
    
-    public partial class ShipmentElements : Form
+    public partial class ShipmentElements : DictForm
     {
-        PlanningDbContext _context;
         public ShipmentElements()
         {
             InitializeComponent();
-            _context = DataService.context;
         }
 
-        private void ShipmentElementsLoad()
+        protected override void AddRow()
+        {
+            ShipmentElement shipmentElement = new ShipmentElement();
+            var frmShipmentElementEdit = new ShipmentElementEdit(shipmentElement);
+
+            frmShipmentElementEdit.ShowDialog();
+            if (frmShipmentElementEdit.DialogResult == DialogResult.Cancel)
+                return;
+            _context.ShipmentElements.Add(shipmentElement);
+            Save();
+        }
+
+        protected override void EditRow()
+        {
+            ShipmentElement shipmentElement = _context.ShipmentElements.Find(tblElements.Rows[tblElements.CurrentCell.RowIndex].Cells["colId"].Value);
+            var frmTimeSlotEdit = new ShipmentElementEdit(shipmentElement);
+
+            frmTimeSlotEdit.ShowDialog();
+            if (frmTimeSlotEdit.DialogResult == DialogResult.Cancel)
+                return;
+
+            Save();
+        }
+
+        protected override void DelRow()
+        {
+            if (MessageBox.Show("Удалить запись?", "Подтверждение удаления", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            {
+                ShipmentElement shipmentElement = _context.ShipmentElements.Find(tblElements.Rows[tblElements.CurrentCell.RowIndex].Cells["colId"].Value);
+                _context.ShipmentElements.Remove(shipmentElement);
+                Save();
+            }
+        }
+
+        protected override void Populate()
         {
             using (SqlConnection connection = new SqlConnection(DataService.connectionString))
             {
@@ -38,7 +70,8 @@ namespace Planning
                 tblElements.DataSource = ds.Tables[0];
             }
         }
-        private void Save()
+        /*
+        protected override void Save()
         {
             try
             {
@@ -61,44 +94,8 @@ namespace Planning
 
             ShipmentElementsLoad();
         }
-        private void btnAddRow_Click(object sender, EventArgs e)
-        {
-            ShipmentElement shipmentElement = new ShipmentElement();
-            var frmShipmentElementEdit = new ShipmentElementEdit(shipmentElement);
-
-            frmShipmentElementEdit.ShowDialog();
-            if (frmShipmentElementEdit.DialogResult == DialogResult.Cancel)
-                return;
-            _context.ShipmentElements.Add(shipmentElement);
-            Save();
-        }
-
-        private void ShipmentElements_Load(object sender, EventArgs e)
-        {
-            ShipmentElementsLoad();
-        }
-
-        private void btnEdit_Click(object sender, EventArgs e)
-        {
-            ShipmentElement shipmentElement = _context.ShipmentElements.Find(tblElements.Rows[tblElements.CurrentCell.RowIndex].Cells["colId"].Value);
-            var frmTimeSlotEdit = new ShipmentElementEdit(shipmentElement);
-
-            frmTimeSlotEdit.ShowDialog();
-            if (frmTimeSlotEdit.DialogResult == DialogResult.Cancel)
-                return;
-
-            Save();
-        }
-
-        private void btnDelRow_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("Удалить запись?", "Подтверждение удаления", MessageBoxButtons.OKCancel) == DialogResult.OK)
-            {
-                ShipmentElement shipmentElement = _context.ShipmentElements.Find(tblElements.Rows[tblElements.CurrentCell.RowIndex].Cells["colId"].Value);
-                _context.ShipmentElements.Remove(shipmentElement);
-                Save();
-            }
-        }
+        */
+       
     }
 
 

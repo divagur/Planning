@@ -1,6 +1,6 @@
 ﻿namespace Planning
 {
-    partial class FormEdit
+    partial class DictEditForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,13 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DictEditForm));
             this.btnSave = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(272, 304);
+            this.btnSave.Location = new System.Drawing.Point(12, 95);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 0;
@@ -44,7 +45,7 @@
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(353, 304);
+            this.btnClose.Location = new System.Drawing.Point(93, 95);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
             this.btnClose.TabIndex = 1;
@@ -52,20 +53,22 @@
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
-            // FormEdit
+            // DictEditForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(436, 333);
+            this.ClientSize = new System.Drawing.Size(377, 130);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnSave);
-            this.Name = "FormEdit";
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Name = "DictEditForm";
+            this.ShowInTaskbar = false;
+            this.Load += new System.EventHandler(this.DictEditForm_Load);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
         public System.Windows.Forms.Button btnSave;
         public System.Windows.Forms.Button btnClose;
     }

@@ -43,5 +43,7 @@ namespace Planning
         public virtual DbSet<ShipmentElement> ShipmentElements { get; set; }
         public virtual DbSet<TransportCompany> TransportCompanies { get; set; }
         public virtual DbSet<TransportType> TransportTypes { get; set; }
+        public virtual DbSet<UserGrpPrvlg> UserGrpPrvlgs { get; set; }
+        public virtual DbSet<Function> Functions { get; set; }
     }
 }

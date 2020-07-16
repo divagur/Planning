@@ -21,6 +21,13 @@
           <Property Name="lv_base" Type="nvarchar" MaxLength="128" />
           <Property Name="lv_id" Type="int" />
         </EntityType>
+        <EntityType Name="functions">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="120" />
+        </EntityType>
         <EntityType Name="gateways">
           <Key>
             <PropertyRef Name="id" />
@@ -142,6 +149,18 @@
           <Property Name="user_id" Type="int" Nullable="false" />
           <Property Name="group_id" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="user_grp_prvlg">
+          <Key>
+            <PropertyRef Name="grp_id" />
+            <PropertyRef Name="func_id" />
+          </Key>
+          <Property Name="grp_id" Type="int" Nullable="false" />
+          <Property Name="func_id" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="is_view" Type="bit" />
+          <Property Name="is_append" Type="bit" />
+          <Property Name="is_edit" Type="bit" />
+          <Property Name="is_delete" Type="bit" />
+        </EntityType>
         <EntityType Name="users">
           <Key>
             <PropertyRef Name="id" />
@@ -152,6 +171,8 @@
           <Property Name="first_name" Type="varchar" MaxLength="20" />
           <Property Name="second_name" Type="varchar" MaxLength="20" />
           <Property Name="last_name" Type="varchar" MaxLength="20" />
+          <Property Name="is_reg" Type="bit" />
+          <Property Name="reg_type" Type="int" />
         </EntityType>
         <EntityType Name="users_group">
           <Key>
@@ -290,6 +311,7 @@
         <EntityContainer Name="PlanningModelStoreContainer">
           <EntitySet Name="delay_reasons" EntityType="Self.delay_reasons" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="depositors" EntityType="Self.depositors" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="functions" EntityType="Self.functions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="gateways" EntityType="Self.gateways" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="lv_attr" EntityType="Self.lv_attr" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="opers_type" EntityType="Self.opers_type" Schema="dbo" store:Type="Tables" />
@@ -300,6 +322,7 @@
           <EntitySet Name="transport_company" EntityType="Self.transport_company" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="transport_type" EntityType="Self.transport_type" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="user_group_lnk" EntityType="Self.user_group_lnk" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="user_grp_prvlg" EntityType="Self.user_grp_prvlg" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="users_group" EntityType="Self.users_group" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_shipment_orders_shipments" Association="Self.FK_shipment_orders_shipments">
@@ -452,6 +475,8 @@
           <Property Name="SecondName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="LastName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="UserGroups" Relationship="Self.user_group_lnk" FromRole="users" ToRole="users_group" />
+          <Property Name="IsReg" Type="Boolean" />
+          <Property Name="RegType" Type="Int32" />
         </EntityType>
         <EntityType Name="UserGroup">
           <Key>
@@ -530,6 +555,8 @@
             <End Role="transport_type" EntitySet="TransportTypes" />
             <End Role="Shipment" EntitySet="Shipments" />
           </AssociationSet>
+          <EntitySet Name="UserGrpPrvlgs" EntityType="PlanningModel.UserGrpPrvlg" />
+          <EntitySet Name="Functions" EntityType="PlanningModel.Function" />
         </EntityContainer>
         <Association Name="FK_shipments_delay_reasons">
           <End Type="PlanningModel.DelayReason" Role="delay_reasons" Multiplicity="0..1" />
@@ -666,6 +693,25 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="UserGrpPrvlg">
+          <Key>
+            <PropertyRef Name="GrpId" />
+            <PropertyRef Name="FuncId" />
+          </Key>
+          <Property Name="GrpId" Type="Int32" Nullable="false" />
+          <Property Name="FuncId" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="IsView" Type="Boolean" />
+          <Property Name="IsAppend" Type="Boolean" />
+          <Property Name="IsEdit" Type="Boolean" />
+          <Property Name="IsDelete" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="Function">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -763,6 +809,8 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="PlanningModel.User">
               <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="RegType" ColumnName="reg_type" />
+                <ScalarProperty Name="IsReg" ColumnName="is_reg" />
                 <ScalarProperty Name="Id" ColumnName="id" />
                 <ScalarProperty Name="Login" ColumnName="login" />
                 <ScalarProperty Name="Password" ColumnName="password" />
@@ -836,6 +884,26 @@
             <EntityTypeMapping TypeName="PlanningModel.TransportType">
               <MappingFragment StoreEntitySet="transport_type">
                 <ScalarProperty Name="Tonnage" ColumnName="tonnage" />
+                <ScalarProperty Name="Name" ColumnName="name" />
+                <ScalarProperty Name="Id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserGrpPrvlgs">
+            <EntityTypeMapping TypeName="PlanningModel.UserGrpPrvlg">
+              <MappingFragment StoreEntitySet="user_grp_prvlg">
+                <ScalarProperty Name="IsDelete" ColumnName="is_delete" />
+                <ScalarProperty Name="IsEdit" ColumnName="is_edit" />
+                <ScalarProperty Name="IsAppend" ColumnName="is_append" />
+                <ScalarProperty Name="IsView" ColumnName="is_view" />
+                <ScalarProperty Name="FuncId" ColumnName="func_id" />
+                <ScalarProperty Name="GrpId" ColumnName="grp_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Functions">
+            <EntityTypeMapping TypeName="PlanningModel.Function">
+              <MappingFragment StoreEntitySet="functions">
                 <ScalarProperty Name="Name" ColumnName="name" />
                 <ScalarProperty Name="Id" ColumnName="id" />
               </MappingFragment>

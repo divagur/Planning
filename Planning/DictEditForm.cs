@@ -7,39 +7,47 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.Entity;
 
 namespace Planning
 {
-    public partial class FormEdit : Form
+    public partial class DictEditForm : Form
     {
-        protected byte _formState;
-        protected DbSet _row;
-
-        public FormEdit()
+        public DictEditForm()
         {
             InitializeComponent();
-            //_formState = FormSate;
-            //_row = Row;
         }
+
+
         protected virtual void Save()
         {
 
         }
 
-        protected virtual void Cancel()
+        protected virtual void CloseEdit()
         {
 
         }
 
+        protected virtual void Populate()
+        {
+
+        }
         private void btnSave_Click(object sender, EventArgs e)
         {
             Save();
+            DialogResult = DialogResult.OK;
         }
 
         private void btnClose_Click(object sender, EventArgs e)
         {
-            Cancel();
+            CloseEdit();
+            DialogResult = DialogResult.Cancel;
+            Close();
+        }
+
+        private void DictEditForm_Load(object sender, EventArgs e)
+        {
+            Populate();
         }
     }
 }

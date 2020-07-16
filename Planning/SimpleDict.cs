@@ -11,17 +11,17 @@ using System.Data.SqlClient;
 
 namespace Planning
 {
-    public partial class SimpleDict : Form
+    public partial class SimpleDict : DictForm
     {
         DataSet ds;
         DictSimple _dict;
         SqlDataAdapter adapter;
         //SqlConnection connection;
         string connectionString;// = @"Data Source=ПОЛЬЗОВАТЕЛЬ-ПК\SQLEXPRESS2017;Initial Catalog=Planning;User ID=SYSADM; Password = SYSADM";
-        Form _editForm;
+        FormEdit _editForm;
         string sql = "";
 
-        public void SetEditForm(Form editForm)
+        public void SetEditForm(FormEdit editForm)
         {
             _editForm = editForm;
             if (_editForm != null)
@@ -35,11 +35,53 @@ namespace Planning
         {
             InitializeComponent();
             _dict = dict;
-           // _editForm = EditForm;
-          
+            // _editForm = EditForm;
+            btnEdit.Visible = false;
             this.Text = _dict.Title;
-            connectionString = DataService.connectionString;
-            using (SqlConnection connection = new SqlConnection(connectionString))
+           
+        }
+/*
+        public DelayReasons()
+        {
+           
+
+
+            
+        }
+        */
+        private void DelayReasons_Load(object sender, EventArgs e)
+        {
+
+
+        }
+
+
+        protected override void AddRow()
+        {
+            DataRow row = ds.Tables[0].NewRow(); // добавляем новую строку в DataTable
+            ds.Tables[0].Rows.Add(row);
+        }
+
+        protected override void DelRow()
+        {
+            // удаляем выделенные строки из dataGridView1
+            foreach (DataGridViewRow row in tblDelayReasons.SelectedRows)
+            {
+                tblDelayReasons.Rows.Remove(row);
+            }
+        }
+
+        protected override void EditRow()
+        {
+            if (_editForm != null)
+            {
+                _editForm.ShowDialog();
+            }
+        }
+
+        protected override void Populate()
+        {
+            using (SqlConnection connection = new SqlConnection(DataService.connectionString))
             {
                 string sqlColumns = "";
 
@@ -51,20 +93,20 @@ namespace Planning
                         switch (dictColumn.DataType)
                         {
                             case SqlDbType.Bit:
-                                    column = new DataGridViewCheckBoxColumn();
-                                    break;
+                                column = new DataGridViewCheckBoxColumn();
+                                break;
                             default:
-                                    column = new DataGridViewTextBoxColumn();
-                                    break;
+                                column = new DataGridViewTextBoxColumn();
+                                break;
                         }
-                        
+
                     }
                     else
                     {
                         column = new DataGridViewComboBoxColumn();
                         ((DataGridViewComboBoxColumn)column).Items.AddRange(dictColumn.ItemValues);
                     }
-                    
+
                     column.Name = dictColumn.Id;
                     column.HeaderText = dictColumn.Title;
                     column.DataPropertyName = dictColumn.DataField;
@@ -84,36 +126,16 @@ namespace Planning
                 adapter.Fill(ds);
                 tblDelayReasons.AutoGenerateColumns = false;
                 tblDelayReasons.DataSource = ds.Tables[0];
+                btnSave.Visible = true;
                 //tblDelayReasons.Columns[0].DataPropertyName = "id";
                 //tblDelayReasons.Columns[1].DataPropertyName = "name";
 
                 // делаем недоступным столбец id для изменения
                 //tblDelayReasons.Columns["id"].Visible = false;
-            }   
-        }
-/*
-        public DelayReasons()
-        {
-           
-
-
-            
-        }
-        */
-        private void DelayReasons_Load(object sender, EventArgs e)
-        {
-
-
+            }
         }
 
-        private void btnAddRow_Click(object sender, EventArgs e)
-        {
-            DataRow row = ds.Tables[0].NewRow(); // добавляем новую строку в DataTable
-            ds.Tables[0].Rows.Add(row);
-
-        }
-
-        private void btnSave_Click(object sender, EventArgs e)
+        protected override void SaveRow()
         {
             using (SqlConnection connection = new SqlConnection(DataService.connectionString))
             {
@@ -170,23 +192,6 @@ namespace Planning
                     MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
-            }
-        }
-
-        private void btnDelRow_Click(object sender, EventArgs e)
-        {
-            // удаляем выделенные строки из dataGridView1
-            foreach (DataGridViewRow row in tblDelayReasons.SelectedRows)
-            {
-                tblDelayReasons.Rows.Remove(row);
-            }
-        }
-
-        private void btnEdit_Click(object sender, EventArgs e)
-        {
-            if (_editForm != null)
-            {
-                _editForm.ShowDialog();
             }
         }
     }

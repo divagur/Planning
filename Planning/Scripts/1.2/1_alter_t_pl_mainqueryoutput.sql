@@ -44,6 +44,7 @@ CREATE TYPE [dbo].[T_PL_MainQueryOutput] AS TABLE(
 	[ShpDelayComment] [varchar](200) NULL,
 	[ShpForwarderFio] [varchar](80) NULL,
 	[OrdLVType] [varchar](77) NULL,
+	[ShpStampNumber] [varchar](25) NULL,
 	[IsAddLv] [bit] NULL,
 	[FontColor] [int] NULL,
 	[BackgroundColor] [int] NULL

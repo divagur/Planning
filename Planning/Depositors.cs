@@ -12,13 +12,11 @@ using System.Windows.Forms;
 
 namespace Planning
 {
-    public partial class Depositors : Form
+    public partial class Depositors : DictForm
     {
-        PlanningDbContext _context;
         public Depositors()
         {
             InitializeComponent();
-            _context = DataService.context;
         }
 
         void CreateEdtiForm(Depositor depositor, bool isNew)
@@ -33,13 +31,13 @@ namespace Planning
             Save();
         }
 
-        public void AddRow()
+        protected override void AddRow()
         {
             Depositor depositor = new Depositor();
             CreateEdtiForm(depositor, true);
         }
 
-        public void Populate()
+        protected override void Populate()
         {
             using (SqlConnection connection = new SqlConnection(DataService.connectionString))
             {
@@ -56,13 +54,13 @@ namespace Planning
             }
         }
 
-        public void EditRow()
+        protected override void EditRow()
         {
             Depositor depositor = _context.Depositors.Find(tblDict.Rows[tblDict.CurrentCell.RowIndex].Cells["colId"].Value);
             CreateEdtiForm(depositor, false);
         }
 
-        public void DeleteRow()
+        protected override void DelRow()
         {
             if (MessageBox.Show("Удалить запись?", "Подтверждение удаления", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
@@ -72,48 +70,5 @@ namespace Planning
             }
         }
 
-        private void Save()
-        {
-            try
-            {
-                _context.SaveChanges();
-            }
-            catch (DbEntityValidationException ex)
-            {
-                string errorText = "";
-                foreach (DbEntityValidationResult validationError in ex.EntityValidationErrors)
-                {
-                    errorText = errorText + "Object: " + validationError.Entry.Entity.ToString() + "\n\r";
-                    foreach (DbValidationError err in validationError.ValidationErrors)
-                    {
-                        errorText = errorText + err.ErrorMessage + "\n\r";
-
-                    }
-                }
-                MessageBox.Show(errorText);
-            }
-
-            Populate();
-        }
-
-        private void Depositors_Load(object sender, EventArgs e)
-        {
-            Populate();
-        }
-
-        private void btnAddRow_Click(object sender, EventArgs e)
-        {
-            AddRow();
-        }
-
-        private void btnEdit_Click(object sender, EventArgs e)
-        {
-            EditRow();
-        }
-
-        private void btnDelRow_Click(object sender, EventArgs e)
-        {
-            DeleteRow();
-        }
     }
 }

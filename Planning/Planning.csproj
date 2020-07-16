@@ -138,13 +138,22 @@
     <Compile Include="Depositors.Designer.cs">
       <DependentUpon>Depositors.cs</DependentUpon>
     </Compile>
+    <Compile Include="DictEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DictEditForm.Designer.cs">
+      <DependentUpon>DictEditForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="DictForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DictForm.Designer.cs">
+    <Compile Include="Dict.Designer.cs">
       <DependentUpon>DictForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ExcelPrint.cs" />
+    <Compile Include="Function.cs">
+      <DependentUpon>DbPlaning.tt</DependentUpon>
+    </Compile>
     <Compile Include="LvAttr.cs">
       <DependentUpon>DbPlaning.tt</DependentUpon>
     </Compile>
@@ -166,6 +175,7 @@
     <Compile Include="SettingsEdit.Designer.cs">
       <DependentUpon>SettingsEdit.cs</DependentUpon>
     </Compile>
+    <Compile Include="SettingsHandle.cs" />
     <Compile Include="SettingsWizard.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -199,6 +209,7 @@
     <Compile Include="ShipmentOrderEdit.Designer.cs">
       <DependentUpon>ShipmentOrderEdit.cs</DependentUpon>
     </Compile>
+    <Compile Include="SqlHandle.cs" />
     <Compile Include="TimeSlots.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -277,8 +288,47 @@
     <Compile Include="User.cs">
       <DependentUpon>DbPlaning.tt</DependentUpon>
     </Compile>
+    <Compile Include="UserEditEx.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserEditEx.Designer.cs">
+      <DependentUpon>UserEditEx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserEdit_.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserEdit_.Designer.cs">
+      <DependentUpon>UserEdit_.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserGroup.cs">
       <DependentUpon>DbPlaning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserGroupEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserGroupEdit.Designer.cs">
+      <DependentUpon>UserGroupEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserGroups.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserGroups.Designer.cs">
+      <DependentUpon>UserGroups.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserGrpEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserGrpEdit.Designer.cs">
+      <DependentUpon>UserGrpEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserGrpPrvlg.cs">
+      <DependentUpon>DbPlaning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Users.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Users.Designer.cs">
+      <DependentUpon>Users.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="DepositorEdit.resx">
       <DependentUpon>DepositorEdit.cs</DependentUpon>
@@ -286,8 +336,11 @@
     <EmbeddedResource Include="Depositors.resx">
       <DependentUpon>Depositors.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DictForm.resx">
+    <EmbeddedResource Include="Dict.resx">
       <DependentUpon>DictForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DictEditForm.resx">
+      <DependentUpon>DictEditForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LvAttrEdit.resx">
       <DependentUpon>LvAttrEdit.cs</DependentUpon>
@@ -337,6 +390,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TimeSlotEdit.resx">
       <DependentUpon>TimeSlotEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserEditEx.resx">
+      <DependentUpon>UserEditEx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserEdit_.resx">
+      <DependentUpon>UserEdit_.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserGroupEdit.resx">
+      <DependentUpon>UserGroupEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserGroups.resx">
+      <DependentUpon>UserGroups.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Users.resx">
+      <DependentUpon>Users.cs</DependentUpon>
     </EmbeddedResource>
     <EntityDeploy Include="DbPlaning.edmx">
       <Generator>EntityModelCodeGenerator</Generator>

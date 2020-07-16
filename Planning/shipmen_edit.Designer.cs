@@ -38,6 +38,8 @@
             this.cmbDelayReasons = new System.Windows.Forms.ComboBox();
             this.edDelayComment = new System.Windows.Forms.TextBox();
             this.gbTransport = new System.Windows.Forms.GroupBox();
+            this.cmbTransportType = new System.Windows.Forms.ComboBox();
+            this.label21 = new System.Windows.Forms.Label();
             this.btnEndDate = new System.Windows.Forms.Button();
             this.btnAttorneyDate = new System.Windows.Forms.Button();
             this.btnLeaveTime = new System.Windows.Forms.Button();
@@ -104,8 +106,6 @@
             this.btnAddToLV = new System.Windows.Forms.Button();
             this.btnSDate = new System.Windows.Forms.Button();
             this.btnBindLV = new System.Windows.Forms.Button();
-            this.label21 = new System.Windows.Forms.Label();
-            this.cmbTransportType = new System.Windows.Forms.ComboBox();
             this.gbTransport.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tblShipmentOrders)).BeginInit();
@@ -230,6 +230,23 @@
             this.gbTransport.Size = new System.Drawing.Size(824, 252);
             this.gbTransport.TabIndex = 10;
             this.gbTransport.TabStop = false;
+            // 
+            // cmbTransportType
+            // 
+            this.cmbTransportType.FormattingEnabled = true;
+            this.cmbTransportType.Location = new System.Drawing.Point(573, 121);
+            this.cmbTransportType.Name = "cmbTransportType";
+            this.cmbTransportType.Size = new System.Drawing.Size(191, 21);
+            this.cmbTransportType.TabIndex = 31;
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(510, 125);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(57, 13);
+            this.label21.TabIndex = 30;
+            this.label21.Text = "Марка ТС";
             // 
             // btnEndDate
             // 
@@ -825,23 +842,6 @@
             this.btnBindLV.Text = "Привязать заказы к LV";
             this.btnBindLV.UseVisualStyleBackColor = true;
             this.btnBindLV.Click += new System.EventHandler(this.btnBindLV_Click);
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(510, 125);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(57, 13);
-            this.label21.TabIndex = 30;
-            this.label21.Text = "Марка ТС";
-            // 
-            // cmbTransportType
-            // 
-            this.cmbTransportType.FormattingEnabled = true;
-            this.cmbTransportType.Location = new System.Drawing.Point(573, 121);
-            this.cmbTransportType.Name = "cmbTransportType";
-            this.cmbTransportType.Size = new System.Drawing.Size(191, 21);
-            this.cmbTransportType.TabIndex = 31;
             // 
             // shipmen_edit
             // 

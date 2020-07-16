@@ -54,6 +54,22 @@ namespace Planning
         public string NameColumn;
     }
 
+    public class UserAccessItem
+    {
+        public string FunctionId { get; set; }
+        public string FunctionName { get; set; }
+        public bool IsView { get; set; }
+        public bool IsAppend { get; set; }
+        public bool IsEdit { get; set; }
+        public bool IsDelete { get; set; }
+
+    }
+/*
+    public class UserAccess
+    {
+        public List<UserAccessItem> User
+    }
+*/
     public class DataService
     {
         public static PlanningDbContext context;
@@ -291,6 +307,24 @@ namespace Planning
             entityBuilder.Metadata = @"res://*/DbPlaning.csdl|res://*/DbPlaning.ssdl|res://*/DbPlaning.msl";
             
             return entityBuilder.ToString();
+        }
+
+
+        public static List<UserAccessItem> GetPrvlg(string UserLogin)
+        {
+            
+            List<UserAccessItem> dict = new List<UserAccessItem>();
+            using (IDbConnection db = new SqlConnection(connectionString))
+
+            {
+                if (db.State == ConnectionState.Closed)
+                {
+                    db.Open();
+                }
+                return db.Query<UserAccessItem>($"select id FunctionId, name FunctionName,is_view IsView,is_append IsAppend,is_edit IsEdit,is_delete IsDelete from fn_GetPrvlg('{UserLogin}')").ToList();
+            }
+
+            
         }
     }
 }

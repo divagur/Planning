@@ -23,7 +23,9 @@ namespace Planning
 
         private int Xwid = 6;//координаты ширины по диагонали крестика
         private const int tab_margin = 5;//координаты по высоте крестика
-        Settings setting = new Settings(); 
+        Settings setting = new Settings();
+        SettingsHandle settingsHandle = new SettingsHandle("Settings.xml");
+        List<UserAccessItem> UserPrvlg = new List<UserAccessItem>();
         public frmMain()
         {
             InitializeComponent();
@@ -112,10 +114,58 @@ namespace Planning
             ShipmentsLoad();
         }
 
+        private ToolStripItem FindMenuItem(ToolStripItemCollection items, string Tag)
+        {
+            foreach(ToolStripMenuItem mi in items)
+            {
+                if ((string)mi.Tag == Tag)
+                {
+                    return mi;
+                }
+                else if (mi.DropDownItems.Count > 0)
+                {
+                    ToolStripItem miResult = FindMenuItem(mi.DropDownItems, Tag);
+                    if (miResult !=null)
+                        return miResult;
+                }
+
+            }
+
+            return null;
+        }
+
+        private void UpdateFunctionPrvlg()
+        {
+            
+            
+
+            foreach (UserAccessItem item in UserPrvlg)
+            {
+                ToolStripItem mi = FindMenuItem(menuMain.Items, item.FunctionId);
+                if (mi != null)
+                    mi.Visible = item.IsView;
+            }
+        }
+
+        private void SetFormPrivalage(DictForm form, string FunctionId)
+        {
+            UserAccessItem accessItem = UserPrvlg.Find(i => i.FunctionId == FunctionId);
+            if (accessItem !=null)
+            {
+                form.SetPrivilege(accessItem.IsAppend, accessItem.IsEdit, accessItem.IsDelete);
+            }
+        }
+
         private void frmMain_Load(object sender, EventArgs e)
         {
 
-            setting = SettingsHandle.Load();
+
+            setting.ServerName = settingsHandle.GetParamStringValue("Connection\\ServerName");
+            setting.BaseName = settingsHandle.GetParamStringValue("Connection\\BaseName");
+            setting.UserName = settingsHandle.GetParamStringValue("Connection\\UserName");
+            setting.Password = settingsHandle.GetParamStringValue("Connection\\Password");
+
+
             /*
             if(setting == null)
             {
@@ -123,7 +173,7 @@ namespace Planning
                 UpdateSetting();
             }
             */
-            if (setting == null)
+            if (setting.BaseName == "")
             {
                 setting = new Settings();
 
@@ -132,12 +182,23 @@ namespace Planning
 
 
                 if (frmSettingsEdit.ShowDialog() == DialogResult.OK)
-                    SettingsHandle.Save(setting);
+                {
+                    settingsHandle.SetParamValue("Connection\\ServerName", setting.ServerName);
+                    settingsHandle.SetParamValue("Connection\\UserName", setting.UserName);
+                    settingsHandle.SetParamValue("Connection\\BaseName", setting.BaseName);
+                    settingsHandle.SetParamValue("Connection\\Password", setting.Password);
+
+                }
                 else
                     this.Close();
             }
 
             UpdateSetting();
+
+           /* UserPrvlg = DataService.GetPrvlg("User1");
+            
+            UpdateFunctionPrvlg();
+            */
             /*
             DataService.connectionString = $"Data Source={setting.ServerName};Initial Catalog={setting.BaseName};User ID={setting.UserName}; Password = {setting.Password}";
             context = new PlanningDbContext(DataService.GetEntityConnectionString(DataService.connectionString));
@@ -169,6 +230,7 @@ namespace Planning
             dict.Columns.Add(new DictColumn { Id = "name", IsPK = false, IsVisible = true, Title = "Наименование", DataField = "name", Width = 254, DataType = SqlDbType.NVarChar, Length = 254 });
 
             SimpleDict frmDelayReasons = new SimpleDict(dict);
+            SetFormPrivalage(frmDelayReasons, "DelayReasons");
             AddFormTab(frmDelayReasons, "Причины задержки");
         }
 
@@ -182,6 +244,7 @@ namespace Planning
             dict.Columns.Add(new DictColumn { Id = "name", IsPK = false, IsVisible = true, Title = "Наименование", DataField = "name", Width = 254, DataType = SqlDbType.NVarChar, Length = 20 });
 
             SimpleDict frmOperType = new SimpleDict(dict);
+            SetFormPrivalage(frmOperType, "OperType");
             AddFormTab(frmOperType, "Типы операций");
         }
         
@@ -205,8 +268,9 @@ namespace Planning
             dict.Columns.Add(new DictColumn { Id = "Id", IsPK = true, IsVisible = false, Title = "Код", DataField = "id", DataType = SqlDbType.Int });
             dict.Columns.Add(new DictColumn { Id = "GatewayNum", IsPK = false, IsVisible = true, Title = "Номер ворот", DataField = "name", Width = 254, DataType = SqlDbType.Int });
 
-            SimpleDict frmOperType = new SimpleDict(dict);
-            AddFormTab(frmOperType, "Ворота");
+            SimpleDict frmGate = new SimpleDict(dict);
+            SetFormPrivalage(frmGate, "Gate");
+            AddFormTab(frmGate, "Ворота");
             /*
             frmOperType.TopLevel = false;
             frmOperType.Visible = true;
@@ -302,24 +366,15 @@ namespace Planning
 
         private void miDictUser_Click(object sender, EventArgs e)
         {
-
+            var frmUsers = new Users();
+            SetFormPrivalage(frmUsers, "Users");
+            AddFormTab(frmUsers, "Пользователи");
         }
 
         private void miDictTimeSlot_Click(object sender, EventArgs e)
         {
-            /*
-            DictSimple dict = new DictSimple();
-
-            dict.TableName = "time_slot";
-            dict.Title = "Справочник: Тайм слоты";
-
-            dict.Columns.Add(new DictColumn { Id = "Id", IsPK = true, IsVisible = false, Title = "Код", DataField = "id", DataType = SqlDbType.Int });
-            dict.Columns.Add(new DictColumn { Id = "Depositor", IsPK = false, IsVisible = true, Title = "Депозитор", DataField = "depositor_id", Width = 254, DataType = SqlDbType.Int, Length = 5 });
-            dict.Columns.Add(new DictColumn { Id = "TimeSlot", IsPK = false, IsVisible = true, Title = "Слот", DataField = "slot_time", Width = 254, DataType = SqlDbType.VarChar, Length = 5 });
-
-            SimpleDict frmDepositors = new SimpleDict(dict);
-            */
             var frmTimeSlot = new TimeSlots();
+            SetFormPrivalage(frmTimeSlot, "TimeSlot");
             AddFormTab(frmTimeSlot, "Тайм слоты");
         }
 
@@ -335,7 +390,8 @@ namespace Planning
             dict.Columns.Add(new DictColumn { Id = "DB", IsPK = false, IsVisible = true, Title = "База данных", DataField = "lv_base", Width = 128, DataType = SqlDbType.VarChar, Length = 128});
             dict.Columns.Add(new DictColumn { Id = "LVId", IsPK = false, IsVisible = true ,Title = "Код в LVision", DataField = "lv_id", Width = 80, DataType = SqlDbType.Int});
 
-            Depositors frmDepositors = new Depositors();        
+            Depositors frmDepositors = new Depositors();
+            SetFormPrivalage(frmDepositors, "Depositor");       
             AddFormTab(frmDepositors, "Депозиторы");
         }
 
@@ -572,7 +628,9 @@ namespace Planning
 
         private void miDictUserGroup_Click(object sender, EventArgs e)
         {
-
+            var frmUserGroups = new UserGroups();
+            SetFormPrivalage(frmUserGroups, "UserGrp");
+            AddFormTab(frmUserGroups, "Группы пользователей");
         }
 
         private void tblShipments_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -582,15 +640,17 @@ namespace Planning
 
         private void miSettings_Click(object sender, EventArgs e)
         {
-
+            /*
             SettingsWizard frmSettingsWizard = new SettingsWizard();
             frmSettingsWizard.ShowDialog();
             return;
-
+            */
             SettingsEdit frmSettingsEdit = new SettingsEdit(setting);
             if (frmSettingsEdit.ShowDialog()==DialogResult.OK)
             {
-                SettingsHandle.Save(setting);
+                settingsHandle.SetParamValue("Connection\\ServerName", setting.ServerName);
+                settingsHandle.SetParamValue("Connection\\UserName", setting.UserName);
+                settingsHandle.SetParamValue("Connection\\BaseName", setting.BaseName);
                 /*
                 DataService.connectionString = $"Data Source={setting.ServerName};Initial Catalog={setting.BaseName};User ID={setting.UserName}; Password = {setting.Password}";
                 context = new PlanningDbContext(DataService.GetEntityConnectionString(DataService.connectionString));
@@ -618,6 +678,8 @@ namespace Planning
         private void miAttributes_Click(object sender, EventArgs e)
         {
             var frmShimentElements = new ShipmentElements();
+
+            SetFormPrivalage(frmShimentElements, "Attr");
             AddFormTab(frmShimentElements, "Элементы отгрузки");
         }
 
@@ -633,6 +695,7 @@ namespace Planning
             dict.Columns.Add(new DictColumn { Id = "Tonnage", IsPK = false, IsVisible = true, Title = "Тоннаж", DataField = "tonnage", Width = 80, DataType = SqlDbType.Int });
 
             var frmTypeTransport = new SimpleDict(dict);
+            SetFormPrivalage(frmTypeTransport, "TransporType");
             AddFormTab(frmTypeTransport, "Типы транспорта");
         }
 
@@ -649,6 +712,7 @@ namespace Planning
             
 
             var frmTransportCompany = new SimpleDict(dict);
+            SetFormPrivalage(frmTransportCompany, "TC");
             AddFormTab(frmTransportCompany, "Транспортные компании");
         }
 
@@ -665,8 +729,8 @@ namespace Planning
                 DataRow[] printRows = (tblShipments.DataSource as DataTable).Select("ShpId = "+ tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colId"].Value.ToString());
                 ExcelPrint excel = new ExcelPrint(Application.StartupPath + "\\Reports\\ЛистОтгрузки.xltx");
                 //Код отгрузки
-                excel.SetValue(1, 6, 2, "*"+printRows[0]["UniqueKey"] + "*");
-                excel.SetValue(1, 6, 3, printRows[0]["UniqueKey"]);
+                excel.SetValue(1, 5, 2, "*"+printRows[0]["UniqueKey"] + "*");
+                excel.SetValue(1, 5, 3, printRows[0]["UniqueKey"]);
                 //Прибыл по плану
                 excel.SetValue(1, 3, 6, printRows[0]["ShpDate"].ToString().Substring(0,10)+" "+ printRows[0]["SlotTime"]);
                 //Прибыл по факту
@@ -677,14 +741,16 @@ namespace Planning
                 excel.SetValue(1, 3, 9, printRows[0]["ShpVehicleNumber"]);
                 //№ телефона
                 excel.SetValue(1, 3, 10, printRows[0]["ShpDriverPhone"]);
-                //№ ворот, время постановки на ворота	
-                excel.SetValue(1, 3, 11, printRows[0]["GateName"] + ","+ printRows[0]["ShpStartTime"]);
+                //№ ворот	
+                excel.SetValue(1, 3, 11, printRows[0]["GateName"]);
+                //Время постановки на ворота	
+                excel.SetValue(1, 3, 12, printRows[0]["ShpStartTime"]);
                 //№ пломбы
-                excel.SetValue(1, 3, 12, printRows[0]["ShpStampNumber"]);
+                excel.SetValue(1, 3, 13, printRows[0]["ShpStampNumber"]);
                 //Время окончание загрузки
-                excel.SetValue(1, 3, 13, printRows[0]["ShpEndTimePlan"]);
+                excel.SetValue(1, 3, 14, printRows[0]["ShpEndTimePlan"]);
                 //Убыл: дата, время
-                excel.SetValue(1, 3, 14, printRows[0]["ShpEndTimeFact"]);
+                excel.SetValue(1, 3, 15, printRows[0]["ShpEndTimeFact"]);
 
                 for(int i = 0;i<printRows.Count();i++)
                 {
@@ -718,7 +784,7 @@ namespace Planning
                 range.HorizontalAlignment = Excel.XlHAlign.xlHAlignLeft;
                 range.VerticalAlignment = Excel.XlVAlign.xlVAlignTop;
                 range.WrapText = true;
-                excel.SetValue(1, 1, 17 + printRows.Count() + 2, "Комментарии к заказу:");
+                excel.SetValue(1, 1, 17 + printRows.Count() + 2, "Комментарии к отгрузке:");
                 excel.SetValue(1, 2, 17 + printRows.Count() + 2, printRows[0]["ShpComment"]);
 
                 range = excel.SelectCells(1, 1, 17 + printRows.Count() + 2, 6, 17 + printRows.Count() + 6);

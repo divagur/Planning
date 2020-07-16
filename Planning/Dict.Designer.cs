@@ -30,13 +30,11 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DictForm));
             this.tbMain = new System.Windows.Forms.ToolStrip();
-            this.tblDict = new System.Windows.Forms.DataGridView();
             this.btnAddRow = new System.Windows.Forms.ToolStripButton();
             this.btnEdit = new System.Windows.Forms.ToolStripButton();
             this.btnDelRow = new System.Windows.Forms.ToolStripButton();
             this.btnSave = new System.Windows.Forms.ToolStripButton();
             this.tbMain.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tblDict)).BeginInit();
             this.SuspendLayout();
             // 
             // tbMain
@@ -48,18 +46,9 @@
             this.btnSave});
             this.tbMain.Location = new System.Drawing.Point(0, 0);
             this.tbMain.Name = "tbMain";
-            this.tbMain.Size = new System.Drawing.Size(875, 25);
+            this.tbMain.Size = new System.Drawing.Size(765, 25);
             this.tbMain.TabIndex = 4;
             this.tbMain.Text = "toolStrip1";
-            // 
-            // tblDict
-            // 
-            this.tblDict.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.tblDict.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tblDict.Location = new System.Drawing.Point(0, 25);
-            this.tblDict.Name = "tblDict";
-            this.tblDict.Size = new System.Drawing.Size(875, 398);
-            this.tblDict.TabIndex = 5;
             // 
             // btnAddRow
             // 
@@ -77,7 +66,7 @@
             // 
             this.btnEdit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.btnEdit.Image = global::Planning.Properties.Resources.Edit;
-            this.btnEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnEdit.ImageTransparentColor = System.Drawing.Color.White;
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(23, 22);
             this.btnEdit.Text = "toolStripButton1";
@@ -105,21 +94,19 @@
             this.btnSave.Text = "toolStripButton1";
             this.btnSave.ToolTipText = "Сохранить";
             this.btnSave.Visible = false;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // DictForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(875, 423);
-            this.Controls.Add(this.tblDict);
+            this.ClientSize = new System.Drawing.Size(765, 521);
             this.Controls.Add(this.tbMain);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "DictForm";
-            this.Text = "DictForm";
             this.Load += new System.EventHandler(this.DictForm_Load);
             this.tbMain.ResumeLayout(false);
             this.tbMain.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tblDict)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -128,10 +115,9 @@
         #endregion
 
         private System.Windows.Forms.ToolStrip tbMain;
-        private System.Windows.Forms.ToolStripButton btnAddRow;
-        private System.Windows.Forms.ToolStripButton btnEdit;
-        private System.Windows.Forms.ToolStripButton btnDelRow;
-        private System.Windows.Forms.ToolStripButton btnSave;
-        protected System.Windows.Forms.DataGridView tblDict;
+        public System.Windows.Forms.ToolStripButton btnAddRow;
+        public System.Windows.Forms.ToolStripButton btnEdit;
+        public System.Windows.Forms.ToolStripButton btnDelRow;
+        public System.Windows.Forms.ToolStripButton btnSave;
     }
 }

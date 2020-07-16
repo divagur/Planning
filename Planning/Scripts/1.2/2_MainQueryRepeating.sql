@@ -16,6 +16,7 @@ select vs.shp_id, so.id, so.lv_order_id, vs.s_date, vs.time_slot_id,
 				vs.start_time, vs.end_time, vs.leave_time,
 				vs.delay_reason_name, vs.delay_comment,
 				vs.forwarder_fio,ort_Code + N'' - '' + ort_Description OrdLVType,
+				vs.stamp_number,
 				vs.is_add_lv
 				
 		from 
@@ -109,6 +110,7 @@ select vs.shp_id, so.id, so.lv_order_id, vs.s_date, vs.time_slot_id,
 				vs.delay_reason_name, vs.delay_comment,
 				vs.forwarder_fio,
 				 rtt_Code + N'' - '' + rtt_Description OrdLVType,
+				 vs.stamp_number,
 				vs.is_add_lv
 	from 
 			v_shipments vs with(nolock)

@@ -24,7 +24,7 @@ namespace Planning
         SqlDataAdapter adapter;
         SqlCommandBuilder commandBuilder;
         string sql = "";
-
+        bool getCalendarTime;
 
         protected override void WndProc(ref Message m)
         {
@@ -360,6 +360,10 @@ namespace Planning
                 pnGetDateTime.Tag = sender;
                 DateTime dateStart = ((TextBox)((Button)sender).Tag).Text == "" ? DateTime.Now :DateTime.Parse(((TextBox)((Button)sender).Tag).Text);
                 monthCalendarSpecial.SetSelectionRange(dateStart,dateStart);
+                getCalendarTime = true;
+                
+                if (((TextBox)(sender as Button).Tag).Equals(edSDate) || ((TextBox)(sender as Button).Tag).Equals(edAttorneyDate))
+                    getCalendarTime = false;
                 pnGetDateTime.Show();
 
 
@@ -371,7 +375,8 @@ namespace Planning
         {
 
             Button btn = (Button)pnGetDateTime.Tag;
-            ((TextBox)btn.Tag).Text = monthCalendarSpecial.SelectionRange.Start.ToShortDateString() + " " + dtSpecialTime.Value.ToShortTimeString();
+            ((TextBox)btn.Tag).Text = monthCalendarSpecial.SelectionRange.Start.ToShortDateString()+
+            (getCalendarTime == true?" " + dtSpecialTime.Value.ToShortTimeString():"");
             pnGetDateTime.Hide();
 
         }
@@ -397,6 +402,7 @@ namespace Planning
             if (_shipment.ShIn == null || _shipment.ShIn == true)
             {
                 btnAddToLV.Visible = false;
+                btnBindLV.Visible = false;
             }
         }
 

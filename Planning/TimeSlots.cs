@@ -12,38 +12,14 @@ using System.Windows.Forms;
 
 namespace Planning
 {
-    public partial class TimeSlots : Form
+    public partial class TimeSlots : DictForm
     {
-        PlanningDbContext _context;
         public TimeSlots()
         {
             InitializeComponent();
-            _context = DataService.context;
         }
-        private void Save()
-        {
-            try
-                        {
-                            _context.SaveChanges();
-                        }
-                        catch (DbEntityValidationException ex)
-                        {
-                            string errorText = "";
-                            foreach (DbEntityValidationResult validationError in ex.EntityValidationErrors)
-                            {
-                                errorText = errorText+"Object: " + validationError.Entry.Entity.ToString() + "\n\r";
-                                foreach (DbValidationError err in validationError.ValidationErrors)
-                                {
-                                    errorText = errorText + err.ErrorMessage + "\n\r";
 
-                                }
-                            }
-                            MessageBox.Show(errorText);
-                        }
-                         
-            TimeSlotLoad();
-        }
-        private void btnAddRow_Click(object sender, EventArgs e)
+        protected override void AddRow()
         {
             TimeSlot timeSlot = new TimeSlot();
             var frmTimeSlotEdit = new TimeSlotEdit(timeSlot);
@@ -53,10 +29,9 @@ namespace Planning
                 return;
             DataService.context.TimeSlots.Add(timeSlot);
             Save();
-            
         }
 
-        private void btnEdit_Click(object sender, EventArgs e)
+        protected override void EditRow()
         {
             TimeSlot timeSlot = _context.TimeSlots.Find(tblTimeSlot.Rows[tblTimeSlot.CurrentCell.RowIndex].Cells["colId"].Value);
             var frmTimeSlotEdit = new TimeSlotEdit(timeSlot);
@@ -68,7 +43,18 @@ namespace Planning
             Save();
         }
 
-        private void TimeSlotLoad()
+        protected override void DelRow()
+        {
+            if (MessageBox.Show("Удалить запись?", "Подтверждение удаления", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            {
+                TimeSlot timeSlot = _context.TimeSlots.Find(tblTimeSlot.Rows[tblTimeSlot.CurrentCell.RowIndex].Cells["colId"].Value);
+                _context.TimeSlots.Remove(timeSlot);
+                Save();
+            }
+        }
+       
+
+        protected override void Populate()
         {
             using (SqlConnection connection = new SqlConnection(DataService.connectionString))
             {
@@ -86,19 +72,6 @@ namespace Planning
             }
         }
 
-        private void TimeSlots_Load(object sender, EventArgs e)
-        {
-            TimeSlotLoad();
-        }
 
-        private void btnDelRow_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("Удалить запись?","Подтверждение удаления", MessageBoxButtons.OKCancel)==DialogResult.OK)
-            {
-                TimeSlot timeSlot = _context.TimeSlots.Find(tblTimeSlot.Rows[tblTimeSlot.CurrentCell.RowIndex].Cells["colId"].Value);
-                _context.TimeSlots.Remove(timeSlot);
-                Save();
-            }
-        }
     }
 }

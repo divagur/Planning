@@ -18,7 +18,7 @@ namespace Planning
         public string Password { get; set; }
 
     }
-
+/*
     public static class SettingsHandle
     {
         //Settings _settings;
@@ -67,4 +67,5 @@ namespace Planning
             
         }
     }
+    */
 }
