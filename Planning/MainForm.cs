@@ -229,6 +229,20 @@ namespace Planning
 
             return true;
         }
+
+        private string GetHideColumns()
+        {
+
+            List<string> result = new List<string>();
+            foreach (DataGridViewTextBoxColumn col in tblShipments.Columns)
+            {
+                if (!col.Visible)
+                {
+                    result.Add(col.Name);
+                }
+            }
+            return String.Join(",", result);
+        }
         private void frmMain_Load(object sender, EventArgs e)
         {
 
@@ -315,6 +329,9 @@ namespace Planning
             DataService.Dicts.Add("Типы_транспорта", new DictInfo { TableName = "transport_type", NameColumn = "name" });
             //dataService.Dicts.Add("Ворота", "gateways");
 
+
+
+            List<string> hideCols = settingsHandle.GetParamStringValue("View\\HideColumns").Split(',').ToList();
             btnColumnVisible.DropDownItems.Clear();
             foreach(DataGridViewTextBoxColumn col in tblShipments.Columns)
             {
@@ -322,9 +339,16 @@ namespace Planning
                 {
                     ToolStripMenuItem item = (ToolStripMenuItem)btnColumnVisible.DropDownItems.Add(col.HeaderText);
                     item.CheckOnClick = true;
-                    item.CheckState = CheckState.Checked;
+                    item.CheckState = hideCols.IndexOf(col.Name) < 0?CheckState.Checked:CheckState.Unchecked;
+                    item.Tag = col;
+                    item.Click += toolStripMenuItem3_Click;
+                    col.Visible = hideCols.IndexOf(col.Name) < 0;
                 }
+                
+                
             }
+
+
 
         }
 
@@ -960,6 +984,15 @@ namespace Planning
             {
                 LoginUser();
             }
+        }
+
+
+
+        private void toolStripMenuItem3_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem item = (ToolStripMenuItem)sender;
+            (item.Tag as DataGridViewTextBoxColumn).Visible = item.CheckState == CheckState.Checked ? true : false;
+            settingsHandle.SetParamValue("View\\HideColumns", GetHideColumns());
         }
     }
 }
