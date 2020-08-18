@@ -82,6 +82,7 @@
             this.label3.Size = new System.Drawing.Size(63, 13);
             this.label3.TabIndex = 0;
             this.label3.Text = "ID в Lvision";
+            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // edName
             // 
@@ -106,7 +107,7 @@
             // 
             // btnOk
             // 
-            this.btnOk.Location = new System.Drawing.Point(368, 436);
+            this.btnOk.Location = new System.Drawing.Point(368, 435);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
             this.btnOk.TabIndex = 2;
@@ -116,7 +117,7 @@
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(449, 436);
+            this.btnClose.Location = new System.Drawing.Point(449, 435);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
             this.btnClose.TabIndex = 2;
@@ -128,7 +129,7 @@
             // 
             this.groupBox1.Controls.Add(this.tblAttr);
             this.groupBox1.Controls.Add(this.tbAttr);
-            this.groupBox1.Location = new System.Drawing.Point(12, 123);
+            this.groupBox1.Location = new System.Drawing.Point(12, 122);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(515, 307);
             this.groupBox1.TabIndex = 3;
@@ -262,7 +263,7 @@
             this.groupBox2.Controls.Add(this.edLvId);
             this.groupBox2.Location = new System.Drawing.Point(12, 12);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(515, 105);
+            this.groupBox2.Size = new System.Drawing.Size(515, 104);
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Данные депозитора";
@@ -271,7 +272,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(535, 467);
+            this.ClientSize = new System.Drawing.Size(535, 466);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnClose);

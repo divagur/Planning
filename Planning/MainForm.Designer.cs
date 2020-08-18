@@ -29,11 +29,12 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.menuMain = new System.Windows.Forms.MenuStrip();
             this.mtiFile = new System.Windows.Forms.ToolStripMenuItem();
             this.miSettings = new System.Windows.Forms.ToolStripMenuItem();
+            this.miConnect = new System.Windows.Forms.ToolStripMenuItem();
             this.miDicts = new System.Windows.Forms.ToolStripMenuItem();
             this.miDictUserGroup = new System.Windows.Forms.ToolStripMenuItem();
             this.miDictUser = new System.Windows.Forms.ToolStripMenuItem();
@@ -102,6 +103,11 @@
             this.tmUpdate = new System.Windows.Forms.Timer(this.components);
             this.delay_reasonsTableAdapter1 = new Planning.PlanningDataSetTableAdapters.delay_reasonsTableAdapter();
             this.shipmentBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnColumnVisible = new System.Windows.Forms.ToolStripSplitButton();
+            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMain.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -128,7 +134,8 @@
             // mtiFile
             // 
             this.mtiFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.miSettings});
+            this.miSettings,
+            this.miConnect});
             this.mtiFile.Name = "mtiFile";
             this.mtiFile.Size = new System.Drawing.Size(48, 20);
             this.mtiFile.Text = "Файл";
@@ -140,6 +147,13 @@
             this.miSettings.Tag = "Settings";
             this.miSettings.Text = "Настройки";
             this.miSettings.Click += new System.EventHandler(this.miSettings_Click);
+            // 
+            // miConnect
+            // 
+            this.miConnect.Name = "miConnect";
+            this.miConnect.Size = new System.Drawing.Size(152, 22);
+            this.miConnect.Text = "Подключение";
+            this.miConnect.Click += new System.EventHandler(this.miConnect_Click);
             // 
             // miDicts
             // 
@@ -398,8 +412,8 @@
             // colCopmletePct
             // 
             this.colCopmletePct.DataPropertyName = "PrcReady";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.colCopmletePct.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.colCopmletePct.DefaultCellStyle = dataGridViewCellStyle4;
             this.colCopmletePct.HeaderText = "Собран (в %)";
             this.colCopmletePct.Name = "colCopmletePct";
             this.colCopmletePct.ReadOnly = true;
@@ -607,7 +621,7 @@
             // cbUpdate
             // 
             this.cbUpdate.AutoSize = true;
-            this.cbUpdate.Location = new System.Drawing.Point(295, 5);
+            this.cbUpdate.Location = new System.Drawing.Point(317, 5);
             this.cbUpdate.Name = "cbUpdate";
             this.cbUpdate.Size = new System.Drawing.Size(110, 17);
             this.cbUpdate.TabIndex = 5;
@@ -617,7 +631,7 @@
             // 
             // edInterval
             // 
-            this.edInterval.Location = new System.Drawing.Point(244, 4);
+            this.edInterval.Location = new System.Drawing.Point(266, 4);
             this.edInterval.Minimum = new decimal(new int[] {
             10,
             0,
@@ -636,7 +650,7 @@
             // edCurrDay
             // 
             this.edCurrDay.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.edCurrDay.Location = new System.Drawing.Point(143, 3);
+            this.edCurrDay.Location = new System.Drawing.Point(165, 3);
             this.edCurrDay.Name = "edCurrDay";
             this.edCurrDay.Size = new System.Drawing.Size(95, 20);
             this.edCurrDay.TabIndex = 3;
@@ -651,7 +665,9 @@
             this.btnDel,
             this.btnRefresh,
             this.toolStripSeparator1,
-            this.btnPrint});
+            this.btnPrint,
+            this.toolStripSeparator2,
+            this.btnColumnVisible});
             this.tbMain.Location = new System.Drawing.Point(0, 0);
             this.tbMain.Name = "tbMain";
             this.tbMain.Size = new System.Drawing.Size(1262, 25);
@@ -726,7 +742,7 @@
             this.tabForms.SelectedIndex = 0;
             this.tabForms.Size = new System.Drawing.Size(1276, 607);
             this.tabForms.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
-            this.tabForms.TabIndex = 4;
+            this.tabForms.TabIndex = 0;
             this.tabForms.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.tabForms_DrawItem);
             this.tabForms.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tabForms_MouseDown);
             // 
@@ -745,6 +761,47 @@
             // delay_reasonsTableAdapter1
             // 
             this.delay_reasonsTableAdapter1.ClearBeforeFill = true;
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
+            // btnColumnVisible
+            // 
+            this.btnColumnVisible.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnColumnVisible.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem3,
+            this.toolStripMenuItem1,
+            this.toolStripMenuItem2});
+            this.btnColumnVisible.Image = ((System.Drawing.Image)(resources.GetObject("btnColumnVisible.Image")));
+            this.btnColumnVisible.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnColumnVisible.Name = "btnColumnVisible";
+            this.btnColumnVisible.Size = new System.Drawing.Size(32, 22);
+            this.btnColumnVisible.Text = "toolStripSplitButton1";
+            // 
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.Checked = true;
+            this.toolStripMenuItem3.CheckOnClick = true;
+            this.toolStripMenuItem3.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem3.Text = "2";
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.CheckOnClick = true;
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem1.Text = "1";
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.CheckOnClick = true;
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem2.Text = "3";
             // 
             // frmMain
             // 
@@ -852,6 +909,12 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn BackgroundColor;
         private System.Windows.Forms.DataGridViewTextBoxColumn IsAddLv;
         private System.Windows.Forms.ToolStripButton btnPrint;
+        private System.Windows.Forms.ToolStripMenuItem miConnect;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripSplitButton btnColumnVisible;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
     }
 }
 

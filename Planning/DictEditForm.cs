@@ -18,9 +18,9 @@ namespace Planning
         }
 
 
-        protected virtual void Save()
+        protected virtual bool Save()
         {
-
+            return true;
         }
 
         protected virtual void CloseEdit()
@@ -34,8 +34,8 @@ namespace Planning
         }
         private void btnSave_Click(object sender, EventArgs e)
         {
-            Save();
-            DialogResult = DialogResult.OK;
+            if (Save())
+                DialogResult = DialogResult.OK;
         }
 
         private void btnClose_Click(object sender, EventArgs e)

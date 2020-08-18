@@ -13,11 +13,17 @@ namespace Planning
     {
         User _user;
         PlanningDbContext _context;
-        public UserEditEx(User user)
+        bool _isNew;
+        public UserEditEx(User user, bool IsNew)
         {
             InitializeComponent();
             _user = user;
             _context = DataService.context;
+            _isNew = IsNew;
+            cbRegType.SelectedIndex = 1;
+            edLogin.Enabled = IsNew;
+            edPassword.Enabled = IsNew;
+            cbRegType.Enabled = IsNew;
         }
 
 
@@ -32,24 +38,113 @@ namespace Planning
         {
             SqlHandle sql = new SqlHandle(DataService.connectionString);
 
-            StringBuilder sqlStatement = new StringBuilder($"CREATE LOGIN { Login }");
+            StringBuilder sqlStatement = new StringBuilder($"CREATE LOGIN { Login } ");
+           
             if (!IsWindowsUser)
-                sqlStatement.Append("WITH PASSWORD = '{Password}';");
-
-            sqlStatement.Append("CREATE USER {Login} FOR LOGIN {Login}");
+                sqlStatement.Append($"WITH PASSWORD = '{Password}, CHECK_POLICY = OFF';");
             sql.SqlStatement = sqlStatement.ToString();
-            return sql.Execute();
+
+            if (!sql.Execute())
+            {
+                MessageBox.Show(sql.LastError, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            sqlStatement.Clear();
+            sqlStatement.Append($"CREATE USER {Login} FOR LOGIN {Login};");
+            sql.SqlStatement = sqlStatement.ToString();
+
+            if (!sql.Execute())
+            {
+                MessageBox.Show(sql.LastError, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            sqlStatement.Clear();
+            sqlStatement.Append($" EXEC [sp_addrolemember] 'pl_user', '{Login}';");
+            sql.SqlStatement = sqlStatement.ToString();
+            if (!sql.Execute())
+            {
+                MessageBox.Show(sql.LastError, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            return true;
+        }
+
+        
+
+        private bool AlterLogin(string Login, string NewPassword)
+        {
+            SqlHandle sql = new SqlHandle(DataService.connectionString);
+
+            sql.SqlStatement = $"ALTER USER {Login} WITH PASSWORD = '{NewPassword}'";
+
+            if (!sql.Execute())
+            {
+                MessageBox.Show(sql.LastError, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            sql.SqlStatement = $"ALTER LOGIN {Login} WITH PASSWORD = '{NewPassword}'";
+
+            if (!sql.Execute())
+            {
+                MessageBox.Show(sql.LastError, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            return true;
         }
         private void AddUserToGroup(DataGridViewRow row)
         {
             _user.UserGroups.Add(_context.UserGroups.Find(row.Cells["colGrpId"].Value));
         }
 
-        protected override void Save()
+        private bool CanSave()
         {
-            if (_user.IsReg==false || _user.IsReg ==null)
+            if (tblGroup.Rows.Count == 0)
             {
-                CreateUser(edLogin.Text, edPassword.Text, bool.Parse(cbRegType.SelectedIndex.ToString()));
+                MessageBox.Show("Пользователь не входит ни в одну из групп", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            return true;
+        }
+
+        private bool AddUserToDepositors()
+        {
+            bool success = true;
+            foreach(Depositor dep in _context.Depositors)
+            {
+                if (dep.LvBase != null)
+                    success = success && DataService.CreateDBUser(dep.LvBase, edLogin.Text, edLogin.Text);
+            }
+            return success;
+        }
+        protected override bool Save()
+        {
+            if (!CanSave())
+                return false;
+
+            if (_isNew)
+            {
+                if (!DataService.CreateLogin(edLogin.Text, edPassword.Text, cbRegType.SelectedIndex == 0 ? true:false))
+                {
+                    return false;
+                }
+
+                if (!DataService.CreateDBUser(DataService.setting.BaseName, edLogin.Text, edLogin.Text))
+                {
+                    return false;
+                }
+                if (!AddUserToDepositors())
+                {
+                    return false;
+                }
+            }
+            else if (_user.RegType == 1)
+            {
+                if (!AlterLogin(edLogin.Text,edPassword.Text))
+                {
+                    return false;
+                }
             }
 
             _user.Login = edLogin.Text;
@@ -59,6 +154,7 @@ namespace Planning
             {
                 AddUserToGroup(row);
             }
+            return true;
         }
 
         protected override void Populate()

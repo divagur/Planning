@@ -23,8 +23,8 @@ namespace Planning
     
         public int Id { get; set; }
         public string Name { get; set; }
-        public string lv_base { get; set; }
-        public Nullable<int> lv_id { get; set; }
+        public string LvBase { get; set; }
+        public Nullable<int> LvId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Shipment> Shipments { get; set; }

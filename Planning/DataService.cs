@@ -76,6 +76,7 @@ namespace Planning
         //public static string connectionString = @"Data Source=ПОЛЬЗОВАТЕЛЬ-ПК\SQLEXPRESS2017;Initial Catalog=Planning;User ID=SYSADM; Password = SYSADM";
         public static string connectionString = "";
         public static Dictionary<string, DictInfo> Dicts = new Dictionary<string, DictInfo>();
+        public static Settings setting = new Settings();
 
         public static List<Shipment> GetAll()
         {
@@ -323,8 +324,219 @@ namespace Planning
                 }
                 return db.Query<UserAccessItem>($"select id FunctionId, name FunctionName,is_view IsView,is_append IsAppend,is_edit IsEdit,is_delete IsDelete from fn_GetPrvlg('{UserLogin}')").ToList();
             }
-
             
+            
+        }
+        public static bool IsLoginExist(string Login)
+        {
+            SqlHandle sql = new SqlHandle(DataService.connectionString);
+
+            sql.SqlStatement = $"select name from sys.server_principals  where type = 'S' and name = '{Login}' ";
+            sql.IsResultSet = true;
+            bool success =sql.Connect() && sql.Execute();
+
+            success = sql.Reader.HasRows && sql.Reader.Read() && (bool)(sql.Reader.GetSqlString(0) != null);
+
+            sql.Disconnect();
+
+            return success;
+        }
+
+        public static bool IsUserExist(string DB, string User)
+        {
+            bool success;
+            SqlHandle sql = new SqlHandle(DataService.connectionString);
+            sql.Connect();
+            /*
+            sql.SqlStatement = $"USE {DB}";
+            sql.IsResultSet = false;
+            success = sql.Execute();
+*/
+            sql.IsResultSet = true;
+            sql.SqlStatement = $"select  count(*) from {DB}.sys.database_principals where type = 'S' and name = '{User}'";
+            success = sql.Execute();
+            success = sql.Reader.Read() && (bool)(sql.Reader.GetSqlInt32(0) > 0);
+            /*
+            sql.SqlStatement = $"USE {DataService.setting.BaseName}";
+            sql.IsResultSet = false;
+            sql.Execute();
+            */
+
+
+            sql.Disconnect();
+            return success;
+        }
+
+
+        public static bool CreateLogin(string Login, string Pswd, bool IsWindowsUser)
+        {
+            /*if (IsLoginExist(Login))
+                return true;
+            SqlHandle sql = new SqlHandle(DataService.connectionString);
+
+            StringBuilder sqlStatement = new StringBuilder($"CREATE LOGIN { Login } ");
+
+            if (!IsWindowsUser)
+                sqlStatement.Append($"WITH PASSWORD = '{Pswd}, CHECK_POLICY = OFF';");
+            sql.SqlStatement = sqlStatement.ToString();
+            sql.Connect();
+
+            bool success = sql.Execute();
+            
+            if  (!success)  
+                MessageBox.Show(sql.LastError, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            sql.Disconnect();
+
+            return success;
+            */
+
+            SqlHandle sql = new SqlHandle(DataService.connectionString);
+            sql.Connect();
+            sql.TypeCommand = CommandType.StoredProcedure;
+            sql.SqlStatement = "CreateLogin";
+           
+            sql.AddCommandParametr(new SqlParameter { ParameterName = "@Login", Value = Login });
+            sql.AddCommandParametr(new SqlParameter { ParameterName = "@Psw", Value = Pswd });
+            
+            bool success = sql.Execute();
+
+            if (!success)
+            {
+                MessageBox.Show(sql.LastError, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            sql.Disconnect();
+            return success;
+        
+        }
+
+        public static bool CreateDBUser(string DB, string User, string Login)
+        {
+            if (IsUserExist(DB, User))
+                return true;
+            bool success;
+            SqlHandle sql = new SqlHandle(DataService.connectionString);
+            StringBuilder sqlStatement = new StringBuilder($@"USE {DB}; 
+                CREATE USER {Login} FOR LOGIN {Login}");
+
+            sql.SqlStatement = sqlStatement.ToString();
+            success = sql.Connect() && sql.Execute();
+            
+            if (!success)
+            {
+                MessageBox.Show(sql.LastError, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            sql.SqlStatement = "sp_addrolemember";
+            sql.Parameters.Add(new SqlParameter { ParameterName = "@rolename" });
+            sql.Parameters.Add(new SqlParameter { ParameterName = "@membername" });
+            sql.TypeCommand = CommandType.StoredProcedure;
+            sql.IsResultSet = false;
+
+            sql.Parameters["@rolename"].Value = "db_datareader";
+            sql.Parameters["@membername"].Value = User;
+            success = sql.Execute();
+            if (!success)
+            {
+                MessageBox.Show(sql.LastError, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+
+            sql.Parameters["@rolename"].Value = "db_datawriter";
+            //sql.Parameters["@membername"].Value = User;
+
+            success = sql.Execute();
+            if (!success)
+            {
+                MessageBox.Show(sql.LastError, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            if (DB == DataService.setting.BaseName)
+            {
+                sql.Parameters["@rolename"].Value = "pl_user";
+                success = sql.Execute();
+                if (!success)
+                {
+                    MessageBox.Show(sql.LastError, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+            }
+            sql.TypeCommand = CommandType.Text;
+            sql.SqlStatement = $"USE { DataService.setting.BaseName}";
+            success = sql.Execute();
+
+
+            sql.Disconnect();
+            return true;
+/*
+            SqlHandle sql = new SqlHandle(DataService.connectionString);
+            sql.TypeCommand = CommandType.StoredProcedure;
+            sql.AddCommandParametr(new SqlParameter { ParameterName = "@DB", Value = DB });
+            sql.AddCommandParametr(new SqlParameter { ParameterName = "@User", Value = User });
+            sql.AddCommandParametr(new SqlParameter { ParameterName = "@Login", Value = Login });
+            sql.SqlStatement = "CreateUser";
+            bool success = sql.Connect() && sql.Execute();
+
+            if (!success)
+            {
+                MessageBox.Show(sql.LastError, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+    */        
+            return success;
+        }
+
+
+        public static bool DropUser(string Login)
+        {
+            SqlHandle sql = new SqlHandle(DataService.connectionString);
+
+            sql.SqlStatement = $"DROP USER IF EXISTS  {Login}";
+            sql.Connect();
+            bool success = sql.Execute();
+            if (!sql.Execute())
+            {
+                MessageBox.Show(sql.LastError, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            }
+
+            /*
+            sql.SqlStatement = $"DROP LOGIN  {Login}";
+
+            if (!sql.Execute())
+            {
+                MessageBox.Show(sql.LastError, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            */
+            sql.Disconnect();
+            return success;
+        }
+
+        public static bool TryDBConnect(string Server, string DB, string Login, string Pswd, bool ShowError)
+        {
+            if (Server == null || DB == null || Login == null)
+                return false;
+            using (SqlConnection connection = new SqlConnection($"Data Source={Server};Initial Catalog={DB};User ID={Login}; Password = {Pswd}"))
+            {
+                try
+                {
+                    connection.Open();
+                }
+                catch (SqlException ex)
+                {
+                    if (ShowError)
+                        MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+
+                    return false;
+                }
+
+            }
+            return true;
         }
     }
 }

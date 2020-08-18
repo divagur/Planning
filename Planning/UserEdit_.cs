@@ -19,9 +19,10 @@ namespace Planning
             _user = user;
         }
 
-        protected override void Save()
+        protected override bool Save()
         {
             _user.Login = edLogin.Text;
+            return true;
         }
 
         protected override void Populate()

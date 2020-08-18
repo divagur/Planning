@@ -66,12 +66,11 @@ namespace Planning
         {
            
             edName.Text = _depositor.Name;
-            edDB.Text = _depositor.lv_base;
-            edLvId.Text = _depositor.lv_id.ToString();
-
+            edDB.Text = _depositor.LvBase;
+            edLvId.Text = _depositor.LvId.ToString();
             PopulateAttr();
 
-
+             
 
         }
         private void DepositorEdit_Load(object sender, EventArgs e)
@@ -88,9 +87,8 @@ namespace Planning
         private void btnOk_Click(object sender, EventArgs e)
         {
             _depositor.Name = edName.Text;
-            _depositor.lv_base = edDB.Text;
-            _depositor.lv_id = Int32.Parse(edLvId.Text);
-
+            _depositor.LvBase = edDB.Text;
+            _depositor.LvId = Int32.Parse(edLvId.Text);
             DialogResult = DialogResult.OK;
         }
 
@@ -154,6 +152,11 @@ namespace Planning
         }
 
         private void tblAttr_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
         {
 
         }

@@ -151,6 +151,12 @@
       <DependentUpon>DictForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ExcelPrint.cs" />
+    <Compile Include="FormLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormLogin.Designer.cs">
+      <DependentUpon>FormLogin.cs</DependentUpon>
+    </Compile>
     <Compile Include="Function.cs">
       <DependentUpon>DbPlaning.tt</DependentUpon>
     </Compile>
@@ -341,6 +347,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DictEditForm.resx">
       <DependentUpon>DictEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormLogin.resx">
+      <DependentUpon>FormLogin.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LvAttrEdit.resx">
       <DependentUpon>LvAttrEdit.cs</DependentUpon>

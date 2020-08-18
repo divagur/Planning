@@ -23,9 +23,11 @@ namespace Planning
 
         private int Xwid = 6;//координаты ширины по диагонали крестика
         private const int tab_margin = 5;//координаты по высоте крестика
-        Settings setting = new Settings();
+        
         SettingsHandle settingsHandle = new SettingsHandle("Settings.xml");
         List<UserAccessItem> UserPrvlg = new List<UserAccessItem>();
+        string LVconnectionString = $"Data Source='ПОЛЬЗОВАТЕЛЬ-ПК\\SQLEXPRESS2017';Initial Catalog='Lvision';User ID='pluser'; Password = 'pluser'";
+        SqlConnection LVConnect;
         public frmMain()
         {
             InitializeComponent();
@@ -61,7 +63,7 @@ namespace Planning
                 string sqlText = "SP_PL_MainQueryP";
 
                 SqlCommand command = new SqlCommand(sqlText, connection);
-                command.CommandType = CommandType.StoredProcedure;
+            command.CommandType = CommandType.StoredProcedure;
 
                 command.Parameters.Add(new SqlParameter { ParameterName = "@From", Value = DateFrom });
                 command.Parameters.Add(new SqlParameter { ParameterName = "@Till", Value = DateTill });
@@ -86,6 +88,10 @@ namespace Planning
             tbMain.Enabled = false;
             miDicts.Enabled = false;
             var reader = GetShipment(edCurrDay.Value, null, null,null);
+            if (reader == null)
+            {
+                return;
+            }
             tbMain.Enabled = true;
             miDicts.Enabled = true;
             DataSet ds = new DataSet();
@@ -109,9 +115,9 @@ namespace Planning
                 ShipmentsLoad();
             }
             */
-            DataService.connectionString = $"Data Source={setting.ServerName};Initial Catalog={setting.BaseName};User ID={setting.UserName}; Password = {setting.Password}";
+            DataService.connectionString = $"Data Source={DataService.setting.ServerName};Initial Catalog={DataService.setting.BaseName};User ID={DataService.setting.UserName}; Password = {DataService.setting.Password}";
             DataService.context = new PlanningDbContext(DataService.GetEntityConnectionString(DataService.connectionString));
-            ShipmentsLoad();
+            
         }
 
         private ToolStripItem FindMenuItem(ToolStripItemCollection items, string Tag)
@@ -156,15 +162,84 @@ namespace Planning
             }
         }
 
+        private bool IsValidUser(string UserName)
+        {
+            
+
+            return true;
+        }
+        private void SaveSettings()
+        {
+            settingsHandle.SetParamValue("Connection\\ServerName", DataService.setting.ServerName);
+            settingsHandle.SetParamValue("Connection\\UserName", DataService.setting.UserName);
+            settingsHandle.SetParamValue("Connection\\BaseName", DataService.setting.BaseName);
+            //settingsHandle.SetParamValue("Connection\\Password", setting.Password);
+            settingsHandle.SetParamValue("ReportTemplate\\ShipmentTemplate", DataService.setting.ShipmentReport);
+            settingsHandle.SetParamValue("ReportTemplate\\ReceiptTemplate", DataService.setting.ReceiptReport);
+        }
+
+        private void LoginUser()
+        {
+            UpdateSetting();
+            ShipmentsLoad();
+            UserPrvlg = DataService.GetPrvlg(DataService.setting.UserName);
+            UpdateFunctionPrvlg();
+        }
+
+       private void CloseAllTabs()
+        {
+           foreach(TabPage pg in tabForms.TabPages)
+            {
+                if (pg.Name != "tabMain")
+                    tabForms.TabPages.Remove(pg);
+            }
+        }
+
+        private bool TryDBConnect(bool ShowError)
+        {
+            using (SqlConnection connection = new SqlConnection(DataService.connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                }
+                catch (SqlException ex)
+                {
+                    if (ShowError)
+                        MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+
+                    return false;
+                }
+
+            }
+            return true;
+        }
+
+        private bool GetLogin()
+        {
+            FormLogin frmLogin = new FormLogin(DataService.setting);
+            if (frmLogin.ShowDialog() == DialogResult.Cancel)
+            {
+                return false;
+            }
+            CloseAllTabs();
+            settingsHandle.SetParamValue("Connection\\UserName", DataService.setting.UserName);
+
+
+            return true;
+        }
         private void frmMain_Load(object sender, EventArgs e)
         {
 
+            //Получаем параметры из конфига
+            DataService.setting.ServerName = settingsHandle.GetParamStringValue("Connection\\ServerName");
+            DataService.setting.BaseName = settingsHandle.GetParamStringValue("Connection\\BaseName");
+            DataService.setting.UserName = settingsHandle.GetParamStringValue("Connection\\UserName");
+            //setting.Password = settingsHandle.GetParamStringValue("Connection\\Password");
 
-            setting.ServerName = settingsHandle.GetParamStringValue("Connection\\ServerName");
-            setting.BaseName = settingsHandle.GetParamStringValue("Connection\\BaseName");
-            setting.UserName = settingsHandle.GetParamStringValue("Connection\\UserName");
-            setting.Password = settingsHandle.GetParamStringValue("Connection\\Password");
-
+            DataService.setting.ShipmentReport = settingsHandle.GetParamStringValue("ReportTemplate\\ShipmentTemplate");
+            DataService.setting.ReceiptReport = settingsHandle.GetParamStringValue("ReportTemplate\\ReceiptTemplate");
 
             /*
             if(setting == null)
@@ -173,36 +248,61 @@ namespace Planning
                 UpdateSetting();
             }
             */
-            if (setting.BaseName == "")
+            //Если нет сервера или базы, то выдадим окно настройки
+            if (DataService.setting.BaseName == "" || DataService.setting.ServerName =="")
             {
-                setting = new Settings();
+                DataService.setting = new Settings();
 
-                SettingsEdit frmSettingsEdit = new SettingsEdit(setting);
+                SettingsWizard frmSettingsWizard = new SettingsWizard(DataService.setting);
 
 
 
-                if (frmSettingsEdit.ShowDialog() == DialogResult.OK)
+                if (frmSettingsWizard.ShowDialog() == DialogResult.OK)
                 {
-                    settingsHandle.SetParamValue("Connection\\ServerName", setting.ServerName);
-                    settingsHandle.SetParamValue("Connection\\UserName", setting.UserName);
-                    settingsHandle.SetParamValue("Connection\\BaseName", setting.BaseName);
-                    settingsHandle.SetParamValue("Connection\\Password", setting.Password);
-
+                    SaveSettings();
                 }
                 else
                     this.Close();
             }
 
+            //Если в настройках нет пользователя то запросим
+            if (DataService.setting.UserName == "")
+            {
+                if (!GetLogin())
+                {
+                    this.Close();
+                }
+            }
             UpdateSetting();
+            //Попробуем подключиться с текущими настроками Пользователь/Пароль
+            //Если не получится запросим еще раз
+            if (!TryDBConnect(false))
+            {
+                if (!GetLogin())
+                {
+                    this.Close();
+                }
+            }
 
-           /* UserPrvlg = DataService.GetPrvlg("User1");
-            
-            UpdateFunctionPrvlg();
-            */
+            //LVConnect = new SqlConnection(LVconnectionString);
+            //LVConnect.Open();
             /*
-            DataService.connectionString = $"Data Source={setting.ServerName};Initial Catalog={setting.BaseName};User ID={setting.UserName}; Password = {setting.Password}";
-            context = new PlanningDbContext(DataService.GetEntityConnectionString(DataService.connectionString));
-           */
+            SqlHandle hSql = new SqlHandle(DataService.connectionString);
+            hSql.Connect();
+            hSql.IsResultSet = false;
+            hSql.TypeCommand = CommandType.StoredProcedure;
+            hSql.SqlStatement = "Lvision.sys.sp_setapprole";
+            hSql.AddCommandParametr(new SqlParameter { ParameterName = "@rolename", Value = "pl_role" });
+            hSql.AddCommandParametr(new SqlParameter { ParameterName = "@password", Value = "planning" });
+            hSql.Execute();
+            hSql.Disconnect();
+            */
+
+
+            LoginUser();
+
+
+            
 
 
             //DataService dataService = new DataService();
@@ -215,7 +315,16 @@ namespace Planning
             DataService.Dicts.Add("Типы_транспорта", new DictInfo { TableName = "transport_type", NameColumn = "name" });
             //dataService.Dicts.Add("Ворота", "gateways");
 
-
+            btnColumnVisible.DropDownItems.Clear();
+            foreach(DataGridViewTextBoxColumn col in tblShipments.Columns)
+            {
+                if (col.Visible)
+                {
+                    ToolStripMenuItem item = (ToolStripMenuItem)btnColumnVisible.DropDownItems.Add(col.HeaderText);
+                    item.CheckOnClick = true;
+                    item.CheckState = CheckState.Checked;
+                }
+            }
 
         }
 
@@ -640,23 +749,25 @@ namespace Planning
 
         private void miSettings_Click(object sender, EventArgs e)
         {
+            
+            SettingsWizard frmSettingsWizard = new SettingsWizard(DataService.setting);
+            if (frmSettingsWizard.ShowDialog()==DialogResult.OK)
+            {
+                SaveSettings();
+                UpdateSetting();
+                return;
+            }
+
             /*
-            SettingsWizard frmSettingsWizard = new SettingsWizard();
-            frmSettingsWizard.ShowDialog();
-            return;
-            */
             SettingsEdit frmSettingsEdit = new SettingsEdit(setting);
             if (frmSettingsEdit.ShowDialog()==DialogResult.OK)
             {
                 settingsHandle.SetParamValue("Connection\\ServerName", setting.ServerName);
                 settingsHandle.SetParamValue("Connection\\UserName", setting.UserName);
                 settingsHandle.SetParamValue("Connection\\BaseName", setting.BaseName);
-                /*
-                DataService.connectionString = $"Data Source={setting.ServerName};Initial Catalog={setting.BaseName};User ID={setting.UserName}; Password = {setting.Password}";
-                context = new PlanningDbContext(DataService.GetEntityConnectionString(DataService.connectionString));
-                ShipmentsLoad();*/
                 UpdateSetting();
             }
+            */
         }
 
         private void cbUpdate_CheckedChanged(object sender, EventArgs e)
@@ -725,9 +836,13 @@ namespace Planning
             Excel.Range range;
             if (shipment.ShIn == false)
             {
-     
+                if (DataService.setting.ShipmentReport == "")
+                {
+                    MessageBox.Show("Не задан шаблон печати листа отгрузки", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 DataRow[] printRows = (tblShipments.DataSource as DataTable).Select("ShpId = "+ tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colId"].Value.ToString());
-                ExcelPrint excel = new ExcelPrint(Application.StartupPath + "\\Reports\\ЛистОтгрузки.xltx");
+                ExcelPrint excel = new ExcelPrint(DataService.setting.ShipmentReport);
                 //Код отгрузки
                 excel.SetValue(1, 5, 2, "*"+printRows[0]["UniqueKey"] + "*");
                 excel.SetValue(1, 5, 3, printRows[0]["UniqueKey"]);
@@ -800,10 +915,15 @@ namespace Planning
             }
            else
             {
+                if (DataService.setting.ReceiptReport == "")
+                {
+                    MessageBox.Show("Не задан шаблон печати листа отгрузки", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 string filter = "ShpId = " + tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colId"].Value.ToString()+
                                 " and OrdId = "+ tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colIdNakl"].Value.ToString();
                 DataRow[] printRows = (tblShipments.DataSource as DataTable).Select(filter);
-                ExcelPrint excel = new ExcelPrint(Application.StartupPath + "\\Reports\\ЛистПрихода.xltx");
+                ExcelPrint excel = new ExcelPrint(DataService.setting.ReceiptReport);
                 //Прибыл по плану
                 excel.SetValue(1, 2, 6, printRows[0]["ShpDate"].ToString().Substring(0, 10) + " " + printRows[0]["SlotTime"]);
                 //Прибыл по факту
@@ -832,6 +952,14 @@ namespace Planning
             }
 
             
+        }
+
+        private void miConnect_Click(object sender, EventArgs e)
+        {
+            if (GetLogin())
+            {
+                LoginUser();
+            }
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Planning
         DictSimple _dict;
         SqlDataAdapter adapter;
         //SqlConnection connection;
-        string connectionString;// = @"Data Source=ПОЛЬЗОВАТЕЛЬ-ПК\SQLEXPRESS2017;Initial Catalog=Planning;User ID=SYSADM; Password = SYSADM";
+        //string connectionString;// = @"Data Source=ПОЛЬЗОВАТЕЛЬ-ПК\SQLEXPRESS2017;Initial Catalog=Planning;User ID=SYSADM; Password = SYSADM";
         FormEdit _editForm;
         string sql = "";
 

@@ -36,11 +36,11 @@
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tblGroup = new System.Windows.Forms.DataGridView();
-            this.colGrp = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.colGrpId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tbUserGrp = new System.Windows.Forms.ToolStrip();
             this.btnAdd = new System.Windows.Forms.ToolStripButton();
             this.btnDel = new System.Windows.Forms.ToolStripButton();
+            this.colGrp = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.colGrpId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tblGroup)).BeginInit();
             this.tbUserGrp.SuspendLayout();
@@ -50,11 +50,13 @@
             // 
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSave.Location = new System.Drawing.Point(193, 324);
+            this.btnSave.TabIndex = 3;
             // 
             // btnClose
             // 
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnClose.Location = new System.Drawing.Point(274, 324);
+            this.btnClose.TabIndex = 4;
             // 
             // label4
             // 
@@ -83,7 +85,7 @@
             this.cbRegType.Location = new System.Drawing.Point(154, 10);
             this.cbRegType.Name = "cbRegType";
             this.cbRegType.Size = new System.Drawing.Size(189, 21);
-            this.cbRegType.TabIndex = 11;
+            this.cbRegType.TabIndex = 0;
             this.cbRegType.SelectedIndexChanged += new System.EventHandler(this.cbRegType_SelectedIndexChanged);
             // 
             // edPassword
@@ -91,7 +93,7 @@
             this.edPassword.Location = new System.Drawing.Point(74, 63);
             this.edPassword.Name = "edPassword";
             this.edPassword.Size = new System.Drawing.Size(269, 20);
-            this.edPassword.TabIndex = 8;
+            this.edPassword.TabIndex = 2;
             this.edPassword.UseSystemPasswordChar = true;
             // 
             // edLogin
@@ -99,7 +101,7 @@
             this.edLogin.Location = new System.Drawing.Point(74, 37);
             this.edLogin.Name = "edLogin";
             this.edLogin.Size = new System.Drawing.Size(269, 20);
-            this.edLogin.TabIndex = 10;
+            this.edLogin.TabIndex = 1;
             // 
             // label1
             // 
@@ -134,19 +136,6 @@
             this.tblGroup.TabIndex = 1;
             this.tblGroup.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.tblGroup_CellValueChanged);
             // 
-            // colGrp
-            // 
-            this.colGrp.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.colGrp.HeaderText = "Группа";
-            this.colGrp.Name = "colGrp";
-            this.colGrp.Width = 250;
-            // 
-            // colGrpId
-            // 
-            this.colGrpId.DataPropertyName = "Id";
-            this.colGrpId.HeaderText = "Id";
-            this.colGrpId.Name = "colGrpId";
-            // 
             // tbUserGrp
             // 
             this.tbUserGrp.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -180,6 +169,20 @@
             this.btnDel.ToolTipText = "Удалить из группы";
             this.btnDel.Click += new System.EventHandler(this.btnDel_Click);
             // 
+            // colGrp
+            // 
+            this.colGrp.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.colGrp.HeaderText = "Группа";
+            this.colGrp.Name = "colGrp";
+            this.colGrp.Width = 250;
+            // 
+            // colGrpId
+            // 
+            this.colGrpId.DataPropertyName = "Id";
+            this.colGrpId.HeaderText = "Id";
+            this.colGrpId.Name = "colGrpId";
+            this.colGrpId.Visible = false;
+            // 
             // UserEditEx
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -191,6 +194,7 @@
             this.Controls.Add(this.edPassword);
             this.Controls.Add(this.edLogin);
             this.Controls.Add(this.label1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "UserEditEx";
             this.Controls.SetChildIndex(this.btnClose, 0);
             this.Controls.SetChildIndex(this.btnSave, 0);

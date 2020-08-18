@@ -386,8 +386,8 @@
           <Property Name="Name" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Shipments" Relationship="PlanningModel.FK_shipments_depositor" FromRole="depositors" ToRole="shipments" />
           <NavigationProperty Name="TimeSlots" Relationship="PlanningModel.FK_time_slot_depositors" FromRole="Depositor" ToRole="time_slot" />
-          <Property Name="lv_base" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="lv_id" Type="Int32" />
+          <Property Name="LvBase" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="LvId" Type="Int32" />
         </EntityType>
         <EntityType Name="Gateway">
           <Key>
@@ -729,8 +729,8 @@
           <EntitySetMapping Name="Depositors">
             <EntityTypeMapping TypeName="PlanningModel.Depositor">
               <MappingFragment StoreEntitySet="depositors">
-                <ScalarProperty Name="lv_id" ColumnName="lv_id" />
-                <ScalarProperty Name="lv_base" ColumnName="lv_base" />
+                <ScalarProperty Name="LvId" ColumnName="lv_id" />
+                <ScalarProperty Name="LvBase" ColumnName="lv_base" />
                 <ScalarProperty Name="Id" ColumnName="id" />
                 <ScalarProperty Name="Name" ColumnName="name" />
               </MappingFragment>

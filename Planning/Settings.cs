@@ -16,6 +16,9 @@ namespace Planning
         public string BaseName { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
+        public string ShipmentReport { get; set; }
+        public string ReceiptReport { get; set; }
+        public int IsGetLogin { get; set; }
 
     }
 /*

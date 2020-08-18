@@ -6,7 +6,7 @@
     <edmx:Diagrams>
       <Diagram DiagramId="7005c0b70f324a0e9757893b6912d2e6" Name="Diagram1" ZoomLevel="97">
         <EntityTypeShape EntityType="PlanningModel.DelayReason" Width="1.5" PointX="7.125" PointY="8.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="PlanningModel.Depositor" Width="1.5" PointX="9.5" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PlanningModel.Depositor" Width="1.5" PointX="9.625" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="PlanningModel.Gateway" Width="1.5" PointX="0.5" PointY="4.5" IsExpanded="true" />
         <EntityTypeShape EntityType="PlanningModel.OperType" Width="1.5" PointX="7.125" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="PlanningModel.ShipmentOrder" Width="2.25" PointX="5.375" PointY="2.625" IsExpanded="true" />

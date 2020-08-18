@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -10,38 +11,142 @@ namespace Planning
     class SqlHandle
     {
         private string _connectionString;
-        public string SqlStatement;
-        public string LastError;
+        private SqlConnection _connection;
+        private SqlDataReader _reader;
+        private SqlCommand _command;
+       
+        public string SqlStatement
+        { get
+            { return _command.CommandText; }
+          set
+            {
+                _command.CommandText = value;
+            }
+        }
 
+        public string LastError;
+        public bool IsResultSet;
+        
+        public CommandType TypeCommand
+        {
+            get
+            {
+                return _command.CommandType;
+            }
+            set
+            {
+                _command.CommandType = value;
+            }
+        }
+        public SqlDataReader Reader
+        {
+            get
+            {
+                return _reader;
+            }
+        }
+
+        public SqlParameterCollection Parameters
+        {
+            get
+            {
+                return _command.Parameters;
+            }
+        }
         public SqlHandle(string connectionString)
         {
             _connectionString = connectionString;
+            _connection = new SqlConnection(_connectionString);
+            _command = new SqlCommand();
+            TypeCommand = CommandType.Text;
+            IsResultSet = false;
         }
-        public bool Execute()
+
+        public bool Connect()
         {
-            if (SqlStatement == null || SqlStatement == "")
-                return false;
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            
+            try
             {
-                connection.Open();
+                _connection.Open();
+            }
+            catch(SqlException ex)
+            {
+                LastError = ex.Message;
+                return false;
+            }
 
-                SqlCommand command = new SqlCommand(SqlStatement, connection);
+            return true;
+        }
+        
 
-                try
-                {
-                    command.ExecuteNonQuery();
-                }
-                catch (SqlException ex)
-                {
-                    LastError = ex.Message;
-                    return false;                    
-                }
+        public void Disconnect()
+        {
+            _connection.Close();
+        }
+        private bool CanExecute()
+        {
+            if (_connection.State == System.Data.ConnectionState.Closed)
+            {
+                LastError = "Попытка выполнения запроса при неактивном подключении к базе данных";
+                return false;
             }
             return true;
         }
 
+        public bool Execute()
+        {
+            if (SqlStatement == null || SqlStatement == "" || !CanExecute())
+                return false;
+
+            //SqlCommand command = new SqlCommand(SqlStatement, _connection);
+            //_command.CommandText = SqlStatement;
+            _command.Connection = _connection;
+            _command.CommandType = TypeCommand;
+            
+            try
+            {
+                //Если есть ридер с прошлого вызова и он не закрыт то закроем
+                if (_reader != null && !_reader.IsClosed)
+                {
+                    _reader.Close();
+                }
+
+                if (IsResultSet)
+                {
+                    _reader = _command.ExecuteReader();
+                }
+                    
+                else
+                    _command.ExecuteNonQuery();
+            }
+            catch (SqlException ex)
+            {
+                LastError = ex.Message;
+                return false;
+            } 
+          /*  finally
+            {
+                Disconnect();
+            }
+            */
+            return true;
+
+            
+        }
+
+
+
+        public void AddCommandParametr(SqlParameter param)
+        {
+            _command.Parameters.Add(param);
+            
+        }
         public SqlDataReader ExecuteReader()
         {
+
+            if (SqlStatement == null || SqlStatement == "" || !CanExecute())
+                return null;
+
             SqlDataReader reader;// = new SqlDataReader();
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
