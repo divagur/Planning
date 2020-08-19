@@ -868,8 +868,8 @@ namespace Planning
                 DataRow[] printRows = (tblShipments.DataSource as DataTable).Select("ShpId = "+ tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colId"].Value.ToString());
                 ExcelPrint excel = new ExcelPrint(DataService.setting.ShipmentReport);
                 //Код отгрузки
-                excel.SetValue(1, 5, 2, "*"+printRows[0]["UniqueKey"] + "*");
-                excel.SetValue(1, 5, 3, printRows[0]["UniqueKey"]);
+                excel.SetValue(1, 5, 2, "*PL"+printRows[0]["ShpId"] + "*");
+                excel.SetValue(1, 5, 3, "PL"+printRows[0]["ShpId"]);
                 //Прибыл по плану
                 excel.SetValue(1, 3, 6, printRows[0]["ShpDate"].ToString().Substring(0,10)+" "+ printRows[0]["SlotTime"]);
                 //Прибыл по факту

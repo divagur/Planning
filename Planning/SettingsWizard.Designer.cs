@@ -36,6 +36,12 @@
             this.imlStep = new System.Windows.Forms.ImageList(this.components);
             this.pnRight = new System.Windows.Forms.Panel();
             this.pnReport = new System.Windows.Forms.Panel();
+            this.btnReceiptDlg = new System.Windows.Forms.Button();
+            this.btnShipmentDlg = new System.Windows.Forms.Button();
+            this.edReceiptTemplate = new System.Windows.Forms.TextBox();
+            this.edShipmentTemplate = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.pnConnect = new System.Windows.Forms.Panel();
             this.edPassword = new System.Windows.Forms.TextBox();
             this.edUser = new System.Windows.Forms.TextBox();
@@ -50,13 +56,7 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.pbBack = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.edShipmentTemplate = new System.Windows.Forms.TextBox();
-            this.edReceiptTemplate = new System.Windows.Forms.TextBox();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.btnShipmentDlg = new System.Windows.Forms.Button();
-            this.btnReceiptDlg = new System.Windows.Forms.Button();
             this.pnRight.SuspendLayout();
             this.pnReport.SuspendLayout();
             this.pnConnect.SuspendLayout();
@@ -88,7 +88,7 @@
             treeNode1,
             treeNode2});
             this.tvStep.SelectedImageIndex = 0;
-            this.tvStep.Size = new System.Drawing.Size(232, 458);
+            this.tvStep.Size = new System.Drawing.Size(124, 458);
             this.tvStep.TabIndex = 1;
             this.tvStep.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvStep_NodeMouseClick);
             // 
@@ -106,7 +106,7 @@
             this.pnRight.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnRight.Location = new System.Drawing.Point(0, 0);
             this.pnRight.Name = "pnRight";
-            this.pnRight.Size = new System.Drawing.Size(1137, 458);
+            this.pnRight.Size = new System.Drawing.Size(606, 458);
             this.pnRight.TabIndex = 2;
             // 
             // pnReport
@@ -117,10 +117,62 @@
             this.pnReport.Controls.Add(this.edShipmentTemplate);
             this.pnReport.Controls.Add(this.label6);
             this.pnReport.Controls.Add(this.label5);
-            this.pnReport.Location = new System.Drawing.Point(67, 191);
+            this.pnReport.Location = new System.Drawing.Point(6, 175);
             this.pnReport.Name = "pnReport";
-            this.pnReport.Size = new System.Drawing.Size(747, 226);
+            this.pnReport.Size = new System.Drawing.Size(597, 226);
             this.pnReport.TabIndex = 2;
+            // 
+            // btnReceiptDlg
+            // 
+            this.btnReceiptDlg.Location = new System.Drawing.Point(554, 74);
+            this.btnReceiptDlg.Name = "btnReceiptDlg";
+            this.btnReceiptDlg.Size = new System.Drawing.Size(27, 20);
+            this.btnReceiptDlg.TabIndex = 2;
+            this.btnReceiptDlg.Text = "...";
+            this.btnReceiptDlg.UseVisualStyleBackColor = true;
+            this.btnReceiptDlg.Click += new System.EventHandler(this.btnReceiptDlg_Click);
+            // 
+            // btnShipmentDlg
+            // 
+            this.btnShipmentDlg.Location = new System.Drawing.Point(554, 26);
+            this.btnShipmentDlg.Name = "btnShipmentDlg";
+            this.btnShipmentDlg.Size = new System.Drawing.Size(27, 20);
+            this.btnShipmentDlg.TabIndex = 2;
+            this.btnShipmentDlg.Text = "...";
+            this.btnShipmentDlg.UseVisualStyleBackColor = true;
+            this.btnShipmentDlg.Click += new System.EventHandler(this.btnShipmentDlg_Click);
+            // 
+            // edReceiptTemplate
+            // 
+            this.edReceiptTemplate.Location = new System.Drawing.Point(16, 75);
+            this.edReceiptTemplate.Name = "edReceiptTemplate";
+            this.edReceiptTemplate.Size = new System.Drawing.Size(532, 20);
+            this.edReceiptTemplate.TabIndex = 1;
+            // 
+            // edShipmentTemplate
+            // 
+            this.edShipmentTemplate.Location = new System.Drawing.Point(16, 26);
+            this.edShipmentTemplate.Name = "edShipmentTemplate";
+            this.edShipmentTemplate.Size = new System.Drawing.Size(532, 20);
+            this.edShipmentTemplate.TabIndex = 1;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(13, 59);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(122, 13);
+            this.label6.TabIndex = 0;
+            this.label6.Text = "Шаблон листа прихода";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(13, 10);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(129, 13);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "Шаблон листа отгрузки ";
             // 
             // pnConnect
             // 
@@ -209,12 +261,13 @@
             this.pbFooter.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.pbFooter.Location = new System.Drawing.Point(0, 458);
             this.pbFooter.Name = "pbFooter";
-            this.pbFooter.Size = new System.Drawing.Size(1373, 34);
+            this.pbFooter.Size = new System.Drawing.Size(734, 34);
             this.pbFooter.TabIndex = 3;
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(1298, 6);
+            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClose.Location = new System.Drawing.Point(654, 6);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
             this.btnClose.TabIndex = 1;
@@ -224,7 +277,8 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(1214, 6);
+            this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSave.Location = new System.Drawing.Point(570, 6);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 0;
@@ -238,7 +292,7 @@
             this.pbBack.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pbBack.Location = new System.Drawing.Point(0, 0);
             this.pbBack.Name = "pbBack";
-            this.pbBack.Size = new System.Drawing.Size(1373, 458);
+            this.pbBack.Size = new System.Drawing.Size(734, 458);
             this.pbBack.TabIndex = 4;
             // 
             // splitContainer1
@@ -254,41 +308,9 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.pnRight);
-            this.splitContainer1.Size = new System.Drawing.Size(1373, 458);
-            this.splitContainer1.SplitterDistance = 232;
+            this.splitContainer1.Size = new System.Drawing.Size(734, 458);
+            this.splitContainer1.SplitterDistance = 124;
             this.splitContainer1.TabIndex = 3;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(13, 10);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(129, 13);
-            this.label5.TabIndex = 0;
-            this.label5.Text = "Шаблон листа отгрузки ";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(13, 59);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(122, 13);
-            this.label6.TabIndex = 0;
-            this.label6.Text = "Шаблон листа прихода";
-            // 
-            // edShipmentTemplate
-            // 
-            this.edShipmentTemplate.Location = new System.Drawing.Point(16, 26);
-            this.edShipmentTemplate.Name = "edShipmentTemplate";
-            this.edShipmentTemplate.Size = new System.Drawing.Size(532, 20);
-            this.edShipmentTemplate.TabIndex = 1;
-            // 
-            // edReceiptTemplate
-            // 
-            this.edReceiptTemplate.Location = new System.Drawing.Point(16, 75);
-            this.edReceiptTemplate.Name = "edReceiptTemplate";
-            this.edReceiptTemplate.Size = new System.Drawing.Size(532, 20);
-            this.edReceiptTemplate.TabIndex = 1;
             // 
             // openFileDialog
             // 
@@ -296,31 +318,11 @@
             this.openFileDialog.Filter = "\"Excel|*.xltx| Excel macros| *xltm\"";
             this.openFileDialog.Title = "Шаблоны отчетов";
             // 
-            // btnShipmentDlg
-            // 
-            this.btnShipmentDlg.Location = new System.Drawing.Point(554, 26);
-            this.btnShipmentDlg.Name = "btnShipmentDlg";
-            this.btnShipmentDlg.Size = new System.Drawing.Size(27, 20);
-            this.btnShipmentDlg.TabIndex = 2;
-            this.btnShipmentDlg.Text = "...";
-            this.btnShipmentDlg.UseVisualStyleBackColor = true;
-            this.btnShipmentDlg.Click += new System.EventHandler(this.btnShipmentDlg_Click);
-            // 
-            // btnReceiptDlg
-            // 
-            this.btnReceiptDlg.Location = new System.Drawing.Point(554, 74);
-            this.btnReceiptDlg.Name = "btnReceiptDlg";
-            this.btnReceiptDlg.Size = new System.Drawing.Size(27, 20);
-            this.btnReceiptDlg.TabIndex = 2;
-            this.btnReceiptDlg.Text = "...";
-            this.btnReceiptDlg.UseVisualStyleBackColor = true;
-            this.btnReceiptDlg.Click += new System.EventHandler(this.btnReceiptDlg_Click);
-            // 
             // SettingsWizard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1373, 492);
+            this.ClientSize = new System.Drawing.Size(734, 492);
             this.Controls.Add(this.pbBack);
             this.Controls.Add(this.pbFooter);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
