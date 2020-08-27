@@ -31,14 +31,15 @@ namespace Planning
         protected override void AddRow()
         {
             UserGroup userGroup = new UserGroup();
+            
+
             var frmUserGroupEdit = new UserGroupEdit(userGroup);
 
             frmUserGroupEdit.ShowDialog();
             if (frmUserGroupEdit.DialogResult == DialogResult.Cancel)
                 return;
+
             DataService.context.UserGroups.Add(userGroup);
-
-
             Save();
         }
 

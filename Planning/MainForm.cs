@@ -104,19 +104,26 @@ namespace Planning
             
         }
 
+        
+
         private void UpdateSetting()
         {
-        /*    SettingsEdit frmSettingsEdit = new SettingsEdit(setting);
-            if (frmSettingsEdit.ShowDialog() == DialogResult.OK)
-            {
-                SettingsHandle.Save(setting);
-                DataService.connectionString = $"Data Source={setting.ServerName};Initial Catalog={setting.BaseName};User ID={setting.UserName}; Password = {setting.Password}";
-                context = new PlanningDbContext(DataService.GetEntityConnectionString(DataService.connectionString));
-                ShipmentsLoad();
-            }
-            */
-            DataService.connectionString = $"Data Source={DataService.setting.ServerName};Initial Catalog={DataService.setting.BaseName};User ID={DataService.setting.UserName}; Password = {DataService.setting.Password}";
+            /*    SettingsEdit frmSettingsEdit = new SettingsEdit(setting);
+                if (frmSettingsEdit.ShowDialog() == DialogResult.OK)
+                {
+                    SettingsHandle.Save(setting);
+                    DataService.connectionString = $"Data Source={setting.ServerName};Initial Catalog={setting.BaseName};User ID={setting.UserName}; Password = {setting.Password}";
+                    context = new PlanningDbContext(DataService.GetEntityConnectionString(DataService.connectionString));
+                    ShipmentsLoad();
+                }
+                */
+            DataService.connectionString = DataService.BuildConnectionString(DataService.setting.ServerName,
+                DataService.setting.BaseName, 
+                DataService.setting.UserName, 
+                DataService.setting.Password, DataService.setting.IsWnd);
+            //$"Data Source={DataService.setting.ServerName};Initial Catalog={DataService.setting.BaseName};Integrated Security=true;User ID={DataService.setting.UserName}; Password = {DataService.setting.Password}";
             DataService.context = new PlanningDbContext(DataService.GetEntityConnectionString(DataService.connectionString));
+            
             
         }
 
@@ -162,12 +169,7 @@ namespace Planning
             }
         }
 
-        private bool IsValidUser(string UserName)
-        {
-            
 
-            return true;
-        }
         private void SaveSettings()
         {
             settingsHandle.SetParamValue("Connection\\ServerName", DataService.setting.ServerName);
@@ -225,7 +227,7 @@ namespace Planning
             }
             CloseAllTabs();
             settingsHandle.SetParamValue("Connection\\UserName", DataService.setting.UserName);
-
+            statusInfo.Text = "Пользователь: " + DataService.setting.UserName;
 
             return true;
         }
@@ -278,7 +280,20 @@ namespace Planning
                 else
                     this.Close();
             }
-
+            DataService.setting.IsWnd = true;
+            DataService.setting.UserName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
+            //Попробуем подключиться под текущим пользователем виндовс
+            //Если не получится запросим имя пользователя и пароль
+            if (!DataService.TryDBConnect(DataService.setting.ServerName,DataService.setting.BaseName, "","", DataService.setting.IsWnd, false))
+            {
+                DataService.setting.IsWnd = false;
+                if (!GetLogin())
+                {
+                    this.Close();
+                    return;
+                }
+            }
+            /*
             //Если в настройках нет пользователя то запросим
             if (DataService.setting.UserName == "")
             {
@@ -287,16 +302,9 @@ namespace Planning
                     this.Close();
                 }
             }
+            */
             UpdateSetting();
-            //Попробуем подключиться с текущими настроками Пользователь/Пароль
-            //Если не получится запросим еще раз
-            if (!TryDBConnect(false))
-            {
-                if (!GetLogin())
-                {
-                    this.Close();
-                }
-            }
+
 
             //LVConnect = new SqlConnection(LVconnectionString);
             //LVConnect.Open();
@@ -348,7 +356,7 @@ namespace Planning
                 
             }
 
-
+            statusInfo.Text = "Пользователь: " + DataService.setting.UserName;
 
         }
 
@@ -993,6 +1001,11 @@ namespace Planning
             ToolStripMenuItem item = (ToolStripMenuItem)sender;
             (item.Tag as DataGridViewTextBoxColumn).Visible = item.CheckState == CheckState.Checked ? true : false;
             settingsHandle.SetParamValue("View\\HideColumns", GetHideColumns());
+        }
+
+        private void statusStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
         }
     }
 }

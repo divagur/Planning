@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'D:\Documents\Visual Studio 2015\Projects\Planning\Planning\DbPlaning.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\guravlev\Documents\GitHub\Planning\Planning\DbPlaning.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

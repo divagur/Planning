@@ -77,33 +77,8 @@ namespace Planning
         public static string connectionString = "";
         public static Dictionary<string, DictInfo> Dicts = new Dictionary<string, DictInfo>();
         public static Settings setting = new Settings();
+        //public static SqlConnectionStringBuilder connectionString = new SqlConnectionStringBuilder();
 
-        public static List<Shipment> GetAll()
-        {
-            
-            using (IDbConnection db = new SqlConnection(connectionString))
-
-            {
-                if (db.State == ConnectionState.Closed)
-                {
-                    db.Open();        
-                }
-
-                return db.Query<Shipment>(@"SELECT id,lv_id,time_slot_id,s_date,s_comment,o_comment,gate_id,sp_condition,driver_phone,driver_fio,
-                                                    vehicle_number,trailer_number,attorney_number,attorney_date,submission_time,start_time,end_time_plan,end_time_fact,
-                                                    delay_reasons_id,delay_comment,depositor_id FROM shipments").ToList();
-            }
-        }
-
-        public static Shipment Get(int Id)
-        { 
-            Shipment shipment = null;
-            using (IDbConnection db = new SqlConnection(connectionString))
-            {
-                shipment = db.Query<Shipment>("SELECT * FROM shipments WHERE id = @id", new { Id }).FirstOrDefault();
-            }
-            return shipment;
-        }
 
         public static Shipment Add(Shipment shipment)
         {
@@ -397,7 +372,8 @@ namespace Planning
            
             sql.AddCommandParametr(new SqlParameter { ParameterName = "@Login", Value = Login });
             sql.AddCommandParametr(new SqlParameter { ParameterName = "@Psw", Value = Pswd });
-            
+            sql.AddCommandParametr(new SqlParameter { ParameterName = "@IsWnd", Value = IsWindowsUser });
+
             bool success = sql.Execute();
 
             if (!success)
@@ -415,11 +391,12 @@ namespace Planning
             if (IsUserExist(DB, User))
                 return true;
             bool success;
+            
             SqlHandle sql = new SqlHandle(DataService.connectionString);
-            StringBuilder sqlStatement = new StringBuilder($@"USE {DB}; 
-                CREATE USER {Login} FOR LOGIN {Login}");
-
+            StringBuilder sqlStatement = new StringBuilder($"USE {DB};  CREATE USER [{Login}] FOR LOGIN [{Login}]");
+            
             sql.SqlStatement = sqlStatement.ToString();
+            
             success = sql.Connect() && sql.Execute();
             
             if (!success)
@@ -515,16 +492,31 @@ namespace Planning
             sql.Disconnect();
             return success;
         }
+        public static string BuildConnectionString(string Server, string DB, string Login, string Pswd, bool IsWnd)
+        {
+            SqlConnectionStringBuilder connectionString = new SqlConnectionStringBuilder();
 
-        public static bool TryDBConnect(string Server, string DB, string Login, string Pswd, bool ShowError)
+            connectionString.DataSource = Server;
+            connectionString.InitialCatalog = DB;
+            connectionString.IntegratedSecurity = IsWnd;
+            if (!IsWnd)
+            {
+                connectionString.UserID = Login;
+                connectionString.Password = Pswd;
+            }
+
+            return connectionString.ToString();
+        }
+        public static bool TryDBConnect(string Server, string DB, string Login, string Pswd,bool IsWnd, bool ShowError)
         {
             if (Server == null || DB == null || Login == null)
                 return false;
-            using (SqlConnection connection = new SqlConnection($"Data Source={Server};Initial Catalog={DB};User ID={Login}; Password = {Pswd}"))
+            using (SqlConnection connection = new SqlConnection(BuildConnectionString(Server, DB, Login, Pswd, IsWnd)))
             {
                 try
                 {
                     connection.Open();
+                    
                 }
                 catch (SqlException ex)
                 {
@@ -533,6 +525,10 @@ namespace Planning
 
 
                     return false;
+                }
+                finally
+                {
+                    connection.Close();
                 }
 
             }

@@ -23,11 +23,17 @@ namespace Planning
         {
             _setting.UserName = edUserName.Text;
             _setting.Password = edPassword.Text;
-            if (DataService.TryDBConnect(DataService.setting.ServerName, DataService.setting.BaseName, DataService.setting.Password, DataService.setting.Password, false))
+            //MessageBox.Show($"Подключение к серверу: {DataService.setting.ServerName} базе: {DataService.setting.BaseName} пользователь: {DataService.setting.UserName} ");
+            if (DataService.TryDBConnect(DataService.setting.ServerName, DataService.setting.BaseName, DataService.setting.UserName, DataService.setting.Password,false, false))
             {
+                //MessageBox.Show("Успешно");
                 DialogResult = DialogResult.OK;
                 Close();
             }
+           /* else
+            {
+                MessageBox.Show("Не успешно");
+            }*/
         }
 
         private void btnOk_Click(object sender, EventArgs e)

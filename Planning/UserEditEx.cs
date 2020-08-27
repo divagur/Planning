@@ -129,11 +129,12 @@ namespace Planning
                 {
                     return false;
                 }
-
+                //MessageBox.Show("Создание пользователя");
                 if (!DataService.CreateDBUser(DataService.setting.BaseName, edLogin.Text, edLogin.Text))
                 {
                     return false;
                 }
+                //MessageBox.Show("Создание пользователя у депозиторов");
                 if (!AddUserToDepositors())
                 {
                     return false;
