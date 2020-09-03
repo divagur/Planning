@@ -247,7 +247,7 @@ namespace Planning
         {
             ShipmentOrder shipmentOrder = _context.ShipmentOrders.Find(tblShipmentOrders.Rows[tblShipmentOrders.CurrentCell.RowIndex].Cells["colId"].Value);
             var frmShipmentOrderEdit = new ShipmentOrderEdit(shipmentOrder);
-
+            
             frmShipmentOrderEdit.ShowDialog();
             if (frmShipmentOrderEdit.DialogResult == DialogResult.Cancel)
                 return;

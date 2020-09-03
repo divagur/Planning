@@ -850,7 +850,7 @@ namespace Planning
             dict.Title = "Справочник: Транспортные компании";
 
             dict.Columns.Add(new DictColumn { Id = "Id", IsPK = true, IsVisible = false, Title = "Код", DataField = "id", DataType = SqlDbType.Int });
-            dict.Columns.Add(new DictColumn { Id = "Name", IsPK = false, IsVisible = true, Title = "Наименование", DataField = "name", Width = 254, DataType = SqlDbType.VarChar, Length = 20 });
+            dict.Columns.Add(new DictColumn { Id = "Name", IsPK = false, IsVisible = true, Title = "Наименование", DataField = "name", Width = 254, DataType = SqlDbType.VarChar, Length = 254 });
             dict.Columns.Add(new DictColumn { Id = "IsActive", IsPK = false, IsVisible = true, Title = "Активная", DataField = "is_active", Width = 80, DataType = SqlDbType.Bit });
             
 
@@ -932,7 +932,20 @@ namespace Planning
                 range.VerticalAlignment = Excel.XlVAlign.xlVAlignTop;
                 range.WrapText = true;
                 excel.SetValue(1, 1, 17 + printRows.Count() + 2, "Комментарии к отгрузке:");
-                excel.SetValue(1, 2, 17 + printRows.Count() + 2, printRows[0]["ShpComment"]);
+
+                
+
+                if (shipment.IsCourier == true)
+                {
+                    range = excel.SelectCells(1, 2, 17 + printRows.Count() + 2, 6, 17 + printRows.Count() + 2);
+                    range.Merge();
+                    range.Font.Bold = true;
+                    range.Font.Size = 18;
+                    range.Font.Color = Color.Orange;
+                    excel.SetValue(1, 2, 17 + printRows.Count() + 2, "Необходимо прикрепить комплект документов к грузу");
+                }
+                else
+                    excel.SetValue(1, 2, 17 + printRows.Count() + 2, printRows[0]["ShpComment"]);
 
                 range = excel.SelectCells(1, 1, 17 + printRows.Count() + 2, 6, 17 + printRows.Count() + 6);
                 range.Borders.Item[Excel.XlBordersIndex.xlEdgeLeft].Weight = Excel.XlBorderWeight.xlMedium;

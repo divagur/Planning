@@ -46,6 +46,9 @@
             this.tblDelayReasons.Name = "tblDelayReasons";
             this.tblDelayReasons.Size = new System.Drawing.Size(851, 454);
             this.tblDelayReasons.TabIndex = 1;
+            this.tblDelayReasons.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.tblDelayReasons_CellValueChanged);
+            this.tblDelayReasons.CurrentCellChanged += new System.EventHandler(this.tblDelayReasons_CurrentCellChanged);
+            this.tblDelayReasons.RowValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.tblDelayReasons_RowValidated);
             // 
             // planningDataSet
             // 

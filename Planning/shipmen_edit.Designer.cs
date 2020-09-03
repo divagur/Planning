@@ -588,9 +588,9 @@
             this.cbIsCourier.AutoSize = true;
             this.cbIsCourier.Location = new System.Drawing.Point(507, 37);
             this.cbIsCourier.Name = "cbIsCourier";
-            this.cbIsCourier.Size = new System.Drawing.Size(126, 17);
+            this.cbIsCourier.Size = new System.Drawing.Size(123, 17);
             this.cbIsCourier.TabIndex = 13;
-            this.cbIsCourier.Text = "Курьерская служба";
+            this.cbIsCourier.Text = "Точка перезагруза";
             this.cbIsCourier.UseVisualStyleBackColor = true;
             // 
             // groupBox1

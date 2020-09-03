@@ -16,12 +16,15 @@ namespace Planning
 
     {
         private UserGroup _userGroup;
+        private List<UserGrpPrvlg> _grpPrvlg;
         PlanningDbContext _context;
-        public UserGroupEdit(UserGroup userGroup)
+        public UserGroupEdit(UserGroup userGroup, List<UserGrpPrvlg> grpPrvlg)
         {
             InitializeComponent();
             _userGroup = userGroup;
+            _grpPrvlg = grpPrvlg;
             _context = DataService.context;
+
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -61,25 +64,7 @@ namespace Planning
         private void Save()
         {
             _userGroup.Name = edGrpName.Text;
-           /* try
-            {
-                _context.SaveChanges();
-            }
-            catch (DbEntityValidationException ex)
-            {
-                string errorText = "";
-                foreach (DbEntityValidationResult validationError in ex.EntityValidationErrors)
-                {
-                    errorText = errorText + "Object: " + validationError.Entry.Entity.ToString() + "\n\r";
-                    foreach (DbValidationError err in validationError.ValidationErrors)
-                    {
-                        errorText = errorText + err.ErrorMessage + "\n\r";
-
-                    }
-                }
-                MessageBox.Show(errorText);
-            }
-            */
+           
             SaveChild();
 
         }
@@ -89,16 +74,7 @@ namespace Planning
         }
         private bool InsertDataRow(DataRow Row)
         {
-            /*
-            SqlHandle sql = new SqlHandle(DataService.connectionString);
-            sql.SqlStatement = $@"insert into user_grp_prvlg(func_id, grp_id, is_view, is_append, is_edit, is_delete)
-                                                        values('{Row["func_id"]}',{_userGroup.Id},'{Row["is_view"]}','{Row["is_append"]}', '{Row["is_edit"]}','{Row["is_delete"]}')";
-            if (!sql.Execute())
-            {
-                MessageBox.Show(sql.LastError, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-            */
+           
             UserGrpPrvlg ugp = new UserGrpPrvlg();
             ugp.GrpId = _userGroup.Id;
             ugp.FuncId = (string)Row["func_id"];
@@ -106,8 +82,8 @@ namespace Planning
             ugp.IsAppend = RowToBool(Row["is_append"]);
             ugp.IsEdit = RowToBool(Row["is_edit"]);
             ugp.IsDelete = RowToBool(Row["is_delete"]);
-
-            _context.UserGrpPrvlgs.Add(ugp);
+            _grpPrvlg.Add(ugp);
+            //_context.UserGrpPrvlgs.Add(ugp);
             return true;
 
            
