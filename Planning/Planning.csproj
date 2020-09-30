@@ -492,6 +492,8 @@
       <LastGenOutput>Planing.cs</LastGenOutput>
     </Content>
     <None Include="Resources\Print.png" />
+    <Content Include="Resources\find_6617.png" />
+    <None Include="Resources\find_next.png" />
     <Content Include="Resources\printer.png" />
     <None Include="Resources\arrow_refresh_8563.png" />
     <Content Include="PlanningLogo.ico" />

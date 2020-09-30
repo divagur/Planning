@@ -534,5 +534,26 @@ namespace Planning
             }
             return true;
         }
+        public static bool ForceMergeLVAttribute(int ShpId)
+        {
+            SqlHandle sql = new SqlHandle(DataService.connectionString);
+            sql.Connect();
+            sql.TypeCommand = CommandType.StoredProcedure;
+            sql.SqlStatement = "SP_PL_ForceMergeLVAttribute";
+
+            sql.AddCommandParametr(new SqlParameter { ParameterName = "@ShpID", Value = ShpId });
+
+
+            bool success = sql.Execute();
+
+            if (!success)
+            {
+                MessageBox.Show(sql.LastError, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            sql.Disconnect();
+            return success;
+
+        }
     }
 }

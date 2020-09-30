@@ -104,7 +104,22 @@ namespace Planning
             
         }
 
-        
+        private void SearchByOrder(bool FromBegin)
+        {
+            int startRow = FromBegin ? 0 : tblShipments.CurrentRow.Index+1;
+            for (int i = startRow; i <= tblShipments.Rows.Count - 1; i++)
+                if (tblShipments.Rows[i].Cells["colOrderId"].Value != null && tblShipments.Rows[i].Cells["colOrderId"].Value.ToString() == edSearch.Text)
+                {
+
+                    tblShipments.CurrentRow.Selected = false;
+                    DataGridViewCell cell = tblShipments.Rows[i].Cells["colOrderId"];                  
+                    tblShipments.CurrentCell = cell;
+                    tblShipments.Rows[i].Selected = true;
+                   
+                    return;
+                }
+                    
+        }
 
         private void UpdateSetting()
         {
@@ -449,6 +464,10 @@ namespace Planning
             if (frmShipmentEdit.ShowDialog() == DialogResult.OK)
             {
                 DataService.context.SaveChanges();
+                if (shipment.ShIn == true)
+                {
+                    DataService.ForceMergeLVAttribute(shipment.Id);
+                }
                 if (shipment.IsAddLv == true)
                 {
                     AddShToLV(shipment);
@@ -901,8 +920,8 @@ namespace Planning
 
                 for(int i = 0;i<printRows.Count();i++)
                 {
-                    excel.SetValue(1, 1, 17 + i, printRows[i]["OrdLVCode"]);
-                    excel.SetValue(1, 2, 17 + i, printRows[i]["KlientName"]);
+                    excel.SetValue(1, 1, 17 + i+1, printRows[i]["OrdLVCode"]);
+                    excel.SetValue(1, 2, 17 + i+1, printRows[i]["KlientName"]);
                 }
                 
 
@@ -937,11 +956,12 @@ namespace Planning
 
                 if (shipment.IsCourier == true)
                 {
-                    range = excel.SelectCells(1, 2, 17 + printRows.Count() + 2, 6, 17 + printRows.Count() + 2);
+                    range = excel.SelectCells(1, 2, 17 + printRows.Count() + 2, 6, 17 + printRows.Count() + 3);
                     range.Merge();
                     range.Font.Bold = true;
                     range.Font.Size = 18;
-                    range.Font.Color = Color.Orange;
+                    range.Font.Color = Color.Red;
+                    range.Interior.Color= Color.Yellow;
                     excel.SetValue(1, 2, 17 + printRows.Count() + 2, "Необходимо прикрепить комплект документов к грузу");
                 }
                 else
@@ -1019,6 +1039,26 @@ namespace Planning
         private void statusStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
 
+        }
+
+        
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            SearchByOrder(true);
+        }
+
+        private void edSearch_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                SearchByOrder(true);
+            }
+        }
+
+        private void btnSearchNext_Click(object sender, EventArgs e)
+        {
+            SearchByOrder(false);
         }
     }
 }

@@ -29,7 +29,7 @@ namespace Planning
             txtManualUnload.Text = _shipmentOrder.ManualUnload.ToString();
             txtPalletAmount.Text = _shipmentOrder.PalletAmount.ToString();
 
-            txtOrderId.Enabled = !(bool)_shipmentOrder.IsBinding;
+            txtOrderId.Enabled = _shipmentOrder.IsBinding == null ? false : !(bool)_shipmentOrder.IsBinding;
         }
 
         private void btnSave_Click(object sender, EventArgs e)

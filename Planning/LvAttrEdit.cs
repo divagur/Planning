@@ -28,10 +28,11 @@ namespace Planning
             _depId = DepId;
             _context = DataService.context;
             _attrName = attrName;
+            cmbAttrType.SelectedIndex = _attr.LvaIn == false ? 0 : 1;
         }
 
 
-        private void GetAttr()
+        private void GetAttr(bool lvIn)
         {
             if (LVAttr == null)
                 LVAttr = new Dictionary<int, string>();
@@ -51,7 +52,7 @@ namespace Planning
                 command.CommandType = CommandType.StoredProcedure;
 
                 command.Parameters.Add(new SqlParameter { ParameterName = "@DepId", Value = _depId });
-
+                command.Parameters.Add(new SqlParameter { ParameterName = "@ShpIn", Value = _attr.LvaIn });
 
                 var reader = command.ExecuteReader();
                 if (reader.HasRows)
@@ -100,13 +101,13 @@ namespace Planning
         {
             _attr.LvaAttrLvId = GetKeyByValue(LVAttr, cmbLVAttr.Text);
             _attr.PlElemId = GetKeyByValue(PLAttr, cmbPLAttr.Text);
-            _attr.LvaIn = false;
+            //_attr.LvaIn = false;
             _attr.LvaUseOrdAttr = false;
             _attr.PlDepId = _depId;
 
             _attrName[0] = cmbLVAttr.Text;
             _attrName[1] = cmbPLAttr.Text;
-
+            _attrName[2] = cmbAttrType.Text;
             DialogResult = DialogResult.OK;
             Close();
         }
@@ -119,7 +120,7 @@ namespace Planning
 
         private void LvAttrEdit_Load(object sender, EventArgs e)
         {
-            GetAttr();
+            
             string value;
             if (LVAttr.TryGetValue(_attr.LvaAttrLvId ==null?0:(int)_attr.LvaAttrLvId, out value))
                 cmbLVAttr.Text = value;
@@ -127,6 +128,14 @@ namespace Planning
             {
                 cmbPLAttr.Text = value;
             } 
+        }
+
+        private void cmbAttrType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            _attr.LvaIn = cmbAttrType.SelectedIndex == 0 ? false : true;
+            cmbLVAttr.Text = "";
+            cmbPLAttr.Text = "";
+            GetAttr((bool)_attr.LvaIn);
         }
     }
 }

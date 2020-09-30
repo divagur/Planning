@@ -36,7 +36,7 @@ namespace Planning
                 command.CommandType = CommandType.StoredProcedure;
 
                 command.Parameters.Add(new SqlParameter { ParameterName = "@DepId", Value = _depositor.Id });
-
+                //command.Parameters.Add(new SqlParameter { ParameterName = "@ShpIn", Value = 0 });
                 /*
                 SqlDataAdapter adapter = new SqlDataAdapter(command);
                 DataSet ds = new DataSet();
@@ -48,13 +48,14 @@ namespace Planning
 
                 if (reader.HasRows)
                 {
-                    tblAttr.Rows.Clear();
+                    tblAttrShipment.Rows.Clear();
                     while (reader.Read())
                     {
-                        int Row = tblAttr.Rows.Add();
-                        tblAttr.Rows[Row].Cells["Id"].Value = reader.GetInt32(0);
-                        tblAttr.Rows[Row].Cells["LVAttrName"].Value = reader.GetString(2);
-                        tblAttr.Rows[Row].Cells["PLField"].Value = reader.GetString(4);
+                        int Row = tblAttrShipment.Rows.Add();
+                        tblAttrShipment.Rows[Row].Cells["Id"].Value = reader.GetInt32(0);
+                        tblAttrShipment.Rows[Row].Cells["LVAttrName"].Value = reader.GetString(2);
+                        tblAttrShipment.Rows[Row].Cells["PLField"].Value = reader.GetString(4);
+                        tblAttrShipment.Rows[Row].Cells["LvType"].Value = reader.GetString(6);
 
                     }
                 }
@@ -94,7 +95,8 @@ namespace Planning
 
         void CreateEdtiForm(LvAttr attr, bool isNew)
         {
-            List<string> attrName = new List<string>(2);
+            List<string> attrName = new List<string>(3);
+            attrName.Add("");
             attrName.Add("");
             attrName.Add("");
             var frmAttrEdit = new LvAttrEdit(attr, _depositor.Id, attrName);
@@ -106,18 +108,18 @@ namespace Planning
             if (isNew)
             {
                 _context.LvAttrs.Add(attr);
-                rowIdx = tblAttr.Rows.Add();
+                rowIdx = tblAttrShipment.Rows.Add();
             }
             else
             {
-                rowIdx = tblAttr.CurrentRow.Index;
+                rowIdx = tblAttrShipment.CurrentRow.Index;
             }
 
-            tblAttr.Rows[rowIdx].Cells["Id"].Value = attr.Id;
-            tblAttr.Rows[rowIdx].Cells["LVAttrName"].Value = attrName[0];
-            tblAttr.Rows[rowIdx].Cells["PLField"].Value = attrName[1];
+            tblAttrShipment.Rows[rowIdx].Cells["Id"].Value = attr.Id;
+            tblAttrShipment.Rows[rowIdx].Cells["LVAttrName"].Value = attrName[0];
+            tblAttrShipment.Rows[rowIdx].Cells["PLField"].Value = attrName[1];
+            tblAttrShipment.Rows[rowIdx].Cells["LvType"].Value = attrName[2];
 
-            
         }
 
         private void tblAttr_CellEndEdit(object sender, DataGridViewCellEventArgs e)
@@ -134,7 +136,7 @@ namespace Planning
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            LvAttr attr = _context.LvAttrs.Find(tblAttr.Rows[tblAttr.CurrentCell.RowIndex].Cells["Id"].Value);
+            LvAttr attr = _context.LvAttrs.Find(tblAttrShipment.Rows[tblAttrShipment.CurrentCell.RowIndex].Cells["Id"].Value);
             CreateEdtiForm(attr, false);
            // PopulateAttr();
         }
@@ -143,7 +145,7 @@ namespace Planning
         {
             if (MessageBox.Show("Удалить запись?", "Подтверждение удаления", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
-                LvAttr attr = _context.LvAttrs.Find(tblAttr.Rows[tblAttr.CurrentCell.RowIndex].Cells["Id"].Value);
+                LvAttr attr = _context.LvAttrs.Find(tblAttrShipment.Rows[tblAttrShipment.CurrentCell.RowIndex].Cells["Id"].Value);
                 _context.LvAttrs.Remove(attr);
                 PopulateAttr();
 
@@ -157,6 +159,11 @@ namespace Planning
         }
 
         private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tblAttr_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }

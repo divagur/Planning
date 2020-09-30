@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.menuMain = new System.Windows.Forms.MenuStrip();
             this.mtiFile = new System.Windows.Forms.ToolStripMenuItem();
@@ -86,29 +86,33 @@
             this.BackgroundColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.IsAddLv = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mnuContext = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.mciPrint = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.cbUpdate = new System.Windows.Forms.CheckBox();
             this.edInterval = new System.Windows.Forms.NumericUpDown();
             this.edCurrDay = new System.Windows.Forms.DateTimePicker();
             this.tbMain = new System.Windows.Forms.ToolStrip();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.tabForms = new System.Windows.Forms.TabControl();
+            this.tmUpdate = new System.Windows.Forms.Timer(this.components);
+            this.delay_reasonsTableAdapter1 = new Planning.PlanningDataSetTableAdapters.delay_reasonsTableAdapter();
+            this.statusStrip2 = new System.Windows.Forms.StatusStrip();
+            this.statusInfo = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.edSearch = new System.Windows.Forms.ToolStripTextBox();
+            this.mciPrint = new System.Windows.Forms.ToolStripMenuItem();
             this.btnAdd = new System.Windows.Forms.ToolStripButton();
             this.btnEdit = new System.Windows.Forms.ToolStripButton();
             this.btnDel = new System.Windows.Forms.ToolStripButton();
             this.btnRefresh = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.btnPrint = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.btnColumnVisible = new System.Windows.Forms.ToolStripSplitButton();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.tabForms = new System.Windows.Forms.TabControl();
-            this.tmUpdate = new System.Windows.Forms.Timer(this.components);
-            this.delay_reasonsTableAdapter1 = new Planning.PlanningDataSetTableAdapters.delay_reasonsTableAdapter();
+            this.btnSearch = new System.Windows.Forms.ToolStripButton();
+            this.btnSearchNext = new System.Windows.Forms.ToolStripButton();
             this.shipmentBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.statusStrip2 = new System.Windows.Forms.StatusStrip();
-            this.statusInfo = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuMain.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -118,8 +122,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.edInterval)).BeginInit();
             this.tbMain.SuspendLayout();
             this.tabForms.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.shipmentBindingSource)).BeginInit();
             this.statusStrip2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.shipmentBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // menuMain
@@ -414,8 +418,8 @@
             // colCopmletePct
             // 
             this.colCopmletePct.DataPropertyName = "PrcReady";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.colCopmletePct.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.colCopmletePct.DefaultCellStyle = dataGridViewCellStyle1;
             this.colCopmletePct.HeaderText = "Собран (в %)";
             this.colCopmletePct.Name = "colCopmletePct";
             this.colCopmletePct.ReadOnly = true;
@@ -600,14 +604,6 @@
             this.mnuContext.Name = "mnuContext";
             this.mnuContext.Size = new System.Drawing.Size(114, 26);
             // 
-            // mciPrint
-            // 
-            this.mciPrint.Image = global::Planning.Properties.Resources.printer;
-            this.mciPrint.Name = "mciPrint";
-            this.mciPrint.Size = new System.Drawing.Size(113, 22);
-            this.mciPrint.Text = "Печать";
-            this.mciPrint.Click += new System.EventHandler(this.mciPrint_Click);
-            // 
             // panel1
             // 
             this.panel1.Controls.Add(this.cbUpdate);
@@ -623,7 +619,7 @@
             // cbUpdate
             // 
             this.cbUpdate.AutoSize = true;
-            this.cbUpdate.Location = new System.Drawing.Point(317, 5);
+            this.cbUpdate.Location = new System.Drawing.Point(515, 4);
             this.cbUpdate.Name = "cbUpdate";
             this.cbUpdate.Size = new System.Drawing.Size(110, 17);
             this.cbUpdate.TabIndex = 5;
@@ -633,7 +629,7 @@
             // 
             // edInterval
             // 
-            this.edInterval.Location = new System.Drawing.Point(266, 4);
+            this.edInterval.Location = new System.Drawing.Point(464, 3);
             this.edInterval.Minimum = new decimal(new int[] {
             10,
             0,
@@ -652,7 +648,7 @@
             // edCurrDay
             // 
             this.edCurrDay.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.edCurrDay.Location = new System.Drawing.Point(165, 3);
+            this.edCurrDay.Location = new System.Drawing.Point(363, 2);
             this.edCurrDay.Name = "edCurrDay";
             this.edCurrDay.Size = new System.Drawing.Size(95, 20);
             this.edCurrDay.TabIndex = 3;
@@ -669,12 +665,86 @@
             this.toolStripSeparator1,
             this.btnPrint,
             this.toolStripSeparator2,
-            this.btnColumnVisible});
+            this.btnColumnVisible,
+            this.toolStripSeparator3,
+            this.edSearch,
+            this.btnSearch,
+            this.btnSearchNext});
             this.tbMain.Location = new System.Drawing.Point(0, 0);
             this.tbMain.Name = "tbMain";
             this.tbMain.Size = new System.Drawing.Size(1262, 25);
             this.tbMain.TabIndex = 1;
             this.tbMain.Text = "toolStrip1";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
+            // tabForms
+            // 
+            this.tabForms.Controls.Add(this.tabMain);
+            this.tabForms.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabForms.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
+            this.tabForms.ItemSize = new System.Drawing.Size(180, 20);
+            this.tabForms.Location = new System.Drawing.Point(0, 24);
+            this.tabForms.Name = "tabForms";
+            this.tabForms.SelectedIndex = 0;
+            this.tabForms.Size = new System.Drawing.Size(1276, 585);
+            this.tabForms.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
+            this.tabForms.TabIndex = 0;
+            this.tabForms.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.tabForms_DrawItem);
+            this.tabForms.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tabForms_MouseDown);
+            // 
+            // tmUpdate
+            // 
+            this.tmUpdate.Tick += new System.EventHandler(this.tmUpdate_Tick);
+            // 
+            // delay_reasonsTableAdapter1
+            // 
+            this.delay_reasonsTableAdapter1.ClearBeforeFill = true;
+            // 
+            // statusStrip2
+            // 
+            this.statusStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.statusInfo});
+            this.statusStrip2.Location = new System.Drawing.Point(0, 609);
+            this.statusStrip2.Name = "statusStrip2";
+            this.statusStrip2.Size = new System.Drawing.Size(1276, 22);
+            this.statusStrip2.TabIndex = 2;
+            this.statusStrip2.Text = "statusStrip2";
+            // 
+            // statusInfo
+            // 
+            this.statusInfo.Name = "statusInfo";
+            this.statusInfo.Size = new System.Drawing.Size(118, 17);
+            this.statusInfo.Text = "toolStripStatusLabel1";
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+            // 
+            // edSearch
+            // 
+            this.edSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.edSearch.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.edSearch.Name = "edSearch";
+            this.edSearch.Size = new System.Drawing.Size(150, 25);
+            this.edSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.edSearch_KeyDown);
+            // 
+            // mciPrint
+            // 
+            this.mciPrint.Image = global::Planning.Properties.Resources.printer;
+            this.mciPrint.Name = "mciPrint";
+            this.mciPrint.Size = new System.Drawing.Size(113, 22);
+            this.mciPrint.Text = "Печать";
+            this.mciPrint.Click += new System.EventHandler(this.mciPrint_Click);
             // 
             // btnAdd
             // 
@@ -717,11 +787,6 @@
             this.btnRefresh.ToolTipText = "Обновить";
             this.btnRefresh.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-            // 
             // btnPrint
             // 
             this.btnPrint.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -732,11 +797,6 @@
             this.btnPrint.Text = "toolStripButton1";
             this.btnPrint.ToolTipText = "Печать";
             this.btnPrint.Click += new System.EventHandler(this.mciPrint_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
             // btnColumnVisible
             // 
@@ -750,6 +810,7 @@
             this.btnColumnVisible.Name = "btnColumnVisible";
             this.btnColumnVisible.Size = new System.Drawing.Size(32, 22);
             this.btnColumnVisible.Text = "toolStripSplitButton1";
+            this.btnColumnVisible.ToolTipText = "Видимость колонок";
             // 
             // toolStripMenuItem3
             // 
@@ -775,44 +836,27 @@
             this.toolStripMenuItem2.Size = new System.Drawing.Size(80, 22);
             this.toolStripMenuItem2.Text = "3";
             // 
-            // tabForms
+            // btnSearch
             // 
-            this.tabForms.Controls.Add(this.tabMain);
-            this.tabForms.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabForms.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
-            this.tabForms.ItemSize = new System.Drawing.Size(180, 20);
-            this.tabForms.Location = new System.Drawing.Point(0, 24);
-            this.tabForms.Name = "tabForms";
-            this.tabForms.SelectedIndex = 0;
-            this.tabForms.Size = new System.Drawing.Size(1276, 585);
-            this.tabForms.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
-            this.tabForms.TabIndex = 0;
-            this.tabForms.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.tabForms_DrawItem);
-            this.tabForms.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tabForms_MouseDown);
+            this.btnSearch.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnSearch.Image = global::Planning.Properties.Resources.find_6617;
+            this.btnSearch.ImageTransparentColor = System.Drawing.Color.White;
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(23, 22);
+            this.btnSearch.Text = "toolStripButton1";
+            this.btnSearch.ToolTipText = "Найти";
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
-            // tmUpdate
+            // btnSearchNext
             // 
-            this.tmUpdate.Tick += new System.EventHandler(this.tmUpdate_Tick);
-            // 
-            // delay_reasonsTableAdapter1
-            // 
-            this.delay_reasonsTableAdapter1.ClearBeforeFill = true;
-            // 
-            // statusStrip2
-            // 
-            this.statusStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.statusInfo});
-            this.statusStrip2.Location = new System.Drawing.Point(0, 609);
-            this.statusStrip2.Name = "statusStrip2";
-            this.statusStrip2.Size = new System.Drawing.Size(1276, 22);
-            this.statusStrip2.TabIndex = 2;
-            this.statusStrip2.Text = "statusStrip2";
-            // 
-            // statusInfo
-            // 
-            this.statusInfo.Name = "statusInfo";
-            this.statusInfo.Size = new System.Drawing.Size(118, 17);
-            this.statusInfo.Text = "toolStripStatusLabel1";
+            this.btnSearchNext.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnSearchNext.Image = global::Planning.Properties.Resources.find_next;
+            this.btnSearchNext.ImageTransparentColor = System.Drawing.Color.White;
+            this.btnSearchNext.Name = "btnSearchNext";
+            this.btnSearchNext.Size = new System.Drawing.Size(23, 22);
+            this.btnSearchNext.Text = "toolStripButton1";
+            this.btnSearchNext.ToolTipText = "Найти далее";
+            this.btnSearchNext.Click += new System.EventHandler(this.btnSearchNext_Click);
             // 
             // frmMain
             // 
@@ -841,9 +885,9 @@
             this.tbMain.ResumeLayout(false);
             this.tbMain.PerformLayout();
             this.tabForms.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.shipmentBindingSource)).EndInit();
             this.statusStrip2.ResumeLayout(false);
             this.statusStrip2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.shipmentBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -929,6 +973,10 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
         private System.Windows.Forms.StatusStrip statusStrip2;
         private System.Windows.Forms.ToolStripStatusLabel statusInfo;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripTextBox edSearch;
+        private System.Windows.Forms.ToolStripButton btnSearch;
+        private System.Windows.Forms.ToolStripButton btnSearchNext;
     }
 }
 

@@ -38,20 +38,21 @@
             this.btnOk = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.tblAttr = new System.Windows.Forms.DataGridView();
+            this.tblAttrShipment = new System.Windows.Forms.DataGridView();
             this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.LVAttrName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PLField = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.LVAttrId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PLFieldId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.LVIn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LvType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tbAttr = new System.Windows.Forms.ToolStrip();
             this.btnAdd = new System.Windows.Forms.ToolStripButton();
             this.btnEdit = new System.Windows.Forms.ToolStripButton();
             this.btnDel = new System.Windows.Forms.ToolStripButton();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tblAttr)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tblAttrShipment)).BeginInit();
             this.tbAttr.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -107,7 +108,7 @@
             // 
             // btnOk
             // 
-            this.btnOk.Location = new System.Drawing.Point(368, 435);
+            this.btnOk.Location = new System.Drawing.Point(397, 432);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
             this.btnOk.TabIndex = 2;
@@ -117,7 +118,7 @@
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(449, 435);
+            this.btnClose.Location = new System.Drawing.Point(478, 432);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
             this.btnClose.TabIndex = 2;
@@ -127,36 +128,38 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.tblAttr);
+            this.groupBox1.Controls.Add(this.tblAttrShipment);
             this.groupBox1.Controls.Add(this.tbAttr);
             this.groupBox1.Location = new System.Drawing.Point(12, 122);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(515, 307);
+            this.groupBox1.Size = new System.Drawing.Size(544, 307);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Аттрибуты";
             // 
-            // tblAttr
+            // tblAttrShipment
             // 
-            this.tblAttr.AllowUserToAddRows = false;
-            this.tblAttr.AllowUserToDeleteRows = false;
-            this.tblAttr.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.tblAttr.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.tblAttrShipment.AllowUserToAddRows = false;
+            this.tblAttrShipment.AllowUserToDeleteRows = false;
+            this.tblAttrShipment.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.tblAttrShipment.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Id,
             this.LVAttrName,
             this.PLField,
             this.LVAttrId,
             this.PLFieldId,
-            this.LVIn});
-            this.tblAttr.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tblAttr.Location = new System.Drawing.Point(3, 41);
-            this.tblAttr.Name = "tblAttr";
-            this.tblAttr.ReadOnly = true;
-            this.tblAttr.RowHeadersVisible = false;
-            this.tblAttr.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.tblAttr.Size = new System.Drawing.Size(509, 263);
-            this.tblAttr.TabIndex = 0;
-            this.tblAttr.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tblAttr_CellDoubleClick);
+            this.LVIn,
+            this.LvType});
+            this.tblAttrShipment.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tblAttrShipment.Location = new System.Drawing.Point(3, 41);
+            this.tblAttrShipment.Name = "tblAttrShipment";
+            this.tblAttrShipment.ReadOnly = true;
+            this.tblAttrShipment.RowHeadersVisible = false;
+            this.tblAttrShipment.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.tblAttrShipment.Size = new System.Drawing.Size(538, 263);
+            this.tblAttrShipment.TabIndex = 0;
+            this.tblAttrShipment.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tblAttr_CellContentClick);
+            this.tblAttrShipment.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tblAttr_CellDoubleClick);
             // 
             // Id
             // 
@@ -202,10 +205,18 @@
             // 
             // LVIn
             // 
+            this.LVIn.DataPropertyName = "lva_in";
             this.LVIn.HeaderText = "LvIn";
             this.LVIn.Name = "LVIn";
             this.LVIn.ReadOnly = true;
             this.LVIn.Visible = false;
+            // 
+            // LvType
+            // 
+            this.LvType.DataPropertyName = "lva_type";
+            this.LvType.HeaderText = "Тип аттрибута";
+            this.LvType.Name = "LvType";
+            this.LvType.ReadOnly = true;
             // 
             // tbAttr
             // 
@@ -216,7 +227,7 @@
             this.btnDel});
             this.tbAttr.Location = new System.Drawing.Point(3, 16);
             this.tbAttr.Name = "tbAttr";
-            this.tbAttr.Size = new System.Drawing.Size(509, 25);
+            this.tbAttr.Size = new System.Drawing.Size(538, 25);
             this.tbAttr.TabIndex = 1;
             this.tbAttr.Text = "toolStrip1";
             // 
@@ -263,7 +274,7 @@
             this.groupBox2.Controls.Add(this.edLvId);
             this.groupBox2.Location = new System.Drawing.Point(12, 12);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(515, 104);
+            this.groupBox2.Size = new System.Drawing.Size(541, 104);
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Данные депозитора";
@@ -272,7 +283,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(535, 466);
+            this.ClientSize = new System.Drawing.Size(565, 462);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnClose);
@@ -284,7 +295,7 @@
             this.Load += new System.EventHandler(this.DepositorEdit_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tblAttr)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tblAttrShipment)).EndInit();
             this.tbAttr.ResumeLayout(false);
             this.tbAttr.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -304,17 +315,18 @@
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.DataGridView tblAttr;
+        private System.Windows.Forms.DataGridView tblAttrShipment;
         private System.Windows.Forms.ToolStrip tbAttr;
         private System.Windows.Forms.ToolStripButton btnAdd;
         private System.Windows.Forms.ToolStripButton btnDel;
         private System.Windows.Forms.ToolStripButton btnEdit;
+        private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Id;
         private System.Windows.Forms.DataGridViewTextBoxColumn LVAttrName;
         private System.Windows.Forms.DataGridViewTextBoxColumn PLField;
         private System.Windows.Forms.DataGridViewTextBoxColumn LVAttrId;
         private System.Windows.Forms.DataGridViewTextBoxColumn PLFieldId;
         private System.Windows.Forms.DataGridViewTextBoxColumn LVIn;
-        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn LvType;
     }
 }

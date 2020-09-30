@@ -41,6 +41,11 @@ namespace Planning
             return (Value == "") ? NullValue : Value;
         }
 
+        private bool IsShpIn()
+        {
+            return _shipment.ShIn == null || _shipment.ShIn == true;
+        }
+
         public void ClearFields()
         {
             edSDate.Text = "";
@@ -224,7 +229,16 @@ namespace Planning
         private void btnOK_Click(object sender, EventArgs e)
         {
             if (CopyToShipment())
+            {
+                /*
+                if (IsShpIn())
+                {
+                    DataService.ForceMergeLVAttribute(3026);
+                }
+                */
                 DialogResult = DialogResult.OK;
+            }
+                
         }
 
         private void tbtnAdd_Click(object sender, EventArgs e)
@@ -399,7 +413,7 @@ namespace Planning
             btnEndDate.Tag = edEndDate;
             btnLeaveTime.Tag = edLeaveTime;
             btnSDate.Tag = edSDate;
-            if (_shipment.ShIn == null || _shipment.ShIn == true)
+            if (IsShpIn())
             {
                 btnAddToLV.Visible = false;
                 btnBindLV.Visible = false;

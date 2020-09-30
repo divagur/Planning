@@ -35,12 +35,14 @@
             this.cmbPLAttr = new System.Windows.Forms.ComboBox();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.cmbAttrType = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(4, 9);
+            this.label1.Location = new System.Drawing.Point(3, 36);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(88, 13);
             this.label1.TabIndex = 0;
@@ -49,7 +51,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(4, 36);
+            this.label2.Location = new System.Drawing.Point(3, 63);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(96, 13);
             this.label2.TabIndex = 0;
@@ -58,7 +60,7 @@
             // cmbLVAttr
             // 
             this.cmbLVAttr.FormattingEnabled = true;
-            this.cmbLVAttr.Location = new System.Drawing.Point(106, 6);
+            this.cmbLVAttr.Location = new System.Drawing.Point(105, 33);
             this.cmbLVAttr.Name = "cmbLVAttr";
             this.cmbLVAttr.Size = new System.Drawing.Size(262, 21);
             this.cmbLVAttr.TabIndex = 1;
@@ -66,14 +68,14 @@
             // cmbPLAttr
             // 
             this.cmbPLAttr.FormattingEnabled = true;
-            this.cmbPLAttr.Location = new System.Drawing.Point(106, 33);
+            this.cmbPLAttr.Location = new System.Drawing.Point(105, 60);
             this.cmbPLAttr.Name = "cmbPLAttr";
             this.cmbPLAttr.Size = new System.Drawing.Size(262, 21);
             this.cmbPLAttr.TabIndex = 1;
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(297, 60);
+            this.btnCancel.Location = new System.Drawing.Point(296, 87);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(71, 23);
             this.btnCancel.TabIndex = 14;
@@ -83,7 +85,7 @@
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(216, 60);
+            this.btnOK.Location = new System.Drawing.Point(215, 87);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 13;
@@ -91,11 +93,34 @@
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(3, 9);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(79, 13);
+            this.label3.TabIndex = 15;
+            this.label3.Text = "Тип аттрибута";
+            // 
+            // cmbAttrType
+            // 
+            this.cmbAttrType.FormattingEnabled = true;
+            this.cmbAttrType.Items.AddRange(new object[] {
+            "Отгрузка",
+            "Приход"});
+            this.cmbAttrType.Location = new System.Drawing.Point(105, 6);
+            this.cmbAttrType.Name = "cmbAttrType";
+            this.cmbAttrType.Size = new System.Drawing.Size(185, 21);
+            this.cmbAttrType.TabIndex = 16;
+            this.cmbAttrType.SelectedIndexChanged += new System.EventHandler(this.cmbAttrType_SelectedIndexChanged);
+            // 
             // LvAttrEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(375, 89);
+            this.ClientSize = new System.Drawing.Size(375, 115);
+            this.Controls.Add(this.cmbAttrType);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.cmbPLAttr);
@@ -121,5 +146,7 @@
         private System.Windows.Forms.ComboBox cmbPLAttr;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnOK;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ComboBox cmbAttrType;
     }
 }
