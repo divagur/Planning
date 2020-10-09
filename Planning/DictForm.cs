@@ -14,6 +14,10 @@ namespace Planning
     public partial class DictForm : Form
     {
         protected PlanningDbContext _context;
+        private IWait waitHandler;
+
+        internal IWait WaitHandler { get => waitHandler; set => waitHandler = value; }
+        
         public DictForm()
         {
             InitializeComponent();
@@ -52,11 +56,25 @@ namespace Planning
 
         }
 
+        protected void WaitBegin()
+        {
+            if (waitHandler != null)
+                waitHandler.WaitBegin();
+        }
+
+        protected void WaitEnd()
+        {
+            if (waitHandler != null)
+                waitHandler.WaitEnd();
+        }
+
         protected virtual void Save()
         {
             try
             {
+                Cursor = Cursors.AppStarting;
                 _context.SaveChanges();
+
             }
             catch (DbEntityValidationException ex)
             {
@@ -72,7 +90,10 @@ namespace Planning
                 }
                 MessageBox.Show(errorText);
             }
-
+            finally
+            {
+                Cursor = Cursors.Default;
+            }
             Populate();
         }
 

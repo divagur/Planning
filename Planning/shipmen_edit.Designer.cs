@@ -80,7 +80,7 @@
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.cbIsCourier = new System.Windows.Forms.CheckBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.gbOrders = new System.Windows.Forms.GroupBox();
             this.tblShipmentOrders = new System.Windows.Forms.DataGridView();
             this.colOrderId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colOrderType = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -107,7 +107,7 @@
             this.btnSDate = new System.Windows.Forms.Button();
             this.btnBindLV = new System.Windows.Forms.Button();
             this.gbTransport.SuspendLayout();
-            this.groupBox1.SuspendLayout();
+            this.gbOrders.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tblShipmentOrders)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.pnGetDateTime.SuspendLayout();
@@ -593,15 +593,15 @@
             this.cbIsCourier.Text = "Точка перезагруза";
             this.cbIsCourier.UseVisualStyleBackColor = true;
             // 
-            // groupBox1
+            // gbOrders
             // 
-            this.groupBox1.Controls.Add(this.tblShipmentOrders);
-            this.groupBox1.Controls.Add(this.toolStrip1);
-            this.groupBox1.Location = new System.Drawing.Point(11, 439);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(827, 214);
-            this.groupBox1.TabIndex = 14;
-            this.groupBox1.TabStop = false;
+            this.gbOrders.Controls.Add(this.tblShipmentOrders);
+            this.gbOrders.Controls.Add(this.toolStrip1);
+            this.gbOrders.Location = new System.Drawing.Point(11, 439);
+            this.gbOrders.Name = "gbOrders";
+            this.gbOrders.Size = new System.Drawing.Size(827, 214);
+            this.gbOrders.TabIndex = 14;
+            this.gbOrders.TabStop = false;
             // 
             // tblShipmentOrders
             // 
@@ -852,7 +852,7 @@
             this.Controls.Add(this.btnAddToLV);
             this.Controls.Add(this.pnGetDateTime);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.gbOrders);
             this.Controls.Add(this.cbIsCourier);
             this.Controls.Add(this.btnSDate);
             this.Controls.Add(this.btnCancel);
@@ -876,8 +876,8 @@
             this.Load += new System.EventHandler(this.shipmen_edit_Load);
             this.gbTransport.ResumeLayout(false);
             this.gbTransport.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.gbOrders.ResumeLayout(false);
+            this.gbOrders.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tblShipmentOrders)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
@@ -926,7 +926,7 @@
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.CheckBox cbIsCourier;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox gbOrders;
         private System.Windows.Forms.DataGridView tblShipmentOrders;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton tbtnAdd;

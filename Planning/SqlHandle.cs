@@ -8,13 +8,17 @@ using System.Threading.Tasks;
 
 namespace Planning
 {
+    
+
     class SqlHandle
     {
         private string _connectionString;
         private SqlConnection _connection;
         private SqlDataReader _reader;
         private SqlCommand _command;
-       
+        public static event Action<string> OnExecuteBeforeCommon;
+        public static event Action<string> OnExecuteAfterCommon;
+
         public string SqlStatement
         { get
             { return _command.CommandText; }
@@ -105,6 +109,7 @@ namespace Planning
             
             try
             {
+                OnExecuteBeforeCommon?.Invoke(SqlStatement);
                 //Если есть ридер с прошлого вызова и он не закрыт то закроем
                 if (_reader != null && !_reader.IsClosed)
                 {
@@ -118,6 +123,7 @@ namespace Planning
                     
                 else
                     _command.ExecuteNonQuery();
+                OnExecuteAfterCommon?.Invoke(SqlStatement);
             }
             catch (SqlException ex)
             {
@@ -166,5 +172,7 @@ namespace Planning
             }
             return reader;
         }
+
+        
     }
 }

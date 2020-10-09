@@ -14,6 +14,7 @@ using System.Configuration;
 using Excel = Microsoft.Office.Interop.Excel;
 namespace Planning
 {
+    
     public partial class frmMain : Form
     {
        private string CR = Environment.NewLine;
@@ -23,15 +24,27 @@ namespace Planning
 
         private int Xwid = 6;//координаты ширины по диагонали крестика
         private const int tab_margin = 5;//координаты по высоте крестика
-        
+        public WaitHandler waitCur;
         SettingsHandle settingsHandle = new SettingsHandle("Settings.xml");
         List<UserAccessItem> UserPrvlg = new List<UserAccessItem>();
-        string LVconnectionString = $"Data Source='ПОЛЬЗОВАТЕЛЬ-ПК\\SQLEXPRESS2017';Initial Catalog='Lvision';User ID='pluser'; Password = 'pluser'";
+        UserAccessItem mainFormAccess =new UserAccessItem();
         SqlConnection LVConnect;
         public frmMain()
         {
             InitializeComponent();
+            SqlHandle.OnExecuteBeforeCommon += OnSqlExecureBeforeCommon;
+            SqlHandle.OnExecuteAfterCommon += OnSqlExecureAfterCommon;
+            waitCur = new WaitHandler(this);
+        }
 
+        public void OnSqlExecureBeforeCommon(string Param)
+        {
+            this.Cursor = Cursors.AppStarting;
+        }
+
+        public void OnSqlExecureAfterCommon(string Param)
+        {
+            this.Cursor = Cursors.Default;
         }
 
         private void tblShipments_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -41,6 +54,27 @@ namespace Planning
 
         private SqlDataReader GetShipment(DateTime DateFrom, DateTime? DateTill, string ShpId, string OrdId)
         {
+            SqlHandle sql = new SqlHandle(DataService.connectionString);
+            sql.SqlStatement = "SP_PL_MainQueryP";
+            sql.Connect();
+            sql.TypeCommand = CommandType.StoredProcedure;
+            sql.IsResultSet = true;
+            sql.AddCommandParametr(new SqlParameter { ParameterName = "@From", Value = DateFrom });
+            sql.AddCommandParametr(new SqlParameter { ParameterName = "@Till", Value = DateTill });
+            sql.AddCommandParametr(new SqlParameter { ParameterName = "@ShpId", Value = ShpId });
+            sql.AddCommandParametr(new SqlParameter { ParameterName = "@OrdID", Value = OrdId });
+
+            bool success = sql.Execute();
+
+            if (!success)
+            {
+                MessageBox.Show(sql.LastError, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+            return sql.Reader;
+            
+            
+/*
             SqlDataReader reader = null;
             SqlConnection connection = new SqlConnection(DataService.connectionString);
                 if (connection.State == ConnectionState.Closed)
@@ -63,7 +97,7 @@ namespace Planning
                 string sqlText = "SP_PL_MainQueryP";
 
                 SqlCommand command = new SqlCommand(sqlText, connection);
-            command.CommandType = CommandType.StoredProcedure;
+                command.CommandType = CommandType.StoredProcedure;
 
                 command.Parameters.Add(new SqlParameter { ParameterName = "@From", Value = DateFrom });
                 command.Parameters.Add(new SqlParameter { ParameterName = "@Till", Value = DateTill });
@@ -79,12 +113,28 @@ namespace Planning
                     MessageBox.Show("Ошибка при получении данных: " + CR + ex.Message, "Ошибка", MessageBoxButtons.OK);
                 }
                 return reader;
-
+*/
             
         }
 
         private void ShipmentsLoad()
         {
+            if (mainFormAccess!=null && !mainFormAccess.IsView)
+            {
+                MessageBox.Show("Нет доступа на просмотр списка отгрузок", "Ошибка доступа", MessageBoxButtons.OK);
+                return;
+            }
+            string rowShpId = "";
+            string rowShpOrdId = "";
+            bool restoreRow = false;
+            //this.Cursor = Cursors.AppStarting;
+            if (tblShipments.CurrentCell != null)
+            {
+                rowShpId = tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colId"].Value.ToString();
+                rowShpOrdId = tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colIdNakl"].Value.ToString();
+                restoreRow = true;
+            }
+            
             tbMain.Enabled = false;
             miDicts.Enabled = false;
             var reader = GetShipment(edCurrDay.Value, null, null,null);
@@ -100,13 +150,34 @@ namespace Planning
 
             tblShipments.AutoGenerateColumns = false;
             tblShipments.DataSource = ds.Tables[0];
-
-            
+            if (restoreRow)
+                SearchBy(true, i => tblShipments.Rows[i].Cells["colId"].Value.ToString() == rowShpId && tblShipments.Rows[i].Cells["colIdNakl"].Value.ToString() == rowShpOrdId);
+           //this.Cursor = Cursors.Default;
         }
 
+        private bool SearchBy(bool FromBegin, Predicate<int> condition)
+        {
+            int startRow = FromBegin ? 0 : tblShipments.CurrentRow.Index + 1;
+          
+            for (int i = startRow; i <= tblShipments.Rows.Count - 1; i++)
+                if (condition(i))
+                {
+
+                    tblShipments.CurrentRow.Selected = false;
+                    DataGridViewCell cell = tblShipments.Rows[i].Cells["colOrderId"];
+                    tblShipments.CurrentCell = cell;
+                    tblShipments.Rows[i].Selected = true;
+
+                    return true;
+                }
+            return false;
+
+        }
         private void SearchByOrder(bool FromBegin)
         {
-            int startRow = FromBegin ? 0 : tblShipments.CurrentRow.Index+1;
+           
+            SearchBy(FromBegin, i => tblShipments.Rows[i].Cells["colOrderId"].Value != null && tblShipments.Rows[i].Cells["colOrderId"].Value.ToString() == edSearch.Text);
+            /*int startRow = FromBegin ? 0 : tblShipments.CurrentRow.Index+1;
             for (int i = startRow; i <= tblShipments.Rows.Count - 1; i++)
                 if (tblShipments.Rows[i].Cells["colOrderId"].Value != null && tblShipments.Rows[i].Cells["colOrderId"].Value.ToString() == edSearch.Text)
                 {
@@ -118,7 +189,7 @@ namespace Planning
                    
                     return;
                 }
-                    
+                   */ 
         }
 
         private void UpdateSetting()
@@ -164,8 +235,26 @@ namespace Planning
 
         private void UpdateFunctionPrvlg()
         {
-            
-            
+
+            mainFormAccess = UserPrvlg.Find(i => i.FunctionId == "MainForm");
+            if (mainFormAccess != null)
+            {
+                btnAdd.Enabled = mainFormAccess.IsAppend;
+                //btnEdit.Enabled = mainFormAccess.IsEdit;
+                btnDel.Enabled = mainFormAccess.IsDelete;
+                btnRefresh.Enabled = mainFormAccess.IsView;
+                
+            }
+            else
+            {
+                mainFormAccess = new UserAccessItem();
+                mainFormAccess.IsAppend = false;
+                mainFormAccess.IsEdit = false;
+                mainFormAccess.IsDelete = false;
+                mainFormAccess.IsView = true;
+            }
+            btnEdit.Image = mainFormAccess.IsEdit ? Properties.Resources.Edit : Properties.Resources.EditView;
+
 
             foreach (UserAccessItem item in UserPrvlg)
             {
@@ -198,9 +287,12 @@ namespace Planning
         private void LoginUser()
         {
             UpdateSetting();
-            ShipmentsLoad();
             UserPrvlg = DataService.GetPrvlg(DataService.setting.UserName);
             UpdateFunctionPrvlg();
+
+            ShipmentsLoad();
+            
+            //UpdateFunctionPrvlg();
         }
 
        private void CloseAllTabs()
@@ -461,6 +553,7 @@ namespace Planning
             shipmen_edit frmShipmentEdit = new shipmen_edit(shipment);
             frmShipmentEdit.ClearFields();
             frmShipmentEdit.Populate();
+            frmShipmentEdit.LockField(new List<string>() {"btnOK","btnCancel" }, mainFormAccess.IsEdit);
             if (frmShipmentEdit.ShowDialog() == DialogResult.OK)
             {
                 DataService.context.SaveChanges();
@@ -549,8 +642,10 @@ namespace Planning
             dict.Columns.Add(new DictColumn { Id = "Name", IsPK = false, IsVisible = true, Title = "Наименование", DataField = "name", Width = 254, DataType = SqlDbType.VarChar, Length = 20 });
             dict.Columns.Add(new DictColumn { Id = "DB", IsPK = false, IsVisible = true, Title = "База данных", DataField = "lv_base", Width = 128, DataType = SqlDbType.VarChar, Length = 128});
             dict.Columns.Add(new DictColumn { Id = "LVId", IsPK = false, IsVisible = true ,Title = "Код в LVision", DataField = "lv_id", Width = 80, DataType = SqlDbType.Int});
-
+            
             Depositors frmDepositors = new Depositors();
+            
+            frmDepositors.WaitHandler = waitCur;
             SetFormPrivalage(frmDepositors, "Depositor");       
             AddFormTab(frmDepositors, "Депозиторы");
         }
@@ -880,6 +975,7 @@ namespace Planning
 
         private void mciPrint_Click(object sender, EventArgs e)
         {
+            this.Cursor = Cursors.AppStarting;
             if (tblShipments.SelectedRows.Count <= 0)
                 return;
 
@@ -935,8 +1031,8 @@ namespace Planning
                 
 
                 range.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
-                range.EntireRow.Font.Bold = true;
-
+                range.EntireRow.Font.Bold = false;
+                range.Font.Size = 11;
                 range = excel.SelectCells(1, 1, 16, 6, 18 + printRows.Count()-1);
               
                 range.Borders.Item[Excel.XlBordersIndex.xlEdgeLeft].Weight = Excel.XlBorderWeight.xlMedium;
@@ -952,20 +1048,26 @@ namespace Planning
                 range.WrapText = true;
                 excel.SetValue(1, 1, 17 + printRows.Count() + 2, "Комментарии к отгрузке:");
 
-                
 
+                int commentRow = 17 + printRows.Count() + 2;
                 if (shipment.IsCourier == true)
                 {
-                    range = excel.SelectCells(1, 2, 17 + printRows.Count() + 2, 6, 17 + printRows.Count() + 3);
+                    range = excel.SelectCells(1, 2, commentRow, 6, commentRow+1);
                     range.Merge();
                     range.Font.Bold = true;
                     range.Font.Size = 18;
                     range.Font.Color = Color.Red;
                     range.Interior.Color= Color.Yellow;
-                    excel.SetValue(1, 2, 17 + printRows.Count() + 2, "Необходимо прикрепить комплект документов к грузу");
+                    excel.SetValue(1, 2, commentRow, "Необходимо прикрепить комплект документов к грузу");
+                    commentRow += 2;
                 }
-                else
-                    excel.SetValue(1, 2, 17 + printRows.Count() + 2, printRows[0]["ShpComment"]);
+
+                range = excel.SelectCells(1, 2, commentRow, 6, commentRow + 2);
+                range.Merge();
+                range.Font.Bold = false;
+                range.VerticalAlignment = Excel.XlVAlign.xlVAlignTop;
+                range.WrapText = true;
+                excel.SetValue(1, 2, commentRow, printRows[0]["ShpComment"]);
 
                 range = excel.SelectCells(1, 1, 17 + printRows.Count() + 2, 6, 17 + printRows.Count() + 6);
                 range.Borders.Item[Excel.XlBordersIndex.xlEdgeLeft].Weight = Excel.XlBorderWeight.xlMedium;
@@ -1014,6 +1116,7 @@ namespace Planning
                 range.Activate();
 
                 excel.Visible = true;
+                this.Cursor = Cursors.Default;
             }
 
             

@@ -87,6 +87,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdvancedCursor.cs" />
+    <Compile Include="CommonFuctions.cs" />
     <Compile Include="DbPlaning.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -492,6 +494,7 @@
       <LastGenOutput>Planing.cs</LastGenOutput>
     </Content>
     <None Include="Resources\Print.png" />
+    <None Include="Resources\EditView.png" />
     <Content Include="Resources\find_6617.png" />
     <None Include="Resources\find_next.png" />
     <Content Include="Resources\printer.png" />

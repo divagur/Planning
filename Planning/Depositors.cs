@@ -17,6 +17,7 @@ namespace Planning
         public Depositors()
         {
             InitializeComponent();
+            tblDict.AutoGenerateColumns = false;
         }
 
         void CreateEdtiForm(Depositor depositor, bool isNew)
@@ -39,6 +40,14 @@ namespace Planning
 
         protected override void Populate()
         {
+
+            WaitBegin();
+           // Cursor = Cursors.AppStarting;
+            tblDict.DataSource = _context.Depositors.ToList<Depositor>();
+            WaitEnd();
+            //Cursor = Cursors.Default;
+
+            /*
             using (SqlConnection connection = new SqlConnection(DataService.connectionString))
             {
                 if (connection.State == ConnectionState.Closed)
@@ -49,9 +58,10 @@ namespace Planning
 
                 DataSet ds = new DataSet();
                 adapter.Fill(ds);
-                tblDict.AutoGenerateColumns = false;
+                
                 tblDict.DataSource = ds.Tables[0];
             }
+            */
         }
 
         protected override void EditRow()

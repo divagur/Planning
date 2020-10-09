@@ -86,7 +86,31 @@ namespace Planning
 
         }
 
-        
+        private void LockFieldInner(Control.ControlCollection controls, List<string> filterExclusion, bool IsLock)
+        {
+            for (int i = 0; i < controls.Count; i++)
+            {
+                if (controls[i] is GroupBox)
+                    LockFieldInner((controls[i] as GroupBox).Controls, filterExclusion, IsLock);
+                if (!((controls[i] is Label) || (controls[i] is GroupBox)))
+                    if (!(filterExclusion != null ? filterExclusion.Contains(controls[i].Name) : false))
+                        controls[i].Enabled = IsLock;
+
+            }
+        }
+        public void LockField(List<string> filterExclusion,bool IsLock)
+        {
+            LockFieldInner(this.Controls, filterExclusion, IsLock);
+            /*
+            for (int i = 0; i < this.Controls.Count; i++)
+            {
+                if (!((this.Controls[i] is Label) || (this.Controls[i] is GroupBox)))
+                    if (!(filterExclusion != null ? filterExclusion.Contains(this.Controls[i].Name) : false))
+                        this.Controls[i].Enabled = IsLock;
+            
+             
+            }*/
+        }
 
 
         public void Populate()

@@ -1,0 +1,1 @@
+insert into functions(id,name) values('MainForm', 'Главная форма')

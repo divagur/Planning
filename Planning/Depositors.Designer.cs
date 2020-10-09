@@ -48,11 +48,11 @@
             this.colDB,
             this.colLvId});
             this.tblDict.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tblDict.Location = new System.Drawing.Point(0, 0);
+            this.tblDict.Location = new System.Drawing.Point(0, 25);
             this.tblDict.Name = "tblDict";
             this.tblDict.ReadOnly = true;
             this.tblDict.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.tblDict.Size = new System.Drawing.Size(1116, 435);
+            this.tblDict.Size = new System.Drawing.Size(1116, 410);
             this.tblDict.TabIndex = 7;
             // 
             // colId
@@ -65,7 +65,7 @@
             // 
             // colName
             // 
-            this.colName.DataPropertyName = "name";
+            this.colName.DataPropertyName = "Name";
             this.colName.HeaderText = "Наименование";
             this.colName.Name = "colName";
             this.colName.ReadOnly = true;
@@ -73,7 +73,7 @@
             // 
             // colDB
             // 
-            this.colDB.DataPropertyName = "lv_base";
+            this.colDB.DataPropertyName = "LvBase";
             this.colDB.HeaderText = "База данных";
             this.colDB.Name = "colDB";
             this.colDB.ReadOnly = true;
@@ -81,7 +81,7 @@
             // 
             // colLvId
             // 
-            this.colLvId.DataPropertyName = "lv_id";
+            this.colLvId.DataPropertyName = "LvId";
             this.colLvId.HeaderText = "Код в Lvision";
             this.colLvId.Name = "colLvId";
             this.colLvId.ReadOnly = true;
