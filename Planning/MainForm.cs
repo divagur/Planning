@@ -1000,7 +1000,8 @@ namespace Planning
                 //ФИО
                 excel.SetValue(1, 3, 8, printRows[0]["ShpDriverFio"]);
                 //№ машины
-                excel.SetValue(1, 3, 9, printRows[0]["ShpVehicleNumber"]);
+                string trailerNumber = printRows[0]["ShpTrailerNumber"].ToString() != "" ? "/" + printRows[0]["ShpTrailerNumber"] : "";
+                excel.SetValue(1, 3, 9, printRows[0]["ShpVehicleNumber"]+ trailerNumber);
                 //№ телефона
                 excel.SetValue(1, 3, 10, printRows[0]["ShpDriverPhone"]);
                 //№ ворот	
@@ -1087,6 +1088,11 @@ namespace Planning
                     MessageBox.Show("Не задан шаблон печати листа отгрузки", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
+                if (tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colIdNakl"].Value.ToString() == "")
+                {
+                    MessageBox.Show("Отгрузка не содержит ни одного заказа. Печать не возможна", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 string filter = "ShpId = " + tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colId"].Value.ToString()+
                                 " and OrdId = "+ tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colIdNakl"].Value.ToString();
                 DataRow[] printRows = (tblShipments.DataSource as DataTable).Select(filter);
@@ -1098,19 +1104,23 @@ namespace Planning
                 //ФИО
                 excel.SetValue(1, 2, 8, printRows[0]["ShpDriverFio"]);
                 //№ машины
-                excel.SetValue(1, 2, 9, printRows[0]["ShpVehicleNumber"]);
+                string trailerNumber = printRows[0]["ShpTrailerNumber"].ToString() != "" ? "/" + printRows[0]["ShpTrailerNumber"] : "";
+                excel.SetValue(1, 2, 9, printRows[0]["ShpVehicleNumber"]+ trailerNumber);
                 //№ телефона
                 excel.SetValue(1, 2, 10, printRows[0]["ShpDriverPhone"]);
                 //№ номер накладной
-                excel.SetValue(1, 2, 11, printRows[0]["OrdId"]);
-                //№ ворот, время постановки на ворота	
-                excel.SetValue(1, 2, 12, printRows[0]["GateName"] + "," + printRows[0]["ShpStartTime"]);
+                excel.SetValue(1, 2, 11, printRows[0]["OrdLVCode"]);
+                //№ ворот
+                excel.SetValue(1, 2, 12, printRows[0]["GateName"]);
+                //Время постановки на ворота	
+                excel.SetValue(1, 2, 13, printRows[0]["ShpStartTime"]);
                 //№ пломбы
-                excel.SetValue(1, 2, 12, printRows[0]["ShpStampNumber"]);
-                //Время окончание загрузки
-                excel.SetValue(1, 2, 14, printRows[0]["ShpEndTimePlan"]);
+                //excel.SetValue(1, 2, 12, printRows[0]["ShpStampNumber"]);
+                //Количество паллет
+                int? pallentsCount = DataService.SQLGetIntValue("select pallet_amount from shipment_orders where id = " + (int)printRows[0]["OrdID"]);
+                excel.SetValue(1, 2, 14, pallentsCount);
                 //Убыл: дата, время
-                excel.SetValue(1, 2, 16, printRows[0]["ShpEndTimeFact"]);
+                excel.SetValue(1, 2, 15, printRows[0]["ShpEndTimeFact"]);
 
                 range = excel.SelectCells(1, 1, 1, 1, 1);
                 range.Activate();

@@ -270,11 +270,11 @@ namespace Planning
 
             ShipmentOrder shipmentOrder = new ShipmentOrder();
             var frmShipmentOrderEdit = new ShipmentOrderEdit(shipmentOrder);
-
+            shipmentOrder.ShipmentId = _shipment.Id;
+            shipmentOrder.IsBinding = false;
             if (frmShipmentOrderEdit.ShowDialog() == DialogResult.OK)
             {
-                shipmentOrder.ShipmentId = _shipment.Id;
-                shipmentOrder.IsBinding = false;
+
                 _context.ShipmentOrders.Add(shipmentOrder);
                 tblShipmentOrders.DataSource = _shipment.ShipmentOrders.ToList();
             }
@@ -283,6 +283,8 @@ namespace Planning
 
         private void tbtnEdit_Click(object sender, EventArgs e)
         {
+            if (tblShipmentOrders.CurrentCell == null)
+                return;
             ShipmentOrder shipmentOrder = _context.ShipmentOrders.Find(tblShipmentOrders.Rows[tblShipmentOrders.CurrentCell.RowIndex].Cells["colId"].Value);
             var frmShipmentOrderEdit = new ShipmentOrderEdit(shipmentOrder);
             
@@ -294,6 +296,9 @@ namespace Planning
 
         private void tbtnDel_Click(object sender, EventArgs e)
         {
+            if (tblShipmentOrders.CurrentCell == null)
+                return;
+
             if (MessageBox.Show("Удалить заказ?", "Подверждение", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
                 ShipmentOrder shipmentOrder = _context.ShipmentOrders.Find(tblShipmentOrders.Rows[tblShipmentOrders.CurrentCell.RowIndex].Cells["colId"].Value);

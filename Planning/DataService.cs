@@ -230,9 +230,16 @@ namespace Planning
             }
         }
 
-        public static int? SQLGetIntValue(string SQLExpr)
+        public static int SQLGetIntValue(string SQLExpr)
         {
-
+            SqlHandle sql = new SqlHandle(DataService.connectionString);
+            sql.SqlStatement = SQLExpr;
+            sql.IsResultSet = true;
+            bool success = sql.Connect() && sql.Execute() && sql.Reader.Read();
+            if (success)
+                return sql.Reader.IsDBNull(0)?0:sql.Reader.GetSqlInt32(0).Value;
+            return 0;
+            /*
             using (IDbConnection db = new SqlConnection(connectionString))
             {
                 if (db.State == ConnectionState.Closed)
@@ -240,8 +247,10 @@ namespace Planning
                     db.Open();
                 }
                 //
-                return db.Query<int>(SQLExpr).FirstOrDefault();
-            }
+                int? result = db.Query<int>(SQLExpr).FirstOrDefault();
+                return result;
+           
+            } */
             
         }
 

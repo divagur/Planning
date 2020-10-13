@@ -259,5 +259,10 @@ namespace Planning
             MoveRow(tblOrders, tblShipmentItem);
             LockChangeType(true);
         }
+
+        private void cmbTimeSlot_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
