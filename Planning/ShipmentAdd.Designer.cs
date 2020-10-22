@@ -45,6 +45,7 @@
             this.colItemKlient = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colLVOrdId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel6 = new System.Windows.Forms.Panel();
+            this.label5 = new System.Windows.Forms.Label();
             this.cmbTimeSlot = new System.Windows.Forms.ComboBox();
             this.dtSDate = new System.Windows.Forms.DateTimePicker();
             this.label4 = new System.Windows.Forms.Label();
@@ -67,7 +68,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
             this.pnlToolBar.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel4.SuspendLayout();
@@ -208,6 +208,15 @@
             this.panel6.Size = new System.Drawing.Size(475, 117);
             this.panel6.TabIndex = 0;
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 49);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(57, 13);
+            this.label5.TabIndex = 3;
+            this.label5.Text = "Таймслот";
+            // 
             // cmbTimeSlot
             // 
             this.cmbTimeSlot.FormattingEnabled = true;
@@ -328,6 +337,7 @@
             this.tblOrders.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.tblOrders.Size = new System.Drawing.Size(546, 509);
             this.tblOrders.TabIndex = 1;
+            this.tblOrders.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tblOrders_CellContentClick);
             this.tblOrders.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tblOrders_CellDoubleClick);
             // 
             // colId
@@ -390,6 +400,7 @@
             this.btnFind.Size = new System.Drawing.Size(27, 22);
             this.btnFind.TabIndex = 6;
             this.btnFind.UseVisualStyleBackColor = true;
+            this.btnFind.Click += new System.EventHandler(this.btnFind_Click);
             // 
             // txtOrderId
             // 
@@ -397,6 +408,7 @@
             this.txtOrderId.Name = "txtOrderId";
             this.txtOrderId.Size = new System.Drawing.Size(100, 20);
             this.txtOrderId.TabIndex = 5;
+            this.txtOrderId.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtOrderId_KeyDown);
             // 
             // cmbType
             // 
@@ -445,15 +457,6 @@
             this.label1.Size = new System.Drawing.Size(63, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Депозитор";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 49);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(57, 13);
-            this.label5.TabIndex = 3;
-            this.label5.Text = "Таймслот";
             // 
             // ShipmentAdd
             // 

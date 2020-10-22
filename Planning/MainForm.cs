@@ -173,10 +173,10 @@ namespace Planning
             return false;
 
         }
-        private void SearchByOrder(bool FromBegin)
+        private bool SearchByOrder(bool FromBegin)
         {
            
-            SearchBy(FromBegin, i => tblShipments.Rows[i].Cells["colOrderId"].Value != null && tblShipments.Rows[i].Cells["colOrderId"].Value.ToString() == edSearch.Text);
+            return SearchBy(FromBegin, i => tblShipments.Rows[i].Cells["colOrderId"].Value != null && tblShipments.Rows[i].Cells["colOrderId"].Value.ToString() == edSearch.Text);
             /*int startRow = FromBegin ? 0 : tblShipments.CurrentRow.Index+1;
             for (int i = startRow; i <= tblShipments.Rows.Count - 1; i++)
                 if (tblShipments.Rows[i].Cells["colOrderId"].Value != null && tblShipments.Rows[i].Cells["colOrderId"].Value.ToString() == edSearch.Text)
@@ -536,6 +536,8 @@ namespace Planning
             {
                 DataService.AddShipmentToLV(shipment.Id);
             }
+
+            DataService.AddShipmentToLV(shipment.Id);
         }
 
         private void ShipmentRowEdit()
@@ -656,7 +658,7 @@ namespace Planning
             {
                 if (e.ColumnIndex == ((DataGridView)sender).Columns["colCopmletePct"].Index)
                 {
-
+                                          
 
                     using (
                         Brush gridBrush = new SolidBrush(this.tblShipments.GridColor),
@@ -1093,10 +1095,19 @@ namespace Planning
                     MessageBox.Show("Отгрузка не содержит ни одного заказа. Печать не возможна", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                string filter = "ShpId = " + tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colId"].Value.ToString()+
-                                " and OrdId = "+ tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colIdNakl"].Value.ToString();
+                string filter = "ShpId = " + tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colId"].Value.ToString();
+                //                +" and OrdId = "+ tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colIdNakl"].Value.ToString();
                 DataRow[] printRows = (tblShipments.DataSource as DataTable).Select(filter);
                 ExcelPrint excel = new ExcelPrint(DataService.setting.ReceiptReport);
+                string orderLVCode = "";
+                //Соберем заказы
+                for (int i = 0; i < printRows.Count(); i++)
+                {
+                    if (orderLVCode != "")
+                        orderLVCode = orderLVCode + "/";
+                    orderLVCode= orderLVCode+printRows[i]["OrdLVCode"];
+                    
+                }
                 //Прибыл по плану
                 excel.SetValue(1, 2, 6, printRows[0]["ShpDate"].ToString().Substring(0, 10) + " " + printRows[0]["SlotTime"]);
                 //Прибыл по факту
@@ -1109,7 +1120,8 @@ namespace Planning
                 //№ телефона
                 excel.SetValue(1, 2, 10, printRows[0]["ShpDriverPhone"]);
                 //№ номер накладной
-                excel.SetValue(1, 2, 11, printRows[0]["OrdLVCode"]);
+                //printRows[0]["OrdLVCode"]
+                excel.SetValue(1, 2, 11, orderLVCode);
                 //№ ворот
                 excel.SetValue(1, 2, 12, printRows[0]["GateName"]);
                 //Время постановки на ворота	
@@ -1158,14 +1170,32 @@ namespace Planning
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            SearchByOrder(true);
+            
+            if (!SearchByOrder(true))
+            {
+                SqlHandle sql = new SqlHandle(DataService.connectionString);
+                sql.Connect();
+                sql.SqlStatement = @"select s_date 
+                                    from shipments s inner join shipment_orders so on (s.id = so.shipment_id)
+                                    where so.lv_order_code = '" + edSearch.Text+"'";
+                sql.IsResultSet = true;
+                sql.Execute();
+                if (sql.Reader.HasRows)
+                {
+                    sql.Reader.Read();
+                    edCurrDay.Value = sql.Reader.GetDateTime(0).Date;
+                    SearchByOrder(true);
+                }    
+                sql.Disconnect();
+            }
         }
 
         private void edSearch_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                SearchByOrder(true);
+                //SearchByOrder(true);
+                btnSearch_Click(sender, e);
             }
         }
 

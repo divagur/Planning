@@ -225,6 +225,25 @@ namespace Planning
 
         }
 
+        private bool SearchBy(bool FromBegin, Predicate<int> condition)
+        {
+            int startRow = FromBegin ? 0 : tblOrders.CurrentRow.Index + 1;
+
+            for (int i = startRow; i <= tblOrders.Rows.Count - 1; i++)
+               if (condition(i))
+                {
+
+                    tblOrders.CurrentRow.Selected = false;
+                    DataGridViewCell cell = tblOrders.Rows[i].Cells["colId"];
+                    tblOrders.CurrentCell = cell;
+                    tblOrders.Rows[i].Selected = true;
+
+                    return true;
+                }
+            return false;
+
+        }
+
         private void btnFromShipmentAll_Click(object sender, EventArgs e)
         {
             LockChangeType(false);
@@ -263,6 +282,24 @@ namespace Planning
         private void cmbTimeSlot_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnFind_Click(object sender, EventArgs e)
+        {
+            SearchBy(true, r => tblOrders.Rows[r].Cells["colId"] != null && tblOrders.Rows[r].Cells["colId"].Value.ToString() == txtOrderId.Text);
+        }
+
+        private void tblOrders_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void txtOrderId_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                btnFind_Click(sender, e);
+            }
         }
     }
 }

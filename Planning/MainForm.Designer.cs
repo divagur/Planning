@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.menuMain = new System.Windows.Forms.MenuStrip();
             this.mtiFile = new System.Windows.Forms.ToolStripMenuItem();
             this.miSettings = new System.Windows.Forms.ToolStripMenuItem();
@@ -50,32 +50,32 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.tblShipments = new System.Windows.Forms.DataGridView();
             this.mnuContext = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.mciPrint = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.cbUpdate = new System.Windows.Forms.CheckBox();
             this.edInterval = new System.Windows.Forms.NumericUpDown();
             this.edCurrDay = new System.Windows.Forms.DateTimePicker();
             this.tbMain = new System.Windows.Forms.ToolStrip();
+            this.btnAdd = new System.Windows.Forms.ToolStripButton();
+            this.btnEdit = new System.Windows.Forms.ToolStripButton();
+            this.btnDel = new System.Windows.Forms.ToolStripButton();
+            this.btnRefresh = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnPrint = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnColumnVisible = new System.Windows.Forms.ToolStripSplitButton();
+            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.edSearch = new System.Windows.Forms.ToolStripTextBox();
+            this.btnSearch = new System.Windows.Forms.ToolStripButton();
+            this.btnSearchNext = new System.Windows.Forms.ToolStripButton();
             this.tabForms = new System.Windows.Forms.TabControl();
             this.tmUpdate = new System.Windows.Forms.Timer(this.components);
             this.delay_reasonsTableAdapter1 = new Planning.PlanningDataSetTableAdapters.delay_reasonsTableAdapter();
             this.statusStrip2 = new System.Windows.Forms.StatusStrip();
             this.statusInfo = new System.Windows.Forms.ToolStripStatusLabel();
-            this.mciPrint = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnAdd = new System.Windows.Forms.ToolStripButton();
-            this.btnEdit = new System.Windows.Forms.ToolStripButton();
-            this.btnDel = new System.Windows.Forms.ToolStripButton();
-            this.btnRefresh = new System.Windows.Forms.ToolStripButton();
-            this.btnPrint = new System.Windows.Forms.ToolStripButton();
-            this.btnColumnVisible = new System.Windows.Forms.ToolStripSplitButton();
-            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnSearch = new System.Windows.Forms.ToolStripButton();
-            this.btnSearchNext = new System.Windows.Forms.ToolStripButton();
             this.shipmentBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.UniqueKey = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -89,6 +89,7 @@
             this.colKlientName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colCopmletePct = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PrcValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDoneShare = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colComment = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colOrderComment = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -298,6 +299,7 @@
             this.colKlientName,
             this.colStatus,
             this.colCopmletePct,
+            this.PrcValue,
             this.colDoneShare,
             this.colComment,
             this.colOrderComment,
@@ -345,6 +347,14 @@
             this.mciPrint});
             this.mnuContext.Name = "mnuContext";
             this.mnuContext.Size = new System.Drawing.Size(114, 26);
+            // 
+            // mciPrint
+            // 
+            this.mciPrint.Image = global::Planning.Properties.Resources.printer;
+            this.mciPrint.Name = "mciPrint";
+            this.mciPrint.Size = new System.Drawing.Size(113, 22);
+            this.mciPrint.Text = "Печать";
+            this.mciPrint.Click += new System.EventHandler(this.mciPrint_Click);
             // 
             // panel1
             // 
@@ -418,76 +428,6 @@
             this.tbMain.TabIndex = 1;
             this.tbMain.Text = "toolStrip1";
             // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
-            // 
-            // edSearch
-            // 
-            this.edSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.edSearch.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.edSearch.Name = "edSearch";
-            this.edSearch.Size = new System.Drawing.Size(150, 25);
-            this.edSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.edSearch_KeyDown);
-            // 
-            // tabForms
-            // 
-            this.tabForms.Controls.Add(this.tabMain);
-            this.tabForms.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabForms.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
-            this.tabForms.ItemSize = new System.Drawing.Size(180, 20);
-            this.tabForms.Location = new System.Drawing.Point(0, 24);
-            this.tabForms.Name = "tabForms";
-            this.tabForms.SelectedIndex = 0;
-            this.tabForms.Size = new System.Drawing.Size(1276, 585);
-            this.tabForms.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
-            this.tabForms.TabIndex = 0;
-            this.tabForms.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.tabForms_DrawItem);
-            this.tabForms.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tabForms_MouseDown);
-            // 
-            // tmUpdate
-            // 
-            this.tmUpdate.Tick += new System.EventHandler(this.tmUpdate_Tick);
-            // 
-            // delay_reasonsTableAdapter1
-            // 
-            this.delay_reasonsTableAdapter1.ClearBeforeFill = true;
-            // 
-            // statusStrip2
-            // 
-            this.statusStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.statusInfo});
-            this.statusStrip2.Location = new System.Drawing.Point(0, 609);
-            this.statusStrip2.Name = "statusStrip2";
-            this.statusStrip2.Size = new System.Drawing.Size(1276, 22);
-            this.statusStrip2.TabIndex = 2;
-            this.statusStrip2.Text = "statusStrip2";
-            // 
-            // statusInfo
-            // 
-            this.statusInfo.Name = "statusInfo";
-            this.statusInfo.Size = new System.Drawing.Size(118, 17);
-            this.statusInfo.Text = "toolStripStatusLabel1";
-            // 
-            // mciPrint
-            // 
-            this.mciPrint.Image = global::Planning.Properties.Resources.printer;
-            this.mciPrint.Name = "mciPrint";
-            this.mciPrint.Size = new System.Drawing.Size(113, 22);
-            this.mciPrint.Text = "Печать";
-            this.mciPrint.Click += new System.EventHandler(this.mciPrint_Click);
-            // 
             // btnAdd
             // 
             this.btnAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -529,6 +469,11 @@
             this.btnRefresh.ToolTipText = "Обновить";
             this.btnRefresh.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
             // btnPrint
             // 
             this.btnPrint.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -539,6 +484,11 @@
             this.btnPrint.Text = "toolStripButton1";
             this.btnPrint.ToolTipText = "Печать";
             this.btnPrint.Click += new System.EventHandler(this.mciPrint_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
             // btnColumnVisible
             // 
@@ -578,6 +528,19 @@
             this.toolStripMenuItem2.Size = new System.Drawing.Size(80, 22);
             this.toolStripMenuItem2.Text = "3";
             // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+            // 
+            // edSearch
+            // 
+            this.edSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.edSearch.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.edSearch.Name = "edSearch";
+            this.edSearch.Size = new System.Drawing.Size(150, 25);
+            this.edSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.edSearch_KeyDown);
+            // 
             // btnSearch
             // 
             this.btnSearch.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -599,6 +562,45 @@
             this.btnSearchNext.Text = "toolStripButton1";
             this.btnSearchNext.ToolTipText = "Найти далее";
             this.btnSearchNext.Click += new System.EventHandler(this.btnSearchNext_Click);
+            // 
+            // tabForms
+            // 
+            this.tabForms.Controls.Add(this.tabMain);
+            this.tabForms.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabForms.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
+            this.tabForms.ItemSize = new System.Drawing.Size(180, 20);
+            this.tabForms.Location = new System.Drawing.Point(0, 24);
+            this.tabForms.Name = "tabForms";
+            this.tabForms.SelectedIndex = 0;
+            this.tabForms.Size = new System.Drawing.Size(1276, 585);
+            this.tabForms.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
+            this.tabForms.TabIndex = 0;
+            this.tabForms.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.tabForms_DrawItem);
+            this.tabForms.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tabForms_MouseDown);
+            // 
+            // tmUpdate
+            // 
+            this.tmUpdate.Tick += new System.EventHandler(this.tmUpdate_Tick);
+            // 
+            // delay_reasonsTableAdapter1
+            // 
+            this.delay_reasonsTableAdapter1.ClearBeforeFill = true;
+            // 
+            // statusStrip2
+            // 
+            this.statusStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.statusInfo});
+            this.statusStrip2.Location = new System.Drawing.Point(0, 609);
+            this.statusStrip2.Name = "statusStrip2";
+            this.statusStrip2.Size = new System.Drawing.Size(1276, 22);
+            this.statusStrip2.TabIndex = 2;
+            this.statusStrip2.Text = "statusStrip2";
+            // 
+            // statusInfo
+            // 
+            this.statusInfo.Name = "statusInfo";
+            this.statusInfo.Size = new System.Drawing.Size(118, 17);
+            this.statusInfo.Text = "toolStripStatusLabel1";
             // 
             // UniqueKey
             // 
@@ -680,11 +682,19 @@
             // colCopmletePct
             // 
             this.colCopmletePct.DataPropertyName = "PrcReady";
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.colCopmletePct.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.colCopmletePct.DefaultCellStyle = dataGridViewCellStyle2;
             this.colCopmletePct.HeaderText = "Собран (в %)";
             this.colCopmletePct.Name = "colCopmletePct";
             this.colCopmletePct.ReadOnly = true;
+            // 
+            // PrcValue
+            // 
+            this.PrcValue.DataPropertyName = "PrcReady";
+            this.PrcValue.HeaderText = "PrcValue";
+            this.PrcValue.Name = "PrcValue";
+            this.PrcValue.ReadOnly = true;
+            this.PrcValue.Visible = false;
             // 
             // colDoneShare
             // 
@@ -954,6 +964,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colKlientName;
         private System.Windows.Forms.DataGridViewTextBoxColumn colStatus;
         private System.Windows.Forms.DataGridViewTextBoxColumn colCopmletePct;
+        private System.Windows.Forms.DataGridViewTextBoxColumn PrcValue;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDoneShare;
         private System.Windows.Forms.DataGridViewTextBoxColumn colComment;
         private System.Windows.Forms.DataGridViewTextBoxColumn colOrderComment;
