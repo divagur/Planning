@@ -10,9 +10,11 @@
 namespace Planning
 {
     using System;
+    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    
+    using System.Linq.Expressions;
+
     public partial class PlanningDbContext : DbContext
     {
         public PlanningDbContext()
@@ -45,5 +47,30 @@ namespace Planning
         public virtual DbSet<TransportType> TransportTypes { get; set; }
         public virtual DbSet<UserGrpPrvlg> UserGrpPrvlgs { get; set; }
         public virtual DbSet<Function> Functions { get; set; }
+        /*
+        public void ReloadNavigationProperty<TEntity, TElement>(
+        this DbContext context,
+        TEntity entity,
+        Expression<Func<TEntity, ICollection<TElement>>> navigationProperty)
+        where TEntity : class
+        where TElement : class
+        {
+            context.Entry(entity).Collection<TElement>(navigationProperty).Query();
+        }
+        */
+        public void RefreshAll()
+        {
+            foreach (var entity in this.ChangeTracker.Entries())
+            {
+                entity.Reload();
+            }
+        }
+
+        public void RefreshEntity(DbEntityEntry entity)
+        {
+
+                entity.Reload();
+
+        }
     }
 }

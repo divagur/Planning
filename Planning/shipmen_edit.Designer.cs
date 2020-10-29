@@ -751,9 +751,9 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(8, 9);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(84, 13);
+            this.label5.Size = new System.Drawing.Size(145, 13);
             this.label5.TabIndex = 15;
-            this.label5.Text = "Дата создания";
+            this.label5.Text = "Ожидаемая дата прибытия";
             // 
             // pnGetDateTime
             // 
@@ -808,14 +808,14 @@
             // 
             // edSDate
             // 
-            this.edSDate.Location = new System.Drawing.Point(98, 6);
+            this.edSDate.Location = new System.Drawing.Point(155, 6);
             this.edSDate.Name = "edSDate";
             this.edSDate.Size = new System.Drawing.Size(118, 20);
             this.edSDate.TabIndex = 0;
             // 
             // btnAddToLV
             // 
-            this.btnAddToLV.Location = new System.Drawing.Point(556, 659);
+            this.btnAddToLV.Location = new System.Drawing.Point(400, 659);
             this.btnAddToLV.Name = "btnAddToLV";
             this.btnAddToLV.Size = new System.Drawing.Size(124, 23);
             this.btnAddToLV.TabIndex = 36;
@@ -826,7 +826,7 @@
             // btnSDate
             // 
             this.btnSDate.Image = global::Planning.Properties.Resources.calendar;
-            this.btnSDate.Location = new System.Drawing.Point(222, 4);
+            this.btnSDate.Location = new System.Drawing.Point(279, 4);
             this.btnSDate.Name = "btnSDate";
             this.btnSDate.Size = new System.Drawing.Size(31, 22);
             this.btnSDate.TabIndex = 1;
@@ -835,7 +835,7 @@
             // 
             // btnBindLV
             // 
-            this.btnBindLV.Location = new System.Drawing.Point(401, 659);
+            this.btnBindLV.Location = new System.Drawing.Point(530, 659);
             this.btnBindLV.Name = "btnBindLV";
             this.btnBindLV.Size = new System.Drawing.Size(150, 23);
             this.btnBindLV.TabIndex = 36;

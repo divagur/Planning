@@ -445,7 +445,7 @@ namespace Planning
             if (IsShpIn())
             {
                 btnAddToLV.Visible = false;
-                btnBindLV.Visible = false;
+                //btnBindLV.Visible = false;
             }
         }
 
@@ -495,10 +495,27 @@ namespace Planning
 
         private void btnBindLV_Click(object sender, EventArgs e)
         {
+            _context.SaveChanges();
             if (BindOrderToLV())
             {
+                
+                bool isAllBindings = true;
+                foreach (var shipmentOrder in _shipment.ShipmentOrders)
+                {
+                    _context.Entry(shipmentOrder).Reload();
+
+                    if (shipmentOrder.IsBinding == null || shipmentOrder.IsBinding == false)
+                    {
+                        MessageBox.Show($"Заказ [{shipmentOrder.OrderId} не найдет в Lvision]");
+                        isAllBindings = false;
+                    }
+                }
+                
+                _context.Entry(_shipment).Reload();
+               
                 tblShipmentOrders.DataSource = _shipment.ShipmentOrders.ToList();
-                MessageBox.Show("Все заказы привязаны к отгрузке");
+                if (isAllBindings)
+                    MessageBox.Show("Все заказы привязаны к отгрузке");
             }
         }
 

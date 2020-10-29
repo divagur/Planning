@@ -49,7 +49,7 @@ namespace Planning
 
         private void tblShipments_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
+            Clipboard.SetText(tblShipments.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
         }
 
         private SqlDataReader GetShipment(DateTime DateFrom, DateTime? DateTill, string ShpId, string OrdId)
