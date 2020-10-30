@@ -75,6 +75,7 @@ namespace Planning
         public static PlanningDbContext context;
         //public static string connectionString = @"Data Source=ПОЛЬЗОВАТЕЛЬ-ПК\SQLEXPRESS2017;Initial Catalog=Planning;User ID=SYSADM; Password = SYSADM";
         public static string connectionString = "";
+        public static string entityConnectionString = "";
         public static Dictionary<string, DictInfo> Dicts = new Dictionary<string, DictInfo>();
         public static Settings setting = new Settings();
         //public static SqlConnectionStringBuilder connectionString = new SqlConnectionStringBuilder();
@@ -294,7 +295,10 @@ namespace Planning
             return entityBuilder.ToString();
         }
 
-
+        public static void InitContext()
+        {
+            context = new PlanningDbContext(entityConnectionString);
+        }
         public static List<UserAccessItem> GetPrvlg(string UserLogin)
         {
             

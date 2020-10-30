@@ -207,9 +207,10 @@ namespace Planning
                 DataService.setting.BaseName, 
                 DataService.setting.UserName, 
                 DataService.setting.Password, DataService.setting.IsWnd);
+            DataService.entityConnectionString = DataService.GetEntityConnectionString(DataService.connectionString);
             //$"Data Source={DataService.setting.ServerName};Initial Catalog={DataService.setting.BaseName};Integrated Security=true;User ID={DataService.setting.UserName}; Password = {DataService.setting.Password}";
-            DataService.context = new PlanningDbContext(DataService.GetEntityConnectionString(DataService.connectionString));
-            
+            //DataService.context = new PlanningDbContext(DataService.entityConnectionString);
+            DataService.InitContext();
             
         }
 
@@ -544,7 +545,7 @@ namespace Planning
         {
             if (tblShipments.SelectedRows.Count <= 0)
                 return;
-
+            DataService.InitContext();
             Shipment shipment = DataService.context.Shipments.Find(tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colId"].Value);
             ShipmentEdit(shipment);
             ShipmentsLoad();
@@ -886,6 +887,7 @@ namespace Planning
         private void miDictUserGroup_Click(object sender, EventArgs e)
         {
             var frmUserGroups = new UserGroups();
+            
             SetFormPrivalage(frmUserGroups, "UserGrp");
             AddFormTab(frmUserGroups, "Группы пользователей");
         }

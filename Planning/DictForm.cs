@@ -21,6 +21,7 @@ namespace Planning
         public DictForm()
         {
             InitializeComponent();
+            DataService.InitContext();
             _context = DataService.context;
         }
 
