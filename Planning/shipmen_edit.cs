@@ -131,8 +131,9 @@ namespace Planning
                 cmbGate.Items.Add(g.Name);
 
             cmbTimeSlot.Items.Clear();
-            foreach (var ts in _context.TimeSlots.ToList())
-            cmbTimeSlot.Items.Add(ts.SlotTime.ToString());
+            foreach (var ts in _context.TimeSlots.OrderBy(t => t.SlotTime).ToList())
+                cmbTimeSlot.Items.Add(ts.SlotTime.ToString());
+            
 
             cmbTransportCompany.Items.Clear();
             foreach (var tc in _context.TransportCompanies.ToList())
