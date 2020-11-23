@@ -18,6 +18,7 @@ namespace Planning
         const int WM_LBUTTONDOWN = 0x201;
 
         Shipment _shipment;
+        Movement _movement;
         PlanningDbContext _context;
         DataSet ds;
         DictSimple _dict;
@@ -25,6 +26,7 @@ namespace Planning
         SqlCommandBuilder commandBuilder;
         string sql = "";
         bool getCalendarTime;
+        bool IsShipment;
 
         protected override void WndProc(ref Message m)
         {
@@ -115,13 +117,6 @@ namespace Planning
 
         public void Populate()
         {
-            /*
-            DataService.PopulateFromList(DataService.GetDictAll("Причины_задержки"), cmbDelayReasons);
-            DataService.PopulateFromList(DataService.GetDictAll("Ворота"), cmbGate);
-            DataService.PopulateFromList(DataService.GetDictAll("ТаймСлоты"), cmbTimeSlot);
-            */
-
-
             cmbDelayReasons.Items.Clear();
             foreach (var dr in _context.DelayReasons.ToList())
                 cmbDelayReasons.Items.Add(dr.Name);
@@ -142,39 +137,61 @@ namespace Planning
             cmbTransportType.Items.Clear();
             foreach (var tt in _context.TransportTypes.ToList())
                 cmbTransportType.Items.Add(tt.Name);
+            if (IsShipment)
+            {
+                edSDate.Text = _shipment.SDate == null ? DateTime.Now.ToShortDateString() : _shipment.SDate.Value.ToShortDateString();
+                edShipmentComment.Text = _shipment.SComment;
+                cmbDelayReasons.Text = DataService.GetDictNameById("Причины_задержки", _shipment.DelayReasonsId);
+                edDelayComment.Text = _shipment.DelayComment;
+                cbIsCourier.Checked = _shipment.IsCourier == null ? false : (bool)_shipment.IsCourier;
+                edSubmissionTime.Text = _shipment.SubmissionTime.ToString();
+                edStartTime.Text = _shipment.StartTime.ToString();
+                edEndDate.Text = _shipment.EndTime.ToString();
+                edLeaveTime.Text = _shipment.LeaveTime.ToString();
+                edDriverFIO.Text = _shipment.DriverFio;
+                edDriverPhone.Text = _shipment.DriverPhone;
+                edForwarderFIO.Text = _shipment.ForwarderFio;
+                edVehicleNumber.Text = _shipment.VehicleNumber;
+                edTrailerNumber.Text = _shipment.TrailerNumber;
+                edStamp.Text = _shipment.StampNumber;
+                edAttorneyNumber.Text = _shipment.AttorneyNumber;
+                edAttorneyDate.Text = _shipment.AttorneyDate.ToString();
+                edAttorneyIssued.Text = _shipment.AttorneyIssued;
+                cmbGate.Text = DataService.GetDictNameById("Ворота", _shipment.GateId);
+                cmbTimeSlot.Text = _shipment.TimeSlot == null ? "" : _shipment.TimeSlot.SlotTime.ToString();//DataService.GetDictValueById("ТаймСлоты","slot_time", _shipment.TimeSlotId);
+                                                                                                            //cbIsCourier.Checked = (bool)_shipment.IsCourier;
+                tblShipmentOrders.AutoGenerateColumns = false;
+                tblShipmentOrders.DataSource = _shipment.ShipmentOrders.ToList();
+                cmbTransportCompany.Text = DataService.GetDictNameById("ТК", _shipment.TransportCompanyId);
+                cmbTransportType.Text = DataService.GetDictNameById("Типы_транспорта", _shipment.TransportTypeId);
 
-            edSDate.Text = _shipment.SDate ==null?DateTime.Now.ToShortDateString():_shipment.SDate.Value.ToShortDateString();
-            edShipmentComment.Text = _shipment.SComment;
-            cmbDelayReasons.Text = DataService.GetDictNameById("Причины_задержки", _shipment.DelayReasonsId);
-            edDelayComment.Text = _shipment.DelayComment;
-            cbIsCourier.Checked = _shipment.IsCourier == null?false:(bool)_shipment.IsCourier;
-            edSubmissionTime.Text = _shipment.SubmissionTime.ToString();
-            edStartTime.Text = _shipment.StartTime.ToString();
-            edEndDate.Text = _shipment.EndTime.ToString();
-            edLeaveTime.Text = _shipment.LeaveTime.ToString();
-            edDriverFIO.Text = _shipment.DriverFio;
-            edDriverPhone.Text = _shipment.DriverPhone;
-            edForwarderFIO.Text = _shipment.ForwarderFio;
-            edVehicleNumber.Text = _shipment.VehicleNumber;
-            edTrailerNumber.Text = _shipment.TrailerNumber;
-            edStamp.Text = _shipment.StampNumber;
-            edAttorneyNumber.Text = _shipment.AttorneyNumber;
-            edAttorneyDate.Text = _shipment.AttorneyDate.ToString();
-            edAttorneyIssued.Text = _shipment.AttorneyIssued;
-            cmbGate.Text = DataService.GetDictNameById("Ворота",_shipment.GateId);
-            cmbTimeSlot.Text = _shipment.TimeSlot==null?"":_shipment.TimeSlot.SlotTime.ToString();//DataService.GetDictValueById("ТаймСлоты","slot_time", _shipment.TimeSlotId);
-            //cbIsCourier.Checked = (bool)_shipment.IsCourier;
-            tblShipmentOrders.AutoGenerateColumns = false;
-            tblShipmentOrders.DataSource = _shipment.ShipmentOrders.ToList();
-            cmbTransportCompany.Text = DataService.GetDictNameById("ТК", _shipment.TransportCompanyId);
-            cmbTransportType.Text = DataService.GetDictNameById("Типы_транспорта", _shipment.TransportTypeId);
+                DateTime specTime;
+                if (DateTime.TryParse(_shipment.SpecialTime.ToString(), out specTime))
+                    dtSpecialTime.Value = specTime;
 
-            DateTime specTime;
-            if (DateTime.TryParse(_shipment.SpecialTime.ToString(),out specTime))
-                dtSpecialTime.Value = specTime;
+                dtSpecialCond.Visible = cbSpecCondition.Checked;
+                //PopulateOrders();
 
-            dtSpecialCond.Visible = cbSpecCondition.Checked;
-            //PopulateOrders();
+            }
+            else
+            {
+                edSDate.Text = _movement.MDate==null?DateTime.Now.ToShortDateString(): _movement.MDate.ToShortDateString();
+                edShipmentComment.Text = _movement.Comment;
+                cmbDelayReasons.Text = DataService.GetDictNameById("Причины_задержки", _movement.DelayReasonsId);
+                edDelayComment.Text = _movement.DelayComment;
+                edDriverFIO.Text = _movement.Performer;
+                cmbTimeSlot.Text = _movement.TimeSlots == null ? "" : _movement.TimeSlots.SlotTime.ToString();
+                tblShipmentOrders.AutoGenerateColumns = false;
+                tblShipmentOrders.DataSource = _movement.MovementItems.ToList();
+
+
+                DateTime specTime;
+                if (DateTime.TryParse(_movement.SpecialTime.ToString(), out specTime))
+                    dtSpecialTime.Value = specTime;
+
+                dtSpecialCond.Visible = cbSpecCondition.Checked;
+
+            }
 
         }
 
@@ -191,7 +208,7 @@ namespace Planning
             return true;
         }
 
-        private DateTime? GetDate(TextBox dateControl)
+        private DateTime? GetNullableDate(TextBox dateControl)
         {
             DateTime date;
             if (dateControl.Text!="" && !DateTime.TryParse(dateControl.Text, out date))
@@ -203,38 +220,85 @@ namespace Planning
             return dateControl.Text == ""?(DateTime?)null:Convert.ToDateTime(dateControl.Text);
         }
 
+        private DateTime GetDate(TextBox dateControl)
+        {
+            DateTime date;
+            if (dateControl.Text != "" && !DateTime.TryParse(dateControl.Text, out date))
+            {
+                MessageBox.Show("Не верный формат даты", "Ошибка сохранения даты");
+                dateControl.Focus();
+                return DateTime.Now;
+            }
+            return dateControl.Text == "" ? DateTime.Now : Convert.ToDateTime(dateControl.Text);
+        }
+
         bool CopyToShipment()
         {
-            bool success = IsValidDate(edSDate) && IsValidDate(edSubmissionTime) && IsValidDate(edStartTime) && IsValidDate(edEndDate) && IsValidDate(edLeaveTime);
-            if (!success)
-                return false;
+            if (IsShipment)
+            {
+                bool success = IsValidDate(edSDate) && IsValidDate(edSubmissionTime) && IsValidDate(edStartTime) && IsValidDate(edEndDate) && IsValidDate(edLeaveTime);
+                if (!success)
+                    return false;
 
-            //cbTransportCompany.Text = "";
-            _shipment.SDate = GetDate(edSDate);
-            _shipment.SComment = edShipmentComment.Text;
-            _shipment.DelayReasonsId = DataService.GetDictIdByName("Причины_задержки", cmbDelayReasons.Text);//Convert.ToInt32(IsNull(cmbDelayReasons.Text, "0"));
-            _shipment.TimeSlotId = cbSpecCondition.Checked?(int?)null:DataService.GetDictIdByCondition("ТаймСлоты", $"slot_time='{cmbTimeSlot.Text}'");
-            _shipment.SpecialTime = cbSpecCondition.Checked ? TimeSpan.Parse(dtSpecialCond.Value.ToShortTimeString()):(TimeSpan?)null;
-            _shipment.DelayComment = edDelayComment.Text;
-            _shipment.IsCourier = cbIsCourier.Checked;
-            _shipment.SubmissionTime = GetDate(edSubmissionTime);
-            _shipment.StartTime = GetDate(edStartTime);
-            _shipment.EndTime = GetDate(edEndDate);
-            _shipment.LeaveTime = GetDate(edLeaveTime);
-            _shipment.DriverFio = edDriverFIO.Text;
-            _shipment.DriverPhone = edDriverPhone.Text;
-            _shipment.ForwarderFio = edForwarderFIO.Text;
-            _shipment.VehicleNumber = edVehicleNumber.Text;
-            _shipment.TrailerNumber = edTrailerNumber.Text;
-            _shipment.StampNumber = edStamp.Text;
-            _shipment.AttorneyNumber = edAttorneyNumber.Text;
-            _shipment.AttorneyDate = GetDate(edAttorneyDate);
-            _shipment.AttorneyIssued = edAttorneyIssued.Text;
-            _shipment.GateId = DataService.GetDictIdByName("Ворота", cmbGate.Text);
-            _shipment.TransportCompanyId = DataService.GetDictIdByName("ТК", cmbTransportCompany.Text);
-            _shipment.TransportTypeId = DataService.GetDictIdByName("Типы_транспорта", cmbTransportType.Text);
-            // _shipment.TimeSlotId =Convert.ToInt32(IsNull(cmbTimeSlot.Text,null));
-            return true;
+                //cbTransportCompany.Text = "";
+                _shipment.SDate = GetNullableDate(edSDate);
+                _shipment.SComment = edShipmentComment.Text;
+                _shipment.DelayReasonsId = DataService.GetDictIdByName("Причины_задержки", cmbDelayReasons.Text);//Convert.ToInt32(IsNull(cmbDelayReasons.Text, "0"));
+                _shipment.TimeSlotId = cbSpecCondition.Checked?(int?)null:DataService.GetDictIdByCondition("ТаймСлоты", $"slot_time='{cmbTimeSlot.Text}'");
+                _shipment.SpecialTime = cbSpecCondition.Checked ? TimeSpan.Parse(dtSpecialCond.Value.ToShortTimeString()):(TimeSpan?)null;
+                _shipment.DelayComment = edDelayComment.Text;
+                _shipment.IsCourier = cbIsCourier.Checked;
+                _shipment.SubmissionTime = GetNullableDate(edSubmissionTime);
+                _shipment.StartTime = GetNullableDate(edStartTime);
+                _shipment.EndTime = GetNullableDate(edEndDate);
+                _shipment.LeaveTime = GetNullableDate(edLeaveTime);
+                _shipment.DriverFio = edDriverFIO.Text;
+                _shipment.DriverPhone = edDriverPhone.Text;
+                _shipment.ForwarderFio = edForwarderFIO.Text;
+                _shipment.VehicleNumber = edVehicleNumber.Text;
+                _shipment.TrailerNumber = edTrailerNumber.Text;
+                _shipment.StampNumber = edStamp.Text;
+                _shipment.AttorneyNumber = edAttorneyNumber.Text;
+                _shipment.AttorneyDate = GetNullableDate(edAttorneyDate);
+                _shipment.AttorneyIssued = edAttorneyIssued.Text;
+                _shipment.GateId = DataService.GetDictIdByName("Ворота", cmbGate.Text);
+                _shipment.TransportCompanyId = DataService.GetDictIdByName("ТК", cmbTransportCompany.Text);
+                _shipment.TransportTypeId = DataService.GetDictIdByName("Типы_транспорта", cmbTransportType.Text);
+                // _shipment.TimeSlotId =Convert.ToInt32(IsNull(cmbTimeSlot.Text,null));
+                return true;
+            }
+            else
+            {
+                /*
+                 edSDate.Text = _movement.MDate==null?DateTime.Now.ToShortDateString(): _movement.MDate.ToShortDateString();
+                edShipmentComment.Text = _movement.Comment;
+                cmbDelayReasons.Text = DataService.GetDictNameById("Причины_задержки", _movement.DelayReasonsId);
+                edDelayComment.Text = _movement.DelayComment;
+                edDriverFIO.Text = _movement.Performer;
+                cmbTimeSlot.Text = _movement.TimeSlots == null ? "" : _movement.TimeSlots.SlotTime.ToString();
+                tblShipmentOrders.AutoGenerateColumns = false;
+                tblShipmentOrders.DataSource = _movement.MovementItems.ToList();
+
+
+                DateTime specTime;
+                if (DateTime.TryParse(_movement.SpecialTime.ToString(), out specTime))
+                    dtSpecialTime.Value = specTime;
+
+                dtSpecialCond.Visible = cbSpecCondition.Checked;
+                 */
+
+                bool success = IsValidDate(edSDate);
+                if (!success)
+                    return false;
+                _movement.MDate = GetDate(edSDate);
+                _movement.Comment = edShipmentComment.Text;
+                _movement.DelayComment = edDelayComment.Text;
+                _movement.DelayReasonsId = DataService.GetDictIdByName("Причины_задержки", cmbDelayReasons.Text);
+                _movement.Performer = edDriverFIO.Text;
+                _movement.TimeSlotId = cbSpecCondition.Checked ? (int?)null : DataService.GetDictIdByCondition("ТаймСлоты", $"slot_time='{cmbTimeSlot.Text}'");
+                _movement.SpecialTime = cbSpecCondition.Checked ? TimeSpan.Parse(dtSpecialCond.Value.ToShortTimeString()) : (TimeSpan?)null;
+            }
+            return false;
         }
         public shipmen_edit(Shipment shipment)
         {
@@ -243,6 +307,20 @@ namespace Planning
 
             _context = DataService.context;
             _shipment = shipment;
+            IsShipment = true;
+            gbMovementItem.Visible = false;
+        }
+
+        public shipmen_edit(Movement movement)
+        {
+            InitializeComponent();
+            _context = DataService.context;
+            _movement = movement;
+            IsShipment = false;
+            gbOrders.Visible = false;
+            btnAddToLV.Visible = false;
+            btnBindLV.Visible = false;
+
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -255,12 +333,6 @@ namespace Planning
         {
             if (CopyToShipment())
             {
-                /*
-                if (IsShpIn())
-                {
-                    DataService.ForceMergeLVAttribute(3026);
-                }
-                */
                 DialogResult = DialogResult.OK;
             }
                 

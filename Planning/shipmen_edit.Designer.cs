@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(shipmen_edit));
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -106,11 +107,24 @@
             this.btnAddToLV = new System.Windows.Forms.Button();
             this.btnSDate = new System.Windows.Forms.Button();
             this.btnBindLV = new System.Windows.Forms.Button();
+            this.gbMovementItem = new System.Windows.Forms.GroupBox();
+            this.toolStrip2 = new System.Windows.Forms.ToolStrip();
+            this.tbtnMoveItemEdit = new System.Windows.Forms.ToolStripButton();
+            this.tblMovementItem = new System.Windows.Forms.DataGridView();
+            this.colMvId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMvStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMvExpectedDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMvKlient = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMvEnterDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMvDepositor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gbTransport.SuspendLayout();
             this.gbOrders.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tblShipmentOrders)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.pnGetDateTime.SuspendLayout();
+            this.gbMovementItem.SuspendLayout();
+            this.toolStrip2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tblMovementItem)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -843,11 +857,105 @@
             this.btnBindLV.UseVisualStyleBackColor = true;
             this.btnBindLV.Click += new System.EventHandler(this.btnBindLV_Click);
             // 
+            // gbMovementItem
+            // 
+            this.gbMovementItem.Controls.Add(this.tblMovementItem);
+            this.gbMovementItem.Controls.Add(this.toolStrip2);
+            this.gbMovementItem.Location = new System.Drawing.Point(11, 439);
+            this.gbMovementItem.Name = "gbMovementItem";
+            this.gbMovementItem.Size = new System.Drawing.Size(827, 214);
+            this.gbMovementItem.TabIndex = 37;
+            this.gbMovementItem.TabStop = false;
+            // 
+            // toolStrip2
+            // 
+            this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tbtnMoveItemEdit});
+            this.toolStrip2.Location = new System.Drawing.Point(3, 16);
+            this.toolStrip2.Name = "toolStrip2";
+            this.toolStrip2.Size = new System.Drawing.Size(821, 25);
+            this.toolStrip2.TabIndex = 0;
+            this.toolStrip2.Text = "toolStrip2";
+            // 
+            // tbtnMoveItemEdit
+            // 
+            this.tbtnMoveItemEdit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbtnMoveItemEdit.Image = global::Planning.Properties.Resources.Edit;
+            this.tbtnMoveItemEdit.ImageTransparentColor = System.Drawing.Color.White;
+            this.tbtnMoveItemEdit.Name = "tbtnMoveItemEdit";
+            this.tbtnMoveItemEdit.Size = new System.Drawing.Size(23, 22);
+            this.tbtnMoveItemEdit.Text = "toolStripButton1";
+            // 
+            // tblMovementItem
+            // 
+            this.tblMovementItem.AllowUserToAddRows = false;
+            this.tblMovementItem.AllowUserToDeleteRows = false;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.tblMovementItem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.tblMovementItem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.tblMovementItem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colMvId,
+            this.colMvStatus,
+            this.colMvExpectedDate,
+            this.colMvKlient,
+            this.colMvEnterDate,
+            this.colMvDepositor});
+            this.tblMovementItem.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tblMovementItem.Location = new System.Drawing.Point(3, 41);
+            this.tblMovementItem.Name = "tblMovementItem";
+            this.tblMovementItem.ReadOnly = true;
+            this.tblMovementItem.Size = new System.Drawing.Size(821, 170);
+            this.tblMovementItem.TabIndex = 1;
+            // 
+            // colMvId
+            // 
+            this.colMvId.HeaderText = "Код";
+            this.colMvId.Name = "colMvId";
+            this.colMvId.ReadOnly = true;
+            // 
+            // colMvStatus
+            // 
+            this.colMvStatus.HeaderText = "Статус";
+            this.colMvStatus.Name = "colMvStatus";
+            this.colMvStatus.ReadOnly = true;
+            // 
+            // colMvExpectedDate
+            // 
+            this.colMvExpectedDate.HeaderText = "Ожидаемая дата";
+            this.colMvExpectedDate.Name = "colMvExpectedDate";
+            this.colMvExpectedDate.ReadOnly = true;
+            // 
+            // colMvKlient
+            // 
+            this.colMvKlient.HeaderText = "Клиент";
+            this.colMvKlient.Name = "colMvKlient";
+            this.colMvKlient.ReadOnly = true;
+            // 
+            // colMvEnterDate
+            // 
+            this.colMvEnterDate.HeaderText = "Дата ввода";
+            this.colMvEnterDate.Name = "colMvEnterDate";
+            this.colMvEnterDate.ReadOnly = true;
+            // 
+            // colMvDepositor
+            // 
+            this.colMvDepositor.HeaderText = "Депозитор";
+            this.colMvDepositor.Name = "colMvDepositor";
+            this.colMvDepositor.ReadOnly = true;
+            this.colMvDepositor.Width = 200;
+            // 
             // shipmen_edit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(847, 694);
+            this.ClientSize = new System.Drawing.Size(847, 688);
+            this.Controls.Add(this.gbMovementItem);
             this.Controls.Add(this.btnBindLV);
             this.Controls.Add(this.btnAddToLV);
             this.Controls.Add(this.pnGetDateTime);
@@ -882,6 +990,11 @@
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.pnGetDateTime.ResumeLayout(false);
+            this.gbMovementItem.ResumeLayout(false);
+            this.gbMovementItem.PerformLayout();
+            this.toolStrip2.ResumeLayout(false);
+            this.toolStrip2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tblMovementItem)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -966,5 +1079,15 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colShipmentId;
         private System.Windows.Forms.ComboBox cmbTransportType;
         private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.GroupBox gbMovementItem;
+        private System.Windows.Forms.DataGridView tblMovementItem;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colMvId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colMvStatus;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colMvExpectedDate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colMvKlient;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colMvEnterDate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colMvDepositor;
+        private System.Windows.Forms.ToolStrip toolStrip2;
+        private System.Windows.Forms.ToolStripButton tbtnMoveItemEdit;
     }
 }

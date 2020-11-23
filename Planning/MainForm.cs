@@ -546,27 +546,45 @@ namespace Planning
             if (tblShipments.SelectedRows.Count <= 0)
                 return;
             DataService.InitContext();
-            Shipment shipment = DataService.context.Shipments.Find(tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colId"].Value);
-            ShipmentEdit(shipment);
+            ShipmentAddResult shipmentAddResult = new ShipmentAddResult();
+            if (tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colDirection"].Value.ToString()!="перем")
+            {
+                shipmentAddResult.Result = DataService.context.Shipments.Find(tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colId"].Value);
+            }
+            else
+            {
+                shipmentAddResult.Result = DataService.context.Movements.Find(tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colId"].Value);
+            }
+            
+            ShipmentEdit(shipmentAddResult);
             ShipmentsLoad();
         }
-        private void ShipmentEdit(Shipment shipment)
+        private void ShipmentEdit(ShipmentAddResult shipmentAddResult)
         {
-            
-            shipmen_edit frmShipmentEdit = new shipmen_edit(shipment);
+            shipmen_edit frmShipmentEdit;
+            if (shipmentAddResult.IsShipment)
+                frmShipmentEdit = new shipmen_edit((Shipment)shipmentAddResult.Result);
+            else
+                frmShipmentEdit = new shipmen_edit((Movement)shipmentAddResult.Result);
             frmShipmentEdit.ClearFields();
             frmShipmentEdit.Populate();
             frmShipmentEdit.LockField(new List<string>() {"btnOK","btnCancel" }, mainFormAccess.IsEdit);
             if (frmShipmentEdit.ShowDialog() == DialogResult.OK)
             {
                 DataService.context.SaveChanges();
-                if (shipment.ShIn == true)
+                if (shipmentAddResult.IsShipment)
                 {
-                    DataService.ForceMergeLVAttribute(shipment.Id);
-                }
-                if (shipment.IsAddLv == true)
-                {
-                    AddShToLV(shipment);
+                    Shipment shipment = (Shipment)shipmentAddResult.Result;
+
+                    if (shipment.ShIn == true)
+                    {
+                        DataService.ForceMergeLVAttribute(shipment.Id);
+                    }
+                    if (shipment.IsAddLv == true)
+                    {
+                        AddShToLV(shipment);
+                    }
+
                 }
 
                 tblShipments.Refresh();
@@ -583,20 +601,20 @@ namespace Planning
                 DataService.Add(shipment);
             }
             */
-            
-            Shipment shipment = new Shipment();
-            ShipmentAdd frmShipmentAdd = new ShipmentAdd(shipment);
+            ShipmentAddResult shipmentAddResult = new ShipmentAddResult();
+           // Shipment shipment = new Shipment();
+            ShipmentAdd frmShipmentAdd = new ShipmentAdd(shipmentAddResult);
             DialogResult result = frmShipmentAdd.ShowDialog();
             if (result == DialogResult.OK || result == DialogResult.Retry)
             {
-                DataService.context.Shipments.Add(shipment);
-                DataService.context.SaveChanges();
+                //DataService.context.Shipments.Add(shipment);
+                //DataService.context.SaveChanges();
                 //AddShToLV(shipment);
 
-
+                
                 if (result == DialogResult.Retry)
                 {
-                    ShipmentEdit(shipment);
+                    ShipmentEdit(shipmentAddResult);
                 }
                 ShipmentsLoad();
             }

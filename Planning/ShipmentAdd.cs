@@ -19,6 +19,8 @@ namespace Planning
         SqlCommandBuilder commandBuilder;
         PlanningDbContext _context;
         Shipment _shipment;
+        Movement _movement;
+        ShipmentAddResult _shipmentAddResult;
         List<string> SelectedId;
         bool Locked;
 
@@ -29,11 +31,12 @@ namespace Planning
             cmbType.Enabled = !Lock;
             
         }
-        public ShipmentAdd(Shipment shipment)
+        public ShipmentAdd(ShipmentAddResult shipmentAddResult)
         {
             InitializeComponent();
             _context = DataService.context;
-            _shipment = shipment;
+            //_shipment = shipment;
+            _shipmentAddResult = shipmentAddResult;
             SelectedId = new List<string>();
         }
         private void PopulateList()
@@ -52,7 +55,7 @@ namespace Planning
         private void PopulateOrders(/*int DepositorLVId, int Type*/)
         {
             int? DepositorLVId = DataService.GetDictIdByName("Депозиторы", cmbDepositor.Text);
-            int Type = cmbType.SelectedIndex;
+            int? Type = cmbType.SelectedIndex<2?(int?)cmbType.SelectedIndex: null;
 
             using (SqlConnection connection = new SqlConnection(DataService.connectionString))
             {
@@ -83,43 +86,7 @@ namespace Planning
                         tblOrders.Rows[Row].Cells[4].Value = reader.GetInt32(0);
                     }
                 }
-                //string whereEx = ""; 
-                /*
-                                if (Type == 0)
-                                {
-
-                                    //whereEx = SelectedId.Count > 0 ? $" and ord_Code not in ({string.Join(",",SelectedId.ToArray())}) " : "";
-                                    sqlText = @"select distinct ord_ID, ord_Code LVCode, msg_Greek LVStatus, ord_ExpShipDate ExpDate, cmp_ShortName Company
-                                        from dbo.LV_Order with(nolock)
-                                        left join dbo.LV_Customer with(nolock) on cus_ID = ord_CustomerID
-                                        left join dbo.LV_Company with (nolock) on cmp_ID = cus_CompanyID
-                                        left join dbo.LV_ProgressStatus with(nolock) on pst_ID = ord_StatusID
-                                        left join dbo.LV_Messages with(nolock) on msg_code = pst_MessageCode and msg_languageID = 4
-                                        where ord_StatusID not in (3, 4) ";
-                                }
-                                else if (Type == 1)
-                                {
-
-                                    //whereEx = SelectedId.Count > 0 ? $" and rct_Code not in ({string.Join(",", SelectedId.Select(n=>"'"+n+"'").ToArray())}) " : "";
-                                    sqlText = @"select distinct rct_ID, rct_Code LVCode, msg_Greek LVStatus, rct_ExpectedDate ExpDate, cmp_ShortName Company
-                                        from dbo.LV_Receipt with(nolock)
-                                        left join dbo.LV_Supplier with(nolock) on spl_ID = rct_SupplierID
-                                        left join dbo.LV_Company with (nolock) on cmp_ID = spl_CompanyID
-                                        left join dbo.LV_ProgressStatus with(nolock) on pst_ID = rct_ProgressID
-                                        left join dbo.LV_Messages with(nolock) on msg_code = pst_MessageCode and msg_languageID = 4
-                                        where rct_ProgressID not in (3, 4) ";
-                                    //and rct_DepositorID = 3
-                                }
-                           */
-/*                
-                adapter = new SqlDataAdapter(sqlText, connection);
                 
-                ds = new DataSet();
-                ds.Tables.Add();
-                ds.Tables[0].Load(reader);
-                tblOrders.AutoGenerateColumns = false;
-                tblOrders.DataSource = ds.Tables[0];
-                */
             }
         }
         private void MoveRow(DataGridView TableSource, DataGridView TableTarged)
@@ -136,35 +103,53 @@ namespace Planning
             }
             
             
-                /*
-            TableTarged.Rows.Add(TableSource.Rows[CurrentRow].Cells[ColId].Value,
-                TableSource.Rows[CurrentRow].Cells["colState"].Value,
-                TableSource.Rows[CurrentRow].Cells["colDate"].Value,
-                TableSource.Rows[CurrentRow].Cells["colKlient"].Value);
-            */
+              
             TableSource.Rows.Remove(TableSource.CurrentRow);
         }
         private void Save()
         {
-            //
-            _shipment.SDate = dtSDate.Value;
-            _shipment.ShIn = cmbType.Text == "Вход" ? true : false;
-            _shipment.DepositorId = DataService.GetDictIdByName("Депозиторы", cmbDepositor.Text);
-            _shipment.TimeSlotId = DataService.GetDictIdByCondition("ТаймСлоты", $"depositor_id = {_shipment.DepositorId} and slot_time = '{cmbTimeSlot.Text}'");
-            _shipment.IsAddLv = false;
-
-            for (int i = 0;i<tblShipmentItem.RowCount;i++)
+            if (cmbType.SelectedIndex < 2)
             {
-                ShipmentOrder shipmentOrder = new ShipmentOrder();
-                
-                shipmentOrder.OrderId = tblShipmentItem.Rows[i].Cells["colItemId"].Value.ToString();
-                shipmentOrder.LVOrderId = (int?)tblShipmentItem.Rows[i].Cells["colLVOrdId"].Value;
-                shipmentOrder.lv_order_code = tblShipmentItem.Rows[i].Cells["colItemId"].Value.ToString();
-                shipmentOrder.IsBinding = true;
-                _shipment.ShipmentOrders.Add(shipmentOrder);
-            }
+                _shipmentAddResult.IsShipment = true;
 
-            //_context.SaveChanges();
+                _shipment = new Shipment();
+                _shipment.SDate = dtSDate.Value;
+                _shipment.ShIn = cmbType.Text == "Вход" ? true : false;
+                _shipment.DepositorId = DataService.GetDictIdByName("Депозиторы", cmbDepositor.Text);
+                _shipment.TimeSlotId = DataService.GetDictIdByCondition("ТаймСлоты", $"depositor_id = {_shipment.DepositorId} and slot_time = '{cmbTimeSlot.Text}'");
+                _shipment.IsAddLv = false;
+
+                for (int i = 0; i < tblShipmentItem.RowCount; i++)
+                {
+                    ShipmentOrder shipmentOrder = new ShipmentOrder();
+
+                    shipmentOrder.OrderId = tblShipmentItem.Rows[i].Cells["colItemId"].Value.ToString();
+                    shipmentOrder.LVOrderId = (int?)tblShipmentItem.Rows[i].Cells["colLVOrdId"].Value;
+                    shipmentOrder.lv_order_code = tblShipmentItem.Rows[i].Cells["colItemId"].Value.ToString();
+                    shipmentOrder.IsBinding = true;
+                    _shipment.ShipmentOrders.Add(shipmentOrder);
+                }
+                _shipmentAddResult.Result = _shipment;
+                _context.Shipments.Add(_shipment);
+            }
+            else if (cmbType.SelectedIndex ==2)
+            {
+                _shipmentAddResult.IsShipment = false;
+                _movement = new Movement();
+                _movement.MDate = dtSDate.Value;
+                _movement.TimeSlotId = DataService.GetDictIdByCondition("ТаймСлоты", $"depositor_id = {DataService.GetDictIdByName("Депозиторы", cmbDepositor.Text)} and slot_time = '{cmbTimeSlot.Text}'");
+                for (int i = 0; i < tblShipmentItem.RowCount; i++)
+                {
+                    MovementItem movementItem = new MovementItem();
+
+                    movementItem.DepositorId = (int)DataService.GetDictIdByName("Депозиторы", cmbDepositor.Text);
+                    movementItem.TklLVID = int.Parse(tblShipmentItem.Rows[i].Cells["colLVOrdId"].Value.ToString());
+                    _movement.MovementItems.Add(movementItem);
+                }
+                _shipmentAddResult.Result = _movement;
+                _context.Movements.Add(_movement);
+            }
+            _context.SaveChanges();
 
         }
         private void btnOk_Click(object sender, EventArgs e)

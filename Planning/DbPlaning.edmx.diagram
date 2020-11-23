@@ -29,6 +29,12 @@
         <AssociationConnector Association="PlanningModel.FK_shipments_transport_type" />
         <EntityTypeShape EntityType="PlanningModel.UserGrpPrvlg" Width="1.5" PointX="8" PointY="2.75" />
         <EntityTypeShape EntityType="PlanningModel.Function" Width="1.5" PointX="10.5" PointY="3.875" />
+        <EntityTypeShape EntityType="PlanningModel.Movement" Width="1.5" PointX="14.5" PointY="5.625" />
+        <EntityTypeShape EntityType="PlanningModel.MovementItem" Width="1.5" PointX="16.75" PointY="4.875" />
+        <AssociationConnector Association="PlanningModel.FK_movement_DelayReasonID" />
+        <AssociationConnector Association="PlanningModel.FK_MovementItem_DepID" />
+        <AssociationConnector Association="PlanningModel.FK_movement_SlotID" />
+        <AssociationConnector Association="PlanningModel.FK_MovementItem_MovementID" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

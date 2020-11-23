@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ShipmentAdd));
             this.pnlToolBar = new System.Windows.Forms.Panel();
             this.btnCancel = new System.Windows.Forms.Button();
@@ -39,11 +39,6 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
             this.tblShipmentItem = new System.Windows.Forms.DataGridView();
-            this.colItemId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colItemStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colItemDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colItemKlient = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colLVOrdId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel6 = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
             this.cmbTimeSlot = new System.Windows.Forms.ComboBox();
@@ -68,6 +63,11 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.colItemId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colItemStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colItemDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colItemKlient = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colLVOrdId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pnlToolBar.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel4.SuspendLayout();
@@ -160,41 +160,6 @@
             this.tblShipmentItem.RowHeadersVisible = false;
             this.tblShipmentItem.Size = new System.Drawing.Size(475, 454);
             this.tblShipmentItem.TabIndex = 1;
-            // 
-            // colItemId
-            // 
-            this.colItemId.HeaderText = "colItem";
-            this.colItemId.Name = "colItemId";
-            this.colItemId.ReadOnly = true;
-            this.colItemId.Width = 200;
-            // 
-            // colItemStatus
-            // 
-            this.colItemStatus.HeaderText = "Status";
-            this.colItemStatus.Name = "colItemStatus";
-            this.colItemStatus.ReadOnly = true;
-            this.colItemStatus.Visible = false;
-            // 
-            // colItemDate
-            // 
-            this.colItemDate.HeaderText = "Date";
-            this.colItemDate.Name = "colItemDate";
-            this.colItemDate.ReadOnly = true;
-            this.colItemDate.Visible = false;
-            // 
-            // colItemKlient
-            // 
-            this.colItemKlient.HeaderText = "Klient";
-            this.colItemKlient.Name = "colItemKlient";
-            this.colItemKlient.ReadOnly = true;
-            this.colItemKlient.Visible = false;
-            // 
-            // colLVOrdId
-            // 
-            this.colLVOrdId.HeaderText = "LVOrdId";
-            this.colLVOrdId.Name = "colLVOrdId";
-            this.colLVOrdId.ReadOnly = true;
-            this.colLVOrdId.Visible = false;
             // 
             // panel6
             // 
@@ -298,14 +263,14 @@
             // 
             this.tblOrders.AllowUserToAddRows = false;
             this.tblOrders.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.tblOrders.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.tblOrders.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.tblOrders.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.tblOrders.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colId,
@@ -313,26 +278,26 @@
             this.colDate,
             this.colKlient,
             this.colLVOrderId});
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.tblOrders.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.tblOrders.DefaultCellStyle = dataGridViewCellStyle2;
             this.tblOrders.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tblOrders.Location = new System.Drawing.Point(0, 62);
             this.tblOrders.Name = "tblOrders";
             this.tblOrders.ReadOnly = true;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.tblOrders.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.tblOrders.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.tblOrders.RowHeadersVisible = false;
             this.tblOrders.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.tblOrders.Size = new System.Drawing.Size(546, 509);
@@ -415,7 +380,8 @@
             this.cmbType.FormattingEnabled = true;
             this.cmbType.Items.AddRange(new object[] {
             "Выход",
-            "Вход"});
+            "Вход",
+            "Перемещение"});
             this.cmbType.Location = new System.Drawing.Point(228, 25);
             this.cmbType.Name = "cmbType";
             this.cmbType.Size = new System.Drawing.Size(153, 21);
@@ -457,6 +423,40 @@
             this.label1.Size = new System.Drawing.Size(63, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Депозитор";
+            // 
+            // colItemId
+            // 
+            this.colItemId.HeaderText = "colItem";
+            this.colItemId.Name = "colItemId";
+            this.colItemId.ReadOnly = true;
+            this.colItemId.Width = 200;
+            // 
+            // colItemStatus
+            // 
+            this.colItemStatus.HeaderText = "Status";
+            this.colItemStatus.Name = "colItemStatus";
+            this.colItemStatus.ReadOnly = true;
+            this.colItemStatus.Visible = false;
+            // 
+            // colItemDate
+            // 
+            this.colItemDate.HeaderText = "Date";
+            this.colItemDate.Name = "colItemDate";
+            this.colItemDate.ReadOnly = true;
+            this.colItemDate.Visible = false;
+            // 
+            // colItemKlient
+            // 
+            this.colItemKlient.HeaderText = "Klient";
+            this.colItemKlient.Name = "colItemKlient";
+            this.colItemKlient.ReadOnly = true;
+            this.colItemKlient.Visible = false;
+            // 
+            // colLVOrdId
+            // 
+            this.colLVOrdId.HeaderText = "LVOrdId";
+            this.colLVOrdId.Name = "colLVOrdId";
+            this.colLVOrdId.ReadOnly = true;
             // 
             // ShipmentAdd
             // 
@@ -512,16 +512,16 @@
         private System.Windows.Forms.Button btnToShipment;
         private System.Windows.Forms.Button btnFromShipment;
         private System.Windows.Forms.DataGridView tblShipmentItem;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colItemId;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colItemStatus;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colItemDate;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colItemKlient;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colLVOrdId;
         private System.Windows.Forms.DataGridViewTextBoxColumn colId;
         private System.Windows.Forms.DataGridViewTextBoxColumn colState;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDate;
         private System.Windows.Forms.DataGridViewTextBoxColumn colKlient;
         private System.Windows.Forms.DataGridViewTextBoxColumn colLVOrderId;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colItemId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colItemStatus;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colItemDate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colItemKlient;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colLVOrdId;
     }
 }

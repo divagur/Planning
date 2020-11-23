@@ -48,6 +48,31 @@
           <Property Name="pl_dep_id" Type="int" />
           <Property Name="pl_elem_id" Type="int" />
         </EntityType>
+        <EntityType Name="movement">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="m_date" Type="date" Nullable="false" />
+          <Property Name="time_slot_id" Type="int" />
+          <Property Name="priority" Type="int" />
+          <Property Name="comment" Type="nvarchar" MaxLength="1024" />
+          <Property Name="delay_reasons_id" Type="int" />
+          <Property Name="delay_comment" Type="nvarchar" MaxLength="1024" />
+          <Property Name="performer" Type="nvarchar" MaxLength="256" />
+          <Property Name="def_customer" Type="bit" Nullable="false" />
+          <Property Name="sp_condition" Type="bit" Nullable="false" />
+          <Property Name="special_time" Type="time" Precision="0" />
+        </EntityType>
+        <EntityType Name="movement_item">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="movement_id" Type="int" Nullable="false" />
+          <Property Name="depositor_id" Type="int" Nullable="false" />
+          <Property Name="TklLVID" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="opers_type">
           <Key>
             <PropertyRef Name="id" />
@@ -182,6 +207,56 @@
           <Property Name="name" Type="varchar" MaxLength="254" />
           <Property Name="access" Type="tinyint" />
         </EntityType>
+        <Association Name="FK_movement_DelayReasonID">
+          <End Role="delay_reasons" Type="Self.delay_reasons" Multiplicity="0..1" />
+          <End Role="movement" Type="Self.movement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="delay_reasons">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="movement">
+              <PropertyRef Name="delay_reasons_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_movement_SlotID">
+          <End Role="time_slot" Type="Self.time_slot" Multiplicity="0..1" />
+          <End Role="movement" Type="Self.movement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="time_slot">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="movement">
+              <PropertyRef Name="time_slot_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MovementItem_DepID">
+          <End Role="depositors" Type="Self.depositors" Multiplicity="1" />
+          <End Role="movement_item" Type="Self.movement_item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="depositors">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="movement_item">
+              <PropertyRef Name="depositor_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MovementItem_MovementID">
+          <End Role="movement" Type="Self.movement" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="movement_item" Type="Self.movement_item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="movement">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="movement_item">
+              <PropertyRef Name="movement_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_shipment_orders_shipments">
           <End Role="shipments" Type="Self.shipments" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -314,6 +389,8 @@
           <EntitySet Name="functions" EntityType="Self.functions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="gateways" EntityType="Self.gateways" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="lv_attr" EntityType="Self.lv_attr" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="movement" EntityType="Self.movement" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="movement_item" EntityType="Self.movement_item" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="opers_type" EntityType="Self.opers_type" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="shipment_element" EntityType="Self.shipment_element" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="shipment_orders" EntityType="Self.shipment_orders" Schema="dbo" store:Type="Tables" />
@@ -325,6 +402,22 @@
           <EntitySet Name="user_grp_prvlg" EntityType="Self.user_grp_prvlg" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="users_group" EntityType="Self.users_group" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_movement_DelayReasonID" Association="Self.FK_movement_DelayReasonID">
+            <End Role="delay_reasons" EntitySet="delay_reasons" />
+            <End Role="movement" EntitySet="movement" />
+          </AssociationSet>
+          <AssociationSet Name="FK_movement_SlotID" Association="Self.FK_movement_SlotID">
+            <End Role="time_slot" EntitySet="time_slot" />
+            <End Role="movement" EntitySet="movement" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MovementItem_DepID" Association="Self.FK_MovementItem_DepID">
+            <End Role="depositors" EntitySet="depositors" />
+            <End Role="movement_item" EntitySet="movement_item" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MovementItem_MovementID" Association="Self.FK_MovementItem_MovementID">
+            <End Role="movement" EntitySet="movement" />
+            <End Role="movement_item" EntitySet="movement_item" />
+          </AssociationSet>
           <AssociationSet Name="FK_shipment_orders_shipments" Association="Self.FK_shipment_orders_shipments">
             <End Role="shipments" EntitySet="shipments" />
             <End Role="shipment_orders" EntitySet="shipment_orders" />
@@ -377,6 +470,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Shipments" Relationship="PlanningModel.FK_shipments_delay_reasons" FromRole="delay_reasons" ToRole="shipments" />
+          <NavigationProperty Name="Movements" Relationship="PlanningModel.FK_movement_DelayReasonID" FromRole="DelayReason" ToRole="movement" />
         </EntityType>
         <EntityType Name="Depositor">
           <Key>
@@ -388,6 +482,7 @@
           <NavigationProperty Name="TimeSlots" Relationship="PlanningModel.FK_time_slot_depositors" FromRole="Depositor" ToRole="time_slot" />
           <Property Name="LvBase" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="LvId" Type="Int32" />
+          <NavigationProperty Name="MovementItem" Relationship="PlanningModel.FK_MovementItem_DepID" FromRole="Depositor" ToRole="movement_item" />
         </EntityType>
         <EntityType Name="Gateway">
           <Key>
@@ -557,6 +652,24 @@
           </AssociationSet>
           <EntitySet Name="UserGrpPrvlgs" EntityType="PlanningModel.UserGrpPrvlg" />
           <EntitySet Name="Functions" EntityType="PlanningModel.Function" />
+          <EntitySet Name="Movements" EntityType="PlanningModel.Movement" />
+          <EntitySet Name="MovementItems" EntityType="PlanningModel.MovementItem" />
+          <AssociationSet Name="FK_movement_DelayReasonID" Association="PlanningModel.FK_movement_DelayReasonID">
+            <End Role="DelayReason" EntitySet="DelayReasons" />
+            <End Role="movement" EntitySet="Movements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MovementItem_DepID" Association="PlanningModel.FK_MovementItem_DepID">
+            <End Role="Depositor" EntitySet="Depositors" />
+            <End Role="movement_item" EntitySet="MovementItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_movement_SlotID" Association="PlanningModel.FK_movement_SlotID">
+            <End Role="TimeSlot" EntitySet="TimeSlots" />
+            <End Role="movement" EntitySet="Movements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MovementItem_MovementID" Association="PlanningModel.FK_MovementItem_MovementID">
+            <End Role="movement" EntitySet="Movements" />
+            <End Role="movement_item" EntitySet="MovementItems" />
+          </AssociationSet>
         </EntityContainer>
         <Association Name="FK_shipments_delay_reasons">
           <End Type="PlanningModel.DelayReason" Role="delay_reasons" Multiplicity="0..1" />
@@ -604,6 +717,7 @@
           <NavigationProperty Name="Shipments" Relationship="PlanningModel.FK_shipments_time_slot" FromRole="time_slot" ToRole="Shipment" />
           <Property Name="Name" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
           <Property Name="SlotTime" Type="Time" Precision="0" />
+          <NavigationProperty Name="Movements" Relationship="PlanningModel.FK_movement_SlotID" FromRole="TimeSlot" ToRole="movement" />
         </EntityType>
         <Association Name="FK_time_slot_depositors">
           <End Type="PlanningModel.Depositor" Role="Depositor" Multiplicity="0..1" />
@@ -712,6 +826,86 @@
           <Property Name="Id" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
           <Property Name="Name" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="Movement">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="TimeSlotId" Type="Int32" />
+          <Property Name="Priority" Type="Int32" />
+          <Property Name="Comment" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
+          <Property Name="DelayReasonsId" Type="Int32" />
+          <Property Name="DelayComment" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
+          <Property Name="Performer" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="DefCustomer" Type="Boolean" Nullable="false" />
+          <Property Name="SpCondition" Type="Boolean" Nullable="false" />
+          <Property Name="SpecialTime" Type="Time" Precision="0" />
+          <NavigationProperty Name="DelayReasons" Relationship="PlanningModel.FK_movement_DelayReasonID" FromRole="movement" ToRole="DelayReason" />
+          <NavigationProperty Name="TimeSlots" Relationship="PlanningModel.FK_movement_SlotID" FromRole="movement" ToRole="TimeSlot" />
+          <NavigationProperty Name="MovementItems" Relationship="PlanningModel.FK_MovementItem_MovementID" FromRole="movement" ToRole="movement_item" />
+        </EntityType>
+        <EntityType Name="MovementItem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MovementId" Type="Int32" Nullable="false" />
+          <Property Name="DepositorId" Type="Int32" Nullable="false" />
+          <Property Name="TklLVID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Depositors" Relationship="PlanningModel.FK_MovementItem_DepID" FromRole="movement_item" ToRole="Depositor" />
+          <NavigationProperty Name="Movement" Relationship="PlanningModel.FK_MovementItem_MovementID" FromRole="movement_item" ToRole="movement" />
+        </EntityType>
+        <Association Name="FK_movement_DelayReasonID">
+          <End Type="PlanningModel.DelayReason" Role="DelayReason" Multiplicity="0..1" />
+          <End Type="PlanningModel.Movement" Role="movement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DelayReason">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="movement">
+              <PropertyRef Name="DelayReasonsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MovementItem_DepID">
+          <End Type="PlanningModel.Depositor" Role="Depositor" Multiplicity="1" />
+          <End Type="PlanningModel.MovementItem" Role="movement_item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Depositor">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="movement_item">
+              <PropertyRef Name="DepositorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_movement_SlotID">
+          <End Type="PlanningModel.TimeSlot" Role="TimeSlot" Multiplicity="0..1" />
+          <End Type="PlanningModel.Movement" Role="movement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TimeSlot">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="movement">
+              <PropertyRef Name="TimeSlotId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MovementItem_MovementID">
+          <End Type="PlanningModel.Movement" Role="movement" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="PlanningModel.MovementItem" Role="movement_item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="movement">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="movement_item">
+              <PropertyRef Name="MovementId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -905,6 +1099,33 @@
             <EntityTypeMapping TypeName="PlanningModel.Function">
               <MappingFragment StoreEntitySet="functions">
                 <ScalarProperty Name="Name" ColumnName="name" />
+                <ScalarProperty Name="Id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Movements">
+            <EntityTypeMapping TypeName="PlanningModel.Movement">
+              <MappingFragment StoreEntitySet="movement">
+                <ScalarProperty Name="SpecialTime" ColumnName="special_time" />
+                <ScalarProperty Name="SpCondition" ColumnName="sp_condition" />
+                <ScalarProperty Name="DefCustomer" ColumnName="def_customer" />
+                <ScalarProperty Name="Performer" ColumnName="performer" />
+                <ScalarProperty Name="DelayComment" ColumnName="delay_comment" />
+                <ScalarProperty Name="DelayReasonsId" ColumnName="delay_reasons_id" />
+                <ScalarProperty Name="Comment" ColumnName="comment" />
+                <ScalarProperty Name="Priority" ColumnName="priority" />
+                <ScalarProperty Name="TimeSlotId" ColumnName="time_slot_id" />
+                <ScalarProperty Name="MDate" ColumnName="m_date" />
+                <ScalarProperty Name="Id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MovementItems">
+            <EntityTypeMapping TypeName="PlanningModel.MovementItem">
+              <MappingFragment StoreEntitySet="movement_item">
+                <ScalarProperty Name="TklLVID" ColumnName="TklLVID" />
+                <ScalarProperty Name="DepositorId" ColumnName="depositor_id" />
+                <ScalarProperty Name="MovementId" ColumnName="movement_id" />
                 <ScalarProperty Name="Id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

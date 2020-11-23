@@ -144,6 +144,9 @@
     <Compile Include="Function.cs">
       <DependentUpon>DbPlaning.tt</DependentUpon>
     </Compile>
+    <Compile Include="Gateway.cs">
+      <DependentUpon>DbPlaning.tt</DependentUpon>
+    </Compile>
     <Compile Include="LvAttr.cs">
       <DependentUpon>DbPlaning.tt</DependentUpon>
     </Compile>
@@ -152,6 +155,15 @@
     </Compile>
     <Compile Include="LvAttrEdit.Designer.cs">
       <DependentUpon>LvAttrEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Movement.cs">
+      <DependentUpon>DbPlaning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MovementItem.cs">
+      <DependentUpon>DbPlaning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OperType.cs">
+      <DependentUpon>DbPlaning.tt</DependentUpon>
     </Compile>
     <Compile Include="PlanningDataSet1.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -172,12 +184,16 @@
     <Compile Include="SettingsWizard.Designer.cs">
       <DependentUpon>SettingsWizard.cs</DependentUpon>
     </Compile>
+    <Compile Include="Shipment.cs">
+      <DependentUpon>DbPlaning.tt</DependentUpon>
+    </Compile>
     <Compile Include="ShipmentAdd.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ShipmentAdd.Designer.cs">
       <DependentUpon>ShipmentAdd.cs</DependentUpon>
     </Compile>
+    <Compile Include="ShipmentAddResult.cs" />
     <Compile Include="ShipmentElement.cs">
       <DependentUpon>DbPlaning.tt</DependentUpon>
     </Compile>
@@ -193,6 +209,9 @@
     <Compile Include="ShipmentElements.Designer.cs">
       <DependentUpon>ShipmentElements.cs</DependentUpon>
     </Compile>
+    <Compile Include="ShipmentOrder.cs">
+      <DependentUpon>DbPlaning.tt</DependentUpon>
+    </Compile>
     <Compile Include="ShipmentOrderEdit.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -200,6 +219,9 @@
       <DependentUpon>ShipmentOrderEdit.cs</DependentUpon>
     </Compile>
     <Compile Include="SqlHandle.cs" />
+    <Compile Include="TimeSlot.cs">
+      <DependentUpon>DbPlaning.tt</DependentUpon>
+    </Compile>
     <Compile Include="TimeSlots.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -212,12 +234,6 @@
     <Compile Include="FormEdit.Designer.cs">
       <DependentUpon>FormEdit.cs</DependentUpon>
     </Compile>
-    <Compile Include="Gateway.cs">
-      <DependentUpon>DbPlaning.tt</DependentUpon>
-    </Compile>
-    <Compile Include="OperType.cs">
-      <DependentUpon>DbPlaning.tt</DependentUpon>
-    </Compile>
     <Compile Include="Planing.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -227,9 +243,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Planing.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ShipmentOrder.cs">
-      <DependentUpon>DbPlaning.tt</DependentUpon>
     </Compile>
     <Compile Include="SimpleDict.cs">
       <SubType>Form</SubType>
@@ -241,9 +254,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>PlanningDataSet.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Shipment.cs">
-      <DependentUpon>DbPlaning.tt</DependentUpon>
     </Compile>
     <Compile Include="DataService.cs" />
     <Compile Include="MainForm.cs">
@@ -259,9 +269,6 @@
     </Compile>
     <Compile Include="shipmen_edit.Designer.cs">
       <DependentUpon>shipmen_edit.cs</DependentUpon>
-    </Compile>
-    <Compile Include="TimeSlot.cs">
-      <DependentUpon>DbPlaning.tt</DependentUpon>
     </Compile>
     <Compile Include="TimeSlotEdit.cs">
       <SubType>Form</SubType>

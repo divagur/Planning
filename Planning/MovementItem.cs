@@ -12,18 +12,14 @@ namespace Planning
     using System;
     using System.Collections.Generic;
     
-    public partial class Gateway
+    public partial class MovementItem
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Gateway()
-        {
-            this.Shipments = new HashSet<Shipment>();
-        }
-    
         public int Id { get; set; }
-        public Nullable<int> Name { get; set; }
+        public int MovementId { get; set; }
+        public int DepositorId { get; set; }
+        public int TklLVID { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Shipment> Shipments { get; set; }
+        public virtual Depositor Depositors { get; set; }
+        public virtual Movement Movement { get; set; }
     }
 }
