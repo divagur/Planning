@@ -18,6 +18,7 @@ namespace Planning
         public string Password { get; set; }
         public string ShipmentReport { get; set; }
         public string ReceiptReport { get; set; }
+        public string PeriodReport { get; set; }
         public int IsGetLogin { get; set; }
         public bool IsWnd { get; set; }
 

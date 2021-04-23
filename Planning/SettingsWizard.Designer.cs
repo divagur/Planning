@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Соединение");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Отчеты", 1, 1);
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Соединение");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Отчеты", 1, 1);
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsWizard));
             this.tvStep = new System.Windows.Forms.TreeView();
             this.imlStep = new System.Windows.Forms.ImageList(this.components);
@@ -57,6 +57,9 @@
             this.pbBack = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.btnRepPeriodTemplate = new System.Windows.Forms.Button();
+            this.edRepPeriodTemplate = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.pnRight.SuspendLayout();
             this.pnReport.SuspendLayout();
             this.pnConnect.SuspendLayout();
@@ -75,18 +78,18 @@
             this.tvStep.ImageList = this.imlStep;
             this.tvStep.Location = new System.Drawing.Point(0, 0);
             this.tvStep.Name = "tvStep";
-            treeNode1.Checked = true;
-            treeNode1.Name = "NodeConnection";
-            treeNode1.Tag = "0";
-            treeNode1.Text = "Соединение";
-            treeNode2.ImageIndex = 1;
-            treeNode2.Name = "NodeReport";
-            treeNode2.SelectedImageIndex = 1;
-            treeNode2.Tag = "1";
-            treeNode2.Text = "Отчеты";
+            treeNode3.Checked = true;
+            treeNode3.Name = "NodeConnection";
+            treeNode3.Tag = "0";
+            treeNode3.Text = "Соединение";
+            treeNode4.ImageIndex = 1;
+            treeNode4.Name = "NodeReport";
+            treeNode4.SelectedImageIndex = 1;
+            treeNode4.Tag = "1";
+            treeNode4.Text = "Отчеты";
             this.tvStep.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2});
+            treeNode3,
+            treeNode4});
             this.tvStep.SelectedImageIndex = 0;
             this.tvStep.Size = new System.Drawing.Size(124, 458);
             this.tvStep.TabIndex = 1;
@@ -111,6 +114,9 @@
             // 
             // pnReport
             // 
+            this.pnReport.Controls.Add(this.btnRepPeriodTemplate);
+            this.pnReport.Controls.Add(this.edRepPeriodTemplate);
+            this.pnReport.Controls.Add(this.label7);
             this.pnReport.Controls.Add(this.btnReceiptDlg);
             this.pnReport.Controls.Add(this.btnShipmentDlg);
             this.pnReport.Controls.Add(this.edReceiptTemplate);
@@ -130,7 +136,7 @@
             this.btnReceiptDlg.TabIndex = 2;
             this.btnReceiptDlg.Text = "...";
             this.btnReceiptDlg.UseVisualStyleBackColor = true;
-            this.btnReceiptDlg.Click += new System.EventHandler(this.btnReceiptDlg_Click);
+            this.btnReceiptDlg.Click += new System.EventHandler(this.btnShipmentDlg_Click);
             // 
             // btnShipmentDlg
             // 
@@ -318,6 +324,32 @@
             this.openFileDialog.Filter = "\"Excel|*.xltx| Excel macros| *xltm\"";
             this.openFileDialog.Title = "Шаблоны отчетов";
             // 
+            // btnRepPeriodTemplate
+            // 
+            this.btnRepPeriodTemplate.Location = new System.Drawing.Point(554, 125);
+            this.btnRepPeriodTemplate.Name = "btnRepPeriodTemplate";
+            this.btnRepPeriodTemplate.Size = new System.Drawing.Size(27, 20);
+            this.btnRepPeriodTemplate.TabIndex = 5;
+            this.btnRepPeriodTemplate.Text = "...";
+            this.btnRepPeriodTemplate.UseVisualStyleBackColor = true;
+            this.btnRepPeriodTemplate.Click += new System.EventHandler(this.btnShipmentDlg_Click);
+            // 
+            // edRepPeriodTemplate
+            // 
+            this.edRepPeriodTemplate.Location = new System.Drawing.Point(16, 126);
+            this.edRepPeriodTemplate.Name = "edRepPeriodTemplate";
+            this.edRepPeriodTemplate.Size = new System.Drawing.Size(532, 20);
+            this.edRepPeriodTemplate.TabIndex = 4;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(13, 110);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(108, 13);
+            this.label7.TabIndex = 3;
+            this.label7.Text = "Отгрузки за период";
+            // 
             // SettingsWizard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -371,5 +403,8 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
+        private System.Windows.Forms.Button btnRepPeriodTemplate;
+        private System.Windows.Forms.TextBox edRepPeriodTemplate;
+        private System.Windows.Forms.Label label7;
     }
 }

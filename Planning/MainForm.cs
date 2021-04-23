@@ -17,6 +17,8 @@ namespace Planning
     
     public partial class frmMain : Form
     {
+        const int REPORT_PERIOD = 101;
+
        private string CR = Environment.NewLine;
 
         //DataService dataService = new DataService();
@@ -29,6 +31,14 @@ namespace Planning
         List<UserAccessItem> UserPrvlg = new List<UserAccessItem>();
         UserAccessItem mainFormAccess =new UserAccessItem();
         SqlConnection LVConnect;
+        private int currShpId = 0;
+        private int currColorIdx = 0;
+        frmProgressBar wait;
+        private List<Color> rowColors = new List<Color>()
+        {
+          Color.FromArgb(220, 220, 220),
+          Color.FromArgb(220, 230, 241)
+        };
         public frmMain()
         {
             InitializeComponent();
@@ -39,28 +49,34 @@ namespace Planning
 
         public void OnSqlExecureBeforeCommon(string Param)
         {
-            this.Cursor = Cursors.AppStarting;
+            //this.Cursor = Cursors.AppStarting;
         }
 
         public void OnSqlExecureAfterCommon(string Param)
         {
-            this.Cursor = Cursors.Default;
+           // this.Cursor = Cursors.Default;
         }
 
         private void tblShipments_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex < 0) return;
+            
             Clipboard.SetText(tblShipments.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
         }
 
-        private SqlDataReader GetShipment(DateTime DateFrom, DateTime? DateTill, string ShpId, string OrdId)
+        private SqlDataReader GetShipment(DateTime DateFrom, DateTime? DateTill, string ShpId, string OrdId, int ShpType = -1)
         {
             SqlHandle sql = new SqlHandle(DataService.connectionString);
             sql.SqlStatement = "SP_PL_MainQueryP";
             sql.Connect();
             sql.TypeCommand = CommandType.StoredProcedure;
             sql.IsResultSet = true;
+            object shpType = null;
+            if (ShpType >= 0)
+                shpType = ShpType;
             sql.AddCommandParametr(new SqlParameter { ParameterName = "@From", Value = DateFrom });
             sql.AddCommandParametr(new SqlParameter { ParameterName = "@Till", Value = DateTill });
+            sql.AddCommandParametr(new SqlParameter { ParameterName = "@In", Value = shpType });
             sql.AddCommandParametr(new SqlParameter { ParameterName = "@ShpId", Value = ShpId });
             sql.AddCommandParametr(new SqlParameter { ParameterName = "@OrdID", Value = OrdId });
 
@@ -152,7 +168,8 @@ namespace Planning
             tblShipments.DataSource = ds.Tables[0];
             if (restoreRow)
                 SearchBy(true, i => tblShipments.Rows[i].Cells["colId"].Value.ToString() == rowShpId && tblShipments.Rows[i].Cells["colIdNakl"].Value.ToString() == rowShpOrdId);
-           //this.Cursor = Cursors.Default;
+            //this.Cursor = Cursors.Default;
+            CalcRowColor();
         }
 
         private bool SearchBy(bool FromBegin, Predicate<int> condition)
@@ -283,6 +300,7 @@ namespace Planning
             //settingsHandle.SetParamValue("Connection\\Password", setting.Password);
             settingsHandle.SetParamValue("ReportTemplate\\ShipmentTemplate", DataService.setting.ShipmentReport);
             settingsHandle.SetParamValue("ReportTemplate\\ReceiptTemplate", DataService.setting.ReceiptReport);
+            settingsHandle.SetParamValue("ReportTemplate\\PeriodTemplate", DataService.setting.PeriodReport);
         }
 
         private void LoginUser()
@@ -364,7 +382,7 @@ namespace Planning
 
             DataService.setting.ShipmentReport = settingsHandle.GetParamStringValue("ReportTemplate\\ShipmentTemplate");
             DataService.setting.ReceiptReport = settingsHandle.GetParamStringValue("ReportTemplate\\ReceiptTemplate");
-
+            DataService.setting.PeriodReport = settingsHandle.GetParamStringValue("ReportTemplate\\PeriodTemplate");
             /*
             if(setting == null)
             {
@@ -549,10 +567,12 @@ namespace Planning
             ShipmentAddResult shipmentAddResult = new ShipmentAddResult();
             if (tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colDirection"].Value.ToString()!="перем")
             {
+                shipmentAddResult.IsShipment = true;
                 shipmentAddResult.Result = DataService.context.Shipments.Find(tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colId"].Value);
             }
             else
             {
+                shipmentAddResult.IsShipment = false;
                 shipmentAddResult.Result = DataService.context.Movements.Find(tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colId"].Value);
             }
             
@@ -562,6 +582,8 @@ namespace Planning
         private void ShipmentEdit(ShipmentAddResult shipmentAddResult)
         {
             shipmen_edit frmShipmentEdit;
+            frmShipmentEdit = shipmentAddResult.IsShipment == true ? new shipmen_edit((Shipment)shipmentAddResult.Result) : new shipmen_edit((Movement)shipmentAddResult.Result);
+
             if (shipmentAddResult.IsShipment)
                 frmShipmentEdit = new shipmen_edit((Shipment)shipmentAddResult.Result);
             else
@@ -671,6 +693,23 @@ namespace Planning
             AddFormTab(frmDepositors, "Депозиторы");
         }
 
+        private void CalcRowColor()
+        {
+            int cellShpId;
+            int cellLastShpId = 0;
+            int currColorIdx = 0;
+            for (int i = 0; i < tblShipments.Rows.Count; i++)
+            {
+                cellShpId = (int)(tblShipments).Rows[i].Cells["colId"].Value;
+                if (cellLastShpId != cellShpId)
+                {
+                    cellLastShpId = cellShpId;
+                    currColorIdx = currColorIdx == 0 ? 1 : 0;
+                }
+                (tblShipments).Rows[i].Cells["BackgroundColor"].Value = currColorIdx;
+            }
+        }
+
         private void tblShipments_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
             if (e.RowIndex >= 0)
@@ -743,21 +782,43 @@ namespace Planning
         private void tblShipments_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
         {
             var CellColor = (int)((DataGridView)sender).Rows[e.RowIndex].Cells["BackgroundColor"].Value;
-     
-            ((DataGridView)sender).Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.FromArgb(CellColor);// (Color)((DataGridView)sender).Rows[e.RowIndex].Cells["BackgroundColor"].Value;
+            var CellShpId = (int)((DataGridView)sender).Rows[e.RowIndex].Cells["colId"].Value;
 
+
+            if (currShpId != CellShpId)
+            {
+                currShpId = CellShpId;
+                currColorIdx = currColorIdx == 0 ? 1 : 0;
+            }
+            //((DataGridView)sender).Rows[e.RowIndex].DefaultCellStyle.BackColor = rowColors[currColorIdx];
+            //if (CellColor != 0)
+                ((DataGridView)sender).Rows[e.RowIndex].DefaultCellStyle.BackColor = rowColors[CellColor];// Color.FromArgb(CellColor);
+
+            CellColor = (int)((DataGridView)sender).Rows[e.RowIndex].Cells["FontColor"].Value;
+            if (CellColor != 0)
+                ((DataGridView)sender).Rows[e.RowIndex].DefaultCellStyle.ForeColor = Color.FromArgb(CellColor);// (Color)((DataGridView)sender).Rows[e.RowIndex].Cells["BackgroundColor"].Value;          
 
         }
 
         private void btnDel_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Удалить запись?","Подверждение",MessageBoxButtons.OKCancel)==DialogResult.OK)
+
+            if (MessageBox.Show("Удалить запись?", "Подверждение", MessageBoxButtons.OKCancel) != DialogResult.OK)
+                return;
+            if (tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colDirection"].Value.ToString() != "перем")
             {
                 Shipment shipment = DataService.context.Shipments.Find(tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colId"].Value);
                 DataService.context.Shipments.Remove(shipment);
-                DataService.context.SaveChanges();
-                ShipmentsLoad();
             }
+            else
+            {
+                Movement movement = DataService.context.Movements.Find(tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colId"].Value);
+                DataService.context.Movements.Remove(movement);
+                
+            }
+            DataService.context.SaveChanges();
+            this.ShipmentsLoad();
+
         }
 
         private void tabForms_DrawItem(object sender, DrawItemEventArgs e)
@@ -1222,6 +1283,208 @@ namespace Planning
         private void btnSearchNext_Click(object sender, EventArgs e)
         {
             SearchByOrder(false);
+        }
+
+        private void miRepPeriod_Click(object sender, EventArgs e)
+        {
+            ReportParams reportParams = new ReportParams();
+            RepPeriod repPeriod = new RepPeriod(reportParams);
+
+
+
+            if (repPeriod.ShowDialog()==DialogResult.OK)
+            {
+                
+                ShowReport(REPORT_PERIOD, reportParams);
+            }
+        }
+
+        private void ShowReport(int ReportId, ReportParams reportParams)
+        {
+            switch (ReportId)
+            {
+                case REPORT_PERIOD:
+                                    ShowReportPeriod(reportParams);
+                                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void ShowReportPeriod(ReportParams reportParams)
+        {
+            //bwProgress.RunWorkerAsync(reportParams);
+            
+            frmProgressBar wait = new frmProgressBar(0, 100);
+            wait.TopLevel = true;
+            wait.TopMost = true;
+            wait.Show();
+            
+            miRepPeriod.Enabled = false;
+            
+            List<string> columnOrder = new List<string> {"ShpId","OrdId","ShpDate","SlotTime","InOut","OrdLVCode","OrdLVType","KlientName","OrderStatus","PrcReady","ShpComment","OrdComment","GateName","ShpSpecialCond","ShpDriverPhone","ShpDriverFio","TransportCompanyName","TransportTypeName","ShpVehicleNumber","ShpTrailerNumber","ShpAttorneyNumber",
+                    "ShpAttorneyDate","ShpSubmissionTime","ShpStartTime", "ShpEndTimePlan","ShpEndTimeFact","ShpDelayReasonName", "ShpDelayComment", "DepCode", "ShpStampNumber" };
+            int[] colNumber = new int[columnOrder.Count];
+            Excel.Range range;
+
+            
+
+
+            wait.SetText("Формирование отчета: получение данных....");
+            Excel.Application excelApp = new Excel.Application();
+            ExcelPrint excel = new ExcelPrint(DataService.setting.PeriodReport);
+            int ShpType = int.Parse(reportParams["ShpType"])-1;
+
+            SqlDataReader dataRows = GetShipment(DateTime.Parse(reportParams["PeriodBegin"]), DateTime.Parse(reportParams["PeriodEnd"]), null, null, ShpType);
+            
+            //SqlDataReader dataRows = GetShipment(edCurrDay.Value, null, null, null);
+
+
+            excel.SetValue(1, 6, 2, "Данные за период с "+ reportParams["PeriodBegin"]+" по "+ reportParams["PeriodEnd"]);
+
+            DataTable dt = new DataTable();
+            dt.Load(dataRows);
+      
+            
+            wait.SetRange(0, dt.Rows.Count);
+            wait.SetPosition(1);
+            wait.SetText("Формирование отчета: вывод данных....");
+            
+            //Получим индексы колонок в резалсете
+            
+            int rowIdx = 0;
+            int colNumberIdx = 0;
+
+            string[,] printRow = new string[1, columnOrder.Count];
+            foreach (DataRow r in dt.Rows)
+            {
+                string cellValue;
+                for (int colIdx = 0; colIdx < columnOrder.Count; colIdx++)
+                {
+                    //
+                    cellValue = r[columnOrder[colIdx]].ToString();
+                    
+                    if (columnOrder[colIdx] == "ShpDate")
+                    {
+                        //columnOrder[colIdx]
+                        cellValue = r[columnOrder[colIdx]].ToString().Substring(0, 10);
+                    }
+                    printRow[0,colIdx] = cellValue;
+                    
+                    //excel.SetValue(1, colIdx + 1, rowIdx, cellValue);
+                    // 
+                }
+                //excel.SetValues(1, 1, rowIdx + 5, columnOrder.Count, rowIdx + 5, printRow);
+                excel.SetRowValues(1, rowIdx + 5, columnOrder.Count, printRow);
+                rowIdx++;
+                wait.SetPosition(rowIdx);
+            }
+
+            range = excel.SelectCells(1, 1, 5, columnOrder.Count, rowIdx+4);
+            range.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
+            range.Borders.Item[Excel.XlBordersIndex.xlEdgeLeft].Weight = Excel.XlBorderWeight.xlMedium;
+            range.Borders.Item[Excel.XlBordersIndex.xlEdgeTop].Weight = Excel.XlBorderWeight.xlMedium;
+            range.Borders.Item[Excel.XlBordersIndex.xlEdgeRight].Weight = Excel.XlBorderWeight.xlMedium;
+            range.Borders.Item[Excel.XlBordersIndex.xlEdgeBottom].Weight = Excel.XlBorderWeight.xlMedium;
+            excel.Visible = true;
+            wait.Close();
+            miRepPeriod.Enabled = true;
+        }
+
+        private void tblShipments_Sorted(object sender, EventArgs e)
+        {
+            CalcRowColor();
+        }
+
+        private void btnCalendarCancel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnCalendarOk_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bwProgress_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            wait.IncPosition();
+        }
+
+        private void bwProgress_DoWork(object sender, DoWorkEventArgs e)
+        {
+            frmProgressBar wait = new frmProgressBar(0, 100);
+            wait.TopLevel = true;
+            wait.TopMost = true;
+            wait.Show();
+
+            List<string> columnOrder = new List<string> {"ShpId","OrdId","ShpDate","SlotTime","InOut","OrdLVCode","OrdLVType","KlientName","OrderStatus","PrcReady","ShpComment","OrdComment","GateName","ShpSpecialCond","ShpDriverPhone","ShpDriverFio","TransportCompanyName","TransportTypeName","ShpVehicleNumber","ShpTrailerNumber","ShpAttorneyNumber",
+                    "ShpAttorneyDate","ShpSubmissionTime","ShpStartTime", "ShpEndTimePlan","ShpEndTimeFact","ShpDelayReasonName", "ShpDelayComment", "DepCode", "ShpStampNumber" };
+            int[] colNumber = new int[columnOrder.Count];
+            Excel.Range range;
+
+
+            ReportParams reportParams = (ReportParams)e.Argument;
+
+
+            wait.SetText("Формирование отчета: получение данных....");
+            ExcelPrint excel = new ExcelPrint(DataService.setting.PeriodReport);
+            SqlDataReader dataRows = GetShipment(DateTime.Parse(reportParams["PeriodBegin"]), DateTime.Parse(reportParams["PeriodEnd"]), null, null);
+
+            //SqlDataReader dataRows = GetShipment(edCurrDay.Value, null, null, null);
+            if (dataRows == null)
+            {
+                wait.Close();
+                bwProgress.CancelAsync();
+                return;
+            }
+            DataTable dt = new DataTable();
+            dt.Load(dataRows);
+            wait.SetRange(0, dt.Rows.Count);
+            wait.SetPosition(1);
+            wait.SetText("Формирование отчета: вывод данных....");
+            //Получим индексы колонок в резалсете
+            int colNumberIdx = 0;
+            foreach (string item in columnOrder)
+            {
+                colNumber[colNumberIdx++] = dataRows.GetOrdinal(item);
+            }
+            int rowIdx = 5;
+
+            while (dataRows.Read())
+            {
+                //excel.SetValue(1, dataRows.GetOrdinal("ShpID"), rowIdx, dataRows.GetValue(dataRows.GetOrdinal("ShpID")));
+
+
+
+                string cellValue;
+                for (int colIdx = 0; colIdx < colNumberIdx; colIdx++)
+                {
+                    cellValue = dataRows.GetValue(colNumber[colIdx]).ToString();
+
+                    if (dataRows.GetName(colNumber[colIdx]) == "ShpDate")
+                    {
+                        cellValue = dataRows.GetValue(colNumber[colIdx]).ToString().Substring(0, 10);
+                    }
+                    excel.SetValue(1, colIdx + 1, rowIdx, cellValue);
+                }
+
+                rowIdx++;
+                bwProgress.ReportProgress(rowIdx);
+
+            }
+            range = excel.SelectCells(1, 1, 5, columnOrder.Count, rowIdx);
+            range.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
+            range.Borders.Item[Excel.XlBordersIndex.xlEdgeLeft].Weight = Excel.XlBorderWeight.xlMedium;
+            range.Borders.Item[Excel.XlBordersIndex.xlEdgeTop].Weight = Excel.XlBorderWeight.xlMedium;
+            range.Borders.Item[Excel.XlBordersIndex.xlEdgeRight].Weight = Excel.XlBorderWeight.xlMedium;
+            range.Borders.Item[Excel.XlBordersIndex.xlEdgeBottom].Weight = Excel.XlBorderWeight.xlMedium;
+            excel.Visible = true;
+        }
+
+        private void bwProgress_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            miRepPeriod.Enabled = true;
         }
     }
 }

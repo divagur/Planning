@@ -70,7 +70,7 @@ namespace Planning
                 command.Parameters.Add(new SqlParameter { ParameterName = "@Split", Value = 0 });
                 command.Parameters.Add(new SqlParameter {ParameterName = "@In",Value = Type });
                 command.Parameters.Add(new SqlParameter { ParameterName = "@DepID", Value = DepositorLVId });
-
+                tblOrders.Rows.Clear();
                 var reader = command.ExecuteReader();
                 if (reader.HasRows)
                 {

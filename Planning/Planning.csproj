@@ -42,14 +42,22 @@
   <ItemGroup>
     <Reference Include="Accessibility" />
     <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dapper.2.0.35\lib\net461\Dapper.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\Dapper.2.0.78\lib\net461\Dapper.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="FastReport, Version=2021.1.20.0, Culture=neutral, PublicKeyToken=5ceb240df42bf6e8, processorArchitecture=MSIL">
+      <HintPath>..\packages\FastReport.OpenSource.2021.1.20\lib\net40\FastReport.dll</HintPath>
+    </Reference>
+    <Reference Include="FastReport.Compat, Version=2021.1.1.0, Culture=neutral, PublicKeyToken=406e1f4c3c8ef97e, processorArchitecture=MSIL">
+      <HintPath>..\packages\FastReport.Compat.2021.1.1\lib\net40\FastReport.Compat.dll</HintPath>
+    </Reference>
+    <Reference Include="FastReport.Data.MsSql, Version=2021.1.17.0, Culture=neutral, PublicKeyToken=b33a9a06fcc00c4c, processorArchitecture=MSIL">
+      <HintPath>..\packages\FastReport.OpenSource.Data.MsSql.2021.1.17\lib\net452\FastReport.Data.MsSql.dll</HintPath>
     </Reference>
     <Reference Include="MDIWindowManager, Version=2.1.2521.32075, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MDIWindowManager.2.1.0\lib\MDIWindowManager.dll</HintPath>
@@ -141,6 +149,18 @@
     <Compile Include="FormLogin.Designer.cs">
       <DependentUpon>FormLogin.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmGetDateTime.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmGetDateTime.Designer.cs">
+      <DependentUpon>frmGetDateTime.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmProgressBar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmProgressBar.Designer.cs">
+      <DependentUpon>frmProgressBar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Function.cs">
       <DependentUpon>DbPlaning.tt</DependentUpon>
     </Compile>
@@ -169,6 +189,13 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>PlanningDataSet1.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="ReportParams.cs" />
+    <Compile Include="RepPeriod.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RepPeriod.Designer.cs">
+      <DependentUpon>RepPeriod.cs</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
     <Compile Include="SettingsEdit.cs">
@@ -342,8 +369,17 @@
     <EmbeddedResource Include="FormLogin.resx">
       <DependentUpon>FormLogin.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmGetDateTime.resx">
+      <DependentUpon>frmGetDateTime.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmProgressBar.resx">
+      <DependentUpon>frmProgressBar.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LvAttrEdit.resx">
       <DependentUpon>LvAttrEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RepPeriod.resx">
+      <DependentUpon>RepPeriod.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SettingsEdit.resx">
       <DependentUpon>SettingsEdit.cs</DependentUpon>
@@ -502,8 +538,12 @@
     </Content>
     <None Include="Resources\Print.png" />
     <None Include="Resources\EditView.png" />
+    <None Include="Resources\ezgif.com-gif-to-apng.png" />
+    <None Include="Resources\ezgif.com-gif-to-apng %281%29.png" />
+    <None Include="Resources\ezgif.com-gif-maker.gif" />
     <Content Include="Resources\find_6617.png" />
     <None Include="Resources\find_next.png" />
+    <None Include="Resources\GzgM.gif" />
     <Content Include="Resources\printer.png" />
     <None Include="Resources\arrow_refresh_8563.png" />
     <Content Include="PlanningLogo.ico" />
@@ -546,12 +586,12 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\FastReport.Compat.2020.3.2\build\FastReport.Compat.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\FastReport.Compat.2020.3.2\build\FastReport.Compat.targets'))" />
     <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
     <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+    <Error Condition="!Exists('..\packages\FastReport.Compat.2021.1.1\build\FastReport.Compat.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\FastReport.Compat.2021.1.1\build\FastReport.Compat.targets'))" />
   </Target>
-  <Import Project="..\packages\FastReport.Compat.2020.3.2\build\FastReport.Compat.targets" Condition="Exists('..\packages\FastReport.Compat.2020.3.2\build\FastReport.Compat.targets')" />
   <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+  <Import Project="..\packages\FastReport.Compat.2021.1.1\build\FastReport.Compat.targets" Condition="Exists('..\packages\FastReport.Compat.2021.1.1\build\FastReport.Compat.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

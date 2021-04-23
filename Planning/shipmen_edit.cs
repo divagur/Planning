@@ -45,7 +45,7 @@ namespace Planning
 
         private bool IsShpIn()
         {
-            return _shipment.ShIn == null || _shipment.ShIn == true;
+            return _shipment!=null && (_shipment.ShIn == null || _shipment.ShIn == true);
         }
 
         public void ClearFields()

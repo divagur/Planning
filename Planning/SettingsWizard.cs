@@ -54,12 +54,17 @@ namespace Planning
             edPassword.Text = _settings.Password;
             edShipmentTemplate.Text = _settings.ShipmentReport;
             edReceiptTemplate.Text = _settings.ReceiptReport;
+            edRepPeriodTemplate.Text = _settings.PeriodReport;
+            btnReceiptDlg.Tag = edReceiptTemplate;
+            btnShipmentDlg.Tag = edShipmentTemplate;
+            btnRepPeriodTemplate.Tag = edRepPeriodTemplate;
+
         }
 
         private void btnShipmentDlg_Click(object sender, EventArgs e)
         {
-            if (openFileDialog.ShowDialog()==DialogResult.OK)       
-                edShipmentTemplate.Text = openFileDialog.FileName;
+            if (openFileDialog.ShowDialog()==DialogResult.OK)
+                ((TextBox)((Button)sender).Tag).Text = openFileDialog.FileName;
             
         }
 
@@ -71,6 +76,7 @@ namespace Planning
             _settings.Password = edPassword.Text;
             _settings.ShipmentReport = edShipmentTemplate.Text;
             _settings.ReceiptReport = edReceiptTemplate.Text;
+            _settings.PeriodReport = edRepPeriodTemplate.Text;
 
             DialogResult = DialogResult.OK;
             Close();
@@ -84,8 +90,7 @@ namespace Planning
 
         private void btnReceiptDlg_Click(object sender, EventArgs e)
         {
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-                edReceiptTemplate.Text = openFileDialog.FileName;
+
         }
     }
 }

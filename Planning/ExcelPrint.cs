@@ -72,5 +72,20 @@ namespace Planning
             Excel.Range range = SelectCells(Sheet, ColFrom, RowFrom, ColTo, RowTo);
             range.Merge(Type.Missing);
         }
+
+        public void SetValues(int Sheet, int ColFrom, int RowFrom, int ColTo, int RowTo, object[,] Values)
+        {
+            Excel.Range printRange = (Excel.Range)_worksheet.Cells[RowFrom, ColFrom];
+            printRange = printRange.Resize[RowTo, ColTo];
+            printRange.Value = Values;
+
+        }
+        public void SetRowValues(int Sheet, int Row, int ColCount, object[,] Values)
+        {
+            // _workbook.Worksheets[Sheet].Range[Row, 1].Resize[Row, ColCount].Value = Values;
+            SelectCells(Sheet, 1, Row, ColCount, Row).Value = Values;
+          
+            //printRange.Value = Values;
+        }
     }
 }

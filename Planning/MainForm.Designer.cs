@@ -29,6 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.menuMain = new System.Windows.Forms.MenuStrip();
@@ -46,6 +49,8 @@
             this.miDictTC = new System.Windows.Forms.ToolStripMenuItem();
             this.miAttributes = new System.Windows.Forms.ToolStripMenuItem();
             this.miTransportType = new System.Windows.Forms.ToolStripMenuItem();
+            this.miReports = new System.Windows.Forms.ToolStripMenuItem();
+            this.miRepPeriod = new System.Windows.Forms.ToolStripMenuItem();
             this.tabMain = new System.Windows.Forms.TabPage();
             this.panel2 = new System.Windows.Forms.Panel();
             this.tblShipments = new System.Windows.Forms.DataGridView();
@@ -73,10 +78,11 @@
             this.btnSearchNext = new System.Windows.Forms.ToolStripButton();
             this.tabForms = new System.Windows.Forms.TabControl();
             this.tmUpdate = new System.Windows.Forms.Timer(this.components);
-            this.delay_reasonsTableAdapter1 = new Planning.PlanningDataSetTableAdapters.delay_reasonsTableAdapter();
             this.statusStrip2 = new System.Windows.Forms.StatusStrip();
             this.statusInfo = new System.Windows.Forms.ToolStripStatusLabel();
             this.shipmentBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.delay_reasonsTableAdapter1 = new Planning.PlanningDataSetTableAdapters.delay_reasonsTableAdapter();
+            this.bwProgress = new System.ComponentModel.BackgroundWorker();
             this.UniqueKey = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colIdNakl = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -131,10 +137,11 @@
             // 
             this.menuMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mtiFile,
-            this.miDicts});
+            this.miDicts,
+            this.miReports});
             this.menuMain.Location = new System.Drawing.Point(0, 0);
             this.menuMain.Name = "menuMain";
-            this.menuMain.Size = new System.Drawing.Size(1276, 24);
+            this.menuMain.Size = new System.Drawing.Size(1461, 24);
             this.menuMain.TabIndex = 0;
             this.menuMain.Text = "menuStrip1";
             // 
@@ -259,6 +266,21 @@
             this.miTransportType.Text = "Типы транспортных средств";
             this.miTransportType.Click += new System.EventHandler(this.miTransportType_Click);
             // 
+            // miReports
+            // 
+            this.miReports.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miRepPeriod});
+            this.miReports.Name = "miReports";
+            this.miReports.Size = new System.Drawing.Size(60, 20);
+            this.miReports.Text = "Отчеты";
+            // 
+            // miRepPeriod
+            // 
+            this.miRepPeriod.Name = "miRepPeriod";
+            this.miRepPeriod.Size = new System.Drawing.Size(181, 22);
+            this.miRepPeriod.Text = "Отгрузки за период";
+            this.miRepPeriod.Click += new System.EventHandler(this.miRepPeriod_Click);
+            // 
             // tabMain
             // 
             this.tabMain.Controls.Add(this.panel2);
@@ -266,7 +288,7 @@
             this.tabMain.Location = new System.Drawing.Point(4, 24);
             this.tabMain.Name = "tabMain";
             this.tabMain.Padding = new System.Windows.Forms.Padding(3);
-            this.tabMain.Size = new System.Drawing.Size(1268, 557);
+            this.tabMain.Size = new System.Drawing.Size(1453, 557);
             this.tabMain.TabIndex = 0;
             this.tabMain.Text = "Отгрузки";
             this.tabMain.UseVisualStyleBackColor = true;
@@ -277,7 +299,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(3, 31);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1262, 523);
+            this.panel2.Size = new System.Drawing.Size(1447, 523);
             this.panel2.TabIndex = 5;
             // 
             // tblShipments
@@ -285,6 +307,14 @@
             this.tblShipments.AllowUserToAddRows = false;
             this.tblShipments.AllowUserToDeleteRows = false;
             this.tblShipments.AllowUserToOrderColumns = true;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.tblShipments.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.tblShipments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.tblShipments.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.UniqueKey,
@@ -326,20 +356,37 @@
             this.IsAddLv});
             this.tblShipments.ContextMenuStrip = this.mnuContext;
             this.tblShipments.Cursor = System.Windows.Forms.Cursors.Arrow;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.tblShipments.DefaultCellStyle = dataGridViewCellStyle3;
             this.tblShipments.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tblShipments.Location = new System.Drawing.Point(0, 0);
             this.tblShipments.Name = "tblShipments";
             this.tblShipments.ReadOnly = true;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.tblShipments.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.tblShipments.RowHeadersVisible = false;
             this.tblShipments.RowHeadersWidth = 20;
             this.tblShipments.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.tblShipments.Size = new System.Drawing.Size(1262, 523);
+            this.tblShipments.Size = new System.Drawing.Size(1447, 523);
             this.tblShipments.TabIndex = 2;
             this.tblShipments.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tblShipments_CellContentClick);
             this.tblShipments.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tblShipments_CellDoubleClick);
             this.tblShipments.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.tblShipments_CellPainting);
             this.tblShipments.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.tblShipments_RowPostPaint);
             this.tblShipments.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.tblShipments_RowPrePaint);
+            this.tblShipments.Sorted += new System.EventHandler(this.tblShipments_Sorted);
             // 
             // mnuContext
             // 
@@ -365,7 +412,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1262, 28);
+            this.panel1.Size = new System.Drawing.Size(1447, 28);
             this.panel1.TabIndex = 4;
             // 
             // cbUpdate
@@ -424,7 +471,7 @@
             this.btnSearchNext});
             this.tbMain.Location = new System.Drawing.Point(0, 0);
             this.tbMain.Name = "tbMain";
-            this.tbMain.Size = new System.Drawing.Size(1262, 25);
+            this.tbMain.Size = new System.Drawing.Size(1447, 25);
             this.tbMain.TabIndex = 1;
             this.tbMain.Text = "toolStrip1";
             // 
@@ -572,7 +619,7 @@
             this.tabForms.Location = new System.Drawing.Point(0, 24);
             this.tabForms.Name = "tabForms";
             this.tabForms.SelectedIndex = 0;
-            this.tabForms.Size = new System.Drawing.Size(1276, 585);
+            this.tabForms.Size = new System.Drawing.Size(1461, 585);
             this.tabForms.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabForms.TabIndex = 0;
             this.tabForms.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.tabForms_DrawItem);
@@ -582,17 +629,13 @@
             // 
             this.tmUpdate.Tick += new System.EventHandler(this.tmUpdate_Tick);
             // 
-            // delay_reasonsTableAdapter1
-            // 
-            this.delay_reasonsTableAdapter1.ClearBeforeFill = true;
-            // 
             // statusStrip2
             // 
             this.statusStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusInfo});
             this.statusStrip2.Location = new System.Drawing.Point(0, 609);
             this.statusStrip2.Name = "statusStrip2";
-            this.statusStrip2.Size = new System.Drawing.Size(1276, 22);
+            this.statusStrip2.Size = new System.Drawing.Size(1461, 22);
             this.statusStrip2.TabIndex = 2;
             this.statusStrip2.Text = "statusStrip2";
             // 
@@ -601,6 +644,18 @@
             this.statusInfo.Name = "statusInfo";
             this.statusInfo.Size = new System.Drawing.Size(118, 17);
             this.statusInfo.Text = "toolStripStatusLabel1";
+            // 
+            // delay_reasonsTableAdapter1
+            // 
+            this.delay_reasonsTableAdapter1.ClearBeforeFill = true;
+            // 
+            // bwProgress
+            // 
+            this.bwProgress.WorkerReportsProgress = true;
+            this.bwProgress.WorkerSupportsCancellation = true;
+            this.bwProgress.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bwProgress_DoWork);
+            this.bwProgress.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.bwProgress_ProgressChanged);
+            this.bwProgress.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bwProgress_RunWorkerCompleted);
             // 
             // UniqueKey
             // 
@@ -727,10 +782,11 @@
             // 
             // colSpecCond
             // 
-            this.colSpecCond.DataPropertyName = "ShpSpecialCon";
+            this.colSpecCond.DataPropertyName = "ShpSpecialCond";
             this.colSpecCond.HeaderText = "Спец. Условия";
             this.colSpecCond.Name = "colSpecCond";
             this.colSpecCond.ReadOnly = true;
+            this.colSpecCond.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             // 
             // colDriverPhone
             // 
@@ -833,7 +889,7 @@
             // 
             // colDepositor
             // 
-            this.colDepositor.DataPropertyName = "DepName";
+            this.colDepositor.DataPropertyName = "DepCode";
             this.colDepositor.HeaderText = "Депозитор";
             this.colDepositor.Name = "colDepositor";
             this.colDepositor.ReadOnly = true;
@@ -867,13 +923,12 @@
             this.IsAddLv.HeaderText = "IsAddLv";
             this.IsAddLv.Name = "IsAddLv";
             this.IsAddLv.ReadOnly = true;
-            this.IsAddLv.Visible = false;
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1276, 631);
+            this.ClientSize = new System.Drawing.Size(1461, 631);
             this.Controls.Add(this.tabForms);
             this.Controls.Add(this.menuMain);
             this.Controls.Add(this.statusStrip2);
@@ -926,7 +981,6 @@
         private System.Windows.Forms.ToolStripButton btnEdit;
         private System.Windows.Forms.ToolStripButton btnDel;
         private System.Windows.Forms.ToolStripButton btnRefresh;
-        private System.Windows.Forms.TabControl tabForms;
         private System.Windows.Forms.DateTimePicker edCurrDay;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.Panel panel1;
@@ -952,6 +1006,10 @@
         private System.Windows.Forms.ToolStripTextBox edSearch;
         private System.Windows.Forms.ToolStripButton btnSearch;
         private System.Windows.Forms.ToolStripButton btnSearchNext;
+        private System.Windows.Forms.ToolStripMenuItem miReports;
+        private System.Windows.Forms.ToolStripMenuItem miRepPeriod;
+        public System.Windows.Forms.TabControl tabForms;
+        private System.ComponentModel.BackgroundWorker bwProgress;
         private System.Windows.Forms.DataGridViewTextBoxColumn UniqueKey;
         private System.Windows.Forms.DataGridViewTextBoxColumn colId;
         private System.Windows.Forms.DataGridViewTextBoxColumn colIdNakl;

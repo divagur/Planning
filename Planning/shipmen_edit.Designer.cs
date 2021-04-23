@@ -108,8 +108,6 @@
             this.btnSDate = new System.Windows.Forms.Button();
             this.btnBindLV = new System.Windows.Forms.Button();
             this.gbMovementItem = new System.Windows.Forms.GroupBox();
-            this.toolStrip2 = new System.Windows.Forms.ToolStrip();
-            this.tbtnMoveItemEdit = new System.Windows.Forms.ToolStripButton();
             this.tblMovementItem = new System.Windows.Forms.DataGridView();
             this.colMvId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colMvStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -117,14 +115,16 @@
             this.colMvKlient = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colMvEnterDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colMvDepositor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.toolStrip2 = new System.Windows.Forms.ToolStrip();
+            this.tbtnMoveItemEdit = new System.Windows.Forms.ToolStripButton();
             this.gbTransport.SuspendLayout();
             this.gbOrders.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tblShipmentOrders)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.pnGetDateTime.SuspendLayout();
             this.gbMovementItem.SuspendLayout();
-            this.toolStrip2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tblMovementItem)).BeginInit();
+            this.toolStrip2.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -867,25 +867,6 @@
             this.gbMovementItem.TabIndex = 37;
             this.gbMovementItem.TabStop = false;
             // 
-            // toolStrip2
-            // 
-            this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tbtnMoveItemEdit});
-            this.toolStrip2.Location = new System.Drawing.Point(3, 16);
-            this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(821, 25);
-            this.toolStrip2.TabIndex = 0;
-            this.toolStrip2.Text = "toolStrip2";
-            // 
-            // tbtnMoveItemEdit
-            // 
-            this.tbtnMoveItemEdit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tbtnMoveItemEdit.Image = global::Planning.Properties.Resources.Edit;
-            this.tbtnMoveItemEdit.ImageTransparentColor = System.Drawing.Color.White;
-            this.tbtnMoveItemEdit.Name = "tbtnMoveItemEdit";
-            this.tbtnMoveItemEdit.Size = new System.Drawing.Size(23, 22);
-            this.tbtnMoveItemEdit.Text = "toolStripButton1";
-            // 
             // tblMovementItem
             // 
             this.tblMovementItem.AllowUserToAddRows = false;
@@ -950,11 +931,30 @@
             this.colMvDepositor.ReadOnly = true;
             this.colMvDepositor.Width = 200;
             // 
+            // toolStrip2
+            // 
+            this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tbtnMoveItemEdit});
+            this.toolStrip2.Location = new System.Drawing.Point(3, 16);
+            this.toolStrip2.Name = "toolStrip2";
+            this.toolStrip2.Size = new System.Drawing.Size(821, 25);
+            this.toolStrip2.TabIndex = 0;
+            this.toolStrip2.Text = "toolStrip2";
+            // 
+            // tbtnMoveItemEdit
+            // 
+            this.tbtnMoveItemEdit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbtnMoveItemEdit.Image = global::Planning.Properties.Resources.Edit;
+            this.tbtnMoveItemEdit.ImageTransparentColor = System.Drawing.Color.White;
+            this.tbtnMoveItemEdit.Name = "tbtnMoveItemEdit";
+            this.tbtnMoveItemEdit.Size = new System.Drawing.Size(23, 22);
+            this.tbtnMoveItemEdit.Text = "toolStripButton1";
+            // 
             // shipmen_edit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(847, 688);
+            this.ClientSize = new System.Drawing.Size(841, 688);
             this.Controls.Add(this.gbMovementItem);
             this.Controls.Add(this.btnBindLV);
             this.Controls.Add(this.btnAddToLV);
@@ -992,9 +992,9 @@
             this.pnGetDateTime.ResumeLayout(false);
             this.gbMovementItem.ResumeLayout(false);
             this.gbMovementItem.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tblMovementItem)).EndInit();
             this.toolStrip2.ResumeLayout(false);
             this.toolStrip2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tblMovementItem)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
