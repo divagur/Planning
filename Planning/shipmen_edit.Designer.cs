@@ -29,6 +29,11 @@
         private void InitializeComponent()
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(shipmen_edit));
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -117,6 +122,11 @@
             this.colMvDepositor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.tbtnMoveItemEdit = new System.Windows.Forms.ToolStripButton();
+            this.tbObject = new System.Windows.Forms.TabControl();
+            this.tabMain = new System.Windows.Forms.TabPage();
+            this.tabHistory = new System.Windows.Forms.TabPage();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.gbTransport.SuspendLayout();
             this.gbOrders.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tblShipmentOrders)).BeginInit();
@@ -125,12 +135,16 @@
             this.gbMovementItem.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tblMovementItem)).BeginInit();
             this.toolStrip2.SuspendLayout();
+            this.tbObject.SuspendLayout();
+            this.tabMain.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(8, 37);
+            this.label1.Location = new System.Drawing.Point(7, 40);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(132, 13);
             this.label1.TabIndex = 0;
@@ -139,7 +153,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(8, 61);
+            this.label2.Location = new System.Drawing.Point(7, 64);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(141, 13);
             this.label2.TabIndex = 1;
@@ -148,7 +162,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(8, 131);
+            this.label3.Location = new System.Drawing.Point(7, 134);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(107, 13);
             this.label3.TabIndex = 2;
@@ -157,7 +171,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(8, 158);
+            this.label4.Location = new System.Drawing.Point(7, 161);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(151, 13);
             this.label4.TabIndex = 3;
@@ -166,18 +180,18 @@
             // cmbTransportCompany
             // 
             this.cmbTransportCompany.FormattingEnabled = true;
-            this.cmbTransportCompany.Location = new System.Drawing.Point(146, 34);
+            this.cmbTransportCompany.Location = new System.Drawing.Point(145, 37);
             this.cmbTransportCompany.Name = "cmbTransportCompany";
             this.cmbTransportCompany.Size = new System.Drawing.Size(341, 21);
             this.cmbTransportCompany.TabIndex = 1;
             // 
             // edShipmentComment
             // 
-            this.edShipmentComment.Location = new System.Drawing.Point(155, 61);
+            this.edShipmentComment.Location = new System.Drawing.Point(154, 64);
             this.edShipmentComment.MaxLength = 500;
             this.edShipmentComment.Multiline = true;
             this.edShipmentComment.Name = "edShipmentComment";
-            this.edShipmentComment.Size = new System.Drawing.Size(680, 61);
+            this.edShipmentComment.Size = new System.Drawing.Size(634, 61);
             this.edShipmentComment.TabIndex = 2;
             // 
             // cmbDelayReasons
@@ -185,17 +199,17 @@
             this.cmbDelayReasons.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.cmbDelayReasons.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cmbDelayReasons.FormattingEnabled = true;
-            this.cmbDelayReasons.Location = new System.Drawing.Point(121, 128);
+            this.cmbDelayReasons.Location = new System.Drawing.Point(120, 131);
             this.cmbDelayReasons.Name = "cmbDelayReasons";
             this.cmbDelayReasons.Size = new System.Drawing.Size(332, 21);
             this.cmbDelayReasons.TabIndex = 3;
             // 
             // edDelayComment
             // 
-            this.edDelayComment.Location = new System.Drawing.Point(165, 155);
+            this.edDelayComment.Location = new System.Drawing.Point(164, 158);
             this.edDelayComment.MaxLength = 200;
             this.edDelayComment.Name = "edDelayComment";
-            this.edDelayComment.Size = new System.Drawing.Size(670, 20);
+            this.edDelayComment.Size = new System.Drawing.Size(624, 20);
             this.edDelayComment.TabIndex = 4;
             // 
             // gbTransport
@@ -239,9 +253,9 @@
             this.gbTransport.Controls.Add(this.label6);
             this.gbTransport.Controls.Add(this.dtSpecialCond);
             this.gbTransport.Controls.Add(this.cmbTimeSlot);
-            this.gbTransport.Location = new System.Drawing.Point(11, 181);
+            this.gbTransport.Location = new System.Drawing.Point(10, 184);
             this.gbTransport.Name = "gbTransport";
-            this.gbTransport.Size = new System.Drawing.Size(824, 252);
+            this.gbTransport.Size = new System.Drawing.Size(778, 252);
             this.gbTransport.TabIndex = 10;
             this.gbTransport.TabStop = false;
             // 
@@ -579,7 +593,7 @@
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(686, 659);
+            this.btnOK.Location = new System.Drawing.Point(640, 3);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 11;
@@ -589,7 +603,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(767, 659);
+            this.btnCancel.Location = new System.Drawing.Point(721, 3);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(71, 23);
             this.btnCancel.TabIndex = 12;
@@ -600,7 +614,7 @@
             // cbIsCourier
             // 
             this.cbIsCourier.AutoSize = true;
-            this.cbIsCourier.Location = new System.Drawing.Point(507, 37);
+            this.cbIsCourier.Location = new System.Drawing.Point(506, 40);
             this.cbIsCourier.Name = "cbIsCourier";
             this.cbIsCourier.Size = new System.Drawing.Size(123, 17);
             this.cbIsCourier.TabIndex = 13;
@@ -611,14 +625,22 @@
             // 
             this.gbOrders.Controls.Add(this.tblShipmentOrders);
             this.gbOrders.Controls.Add(this.toolStrip1);
-            this.gbOrders.Location = new System.Drawing.Point(11, 439);
+            this.gbOrders.Location = new System.Drawing.Point(10, 442);
             this.gbOrders.Name = "gbOrders";
-            this.gbOrders.Size = new System.Drawing.Size(827, 214);
+            this.gbOrders.Size = new System.Drawing.Size(778, 214);
             this.gbOrders.TabIndex = 14;
             this.gbOrders.TabStop = false;
             // 
             // tblShipmentOrders
             // 
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.tblShipmentOrders.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.tblShipmentOrders.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.tblShipmentOrders.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colOrderId,
@@ -631,12 +653,28 @@
             this.colId,
             this.colBindingId,
             this.colShipmentId});
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.tblShipmentOrders.DefaultCellStyle = dataGridViewCellStyle2;
             this.tblShipmentOrders.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tblShipmentOrders.Location = new System.Drawing.Point(3, 41);
             this.tblShipmentOrders.Name = "tblShipmentOrders";
             this.tblShipmentOrders.ReadOnly = true;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.tblShipmentOrders.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.tblShipmentOrders.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.tblShipmentOrders.Size = new System.Drawing.Size(821, 170);
+            this.tblShipmentOrders.Size = new System.Drawing.Size(772, 170);
             this.tblShipmentOrders.TabIndex = 1;
             // 
             // colOrderId
@@ -723,7 +761,7 @@
             this.tbtnDel});
             this.toolStrip1.Location = new System.Drawing.Point(3, 16);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(821, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(772, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -763,7 +801,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(8, 9);
+            this.label5.Location = new System.Drawing.Point(7, 12);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(145, 13);
             this.label5.TabIndex = 15;
@@ -775,7 +813,7 @@
             this.pnGetDateTime.Controls.Add(this.btnCalendarOk);
             this.pnGetDateTime.Controls.Add(this.dtSpecialTime);
             this.pnGetDateTime.Controls.Add(this.monthCalendarSpecial);
-            this.pnGetDateTime.Location = new System.Drawing.Point(841, 218);
+            this.pnGetDateTime.Location = new System.Drawing.Point(858, 209);
             this.pnGetDateTime.Name = "pnGetDateTime";
             this.pnGetDateTime.Size = new System.Drawing.Size(163, 210);
             this.pnGetDateTime.TabIndex = 35;
@@ -822,14 +860,14 @@
             // 
             // edSDate
             // 
-            this.edSDate.Location = new System.Drawing.Point(155, 6);
+            this.edSDate.Location = new System.Drawing.Point(154, 9);
             this.edSDate.Name = "edSDate";
             this.edSDate.Size = new System.Drawing.Size(118, 20);
             this.edSDate.TabIndex = 0;
             // 
             // btnAddToLV
             // 
-            this.btnAddToLV.Location = new System.Drawing.Point(400, 659);
+            this.btnAddToLV.Location = new System.Drawing.Point(354, 3);
             this.btnAddToLV.Name = "btnAddToLV";
             this.btnAddToLV.Size = new System.Drawing.Size(124, 23);
             this.btnAddToLV.TabIndex = 36;
@@ -840,7 +878,7 @@
             // btnSDate
             // 
             this.btnSDate.Image = global::Planning.Properties.Resources.calendar;
-            this.btnSDate.Location = new System.Drawing.Point(279, 4);
+            this.btnSDate.Location = new System.Drawing.Point(278, 7);
             this.btnSDate.Name = "btnSDate";
             this.btnSDate.Size = new System.Drawing.Size(31, 22);
             this.btnSDate.TabIndex = 1;
@@ -849,7 +887,7 @@
             // 
             // btnBindLV
             // 
-            this.btnBindLV.Location = new System.Drawing.Point(530, 659);
+            this.btnBindLV.Location = new System.Drawing.Point(484, 3);
             this.btnBindLV.Name = "btnBindLV";
             this.btnBindLV.Size = new System.Drawing.Size(150, 23);
             this.btnBindLV.TabIndex = 36;
@@ -861,9 +899,9 @@
             // 
             this.gbMovementItem.Controls.Add(this.tblMovementItem);
             this.gbMovementItem.Controls.Add(this.toolStrip2);
-            this.gbMovementItem.Location = new System.Drawing.Point(11, 439);
+            this.gbMovementItem.Location = new System.Drawing.Point(10, 442);
             this.gbMovementItem.Name = "gbMovementItem";
-            this.gbMovementItem.Size = new System.Drawing.Size(827, 214);
+            this.gbMovementItem.Size = new System.Drawing.Size(778, 214);
             this.gbMovementItem.TabIndex = 37;
             this.gbMovementItem.TabStop = false;
             // 
@@ -871,14 +909,14 @@
             // 
             this.tblMovementItem.AllowUserToAddRows = false;
             this.tblMovementItem.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.tblMovementItem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.tblMovementItem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.tblMovementItem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.tblMovementItem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colMvId,
@@ -887,45 +925,67 @@
             this.colMvKlient,
             this.colMvEnterDate,
             this.colMvDepositor});
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.tblMovementItem.DefaultCellStyle = dataGridViewCellStyle5;
             this.tblMovementItem.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tblMovementItem.Location = new System.Drawing.Point(3, 41);
             this.tblMovementItem.Name = "tblMovementItem";
             this.tblMovementItem.ReadOnly = true;
-            this.tblMovementItem.Size = new System.Drawing.Size(821, 170);
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.tblMovementItem.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            this.tblMovementItem.Size = new System.Drawing.Size(772, 170);
             this.tblMovementItem.TabIndex = 1;
             // 
             // colMvId
             // 
+            this.colMvId.DataPropertyName = "LVCode";
             this.colMvId.HeaderText = "Код";
             this.colMvId.Name = "colMvId";
             this.colMvId.ReadOnly = true;
             // 
             // colMvStatus
             // 
+            this.colMvStatus.DataPropertyName = "LVStatus";
             this.colMvStatus.HeaderText = "Статус";
             this.colMvStatus.Name = "colMvStatus";
             this.colMvStatus.ReadOnly = true;
             // 
             // colMvExpectedDate
             // 
+            this.colMvExpectedDate.DataPropertyName = "ExpDate";
             this.colMvExpectedDate.HeaderText = "Ожидаемая дата";
             this.colMvExpectedDate.Name = "colMvExpectedDate";
             this.colMvExpectedDate.ReadOnly = true;
             // 
             // colMvKlient
             // 
+            this.colMvKlient.DataPropertyName = "Company";
             this.colMvKlient.HeaderText = "Клиент";
             this.colMvKlient.Name = "colMvKlient";
             this.colMvKlient.ReadOnly = true;
             // 
             // colMvEnterDate
             // 
+            this.colMvEnterDate.DataPropertyName = "InputDate";
             this.colMvEnterDate.HeaderText = "Дата ввода";
             this.colMvEnterDate.Name = "colMvEnterDate";
             this.colMvEnterDate.ReadOnly = true;
             // 
             // colMvDepositor
             // 
+            this.colMvDepositor.DataPropertyName = "DepCode";
             this.colMvDepositor.HeaderText = "Депозитор";
             this.colMvDepositor.Name = "colMvDepositor";
             this.colMvDepositor.ReadOnly = true;
@@ -937,7 +997,7 @@
             this.tbtnMoveItemEdit});
             this.toolStrip2.Location = new System.Drawing.Point(3, 16);
             this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(821, 25);
+            this.toolStrip2.Size = new System.Drawing.Size(772, 25);
             this.toolStrip2.TabIndex = 0;
             this.toolStrip2.Text = "toolStrip2";
             // 
@@ -949,32 +1009,83 @@
             this.tbtnMoveItemEdit.Name = "tbtnMoveItemEdit";
             this.tbtnMoveItemEdit.Size = new System.Drawing.Size(23, 22);
             this.tbtnMoveItemEdit.Text = "toolStripButton1";
+            this.tbtnMoveItemEdit.Click += new System.EventHandler(this.tbtnMoveItemEdit_Click);
+            // 
+            // tbObject
+            // 
+            this.tbObject.Controls.Add(this.tabMain);
+            this.tbObject.Controls.Add(this.tabHistory);
+            this.tbObject.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbObject.Location = new System.Drawing.Point(0, 0);
+            this.tbObject.Name = "tbObject";
+            this.tbObject.SelectedIndex = 0;
+            this.tbObject.Size = new System.Drawing.Size(805, 685);
+            this.tbObject.TabIndex = 38;
+            // 
+            // tabMain
+            // 
+            this.tabMain.Controls.Add(this.pnGetDateTime);
+            this.tabMain.Controls.Add(this.gbMovementItem);
+            this.tabMain.Controls.Add(this.label5);
+            this.tabMain.Controls.Add(this.btnSDate);
+            this.tabMain.Controls.Add(this.cmbDelayReasons);
+            this.tabMain.Controls.Add(this.label1);
+            this.tabMain.Controls.Add(this.edDelayComment);
+            this.tabMain.Controls.Add(this.cbIsCourier);
+            this.tabMain.Controls.Add(this.label2);
+            this.tabMain.Controls.Add(this.edSDate);
+            this.tabMain.Controls.Add(this.edShipmentComment);
+            this.tabMain.Controls.Add(this.label3);
+            this.tabMain.Controls.Add(this.gbTransport);
+            this.tabMain.Controls.Add(this.gbOrders);
+            this.tabMain.Controls.Add(this.label4);
+            this.tabMain.Controls.Add(this.cmbTransportCompany);
+            this.tabMain.Location = new System.Drawing.Point(4, 22);
+            this.tabMain.Name = "tabMain";
+            this.tabMain.Padding = new System.Windows.Forms.Padding(3);
+            this.tabMain.Size = new System.Drawing.Size(797, 659);
+            this.tabMain.TabIndex = 0;
+            this.tabMain.Text = "Основные сведения";
+            this.tabMain.UseVisualStyleBackColor = true;
+            // 
+            // tabHistory
+            // 
+            this.tabHistory.Location = new System.Drawing.Point(4, 22);
+            this.tabHistory.Name = "tabHistory";
+            this.tabHistory.Padding = new System.Windows.Forms.Padding(3);
+            this.tabHistory.Size = new System.Drawing.Size(794, 659);
+            this.tabHistory.TabIndex = 1;
+            this.tabHistory.Text = "История";
+            this.tabHistory.UseVisualStyleBackColor = true;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.tbObject);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(805, 685);
+            this.panel1.TabIndex = 39;
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.btnAddToLV);
+            this.panel2.Controls.Add(this.btnOK);
+            this.panel2.Controls.Add(this.btnCancel);
+            this.panel2.Controls.Add(this.btnBindLV);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel2.Location = new System.Drawing.Point(0, 685);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(805, 30);
+            this.panel2.TabIndex = 40;
             // 
             // shipmen_edit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(841, 688);
-            this.Controls.Add(this.gbMovementItem);
-            this.Controls.Add(this.btnBindLV);
-            this.Controls.Add(this.btnAddToLV);
-            this.Controls.Add(this.pnGetDateTime);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.gbOrders);
-            this.Controls.Add(this.cbIsCourier);
-            this.Controls.Add(this.btnSDate);
-            this.Controls.Add(this.btnCancel);
-            this.Controls.Add(this.btnOK);
-            this.Controls.Add(this.gbTransport);
-            this.Controls.Add(this.edSDate);
-            this.Controls.Add(this.edDelayComment);
-            this.Controls.Add(this.cmbDelayReasons);
-            this.Controls.Add(this.edShipmentComment);
-            this.Controls.Add(this.cmbTransportCompany);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.ClientSize = new System.Drawing.Size(805, 715);
+            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.panel2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "shipmen_edit";
@@ -995,8 +1106,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.tblMovementItem)).EndInit();
             this.toolStrip2.ResumeLayout(false);
             this.toolStrip2.PerformLayout();
+            this.tbObject.ResumeLayout(false);
+            this.tabMain.ResumeLayout(false);
+            this.tabMain.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -1081,13 +1196,18 @@
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.GroupBox gbMovementItem;
         private System.Windows.Forms.DataGridView tblMovementItem;
+        private System.Windows.Forms.ToolStrip toolStrip2;
+        private System.Windows.Forms.ToolStripButton tbtnMoveItemEdit;
         private System.Windows.Forms.DataGridViewTextBoxColumn colMvId;
         private System.Windows.Forms.DataGridViewTextBoxColumn colMvStatus;
         private System.Windows.Forms.DataGridViewTextBoxColumn colMvExpectedDate;
         private System.Windows.Forms.DataGridViewTextBoxColumn colMvKlient;
         private System.Windows.Forms.DataGridViewTextBoxColumn colMvEnterDate;
         private System.Windows.Forms.DataGridViewTextBoxColumn colMvDepositor;
-        private System.Windows.Forms.ToolStrip toolStrip2;
-        private System.Windows.Forms.ToolStripButton tbtnMoveItemEdit;
+        private System.Windows.Forms.TabControl tbObject;
+        private System.Windows.Forms.TabPage tabMain;
+        private System.Windows.Forms.TabPage tabHistory;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel panel2;
     }
 }

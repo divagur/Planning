@@ -144,6 +144,7 @@ namespace Planning
                 cmbDelayReasons.Text = DataService.GetDictNameById("Причины_задержки", _shipment.DelayReasonsId);
                 edDelayComment.Text = _shipment.DelayComment;
                 cbIsCourier.Checked = _shipment.IsCourier == null ? false : (bool)_shipment.IsCourier;
+                cbSpecCondition.Checked = _shipment.SpCondition == null ? false:(bool)_shipment.SpCondition;
                 edSubmissionTime.Text = _shipment.SubmissionTime.ToString();
                 edStartTime.Text = _shipment.StartTime.ToString();
                 edEndDate.Text = _shipment.EndTime.ToString();
@@ -158,8 +159,10 @@ namespace Planning
                 edAttorneyDate.Text = _shipment.AttorneyDate.ToString();
                 edAttorneyIssued.Text = _shipment.AttorneyIssued;
                 cmbGate.Text = DataService.GetDictNameById("Ворота", _shipment.GateId);
-                cmbTimeSlot.Text = _shipment.TimeSlot == null ? "" : _shipment.TimeSlot.SlotTime.ToString();//DataService.GetDictValueById("ТаймСлоты","slot_time", _shipment.TimeSlotId);
-                                                                                                            //cbIsCourier.Checked = (bool)_shipment.IsCourier;
+                cmbTimeSlot.Text = _shipment.TimeSlot == null ? "" : _shipment.TimeSlot.SlotTime.ToString();
+                //DataService.GetDictValueById("ТаймСлоты","slot_time", _shipment.TimeSlotId);
+                //cbIsCourier.Checked = (bool)_shipment.IsCourier;
+
                 tblShipmentOrders.AutoGenerateColumns = false;
                 tblShipmentOrders.DataSource = _shipment.ShipmentOrders.ToList();
                 cmbTransportCompany.Text = DataService.GetDictNameById("ТК", _shipment.TransportCompanyId);
@@ -181,9 +184,9 @@ namespace Planning
                 edDelayComment.Text = _movement.DelayComment;
                 edDriverFIO.Text = _movement.Performer;
                 cmbTimeSlot.Text = _movement.TimeSlots == null ? "" : _movement.TimeSlots.SlotTime.ToString();
-                tblShipmentOrders.AutoGenerateColumns = false;
-                tblShipmentOrders.DataSource = _movement.MovementItems.ToList();
-
+                //tblShipmentOrders.AutoGenerateColumns = false;
+                //tblShipmentOrders.DataSource = _movement.MovementItems.ToList();
+                PopulateMovementItem();
 
                 DateTime specTime;
                 if (DateTime.TryParse(_movement.SpecialTime.ToString(), out specTime))
@@ -264,6 +267,7 @@ namespace Planning
                 _shipment.GateId = DataService.GetDictIdByName("Ворота", cmbGate.Text);
                 _shipment.TransportCompanyId = DataService.GetDictIdByName("ТК", cmbTransportCompany.Text);
                 _shipment.TransportTypeId = DataService.GetDictIdByName("Типы_транспорта", cmbTransportType.Text);
+                _shipment.SpCondition = cbSpecCondition.Checked;
                 // _shipment.TimeSlotId =Convert.ToInt32(IsNull(cmbTimeSlot.Text,null));
                 return true;
             }
@@ -297,6 +301,8 @@ namespace Planning
                 _movement.Performer = edDriverFIO.Text;
                 _movement.TimeSlotId = cbSpecCondition.Checked ? (int?)null : DataService.GetDictIdByCondition("ТаймСлоты", $"slot_time='{cmbTimeSlot.Text}'");
                 _movement.SpecialTime = cbSpecCondition.Checked ? TimeSpan.Parse(dtSpecialCond.Value.ToShortTimeString()) : (TimeSpan?)null;
+                _movement.SpCondition = cbSpecCondition.Checked;
+                return true;
             }
             return false;
         }
@@ -309,7 +315,11 @@ namespace Planning
             _shipment = shipment;
             IsShipment = true;
             gbMovementItem.Visible = false;
+
+
+            AddHistory(shipment.Id);
         }
+
 
         public shipmen_edit(Movement movement)
         {
@@ -320,6 +330,19 @@ namespace Planning
             gbOrders.Visible = false;
             btnAddToLV.Visible = false;
             btnBindLV.Visible = false;
+
+            AddHistory(movement.Id);
+        }
+
+        public void AddHistory(int ItemId)
+        {
+            frmShipmentHistory frmShipmentLog = new frmShipmentHistory(ItemId);
+            frmShipmentLog.Populate();
+            frmShipmentLog.TopLevel = false;
+            frmShipmentLog.Visible = true;
+            frmShipmentLog.FormBorderStyle = FormBorderStyle.None;
+            frmShipmentLog.Dock = DockStyle.Fill;
+            tbObject.TabPages[1].Controls.Add(frmShipmentLog);
 
         }
 
@@ -601,5 +624,50 @@ namespace Planning
         {
 
         }
+
+
+        private void PopulateMovementItem()
+        {
+            tblMovementItem.AutoGenerateColumns = false;
+            SqlHandle sqlHandle1 = new SqlHandle(DataService.connectionString);
+            sqlHandle1.SqlStatement = "SP_PL_GetMovementItems";
+            sqlHandle1.Connect();
+            sqlHandle1.TypeCommand = CommandType.StoredProcedure;
+            sqlHandle1.IsResultSet = true;
+            SqlHandle sqlHandle2 = sqlHandle1;
+            SqlParameter sqlParameter = new SqlParameter();
+            sqlParameter.ParameterName = "@MovementID";
+            sqlParameter.Value = (object)this._movement.Id;
+            sqlHandle2.AddCommandParametr(sqlParameter);
+            if (!sqlHandle1.Execute())
+            {
+                int num = (int)MessageBox.Show(sqlHandle1.LastError, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+            }
+            else
+            {
+                DataSet dataSet = new DataSet();
+                dataSet.Tables.Add();
+                dataSet.Tables[0].Load((IDataReader)sqlHandle1.Reader);
+                this.tblMovementItem.DataSource = (object)dataSet.Tables[0];
+            }
+        }
+
+        private void tbtnMoveItemEdit_Click(object sender, EventArgs e)
+        {
+            ShipmentParam shipmentAddResult = new ShipmentParam();
+            shipmentAddResult.IsShipment = false;
+            shipmentAddResult.Result = _movement;
+            ShipmentAdd frmShipmentAdd = new ShipmentAdd(shipmentAddResult);
+            if (frmShipmentAdd.ShowDialog() == DialogResult.OK)
+            {
+                _context.SaveChanges();
+                PopulateMovementItem();
+            }
+
+        }
     }
+
+
+
+
 }

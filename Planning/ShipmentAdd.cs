@@ -20,7 +20,7 @@ namespace Planning
         PlanningDbContext _context;
         Shipment _shipment;
         Movement _movement;
-        ShipmentAddResult _shipmentAddResult;
+        ShipmentParam _shipmentAddResult;
         List<string> SelectedId;
         bool Locked;
 
@@ -31,7 +31,7 @@ namespace Planning
             cmbType.Enabled = !Lock;
             
         }
-        public ShipmentAdd(ShipmentAddResult shipmentAddResult)
+        public ShipmentAdd(ShipmentParam shipmentAddResult)
         {
             InitializeComponent();
             _context = DataService.context;

@@ -236,6 +236,12 @@
     <Compile Include="ShipmentElements.Designer.cs">
       <DependentUpon>ShipmentElements.cs</DependentUpon>
     </Compile>
+    <Compile Include="ShipmentHistory.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ShipmentHistory.Designer.cs">
+      <DependentUpon>ShipmentHistory.cs</DependentUpon>
+    </Compile>
     <Compile Include="ShipmentOrder.cs">
       <DependentUpon>DbPlaning.tt</DependentUpon>
     </Compile>
@@ -245,6 +251,7 @@
     <Compile Include="ShipmentOrderEdit.Designer.cs">
       <DependentUpon>ShipmentOrderEdit.cs</DependentUpon>
     </Compile>
+    <Compile Include="ShipmentParam.cs" />
     <Compile Include="SqlHandle.cs" />
     <Compile Include="TimeSlot.cs">
       <DependentUpon>DbPlaning.tt</DependentUpon>
@@ -395,6 +402,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ShipmentElements.resx">
       <DependentUpon>ShipmentElements.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ShipmentHistory.resx">
+      <DependentUpon>ShipmentHistory.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ShipmentOrderEdit.resx">
       <DependentUpon>ShipmentOrderEdit.cs</DependentUpon>

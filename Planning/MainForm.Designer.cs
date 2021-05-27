@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.menuMain = new System.Windows.Forms.MenuStrip();
             this.mtiFile = new System.Windows.Forms.ToolStripMenuItem();
             this.miSettings = new System.Windows.Forms.ToolStripMenuItem();
@@ -54,6 +54,43 @@
             this.tabMain = new System.Windows.Forms.TabPage();
             this.panel2 = new System.Windows.Forms.Panel();
             this.tblShipments = new System.Windows.Forms.DataGridView();
+            this.UniqueKey = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colIdNakl = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDirection = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colOrderId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colOrderType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colKlientId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colKlientName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCopmletePct = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PrcValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDoneShare = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colComment = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colOrderComment = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colGate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colSpecCond = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.colDriverPhone = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDriverName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colTransComp = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colTransportType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colTrackNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colTrailerNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colAttorneyNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colAttorneyDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colSubmissionTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colStartTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colEndTimePlan = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colEndTimeFact = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDelayReason = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDelayComment = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDepositor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colStampNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FontColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.BackgroundColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.IsAddLv = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mnuContext = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mciPrint = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -81,45 +118,10 @@
             this.statusStrip2 = new System.Windows.Forms.StatusStrip();
             this.statusInfo = new System.Windows.Forms.ToolStripStatusLabel();
             this.shipmentBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.delay_reasonsTableAdapter1 = new Planning.PlanningDataSetTableAdapters.delay_reasonsTableAdapter();
             this.bwProgress = new System.ComponentModel.BackgroundWorker();
-            this.UniqueKey = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colIdNakl = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDirection = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colOrderId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colOrderType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colKlientId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colKlientName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colCopmletePct = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PrcValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDoneShare = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colComment = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colOrderComment = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colGate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colSpecCond = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDriverPhone = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDriverName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colTransComp = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colTransportType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colTrackNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colTrailerNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colAttorneyNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colAttorneyDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colSubmissionTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colStartTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colEndTimePlan = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colEndTimeFact = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDelayReason = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDelayComment = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDepositor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colStampNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FontColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.BackgroundColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.IsAddLv = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.delay_reasonsTableAdapter1 = new Planning.PlanningDataSetTableAdapters.delay_reasonsTableAdapter();
+            this.btnShowLog = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.menuMain.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -307,14 +309,14 @@
             this.tblShipments.AllowUserToAddRows = false;
             this.tblShipments.AllowUserToDeleteRows = false;
             this.tblShipments.AllowUserToOrderColumns = true;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.tblShipments.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.tblShipments.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
             this.tblShipments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.tblShipments.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.UniqueKey,
@@ -356,26 +358,26 @@
             this.IsAddLv});
             this.tblShipments.ContextMenuStrip = this.mnuContext;
             this.tblShipments.Cursor = System.Windows.Forms.Cursors.Arrow;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.tblShipments.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.tblShipments.DefaultCellStyle = dataGridViewCellStyle7;
             this.tblShipments.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tblShipments.Location = new System.Drawing.Point(0, 0);
             this.tblShipments.Name = "tblShipments";
             this.tblShipments.ReadOnly = true;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.tblShipments.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.tblShipments.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
             this.tblShipments.RowHeadersVisible = false;
             this.tblShipments.RowHeadersWidth = 20;
             this.tblShipments.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -387,275 +389,6 @@
             this.tblShipments.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.tblShipments_RowPostPaint);
             this.tblShipments.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.tblShipments_RowPrePaint);
             this.tblShipments.Sorted += new System.EventHandler(this.tblShipments_Sorted);
-            // 
-            // mnuContext
-            // 
-            this.mnuContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mciPrint});
-            this.mnuContext.Name = "mnuContext";
-            this.mnuContext.Size = new System.Drawing.Size(114, 26);
-            // 
-            // mciPrint
-            // 
-            this.mciPrint.Image = global::Planning.Properties.Resources.printer;
-            this.mciPrint.Name = "mciPrint";
-            this.mciPrint.Size = new System.Drawing.Size(113, 22);
-            this.mciPrint.Text = "Печать";
-            this.mciPrint.Click += new System.EventHandler(this.mciPrint_Click);
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.cbUpdate);
-            this.panel1.Controls.Add(this.edInterval);
-            this.panel1.Controls.Add(this.edCurrDay);
-            this.panel1.Controls.Add(this.tbMain);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(3, 3);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1447, 28);
-            this.panel1.TabIndex = 4;
-            // 
-            // cbUpdate
-            // 
-            this.cbUpdate.AutoSize = true;
-            this.cbUpdate.Location = new System.Drawing.Point(515, 4);
-            this.cbUpdate.Name = "cbUpdate";
-            this.cbUpdate.Size = new System.Drawing.Size(110, 17);
-            this.cbUpdate.TabIndex = 5;
-            this.cbUpdate.Text = "Автообновление";
-            this.cbUpdate.UseVisualStyleBackColor = true;
-            this.cbUpdate.CheckedChanged += new System.EventHandler(this.cbUpdate_CheckedChanged);
-            // 
-            // edInterval
-            // 
-            this.edInterval.Location = new System.Drawing.Point(464, 3);
-            this.edInterval.Minimum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.edInterval.Name = "edInterval";
-            this.edInterval.Size = new System.Drawing.Size(45, 20);
-            this.edInterval.TabIndex = 4;
-            this.edInterval.Value = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.edInterval.ValueChanged += new System.EventHandler(this.edInterval_ValueChanged);
-            // 
-            // edCurrDay
-            // 
-            this.edCurrDay.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.edCurrDay.Location = new System.Drawing.Point(363, 2);
-            this.edCurrDay.Name = "edCurrDay";
-            this.edCurrDay.Size = new System.Drawing.Size(95, 20);
-            this.edCurrDay.TabIndex = 3;
-            this.edCurrDay.ValueChanged += new System.EventHandler(this.edCurrDay_ValueChanged);
-            // 
-            // tbMain
-            // 
-            this.tbMain.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.tbMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnAdd,
-            this.btnEdit,
-            this.btnDel,
-            this.btnRefresh,
-            this.toolStripSeparator1,
-            this.btnPrint,
-            this.toolStripSeparator2,
-            this.btnColumnVisible,
-            this.toolStripSeparator3,
-            this.edSearch,
-            this.btnSearch,
-            this.btnSearchNext});
-            this.tbMain.Location = new System.Drawing.Point(0, 0);
-            this.tbMain.Name = "tbMain";
-            this.tbMain.Size = new System.Drawing.Size(1447, 25);
-            this.tbMain.TabIndex = 1;
-            this.tbMain.Text = "toolStrip1";
-            // 
-            // btnAdd
-            // 
-            this.btnAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnAdd.Image = global::Planning.Properties.Resources.Add;
-            this.btnAdd.ImageTransparentColor = System.Drawing.Color.White;
-            this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(23, 22);
-            this.btnAdd.Text = "Добавить";
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
-            // 
-            // btnEdit
-            // 
-            this.btnEdit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnEdit.Image = ((System.Drawing.Image)(resources.GetObject("btnEdit.Image")));
-            this.btnEdit.ImageTransparentColor = System.Drawing.Color.White;
-            this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(23, 22);
-            this.btnEdit.Text = "Редактировать";
-            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
-            // 
-            // btnDel
-            // 
-            this.btnDel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnDel.Image = global::Planning.Properties.Resources.Delete;
-            this.btnDel.ImageTransparentColor = System.Drawing.Color.White;
-            this.btnDel.Name = "btnDel";
-            this.btnDel.Size = new System.Drawing.Size(23, 22);
-            this.btnDel.Text = "Удалить";
-            this.btnDel.Click += new System.EventHandler(this.btnDel_Click);
-            // 
-            // btnRefresh
-            // 
-            this.btnRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnRefresh.Image = global::Planning.Properties.Resources.arrow_refresh_8563;
-            this.btnRefresh.ImageTransparentColor = System.Drawing.Color.White;
-            this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(23, 22);
-            this.btnRefresh.Text = "toolStripButton1";
-            this.btnRefresh.ToolTipText = "Обновить";
-            this.btnRefresh.Click += new System.EventHandler(this.toolStripButton1_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-            // 
-            // btnPrint
-            // 
-            this.btnPrint.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnPrint.Image = global::Planning.Properties.Resources.printer;
-            this.btnPrint.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnPrint.Name = "btnPrint";
-            this.btnPrint.Size = new System.Drawing.Size(23, 22);
-            this.btnPrint.Text = "toolStripButton1";
-            this.btnPrint.ToolTipText = "Печать";
-            this.btnPrint.Click += new System.EventHandler(this.mciPrint_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
-            // 
-            // btnColumnVisible
-            // 
-            this.btnColumnVisible.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnColumnVisible.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem3,
-            this.toolStripMenuItem1,
-            this.toolStripMenuItem2});
-            this.btnColumnVisible.Image = ((System.Drawing.Image)(resources.GetObject("btnColumnVisible.Image")));
-            this.btnColumnVisible.ImageTransparentColor = System.Drawing.Color.White;
-            this.btnColumnVisible.Name = "btnColumnVisible";
-            this.btnColumnVisible.Size = new System.Drawing.Size(32, 22);
-            this.btnColumnVisible.Text = "toolStripSplitButton1";
-            this.btnColumnVisible.ToolTipText = "Видимость колонок";
-            // 
-            // toolStripMenuItem3
-            // 
-            this.toolStripMenuItem3.Checked = true;
-            this.toolStripMenuItem3.CheckOnClick = true;
-            this.toolStripMenuItem3.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(80, 22);
-            this.toolStripMenuItem3.Text = "2";
-            this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
-            // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.CheckOnClick = true;
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(80, 22);
-            this.toolStripMenuItem1.Text = "1";
-            // 
-            // toolStripMenuItem2
-            // 
-            this.toolStripMenuItem2.CheckOnClick = true;
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(80, 22);
-            this.toolStripMenuItem2.Text = "3";
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
-            // 
-            // edSearch
-            // 
-            this.edSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.edSearch.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.edSearch.Name = "edSearch";
-            this.edSearch.Size = new System.Drawing.Size(150, 25);
-            this.edSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.edSearch_KeyDown);
-            // 
-            // btnSearch
-            // 
-            this.btnSearch.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnSearch.Image = global::Planning.Properties.Resources.find_6617;
-            this.btnSearch.ImageTransparentColor = System.Drawing.Color.White;
-            this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(23, 22);
-            this.btnSearch.Text = "toolStripButton1";
-            this.btnSearch.ToolTipText = "Найти";
-            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
-            // 
-            // btnSearchNext
-            // 
-            this.btnSearchNext.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnSearchNext.Image = global::Planning.Properties.Resources.find_next;
-            this.btnSearchNext.ImageTransparentColor = System.Drawing.Color.White;
-            this.btnSearchNext.Name = "btnSearchNext";
-            this.btnSearchNext.Size = new System.Drawing.Size(23, 22);
-            this.btnSearchNext.Text = "toolStripButton1";
-            this.btnSearchNext.ToolTipText = "Найти далее";
-            this.btnSearchNext.Click += new System.EventHandler(this.btnSearchNext_Click);
-            // 
-            // tabForms
-            // 
-            this.tabForms.Controls.Add(this.tabMain);
-            this.tabForms.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabForms.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
-            this.tabForms.ItemSize = new System.Drawing.Size(180, 20);
-            this.tabForms.Location = new System.Drawing.Point(0, 24);
-            this.tabForms.Name = "tabForms";
-            this.tabForms.SelectedIndex = 0;
-            this.tabForms.Size = new System.Drawing.Size(1461, 585);
-            this.tabForms.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
-            this.tabForms.TabIndex = 0;
-            this.tabForms.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.tabForms_DrawItem);
-            this.tabForms.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tabForms_MouseDown);
-            // 
-            // tmUpdate
-            // 
-            this.tmUpdate.Tick += new System.EventHandler(this.tmUpdate_Tick);
-            // 
-            // statusStrip2
-            // 
-            this.statusStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.statusInfo});
-            this.statusStrip2.Location = new System.Drawing.Point(0, 609);
-            this.statusStrip2.Name = "statusStrip2";
-            this.statusStrip2.Size = new System.Drawing.Size(1461, 22);
-            this.statusStrip2.TabIndex = 2;
-            this.statusStrip2.Text = "statusStrip2";
-            // 
-            // statusInfo
-            // 
-            this.statusInfo.Name = "statusInfo";
-            this.statusInfo.Size = new System.Drawing.Size(118, 17);
-            this.statusInfo.Text = "toolStripStatusLabel1";
-            // 
-            // delay_reasonsTableAdapter1
-            // 
-            this.delay_reasonsTableAdapter1.ClearBeforeFill = true;
-            // 
-            // bwProgress
-            // 
-            this.bwProgress.WorkerReportsProgress = true;
-            this.bwProgress.WorkerSupportsCancellation = true;
-            this.bwProgress.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bwProgress_DoWork);
-            this.bwProgress.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.bwProgress_ProgressChanged);
-            this.bwProgress.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bwProgress_RunWorkerCompleted);
             // 
             // UniqueKey
             // 
@@ -737,8 +470,8 @@
             // colCopmletePct
             // 
             this.colCopmletePct.DataPropertyName = "PrcReady";
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.colCopmletePct.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.colCopmletePct.DefaultCellStyle = dataGridViewCellStyle6;
             this.colCopmletePct.HeaderText = "Собран (в %)";
             this.colCopmletePct.Name = "colCopmletePct";
             this.colCopmletePct.ReadOnly = true;
@@ -787,6 +520,7 @@
             this.colSpecCond.Name = "colSpecCond";
             this.colSpecCond.ReadOnly = true;
             this.colSpecCond.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colSpecCond.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // colDriverPhone
             // 
@@ -924,6 +658,292 @@
             this.IsAddLv.Name = "IsAddLv";
             this.IsAddLv.ReadOnly = true;
             // 
+            // mnuContext
+            // 
+            this.mnuContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mciPrint});
+            this.mnuContext.Name = "mnuContext";
+            this.mnuContext.Size = new System.Drawing.Size(114, 26);
+            // 
+            // mciPrint
+            // 
+            this.mciPrint.Image = global::Planning.Properties.Resources.printer;
+            this.mciPrint.Name = "mciPrint";
+            this.mciPrint.Size = new System.Drawing.Size(113, 22);
+            this.mciPrint.Text = "Печать";
+            this.mciPrint.Click += new System.EventHandler(this.mciPrint_Click);
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.cbUpdate);
+            this.panel1.Controls.Add(this.edInterval);
+            this.panel1.Controls.Add(this.edCurrDay);
+            this.panel1.Controls.Add(this.tbMain);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(3, 3);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1447, 28);
+            this.panel1.TabIndex = 4;
+            // 
+            // cbUpdate
+            // 
+            this.cbUpdate.AutoSize = true;
+            this.cbUpdate.Location = new System.Drawing.Point(515, 4);
+            this.cbUpdate.Name = "cbUpdate";
+            this.cbUpdate.Size = new System.Drawing.Size(110, 17);
+            this.cbUpdate.TabIndex = 5;
+            this.cbUpdate.Text = "Автообновление";
+            this.cbUpdate.UseVisualStyleBackColor = true;
+            this.cbUpdate.CheckedChanged += new System.EventHandler(this.cbUpdate_CheckedChanged);
+            // 
+            // edInterval
+            // 
+            this.edInterval.Location = new System.Drawing.Point(464, 3);
+            this.edInterval.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.edInterval.Name = "edInterval";
+            this.edInterval.Size = new System.Drawing.Size(45, 20);
+            this.edInterval.TabIndex = 4;
+            this.edInterval.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.edInterval.ValueChanged += new System.EventHandler(this.edInterval_ValueChanged);
+            // 
+            // edCurrDay
+            // 
+            this.edCurrDay.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.edCurrDay.Location = new System.Drawing.Point(363, 2);
+            this.edCurrDay.Name = "edCurrDay";
+            this.edCurrDay.Size = new System.Drawing.Size(95, 20);
+            this.edCurrDay.TabIndex = 3;
+            this.edCurrDay.ValueChanged += new System.EventHandler(this.edCurrDay_ValueChanged);
+            // 
+            // tbMain
+            // 
+            this.tbMain.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.tbMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnAdd,
+            this.btnEdit,
+            this.btnDel,
+            this.btnRefresh,
+            this.btnShowLog,
+            this.toolStripSeparator1,
+            this.btnPrint,
+            this.toolStripSeparator2,
+            this.btnColumnVisible,
+            this.toolStripSeparator3,
+            this.toolStripSeparator4,
+            this.edSearch,
+            this.btnSearch,
+            this.btnSearchNext});
+            this.tbMain.Location = new System.Drawing.Point(0, 0);
+            this.tbMain.Name = "tbMain";
+            this.tbMain.Size = new System.Drawing.Size(1447, 25);
+            this.tbMain.TabIndex = 1;
+            this.tbMain.Text = "toolStrip1";
+            // 
+            // btnAdd
+            // 
+            this.btnAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnAdd.Image = global::Planning.Properties.Resources.Add;
+            this.btnAdd.ImageTransparentColor = System.Drawing.Color.White;
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(23, 22);
+            this.btnAdd.Text = "Добавить";
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            // 
+            // btnEdit
+            // 
+            this.btnEdit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnEdit.Image = ((System.Drawing.Image)(resources.GetObject("btnEdit.Image")));
+            this.btnEdit.ImageTransparentColor = System.Drawing.Color.White;
+            this.btnEdit.Name = "btnEdit";
+            this.btnEdit.Size = new System.Drawing.Size(23, 22);
+            this.btnEdit.Text = "Редактировать";
+            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
+            // 
+            // btnDel
+            // 
+            this.btnDel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnDel.Image = global::Planning.Properties.Resources.Delete;
+            this.btnDel.ImageTransparentColor = System.Drawing.Color.White;
+            this.btnDel.Name = "btnDel";
+            this.btnDel.Size = new System.Drawing.Size(23, 22);
+            this.btnDel.Text = "Удалить";
+            this.btnDel.Click += new System.EventHandler(this.btnDel_Click);
+            // 
+            // btnRefresh
+            // 
+            this.btnRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnRefresh.Image = global::Planning.Properties.Resources.arrow_refresh_8563;
+            this.btnRefresh.ImageTransparentColor = System.Drawing.Color.White;
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(23, 22);
+            this.btnRefresh.Text = "toolStripButton1";
+            this.btnRefresh.ToolTipText = "Обновить";
+            this.btnRefresh.Click += new System.EventHandler(this.toolStripButton1_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // btnPrint
+            // 
+            this.btnPrint.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnPrint.Image = global::Planning.Properties.Resources.printer;
+            this.btnPrint.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnPrint.Name = "btnPrint";
+            this.btnPrint.Size = new System.Drawing.Size(23, 22);
+            this.btnPrint.Text = "toolStripButton1";
+            this.btnPrint.ToolTipText = "Печать";
+            this.btnPrint.Click += new System.EventHandler(this.mciPrint_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
+            // btnColumnVisible
+            // 
+            this.btnColumnVisible.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnColumnVisible.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem3,
+            this.toolStripMenuItem1,
+            this.toolStripMenuItem2});
+            this.btnColumnVisible.Image = ((System.Drawing.Image)(resources.GetObject("btnColumnVisible.Image")));
+            this.btnColumnVisible.ImageTransparentColor = System.Drawing.Color.White;
+            this.btnColumnVisible.Name = "btnColumnVisible";
+            this.btnColumnVisible.Size = new System.Drawing.Size(32, 22);
+            this.btnColumnVisible.Text = "toolStripSplitButton1";
+            this.btnColumnVisible.ToolTipText = "Видимость колонок";
+            // 
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.Checked = true;
+            this.toolStripMenuItem3.CheckOnClick = true;
+            this.toolStripMenuItem3.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem3.Text = "2";
+            this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.CheckOnClick = true;
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem1.Text = "1";
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.CheckOnClick = true;
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem2.Text = "3";
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+            // 
+            // edSearch
+            // 
+            this.edSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.edSearch.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.edSearch.Name = "edSearch";
+            this.edSearch.Size = new System.Drawing.Size(150, 25);
+            this.edSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.edSearch_KeyDown);
+            // 
+            // btnSearch
+            // 
+            this.btnSearch.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnSearch.Image = global::Planning.Properties.Resources.find_6617;
+            this.btnSearch.ImageTransparentColor = System.Drawing.Color.White;
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(23, 22);
+            this.btnSearch.Text = "toolStripButton1";
+            this.btnSearch.ToolTipText = "Найти";
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
+            // 
+            // btnSearchNext
+            // 
+            this.btnSearchNext.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnSearchNext.Image = global::Planning.Properties.Resources.find_next;
+            this.btnSearchNext.ImageTransparentColor = System.Drawing.Color.White;
+            this.btnSearchNext.Name = "btnSearchNext";
+            this.btnSearchNext.Size = new System.Drawing.Size(23, 22);
+            this.btnSearchNext.Text = "toolStripButton1";
+            this.btnSearchNext.ToolTipText = "Найти далее";
+            this.btnSearchNext.Click += new System.EventHandler(this.btnSearchNext_Click);
+            // 
+            // tabForms
+            // 
+            this.tabForms.Controls.Add(this.tabMain);
+            this.tabForms.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabForms.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
+            this.tabForms.ItemSize = new System.Drawing.Size(180, 20);
+            this.tabForms.Location = new System.Drawing.Point(0, 24);
+            this.tabForms.Name = "tabForms";
+            this.tabForms.SelectedIndex = 0;
+            this.tabForms.Size = new System.Drawing.Size(1461, 585);
+            this.tabForms.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
+            this.tabForms.TabIndex = 0;
+            this.tabForms.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.tabForms_DrawItem);
+            this.tabForms.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tabForms_MouseDown);
+            // 
+            // tmUpdate
+            // 
+            this.tmUpdate.Tick += new System.EventHandler(this.tmUpdate_Tick);
+            // 
+            // statusStrip2
+            // 
+            this.statusStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.statusInfo});
+            this.statusStrip2.Location = new System.Drawing.Point(0, 609);
+            this.statusStrip2.Name = "statusStrip2";
+            this.statusStrip2.Size = new System.Drawing.Size(1461, 22);
+            this.statusStrip2.TabIndex = 2;
+            this.statusStrip2.Text = "statusStrip2";
+            // 
+            // statusInfo
+            // 
+            this.statusInfo.Name = "statusInfo";
+            this.statusInfo.Size = new System.Drawing.Size(118, 17);
+            this.statusInfo.Text = "toolStripStatusLabel1";
+            // 
+            // bwProgress
+            // 
+            this.bwProgress.WorkerReportsProgress = true;
+            this.bwProgress.WorkerSupportsCancellation = true;
+            this.bwProgress.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bwProgress_DoWork);
+            this.bwProgress.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.bwProgress_ProgressChanged);
+            this.bwProgress.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bwProgress_RunWorkerCompleted);
+            // 
+            // delay_reasonsTableAdapter1
+            // 
+            this.delay_reasonsTableAdapter1.ClearBeforeFill = true;
+            // 
+            // btnShowLog
+            // 
+            this.btnShowLog.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnShowLog.Image = ((System.Drawing.Image)(resources.GetObject("btnShowLog.Image")));
+            this.btnShowLog.ImageTransparentColor = System.Drawing.Color.White;
+            this.btnShowLog.Name = "btnShowLog";
+            this.btnShowLog.Size = new System.Drawing.Size(23, 22);
+            this.btnShowLog.Text = "toolStripButton1";
+            this.btnShowLog.Click += new System.EventHandler(this.btnShowLog_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1027,7 +1047,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colComment;
         private System.Windows.Forms.DataGridViewTextBoxColumn colOrderComment;
         private System.Windows.Forms.DataGridViewTextBoxColumn colGate;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colSpecCond;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn colSpecCond;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDriverPhone;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDriverName;
         private System.Windows.Forms.DataGridViewTextBoxColumn colTransComp;
@@ -1047,6 +1067,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn FontColor;
         private System.Windows.Forms.DataGridViewTextBoxColumn BackgroundColor;
         private System.Windows.Forms.DataGridViewTextBoxColumn IsAddLv;
+        private System.Windows.Forms.ToolStripButton btnShowLog;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
     }
 }
 

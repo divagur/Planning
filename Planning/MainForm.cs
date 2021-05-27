@@ -90,47 +90,7 @@ namespace Planning
             return sql.Reader;
             
             
-/*
-            SqlDataReader reader = null;
-            SqlConnection connection = new SqlConnection(DataService.connectionString);
-                if (connection.State == ConnectionState.Closed)
-                {
-                    try
-                    {
-                        connection.Open();
-                    }
-                    catch (SqlException ex)
-                    {
-                        MessageBox.Show("Ошибка подключения:" + ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-
-                        return null;
-                    }
-
-
-                }
-
-                string sqlText = "SP_PL_MainQueryP";
-
-                SqlCommand command = new SqlCommand(sqlText, connection);
-                command.CommandType = CommandType.StoredProcedure;
-
-                command.Parameters.Add(new SqlParameter { ParameterName = "@From", Value = DateFrom });
-                command.Parameters.Add(new SqlParameter { ParameterName = "@Till", Value = DateTill });
-                command.Parameters.Add(new SqlParameter { ParameterName = "@ShpId", Value = ShpId });
-                command.Parameters.Add(new SqlParameter { ParameterName = "@OrdID", Value = OrdId });
-                
-                try
-                {
-                    reader = command.ExecuteReader();
-                }
-                catch (SqlException ex)
-                {
-                    MessageBox.Show("Ошибка при получении данных: " + CR + ex.Message, "Ошибка", MessageBoxButtons.OK);
-                }
-                return reader;
-*/
-            
         }
 
         private void ShipmentsLoad()
@@ -467,7 +427,7 @@ namespace Planning
 
             List<string> hideCols = settingsHandle.GetParamStringValue("View\\HideColumns").Split(',').ToList();
             btnColumnVisible.DropDownItems.Clear();
-            foreach(DataGridViewTextBoxColumn col in tblShipments.Columns)
+            foreach(DataGridViewColumn col in tblShipments.Columns)
             {
                 if (col.Visible)
                 {
@@ -564,7 +524,7 @@ namespace Planning
             if (tblShipments.SelectedRows.Count <= 0)
                 return;
             DataService.InitContext();
-            ShipmentAddResult shipmentAddResult = new ShipmentAddResult();
+            ShipmentParam shipmentAddResult = new ShipmentParam();
             if (tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colDirection"].Value.ToString()!="перем")
             {
                 shipmentAddResult.IsShipment = true;
@@ -579,7 +539,7 @@ namespace Planning
             ShipmentEdit(shipmentAddResult);
             ShipmentsLoad();
         }
-        private void ShipmentEdit(ShipmentAddResult shipmentAddResult)
+        private void ShipmentEdit(ShipmentParam shipmentAddResult)
         {
             shipmen_edit frmShipmentEdit;
             frmShipmentEdit = shipmentAddResult.IsShipment == true ? new shipmen_edit((Shipment)shipmentAddResult.Result) : new shipmen_edit((Movement)shipmentAddResult.Result);
@@ -623,7 +583,7 @@ namespace Planning
                 DataService.Add(shipment);
             }
             */
-            ShipmentAddResult shipmentAddResult = new ShipmentAddResult();
+            ShipmentParam shipmentAddResult = new ShipmentParam();
            // Shipment shipment = new Shipment();
             ShipmentAdd frmShipmentAdd = new ShipmentAdd(shipmentAddResult);
             DialogResult result = frmShipmentAdd.ShowDialog();
@@ -1485,6 +1445,13 @@ namespace Planning
         private void bwProgress_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             miRepPeriod.Enabled = true;
+        }
+
+        private void btnShowLog_Click(object sender, EventArgs e)
+        {
+            frmShipmentHistory frmShipment_History = new frmShipmentHistory(-1);
+            AddFormTab(frmShipment_History, "История изменений");
+            frmShipment_History.Populate();
         }
     }
 }
