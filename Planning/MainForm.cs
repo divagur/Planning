@@ -309,6 +309,7 @@ namespace Planning
             FormLogin frmLogin = new FormLogin(DataService.setting);
             if (frmLogin.ShowDialog() == DialogResult.Cancel)
             {
+               
                 return false;
             }
             CloseAllTabs();
@@ -1023,6 +1024,8 @@ namespace Planning
                 return;
 
             Shipment shipment = DataService.context.Shipments.Find(tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colId"].Value);
+            if (shipment == null)
+                return;
             Excel.Range range;
             if (shipment.ShIn == false)
             {

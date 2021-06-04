@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="7005c0b70f324a0e9757893b6912d2e6" Name="Diagram1" ZoomLevel="97">
+      <Diagram DiagramId="7005c0b70f324a0e9757893b6912d2e6" Name="Diagram1" ZoomLevel="77">
         <EntityTypeShape EntityType="PlanningModel.DelayReason" Width="1.5" PointX="7.125" PointY="8.75" IsExpanded="true" />
         <EntityTypeShape EntityType="PlanningModel.Depositor" Width="1.5" PointX="9.625" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="PlanningModel.Gateway" Width="1.5" PointX="0.5" PointY="4.5" IsExpanded="true" />
@@ -35,6 +35,10 @@
         <AssociationConnector Association="PlanningModel.FK_MovementItem_DepID" />
         <AssociationConnector Association="PlanningModel.FK_movement_SlotID" />
         <AssociationConnector Association="PlanningModel.FK_MovementItem_MovementID" />
+        <EntityTypeShape EntityType="PlanningModel.MovementItemLog" Width="1.75" PointX="17.25" PointY="11.625" />
+        <EntityTypeShape EntityType="PlanningModel.MovementLog" Width="1.5" PointX="14.875" PointY="11.125" />
+        <EntityTypeShape EntityType="PlanningModel.ShipmentOrdersLog" Width="2.125" PointX="11.75" PointY="11.25" />
+        <EntityTypeShape EntityType="PlanningModel.ShipmentsLog" Width="1.75" PointX="9.375" PointY="9.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

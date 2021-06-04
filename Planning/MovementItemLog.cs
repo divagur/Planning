@@ -12,16 +12,16 @@ namespace Planning
     using System;
     using System.Collections.Generic;
     
-    public partial class LvAttr
+    public partial class MovementItemLog
     {
-        public int Id { get; set; }
-        public Nullable<bool> LvaIn { get; set; }
-        public Nullable<int> LvaAttrLvId { get; set; }
-        public Nullable<bool> LvaUseOrdAttr { get; set; }
-        public string LvaDB { get; set; }
-        public string LvaField { get; set; }
-        public Nullable<int> PlDepId { get; set; }
-        public Nullable<int> PlElemId { get; set; }
-        public Nullable<int> she_id { get; set; }
+        public int DmlId { get; set; }
+        public string DmlType { get; set; }
+        public System.DateTime DmlDate { get; set; }
+        public string DmlUserName { get; set; }
+        public string DmlCompName { get; set; }
+        public int MovementItemId { get; set; }
+        public int MovementId { get; set; }
+        public int DepositorId { get; set; }
+        public int TklLVID { get; set; }
     }
 }

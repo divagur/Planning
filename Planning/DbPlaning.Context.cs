@@ -47,5 +47,9 @@ namespace Planning
         public virtual DbSet<Function> Functions { get; set; }
         public virtual DbSet<Movement> Movements { get; set; }
         public virtual DbSet<MovementItem> MovementItems { get; set; }
+        public virtual DbSet<MovementItemLog> MovementItemLog { get; set; }
+        public virtual DbSet<MovementLog> MovementLog { get; set; }
+        public virtual DbSet<ShipmentOrdersLog> ShipmentOrdersLog { get; set; }
+        public virtual DbSet<ShipmentsLog> ShipmentsLog { get; set; }
     }
 }

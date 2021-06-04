@@ -1025,7 +1025,6 @@
             // tabMain
             // 
             this.tabMain.Controls.Add(this.pnGetDateTime);
-            this.tabMain.Controls.Add(this.gbMovementItem);
             this.tabMain.Controls.Add(this.label5);
             this.tabMain.Controls.Add(this.btnSDate);
             this.tabMain.Controls.Add(this.cmbDelayReasons);
@@ -1040,6 +1039,7 @@
             this.tabMain.Controls.Add(this.gbOrders);
             this.tabMain.Controls.Add(this.label4);
             this.tabMain.Controls.Add(this.cmbTransportCompany);
+            this.tabMain.Controls.Add(this.gbMovementItem);
             this.tabMain.Location = new System.Drawing.Point(4, 22);
             this.tabMain.Name = "tabMain";
             this.tabMain.Padding = new System.Windows.Forms.Padding(3);
@@ -1053,7 +1053,7 @@
             this.tabHistory.Location = new System.Drawing.Point(4, 22);
             this.tabHistory.Name = "tabHistory";
             this.tabHistory.Padding = new System.Windows.Forms.Padding(3);
-            this.tabHistory.Size = new System.Drawing.Size(794, 659);
+            this.tabHistory.Size = new System.Drawing.Size(797, 659);
             this.tabHistory.TabIndex = 1;
             this.tabHistory.Text = "История";
             this.tabHistory.UseVisualStyleBackColor = true;

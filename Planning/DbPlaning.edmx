@@ -40,6 +40,7 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="she_id" Type="int" />
           <Property Name="lva_in" Type="bit" />
           <Property Name="lva_attr_lv_id" Type="int" />
           <Property Name="lva_use_ord_attr" Type="bit" />
@@ -72,6 +73,41 @@
           <Property Name="movement_id" Type="int" Nullable="false" />
           <Property Name="depositor_id" Type="int" Nullable="false" />
           <Property Name="TklLVID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="movement_item_log">
+          <Key>
+            <PropertyRef Name="dml_id" />
+          </Key>
+          <Property Name="dml_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="dml_type" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="dml_date" Type="datetime" Nullable="false" />
+          <Property Name="dml_user_name" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="dml_comp_name" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="movement_item_id" Type="int" Nullable="false" />
+          <Property Name="movement_id" Type="int" Nullable="false" />
+          <Property Name="depositor_id" Type="int" Nullable="false" />
+          <Property Name="TklLVID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="movement_log">
+          <Key>
+            <PropertyRef Name="dml_id" />
+          </Key>
+          <Property Name="dml_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="dml_type" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="dml_date" Type="datetime" Nullable="false" />
+          <Property Name="dml_user_name" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="dml_comp_name" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="movement_id" Type="int" Nullable="false" />
+          <Property Name="m_date" Type="date" Nullable="false" />
+          <Property Name="time_slot_id" Type="int" />
+          <Property Name="priority" Type="int" />
+          <Property Name="comment" Type="nvarchar" MaxLength="1024" />
+          <Property Name="delay_reasons_id" Type="int" />
+          <Property Name="delay_comment" Type="nvarchar" MaxLength="1024" />
+          <Property Name="performer" Type="nvarchar" MaxLength="256" />
+          <Property Name="def_customer" Type="bit" Nullable="false" />
+          <Property Name="sp_condition" Type="bit" Nullable="false" />
+          <Property Name="special_time" Type="time" Precision="0" />
         </EntityType>
         <EntityType Name="opers_type">
           <Key>
@@ -106,11 +142,73 @@
           <Property Name="lv_order_id" Type="int" />
           <Property Name="lv_order_code" Type="varchar" MaxLength="32" />
         </EntityType>
+        <EntityType Name="shipment_orders_log">
+          <Key>
+            <PropertyRef Name="dml_id" />
+          </Key>
+          <Property Name="dml_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="dml_type" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="dml_date" Type="datetime" Nullable="false" />
+          <Property Name="dml_user_name" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="dml_comp_name" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="shipment_order_id" Type="int" Nullable="false" />
+          <Property Name="order_id" Type="varchar" MaxLength="32" />
+          <Property Name="shipment_id" Type="int" />
+          <Property Name="order_type" Type="varchar" MaxLength="64" />
+          <Property Name="comment" Type="varchar" MaxLength="500" />
+          <Property Name="is_binding" Type="bit" />
+          <Property Name="manual_load" Type="int" />
+          <Property Name="manual_unload" Type="int" />
+          <Property Name="pallet_amount" Type="int" />
+          <Property Name="binding_id" Type="int" />
+          <Property Name="lv_order_id" Type="int" />
+          <Property Name="lv_order_code" Type="varchar" MaxLength="32" />
+        </EntityType>
         <EntityType Name="shipments">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="lv_id" Type="int" />
+          <Property Name="time_slot_id" Type="int" />
+          <Property Name="s_date" Type="date" />
+          <Property Name="s_comment" Type="varchar" MaxLength="500" />
+          <Property Name="o_comment" Type="varchar" MaxLength="500" />
+          <Property Name="gate_id" Type="int" />
+          <Property Name="sp_condition" Type="bit" />
+          <Property Name="driver_phone" Type="varchar" MaxLength="30" />
+          <Property Name="driver_fio" Type="varchar" MaxLength="80" />
+          <Property Name="vehicle_number" Type="varchar" MaxLength="20" />
+          <Property Name="trailer_number" Type="varchar" MaxLength="20" />
+          <Property Name="attorney_number" Type="varchar" MaxLength="30" />
+          <Property Name="attorney_date" Type="date" />
+          <Property Name="submission_time" Type="datetime" />
+          <Property Name="start_time" Type="datetime" />
+          <Property Name="end_time" Type="datetime" />
+          <Property Name="leave_time" Type="datetime" />
+          <Property Name="delay_reasons_id" Type="int" />
+          <Property Name="delay_comment" Type="varchar" MaxLength="200" />
+          <Property Name="depositor_id" Type="int" />
+          <Property Name="is_courier" Type="bit" />
+          <Property Name="forwarder_fio" Type="varchar" MaxLength="80" />
+          <Property Name="stamp_number" Type="varchar" MaxLength="25" />
+          <Property Name="attorney_issued" Type="varchar" MaxLength="150" />
+          <Property Name="s_in" Type="bit" />
+          <Property Name="special_time" Type="time" Precision="0" />
+          <Property Name="is_add_lv" Type="bit" />
+          <Property Name="transport_company_id" Type="int" />
+          <Property Name="transport_type_id" Type="int" />
+        </EntityType>
+        <EntityType Name="shipments_log">
+          <Key>
+            <PropertyRef Name="dml_id" />
+          </Key>
+          <Property Name="dml_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="dml_type" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="dml_date" Type="datetime" Nullable="false" />
+          <Property Name="dml_user_name" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="dml_comp_name" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="shipment_id" Type="int" Nullable="false" />
           <Property Name="lv_id" Type="int" />
           <Property Name="time_slot_id" Type="int" />
           <Property Name="s_date" Type="date" />
@@ -196,8 +294,8 @@
           <Property Name="first_name" Type="varchar" MaxLength="20" />
           <Property Name="second_name" Type="varchar" MaxLength="20" />
           <Property Name="last_name" Type="varchar" MaxLength="20" />
-          <Property Name="is_reg" Type="bit" />
           <Property Name="reg_type" Type="int" />
+          <Property Name="is_reg" Type="bit" />
         </EntityType>
         <EntityType Name="users_group">
           <Key>
@@ -391,10 +489,14 @@
           <EntitySet Name="lv_attr" EntityType="Self.lv_attr" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="movement" EntityType="Self.movement" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="movement_item" EntityType="Self.movement_item" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="movement_item_log" EntityType="Self.movement_item_log" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="movement_log" EntityType="Self.movement_log" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="opers_type" EntityType="Self.opers_type" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="shipment_element" EntityType="Self.shipment_element" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="shipment_orders" EntityType="Self.shipment_orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="shipment_orders_log" EntityType="Self.shipment_orders_log" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="shipments" EntityType="Self.shipments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="shipments_log" EntityType="Self.shipments_log" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="time_slot" EntityType="Self.time_slot" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="transport_company" EntityType="Self.transport_company" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="transport_type" EntityType="Self.transport_type" Schema="dbo" store:Type="Tables" />
@@ -670,6 +772,10 @@
             <End Role="movement" EntitySet="Movements" />
             <End Role="movement_item" EntitySet="MovementItems" />
           </AssociationSet>
+          <EntitySet Name="MovementItemLog" EntityType="PlanningModel.MovementItemLog" />
+          <EntitySet Name="MovementLog" EntityType="PlanningModel.MovementLog" />
+          <EntitySet Name="ShipmentOrdersLog" EntityType="PlanningModel.ShipmentOrdersLog" />
+          <EntitySet Name="ShipmentsLog" EntityType="PlanningModel.ShipmentsLog" />
         </EntityContainer>
         <Association Name="FK_shipments_delay_reasons">
           <End Type="PlanningModel.DelayReason" Role="delay_reasons" Multiplicity="0..1" />
@@ -755,6 +861,7 @@
           <Property Name="LvaField" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="PlDepId" Type="Int32" />
           <Property Name="PlElemId" Type="Int32" />
+          <Property Name="she_id" Type="Int32" />
         </EntityType>
         <EntityType Name="ShipmentElement">
           <Key>
@@ -906,6 +1013,103 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="MovementItemLog">
+          <Key>
+            <PropertyRef Name="DmlId" />
+          </Key>
+          <Property Name="DmlId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DmlType" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="DmlDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DmlUserName" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="DmlCompName" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="MovementItemId" Type="Int32" Nullable="false" />
+          <Property Name="MovementId" Type="Int32" Nullable="false" />
+          <Property Name="DepositorId" Type="Int32" Nullable="false" />
+          <Property Name="TklLVID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MovementLog">
+          <Key>
+            <PropertyRef Name="DmlId" />
+          </Key>
+          <Property Name="DmlId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DmlType" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="DmlDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DmlUserName" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="DmlCompName" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="MovementId" Type="Int32" Nullable="false" />
+          <Property Name="MDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="TimeSlotId" Type="Int32" />
+          <Property Name="Priority" Type="Int32" />
+          <Property Name="Comment" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
+          <Property Name="DelayReasonsId" Type="Int32" />
+          <Property Name="DelayComment" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
+          <Property Name="Performer" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="DefCustomer" Type="Boolean" Nullable="false" />
+          <Property Name="SpCondition" Type="Boolean" Nullable="false" />
+          <Property Name="SpecialTime" Type="Time" Precision="0" />
+        </EntityType>
+        <EntityType Name="ShipmentOrdersLog">
+          <Key>
+            <PropertyRef Name="DmlId" />
+          </Key>
+          <Property Name="DmlId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DmlType" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="DmlDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DmlUserName" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="DmlCompName" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="ShipmentOrderId" Type="Int32" Nullable="false" />
+          <Property Name="OrderId" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="ShipmentId" Type="Int32" />
+          <Property Name="OrderType" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="Comment" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="IsBinding" Type="Boolean" />
+          <Property Name="ManualLoad" Type="Int32" />
+          <Property Name="ManualUnload" Type="Int32" />
+          <Property Name="PalletAmount" Type="Int32" />
+          <Property Name="BindingId" Type="Int32" />
+          <Property Name="LvOrderId" Type="Int32" />
+          <Property Name="LvOrderCode" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ShipmentsLog">
+          <Key>
+            <PropertyRef Name="DmlId" />
+          </Key>
+          <Property Name="DmlId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DmlType" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="DmlDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DmlUserName" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="DmlCompName" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="ShipmentId" Type="Int32" Nullable="false" />
+          <Property Name="LvId" Type="Int32" />
+          <Property Name="TimeSlotId" Type="Int32" />
+          <Property Name="SDate" Type="DateTime" Precision="0" />
+          <Property Name="SComment" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="OComment" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="GateId" Type="Int32" />
+          <Property Name="SpCondition" Type="Boolean" />
+          <Property Name="DriverPhone" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="DriverFio" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="VehicleNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="TrailerNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="AttorneyNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="AttorneyDate" Type="DateTime" Precision="0" />
+          <Property Name="SubmissionTime" Type="DateTime" Precision="3" />
+          <Property Name="StartTime" Type="DateTime" Precision="3" />
+          <Property Name="EndTime" Type="DateTime" Precision="3" />
+          <Property Name="LeaveTime" Type="DateTime" Precision="3" />
+          <Property Name="DelayReasonsId" Type="Int32" />
+          <Property Name="DelayComment" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="DepositorId" Type="Int32" />
+          <Property Name="IsCourier" Type="Boolean" />
+          <Property Name="ForwarderFio" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="StampNumber" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="AttorneyIssued" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="SIn" Type="Boolean" />
+          <Property Name="SpecialTime" Type="Time" Precision="0" />
+          <Property Name="IsAddLv" Type="Boolean" />
+          <Property Name="TransportCompanyId" Type="Int32" />
+          <Property Name="TransportTypeId" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1044,6 +1248,7 @@
           <EntitySetMapping Name="LvAttrs">
             <EntityTypeMapping TypeName="PlanningModel.LvAttr">
               <MappingFragment StoreEntitySet="lv_attr">
+                <ScalarProperty Name="she_id" ColumnName="she_id" />
                 <ScalarProperty Name="PlElemId" ColumnName="pl_elem_id" />
                 <ScalarProperty Name="PlDepId" ColumnName="pl_dep_id" />
                 <ScalarProperty Name="LvaField" ColumnName="lva_field" />
@@ -1127,6 +1332,107 @@
                 <ScalarProperty Name="DepositorId" ColumnName="depositor_id" />
                 <ScalarProperty Name="MovementId" ColumnName="movement_id" />
                 <ScalarProperty Name="Id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MovementItemLog">
+            <EntityTypeMapping TypeName="PlanningModel.MovementItemLog">
+              <MappingFragment StoreEntitySet="movement_item_log">
+                <ScalarProperty Name="TklLVID" ColumnName="TklLVID" />
+                <ScalarProperty Name="DepositorId" ColumnName="depositor_id" />
+                <ScalarProperty Name="MovementId" ColumnName="movement_id" />
+                <ScalarProperty Name="MovementItemId" ColumnName="movement_item_id" />
+                <ScalarProperty Name="DmlCompName" ColumnName="dml_comp_name" />
+                <ScalarProperty Name="DmlUserName" ColumnName="dml_user_name" />
+                <ScalarProperty Name="DmlDate" ColumnName="dml_date" />
+                <ScalarProperty Name="DmlType" ColumnName="dml_type" />
+                <ScalarProperty Name="DmlId" ColumnName="dml_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MovementLog">
+            <EntityTypeMapping TypeName="PlanningModel.MovementLog">
+              <MappingFragment StoreEntitySet="movement_log">
+                <ScalarProperty Name="SpecialTime" ColumnName="special_time" />
+                <ScalarProperty Name="SpCondition" ColumnName="sp_condition" />
+                <ScalarProperty Name="DefCustomer" ColumnName="def_customer" />
+                <ScalarProperty Name="Performer" ColumnName="performer" />
+                <ScalarProperty Name="DelayComment" ColumnName="delay_comment" />
+                <ScalarProperty Name="DelayReasonsId" ColumnName="delay_reasons_id" />
+                <ScalarProperty Name="Comment" ColumnName="comment" />
+                <ScalarProperty Name="Priority" ColumnName="priority" />
+                <ScalarProperty Name="TimeSlotId" ColumnName="time_slot_id" />
+                <ScalarProperty Name="MDate" ColumnName="m_date" />
+                <ScalarProperty Name="MovementId" ColumnName="movement_id" />
+                <ScalarProperty Name="DmlCompName" ColumnName="dml_comp_name" />
+                <ScalarProperty Name="DmlUserName" ColumnName="dml_user_name" />
+                <ScalarProperty Name="DmlDate" ColumnName="dml_date" />
+                <ScalarProperty Name="DmlType" ColumnName="dml_type" />
+                <ScalarProperty Name="DmlId" ColumnName="dml_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ShipmentOrdersLog">
+            <EntityTypeMapping TypeName="PlanningModel.ShipmentOrdersLog">
+              <MappingFragment StoreEntitySet="shipment_orders_log">
+                <ScalarProperty Name="LvOrderCode" ColumnName="lv_order_code" />
+                <ScalarProperty Name="LvOrderId" ColumnName="lv_order_id" />
+                <ScalarProperty Name="BindingId" ColumnName="binding_id" />
+                <ScalarProperty Name="PalletAmount" ColumnName="pallet_amount" />
+                <ScalarProperty Name="ManualUnload" ColumnName="manual_unload" />
+                <ScalarProperty Name="ManualLoad" ColumnName="manual_load" />
+                <ScalarProperty Name="IsBinding" ColumnName="is_binding" />
+                <ScalarProperty Name="Comment" ColumnName="comment" />
+                <ScalarProperty Name="OrderType" ColumnName="order_type" />
+                <ScalarProperty Name="ShipmentId" ColumnName="shipment_id" />
+                <ScalarProperty Name="OrderId" ColumnName="order_id" />
+                <ScalarProperty Name="ShipmentOrderId" ColumnName="shipment_order_id" />
+                <ScalarProperty Name="DmlCompName" ColumnName="dml_comp_name" />
+                <ScalarProperty Name="DmlUserName" ColumnName="dml_user_name" />
+                <ScalarProperty Name="DmlDate" ColumnName="dml_date" />
+                <ScalarProperty Name="DmlType" ColumnName="dml_type" />
+                <ScalarProperty Name="DmlId" ColumnName="dml_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ShipmentsLog">
+            <EntityTypeMapping TypeName="PlanningModel.ShipmentsLog">
+              <MappingFragment StoreEntitySet="shipments_log">
+                <ScalarProperty Name="TransportTypeId" ColumnName="transport_type_id" />
+                <ScalarProperty Name="TransportCompanyId" ColumnName="transport_company_id" />
+                <ScalarProperty Name="IsAddLv" ColumnName="is_add_lv" />
+                <ScalarProperty Name="SpecialTime" ColumnName="special_time" />
+                <ScalarProperty Name="SIn" ColumnName="s_in" />
+                <ScalarProperty Name="AttorneyIssued" ColumnName="attorney_issued" />
+                <ScalarProperty Name="StampNumber" ColumnName="stamp_number" />
+                <ScalarProperty Name="ForwarderFio" ColumnName="forwarder_fio" />
+                <ScalarProperty Name="IsCourier" ColumnName="is_courier" />
+                <ScalarProperty Name="DepositorId" ColumnName="depositor_id" />
+                <ScalarProperty Name="DelayComment" ColumnName="delay_comment" />
+                <ScalarProperty Name="DelayReasonsId" ColumnName="delay_reasons_id" />
+                <ScalarProperty Name="LeaveTime" ColumnName="leave_time" />
+                <ScalarProperty Name="EndTime" ColumnName="end_time" />
+                <ScalarProperty Name="StartTime" ColumnName="start_time" />
+                <ScalarProperty Name="SubmissionTime" ColumnName="submission_time" />
+                <ScalarProperty Name="AttorneyDate" ColumnName="attorney_date" />
+                <ScalarProperty Name="AttorneyNumber" ColumnName="attorney_number" />
+                <ScalarProperty Name="TrailerNumber" ColumnName="trailer_number" />
+                <ScalarProperty Name="VehicleNumber" ColumnName="vehicle_number" />
+                <ScalarProperty Name="DriverFio" ColumnName="driver_fio" />
+                <ScalarProperty Name="DriverPhone" ColumnName="driver_phone" />
+                <ScalarProperty Name="SpCondition" ColumnName="sp_condition" />
+                <ScalarProperty Name="GateId" ColumnName="gate_id" />
+                <ScalarProperty Name="OComment" ColumnName="o_comment" />
+                <ScalarProperty Name="SComment" ColumnName="s_comment" />
+                <ScalarProperty Name="SDate" ColumnName="s_date" />
+                <ScalarProperty Name="TimeSlotId" ColumnName="time_slot_id" />
+                <ScalarProperty Name="LvId" ColumnName="lv_id" />
+                <ScalarProperty Name="ShipmentId" ColumnName="shipment_id" />
+                <ScalarProperty Name="DmlCompName" ColumnName="dml_comp_name" />
+                <ScalarProperty Name="DmlUserName" ColumnName="dml_user_name" />
+                <ScalarProperty Name="DmlDate" ColumnName="dml_date" />
+                <ScalarProperty Name="DmlType" ColumnName="dml_type" />
+                <ScalarProperty Name="DmlId" ColumnName="dml_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

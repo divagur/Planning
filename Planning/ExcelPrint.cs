@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using Excel = Microsoft.Office.Interop.Excel;
+
 
 
 namespace Planning
@@ -18,6 +20,21 @@ namespace Planning
         private Excel.Sheets _sheets;
         private Excel.Worksheet _worksheet;
         private Excel.Range _cells;
+        
+        private const int LOGPIXELSX = 88;
+        private const int LOGPIXELSY = 90;
+        [DllImport("user32.dll", ExactSpelling = true, SetLastError = true)]
+        private static extern IntPtr GetDC(IntPtr hWnd);
+
+        [DllImport("user32.dll", ExactSpelling = true)]
+        private static extern IntPtr ReleaseDC(IntPtr hWnd, IntPtr hDC);
+
+        [System.Runtime.InteropServices.DllImport("user32.dll", EntryPoint = "GetDesktopWindow")]
+        private static extern IntPtr GetDesktopWindow();
+        
+        [DllImport("gdi32.dll")]
+        static extern int GetDeviceCaps(IntPtr hdc, int nIndex);
+
         private void CreateApp()
         {
             _app = new Excel.Application();
@@ -28,6 +45,22 @@ namespace Planning
 
 
         }
+        private int GetDPI(int nIndex)
+        {
+            IntPtr hwnd = GetDesktopWindow();
+            IntPtr hdc = GetDC(hwnd);
+            int result = GetDeviceCaps(hdc, nIndex);
+
+            ReleaseDC(hwnd, hdc);
+            return result;
+        }
+        private double PixelToPoint(int Pixel,int nIndex)
+        {
+            int currentDPI = GetDPI(nIndex);
+
+            return Pixel / Math.Round(currentDPI * 7.33 / 96.0);
+        }
+
         public ExcelPrint(string template)
         {
             _template = template;
@@ -86,6 +119,23 @@ namespace Planning
             SelectCells(Sheet, 1, Row, ColCount, Row).Value = Values;
           
             //printRange.Value = Values;
+        }
+
+        public void SetColumnWidth(int Sheet, int Col, int cWidth)
+        {
+            Excel.Worksheet worksheet  = (Excel.Worksheet)_sheets.get_Item(Sheet);
+            //Excel.Range range = worksheet.Columns[1,Col];//, System.Type.Missing];
+            Excel.Range range = (Excel.Range)_worksheet.Cells[1, Col];
+            
+            range.EntireColumn.ColumnWidth = PixelToPoint(cWidth, LOGPIXELSY) +1;
+        }
+        public void SetRowHeight(int Sheet, int Row, int rHeight)
+        {
+            Excel.Worksheet worksheet = (Excel.Worksheet)_sheets.get_Item(Sheet);
+            //Excel.Range range = worksheet.Columns[1,Col];//, System.Type.Missing];
+            Excel.Range range = (Excel.Range)_worksheet.Cells[Row, 1];
+
+            range.Rows.RowHeight = rHeight*0.75;
         }
     }
 }

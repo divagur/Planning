@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\FastReport.OpenSource.2021.3.4\build\FastReport.OpenSource.props" Condition="Exists('..\packages\FastReport.OpenSource.2021.3.4\build\FastReport.OpenSource.props')" />
   <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -42,7 +43,7 @@
   <ItemGroup>
     <Reference Include="Accessibility" />
     <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dapper.2.0.78\lib\net461\Dapper.dll</HintPath>
+      <HintPath>..\packages\Dapper.2.0.90\lib\net461\Dapper.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
@@ -50,14 +51,14 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="FastReport, Version=2021.1.20.0, Culture=neutral, PublicKeyToken=5ceb240df42bf6e8, processorArchitecture=MSIL">
-      <HintPath>..\packages\FastReport.OpenSource.2021.1.20\lib\net40\FastReport.dll</HintPath>
+    <Reference Include="FastReport, Version=2021.3.4.0, Culture=neutral, PublicKeyToken=5ceb240df42bf6e8, processorArchitecture=MSIL">
+      <HintPath>..\packages\FastReport.OpenSource.2021.3.4\lib\net40\FastReport.dll</HintPath>
     </Reference>
-    <Reference Include="FastReport.Compat, Version=2021.1.1.0, Culture=neutral, PublicKeyToken=406e1f4c3c8ef97e, processorArchitecture=MSIL">
-      <HintPath>..\packages\FastReport.Compat.2021.1.1\lib\net40\FastReport.Compat.dll</HintPath>
+    <Reference Include="FastReport.Compat, Version=2021.2.3.0, Culture=neutral, PublicKeyToken=406e1f4c3c8ef97e, processorArchitecture=MSIL">
+      <HintPath>..\packages\FastReport.Compat.2021.2.3\lib\net40\FastReport.Compat.dll</HintPath>
     </Reference>
-    <Reference Include="FastReport.Data.MsSql, Version=2021.1.17.0, Culture=neutral, PublicKeyToken=b33a9a06fcc00c4c, processorArchitecture=MSIL">
-      <HintPath>..\packages\FastReport.OpenSource.Data.MsSql.2021.1.17\lib\net452\FastReport.Data.MsSql.dll</HintPath>
+    <Reference Include="FastReport.Data.MsSql, Version=2021.3.0.0, Culture=neutral, PublicKeyToken=b33a9a06fcc00c4c, processorArchitecture=MSIL">
+      <HintPath>..\packages\FastReport.OpenSource.Data.MsSql.2021.3.0\lib\net452\FastReport.Data.MsSql.dll</HintPath>
     </Reference>
     <Reference Include="MDIWindowManager, Version=2.1.2521.32075, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MDIWindowManager.2.1.0\lib\MDIWindowManager.dll</HintPath>
@@ -182,6 +183,12 @@
     <Compile Include="MovementItem.cs">
       <DependentUpon>DbPlaning.tt</DependentUpon>
     </Compile>
+    <Compile Include="MovementItemLog.cs">
+      <DependentUpon>DbPlaning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MovementLog.cs">
+      <DependentUpon>DbPlaning.tt</DependentUpon>
+    </Compile>
     <Compile Include="OperType.cs">
       <DependentUpon>DbPlaning.tt</DependentUpon>
     </Compile>
@@ -251,7 +258,13 @@
     <Compile Include="ShipmentOrderEdit.Designer.cs">
       <DependentUpon>ShipmentOrderEdit.cs</DependentUpon>
     </Compile>
+    <Compile Include="ShipmentOrdersLog.cs">
+      <DependentUpon>DbPlaning.tt</DependentUpon>
+    </Compile>
     <Compile Include="ShipmentParam.cs" />
+    <Compile Include="ShipmentsLog.cs">
+      <DependentUpon>DbPlaning.tt</DependentUpon>
+    </Compile>
     <Compile Include="SqlHandle.cs" />
     <Compile Include="TimeSlot.cs">
       <DependentUpon>DbPlaning.tt</DependentUpon>
@@ -598,10 +611,9 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
     <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
-    <Error Condition="!Exists('..\packages\FastReport.Compat.2021.1.1\build\FastReport.Compat.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\FastReport.Compat.2021.1.1\build\FastReport.Compat.targets'))" />
+    <Error Condition="!Exists('..\packages\FastReport.OpenSource.2021.3.4\build\FastReport.OpenSource.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\FastReport.OpenSource.2021.3.4\build\FastReport.OpenSource.props'))" />
   </Target>
   <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
-  <Import Project="..\packages\FastReport.Compat.2021.1.1\build\FastReport.Compat.targets" Condition="Exists('..\packages\FastReport.Compat.2021.1.1\build\FastReport.Compat.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

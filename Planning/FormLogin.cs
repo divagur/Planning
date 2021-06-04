@@ -30,10 +30,10 @@ namespace Planning
                 DialogResult = DialogResult.OK;
                 Close();
             }
-           /* else
+            else
             {
-                MessageBox.Show("Не успешно");
-            }*/
+                MessageBox.Show("Не правильное имя пользователя или пароль", "Ошибка входа", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnOk_Click(object sender, EventArgs e)
