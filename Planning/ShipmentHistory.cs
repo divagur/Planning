@@ -24,7 +24,7 @@ namespace Planning
         private int currShpId = 0;
         private int currColorIdx = 0;
         private string currShpItemId;
-        private int currColorItemIdx = 0;
+        //private int currColorItemIdx = 0;
         int _shipmentId = -1;
         PlanningDbContext _context = DataService.context;
         public frmShipmentHistory(int ShipmentId)
@@ -131,6 +131,9 @@ namespace Planning
             sql.Disconnect();
             CalcRowColor();
 
+            tblShipmentItemLog.AutoGenerateColumns = false;
+            tblMovementItemLog.AutoGenerateColumns = false;
+
             if (tblShipmentLog.Rows.Count > 0)
                 ShowShipmentLogDetail();
 
@@ -214,7 +217,7 @@ namespace Planning
         private void tbPrint_Click(object sender, EventArgs e)
         {
             Excel.Range range;
-            ExcelPrint excel = new ExcelPrint(DataService.setting.ShipmentReport);
+            ExcelPrint excel = new ExcelPrint("");
             DataRow[] printRows = (tblShipmentLog.DataSource as DataTable).Select();
             
             int startRow = 5;
@@ -301,7 +304,9 @@ namespace Planning
                 return;
             int shpId = Int32.Parse(tblShipmentLog.Rows[e.RowIndex].Cells["colShpId"].Value.ToString());
             List<ShipmentOrdersLog> listShipmentOrdersLog = _context.ShipmentOrdersLog.Where(i => i.ShipmentId == shpId).OrderBy(o=>o.OrderId).ThenBy(o=>o.DmlDate).ToList();
-            if (tblShipmentLog.Rows[e.RowIndex].Cells["colShpIn"].Value == null)
+
+
+            if (tblShipmentLog.Rows[e.RowIndex].Cells["colShpIn"].Value == null || tblShipmentLog.Rows[e.RowIndex].Cells["colShpIn"].Value.ToString() == "")
             {
                 tblShipmentItemLog.Visible = false;
                 tblMovementItemLog.Visible = true;
@@ -396,13 +401,19 @@ namespace Planning
 
         private void tblShipmentItemLog_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
         {
-              var CellColor = (int)((DataGridView)sender).Rows[e.RowIndex].Cells["colItemBackgroundColor"].Value;
-              var CellShpId = ((DataGridView)sender).Rows[e.RowIndex].Cells["colShpItemOrderId"].Value.ToString();
+              var CellColorValue = ((DataGridView)sender).Rows[e.RowIndex].Cells["colItemBackgroundColor"].Value;
+              var CellShpIdValue = ((DataGridView)sender).Rows[e.RowIndex].Cells["colShpItemOrderId"].Value;
 
+
+            if (CellColorValue == null || CellShpIdValue == null)
+                return;
+
+            int CellColor = (int)CellColorValue;
+            string CellShpId = CellShpIdValue.ToString();
 
               if (currShpItemId != CellShpId)
               {
-                  currShpItemId = CellShpId;
+                  currShpItemId = CellShpId.ToString();
                   currColorIdx = currColorIdx == 0 ? 1 : 0;
               }
 
@@ -411,16 +422,18 @@ namespace Planning
 
         private void ShowShipmentLogDetail()
         {
-            int row = tblShipmentLog.CurrentRow.Index;
+
+            int row = tblShipmentLog.CurrentRow ==null?-1:tblShipmentLog.CurrentRow.Index;
             if (row < 0)
                 return;
             int shpId = Int32.Parse(tblShipmentLog.Rows[row].Cells["colShpId"].Value.ToString());
-            List<ShipmentOrdersLog> listShipmentOrdersLog = _context.ShipmentOrdersLog.Where(i => i.ShipmentId == shpId).OrderBy(o => o.OrderId).ThenBy(o => o.DmlDate).ToList();
+            
             if (tblShipmentLog.Rows[row].Cells["colShpIn"].Value == null)
             {
                 tblShipmentItemLog.Visible = false;
                 tblMovementItemLog.Visible = true;
                 //tblMovementItemLog.BringToFront();
+                List<MovementItemLog> listShipmentOrdersLog = _context.MovementItemLog.Where(i => i.MovementId == shpId).OrderBy(o => o.MovementItemId).ThenBy(o => o.DmlDate).ToList();
                 tblShipmentItemLog.DataSource = listShipmentOrdersLog;
             }
             else
@@ -428,6 +441,7 @@ namespace Planning
                 tblShipmentItemLog.Visible = true;
                 //tblShipmentItemLog.BringToFront();
                 tblMovementItemLog.Visible = false;
+                List<ShipmentOrdersLog> listShipmentOrdersLog = _context.ShipmentOrdersLog.Where(i => i.ShipmentId == shpId).OrderBy(o => o.OrderId).ThenBy(o => o.DmlDate).ToList();
                 tblShipmentItemLog.DataSource = listShipmentOrdersLog;
             }
             tblShipmentLog.Focus();
@@ -458,6 +472,19 @@ namespace Planning
             }
 
             CalcRowColorItem();*/
+        }
+
+        private void tblMovementItemLog_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (tblMovementItemLog.Columns["colMvmItemDmlTypeName"].Index == e.ColumnIndex)
+            {
+                if (tblMovementItemLog.Rows[e.RowIndex].Cells["colMvmntDmlTypeId"].Value.ToString() == "I")
+                    e.Value = "Создание";
+                else if (tblMovementItemLog.Rows[e.RowIndex].Cells["colMvmntDmlTypeId"].Value.ToString() == "U")
+                    e.Value = "Изменение";
+                else if (tblMovementItemLog.Rows[e.RowIndex].Cells["colMvmntDmlTypeId"].Value.ToString() == "D")
+                    e.Value = "Удаление";
+            }
         }
     }
 }
