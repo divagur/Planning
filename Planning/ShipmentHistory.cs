@@ -300,26 +300,28 @@ namespace Planning
 
         private void tblShipmentLog_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex < 0)
-                return;
-            int shpId = Int32.Parse(tblShipmentLog.Rows[e.RowIndex].Cells["colShpId"].Value.ToString());
-            List<ShipmentOrdersLog> listShipmentOrdersLog = _context.ShipmentOrdersLog.Where(i => i.ShipmentId == shpId).OrderBy(o=>o.OrderId).ThenBy(o=>o.DmlDate).ToList();
+            /* if (e.RowIndex < 0)
+                 return;
+             int shpId = Int32.Parse(tblShipmentLog.Rows[e.RowIndex].Cells["colShpId"].Value.ToString());
+             List<ShipmentOrdersLog> listShipmentOrdersLog = _context.ShipmentOrdersLog.Where(i => i.ShipmentId == shpId).OrderBy(o=>o.OrderId).ThenBy(o=>o.DmlDate).ToList();
 
 
-            if (tblShipmentLog.Rows[e.RowIndex].Cells["colShpIn"].Value == null || tblShipmentLog.Rows[e.RowIndex].Cells["colShpIn"].Value.ToString() == "")
-            {
-                tblShipmentItemLog.Visible = false;
-                tblMovementItemLog.Visible = true;
-                tblShipmentItemLog.DataSource = listShipmentOrdersLog;
-            }
-            else
-            {
-                tblShipmentItemLog.Visible = true;
-                tblMovementItemLog.Visible = false;
-                tblShipmentItemLog.DataSource = listShipmentOrdersLog;
-            }
-            
-            CalcRowColorItem();
+             if (tblShipmentLog.Rows[e.RowIndex].Cells["colShpIn"].Value == null || tblShipmentLog.Rows[e.RowIndex].Cells["colShpIn"].Value.ToString() == "")
+             {
+                 tblShipmentItemLog.Visible = false;
+                 tblMovementItemLog.Visible = true;
+                 tblShipmentItemLog.DataSource = listShipmentOrdersLog;
+             }
+             else
+             {
+                 tblShipmentItemLog.Visible = true;
+                 tblMovementItemLog.Visible = false;
+                 tblShipmentItemLog.DataSource = listShipmentOrdersLog;
+             }
+
+             CalcRowColorItem();
+            */
+            ShowShipmentLogDetail();
         }
 
         private void CalcRowColorItem()
@@ -329,13 +331,16 @@ namespace Planning
             currColorIdx = 0;
             for (int i = 0; i < tblShipmentItemLog.Rows.Count; i++)
             {
-                cellOrderId = (tblShipmentItemLog).Rows[i].Cells["colShpItemOrderId"].Value.ToString();
+                if (tblShipmentItemLog.Rows[i].Cells["colShpItemOrderId"].Value == null)
+                    continue;
+
+                cellOrderId = tblShipmentItemLog.Rows[i].Cells["colShpItemOrderId"].Value.ToString();
                 if (cellLastOrderId != cellOrderId)
                 {
                     cellLastOrderId = cellOrderId;
                     currColorIdx = currColorIdx == 0 ? 1 : 0;
                 }
-                (tblShipmentItemLog).Rows[i].Cells["colItemBackgroundColor"].Value = currColorIdx;
+                tblShipmentItemLog.Rows[i].Cells["colItemBackgroundColor"].Value = currColorIdx;
             }
         }
 
@@ -428,7 +433,7 @@ namespace Planning
                 return;
             int shpId = Int32.Parse(tblShipmentLog.Rows[row].Cells["colShpId"].Value.ToString());
             
-            if (tblShipmentLog.Rows[row].Cells["colShpIn"].Value == null)
+            if (tblShipmentLog.Rows[row].Cells["colShpIn"].Value == null || tblShipmentLog.Rows[row].Cells["colShpIn"].Value.ToString() == "")
             {
                 tblShipmentItemLog.Visible = false;
                 tblMovementItemLog.Visible = true;
@@ -444,8 +449,8 @@ namespace Planning
                 List<ShipmentOrdersLog> listShipmentOrdersLog = _context.ShipmentOrdersLog.Where(i => i.ShipmentId == shpId).OrderBy(o => o.OrderId).ThenBy(o => o.DmlDate).ToList();
                 tblShipmentItemLog.DataSource = listShipmentOrdersLog;
             }
-            tblShipmentLog.Focus();
-            Invalidate();
+            /*tblShipmentLog.Focus();
+            Invalidate();*/
             CalcRowColorItem();
         }
         private void tblShipmentLog_SelectionChanged(object sender, EventArgs e)
