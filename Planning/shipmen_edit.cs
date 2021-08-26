@@ -21,10 +21,7 @@ namespace Planning
         Movement _movement;
         PlanningDbContext _context;
         DataSet ds;
-        DictSimple _dict;
         SqlDataAdapter adapter;
-        SqlCommandBuilder commandBuilder;
-        string sql = "";
         bool getCalendarTime;
         bool IsShipment;
 
@@ -304,7 +301,6 @@ namespace Planning
                 _movement.SpCondition = cbSpecCondition.Checked;
                 return true;
             }
-            return false;
         }
         public shipmen_edit(Shipment shipment)
         {
@@ -316,7 +312,7 @@ namespace Planning
             IsShipment = true;
             gbMovementItem.Visible = false;
 
-
+            this.Text = _shipment.ShIn == false? "Редактирование отгрузки": "Редактирование поставки";
             AddHistory(shipment.Id);
         }
 
@@ -330,18 +326,20 @@ namespace Planning
             gbOrders.Visible = false;
             btnAddToLV.Visible = false;
             btnBindLV.Visible = false;
-
+            this.Text = "Редактирование перемещения";
             AddHistory(movement.Id);
         }
 
         public void AddHistory(int ItemId)
         {
-            frmShipmentHistory frmShipmentLog = new frmShipmentHistory(ItemId);
+            frmShipmentHistory frmShipmentLog = new frmShipmentHistory(ItemId, IsShipment);
             frmShipmentLog.Populate();
             frmShipmentLog.TopLevel = false;
             frmShipmentLog.Visible = true;
             frmShipmentLog.FormBorderStyle = FormBorderStyle.None;
+
             frmShipmentLog.Dock = DockStyle.Fill;
+
             tbObject.TabPages[1].Controls.Add(frmShipmentLog);
 
         }

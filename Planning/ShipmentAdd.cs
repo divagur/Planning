@@ -21,8 +21,6 @@ namespace Planning
         Shipment _shipment;
         Movement _movement;
         ShipmentParam _shipmentAddResult;
-        List<string> SelectedId;
-        bool Locked;
 
         private void LockChangeType(bool Lock)
         {
@@ -37,7 +35,6 @@ namespace Planning
             _context = DataService.context;
             //_shipment = shipment;
             _shipmentAddResult = shipmentAddResult;
-            SelectedId = new List<string>();
         }
         private void PopulateList()
         {
@@ -184,6 +181,23 @@ namespace Planning
 
         private void cmbType_SelectedIndexChanged(object sender, EventArgs e)
         {
+            string type = "";
+            switch (cmbType.SelectedIndex)
+            {
+                
+                case 0:
+                    type = "отгрузки";
+                    break;
+                case 1:
+                    type = "поставки";
+                    break;
+                case 2:
+                    type = "перемещения";
+                    break;
+                default:
+                    break;
+            }
+            this.Text = "Создание " + type;
             PopulateOrders();
 
 
@@ -285,6 +299,11 @@ namespace Planning
             {
                 btnFind_Click(sender, e);
             }
+        }
+
+        private void ShipmentAdd_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            //DialogResult = DialogResult.Cancel;
         }
     }
 }

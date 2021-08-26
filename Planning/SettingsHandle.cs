@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 
 namespace Planning
 {
+
     class SettingsHandle
     {
 
@@ -64,6 +66,14 @@ namespace Planning
 
             return CurrNode;
         }
+        private XmlElement AddNode(XmlElement Node, string Name, string Value)
+        {
+            XmlElement ChildNode = _xDoc.CreateElement(Name);
+            ChildNode.InnerText = Value;
+            Node.AppendChild(ChildNode);
+            return ChildNode;
+        }
+
         public void SetParamValue(string Name, string Value)
         {
             XmlElement elem = GetNodeByPath(Name);
@@ -97,6 +107,24 @@ namespace Planning
             return result;
 
         }
+        public decimal GetParamDecimalValue(string Name)
+        {
+            XmlElement elem = GetNodeByPath(Name);
+            decimal result;
+            if (!decimal.TryParse(elem.InnerText, out result))
+                result = -1;
+            return result;
+
+        }
+
+        public decimal GetParamDecimalCheckValue(string Name, decimal CheckValue, decimal DefaultValue)
+        {
+            decimal result = GetParamDecimalValue(Name);
+            if (result < CheckValue)
+                result = DefaultValue;
+
+            return result;
+        }
 
         public DateTime GetParamDateValue(string Name)
         {
@@ -107,5 +135,57 @@ namespace Planning
             return result;
         }
 
+        public List<T> GetParamList<T>(string Name)
+            where T : class, new()
+        {
+            XmlElement elem = GetNodeByPath(Name);
+
+            Type elemType = typeof(T);
+            PropertyInfo[] elemTypeProps = elemType.GetProperties();
+            
+            List<T> list = new List<T>();
+
+            foreach (XmlNode column in elem.ChildNodes)
+            {
+                T listItem = new T();
+                foreach (XmlNode nodeItemProp in column.ChildNodes)
+                {
+                    int itemPropIdx = Array.FindIndex(elemTypeProps,i => i.Name == nodeItemProp.Name);
+
+
+                    if (itemPropIdx < 0)
+                        continue;
+                    elemTypeProps[itemPropIdx].SetValue(listItem, Convert.ChangeType(nodeItemProp.InnerText, elemTypeProps[itemPropIdx].PropertyType));
+                }
+
+                list.Add(listItem);
+
+
+            }
+            return list;
+        }
+        
+        
+
+
+
+        public void SetParamList<T>(string SectionName,string ItemName, List<T> Values)
+        {
+            XmlElement elem = GetNodeByPath(SectionName);
+            Type elemType = typeof(T);
+            PropertyInfo[] elemTypeProps = elemType.GetProperties();
+            elem.RemoveAll();
+            foreach (T item in Values)
+            {
+                XmlElement ChildNode = _xDoc.CreateElement(ItemName);
+                elem.AppendChild(ChildNode);
+                foreach (var itemProp in elemTypeProps)
+                {
+                    AddNode(ChildNode, itemProp.Name, itemProp.GetValue(item).ToString());
+                }
+            }
+
+            _xDoc.Save(_settingPath);
+        }
     }
 }

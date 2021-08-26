@@ -10,7 +10,6 @@ using System.Windows.Forms;
 using System.Configuration;
 using MDIWindowManager;
 using System.Data.SqlClient;
-using System.Configuration;
 using Excel = Microsoft.Office.Interop.Excel;
 namespace Planning
 {
@@ -88,8 +87,7 @@ namespace Planning
                 return null;
             }
             return sql.Reader;
-            
-            
+                
 
         }
 
@@ -171,22 +169,13 @@ namespace Planning
 
         private void UpdateSetting()
         {
-            /*    SettingsEdit frmSettingsEdit = new SettingsEdit(setting);
-                if (frmSettingsEdit.ShowDialog() == DialogResult.OK)
-                {
-                    SettingsHandle.Save(setting);
-                    DataService.connectionString = $"Data Source={setting.ServerName};Initial Catalog={setting.BaseName};User ID={setting.UserName}; Password = {setting.Password}";
-                    context = new PlanningDbContext(DataService.GetEntityConnectionString(DataService.connectionString));
-                    ShipmentsLoad();
-                }
-                */
+            
             DataService.connectionString = DataService.BuildConnectionString(DataService.setting.ServerName,
                 DataService.setting.BaseName, 
                 DataService.setting.UserName, 
                 DataService.setting.Password, DataService.setting.IsWnd);
             DataService.entityConnectionString = DataService.GetEntityConnectionString(DataService.connectionString);
-            //$"Data Source={DataService.setting.ServerName};Initial Catalog={DataService.setting.BaseName};Integrated Security=true;User ID={DataService.setting.UserName}; Password = {DataService.setting.Password}";
-            //DataService.context = new PlanningDbContext(DataService.entityConnectionString);
+            
             DataService.InitContext();
             
         }
@@ -237,7 +226,13 @@ namespace Planning
             foreach (UserAccessItem item in UserPrvlg)
             {
                 ToolStripItem mi = FindMenuItem(menuMain.Items, item.FunctionId);
-                if (mi != null)
+                if (item.FunctionId == "Attr" || item.FunctionId == "OperType")
+                {
+                    mi.Visible = false;
+                    continue;
+                }
+                    
+                if ( mi != null)
                     mi.Visible = item.IsView;
             }
         }
@@ -261,6 +256,9 @@ namespace Planning
             settingsHandle.SetParamValue("ReportTemplate\\ShipmentTemplate", DataService.setting.ShipmentReport);
             settingsHandle.SetParamValue("ReportTemplate\\ReceiptTemplate", DataService.setting.ReceiptReport);
             settingsHandle.SetParamValue("ReportTemplate\\PeriodTemplate", DataService.setting.PeriodReport);
+            settingsHandle.SetParamValue("TaskUpdateInterval", DataService.setting.TaskUpdateInterval.ToString());
+            settingsHandle.SetParamValue("TaskViewFonSize", DataService.setting.TaskViewFonSize.ToString());
+            settingsHandle.SetParamList<CurrTaskColumn>("CurrentTaskColumns", "Column", DataService.setting.CurrentTaskColumns);
         }
 
         private void LoginUser()
@@ -323,7 +321,7 @@ namespace Planning
         {
 
             List<string> result = new List<string>();
-            foreach (DataGridViewTextBoxColumn col in tblShipments.Columns)
+            foreach (DataGridViewColumn col in tblShipments.Columns)
             {
                 if (!col.Visible)
                 {
@@ -344,6 +342,11 @@ namespace Planning
             DataService.setting.ShipmentReport = settingsHandle.GetParamStringValue("ReportTemplate\\ShipmentTemplate");
             DataService.setting.ReceiptReport = settingsHandle.GetParamStringValue("ReportTemplate\\ReceiptTemplate");
             DataService.setting.PeriodReport = settingsHandle.GetParamStringValue("ReportTemplate\\PeriodTemplate");
+            DataService.setting.TaskUpdateInterval = settingsHandle.GetParamDecimalCheckValue("TaskUpdateInterval",0,10);
+            DataService.setting.TaskViewFonSize= settingsHandle.GetParamDecimalCheckValue("TaskViewFonSize", 0, 5);
+
+
+            DataService.setting.CurrentTaskColumns = settingsHandle.GetParamList<CurrTaskColumn>("CurrentTaskColumns");
             /*
             if(setting == null)
             {
@@ -1201,7 +1204,7 @@ namespace Planning
         private void toolStripMenuItem3_Click(object sender, EventArgs e)
         {
             ToolStripMenuItem item = (ToolStripMenuItem)sender;
-            (item.Tag as DataGridViewTextBoxColumn).Visible = item.CheckState == CheckState.Checked ? true : false;
+            (item.Tag as DataGridViewColumn).Visible = item.CheckState == CheckState.Checked ? true : false;
             settingsHandle.SetParamValue("View\\HideColumns", GetHideColumns());
         }
 
@@ -1316,7 +1319,6 @@ namespace Planning
             //Получим индексы колонок в резалсете
             
             int rowIdx = 0;
-            int colNumberIdx = 0;
 
             string[,] printRow = new string[1, columnOrder.Count];
             foreach (DataRow r in dt.Rows)
@@ -1452,9 +1454,21 @@ namespace Planning
 
         private void btnShowLog_Click(object sender, EventArgs e)
         {
-            frmShipmentHistory frmShipment_History = new frmShipmentHistory(-1);
+            frmShipmentHistory frmShipment_History = new frmShipmentHistory(-1,false);
             AddFormTab(frmShipment_History, "История изменений");
             frmShipment_History.Populate();
+        }
+
+        private void miCalcOrderVolume_Click(object sender, EventArgs e)
+        {
+            frmVolumeCalc frmVolumeCalc = new frmVolumeCalc();
+            AddFormTab(frmVolumeCalc, "История изменений");
+        }
+
+        private void miCurrentTask_Click(object sender, EventArgs e)
+        {
+            frmCurrentTask frmCurrentTask = new frmCurrentTask();
+            frmCurrentTask.ShowDialog();
         }
     }
 }

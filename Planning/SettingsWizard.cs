@@ -14,11 +14,15 @@ namespace Planning
     {
         private List<Panel> steps = new List<Panel>();
         Settings _settings;
+        List<DictColumn> CurrentTaskCols = new List<DictColumn>();
+        List<string> CurrentTaskColsVisible = new List<string>();
+
         public SettingsWizard(Settings settings)
         {
             InitializeComponent();
             steps.Add(pnConnect);
             steps.Add(pnReport);
+            steps.Add(pnCurrentStep);
             _settings = settings;
             ShowStep(0);
             tvStep.SelectedNode = tvStep.Nodes[0];
@@ -58,6 +62,10 @@ namespace Planning
             btnReceiptDlg.Tag = edReceiptTemplate;
             btnShipmentDlg.Tag = edShipmentTemplate;
             btnRepPeriodTemplate.Tag = edRepPeriodTemplate;
+            edTaskUpdateInterval.Value = _settings.TaskUpdateInterval==0?10: _settings.TaskUpdateInterval;
+            edFontSize.Value = _settings.TaskViewFonSize;
+            LoadCurrentTask();
+            
 
         }
 
@@ -77,6 +85,25 @@ namespace Planning
             _settings.ShipmentReport = edShipmentTemplate.Text;
             _settings.ReceiptReport = edReceiptTemplate.Text;
             _settings.PeriodReport = edRepPeriodTemplate.Text;
+            _settings.TaskUpdateInterval = edTaskUpdateInterval.Value;
+            _settings.TaskViewFonSize = edFontSize.Value;
+
+            foreach (DataGridViewCheckBoxColumn column in tblCurrTaskView.Columns)
+            {
+                CurrTaskColumn listItem =  _settings.CurrentTaskColumns.Find(c => c.Id == column.Name);
+                if (listItem == null)
+                {
+                    listItem = new CurrTaskColumn();
+                    _settings.CurrentTaskColumns.Add(listItem);
+                }
+
+                listItem.Id = column.Name;
+                listItem.Title = column.HeaderText;
+                listItem.Visible = (bool)tblCurrTaskView.Rows[0].Cells[column.Index].Value;
+                listItem.Width = column.Width;
+                listItem.BgColor = column.DefaultCellStyle.BackColor.ToArgb();
+                listItem.FontColor = column.HeaderCell.Style.ForeColor.ToArgb();
+            }
 
             DialogResult = DialogResult.OK;
             Close();
@@ -91,6 +118,82 @@ namespace Planning
         private void btnReceiptDlg_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void LoadCurrentTask()
+        {
+
+            tblCurrTaskView.Columns.Add(new DataGridViewCheckBoxColumn { Name = "colDate", HeaderText = "Дата", Width = 100 });
+            tblCurrTaskView.Columns.Add(new DataGridViewCheckBoxColumn { Name = "colTime", HeaderText = "Время", Width = 100 });
+            tblCurrTaskView.Columns.Add(new DataGridViewCheckBoxColumn { Name = "colOrderId", HeaderText = "Код заказа", Width = 100 });
+            tblCurrTaskView.Columns.Add(new DataGridViewCheckBoxColumn { Name = "colKlient", HeaderText = "Клиент", Width = 100 });
+            tblCurrTaskView.Columns.Add(new DataGridViewCheckBoxColumn { Name = "colStatus", HeaderText = "Статус", Width = 100 });
+            tblCurrTaskView.Columns.Add(new DataGridViewCheckBoxColumn { Name = "colDonePrc", HeaderText = "Собран в (%)", Width = 100 });
+            tblCurrTaskView.Columns.Add(new DataGridViewCheckBoxColumn { Name = "colAmountLine", HeaderText = "Кол-во линий", Width = 100 });
+            tblCurrTaskView.Columns.Add(new DataGridViewCheckBoxColumn { Name = "colAmountPallet", HeaderText = "Кол-во паллет", Width = 100 });
+            tblCurrTaskView.Columns.Add(new DataGridViewCheckBoxColumn { Name = "colAmountBox", HeaderText = "Кол-во коробов", Width = 100 });
+            tblCurrTaskView.Columns.Add(new DataGridViewCheckBoxColumn { Name = "colAmountPieces", HeaderText = "Кол-во штук", Width = 100 });
+            tblCurrTaskView.Columns.Add(new DataGridViewCheckBoxColumn { Name = "colShpComment", HeaderText = "Комментарии по загрузке", Width = 100 });
+            tblCurrTaskView.Columns.Add(new DataGridViewCheckBoxColumn { Name = "colGateName", HeaderText = "Номер ворот", Width = 100 });
+            tblCurrTaskView.Columns.Add(new DataGridViewCheckBoxColumn { Name = "colSubmissionTime", HeaderText = "Время подачи документов", Width = 100 });
+            tblCurrTaskView.Columns.Add(new DataGridViewCheckBoxColumn { Name = "colStartTime", HeaderText = "Время начала", Width = 100 });
+            tblCurrTaskView.Columns.Add(new DataGridViewCheckBoxColumn { Name = "colEndTimePlan", HeaderText = "Время окончания", Width = 100 });
+            tblCurrTaskView.Columns.Add(new DataGridViewCheckBoxColumn { Name = "colEndTimeFact", HeaderText = "Убытие по факту", Width = 100 });
+
+            tblCurrTaskView.Rows.Add(true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true);
+
+            
+             foreach (CurrTaskColumn item in _settings.CurrentTaskColumns)
+             {
+                if (tblCurrTaskView.Columns.Contains(item.Id))
+                {
+                    
+                    tblCurrTaskView.Columns[item.Id].Width = item.Width;
+                    tblCurrTaskView.Rows[0].Cells[item.Id].Value = item.Visible;
+                    //tblCurrTaskView.Columns[item.Id].DefaultCellStyle.BackColor = Color.FromArgb(item.BgColor);
+                    //tblCurrTaskView.Columns[item.Id].HeaderCell.Style.ForeColor = Color.FromArgb(item.FontColor);
+
+                }
+                 
+             }
+            
+             
+        }
+
+        private void btnBgColor_Click(object sender, EventArgs e)
+        {
+            if (colorDialog.ShowDialog()==DialogResult.OK)
+            {
+                Int32 selectedColumnCount = tblCurrTaskView.Columns.GetColumnCount(DataGridViewElementStates.Selected);
+                for (int i = 0; i < selectedColumnCount; i++)
+                {
+                    tblCurrTaskView.SelectedColumns[i].DefaultCellStyle.BackColor = colorDialog.Color;
+                }
+               
+            }
+        }
+
+        private void btnFontColor_Click(object sender, EventArgs e)
+        {
+            if (colorDialog.ShowDialog() == DialogResult.OK)
+            {
+                Int32 selectedColumnCount = tblCurrTaskView.Columns.GetColumnCount(DataGridViewElementStates.Selected);
+                for (int i = 0; i < selectedColumnCount; i++)
+                {
+                    tblCurrTaskView.SelectedColumns[i].HeaderCell.Style.ForeColor = colorDialog.Color;
+                }
+
+            }
+        }
+
+        private void btnFontSettings_Click(object sender, EventArgs e)
+        {
+            if (fontDialog.ShowDialog() == DialogResult.OK)
+            {
+                tblCurrTaskView.DefaultCellStyle.Font = fontDialog.Font;
+
+            }
+            
         }
     }
 }

@@ -1,14 +1,43 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Xml;
 using System.Xml.Serialization;
 
 namespace Planning
 {
+
+    [Serializable]
+    public class CurrTaskColumn
+    {
+        public string Id { get; set; }
+        public string Title { get; set; }
+        public bool Visible { get; set; }
+        public int Width { get; set; }
+        public int BgColor { get; set; }
+        public int FontColor { get; set; }
+        
+
+
+        public CurrTaskColumn()
+        {
+
+        }
+        public CurrTaskColumn(string id, string title, bool isVisible, int width)
+        {
+            Id = id;
+            Title = title;
+            Visible = isVisible;
+            Width = width;
+        }
+
+    }
+
     [Serializable]
     public class Settings
     {
@@ -21,7 +50,9 @@ namespace Planning
         public string PeriodReport { get; set; }
         public int IsGetLogin { get; set; }
         public bool IsWnd { get; set; }
-
+        public List<CurrTaskColumn> CurrentTaskColumns = new List<CurrTaskColumn>();
+        public decimal TaskUpdateInterval { get; set; }
+        public decimal TaskViewFonSize { get; set; }
     }
 /*
     public static class SettingsHandle
