@@ -26,14 +26,22 @@ namespace Planning
         private string currShpItemId;
         //private int currColorItemIdx = 0;
         int _shipmentId = -1;
+        bool _isShipment;
         PlanningDbContext _context = DataService.context;
-        public frmShipmentHistory(int ShipmentId)
+
+        public frmShipmentHistory()
         {
-            InitializeComponent();
+             InitializeComponent();
+        }
+
+        public frmShipmentHistory(int ShipmentId, bool IsShipment):this()
+        {
+           
             dtBegin.Value = DateTime.Now;
             dtEnd.Value = DateTime.Now;
             cmbShpType.SelectedIndex = 0;
             _shipmentId = ShipmentId;
+            _isShipment = IsShipment;
             if (_shipmentId > 0)
             {
                 lbShpType.Visible = false;
@@ -42,7 +50,7 @@ namespace Planning
                 cmbUser.Visible = false;
                 btnFind.Left = 251;
                 pnFilter.Height = 36;
-
+                cmbShpType.SelectedIndex = 0;
             }
             else
                     cmbUser.Items.AddRange(_context.Users.Select(i=>i.Login).ToArray());
@@ -81,12 +89,13 @@ namespace Planning
             if (_shipmentId>=0)
             {
                 sql.Connect();
-
+                string table_name = !_isShipment ? "movement_log" : "shipments_log";
+                string field_name= !_isShipment ? "movement_id" : "shipment_id";
                 sql.TypeCommand = CommandType.Text;
                 sql.IsResultSet = true;
-                sql.SqlStatement = @"select min(dml_date) min_dml_date, max(dml_date) max_dml_date
-                from shipments_log
-                where shipment_id = " + _shipmentId;
+                sql.SqlStatement = $@"select min(dml_date) min_dml_date, max(dml_date) max_dml_date
+                from {table_name}
+                where {field_name} = " + _shipmentId;
                 bool Success = sql.Execute() && sql.Reader!=null && sql.Reader.Read() && sql.Reader.HasRows;
                 if (Success)
                 {                   
@@ -246,9 +255,11 @@ namespace Planning
 
             string[,] printRow = new string[1, visibleCount];
             string cellValue;
+            int visibleIdx;
             //tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colDirection"].Value.ToString()
             for (int r = 0; r < tblShipmentLog.RowCount; r++)
             {
+                visibleIdx = 0;
                 for (int c = 0; c < tblShipmentLog.Columns.Count; c++)
                 {
                     if (tblShipmentLog.Columns[c].Visible && tblShipmentLog.Rows[r].Cells[c].Value != null)
@@ -261,7 +272,7 @@ namespace Planning
                         else if (tblShipmentLog.Columns[c].Name == "colShpSpCondition")
                             cellValue = cellValue == "true" ? "Да" : "Нет";
 
-                        printRow[0, c] = cellValue;
+                        printRow[0, visibleIdx++] = cellValue;
                         
                     }
 

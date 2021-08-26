@@ -51,6 +51,9 @@
             this.miTransportType = new System.Windows.Forms.ToolStripMenuItem();
             this.miReports = new System.Windows.Forms.ToolStripMenuItem();
             this.miRepPeriod = new System.Windows.Forms.ToolStripMenuItem();
+            this.miAdditional = new System.Windows.Forms.ToolStripMenuItem();
+            this.miCalcOrderVolume = new System.Windows.Forms.ToolStripMenuItem();
+            this.miCurrentTask = new System.Windows.Forms.ToolStripMenuItem();
             this.tabMain = new System.Windows.Forms.TabPage();
             this.panel2 = new System.Windows.Forms.Panel();
             this.tblShipments = new System.Windows.Forms.DataGridView();
@@ -90,7 +93,7 @@
             this.colStampNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FontColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.BackgroundColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.IsAddLv = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.IsAddLv = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.mnuContext = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mciPrint = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -121,7 +124,6 @@
             this.statusInfo = new System.Windows.Forms.ToolStripStatusLabel();
             this.shipmentBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.bwProgress = new System.ComponentModel.BackgroundWorker();
-            this.delay_reasonsTableAdapter1 = new Planning.PlanningDataSetTableAdapters.delay_reasonsTableAdapter();
             this.menuMain.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -140,7 +142,8 @@
             this.menuMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mtiFile,
             this.miDicts,
-            this.miReports});
+            this.miReports,
+            this.miAdditional});
             this.menuMain.Location = new System.Drawing.Point(0, 0);
             this.menuMain.Name = "menuMain";
             this.menuMain.Size = new System.Drawing.Size(1461, 24);
@@ -258,6 +261,7 @@
             this.miAttributes.Size = new System.Drawing.Size(230, 22);
             this.miAttributes.Tag = "Attr";
             this.miAttributes.Text = "Аттрибуты";
+            this.miAttributes.Visible = false;
             this.miAttributes.Click += new System.EventHandler(this.miAttributes_Click);
             // 
             // miTransportType
@@ -283,6 +287,30 @@
             this.miRepPeriod.Text = "Отгрузки за период";
             this.miRepPeriod.Click += new System.EventHandler(this.miRepPeriod_Click);
             // 
+            // miAdditional
+            // 
+            this.miAdditional.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miCalcOrderVolume,
+            this.miCurrentTask});
+            this.miAdditional.Name = "miAdditional";
+            this.miAdditional.Size = new System.Drawing.Size(107, 20);
+            this.miAdditional.Text = "Дополнительно";
+            // 
+            // miCalcOrderVolume
+            // 
+            this.miCalcOrderVolume.Name = "miCalcOrderVolume";
+            this.miCalcOrderVolume.Size = new System.Drawing.Size(248, 22);
+            this.miCalcOrderVolume.Text = "Рассчет объема заказа";
+            this.miCalcOrderVolume.Visible = false;
+            this.miCalcOrderVolume.Click += new System.EventHandler(this.miCalcOrderVolume_Click);
+            // 
+            // miCurrentTask
+            // 
+            this.miCurrentTask.Name = "miCurrentTask";
+            this.miCurrentTask.Size = new System.Drawing.Size(248, 22);
+            this.miCurrentTask.Text = "Текущие операционные задачи";
+            this.miCurrentTask.Click += new System.EventHandler(this.miCurrentTask_Click);
+            // 
             // tabMain
             // 
             this.tabMain.Controls.Add(this.panel2);
@@ -292,7 +320,7 @@
             this.tabMain.Padding = new System.Windows.Forms.Padding(3);
             this.tabMain.Size = new System.Drawing.Size(1453, 557);
             this.tabMain.TabIndex = 0;
-            this.tabMain.Text = "Отгрузки";
+            this.tabMain.Text = "Операции";
             this.tabMain.UseVisualStyleBackColor = true;
             // 
             // panel2
@@ -654,9 +682,11 @@
             // IsAddLv
             // 
             this.IsAddLv.DataPropertyName = "IsAddLv";
-            this.IsAddLv.HeaderText = "IsAddLv";
+            this.IsAddLv.HeaderText = "Привязка к отгрузке";
             this.IsAddLv.Name = "IsAddLv";
             this.IsAddLv.ReadOnly = true;
+            this.IsAddLv.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.IsAddLv.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // mnuContext
             // 
@@ -839,7 +869,7 @@
             this.toolStripMenuItem3.CheckOnClick = true;
             this.toolStripMenuItem3.CheckState = System.Windows.Forms.CheckState.Checked;
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(80, 22);
             this.toolStripMenuItem3.Text = "2";
             this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
             // 
@@ -847,14 +877,14 @@
             // 
             this.toolStripMenuItem1.CheckOnClick = true;
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(80, 22);
             this.toolStripMenuItem1.Text = "1";
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.CheckOnClick = true;
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(80, 22);
             this.toolStripMenuItem2.Text = "3";
             // 
             // toolStripSeparator3
@@ -940,10 +970,6 @@
             this.bwProgress.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.bwProgress_ProgressChanged);
             this.bwProgress.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bwProgress_RunWorkerCompleted);
             // 
-            // delay_reasonsTableAdapter1
-            // 
-            this.delay_reasonsTableAdapter1.ClearBeforeFill = true;
-            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -993,7 +1019,7 @@
         private System.Windows.Forms.ToolStripMenuItem miDictGates;
         private System.Windows.Forms.ToolStripMenuItem miDictTC;
         private System.Windows.Forms.BindingSource shipmentBindingSource;
-        private PlanningDataSetTableAdapters.delay_reasonsTableAdapter delay_reasonsTableAdapter1;
+        //private PlanningDataSetTableAdapters.delay_reasonsTableAdapter delay_reasonsTableAdapter1;
         private System.Windows.Forms.TabPage tabMain;
         private System.Windows.Forms.DataGridView tblShipments;
         private System.Windows.Forms.ToolStrip tbMain;
@@ -1030,6 +1056,11 @@
         private System.Windows.Forms.ToolStripMenuItem miRepPeriod;
         public System.Windows.Forms.TabControl tabForms;
         private System.ComponentModel.BackgroundWorker bwProgress;
+        private System.Windows.Forms.ToolStripButton btnShowLog;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripMenuItem miAdditional;
+        private System.Windows.Forms.ToolStripMenuItem miCalcOrderVolume;
+        private System.Windows.Forms.ToolStripMenuItem miCurrentTask;
         private System.Windows.Forms.DataGridViewTextBoxColumn UniqueKey;
         private System.Windows.Forms.DataGridViewTextBoxColumn colId;
         private System.Windows.Forms.DataGridViewTextBoxColumn colIdNakl;
@@ -1066,9 +1097,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colStampNumber;
         private System.Windows.Forms.DataGridViewTextBoxColumn FontColor;
         private System.Windows.Forms.DataGridViewTextBoxColumn BackgroundColor;
-        private System.Windows.Forms.DataGridViewTextBoxColumn IsAddLv;
-        private System.Windows.Forms.ToolStripButton btnShowLog;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn IsAddLv;
     }
 }
 

@@ -40,6 +40,9 @@
   <PropertyGroup>
     <ApplicationIcon>PlanningLogo.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>Planning.Program</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Accessibility" />
     <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -150,6 +153,12 @@
     <Compile Include="FormLogin.Designer.cs">
       <DependentUpon>FormLogin.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmCurrentTask.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCurrentTask.Designer.cs">
+      <DependentUpon>frmCurrentTask.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmGetDateTime.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -161,6 +170,12 @@
     </Compile>
     <Compile Include="frmProgressBar.Designer.cs">
       <DependentUpon>frmProgressBar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmVolumeCalc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmVolumeCalc.Designer.cs">
+      <DependentUpon>frmVolumeCalc.cs</DependentUpon>
     </Compile>
     <Compile Include="Function.cs">
       <DependentUpon>DbPlaning.tt</DependentUpon>
@@ -389,15 +404,22 @@
     <EmbeddedResource Include="FormLogin.resx">
       <DependentUpon>FormLogin.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmCurrentTask.resx">
+      <DependentUpon>frmCurrentTask.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmGetDateTime.resx">
       <DependentUpon>frmGetDateTime.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmProgressBar.resx">
       <DependentUpon>frmProgressBar.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmVolumeCalc.resx">
+      <DependentUpon>frmVolumeCalc.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LvAttrEdit.resx">
       <DependentUpon>LvAttrEdit.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="RepPeriod.resx">
       <DependentUpon>RepPeriod.cs</DependentUpon>
     </EmbeddedResource>
@@ -564,9 +586,14 @@
     <None Include="Resources\ezgif.com-gif-to-apng.png" />
     <None Include="Resources\ezgif.com-gif-to-apng %281%29.png" />
     <None Include="Resources\ezgif.com-gif-maker.gif" />
+    <None Include="Resources\color_font.png" />
     <Content Include="Resources\find_6617.png" />
     <None Include="Resources\find_next.png" />
     <None Include="Resources\GzgM.gif" />
+    <None Include="Resources\FontColor.png" />
+    <None Include="Resources\painters_palette2.png" />
+    <None Include="Resources\paint_bucket.png" />
+    <None Include="Resources\font.png" />
     <Content Include="Resources\printer.png" />
     <None Include="Resources\arrow_refresh_8563.png" />
     <Content Include="PlanningLogo.ico" />

@@ -461,22 +461,7 @@ namespace Planning
 
             sql.Disconnect();
             return true;
-/*
-            SqlHandle sql = new SqlHandle(DataService.connectionString);
-            sql.TypeCommand = CommandType.StoredProcedure;
-            sql.AddCommandParametr(new SqlParameter { ParameterName = "@DB", Value = DB });
-            sql.AddCommandParametr(new SqlParameter { ParameterName = "@User", Value = User });
-            sql.AddCommandParametr(new SqlParameter { ParameterName = "@Login", Value = Login });
-            sql.SqlStatement = "CreateUser";
-            bool success = sql.Connect() && sql.Execute();
 
-            if (!success)
-            {
-                MessageBox.Show(sql.LastError, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-    */        
-            return success;
         }
 
 
