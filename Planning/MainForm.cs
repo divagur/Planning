@@ -26,7 +26,7 @@ namespace Planning
         private int Xwid = 6;//координаты ширины по диагонали крестика
         private const int tab_margin = 5;//координаты по высоте крестика
         public WaitHandler waitCur;
-        SettingsHandle settingsHandle = new SettingsHandle("Settings.xml");
+        
         List<UserAccessItem> UserPrvlg = new List<UserAccessItem>();
         UserAccessItem mainFormAccess =new UserAccessItem();
         SqlConnection LVConnect;
@@ -249,6 +249,7 @@ namespace Planning
 
         private void SaveSettings()
         {
+            /*
             settingsHandle.SetParamValue("Connection\\ServerName", DataService.setting.ServerName);
             settingsHandle.SetParamValue("Connection\\UserName", DataService.setting.UserName);
             settingsHandle.SetParamValue("Connection\\BaseName", DataService.setting.BaseName);
@@ -259,6 +260,9 @@ namespace Planning
             settingsHandle.SetParamValue("TaskUpdateInterval", DataService.setting.TaskUpdateInterval.ToString());
             settingsHandle.SetParamValue("TaskViewFonSize", DataService.setting.TaskViewFonSize.ToString());
             settingsHandle.SetParamList<CurrTaskColumn>("CurrentTaskColumns", "Column", DataService.setting.CurrentTaskColumns);
+            settingsHandle.SetParamList<VolumeCalcConstant>("VolumeCalcTemplates", "Template", DataService.setting.VolumeCalcTemplate);
+            */
+            DataService.settingsHandle.Save();
         }
 
         private void LoginUser()
@@ -311,7 +315,7 @@ namespace Planning
                 return false;
             }
             CloseAllTabs();
-            settingsHandle.SetParamValue("Connection\\UserName", DataService.setting.UserName);
+            DataService.settingsHandle.SetParamValue("Connection\\UserName", DataService.setting.UserName);
             statusInfo.Text = "Пользователь: " + DataService.setting.UserName;
 
             return true;
@@ -332,7 +336,7 @@ namespace Planning
         }
         private void frmMain_Load(object sender, EventArgs e)
         {
-
+            /*
             //Получаем параметры из конфига
             DataService.setting.ServerName = settingsHandle.GetParamStringValue("Connection\\ServerName");
             DataService.setting.BaseName = settingsHandle.GetParamStringValue("Connection\\BaseName");
@@ -347,6 +351,10 @@ namespace Planning
 
 
             DataService.setting.CurrentTaskColumns = settingsHandle.GetParamList<CurrTaskColumn>("CurrentTaskColumns");
+
+            DataService.setting.VolumeCalcTemplate = settingsHandle.GetParamList<VolumeCalcConstant>("VolumeCalcTemplates");
+            */
+            DataService.settingsHandle.Load();
             /*
             if(setting == null)
             {
@@ -429,7 +437,7 @@ namespace Planning
 
 
 
-            List<string> hideCols = settingsHandle.GetParamStringValue("View\\HideColumns").Split(',').ToList();
+            List<string> hideCols = DataService.settingsHandle.GetParamStringValue("View\\HideColumns").Split(',').ToList();
             btnColumnVisible.DropDownItems.Clear();
             foreach(DataGridViewColumn col in tblShipments.Columns)
             {
@@ -452,7 +460,7 @@ namespace Planning
 
         private void miDictDelayReasons_Click(object sender, EventArgs e)
         {
-            
+            /*
             DictSimple dict = new DictSimple();
             dict.TableName = "delay_reasons";
             dict.Title = "Справочник: Причины задержки";
@@ -461,6 +469,8 @@ namespace Planning
             dict.Columns.Add(new DictColumn { Id = "name", IsPK = false, IsVisible = true, Title = "Наименование", DataField = "name", Width = 254, DataType = SqlDbType.NVarChar, Length = 254 });
 
             SimpleDict frmDelayReasons = new SimpleDict(dict);
+            */
+            var frmDelayReasons = new DictDelayReasons();
             SetFormPrivalage(frmDelayReasons, "DelayReasons");
             AddFormTab(frmDelayReasons, "Причины задержки");
         }
@@ -1205,7 +1215,7 @@ namespace Planning
         {
             ToolStripMenuItem item = (ToolStripMenuItem)sender;
             (item.Tag as DataGridViewColumn).Visible = item.CheckState == CheckState.Checked ? true : false;
-            settingsHandle.SetParamValue("View\\HideColumns", GetHideColumns());
+            DataService.settingsHandle.SetParamValue("View\\HideColumns", GetHideColumns());
         }
 
         private void statusStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -1462,7 +1472,7 @@ namespace Planning
         private void miCalcOrderVolume_Click(object sender, EventArgs e)
         {
             frmVolumeCalc frmVolumeCalc = new frmVolumeCalc();
-            AddFormTab(frmVolumeCalc, "История изменений");
+            AddFormTab(frmVolumeCalc, "Расчет объема заказа");
         }
 
         private void miCurrentTask_Click(object sender, EventArgs e)

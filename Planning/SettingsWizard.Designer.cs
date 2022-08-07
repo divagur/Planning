@@ -29,17 +29,43 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Соединение");
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Отчеты", 1, 1);
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Окно текущих задач", 2, 2);
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Соединение");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Отчеты", 1, 1);
+            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Окно текущих задач", 2, 2);
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Рассчет объема", 3, 3);
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsWizard));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tvStep = new System.Windows.Forms.TreeView();
             this.imlStep = new System.Windows.Forms.ImageList(this.components);
             this.pnRight = new System.Windows.Forms.Panel();
+            this.pnVolumeCalcStep = new System.Windows.Forms.Panel();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.tblTemplateConstant = new System.Windows.Forms.DataGridView();
+            this.colTemplateName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPalletWeight = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPalletHeight = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPalletVolume = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPalletDementions = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.btnAddTmplt = new System.Windows.Forms.ToolStripButton();
+            this.btnDelTmplt = new System.Windows.Forms.ToolStripButton();
             this.pnCurrentStep = new System.Windows.Forms.Panel();
             this.tblCurrTaskView = new System.Windows.Forms.DataGridView();
             this.lvVisibleCol = new System.Windows.Forms.ListView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.edFontSize = new System.Windows.Forms.NumericUpDown();
+            this.label9 = new System.Windows.Forms.Label();
+            this.btnBgColor = new System.Windows.Forms.Button();
+            this.btnFontSettings = new System.Windows.Forms.Button();
+            this.btnFontColor = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
             this.edTaskUpdateInterval = new System.Windows.Forms.NumericUpDown();
             this.pnReport = new System.Windows.Forms.Panel();
@@ -68,16 +94,25 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
-            this.btnBgColor = new System.Windows.Forms.Button();
-            this.btnFontSettings = new System.Windows.Forms.Button();
-            this.btnFontColor = new System.Windows.Forms.Button();
             this.fontDialog = new System.Windows.Forms.FontDialog();
-            this.label9 = new System.Windows.Forms.Label();
-            this.edFontSize = new System.Windows.Forms.NumericUpDown();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.txtInportRowStart = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.textBox3 = new System.Windows.Forms.TextBox();
             this.pnRight.SuspendLayout();
+            this.pnVolumeCalcStep.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tblTemplateConstant)).BeginInit();
+            this.toolStrip1.SuspendLayout();
             this.pnCurrentStep.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tblCurrTaskView)).BeginInit();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.edFontSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.edTaskUpdateInterval)).BeginInit();
             this.pnReport.SuspendLayout();
             this.pnConnect.SuspendLayout();
@@ -87,7 +122,7 @@
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.edFontSize)).BeginInit();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // tvStep
@@ -98,25 +133,31 @@
             this.tvStep.LineColor = System.Drawing.Color.White;
             this.tvStep.Location = new System.Drawing.Point(0, 0);
             this.tvStep.Name = "tvStep";
-            treeNode4.Checked = true;
-            treeNode4.ImageIndex = 0;
-            treeNode4.Name = "NodeConnection";
-            treeNode4.Tag = "0";
-            treeNode4.Text = "Соединение";
-            treeNode5.ImageIndex = 1;
-            treeNode5.Name = "NodeReport";
-            treeNode5.SelectedImageIndex = 1;
-            treeNode5.Tag = "1";
-            treeNode5.Text = "Отчеты";
-            treeNode6.ImageIndex = 2;
-            treeNode6.Name = "NodeCurrentTask";
-            treeNode6.SelectedImageIndex = 2;
-            treeNode6.Tag = "2";
-            treeNode6.Text = "Окно текущих задач";
+            treeNode5.Checked = true;
+            treeNode5.ImageIndex = 0;
+            treeNode5.Name = "NodeConnection";
+            treeNode5.Tag = "0";
+            treeNode5.Text = "Соединение";
+            treeNode6.ImageIndex = 1;
+            treeNode6.Name = "NodeReport";
+            treeNode6.SelectedImageIndex = 1;
+            treeNode6.Tag = "1";
+            treeNode6.Text = "Отчеты";
+            treeNode7.ImageIndex = 2;
+            treeNode7.Name = "NodeCurrentTask";
+            treeNode7.SelectedImageIndex = 2;
+            treeNode7.Tag = "2";
+            treeNode7.Text = "Окно текущих задач";
+            treeNode8.ImageIndex = 3;
+            treeNode8.Name = "NodeVolumeCalc";
+            treeNode8.SelectedImageIndex = 3;
+            treeNode8.Tag = "3";
+            treeNode8.Text = "Рассчет объема";
             this.tvStep.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode4,
             treeNode5,
-            treeNode6});
+            treeNode6,
+            treeNode7,
+            treeNode8});
             this.tvStep.SelectedImageIndex = 0;
             this.tvStep.ShowRootLines = false;
             this.tvStep.Size = new System.Drawing.Size(248, 519);
@@ -130,9 +171,11 @@
             this.imlStep.Images.SetKeyName(0, "data_network.png");
             this.imlStep.Images.SetKeyName(1, "spreadsheet_sum.png");
             this.imlStep.Images.SetKeyName(2, "clipboard_checks.png");
+            this.imlStep.Images.SetKeyName(3, "wooden_pallet_box.png");
             // 
             // pnRight
             // 
+            this.pnRight.Controls.Add(this.pnVolumeCalcStep);
             this.pnRight.Controls.Add(this.pnCurrentStep);
             this.pnRight.Controls.Add(this.pnReport);
             this.pnRight.Controls.Add(this.pnConnect);
@@ -142,12 +185,149 @@
             this.pnRight.Size = new System.Drawing.Size(1224, 519);
             this.pnRight.TabIndex = 2;
             // 
+            // pnVolumeCalcStep
+            // 
+            this.pnVolumeCalcStep.Controls.Add(this.groupBox3);
+            this.pnVolumeCalcStep.Controls.Add(this.groupBox2);
+            this.pnVolumeCalcStep.Location = new System.Drawing.Point(22, 22);
+            this.pnVolumeCalcStep.Name = "pnVolumeCalcStep";
+            this.pnVolumeCalcStep.Size = new System.Drawing.Size(848, 491);
+            this.pnVolumeCalcStep.TabIndex = 4;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.tblTemplateConstant);
+            this.groupBox2.Controls.Add(this.toolStrip1);
+            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groupBox2.Location = new System.Drawing.Point(0, 0);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(848, 225);
+            this.groupBox2.TabIndex = 2;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Константы для расчета";
+            // 
+            // tblTemplateConstant
+            // 
+            this.tblTemplateConstant.AllowUserToAddRows = false;
+            this.tblTemplateConstant.AllowUserToDeleteRows = false;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.tblTemplateConstant.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
+            this.tblTemplateConstant.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.tblTemplateConstant.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colTemplateName,
+            this.colPalletWeight,
+            this.colPalletHeight,
+            this.colPalletVolume,
+            this.colPalletDementions});
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.tblTemplateConstant.DefaultCellStyle = dataGridViewCellStyle14;
+            this.tblTemplateConstant.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tblTemplateConstant.Location = new System.Drawing.Point(3, 41);
+            this.tblTemplateConstant.Name = "tblTemplateConstant";
+            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle15.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle15.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle15.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.tblTemplateConstant.RowHeadersDefaultCellStyle = dataGridViewCellStyle15;
+            this.tblTemplateConstant.Size = new System.Drawing.Size(842, 181);
+            this.tblTemplateConstant.TabIndex = 0;
+            this.tblTemplateConstant.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.tblTemplateConstant_CellEndEdit);
+            this.tblTemplateConstant.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.tblTemplateConstant_CellFormatting);
+            this.tblTemplateConstant.CellLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.tblTemplateConstant_CellLeave);
+            this.tblTemplateConstant.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.tblTemplateConstant_DataError);
+            this.tblTemplateConstant.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tblTemplateConstant_KeyPress);
+            // 
+            // colTemplateName
+            // 
+            this.colTemplateName.DataPropertyName = "Name";
+            this.colTemplateName.HeaderText = "Наименование";
+            this.colTemplateName.Name = "colTemplateName";
+            this.colTemplateName.Width = 300;
+            // 
+            // colPalletWeight
+            // 
+            this.colPalletWeight.DataPropertyName = "PalletWeight";
+            this.colPalletWeight.HeaderText = "Вес паллета";
+            this.colPalletWeight.Name = "colPalletWeight";
+            // 
+            // colPalletHeight
+            // 
+            this.colPalletHeight.DataPropertyName = "PalletHeight";
+            dataGridViewCellStyle11.NullValue = null;
+            this.colPalletHeight.DefaultCellStyle = dataGridViewCellStyle11;
+            this.colPalletHeight.HeaderText = "Высота паллета";
+            this.colPalletHeight.Name = "colPalletHeight";
+            // 
+            // colPalletVolume
+            // 
+            this.colPalletVolume.DataPropertyName = "PalletVolume";
+            dataGridViewCellStyle12.NullValue = null;
+            this.colPalletVolume.DefaultCellStyle = dataGridViewCellStyle12;
+            this.colPalletVolume.HeaderText = "Объем паллета";
+            this.colPalletVolume.Name = "colPalletVolume";
+            // 
+            // colPalletDementions
+            // 
+            this.colPalletDementions.DataPropertyName = "PalleteDimensions";
+            dataGridViewCellStyle13.NullValue = null;
+            this.colPalletDementions.DefaultCellStyle = dataGridViewCellStyle13;
+            this.colPalletDementions.HeaderText = "Габариты паллета";
+            this.colPalletDementions.Name = "colPalletDementions";
+            // 
+            // toolStrip1
+            // 
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnAddTmplt,
+            this.btnDelTmplt});
+            this.toolStrip1.Location = new System.Drawing.Point(3, 16);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(842, 25);
+            this.toolStrip1.TabIndex = 1;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // btnAddTmplt
+            // 
+            this.btnAddTmplt.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnAddTmplt.Image = global::Planning.Properties.Resources.Add;
+            this.btnAddTmplt.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnAddTmplt.Name = "btnAddTmplt";
+            this.btnAddTmplt.Size = new System.Drawing.Size(23, 22);
+            this.btnAddTmplt.Text = "toolStripButton1";
+            this.btnAddTmplt.ToolTipText = "Добавить шаблон";
+            this.btnAddTmplt.Click += new System.EventHandler(this.btnAddTmplt_Click);
+            // 
+            // btnDelTmplt
+            // 
+            this.btnDelTmplt.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnDelTmplt.Image = global::Planning.Properties.Resources.Delete;
+            this.btnDelTmplt.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnDelTmplt.Name = "btnDelTmplt";
+            this.btnDelTmplt.Size = new System.Drawing.Size(23, 22);
+            this.btnDelTmplt.Text = "toolStripButton2";
+            this.btnDelTmplt.ToolTipText = "Удалить шаблон";
+            this.btnDelTmplt.Click += new System.EventHandler(this.btnDelTmplt_Click);
+            // 
             // pnCurrentStep
             // 
             this.pnCurrentStep.Controls.Add(this.tblCurrTaskView);
             this.pnCurrentStep.Controls.Add(this.lvVisibleCol);
             this.pnCurrentStep.Controls.Add(this.groupBox1);
-            this.pnCurrentStep.Location = new System.Drawing.Point(334, 29);
+            this.pnCurrentStep.Location = new System.Drawing.Point(637, 92);
             this.pnCurrentStep.Name = "pnCurrentStep";
             this.pnCurrentStep.Size = new System.Drawing.Size(858, 389);
             this.pnCurrentStep.TabIndex = 3;
@@ -156,11 +336,34 @@
             // 
             this.tblCurrTaskView.AllowUserToAddRows = false;
             this.tblCurrTaskView.AllowUserToDeleteRows = false;
+            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle16.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle16.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle16.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle16.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle16.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.tblCurrTaskView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle16;
             this.tblCurrTaskView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle17.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle17.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle17.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle17.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle17.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.tblCurrTaskView.DefaultCellStyle = dataGridViewCellStyle17;
             this.tblCurrTaskView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tblCurrTaskView.Location = new System.Drawing.Point(0, 45);
             this.tblCurrTaskView.Name = "tblCurrTaskView";
-            this.tblCurrTaskView.ReadOnly = true;
+            dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle18.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle18.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle18.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle18.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle18.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.tblCurrTaskView.RowHeadersDefaultCellStyle = dataGridViewCellStyle18;
             this.tblCurrTaskView.RowHeadersVisible = false;
             this.tblCurrTaskView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.ColumnHeaderSelect;
             this.tblCurrTaskView.Size = new System.Drawing.Size(858, 344);
@@ -192,6 +395,68 @@
             this.groupBox1.Size = new System.Drawing.Size(858, 45);
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
+            // 
+            // edFontSize
+            // 
+            this.edFontSize.Location = new System.Drawing.Point(317, 14);
+            this.edFontSize.Minimum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.edFontSize.Name = "edFontSize";
+            this.edFontSize.Size = new System.Drawing.Size(46, 20);
+            this.edFontSize.TabIndex = 10;
+            this.edFontSize.Value = new decimal(new int[] {
+            11,
+            0,
+            0,
+            0});
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(223, 16);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(88, 13);
+            this.label9.TabIndex = 9;
+            this.label9.Text = "Размер шрифта";
+            // 
+            // btnBgColor
+            // 
+            this.btnBgColor.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.btnBgColor.Image = global::Planning.Properties.Resources.paint_bucket;
+            this.btnBgColor.Location = new System.Drawing.Point(534, 11);
+            this.btnBgColor.Name = "btnBgColor";
+            this.btnBgColor.Size = new System.Drawing.Size(25, 23);
+            this.btnBgColor.TabIndex = 8;
+            this.btnBgColor.UseVisualStyleBackColor = true;
+            this.btnBgColor.Visible = false;
+            this.btnBgColor.Click += new System.EventHandler(this.btnBgColor_Click);
+            // 
+            // btnFontSettings
+            // 
+            this.btnFontSettings.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.btnFontSettings.Image = global::Planning.Properties.Resources.font;
+            this.btnFontSettings.Location = new System.Drawing.Point(477, 11);
+            this.btnFontSettings.Name = "btnFontSettings";
+            this.btnFontSettings.Size = new System.Drawing.Size(25, 23);
+            this.btnFontSettings.TabIndex = 8;
+            this.btnFontSettings.UseVisualStyleBackColor = true;
+            this.btnFontSettings.Visible = false;
+            this.btnFontSettings.Click += new System.EventHandler(this.btnFontSettings_Click);
+            // 
+            // btnFontColor
+            // 
+            this.btnFontColor.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.btnFontColor.Image = global::Planning.Properties.Resources.color_font;
+            this.btnFontColor.Location = new System.Drawing.Point(508, 11);
+            this.btnFontColor.Name = "btnFontColor";
+            this.btnFontColor.Size = new System.Drawing.Size(25, 23);
+            this.btnFontColor.TabIndex = 8;
+            this.btnFontColor.UseVisualStyleBackColor = true;
+            this.btnFontColor.Visible = false;
+            this.btnFontColor.Click += new System.EventHandler(this.btnFontColor_Click);
             // 
             // label8
             // 
@@ -466,67 +731,87 @@
             this.openFileDialog.Filter = "\"Excel|*.xltx| Excel macros| *xltm\"";
             this.openFileDialog.Title = "Шаблоны отчетов";
             // 
-            // btnBgColor
+            // groupBox3
             // 
-            this.btnBgColor.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnBgColor.Image = global::Planning.Properties.Resources.paint_bucket;
-            this.btnBgColor.Location = new System.Drawing.Point(534, 11);
-            this.btnBgColor.Name = "btnBgColor";
-            this.btnBgColor.Size = new System.Drawing.Size(25, 23);
-            this.btnBgColor.TabIndex = 8;
-            this.btnBgColor.UseVisualStyleBackColor = true;
-            this.btnBgColor.Visible = false;
-            this.btnBgColor.Click += new System.EventHandler(this.btnBgColor_Click);
+            this.groupBox3.Controls.Add(this.textBox3);
+            this.groupBox3.Controls.Add(this.label13);
+            this.groupBox3.Controls.Add(this.textBox2);
+            this.groupBox3.Controls.Add(this.label12);
+            this.groupBox3.Controls.Add(this.textBox1);
+            this.groupBox3.Controls.Add(this.label11);
+            this.groupBox3.Controls.Add(this.txtInportRowStart);
+            this.groupBox3.Controls.Add(this.label10);
+            this.groupBox3.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groupBox3.Location = new System.Drawing.Point(0, 225);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(848, 172);
+            this.groupBox3.TabIndex = 3;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Параметры импорта";
             // 
-            // btnFontSettings
+            // label10
             // 
-            this.btnFontSettings.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnFontSettings.Image = global::Planning.Properties.Resources.font;
-            this.btnFontSettings.Location = new System.Drawing.Point(477, 11);
-            this.btnFontSettings.Name = "btnFontSettings";
-            this.btnFontSettings.Size = new System.Drawing.Size(25, 23);
-            this.btnFontSettings.TabIndex = 8;
-            this.btnFontSettings.UseVisualStyleBackColor = true;
-            this.btnFontSettings.Visible = false;
-            this.btnFontSettings.Click += new System.EventHandler(this.btnFontSettings_Click);
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(6, 25);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(140, 13);
+            this.label10.TabIndex = 0;
+            this.label10.Text = "Начальная строка данных";
             // 
-            // btnFontColor
+            // txtInportRowStart
             // 
-            this.btnFontColor.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnFontColor.Image = global::Planning.Properties.Resources.color_font;
-            this.btnFontColor.Location = new System.Drawing.Point(508, 11);
-            this.btnFontColor.Name = "btnFontColor";
-            this.btnFontColor.Size = new System.Drawing.Size(25, 23);
-            this.btnFontColor.TabIndex = 8;
-            this.btnFontColor.UseVisualStyleBackColor = true;
-            this.btnFontColor.Visible = false;
-            this.btnFontColor.Click += new System.EventHandler(this.btnFontColor_Click);
+            this.txtInportRowStart.Location = new System.Drawing.Point(152, 22);
+            this.txtInportRowStart.Name = "txtInportRowStart";
+            this.txtInportRowStart.Size = new System.Drawing.Size(93, 20);
+            this.txtInportRowStart.TabIndex = 1;
             // 
-            // label9
+            // label11
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(223, 16);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(88, 13);
-            this.label9.TabIndex = 9;
-            this.label9.Text = "Размер шрифта";
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(6, 56);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(116, 13);
+            this.label11.TabIndex = 0;
+            this.label11.Text = "Колонка с артикулом";
             // 
-            // edFontSize
+            // textBox1
             // 
-            this.edFontSize.Location = new System.Drawing.Point(317, 14);
-            this.edFontSize.Minimum = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
-            this.edFontSize.Name = "edFontSize";
-            this.edFontSize.Size = new System.Drawing.Size(46, 20);
-            this.edFontSize.TabIndex = 10;
-            this.edFontSize.Value = new decimal(new int[] {
-            11,
-            0,
-            0,
-            0});
+            this.textBox1.Location = new System.Drawing.Point(152, 53);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(93, 20);
+            this.textBox1.TabIndex = 1;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(6, 82);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(144, 13);
+            this.label12.TabIndex = 0;
+            this.label12.Text = "Колонка с наименованием";
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(152, 79);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(93, 20);
+            this.textBox2.TabIndex = 1;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(6, 108);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(128, 13);
+            this.label13.TabIndex = 0;
+            this.label13.Text = "Колонка с количеством";
+            // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(152, 105);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(93, 20);
+            this.textBox3.TabIndex = 1;
             // 
             // SettingsWizard
             // 
@@ -541,10 +826,17 @@
             this.Text = "Настройки";
             this.Load += new System.EventHandler(this.SettingsWizard_Load);
             this.pnRight.ResumeLayout(false);
+            this.pnVolumeCalcStep.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tblTemplateConstant)).EndInit();
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.pnCurrentStep.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.tblCurrTaskView)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.edFontSize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.edTaskUpdateInterval)).EndInit();
             this.pnReport.ResumeLayout(false);
             this.pnReport.PerformLayout();
@@ -556,7 +848,8 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.edFontSize)).EndInit();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -603,5 +896,25 @@
         private System.Windows.Forms.FontDialog fontDialog;
         private System.Windows.Forms.NumericUpDown edFontSize;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Panel pnVolumeCalcStep;
+        private System.Windows.Forms.DataGridView tblTemplateConstant;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.ToolStripButton btnAddTmplt;
+        private System.Windows.Forms.ToolStripButton btnDelTmplt;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colTemplateName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPalletWeight;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPalletHeight;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPalletVolume;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPalletDementions;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.TextBox txtInportRowStart;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label11;
     }
 }

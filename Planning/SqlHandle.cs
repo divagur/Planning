@@ -140,7 +140,10 @@ namespace Planning
             
         }
 
-
+        public bool HasRows()
+        {
+            return _reader != null && _reader.HasRows;
+        }
 
         public void AddCommandParametr(SqlParameter param)
         {

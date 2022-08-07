@@ -78,6 +78,9 @@ namespace Planning
         public static string entityConnectionString = "";
         public static Dictionary<string, DictInfo> Dicts = new Dictionary<string, DictInfo>();
         public static Settings setting = new Settings();
+        
+        public static SettingsHandle settingsHandle = new SettingsHandle("Settings.xml", setting);
+
         //public static SqlConnectionStringBuilder connectionString = new SqlConnectionStringBuilder();
 
 
@@ -297,7 +300,8 @@ namespace Planning
 
         public static void InitContext()
         {
-            context = new PlanningDbContext(entityConnectionString);
+            if (entityConnectionString != String.Empty)
+                context = new PlanningDbContext(entityConnectionString);
         }
         public static List<UserAccessItem> GetPrvlg(string UserLogin)
         {
@@ -553,5 +557,8 @@ namespace Planning
             return success;
 
         }
+
+        
+
     }
 }

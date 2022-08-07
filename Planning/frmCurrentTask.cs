@@ -75,7 +75,7 @@ namespace Planning
 
             if (e.RowIndex >= 0)
             {
-                if (e.ColumnIndex == ((DataGridView)sender).Columns["colDone"].Index)
+                if (e.ColumnIndex == ((DataGridView)sender).Columns["colDonePrc"].Index)
                 {
 
 

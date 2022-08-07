@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -39,8 +40,19 @@ namespace Planning
     }
 
     [Serializable]
+    public class VolumeCalcConstant
+    {
+        public string Name { get; set; }
+        public decimal PalletWeight { get; set; }
+        public decimal PalletHeight { get; set; }
+        public decimal PalletVolume { get; set; }
+        public decimal PalleteDimensions { get; set; }
+    }
+
+    [Serializable]
     public class Settings
     {
+
         public string ServerName { get; set; }
         public string BaseName { get; set; }
         public string UserName { get; set; }
@@ -50,9 +62,16 @@ namespace Planning
         public string PeriodReport { get; set; }
         public int IsGetLogin { get; set; }
         public bool IsWnd { get; set; }
+
         public List<CurrTaskColumn> CurrentTaskColumns = new List<CurrTaskColumn>();
+
+        public List<VolumeCalcConstant> VolumeCalcTemplate = new List<VolumeCalcConstant>();
+
         public decimal TaskUpdateInterval { get; set; }
         public decimal TaskViewFonSize { get; set; }
+
+
+
     }
 /*
     public static class SettingsHandle

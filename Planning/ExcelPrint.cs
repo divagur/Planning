@@ -129,6 +129,18 @@ namespace Planning
             
             range.EntireColumn.ColumnWidth = PixelToPoint(cWidth, LOGPIXELSY) +1;
         }
+
+        public void SetColumnAutoFit(int Sheet, int Col)
+        {
+            Excel.Worksheet worksheet = (Excel.Worksheet)_sheets.get_Item(Sheet);
+            //Excel.Range range = worksheet.Columns[1,Col];//, System.Type.Missing];
+            Excel.Range range = (Excel.Range)_worksheet.Cells[1, Col];
+
+            range.EntireColumn.AutoFit();
+
+            
+        }
+
         public void SetRowHeight(int Sheet, int Row, int rHeight)
         {
             Excel.Worksheet worksheet = (Excel.Worksheet)_sheets.get_Item(Sheet);
@@ -136,6 +148,28 @@ namespace Planning
             Excel.Range range = (Excel.Range)_worksheet.Cells[Row, 1];
 
             range.Rows.RowHeight = rHeight*0.75;
+        }
+
+
+        public void SetCellFontStyle(int Sheet, int ColFrom, int RowFrom, int ColTo, int RowTo, bool IsBold, bool IsItalic, bool IsUnderline)
+        {
+            _sheets = _workbook.Worksheets;
+            _worksheet = (Excel.Worksheet)_sheets.get_Item(Sheet);
+
+            Excel.Range printRange = SelectCells(Sheet, ColFrom, RowFrom, ColTo, RowTo);
+            printRange.Font.Bold = IsBold;
+            printRange.Font.Italic = IsItalic;
+            printRange.Font.Underline = IsUnderline;
+        }
+
+        public void SetCellsFormat(int Sheet, int ColFrom, int RowFrom, int ColTo, int RowTo, string Format)
+        {
+            _sheets = _workbook.Worksheets;
+            _worksheet = (Excel.Worksheet)_sheets.get_Item(Sheet);
+
+            Excel.Range printRange = SelectCells(Sheet, ColFrom, RowFrom, ColTo, RowTo);
+            printRange.NumberFormat = Format;
+            
         }
     }
 }

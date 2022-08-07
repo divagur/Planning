@@ -16,6 +16,8 @@ namespace Planning
         Settings _settings;
         List<DictColumn> CurrentTaskCols = new List<DictColumn>();
         List<string> CurrentTaskColsVisible = new List<string>();
+        BindingList<VolumeCalcConstant> bindingListVolumeCalcConstant;
+        BindingSource sourceVolumeCalcConstant;
 
         public SettingsWizard(Settings settings)
         {
@@ -23,10 +25,14 @@ namespace Planning
             steps.Add(pnConnect);
             steps.Add(pnReport);
             steps.Add(pnCurrentStep);
+            steps.Add(pnVolumeCalcStep);
             _settings = settings;
             ShowStep(0);
             tvStep.SelectedNode = tvStep.Nodes[0];
-            
+
+
+
+
         }
 
         public void ShowStep(int Index)
@@ -65,8 +71,15 @@ namespace Planning
             edTaskUpdateInterval.Value = _settings.TaskUpdateInterval==0?10: _settings.TaskUpdateInterval;
             edFontSize.Value = _settings.TaskViewFonSize;
             LoadCurrentTask();
-            
 
+            tblTemplateConstant.AutoGenerateColumns = false;
+
+            bindingListVolumeCalcConstant = new BindingList<VolumeCalcConstant>(_settings.VolumeCalcTemplate);
+            sourceVolumeCalcConstant = new BindingSource(bindingListVolumeCalcConstant, null);
+
+
+            //tblTemplateConstant.DataSource = sourceVolumeCalcConstant;
+            tblTemplateConstant.DataSource = _settings.VolumeCalcTemplate;
         }
 
         private void btnShipmentDlg_Click(object sender, EventArgs e)
@@ -104,6 +117,8 @@ namespace Planning
                 listItem.BgColor = column.DefaultCellStyle.BackColor.ToArgb();
                 listItem.FontColor = column.HeaderCell.Style.ForeColor.ToArgb();
             }
+
+
 
             DialogResult = DialogResult.OK;
             Close();
@@ -194,6 +209,74 @@ namespace Planning
 
             }
             
+        }
+
+        private void btnAddTmplt_Click(object sender, EventArgs e)
+        {
+            VolumeCalcConstant item = new VolumeCalcConstant();
+            item.Name = "Набор констант "+ (_settings.VolumeCalcTemplate.Count+1).ToString();
+
+            _settings.VolumeCalcTemplate.Add(item);
+
+            sourceVolumeCalcConstant.ResetBindings(false);
+        }
+
+        private void btnDelTmplt_Click(object sender, EventArgs e)
+        {
+            VolumeCalcConstant item = _settings.VolumeCalcTemplate.Find(i => i.Name == (string)tblTemplateConstant.CurrentRow.Cells[0].Value);
+            if (item != null)
+            {
+                try
+                {
+
+                    _settings.VolumeCalcTemplate.Remove(item);
+                    /*
+                    sourceVolumeCalcConstant.SuspendBinding();
+                    sourceVolumeCalcConstant.DataSource = _settings.VolumeCalcTemplate;
+                    sourceVolumeCalcConstant.ResumeBinding();
+
+                    tblTemplateConstant.DataSource = sourceVolumeCalcConstant;
+                    */
+                    // sourceVolumeCalcConstant.ResetBindings(false);
+                    tblTemplateConstant.DataSource = _settings.VolumeCalcTemplate;
+                }
+                catch (DataException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+                
+
+        }
+
+        private void tblTemplateConstant_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            
+ 
+        }
+
+        private void tblTemplateConstant_CellLeave(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 0 && (tblTemplateConstant.CurrentCell.Value == null || (string)tblTemplateConstant.CurrentCell.Value == ""))
+            {
+                MessageBox.Show("Имя шаблона не может быть пустым");
+                return;
+            }
+        }
+
+        private void tblTemplateConstant_KeyPress(object sender, KeyPressEventArgs e)
+        {
+
+        }
+
+        private void tblTemplateConstant_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            
+        }
+
+        private void tblTemplateConstant_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            MessageBox.Show(e.Exception.Message);
         }
     }
 }

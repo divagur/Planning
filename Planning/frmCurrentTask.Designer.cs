@@ -30,6 +30,8 @@ namespace Planning
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCurrentTask));
             this.tblTaks = new System.Windows.Forms.DataGridView();
             this.timerUpdateTask = new System.Windows.Forms.Timer(this.components);
@@ -39,17 +41,17 @@ namespace Planning
             this.colOrderId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colKlient = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colState = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDone = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colLineCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPalletAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colBoxAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPiecesNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDonePrc = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colAmountLine = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colAmountPallet = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colAmountBox = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colAmountPieces = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colShpComment = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colGate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colGateName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colSubmissionTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colStartTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colEndTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colLeaveTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colEndTimePlan = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colEndTimeFact = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDoneShare = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FontColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.BackgroundColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -70,25 +72,37 @@ namespace Planning
             this.colOrderId,
             this.colKlient,
             this.colState,
-            this.colDone,
-            this.colLineCount,
-            this.colPalletAmount,
-            this.colBoxAmount,
-            this.colPiecesNumber,
+            this.colDonePrc,
+            this.colAmountLine,
+            this.colAmountPallet,
+            this.colAmountBox,
+            this.colAmountPieces,
             this.colShpComment,
-            this.colGate,
+            this.colGateName,
             this.colSubmissionTime,
             this.colStartTime,
-            this.colEndTime,
-            this.colLeaveTime,
+            this.colEndTimePlan,
+            this.colEndTimeFact,
             this.colDoneShare,
             this.FontColor,
             this.BackgroundColor});
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.MenuHighlight;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.ControlLightLight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.tblTaks.DefaultCellStyle = dataGridViewCellStyle1;
             this.tblTaks.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tblTaks.Location = new System.Drawing.Point(0, 0);
             this.tblTaks.Name = "tblTaks";
             this.tblTaks.ReadOnly = true;
             this.tblTaks.RowHeadersVisible = false;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.Black;
+            this.tblTaks.RowsDefaultCellStyle = dataGridViewCellStyle2;
             this.tblTaks.Size = new System.Drawing.Size(1098, 632);
             this.tblTaks.TabIndex = 0;
             this.tblTaks.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tblTaks_CellContentClick);
@@ -144,40 +158,40 @@ namespace Planning
             this.colState.Name = "colState";
             this.colState.ReadOnly = true;
             // 
-            // colDone
+            // colDonePrc
             // 
-            this.colDone.DataPropertyName = "PrcReady";
-            this.colDone.HeaderText = "Собран в (%)";
-            this.colDone.Name = "colDone";
-            this.colDone.ReadOnly = true;
+            this.colDonePrc.DataPropertyName = "PrcReady";
+            this.colDonePrc.HeaderText = "Собран в (%)";
+            this.colDonePrc.Name = "colDonePrc";
+            this.colDonePrc.ReadOnly = true;
             // 
-            // colLineCount
+            // colAmountLine
             // 
-            this.colLineCount.DataPropertyName = "LineAmount";
-            this.colLineCount.HeaderText = "Кол-во линий";
-            this.colLineCount.Name = "colLineCount";
-            this.colLineCount.ReadOnly = true;
+            this.colAmountLine.DataPropertyName = "LineAmount";
+            this.colAmountLine.HeaderText = "Кол-во линий";
+            this.colAmountLine.Name = "colAmountLine";
+            this.colAmountLine.ReadOnly = true;
             // 
-            // colPalletAmount
+            // colAmountPallet
             // 
-            this.colPalletAmount.DataPropertyName = "PalletAmount";
-            this.colPalletAmount.HeaderText = "Кол-во паллет";
-            this.colPalletAmount.Name = "colPalletAmount";
-            this.colPalletAmount.ReadOnly = true;
+            this.colAmountPallet.DataPropertyName = "PalletAmount";
+            this.colAmountPallet.HeaderText = "Кол-во паллет";
+            this.colAmountPallet.Name = "colAmountPallet";
+            this.colAmountPallet.ReadOnly = true;
             // 
-            // colBoxAmount
+            // colAmountBox
             // 
-            this.colBoxAmount.DataPropertyName = "BoxAmount";
-            this.colBoxAmount.HeaderText = "Кол-во коробов";
-            this.colBoxAmount.Name = "colBoxAmount";
-            this.colBoxAmount.ReadOnly = true;
+            this.colAmountBox.DataPropertyName = "BoxAmount";
+            this.colAmountBox.HeaderText = "Кол-во коробов";
+            this.colAmountBox.Name = "colAmountBox";
+            this.colAmountBox.ReadOnly = true;
             // 
-            // colPiecesNumber
+            // colAmountPieces
             // 
-            this.colPiecesNumber.DataPropertyName = "PieceAmount";
-            this.colPiecesNumber.HeaderText = "Кол-во штук";
-            this.colPiecesNumber.Name = "colPiecesNumber";
-            this.colPiecesNumber.ReadOnly = true;
+            this.colAmountPieces.DataPropertyName = "PieceAmount";
+            this.colAmountPieces.HeaderText = "Кол-во штук";
+            this.colAmountPieces.Name = "colAmountPieces";
+            this.colAmountPieces.ReadOnly = true;
             // 
             // colShpComment
             // 
@@ -186,12 +200,12 @@ namespace Planning
             this.colShpComment.Name = "colShpComment";
             this.colShpComment.ReadOnly = true;
             // 
-            // colGate
+            // colGateName
             // 
-            this.colGate.DataPropertyName = "GateName";
-            this.colGate.HeaderText = "Номер ворот";
-            this.colGate.Name = "colGate";
-            this.colGate.ReadOnly = true;
+            this.colGateName.DataPropertyName = "GateName";
+            this.colGateName.HeaderText = "Номер ворот";
+            this.colGateName.Name = "colGateName";
+            this.colGateName.ReadOnly = true;
             // 
             // colSubmissionTime
             // 
@@ -207,19 +221,19 @@ namespace Planning
             this.colStartTime.Name = "colStartTime";
             this.colStartTime.ReadOnly = true;
             // 
-            // colEndTime
+            // colEndTimePlan
             // 
-            this.colEndTime.DataPropertyName = "ShpEndTimePlan";
-            this.colEndTime.HeaderText = "Время окончания";
-            this.colEndTime.Name = "colEndTime";
-            this.colEndTime.ReadOnly = true;
+            this.colEndTimePlan.DataPropertyName = "ShpEndTimePlan";
+            this.colEndTimePlan.HeaderText = "Время окончания";
+            this.colEndTimePlan.Name = "colEndTimePlan";
+            this.colEndTimePlan.ReadOnly = true;
             // 
-            // colLeaveTime
+            // colEndTimeFact
             // 
-            this.colLeaveTime.DataPropertyName = "ShpEndTimeFact";
-            this.colLeaveTime.HeaderText = "Убытие по факту";
-            this.colLeaveTime.Name = "colLeaveTime";
-            this.colLeaveTime.ReadOnly = true;
+            this.colEndTimeFact.DataPropertyName = "ShpEndTimeFact";
+            this.colEndTimeFact.HeaderText = "Убытие по факту";
+            this.colEndTimeFact.Name = "colEndTimeFact";
+            this.colEndTimeFact.ReadOnly = true;
             // 
             // colDoneShare
             // 
@@ -235,6 +249,7 @@ namespace Planning
             this.FontColor.HeaderText = "FontColor";
             this.FontColor.Name = "FontColor";
             this.FontColor.ReadOnly = true;
+            this.FontColor.Visible = false;
             // 
             // BackgroundColor
             // 
@@ -242,6 +257,7 @@ namespace Planning
             this.BackgroundColor.HeaderText = "BackgroundColor";
             this.BackgroundColor.Name = "BackgroundColor";
             this.BackgroundColor.ReadOnly = true;
+            this.BackgroundColor.Visible = false;
             // 
             // frmCurrentTask
             // 
@@ -275,17 +291,17 @@ namespace Planning
         private System.Windows.Forms.DataGridViewTextBoxColumn colOrderId;
         private System.Windows.Forms.DataGridViewTextBoxColumn colKlient;
         private System.Windows.Forms.DataGridViewTextBoxColumn colState;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colDone;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colLineCount;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colPalletAmount;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colBoxAmount;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colPiecesNumber;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDonePrc;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colAmountLine;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colAmountPallet;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colAmountBox;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colAmountPieces;
         private System.Windows.Forms.DataGridViewTextBoxColumn colShpComment;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colGate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colGateName;
         private System.Windows.Forms.DataGridViewTextBoxColumn colSubmissionTime;
         private System.Windows.Forms.DataGridViewTextBoxColumn colStartTime;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colEndTime;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colLeaveTime;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colEndTimePlan;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colEndTimeFact;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDoneShare;
         private System.Windows.Forms.DataGridViewTextBoxColumn FontColor;
         private System.Windows.Forms.DataGridViewTextBoxColumn BackgroundColor;

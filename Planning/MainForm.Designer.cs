@@ -301,7 +301,6 @@
             this.miCalcOrderVolume.Name = "miCalcOrderVolume";
             this.miCalcOrderVolume.Size = new System.Drawing.Size(248, 22);
             this.miCalcOrderVolume.Text = "Рассчет объема заказа";
-            this.miCalcOrderVolume.Visible = false;
             this.miCalcOrderVolume.Click += new System.EventHandler(this.miCalcOrderVolume_Click);
             // 
             // miCurrentTask

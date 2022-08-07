@@ -10,15 +10,16 @@ using System.Xml;
 namespace Planning
 {
 
-    class SettingsHandle
+    public class SettingsHandle
     {
 
-
+        private Settings _settings;
         private XmlDocument _xDoc = new XmlDocument();
         string _settingPath;
-        public SettingsHandle(string FileName)
+        public SettingsHandle(string FileName, Settings settings)
         {
             _settingPath = FileName;
+            _settings = settings;
             if (!File.Exists(FileName))
             {
                 //MessageBox.Show($"Файл {FileName} не найдет","Ошибка", MessageBoxButtons.OK,MessageBoxIcon.Error);
@@ -164,11 +165,6 @@ namespace Planning
             }
             return list;
         }
-        
-        
-
-
-
         public void SetParamList<T>(string SectionName,string ItemName, List<T> Values)
         {
             XmlElement elem = GetNodeByPath(SectionName);
@@ -187,5 +183,36 @@ namespace Planning
 
             _xDoc.Save(_settingPath);
         }
+
+        public void Save()
+        {
+            SetParamValue("Connection\\ServerName", _settings.ServerName);
+            SetParamValue("Connection\\UserName", _settings.UserName);
+            SetParamValue("Connection\\BaseName", _settings.BaseName);            
+            SetParamValue("ReportTemplate\\ShipmentTemplate", _settings.ShipmentReport);
+            SetParamValue("ReportTemplate\\ReceiptTemplate", _settings.ReceiptReport);
+            SetParamValue("ReportTemplate\\PeriodTemplate", _settings.PeriodReport);
+            SetParamValue("TaskUpdateInterval", _settings.TaskUpdateInterval.ToString());
+            SetParamValue("TaskViewFonSize", _settings.TaskViewFonSize.ToString());
+            SetParamList<CurrTaskColumn>("CurrentTaskColumns", "Column", _settings.CurrentTaskColumns);
+            SetParamList<VolumeCalcConstant>("VolumeCalcTemplates", "Template", _settings.VolumeCalcTemplate);
+        }
+
+        public void Load()
+        {
+            _settings.ServerName = GetParamStringValue("Connection\\ServerName");
+            _settings.BaseName = GetParamStringValue("Connection\\BaseName");
+            _settings.UserName = GetParamStringValue("Connection\\UserName");
+            
+
+            _settings.ShipmentReport = GetParamStringValue("ReportTemplate\\ShipmentTemplate");
+            _settings.ReceiptReport = GetParamStringValue("ReportTemplate\\ReceiptTemplate");
+            _settings.PeriodReport = GetParamStringValue("ReportTemplate\\PeriodTemplate");
+            _settings.TaskUpdateInterval = GetParamDecimalCheckValue("TaskUpdateInterval", 0, 10);
+            _settings.TaskViewFonSize = GetParamDecimalCheckValue("TaskViewFonSize", 0, 5);
+            _settings.CurrentTaskColumns = GetParamList<CurrTaskColumn>("CurrentTaskColumns");
+            _settings.VolumeCalcTemplate = GetParamList<VolumeCalcConstant>("VolumeCalcTemplates");
+        }
+
     }
 }
