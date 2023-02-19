@@ -18,14 +18,14 @@ namespace Planning
     {
         List<LVOrder> LVOrders = new List<LVOrder>();
         BindingList<VolumeCalcProduct> bindingListProduct;
-        
+        Settings _settings;
         BindingSource sourceProduct;
         VolumeCalc volumeCalc;
         int? DepositorLVId;
-        public frmVolumeCalc()
+        public frmVolumeCalc(Settings settings)
         {
             InitializeComponent();
-
+            _settings = settings;
             LoadTemplate();
 
         }
@@ -39,12 +39,9 @@ namespace Planning
                 cmbConstantTemplate.Items.Add(item.Name);
             }
         }
-        private void ImportProduct()
-        {
 
-        }
 
-        private void InitCalc()
+        private void InitCalc(List<VolumeCalcProduct> listProduct)
         {
             txtWeightOrder.Text = "0.0";
             txtVolumeOrder.Text = "0.0";
@@ -54,6 +51,16 @@ namespace Planning
             txtVolumeTotal.Text = "0.0";
             txtPalletAmountTotal.Text = "0.0";
             txtHeightTotal.Text = "0.0";
+
+            volumeCalc = new VolumeCalc();
+
+            volumeCalc.volumeCalcProducts = listProduct;
+
+
+            bindingListProduct = new BindingList<VolumeCalcProduct>(volumeCalc.volumeCalcProducts);
+            sourceProduct = new BindingSource(bindingListProduct, null);
+            tblProducts.AutoGenerateColumns = false;
+            tblProducts.DataSource = sourceProduct;
         }
         private void ExportProduct()
         {
@@ -184,6 +191,76 @@ namespace Planning
 
         }
 
+
+        private void ImportProduct()
+        {
+            string importFileName = "";
+            if (openFileImport.ShowDialog() == DialogResult.OK)
+            {
+                importFileName = openFileImport.FileName;
+
+                if (importFileName == String.Empty)
+                {
+                    return;
+                }
+
+                Excel.Application excelApp = new Excel.Application();
+                Excel.Workbook excelBook = null;
+                try
+                {
+                    excelBook = excelApp.Workbooks.Open(importFileName);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Ошибка при импорте", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                
+                Excel._Worksheet excelSheet = excelBook.Sheets[1];
+                Excel.Range excelRange = excelSheet.UsedRange;
+                Dictionary<String, decimal> dictProduct = new Dictionary<string, decimal>();
+                bool Success = true;
+                
+                int startCol = Math.Min(_settings.volumeCalcParams.ImportColVendorCode, Math.Min(_settings.volumeCalcParams.ImportColName, _settings.volumeCalcParams.ImportColAmount));
+                int endCol = Math.Max(_settings.volumeCalcParams.ImportColVendorCode, Math.Max(_settings.volumeCalcParams.ImportColName, _settings.volumeCalcParams.ImportColAmount));
+                
+                int rowIdx = _settings.volumeCalcParams.ImportStartRow;
+                while (Success)
+                {
+                    Excel.Range cellFrom = (Excel.Range)excelSheet.Cells[rowIdx, startCol];
+                    Excel.Range cellTo = (Excel.Range)excelSheet.Cells[rowIdx, endCol];
+                    var arrData = (object[,])excelSheet.get_Range(cellFrom, cellTo).Value;
+                    if (arrData[1, _settings.volumeCalcParams.ImportColVendorCode] == null)
+                    {
+                        break;
+                    }
+                    string vendorCode = arrData[1,_settings.volumeCalcParams.ImportColVendorCode].ToString();
+                    
+                    string AmountString = arrData[1, _settings.volumeCalcParams.ImportColAmount].ToString();
+                    decimal Amount = decimal.Parse(AmountString);
+
+                    if (!dictProduct.ContainsKey(vendorCode))
+                    {
+                        dictProduct.Add(vendorCode, Amount);
+                    }
+                    rowIdx++;
+
+                }
+
+
+                int LVDepId = 59;
+                var codes = dictProduct.Keys.ToList();
+                List<VolumeCalcProduct> listProduct = VolumeCalcProduct_Manager.GetList(LVDepId, codes);
+                foreach (var product in listProduct)
+                {
+                    if (dictProduct.ContainsKey(product.prdCode))
+                    {
+                        product.Qty = dictProduct[product.prdCode];
+                    }
+                }
+                InitCalc(listProduct);
+
+            }
+        }
         private bool IsProductEmpty()
         {
             return volumeCalc == null || volumeCalc.volumeCalcProducts == null || volumeCalc.volumeCalcProducts.Count == 0;
@@ -197,15 +274,16 @@ namespace Planning
 
             if (frmSelectOrd.ShowDialog() == DialogResult.OK)
             {
-                InitCalc();
+               
 
                 if (LVOrders == null || LVOrders.Count == 0)
                     return;
 
                 int? LVDepId = LVOrders.First().DepLVID;
 
-                VolumeCalcProduct_Manager product_Manager = new VolumeCalcProduct_Manager();
-
+               
+                InitCalc(VolumeCalcProduct_Manager.GetList(LVDepId, LVOrders));
+                /*
                 volumeCalc = new VolumeCalc();
 
                 volumeCalc.volumeCalcProducts = product_Manager.GetList(LVDepId, LVOrders);
@@ -215,6 +293,7 @@ namespace Planning
                 sourceProduct = new BindingSource(bindingListProduct, null);
                 tblProducts.AutoGenerateColumns = false;
                 tblProducts.DataSource = sourceProduct;
+                */
             }
             UptadeToolBar();
         }
@@ -264,7 +343,8 @@ namespace Planning
 
         private void btnImport_Click(object sender, EventArgs e)
         {
-
+            ImportProduct();
+            UptadeToolBar();
         }
 
         private void cmbConstantTemplate_SelectedIndexChanged(object sender, EventArgs e)

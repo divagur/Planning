@@ -77,6 +77,7 @@ namespace Planning
             this.colHeight = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colLength = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colWidth = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.openFileImport = new System.Windows.Forms.OpenFileDialog();
             this.toolStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -533,6 +534,10 @@ namespace Planning
             this.colWidth.Name = "colWidth";
             this.colWidth.ReadOnly = true;
             // 
+            // openFileImport
+            // 
+            this.openFileImport.FileName = "openFileImport";
+            // 
             // frmVolumeCalc
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -602,5 +607,6 @@ namespace Planning
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.ComboBox cmbConstantTemplate;
         private System.Windows.Forms.Button btnSaveTemplate;
+        private System.Windows.Forms.OpenFileDialog openFileImport;
     }
 }

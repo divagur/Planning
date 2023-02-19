@@ -24,7 +24,7 @@ namespace Planning
         SqlDataAdapter adapter;
         bool getCalendarTime;
         bool IsShipment;
-
+        bool _isNew;
         protected override void WndProc(ref Message m)
         {
             if (m.Msg == WM_LBUTTONDOWN || (m.Msg == WM_PARENTNOTIFY &&
@@ -128,7 +128,8 @@ namespace Planning
             
 
             cmbTransportCompany.Items.Clear();
-            foreach (var tc in _context.TransportCompanies.ToList())
+            foreach (var tc in _context.TransportCompanies.Where(t=>t.IsActive == true).ToList())
+                
                 cmbTransportCompany.Items.Add(tc.Name);
 
             cmbTransportType.Items.Clear();
@@ -302,7 +303,7 @@ namespace Planning
                 return true;
             }
         }
-        public shipmen_edit(Shipment shipment)
+        public shipmen_edit(Shipment shipment, bool isNew = false)
         {
             
             InitializeComponent();
@@ -311,13 +312,13 @@ namespace Planning
             _shipment = shipment;
             IsShipment = true;
             gbMovementItem.Visible = false;
-
+            _isNew = isNew;
             this.Text = _shipment.ShIn == false? "Редактирование отгрузки": "Редактирование поставки";
             AddHistory(shipment.Id);
         }
 
 
-        public shipmen_edit(Movement movement)
+        public shipmen_edit(Movement movement, bool isNew = false)
         {
             InitializeComponent();
             _context = DataService.context;
@@ -326,6 +327,7 @@ namespace Planning
             gbOrders.Visible = false;
             btnAddToLV.Visible = false;
             btnBindLV.Visible = false;
+            _isNew = isNew;
             this.Text = "Редактирование перемещения";
             AddHistory(movement.Id);
         }

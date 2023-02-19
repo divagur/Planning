@@ -11,6 +11,10 @@ using System.Configuration;
 using MDIWindowManager;
 using System.Data.SqlClient;
 using Excel = Microsoft.Office.Interop.Excel;
+using Microsoft.Office.Interop.Excel;
+using DataTable = System.Data.DataTable;
+using Rectangle = System.Drawing.Rectangle;
+using Font = System.Drawing.Font;
 namespace Planning
 {
     
@@ -26,7 +30,7 @@ namespace Planning
         private int Xwid = 6;//координаты ширины по диагонали крестика
         private const int tab_margin = 5;//координаты по высоте крестика
         public WaitHandler waitCur;
-        
+        DataTable shipmentsDataTable = new DataTable();
         List<UserAccessItem> UserPrvlg = new List<UserAccessItem>();
         UserAccessItem mainFormAccess =new UserAccessItem();
         SqlConnection LVConnect;
@@ -90,6 +94,57 @@ namespace Planning
                 
 
         }
+        private void GetOrderWight()
+        {
+            SqlHandle sql = new SqlHandle(DataService.connectionString);
+            sql.SqlStatement = "SP_PL_GetOrderWight";
+            sql.Connect();
+            sql.TypeCommand = CommandType.StoredProcedure;
+            sql.IsResultSet = true;
+
+           
+            sql.AddCommandParametr(new SqlParameter { ParameterName = "@ShpId", Value = null });
+            sql.AddCommandParametr(new SqlParameter { ParameterName = "@OrdID", Value = null });
+            sql.AddCommandParametr(new SqlParameter { ParameterName = "@DepId", Value = null });
+
+            bool success = sql.Execute();
+
+            if (!success)
+            {
+                MessageBox.Show(sql.LastError, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return ;
+            }
+           
+
+
+        }
+        private List<String> GetFilterActionList()
+        {
+            List<String> result = new List<string>();
+            foreach (ToolStripMenuItem item in btnActionFilter.DropDownItems) 
+            {
+                if (item.Checked)
+                    result.Add(item.Text);
+            }
+            return result;
+        }
+
+        private void ShipmentsUIFilter()
+        {
+            List<string> actionFilter = GetFilterActionList();
+            var rows = shipmentsDataTable.AsEnumerable().Where(r => actionFilter.Contains(r.Field<String>("InOut")));
+            if (rows.Count() >0)
+            {
+                DataTable dt = rows.CopyToDataTable();
+                tblShipments.DataSource = dt;
+                CalcRowColor();
+            }
+            else
+            {
+                tblShipments.DataSource = null;
+            }
+
+        }
 
         private void ShipmentsLoad()
         {
@@ -119,15 +174,21 @@ namespace Planning
             tbMain.Enabled = true;
             miDicts.Enabled = true;
             DataSet ds = new DataSet();
-            ds.Tables.Add();
-            ds.Tables[0].Load(reader);
+            /*ds.Tables.Add();
 
+            ds.Tables[0].Load(reader);
+            */
+            shipmentsDataTable.Clear();
+            shipmentsDataTable.Load(reader);
             tblShipments.AutoGenerateColumns = false;
-            tblShipments.DataSource = ds.Tables[0];
+            tblShipments.DataSource = shipmentsDataTable;// ds.Tables[0];
+
             if (restoreRow)
                 SearchBy(true, i => tblShipments.Rows[i].Cells["colId"].Value.ToString() == rowShpId && tblShipments.Rows[i].Cells["colIdNakl"].Value.ToString() == rowShpOrdId);
             //this.Cursor = Cursors.Default;
             CalcRowColor();
+            GetOrderWight();
+            ShipmentsUIFilter();
         }
 
         private bool SearchBy(bool FromBegin, Predicate<int> condition)
@@ -272,7 +333,6 @@ namespace Planning
             UpdateFunctionPrvlg();
 
             ShipmentsLoad();
-            
             //UpdateFunctionPrvlg();
         }
 
@@ -418,6 +478,12 @@ namespace Planning
             hSql.Disconnect();
             */
 
+            List<string> action = DataService.settingsHandle.GetParamStringValue("View\\ActionFilter").Split(',').ToList();
+            foreach (ToolStripMenuItem item in btnActionFilter.DropDownItems)
+            {
+                if (!action.Contains(item.Text))
+                    item.Checked = false;
+            }
 
             LoginUser();
 
@@ -453,6 +519,10 @@ namespace Planning
                 
                 
             }
+
+
+            
+            
 
             statusInfo.Text = "Пользователь: " + DataService.setting.UserName;
 
@@ -1471,7 +1541,7 @@ namespace Planning
 
         private void miCalcOrderVolume_Click(object sender, EventArgs e)
         {
-            frmVolumeCalc frmVolumeCalc = new frmVolumeCalc();
+            frmVolumeCalc frmVolumeCalc = new frmVolumeCalc(DataService.setting);
             AddFormTab(frmVolumeCalc, "Расчет объема заказа");
         }
 
@@ -1479,6 +1549,12 @@ namespace Planning
         {
             frmCurrentTask frmCurrentTask = new frmCurrentTask();
             frmCurrentTask.ShowDialog();
+        }
+
+        private void входToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShipmentsUIFilter();
+            DataService.settingsHandle.SetParamValue("View\\ActionFilter", String.Join(",", GetFilterActionList().ToArray()));
         }
     }
 }

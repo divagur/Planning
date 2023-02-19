@@ -242,20 +242,23 @@
     <Compile Include="RepPeriod.Designer.cs">
       <DependentUpon>RepPeriod.cs</DependentUpon>
     </Compile>
-    <Compile Include="Settings.cs" />
-    <Compile Include="SettingsEdit.cs">
+    <Compile Include="SettingsClass\CurrTaskColumn.cs" />
+    <Compile Include="SettingsClass\Settings.cs" />
+    <Compile Include="SettingsClass\SettingsEdit.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SettingsEdit.Designer.cs">
+    <Compile Include="SettingsClass\SettingsEdit.Designer.cs">
       <DependentUpon>SettingsEdit.cs</DependentUpon>
     </Compile>
-    <Compile Include="SettingsHandle.cs" />
-    <Compile Include="SettingsWizard.cs">
+    <Compile Include="SettingsClass\SettingsHandle.cs" />
+    <Compile Include="SettingsClass\SettingsWizard.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SettingsWizard.Designer.cs">
+    <Compile Include="SettingsClass\SettingsWizard.Designer.cs">
       <DependentUpon>SettingsWizard.cs</DependentUpon>
     </Compile>
+    <Compile Include="SettingsClass\VolumeCalcConstant.cs" />
+    <Compile Include="SettingsClass\VolumeCalcParams.cs" />
     <Compile Include="Shipment.cs">
       <DependentUpon>DbPlaning.tt</DependentUpon>
     </Compile>
@@ -451,14 +454,13 @@
     <EmbeddedResource Include="LvAttrEdit.resx">
       <DependentUpon>LvAttrEdit.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="RepPeriod.resx">
       <DependentUpon>RepPeriod.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SettingsEdit.resx">
+    <EmbeddedResource Include="SettingsClass\SettingsEdit.resx">
       <DependentUpon>SettingsEdit.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SettingsWizard.resx">
+    <EmbeddedResource Include="SettingsClass\SettingsWizard.resx">
       <DependentUpon>SettingsWizard.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ShipmentAdd.resx">

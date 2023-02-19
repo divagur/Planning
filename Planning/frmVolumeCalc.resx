@@ -183,7 +183,7 @@
   <data name="btnSaveTemplate.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        EgAACxIB0t1+/AAAACR0RVh0Q29weXJpZ2h0AENvcHlyaWdodCAyMDE1IElOQ09SUyBHbWJIeobdNgAA
+        EQAACxEBf2RfkQAAACR0RVh0Q29weXJpZ2h0AENvcHlyaWdodCAyMDE1IElOQ09SUyBHbWJIeobdNgAA
         AAd0SU1FB98IGAoVBcApp6YAAAIFSURBVDhPrZLfS1NhHIePkn9EP6CLEpKgburGkgq6GErBaBVMKWiN
         GLYWCbqOQhQpdFGxIrooz2ZSRGzZ5rbCEauVkNosqC7SpY21LYIg+kFWyNP7vptbxUov+sCH83IOz3Pe
         95yv9l/SuO8gp4wbjKayPEplVOXa+zhdat94BueZXhrMVopYOdvsLozIPd7MQPpLoXI9mJ0lOte3cKw/
@@ -225,5 +225,8 @@
   </metadata>
   <metadata name="colWidth.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
+  </metadata>
+  <metadata name="openFileImport.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>122, 17</value>
   </metadata>
 </root>
