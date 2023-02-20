@@ -1556,5 +1556,10 @@ namespace Planning
             ShipmentsUIFilter();
             DataService.settingsHandle.SetParamValue("View\\ActionFilter", String.Join(",", GetFilterActionList().ToArray()));
         }
+
+        private void btnColumnVisible_ButtonClick(object sender, EventArgs e)
+        {
+
+        }
     }
 }
