@@ -39,11 +39,6 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
             this.tblShipmentItem = new System.Windows.Forms.DataGridView();
-            this.colItemId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colItemStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colItemDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colItemKlient = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colLVOrdId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel6 = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
             this.cmbTimeSlot = new System.Windows.Forms.ComboBox();
@@ -55,11 +50,6 @@
             this.btnFromShipment = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.tblOrders = new System.Windows.Forms.DataGridView();
-            this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colState = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colKlient = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colLVOrderId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel5 = new System.Windows.Forms.Panel();
             this.btnFind = new System.Windows.Forms.Button();
             this.txtOrderId = new System.Windows.Forms.TextBox();
@@ -68,6 +58,20 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colOstCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colState = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colKlient = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colLVOrderId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colOstId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colItemId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colItemOstCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colItemStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colItemDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colItemKlient = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colLVOrdId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colItemOstId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pnlToolBar.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel4.SuspendLayout();
@@ -85,9 +89,9 @@
             this.pnlToolBar.Controls.Add(this.btnEdit);
             this.pnlToolBar.Controls.Add(this.btnOk);
             this.pnlToolBar.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlToolBar.Location = new System.Drawing.Point(0, 571);
+            this.pnlToolBar.Location = new System.Drawing.Point(0, 578);
             this.pnlToolBar.Name = "pnlToolBar";
-            this.pnlToolBar.Size = new System.Drawing.Size(1049, 33);
+            this.pnlToolBar.Size = new System.Drawing.Size(1159, 33);
             this.pnlToolBar.TabIndex = 1;
             // 
             // btnCancel
@@ -128,7 +132,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1049, 571);
+            this.panel1.Size = new System.Drawing.Size(1159, 578);
             this.panel1.TabIndex = 2;
             // 
             // panel4
@@ -136,9 +140,9 @@
             this.panel4.Controls.Add(this.tblShipmentItem);
             this.panel4.Controls.Add(this.panel6);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel4.Location = new System.Drawing.Point(574, 0);
+            this.panel4.Location = new System.Drawing.Point(634, 0);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(475, 571);
+            this.panel4.Size = new System.Drawing.Size(525, 578);
             this.panel4.TabIndex = 2;
             // 
             // tblShipmentItem
@@ -146,54 +150,21 @@
             this.tblShipmentItem.AllowUserToAddRows = false;
             this.tblShipmentItem.AllowUserToDeleteRows = false;
             this.tblShipmentItem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.tblShipmentItem.ColumnHeadersVisible = false;
             this.tblShipmentItem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colItemId,
+            this.colItemOstCode,
             this.colItemStatus,
             this.colItemDate,
             this.colItemKlient,
-            this.colLVOrdId});
+            this.colLVOrdId,
+            this.colItemOstId});
             this.tblShipmentItem.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tblShipmentItem.Location = new System.Drawing.Point(0, 117);
             this.tblShipmentItem.Name = "tblShipmentItem";
             this.tblShipmentItem.ReadOnly = true;
             this.tblShipmentItem.RowHeadersVisible = false;
-            this.tblShipmentItem.Size = new System.Drawing.Size(475, 454);
+            this.tblShipmentItem.Size = new System.Drawing.Size(525, 461);
             this.tblShipmentItem.TabIndex = 1;
-            // 
-            // colItemId
-            // 
-            this.colItemId.HeaderText = "colItem";
-            this.colItemId.Name = "colItemId";
-            this.colItemId.ReadOnly = true;
-            this.colItemId.Width = 200;
-            // 
-            // colItemStatus
-            // 
-            this.colItemStatus.HeaderText = "Status";
-            this.colItemStatus.Name = "colItemStatus";
-            this.colItemStatus.ReadOnly = true;
-            this.colItemStatus.Visible = false;
-            // 
-            // colItemDate
-            // 
-            this.colItemDate.HeaderText = "Date";
-            this.colItemDate.Name = "colItemDate";
-            this.colItemDate.ReadOnly = true;
-            this.colItemDate.Visible = false;
-            // 
-            // colItemKlient
-            // 
-            this.colItemKlient.HeaderText = "Klient";
-            this.colItemKlient.Name = "colItemKlient";
-            this.colItemKlient.ReadOnly = true;
-            this.colItemKlient.Visible = false;
-            // 
-            // colLVOrdId
-            // 
-            this.colLVOrdId.HeaderText = "LVOrdId";
-            this.colLVOrdId.Name = "colLVOrdId";
-            this.colLVOrdId.ReadOnly = true;
             // 
             // panel6
             // 
@@ -204,7 +175,7 @@
             this.panel6.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel6.Location = new System.Drawing.Point(0, 0);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(475, 117);
+            this.panel6.Size = new System.Drawing.Size(525, 117);
             this.panel6.TabIndex = 0;
             // 
             // label5
@@ -248,9 +219,9 @@
             this.panel3.Controls.Add(this.btnToShipment);
             this.panel3.Controls.Add(this.btnFromShipment);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel3.Location = new System.Drawing.Point(546, 0);
+            this.panel3.Location = new System.Drawing.Point(606, 0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(28, 571);
+            this.panel3.Size = new System.Drawing.Size(28, 578);
             this.panel3.TabIndex = 1;
             // 
             // btnFromShipmentAll
@@ -290,7 +261,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(546, 571);
+            this.panel2.Size = new System.Drawing.Size(606, 578);
             this.panel2.TabIndex = 0;
             // 
             // tblOrders
@@ -308,10 +279,12 @@
             this.tblOrders.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.tblOrders.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colId,
+            this.colOstCode,
             this.colState,
             this.colDate,
             this.colKlient,
-            this.colLVOrderId});
+            this.colLVOrderId,
+            this.colOstId});
             dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -334,47 +307,10 @@
             this.tblOrders.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.tblOrders.RowHeadersVisible = false;
             this.tblOrders.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.tblOrders.Size = new System.Drawing.Size(546, 509);
+            this.tblOrders.Size = new System.Drawing.Size(606, 516);
             this.tblOrders.TabIndex = 1;
             this.tblOrders.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tblOrders_CellContentClick);
             this.tblOrders.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tblOrders_CellDoubleClick);
-            // 
-            // colId
-            // 
-            this.colId.DataPropertyName = "LVCode";
-            this.colId.HeaderText = "Код";
-            this.colId.Name = "colId";
-            this.colId.ReadOnly = true;
-            // 
-            // colState
-            // 
-            this.colState.DataPropertyName = "LVStatus";
-            this.colState.HeaderText = "Статус";
-            this.colState.Name = "colState";
-            this.colState.ReadOnly = true;
-            // 
-            // colDate
-            // 
-            this.colDate.DataPropertyName = "ExpDate";
-            this.colDate.HeaderText = "Ожид. дата";
-            this.colDate.Name = "colDate";
-            this.colDate.ReadOnly = true;
-            // 
-            // colKlient
-            // 
-            this.colKlient.DataPropertyName = "Company";
-            this.colKlient.HeaderText = "Клиент";
-            this.colKlient.Name = "colKlient";
-            this.colKlient.ReadOnly = true;
-            this.colKlient.Width = 200;
-            // 
-            // colLVOrderId
-            // 
-            this.colLVOrderId.DataPropertyName = "LVID";
-            this.colLVOrderId.HeaderText = "LVOrderId";
-            this.colLVOrderId.Name = "colLVOrderId";
-            this.colLVOrderId.ReadOnly = true;
-            this.colLVOrderId.Visible = false;
             // 
             // panel5
             // 
@@ -388,7 +324,7 @@
             this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel5.Location = new System.Drawing.Point(0, 0);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(546, 62);
+            this.panel5.Size = new System.Drawing.Size(606, 62);
             this.panel5.TabIndex = 0;
             // 
             // btnFind
@@ -458,11 +394,109 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Депозитор";
             // 
+            // colId
+            // 
+            this.colId.DataPropertyName = "LVCode";
+            this.colId.HeaderText = "Код";
+            this.colId.Name = "colId";
+            this.colId.ReadOnly = true;
+            // 
+            // colOstCode
+            // 
+            this.colOstCode.HeaderText = "Расходная партия";
+            this.colOstCode.Name = "colOstCode";
+            this.colOstCode.ReadOnly = true;
+            // 
+            // colState
+            // 
+            this.colState.DataPropertyName = "LVStatus";
+            this.colState.HeaderText = "Статус";
+            this.colState.Name = "colState";
+            this.colState.ReadOnly = true;
+            // 
+            // colDate
+            // 
+            this.colDate.DataPropertyName = "ExpDate";
+            this.colDate.HeaderText = "Ожид. дата";
+            this.colDate.Name = "colDate";
+            this.colDate.ReadOnly = true;
+            // 
+            // colKlient
+            // 
+            this.colKlient.DataPropertyName = "Company";
+            this.colKlient.HeaderText = "Клиент";
+            this.colKlient.Name = "colKlient";
+            this.colKlient.ReadOnly = true;
+            this.colKlient.Width = 200;
+            // 
+            // colLVOrderId
+            // 
+            this.colLVOrderId.DataPropertyName = "LVID";
+            this.colLVOrderId.HeaderText = "LVOrderId";
+            this.colLVOrderId.Name = "colLVOrderId";
+            this.colLVOrderId.ReadOnly = true;
+            this.colLVOrderId.Visible = false;
+            // 
+            // colOstId
+            // 
+            this.colOstId.HeaderText = "colOstId";
+            this.colOstId.Name = "colOstId";
+            this.colOstId.ReadOnly = true;
+            this.colOstId.Visible = false;
+            // 
+            // colItemId
+            // 
+            this.colItemId.HeaderText = "Код заказа";
+            this.colItemId.Name = "colItemId";
+            this.colItemId.ReadOnly = true;
+            this.colItemId.Width = 200;
+            // 
+            // colItemOstCode
+            // 
+            this.colItemOstCode.HeaderText = "Код расходной партии";
+            this.colItemOstCode.Name = "colItemOstCode";
+            this.colItemOstCode.ReadOnly = true;
+            this.colItemOstCode.Width = 200;
+            // 
+            // colItemStatus
+            // 
+            this.colItemStatus.HeaderText = "Status";
+            this.colItemStatus.Name = "colItemStatus";
+            this.colItemStatus.ReadOnly = true;
+            this.colItemStatus.Visible = false;
+            // 
+            // colItemDate
+            // 
+            this.colItemDate.HeaderText = "Date";
+            this.colItemDate.Name = "colItemDate";
+            this.colItemDate.ReadOnly = true;
+            this.colItemDate.Visible = false;
+            // 
+            // colItemKlient
+            // 
+            this.colItemKlient.HeaderText = "Klient";
+            this.colItemKlient.Name = "colItemKlient";
+            this.colItemKlient.ReadOnly = true;
+            this.colItemKlient.Visible = false;
+            // 
+            // colLVOrdId
+            // 
+            this.colLVOrdId.HeaderText = "LVOrdId";
+            this.colLVOrdId.Name = "colLVOrdId";
+            this.colLVOrdId.ReadOnly = true;
+            // 
+            // colItemOstId
+            // 
+            this.colItemOstId.HeaderText = "colItemOstId";
+            this.colItemOstId.Name = "colItemOstId";
+            this.colItemOstId.ReadOnly = true;
+            this.colItemOstId.Visible = false;
+            // 
             // ShipmentAdd
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1049, 604);
+            this.ClientSize = new System.Drawing.Size(1159, 611);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.pnlToolBar);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -514,16 +548,20 @@
         private System.Windows.Forms.Button btnToShipment;
         private System.Windows.Forms.Button btnFromShipment;
         private System.Windows.Forms.DataGridView tblShipmentItem;
+        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.DataGridViewTextBoxColumn colId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colOstCode;
         private System.Windows.Forms.DataGridViewTextBoxColumn colState;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDate;
         private System.Windows.Forms.DataGridViewTextBoxColumn colKlient;
         private System.Windows.Forms.DataGridViewTextBoxColumn colLVOrderId;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colOstId;
         private System.Windows.Forms.DataGridViewTextBoxColumn colItemId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colItemOstCode;
         private System.Windows.Forms.DataGridViewTextBoxColumn colItemStatus;
         private System.Windows.Forms.DataGridViewTextBoxColumn colItemDate;
         private System.Windows.Forms.DataGridViewTextBoxColumn colItemKlient;
         private System.Windows.Forms.DataGridViewTextBoxColumn colLVOrdId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colItemOstId;
     }
 }

@@ -125,6 +125,21 @@
           <Property Name="field_db_name" Type="varchar" MaxLength="50" />
           <Property Name="field_type" Type="int" />
         </EntityType>
+        <EntityType Name="shipment_order_parts">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="sh_order_id" Type="int" />
+          <Property Name="os_lvid" Type="int" />
+          <Property Name="os_lvcode" Type="varchar" MaxLength="26" />
+          <Property Name="is_binding" Type="bit" />
+          <Property Name="manual_load" Type="int" />
+          <Property Name="manual_unload" Type="int" />
+          <Property Name="pallet_amount" Type="int" />
+          <Property Name="lv_order_id" Type="int" />
+          <Property Name="lv_order_code" Type="varchar" MaxLength="32" />
+        </EntityType>
         <EntityType Name="shipment_orders">
           <Key>
             <PropertyRef Name="id" />
@@ -141,6 +156,8 @@
           <Property Name="binding_id" Type="int" />
           <Property Name="lv_order_id" Type="int" />
           <Property Name="lv_order_code" Type="varchar" MaxLength="32" />
+          <Property Name="shipping_places_number" Type="int" />
+          <Property Name="order_weight" Type="decimal" Precision="19" Scale="6" />
         </EntityType>
         <EntityType Name="shipment_orders_log">
           <Key>
@@ -163,6 +180,8 @@
           <Property Name="binding_id" Type="int" />
           <Property Name="lv_order_id" Type="int" />
           <Property Name="lv_order_code" Type="varchar" MaxLength="32" />
+          <Property Name="shipping_places_number" Type="int" />
+          <Property Name="order_weight" Type="decimal" Precision="19" Scale="6" />
         </EntityType>
         <EntityType Name="shipments">
           <Key>
@@ -481,6 +500,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="sh_order_parts_sh_ord_fk">
+          <End Role="shipment_orders" Type="Self.shipment_orders" Multiplicity="0..1" />
+          <End Role="shipment_order_parts" Type="Self.shipment_order_parts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="shipment_orders">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="shipment_order_parts">
+              <PropertyRef Name="sh_order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="PlanningModelStoreContainer">
           <EntitySet Name="delay_reasons" EntityType="Self.delay_reasons" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="depositors" EntityType="Self.depositors" Schema="dbo" store:Type="Tables" />
@@ -493,6 +524,7 @@
           <EntitySet Name="movement_log" EntityType="Self.movement_log" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="opers_type" EntityType="Self.opers_type" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="shipment_element" EntityType="Self.shipment_element" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="shipment_order_parts" EntityType="Self.shipment_order_parts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="shipment_orders" EntityType="Self.shipment_orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="shipment_orders_log" EntityType="Self.shipment_orders_log" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="shipments" EntityType="Self.shipments" Schema="dbo" store:Type="Tables" />
@@ -560,6 +592,10 @@
             <End Role="users_group" EntitySet="users_group" />
             <End Role="user_group_lnk" EntitySet="user_group_lnk" />
           </AssociationSet>
+          <AssociationSet Name="sh_order_parts_sh_ord_fk" Association="Self.sh_order_parts_sh_ord_fk">
+            <End Role="shipment_orders" EntitySet="shipment_orders" />
+            <End Role="shipment_order_parts" EntitySet="shipment_order_parts" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -618,6 +654,9 @@
           <NavigationProperty Name="Shipment" Relationship="Self.FK_shipment_orders_shipments" FromRole="shipment_orders" ToRole="shipments" />
           <Property Name="LVOrderId" Type="Int32" />
           <Property Name="lv_order_code" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="shipping_places_number" Type="Int32" />
+          <Property Name="order_weight" Type="Decimal" Precision="19" Scale="6" />
+          <NavigationProperty Name="ShipmentOrderParts" Relationship="PlanningModel.sh_order_parts_sh_ord_fk" FromRole="ShipmentOrder" ToRole="shipment_order_parts" />
         </EntityType>
         <EntityType Name="Shipment">
           <Key>
@@ -776,6 +815,11 @@
           <EntitySet Name="MovementLog" EntityType="PlanningModel.MovementLog" />
           <EntitySet Name="ShipmentOrdersLog" EntityType="PlanningModel.ShipmentOrdersLog" />
           <EntitySet Name="ShipmentsLog" EntityType="PlanningModel.ShipmentsLog" />
+          <EntitySet Name="ShipmentOrderParts" EntityType="PlanningModel.ShipmentOrderPart" />
+          <AssociationSet Name="sh_order_parts_sh_ord_fk" Association="PlanningModel.sh_order_parts_sh_ord_fk">
+            <End Role="ShipmentOrder" EntitySet="ShipmentOrders" />
+            <End Role="shipment_order_parts" EntitySet="ShipmentOrderParts" />
+          </AssociationSet>
         </EntityContainer>
         <Association Name="FK_shipments_delay_reasons">
           <End Type="PlanningModel.DelayReason" Role="delay_reasons" Multiplicity="0..1" />
@@ -1069,6 +1113,8 @@
           <Property Name="BindingId" Type="Int32" />
           <Property Name="LvOrderId" Type="Int32" />
           <Property Name="LvOrderCode" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="shipping_places_number" Type="Int32" />
+          <Property Name="order_weight" Type="Decimal" Precision="19" Scale="6" />
         </EntityType>
         <EntityType Name="ShipmentsLog">
           <Key>
@@ -1110,6 +1156,32 @@
           <Property Name="TransportCompanyId" Type="Int32" />
           <Property Name="TransportTypeId" Type="Int32" />
         </EntityType>
+        <EntityType Name="ShipmentOrderPart">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ShOrderId" Type="Int32" />
+          <Property Name="OsLvId" Type="Int32" />
+          <Property Name="OsLvCode" Type="String" MaxLength="26" FixedLength="false" Unicode="false" />
+          <Property Name="IsBinding" Type="Boolean" />
+          <Property Name="ManualLoad" Type="Int32" />
+          <Property Name="ManualUnload" Type="Int32" />
+          <Property Name="PalletAmount" Type="Int32" />
+          <NavigationProperty Name="ShipmentOrder" Relationship="PlanningModel.sh_order_parts_sh_ord_fk" FromRole="shipment_order_parts" ToRole="ShipmentOrder" />
+        </EntityType>
+        <Association Name="sh_order_parts_sh_ord_fk">
+          <End Type="PlanningModel.ShipmentOrder" Role="ShipmentOrder" Multiplicity="0..1" />
+          <End Type="PlanningModel.ShipmentOrderPart" Role="shipment_order_parts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ShipmentOrder">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="shipment_order_parts">
+              <PropertyRef Name="ShOrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1153,6 +1225,8 @@
           <EntitySetMapping Name="ShipmentOrders">
             <EntityTypeMapping TypeName="PlanningModel.ShipmentOrder">
               <MappingFragment StoreEntitySet="shipment_orders">
+                <ScalarProperty Name="order_weight" ColumnName="order_weight" />
+                <ScalarProperty Name="shipping_places_number" ColumnName="shipping_places_number" />
                 <ScalarProperty Name="lv_order_code" ColumnName="lv_order_code" />
                 <ScalarProperty Name="LVOrderId" ColumnName="lv_order_id" />
                 <ScalarProperty Name="Id" ColumnName="id" />
@@ -1375,6 +1449,8 @@
           <EntitySetMapping Name="ShipmentOrdersLog">
             <EntityTypeMapping TypeName="PlanningModel.ShipmentOrdersLog">
               <MappingFragment StoreEntitySet="shipment_orders_log">
+                <ScalarProperty Name="order_weight" ColumnName="order_weight" />
+                <ScalarProperty Name="shipping_places_number" ColumnName="shipping_places_number" />
                 <ScalarProperty Name="LvOrderCode" ColumnName="lv_order_code" />
                 <ScalarProperty Name="LvOrderId" ColumnName="lv_order_id" />
                 <ScalarProperty Name="BindingId" ColumnName="binding_id" />
@@ -1433,6 +1509,20 @@
                 <ScalarProperty Name="DmlDate" ColumnName="dml_date" />
                 <ScalarProperty Name="DmlType" ColumnName="dml_type" />
                 <ScalarProperty Name="DmlId" ColumnName="dml_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ShipmentOrderParts">
+            <EntityTypeMapping TypeName="PlanningModel.ShipmentOrderPart">
+              <MappingFragment StoreEntitySet="shipment_order_parts">
+                <ScalarProperty Name="PalletAmount" ColumnName="pallet_amount" />
+                <ScalarProperty Name="ManualUnload" ColumnName="manual_unload" />
+                <ScalarProperty Name="ManualLoad" ColumnName="manual_load" />
+                <ScalarProperty Name="IsBinding" ColumnName="is_binding" />
+                <ScalarProperty Name="OsLvCode" ColumnName="os_lvcode" />
+                <ScalarProperty Name="OsLvId" ColumnName="os_lvid" />
+                <ScalarProperty Name="ShOrderId" ColumnName="sh_order_id" />
+                <ScalarProperty Name="Id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

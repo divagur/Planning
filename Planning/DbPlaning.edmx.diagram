@@ -5,7 +5,7 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="7005c0b70f324a0e9757893b6912d2e6" Name="Diagram1" ZoomLevel="77">
-        <EntityTypeShape EntityType="PlanningModel.DelayReason" Width="1.5" PointX="7.125" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PlanningModel.DelayReason" Width="1.5" PointX="5.625" PointY="12.625" IsExpanded="true" />
         <EntityTypeShape EntityType="PlanningModel.Depositor" Width="1.5" PointX="9.625" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="PlanningModel.Gateway" Width="1.5" PointX="0.5" PointY="4.5" IsExpanded="true" />
         <EntityTypeShape EntityType="PlanningModel.OperType" Width="1.5" PointX="7.125" PointY="0.5" IsExpanded="true" />
@@ -20,7 +20,16 @@
         <AssociationConnector Association="PlanningModel.FK_shipments_gate" />
         <EntityTypeShape EntityType="PlanningModel.TimeSlot" Width="1.5" PointX="12.25" PointY="4.375" />
         <AssociationConnector Association="PlanningModel.FK_time_slot_depositors" />
-        <AssociationConnector Association="PlanningModel.FK_shipments_time_slot" />
+        <AssociationConnector Association="PlanningModel.FK_shipments_time_slot" ManuallyRouted="true" >
+          <ConnectorPoint PointX="12.25" PointY="5.6281324518229079" />
+          <ConnectorPoint PointX="11.875" PointY="5.6281324518229079" />
+          <ConnectorPoint PointX="11.875" PointY="9.2506759773252583" />
+          <ConnectorPoint PointX="8.7135550138499518" PointY="9.2506759773252583" />
+          <ConnectorPoint PointX="8.7135550138499518" PointY="10.62973439576164" />
+          <ConnectorPoint PointX="5.7486875" PointY="10.62973439576164" />
+          <ConnectorPoint PointX="5.7486875" PointY="8.46875" />
+          <ConnectorPoint PointX="5" PointY="8.46875" />
+        </AssociationConnector>
         <EntityTypeShape EntityType="PlanningModel.LvAttr" Width="1.5" PointX="14.75" PointY="0.875" />
         <EntityTypeShape EntityType="PlanningModel.ShipmentElement" Width="2.5" PointX="11.5" PointY="0.75" />
         <EntityTypeShape EntityType="PlanningModel.TransportCompany" Width="2.125" PointX="0.75" PointY="10.625" />
@@ -31,7 +40,15 @@
         <EntityTypeShape EntityType="PlanningModel.Function" Width="1.5" PointX="10.5" PointY="3.875" />
         <EntityTypeShape EntityType="PlanningModel.Movement" Width="1.5" PointX="14.5" PointY="5.625" />
         <EntityTypeShape EntityType="PlanningModel.MovementItem" Width="1.5" PointX="16.75" PointY="4.875" />
-        <AssociationConnector Association="PlanningModel.FK_movement_DelayReasonID" />
+        <AssociationConnector Association="PlanningModel.FK_movement_DelayReasonID" ManuallyRouted="true" >
+          <ConnectorPoint PointX="6.2812505000000005" PointY="12.625" />
+          <ConnectorPoint PointX="6.2812505000000005" PointY="10.85125" />
+          <ConnectorPoint PointX="9.01853420666504" PointY="10.85125" />
+          <ConnectorPoint PointX="9.01853420666504" PointY="9.4924238366153553" />
+          <ConnectorPoint PointX="14.125" PointY="9.4924238366153553" />
+          <ConnectorPoint PointX="14.125" PointY="9.0614175693029146" />
+          <ConnectorPoint PointX="14.5" PointY="9.3359993489583335" />
+        </AssociationConnector>
         <AssociationConnector Association="PlanningModel.FK_MovementItem_DepID" />
         <AssociationConnector Association="PlanningModel.FK_movement_SlotID" />
         <AssociationConnector Association="PlanningModel.FK_MovementItem_MovementID" />
@@ -39,6 +56,8 @@
         <EntityTypeShape EntityType="PlanningModel.MovementLog" Width="1.5" PointX="14.875" PointY="11.125" />
         <EntityTypeShape EntityType="PlanningModel.ShipmentOrdersLog" Width="2.125" PointX="11.75" PointY="11.25" />
         <EntityTypeShape EntityType="PlanningModel.ShipmentsLog" Width="1.75" PointX="9.375" PointY="9.75" />
+        <EntityTypeShape EntityType="PlanningModel.ShipmentOrderPart" Width="1.875" PointX="8.25" PointY="5.5" />
+        <AssociationConnector Association="PlanningModel.sh_order_parts_sh_ord_fk" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

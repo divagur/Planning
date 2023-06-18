@@ -31,6 +31,8 @@ namespace Planning
 
         public List<VolumeCalcConstant> VolumeCalcTemplate = new List<VolumeCalcConstant>();
 
+      
+
         public decimal TaskUpdateInterval { get; set; }
         public decimal TaskViewFonSize { get; set; }
 

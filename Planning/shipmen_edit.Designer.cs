@@ -34,6 +34,9 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(shipmen_edit));
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -89,6 +92,7 @@
             this.gbOrders = new System.Windows.Forms.GroupBox();
             this.tblShipmentOrders = new System.Windows.Forms.DataGridView();
             this.colOrderId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colOstCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colOrderType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colOrderComment = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colManualLoad = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -97,6 +101,7 @@
             this.colBinding = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colBindingId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colOstId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colShipmentId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.tbtnAdd = new System.Windows.Forms.ToolStripButton();
@@ -124,6 +129,22 @@
             this.tbtnMoveItemEdit = new System.Windows.Forms.ToolStripButton();
             this.tbObject = new System.Windows.Forms.TabControl();
             this.tabMain = new System.Windows.Forms.TabPage();
+            this.tabOrders = new System.Windows.Forms.TabPage();
+            this.gbOrderParts = new System.Windows.Forms.GroupBox();
+            this.tblOrderParts = new System.Windows.Forms.DataGridView();
+            this.colPartsCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPartsOrderCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPartsManualLoad = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPartsManualUnload = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPartsPalletAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPartsIsBinding = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.colPartsId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPartsBindingId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPartsOstId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.toolStrip3 = new System.Windows.Forms.ToolStrip();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.tabHistory = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -137,6 +158,10 @@
             this.toolStrip2.SuspendLayout();
             this.tbObject.SuspendLayout();
             this.tabMain.SuspendLayout();
+            this.tabOrders.SuspendLayout();
+            this.gbOrderParts.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tblOrderParts)).BeginInit();
+            this.toolStrip3.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -625,11 +650,13 @@
             // 
             this.gbOrders.Controls.Add(this.tblShipmentOrders);
             this.gbOrders.Controls.Add(this.toolStrip1);
-            this.gbOrders.Location = new System.Drawing.Point(10, 442);
+            this.gbOrders.Dock = System.Windows.Forms.DockStyle.Top;
+            this.gbOrders.Location = new System.Drawing.Point(3, 3);
             this.gbOrders.Name = "gbOrders";
-            this.gbOrders.Size = new System.Drawing.Size(778, 214);
+            this.gbOrders.Size = new System.Drawing.Size(793, 214);
             this.gbOrders.TabIndex = 14;
             this.gbOrders.TabStop = false;
+            this.gbOrders.Text = "Заказы";
             // 
             // tblShipmentOrders
             // 
@@ -644,6 +671,7 @@
             this.tblShipmentOrders.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.tblShipmentOrders.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colOrderId,
+            this.colOstCode,
             this.colOrderType,
             this.colOrderComment,
             this.colManualLoad,
@@ -652,6 +680,7 @@
             this.colBinding,
             this.colId,
             this.colBindingId,
+            this.colOstId,
             this.colShipmentId});
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
@@ -674,8 +703,9 @@
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.tblShipmentOrders.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.tblShipmentOrders.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.tblShipmentOrders.Size = new System.Drawing.Size(772, 170);
+            this.tblShipmentOrders.Size = new System.Drawing.Size(787, 170);
             this.tblShipmentOrders.TabIndex = 1;
+            this.tblShipmentOrders.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.tblShipmentOrders_RowEnter);
             // 
             // colOrderId
             // 
@@ -684,6 +714,13 @@
             this.colOrderId.Name = "colOrderId";
             this.colOrderId.ReadOnly = true;
             this.colOrderId.Width = 120;
+            // 
+            // colOstCode
+            // 
+            this.colOstCode.HeaderText = "Код расходной партии";
+            this.colOstCode.Name = "colOstCode";
+            this.colOstCode.ReadOnly = true;
+            this.colOstCode.Visible = false;
             // 
             // colOrderType
             // 
@@ -698,6 +735,7 @@
             this.colOrderComment.HeaderText = "Комментарий по заказу";
             this.colOrderComment.Name = "colOrderComment";
             this.colOrderComment.ReadOnly = true;
+            this.colOrderComment.Width = 300;
             // 
             // colManualLoad
             // 
@@ -705,6 +743,7 @@
             this.colManualLoad.HeaderText = "Ручная загрузка коробов";
             this.colManualLoad.Name = "colManualLoad";
             this.colManualLoad.ReadOnly = true;
+            this.colManualLoad.Visible = false;
             // 
             // colManualUnload
             // 
@@ -712,6 +751,7 @@
             this.colManualUnload.HeaderText = "Ручная разрузка коробов";
             this.colManualUnload.Name = "colManualUnload";
             this.colManualUnload.ReadOnly = true;
+            this.colManualUnload.Visible = false;
             // 
             // colPalletCount
             // 
@@ -719,6 +759,7 @@
             this.colPalletCount.HeaderText = "Кол-во паллет";
             this.colPalletCount.Name = "colPalletCount";
             this.colPalletCount.ReadOnly = true;
+            this.colPalletCount.Visible = false;
             // 
             // colBinding
             // 
@@ -728,6 +769,7 @@
             this.colBinding.ReadOnly = true;
             this.colBinding.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.colBinding.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.colBinding.Visible = false;
             // 
             // colId
             // 
@@ -745,6 +787,13 @@
             this.colBindingId.ReadOnly = true;
             this.colBindingId.Visible = false;
             // 
+            // colOstId
+            // 
+            this.colOstId.HeaderText = "OstId";
+            this.colOstId.Name = "colOstId";
+            this.colOstId.ReadOnly = true;
+            this.colOstId.Visible = false;
+            // 
             // colShipmentId
             // 
             this.colShipmentId.DataPropertyName = "shipment_id";
@@ -761,7 +810,7 @@
             this.tbtnDel});
             this.toolStrip1.Location = new System.Drawing.Point(3, 16);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(772, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(787, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -1014,6 +1063,7 @@
             // tbObject
             // 
             this.tbObject.Controls.Add(this.tabMain);
+            this.tbObject.Controls.Add(this.tabOrders);
             this.tbObject.Controls.Add(this.tabHistory);
             this.tbObject.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbObject.Location = new System.Drawing.Point(0, 0);
@@ -1036,7 +1086,6 @@
             this.tabMain.Controls.Add(this.edShipmentComment);
             this.tabMain.Controls.Add(this.label3);
             this.tabMain.Controls.Add(this.gbTransport);
-            this.tabMain.Controls.Add(this.gbOrders);
             this.tabMain.Controls.Add(this.label4);
             this.tabMain.Controls.Add(this.cmbTransportCompany);
             this.tabMain.Controls.Add(this.gbMovementItem);
@@ -1048,12 +1097,193 @@
             this.tabMain.Text = "Основные сведения";
             this.tabMain.UseVisualStyleBackColor = true;
             // 
+            // tabOrders
+            // 
+            this.tabOrders.Controls.Add(this.gbOrderParts);
+            this.tabOrders.Controls.Add(this.gbOrders);
+            this.tabOrders.Location = new System.Drawing.Point(4, 22);
+            this.tabOrders.Name = "tabOrders";
+            this.tabOrders.Padding = new System.Windows.Forms.Padding(3);
+            this.tabOrders.Size = new System.Drawing.Size(799, 659);
+            this.tabOrders.TabIndex = 2;
+            this.tabOrders.Text = "Заказы";
+            this.tabOrders.UseVisualStyleBackColor = true;
+            // 
+            // gbOrderParts
+            // 
+            this.gbOrderParts.Controls.Add(this.tblOrderParts);
+            this.gbOrderParts.Controls.Add(this.toolStrip3);
+            this.gbOrderParts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gbOrderParts.Location = new System.Drawing.Point(3, 217);
+            this.gbOrderParts.Name = "gbOrderParts";
+            this.gbOrderParts.Size = new System.Drawing.Size(793, 439);
+            this.gbOrderParts.TabIndex = 15;
+            this.gbOrderParts.TabStop = false;
+            this.gbOrderParts.Text = "Расходные партии";
+            // 
+            // tblOrderParts
+            // 
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.tblOrderParts.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            this.tblOrderParts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.tblOrderParts.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colPartsCode,
+            this.colPartsOrderCode,
+            this.colPartsManualLoad,
+            this.colPartsManualUnload,
+            this.colPartsPalletAmount,
+            this.colPartsIsBinding,
+            this.colPartsId,
+            this.colPartsBindingId,
+            this.colPartsOstId});
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.tblOrderParts.DefaultCellStyle = dataGridViewCellStyle8;
+            this.tblOrderParts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tblOrderParts.Location = new System.Drawing.Point(3, 41);
+            this.tblOrderParts.Name = "tblOrderParts";
+            this.tblOrderParts.ReadOnly = true;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.tblOrderParts.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            this.tblOrderParts.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.tblOrderParts.Size = new System.Drawing.Size(787, 395);
+            this.tblOrderParts.TabIndex = 1;
+            // 
+            // colPartsCode
+            // 
+            this.colPartsCode.DataPropertyName = "OsLvCode";
+            this.colPartsCode.HeaderText = "Код расходной партии";
+            this.colPartsCode.Name = "colPartsCode";
+            this.colPartsCode.ReadOnly = true;
+            // 
+            // colPartsOrderCode
+            // 
+            this.colPartsOrderCode.DataPropertyName = "ShOrderId";
+            this.colPartsOrderCode.HeaderText = "Код заказа";
+            this.colPartsOrderCode.Name = "colPartsOrderCode";
+            this.colPartsOrderCode.ReadOnly = true;
+            this.colPartsOrderCode.Visible = false;
+            this.colPartsOrderCode.Width = 120;
+            // 
+            // colPartsManualLoad
+            // 
+            this.colPartsManualLoad.DataPropertyName = "ManualLoad";
+            this.colPartsManualLoad.HeaderText = "Ручная загрузка коробов";
+            this.colPartsManualLoad.Name = "colPartsManualLoad";
+            this.colPartsManualLoad.ReadOnly = true;
+            // 
+            // colPartsManualUnload
+            // 
+            this.colPartsManualUnload.DataPropertyName = "ManualUnload";
+            this.colPartsManualUnload.HeaderText = "Ручная разрузка коробов";
+            this.colPartsManualUnload.Name = "colPartsManualUnload";
+            this.colPartsManualUnload.ReadOnly = true;
+            // 
+            // colPartsPalletAmount
+            // 
+            this.colPartsPalletAmount.DataPropertyName = "PalletAmount";
+            this.colPartsPalletAmount.HeaderText = "Кол-во паллет";
+            this.colPartsPalletAmount.Name = "colPartsPalletAmount";
+            this.colPartsPalletAmount.ReadOnly = true;
+            // 
+            // colPartsIsBinding
+            // 
+            this.colPartsIsBinding.DataPropertyName = "IsBinding";
+            this.colPartsIsBinding.HeaderText = "Привязка";
+            this.colPartsIsBinding.Name = "colPartsIsBinding";
+            this.colPartsIsBinding.ReadOnly = true;
+            this.colPartsIsBinding.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colPartsIsBinding.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // colPartsId
+            // 
+            this.colPartsId.DataPropertyName = "Id";
+            this.colPartsId.HeaderText = "colId";
+            this.colPartsId.Name = "colPartsId";
+            this.colPartsId.ReadOnly = true;
+            this.colPartsId.Visible = false;
+            // 
+            // colPartsBindingId
+            // 
+            this.colPartsBindingId.DataPropertyName = "binding_id";
+            this.colPartsBindingId.HeaderText = "colBindingId";
+            this.colPartsBindingId.Name = "colPartsBindingId";
+            this.colPartsBindingId.ReadOnly = true;
+            this.colPartsBindingId.Visible = false;
+            // 
+            // colPartsOstId
+            // 
+            this.colPartsOstId.DataPropertyName = "OsLvId";
+            this.colPartsOstId.HeaderText = "OstId";
+            this.colPartsOstId.Name = "colPartsOstId";
+            this.colPartsOstId.ReadOnly = true;
+            this.colPartsOstId.Visible = false;
+            // 
+            // toolStrip3
+            // 
+            this.toolStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButton1,
+            this.toolStripButton2,
+            this.toolStripButton3});
+            this.toolStrip3.Location = new System.Drawing.Point(3, 16);
+            this.toolStrip3.Name = "toolStrip3";
+            this.toolStrip3.Size = new System.Drawing.Size(787, 25);
+            this.toolStrip3.TabIndex = 0;
+            this.toolStrip3.Text = "toolStrip3";
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton1.Image = global::Planning.Properties.Resources.Add;
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton1.Text = "toolStripButton1";
+            this.toolStripButton1.ToolTipText = "Добавить заказ";
+            // 
+            // toolStripButton2
+            // 
+            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton2.Image = global::Planning.Properties.Resources.Edit;
+            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.White;
+            this.toolStripButton2.Name = "toolStripButton2";
+            this.toolStripButton2.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton2.Text = "toolStripButton2";
+            this.toolStripButton2.ToolTipText = "Редактировать заказ";
+            // 
+            // toolStripButton3
+            // 
+            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton3.Image = global::Planning.Properties.Resources.Delete;
+            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton3.Name = "toolStripButton3";
+            this.toolStripButton3.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton3.Text = "toolStripButton3";
+            this.toolStripButton3.ToolTipText = "Удалить заказ";
+            // 
             // tabHistory
             // 
             this.tabHistory.Location = new System.Drawing.Point(4, 22);
             this.tabHistory.Name = "tabHistory";
             this.tabHistory.Padding = new System.Windows.Forms.Padding(3);
-            this.tabHistory.Size = new System.Drawing.Size(1065, 659);
+            this.tabHistory.Size = new System.Drawing.Size(799, 659);
             this.tabHistory.TabIndex = 1;
             this.tabHistory.Text = "История";
             this.tabHistory.UseVisualStyleBackColor = true;
@@ -1109,6 +1339,12 @@
             this.tbObject.ResumeLayout(false);
             this.tabMain.ResumeLayout(false);
             this.tabMain.PerformLayout();
+            this.tabOrders.ResumeLayout(false);
+            this.gbOrderParts.ResumeLayout(false);
+            this.gbOrderParts.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tblOrderParts)).EndInit();
+            this.toolStrip3.ResumeLayout(false);
+            this.toolStrip3.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -1182,16 +1418,6 @@
         private System.Windows.Forms.Button btnSDate;
         private System.Windows.Forms.Button btnAddToLV;
         private System.Windows.Forms.Button btnBindLV;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colOrderId;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colOrderType;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colOrderComment;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colManualLoad;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colManualUnload;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colPalletCount;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn colBinding;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colId;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colBindingId;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colShipmentId;
         private System.Windows.Forms.ComboBox cmbTransportType;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.GroupBox gbMovementItem;
@@ -1209,5 +1435,33 @@
         private System.Windows.Forms.TabPage tabHistory;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.TabPage tabOrders;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colOrderId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colOstCode;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colOrderType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colOrderComment;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colManualLoad;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colManualUnload;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPalletCount;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn colBinding;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colBindingId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colOstId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colShipmentId;
+        private System.Windows.Forms.GroupBox gbOrderParts;
+        private System.Windows.Forms.DataGridView tblOrderParts;
+        private System.Windows.Forms.ToolStrip toolStrip3;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton toolStripButton2;
+        private System.Windows.Forms.ToolStripButton toolStripButton3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPartsCode;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPartsOrderCode;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPartsManualLoad;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPartsManualUnload;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPartsPalletAmount;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn colPartsIsBinding;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPartsId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPartsBindingId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPartsOstId;
     }
 }

@@ -32,10 +32,12 @@ namespace Planning
         public WaitHandler waitCur;
         DataTable shipmentsDataTable = new DataTable();
         List<UserAccessItem> UserPrvlg = new List<UserAccessItem>();
+        public List<ShipmentColumn> shipmentColumns = new List<ShipmentColumn>();
         UserAccessItem mainFormAccess =new UserAccessItem();
         SqlConnection LVConnect;
         private int currShpId = 0;
         private int currColorIdx = 0;
+        bool IsFormLoad = false;
         frmProgressBar wait;
         private List<Color> rowColors = new List<Color>()
         {
@@ -414,6 +416,7 @@ namespace Planning
 
             DataService.setting.VolumeCalcTemplate = settingsHandle.GetParamList<VolumeCalcConstant>("VolumeCalcTemplates");
             */
+            IsFormLoad = true;
             DataService.settingsHandle.Load();
             /*
             if(setting == null)
@@ -504,6 +507,17 @@ namespace Planning
 
 
             List<string> hideCols = DataService.settingsHandle.GetParamStringValue("View\\HideColumns").Split(',').ToList();
+            shipmentColumns = DataService.settingsHandle.GetParamList<ShipmentColumn>("View\\ShipmentColumns");
+            if (shipmentColumns.Count == 0)
+            {
+                foreach (DataGridViewColumn col in tblShipments.Columns)
+                {
+                    shipmentColumns.Add(new ShipmentColumn() { Id = col.Name, Order = col.DisplayIndex });
+                }
+            }
+            
+            SetShipmentColParam();
+
             btnColumnVisible.DropDownItems.Clear();
             foreach(DataGridViewColumn col in tblShipments.Columns)
             {
@@ -525,7 +539,19 @@ namespace Planning
             
 
             statusInfo.Text = "Пользователь: " + DataService.setting.UserName;
+            IsFormLoad = false ;
+        }
 
+        private void SetShipmentColParam()
+        {
+            foreach (DataGridViewColumn col in tblShipments.Columns)
+            {
+                var shpCol = shipmentColumns.FirstOrDefault(c => c.Id == col.Name);
+                if (shpCol != null)
+                {
+                    col.DisplayIndex = shpCol.Order;
+                }
+            }
         }
 
         private void miDictDelayReasons_Click(object sender, EventArgs e)
@@ -1560,6 +1586,15 @@ namespace Planning
         private void btnColumnVisible_ButtonClick(object sender, EventArgs e)
         {
 
+        }
+
+        private void tblShipments_ColumnDisplayIndexChanged(object sender, DataGridViewColumnEventArgs e)
+        {
+            if (IsFormLoad)
+                return;
+            var col = shipmentColumns.First(c => c.Id == e.Column.Name);
+            col.Order = e.Column.DisplayIndex;
+            DataService.settingsHandle.SetParamList<ShipmentColumn>("View\\ShipmentColumns", "ShipmentColumns", shipmentColumns);
         }
     }
 }

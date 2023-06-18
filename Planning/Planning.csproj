@@ -269,6 +269,7 @@
       <DependentUpon>ShipmentAdd.cs</DependentUpon>
     </Compile>
     <Compile Include="ShipmentAddResult.cs" />
+    <Compile Include="ShipmentColumn.cs" />
     <Compile Include="ShipmentElement.cs">
       <DependentUpon>DbPlaning.tt</DependentUpon>
     </Compile>
@@ -298,6 +299,15 @@
     </Compile>
     <Compile Include="ShipmentOrderEdit.Designer.cs">
       <DependentUpon>ShipmentOrderEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ShipmentOrderPart.cs">
+      <DependentUpon>DbPlaning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ShipmentOrderPartsEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ShipmentOrderPartsEdit.Designer.cs">
+      <DependentUpon>ShipmentOrderPartsEdit.cs</DependentUpon>
     </Compile>
     <Compile Include="ShipmentOrdersLog.cs">
       <DependentUpon>DbPlaning.tt</DependentUpon>
@@ -477,6 +487,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ShipmentOrderEdit.resx">
       <DependentUpon>ShipmentOrderEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ShipmentOrderPartsEdit.resx">
+      <DependentUpon>ShipmentOrderPartsEdit.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TimeSlots.resx">
       <DependentUpon>TimeSlots.cs</DependentUpon>

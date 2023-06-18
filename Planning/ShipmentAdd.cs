@@ -75,12 +75,17 @@ namespace Planning
                     while (reader.Read())
                     {
                         int Row = tblOrders.Rows.Add();
+                        //object[] readerVal = new object[reader.FieldCount];
+                        //reader.GetValues(readerVal);
                         tblOrders.Rows[Row].Cells[0].Value = reader.GetString(1);
-                        tblOrders.Rows[Row].Cells[1].Value = reader.GetString(2);
+                        tblOrders.Rows[Row].Cells[1].Value = reader.GetValue(7);
+                        tblOrders.Rows[Row].Cells[2].Value = reader.GetString(2);
 
-                        tblOrders.Rows[Row].Cells[2].Value = reader.GetSqlDateTime(3).ToString() != "Null" ? reader.GetSqlDateTime(3).ToString().Substring(0, 10) : "";
-                        tblOrders.Rows[Row].Cells[3].Value = reader.GetString(4);
-                        tblOrders.Rows[Row].Cells[4].Value = reader.GetInt32(0);
+                        tblOrders.Rows[Row].Cells[3].Value = reader.GetSqlDateTime(3).ToString() != "Null" ? reader.GetSqlDateTime(3).ToString().Substring(0, 10) : "";
+                        tblOrders.Rows[Row].Cells[4].Value = reader.GetString(4);
+                        tblOrders.Rows[Row].Cells[5].Value = reader.GetInt32(0);
+
+                        tblOrders.Rows[Row].Cells[6].Value = reader.GetValue(6);
                     }
                 }
                 
@@ -118,13 +123,30 @@ namespace Planning
 
                 for (int i = 0; i < tblShipmentItem.RowCount; i++)
                 {
-                    ShipmentOrder shipmentOrder = new ShipmentOrder();
 
-                    shipmentOrder.OrderId = tblShipmentItem.Rows[i].Cells["colItemId"].Value.ToString();
-                    shipmentOrder.LVOrderId = (int?)tblShipmentItem.Rows[i].Cells["colLVOrdId"].Value;
-                    shipmentOrder.lv_order_code = tblShipmentItem.Rows[i].Cells["colItemId"].Value.ToString();
-                    shipmentOrder.IsBinding = true;
-                    _shipment.ShipmentOrders.Add(shipmentOrder);
+                   // ShipmentOrder shipmentOrder;
+
+                    var lvOrderId = int.Parse(tblShipmentItem.Rows[i].Cells["colItemId"].Value.ToString());
+                    
+                    ShipmentOrder shipmentOrder = _shipment.ShipmentOrders.FirstOrDefault(o => o.LVOrderId == lvOrderId);
+                    if (shipmentOrder == null)
+                    {
+                        shipmentOrder = new ShipmentOrder();
+                        shipmentOrder.OrderId = tblShipmentItem.Rows[i].Cells["colItemId"].Value.ToString();
+                        shipmentOrder.LVOrderId = (int?)tblShipmentItem.Rows[i].Cells["colLVOrdId"].Value;
+                        shipmentOrder.lv_order_code = tblShipmentItem.Rows[i].Cells["colItemId"].Value.ToString();
+                        shipmentOrder.IsBinding = true;
+                        _shipment.ShipmentOrders.Add(shipmentOrder);
+                    }
+                    if (cmbType.SelectedIndex == 0)
+                    {
+                        ShipmentOrderPart shipmentOrderPart = new ShipmentOrderPart();
+                        shipmentOrderPart.OsLvCode = tblShipmentItem.Rows[i].Cells["colItemOstCode"].Value.ToString();
+                        shipmentOrderPart.OsLvId = (tblShipmentItem.Rows[i].Cells["colItemOstId"].Value as int?);
+                        shipmentOrderPart.IsBinding = true;
+                        shipmentOrder.ShipmentOrderParts.Add(shipmentOrderPart);
+                    }
+
                 }
                 _shipmentAddResult.Result = _shipment;
                 _context.Shipments.Add(_shipment);

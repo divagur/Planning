@@ -47,47 +47,15 @@ namespace Planning
                     order.ExpDate = sql.Reader.GetSqlDateTime(3).ToString() != "Null" ? (DateTime?)DateTime.Parse(sql.Reader.GetSqlDateTime(3).ToString().Substring(0, 10)) : null;
                     order.Company = sql.Reader.GetString(4);
                     order.DepLVID = sql.Reader.GetInt32(5);
+                    order.OstID = sql.Reader.GetInt32(6);
+                    object objOstCode = sql.Reader.GetString(7);
+                    order.OstCode = objOstCode == null? "": (string)objOstCode;
                     listLVOrder.Add(order);
 
                 }
             }
             
-            /*
-            using (SqlConnection connection = new SqlConnection(DataService.connectionString))
-            {
-                if (connection.State == ConnectionState.Closed)
-                    connection.Open();
-
-                string sqlText = "sp_AddLoadingLVList";
-
-                SqlCommand command = new SqlCommand(sqlText, connection);
-                command.CommandType = CommandType.StoredProcedure;
-
-                command.Parameters.Add(new SqlParameter { ParameterName = "@Split", Value = 0 });
-                command.Parameters.Add(new SqlParameter { ParameterName = "@In", Value = Type });
-                command.Parameters.Add(new SqlParameter { ParameterName = "@DepID", Value = DepositorLVId });
-                
-                var reader = command.ExecuteReader();
-                if (reader.HasRows)
-                {
-                    
-                    while (reader.Read())
-                    {
-                        LVOrder order = new LVOrder();
-                        //LVID, LVCode, LVStatus, ExpDate, Company, DepLVID
-                        order.LVID =reader.GetInt32(0);
-                        order.LVCode = reader.GetString(1);
-                        order.LVStatus = reader.GetString(2);
-                        order.ExpDate = reader.GetSqlDateTime(3).ToString() != "Null" ? (DateTime?)DateTime.Parse(reader.GetSqlDateTime(3).ToString().Substring(0, 10)) : null;
-                        order.Company = reader.GetString(4);
-                        order.DepLVID = reader.GetInt32(5);
-                        listLVOrder.Add(order);
-
-                    }
-                }
-
-            }
-            */
+            
             return listLVOrder;
         }
     }

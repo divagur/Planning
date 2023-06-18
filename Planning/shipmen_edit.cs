@@ -163,6 +163,12 @@ namespace Planning
 
                 tblShipmentOrders.AutoGenerateColumns = false;
                 tblShipmentOrders.DataSource = _shipment.ShipmentOrders.ToList();
+                if (_shipment.ShipmentOrders.Count > 0)
+                {
+                    BindOrderPart(_shipment.ShipmentOrders.ToList()[0].Id);
+                }
+
+
                 cmbTransportCompany.Text = DataService.GetDictNameById("ТК", _shipment.TransportCompanyId);
                 cmbTransportType.Text = DataService.GetDictNameById("Типы_транспорта", _shipment.TransportTypeId);
 
@@ -330,6 +336,7 @@ namespace Planning
             _isNew = isNew;
             this.Text = "Редактирование перемещения";
             AddHistory(movement.Id);
+            tbObject.TabPages.Remove(tabOrders);
         }
 
         public void AddHistory(int ItemId)
@@ -541,6 +548,7 @@ namespace Planning
             if (IsShpIn())
             {
                 btnAddToLV.Visible = false;
+                
                 //btnBindLV.Visible = false;
             }
         }
@@ -664,6 +672,22 @@ namespace Planning
                 PopulateMovementItem();
             }
 
+        }
+
+        private void BindOrderPart(int OrderId)
+        {
+            ShipmentOrder shipmentOrder = _context.ShipmentOrders.Find(OrderId);
+            if (shipmentOrder == null)
+                return;
+            tblOrderParts.AutoGenerateColumns = false;
+            tblOrderParts.DataSource = shipmentOrder.ShipmentOrderParts.ToList();
+        }
+
+        private void tblShipmentOrders_RowEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            if (tblShipmentOrders.CurrentCell == null)
+                return;
+            BindOrderPart((int)tblShipmentOrders.Rows[tblShipmentOrders.CurrentCell.RowIndex].Cells["colId"].Value);
         }
     }
 

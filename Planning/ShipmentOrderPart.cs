@@ -12,26 +12,17 @@ namespace Planning
     using System;
     using System.Collections.Generic;
     
-    public partial class ShipmentOrdersLog
+    public partial class ShipmentOrderPart
     {
-        public int DmlId { get; set; }
-        public string DmlType { get; set; }
-        public System.DateTime DmlDate { get; set; }
-        public string DmlUserName { get; set; }
-        public string DmlCompName { get; set; }
-        public int ShipmentOrderId { get; set; }
-        public string OrderId { get; set; }
-        public Nullable<int> ShipmentId { get; set; }
-        public string OrderType { get; set; }
-        public string Comment { get; set; }
+        public int Id { get; set; }
+        public Nullable<int> ShOrderId { get; set; }
+        public Nullable<int> OsLvId { get; set; }
+        public string OsLvCode { get; set; }
         public Nullable<bool> IsBinding { get; set; }
         public Nullable<int> ManualLoad { get; set; }
         public Nullable<int> ManualUnload { get; set; }
         public Nullable<int> PalletAmount { get; set; }
-        public Nullable<int> BindingId { get; set; }
-        public Nullable<int> LvOrderId { get; set; }
-        public string LvOrderCode { get; set; }
-        public Nullable<int> shipping_places_number { get; set; }
-        public Nullable<decimal> order_weight { get; set; }
+    
+        public virtual ShipmentOrder ShipmentOrder { get; set; }
     }
 }

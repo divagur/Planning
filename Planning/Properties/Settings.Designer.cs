@@ -26,8 +26,8 @@ namespace Planning.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=GURAVLEV\\GURAVLEVMS2019;Initial Catalog=Planning;User ID=SYSADM; Pass" +
-            "word = SYSADM")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=ПОЛЬЗОВАТЕЛЬ-ПК\\MSSQL2017DEV;Initial Catalog=Planning;User ID=sysadm;" +
+            " Password = sysadm")]
         public string ConnectionString {
             get {
                 return ((string)(this["ConnectionString"]));

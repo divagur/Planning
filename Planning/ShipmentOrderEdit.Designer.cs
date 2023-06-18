@@ -35,12 +35,6 @@
             this.txtOrderType = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.txtOrderComment = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.txtManualLoad = new System.Windows.Forms.TextBox();
-            this.txtManualUnload = new System.Windows.Forms.TextBox();
-            this.txtPalletAmount = new System.Windows.Forms.TextBox();
             this.btnClose = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.SuspendLayout();
@@ -64,7 +58,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(406, 9);
+            this.label2.Location = new System.Drawing.Point(12, 35);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(65, 13);
             this.label2.TabIndex = 2;
@@ -72,7 +66,7 @@
             // 
             // txtOrderType
             // 
-            this.txtOrderType.Location = new System.Drawing.Point(477, 6);
+            this.txtOrderType.Location = new System.Drawing.Point(84, 32);
             this.txtOrderType.Name = "txtOrderType";
             this.txtOrderType.Size = new System.Drawing.Size(163, 20);
             this.txtOrderType.TabIndex = 1;
@@ -80,7 +74,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 51);
+            this.label3.Location = new System.Drawing.Point(12, 69);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(80, 26);
             this.label3.TabIndex = 4;
@@ -88,63 +82,15 @@
             // 
             // txtOrderComment
             // 
-            this.txtOrderComment.Location = new System.Drawing.Point(98, 48);
+            this.txtOrderComment.Location = new System.Drawing.Point(98, 69);
             this.txtOrderComment.Multiline = true;
             this.txtOrderComment.Name = "txtOrderComment";
-            this.txtOrderComment.Size = new System.Drawing.Size(542, 71);
+            this.txtOrderComment.Size = new System.Drawing.Size(345, 71);
             this.txtOrderComment.TabIndex = 2;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 141);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(136, 13);
-            this.label4.TabIndex = 6;
-            this.label4.Text = "Ручная загрузка коробов";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(12, 169);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(137, 13);
-            this.label5.TabIndex = 6;
-            this.label5.Text = "Ручная разрузка коробов";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(12, 194);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(104, 13);
-            this.label6.TabIndex = 6;
-            this.label6.Text = "Количество паллет";
-            // 
-            // txtManualLoad
-            // 
-            this.txtManualLoad.Location = new System.Drawing.Point(154, 138);
-            this.txtManualLoad.Name = "txtManualLoad";
-            this.txtManualLoad.Size = new System.Drawing.Size(100, 20);
-            this.txtManualLoad.TabIndex = 3;
-            // 
-            // txtManualUnload
-            // 
-            this.txtManualUnload.Location = new System.Drawing.Point(154, 166);
-            this.txtManualUnload.Name = "txtManualUnload";
-            this.txtManualUnload.Size = new System.Drawing.Size(100, 20);
-            this.txtManualUnload.TabIndex = 4;
-            // 
-            // txtPalletAmount
-            // 
-            this.txtPalletAmount.Location = new System.Drawing.Point(154, 191);
-            this.txtPalletAmount.Name = "txtPalletAmount";
-            this.txtPalletAmount.Size = new System.Drawing.Size(100, 20);
-            this.txtPalletAmount.TabIndex = 5;
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(565, 212);
+            this.btnClose.Location = new System.Drawing.Point(368, 146);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
             this.btnClose.TabIndex = 8;
@@ -154,7 +100,7 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(484, 212);
+            this.btnSave.Location = new System.Drawing.Point(287, 146);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 8;
@@ -166,15 +112,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(652, 242);
+            this.ClientSize = new System.Drawing.Size(454, 181);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnClose);
-            this.Controls.Add(this.txtPalletAmount);
-            this.Controls.Add(this.txtManualUnload);
-            this.Controls.Add(this.txtManualLoad);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
             this.Controls.Add(this.txtOrderComment);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.txtOrderType);
@@ -201,12 +141,6 @@
         private System.Windows.Forms.TextBox txtOrderType;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtOrderComment;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox txtManualLoad;
-        private System.Windows.Forms.TextBox txtManualUnload;
-        private System.Windows.Forms.TextBox txtPalletAmount;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Button btnSave;
     }

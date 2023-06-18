@@ -15,5 +15,8 @@ namespace Planning
 		public string Company { get; set; }
 		public DateTime? InputDate { get; set; }
 		public int? DepLVID { get; set; }
+		public int? OstID { get; set; }
+		public string OstCode { get; set; }
+
 	}
 }
