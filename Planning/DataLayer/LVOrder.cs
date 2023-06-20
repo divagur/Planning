@@ -18,5 +18,8 @@ namespace Planning
 		public int? OstID { get; set; }
 		public string OstCode { get; set; }
 
+
+		
+
 	}
 }

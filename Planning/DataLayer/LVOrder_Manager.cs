@@ -11,7 +11,7 @@ namespace Planning
 {
     class LVOrder_Manager
     {
-        public List<LVOrder> GetList(int? DepositorLVId, int Type)
+        public List<LVOrder> GetList(int? DepositorLVId, int Type, int IsAll = 1, int? OrderId = null)
         {
             List<LVOrder> listLVOrder = new List<LVOrder>();
             SqlHandle sql = new SqlHandle(DataService.connectionString);
@@ -22,7 +22,8 @@ namespace Planning
             sql.AddCommandParametr(new SqlParameter { ParameterName = "@Split", Value = 0 });
             sql.AddCommandParametr(new SqlParameter { ParameterName = "@In", Value = Type });
             sql.AddCommandParametr(new SqlParameter { ParameterName = "@DepID", Value = DepositorLVId });
-            sql.AddCommandParametr(new SqlParameter { ParameterName = "@IsAll", Value = 1 });
+            sql.AddCommandParametr(new SqlParameter { ParameterName = "@LVID", Value = OrderId });
+            sql.AddCommandParametr(new SqlParameter { ParameterName = "@IsAll", Value = IsAll });
 
             try
             {

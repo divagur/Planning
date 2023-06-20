@@ -13,10 +13,12 @@ namespace Planning
     public partial class ShipmentOrderEdit : Form
     {
         ShipmentOrder _shipmentOrder;
-        public ShipmentOrderEdit(ShipmentOrder shipmentOrder)
+        Shipment _shipment;
+        public ShipmentOrderEdit(Shipment shipment, ShipmentOrder shipmentOrder)
         {
             InitializeComponent();
             _shipmentOrder = shipmentOrder;
+            _shipment = shipment;
 
         }
 
@@ -25,11 +27,14 @@ namespace Planning
             txtOrderId.Text = _shipmentOrder.OrderId;
             txtOrderType.Text = _shipmentOrder.OrderType;
             txtOrderComment.Text = _shipmentOrder.Comment;
+            /*
             txtManualLoad.Text = _shipmentOrder.ManualLoad.ToString();
             txtManualUnload.Text = _shipmentOrder.ManualUnload.ToString();
             txtPalletAmount.Text = _shipmentOrder.PalletAmount.ToString();
-
-            txtOrderId.Enabled = _shipmentOrder.IsBinding == null ? false : !(bool)_shipmentOrder.IsBinding;
+            */
+            bool isEnable = _shipmentOrder.IsBinding == null ? false : !(bool)_shipmentOrder.IsBinding;
+            txtOrderId.Enabled = isEnable;
+            btnGetOrder.Enabled = isEnable;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -56,14 +61,26 @@ namespace Planning
             _shipmentOrder.lv_order_code = txtOrderId.Text;
             _shipmentOrder.OrderType = txtOrderType.Text;
             _shipmentOrder.Comment = txtOrderComment.Text;
+           /*
             _shipmentOrder.ManualLoad = GetNumber(txtManualLoad);
             _shipmentOrder.ManualUnload = GetNumber(txtManualUnload);
             _shipmentOrder.PalletAmount = GetNumber(txtPalletAmount);
+           */
         }
 
         private void btnClose_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
+        }
+
+        private void btnGetOrder_Click(object sender, EventArgs e)
+        {
+            ShipmentAddResult selectResult = new ShipmentAddResult();
+            ChooseOrder frmChooseOrder = new ChooseOrder(selectResult, _shipment);
+            if (frmChooseOrder.ShowDialog() == DialogResult.OK && selectResult.Result != null)
+            {
+                txtOrderId.Text = ((LVOrder)selectResult.Result).LVCode;
+            }
         }
     }
 }

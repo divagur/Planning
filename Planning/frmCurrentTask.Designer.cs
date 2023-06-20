@@ -39,6 +39,7 @@ namespace Planning
             this.colDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colOrderId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colOrdPartLVCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colKlient = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colState = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDonePrc = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -70,6 +71,7 @@ namespace Planning
             this.colDate,
             this.colTime,
             this.colOrderId,
+            this.colOrdPartLVCode,
             this.colKlient,
             this.colState,
             this.colDonePrc,
@@ -143,6 +145,13 @@ namespace Planning
             this.colOrderId.HeaderText = "Код заказа";
             this.colOrderId.Name = "colOrderId";
             this.colOrderId.ReadOnly = true;
+            // 
+            // colOrdPartLVCode
+            // 
+            this.colOrdPartLVCode.DataPropertyName = "OrdPartLVCode";
+            this.colOrdPartLVCode.HeaderText = "Код расходной партии";
+            this.colOrdPartLVCode.Name = "colOrdPartLVCode";
+            this.colOrdPartLVCode.ReadOnly = true;
             // 
             // colKlient
             // 
@@ -289,6 +298,7 @@ namespace Planning
         private System.Windows.Forms.DataGridViewTextBoxColumn colDate;
         private System.Windows.Forms.DataGridViewTextBoxColumn colTime;
         private System.Windows.Forms.DataGridViewTextBoxColumn colOrderId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colOrdPartLVCode;
         private System.Windows.Forms.DataGridViewTextBoxColumn colKlient;
         private System.Windows.Forms.DataGridViewTextBoxColumn colState;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDonePrc;

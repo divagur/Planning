@@ -129,7 +129,7 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="sh_order_id" Type="int" />
           <Property Name="os_lvid" Type="int" />
           <Property Name="os_lvcode" Type="varchar" MaxLength="26" />
@@ -137,8 +137,8 @@
           <Property Name="manual_load" Type="int" />
           <Property Name="manual_unload" Type="int" />
           <Property Name="pallet_amount" Type="int" />
-          <Property Name="lv_order_id" Type="int" />
-          <Property Name="lv_order_code" Type="varchar" MaxLength="32" />
+          <Property Name="shipping_places_number" Type="int" />
+          <Property Name="order_part_weight" Type="decimal" Precision="19" Scale="6" />
         </EntityType>
         <EntityType Name="shipment_orders">
           <Key>
@@ -501,7 +501,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="sh_order_parts_sh_ord_fk">
-          <End Role="shipment_orders" Type="Self.shipment_orders" Multiplicity="0..1" />
+          <End Role="shipment_orders" Type="Self.shipment_orders" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="shipment_order_parts" Type="Self.shipment_order_parts" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="shipment_orders">
@@ -1169,6 +1171,8 @@
           <Property Name="ManualUnload" Type="Int32" />
           <Property Name="PalletAmount" Type="Int32" />
           <NavigationProperty Name="ShipmentOrder" Relationship="PlanningModel.sh_order_parts_sh_ord_fk" FromRole="shipment_order_parts" ToRole="ShipmentOrder" />
+          <Property Name="ShippingPlacesNumber" Type="Int32" />
+          <Property Name="OrderPartWeight" Type="Decimal" Precision="19" Scale="6" />
         </EntityType>
         <Association Name="sh_order_parts_sh_ord_fk">
           <End Type="PlanningModel.ShipmentOrder" Role="ShipmentOrder" Multiplicity="0..1" />
@@ -1515,6 +1519,8 @@
           <EntitySetMapping Name="ShipmentOrderParts">
             <EntityTypeMapping TypeName="PlanningModel.ShipmentOrderPart">
               <MappingFragment StoreEntitySet="shipment_order_parts">
+                <ScalarProperty Name="OrderPartWeight" ColumnName="order_part_weight" />
+                <ScalarProperty Name="ShippingPlacesNumber" ColumnName="shipping_places_number" />
                 <ScalarProperty Name="PalletAmount" ColumnName="pallet_amount" />
                 <ScalarProperty Name="ManualUnload" ColumnName="manual_unload" />
                 <ScalarProperty Name="ManualLoad" ColumnName="manual_load" />

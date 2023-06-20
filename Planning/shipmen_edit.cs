@@ -89,9 +89,17 @@ namespace Planning
         {
             for (int i = 0; i < controls.Count; i++)
             {
-                if (controls[i] is GroupBox)
+                /*
+                if (controls[i] is GroupBox )
                     LockFieldInner((controls[i] as GroupBox).Controls, filterExclusion, IsLock);
-                if (!((controls[i] is Label) || (controls[i] is GroupBox)))
+                else if (controls[i] is TabControl)
+                    LockFieldInner((controls[i] as TabControl).Controls, filterExclusion, IsLock);
+                */
+                if (controls[i].HasChildren )
+                {
+                    LockFieldInner(controls[i].Controls, filterExclusion, IsLock);
+                }
+               else if (!((controls[i] is Label) || (controls[i] is GroupBox)))
                     if (!(filterExclusion != null ? filterExclusion.Contains(controls[i].Name) : false))
                         controls[i].Enabled = IsLock;
 
@@ -201,7 +209,18 @@ namespace Planning
             }
 
         }
-
+        private bool IsValidOrderParts()
+        {
+            foreach (var order in _shipment.ShipmentOrders)
+            {
+                if (order.ShipmentOrderParts.Count == 0)
+                {
+                    MessageBox.Show($"У заказа {order.lv_order_code} нет ни одной раходной партии", "Ошибка при сохранении", MessageBoxButtons.OK,MessageBoxIcon.Error);
+                    return false;
+                }
+            }
+            return true;
+        }
         private bool IsValidDate(TextBox dateControl)
         {
             DateTime date;
@@ -246,7 +265,8 @@ namespace Planning
                 bool success = IsValidDate(edSDate) && IsValidDate(edSubmissionTime) && IsValidDate(edStartTime) && IsValidDate(edEndDate) && IsValidDate(edLeaveTime);
                 if (!success)
                     return false;
-
+                if (_shipment.ShIn == false && !IsValidOrderParts())
+                    return false;
                 //cbTransportCompany.Text = "";
                 _shipment.SDate = GetNullableDate(edSDate);
                 _shipment.SComment = edShipmentComment.Text;
@@ -320,6 +340,7 @@ namespace Planning
             gbMovementItem.Visible = false;
             _isNew = isNew;
             this.Text = _shipment.ShIn == false? "Редактирование отгрузки": "Редактирование поставки";
+            gbOrderParts.Enabled = _shipment.ShIn == false;
             AddHistory(shipment.Id);
         }
 
@@ -349,7 +370,7 @@ namespace Planning
 
             frmShipmentLog.Dock = DockStyle.Fill;
 
-            tbObject.TabPages[1].Controls.Add(frmShipmentLog);
+            tbObject.TabPages[2].Controls.Add(frmShipmentLog);
 
         }
 
@@ -372,7 +393,7 @@ namespace Planning
         {
 
             ShipmentOrder shipmentOrder = new ShipmentOrder();
-            var frmShipmentOrderEdit = new ShipmentOrderEdit(shipmentOrder);
+            var frmShipmentOrderEdit = new ShipmentOrderEdit(_shipment, shipmentOrder);
             shipmentOrder.ShipmentId = _shipment.Id;
             shipmentOrder.IsBinding = false;
             if (frmShipmentOrderEdit.ShowDialog() == DialogResult.OK)
@@ -389,7 +410,7 @@ namespace Planning
             if (tblShipmentOrders.CurrentCell == null)
                 return;
             ShipmentOrder shipmentOrder = _context.ShipmentOrders.Find(tblShipmentOrders.Rows[tblShipmentOrders.CurrentCell.RowIndex].Cells["colId"].Value);
-            var frmShipmentOrderEdit = new ShipmentOrderEdit(shipmentOrder);
+            var frmShipmentOrderEdit = new ShipmentOrderEdit(_shipment, shipmentOrder);
             
             frmShipmentOrderEdit.ShowDialog();
             if (frmShipmentOrderEdit.DialogResult == DialogResult.Cancel)
@@ -688,6 +709,62 @@ namespace Planning
             if (tblShipmentOrders.CurrentCell == null)
                 return;
             BindOrderPart((int)tblShipmentOrders.Rows[tblShipmentOrders.CurrentCell.RowIndex].Cells["colId"].Value);
+        }
+
+        private void tbtnAddOrderPart_Click(object sender, EventArgs e)
+        {
+
+            if (tblShipmentOrders.CurrentCell == null)
+                return;
+            ShipmentOrder shipmentOrder = _context.ShipmentOrders.Find(tblShipmentOrders.Rows[tblShipmentOrders.CurrentCell.RowIndex].Cells["colId"].Value);
+
+
+            ShipmentOrderPart shipmentOrderPart = new ShipmentOrderPart();
+            shipmentOrderPart.ShOrderId = shipmentOrder.Id;
+            var frmShipmentOrderPart = new ShipmentOrderPartEdit(shipmentOrder, shipmentOrderPart);
+           
+            shipmentOrderPart.IsBinding = false;
+            if (frmShipmentOrderPart.ShowDialog() == DialogResult.OK)
+            {
+
+                shipmentOrder.ShipmentOrderParts.Add(shipmentOrderPart);
+                BindOrderPart(shipmentOrder.Id);
+            }
+        }
+
+        private void tbtnEditOrderPart_Click(object sender, EventArgs e)
+        {
+            if (tblShipmentOrders.CurrentCell == null)
+                return;
+            ShipmentOrder shipmentOrder = _context.ShipmentOrders.Find(tblShipmentOrders.Rows[tblShipmentOrders.CurrentCell.RowIndex].Cells["colId"].Value);
+
+            if (tblOrderParts.CurrentCell == null)
+                return;
+
+            ShipmentOrderPart shipmentOrderPart = shipmentOrder.ShipmentOrderParts.ToList().Find(o => o.Id == int.Parse(tblOrderParts.Rows[tblOrderParts.CurrentCell.RowIndex].Cells["colPartsId"].Value.ToString()));
+
+            var frmShipmentOrderPart = new ShipmentOrderPartEdit(shipmentOrder, shipmentOrderPart);
+            frmShipmentOrderPart.ShowDialog();
+            if (frmShipmentOrderPart.DialogResult == DialogResult.Cancel)
+                return;
+            tblOrderParts.Refresh();
+        }
+
+        private void tbtnDelOrderPart_Click(object sender, EventArgs e)
+        {
+            if (tblShipmentOrders.CurrentCell == null)
+                return;
+            ShipmentOrder shipmentOrder = _context.ShipmentOrders.Find(tblShipmentOrders.Rows[tblShipmentOrders.CurrentCell.RowIndex].Cells["colId"].Value);
+
+            if (tblOrderParts.CurrentCell == null)
+                return;
+
+            if (MessageBox.Show("Удалить расходную партию?", "Подверждение", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            {
+                ShipmentOrderPart shipmentOrderPart = shipmentOrder.ShipmentOrderParts.ToList().Find(o=>o.Id == int.Parse(tblOrderParts.Rows[tblOrderParts.CurrentCell.RowIndex].Cells["colPartsId"].Value.ToString()));
+                shipmentOrder.ShipmentOrderParts.Remove(shipmentOrderPart);
+                tblOrderParts.DataSource = shipmentOrder.ShipmentOrderParts.ToList();
+            }
         }
     }
 

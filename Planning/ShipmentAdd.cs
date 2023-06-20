@@ -126,7 +126,7 @@ namespace Planning
 
                    // ShipmentOrder shipmentOrder;
 
-                    var lvOrderId = int.Parse(tblShipmentItem.Rows[i].Cells["colItemId"].Value.ToString());
+                    var lvOrderId = int.Parse(tblShipmentItem.Rows[i].Cells["colLVOrdId"].Value.ToString());
                     
                     ShipmentOrder shipmentOrder = _shipment.ShipmentOrders.FirstOrDefault(o => o.LVOrderId == lvOrderId);
                     if (shipmentOrder == null)
@@ -144,9 +144,9 @@ namespace Planning
                         shipmentOrderPart.OsLvCode = tblShipmentItem.Rows[i].Cells["colItemOstCode"].Value.ToString();
                         shipmentOrderPart.OsLvId = (tblShipmentItem.Rows[i].Cells["colItemOstId"].Value as int?);
                         shipmentOrderPart.IsBinding = true;
-                        shipmentOrder.ShipmentOrderParts.Add(shipmentOrderPart);
+                        //shipmentOrder.ShipmentOrderParts.Add(shipmentOrderPart);
                     }
-
+                   
                 }
                 _shipmentAddResult.Result = _shipment;
                 _context.Shipments.Add(_shipment);

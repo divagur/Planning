@@ -69,7 +69,7 @@ namespace Planning
             btnShipmentDlg.Tag = edShipmentTemplate;
             btnRepPeriodTemplate.Tag = edRepPeriodTemplate;
             edTaskUpdateInterval.Value = _settings.TaskUpdateInterval==0?10: _settings.TaskUpdateInterval;
-            edFontSize.Value = _settings.TaskViewFonSize;
+            edFontSize.Value = _settings.TaskViewFonSize<=0?5: _settings.TaskViewFonSize;
             LoadCurrentTask();
 
             tblTemplateConstant.AutoGenerateColumns = false;

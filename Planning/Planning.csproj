@@ -100,6 +100,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdvancedCursor.cs" />
+    <Compile Include="ChooseOrder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChooseOrder.Designer.cs">
+      <DependentUpon>ChooseOrder.cs</DependentUpon>
+    </Compile>
     <Compile Include="CommonFuctions.cs" />
     <Compile Include="DataLayer\LVOrder.cs" />
     <Compile Include="DataLayer\LVOrder_Manager.cs" />
@@ -215,6 +221,7 @@
     <Compile Include="LvAttrEdit.Designer.cs">
       <DependentUpon>LvAttrEdit.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataLayer\LVOrderIdComparer.cs" />
     <Compile Include="Movement.cs">
       <DependentUpon>DbPlaning.tt</DependentUpon>
     </Compile>
@@ -303,11 +310,11 @@
     <Compile Include="ShipmentOrderPart.cs">
       <DependentUpon>DbPlaning.tt</DependentUpon>
     </Compile>
-    <Compile Include="ShipmentOrderPartsEdit.cs">
+    <Compile Include="ShipmentOrderPartEdit.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ShipmentOrderPartsEdit.Designer.cs">
-      <DependentUpon>ShipmentOrderPartsEdit.cs</DependentUpon>
+    <Compile Include="ShipmentOrderPartEdit.Designer.cs">
+      <DependentUpon>ShipmentOrderPartEdit.cs</DependentUpon>
     </Compile>
     <Compile Include="ShipmentOrdersLog.cs">
       <DependentUpon>DbPlaning.tt</DependentUpon>
@@ -425,6 +432,9 @@
     <Compile Include="Users.Designer.cs">
       <DependentUpon>Users.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ChooseOrder.resx">
+      <DependentUpon>ChooseOrder.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DepositorEdit.resx">
       <DependentUpon>DepositorEdit.cs</DependentUpon>
     </EmbeddedResource>
@@ -488,8 +498,8 @@
     <EmbeddedResource Include="ShipmentOrderEdit.resx">
       <DependentUpon>ShipmentOrderEdit.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ShipmentOrderPartsEdit.resx">
-      <DependentUpon>ShipmentOrderPartsEdit.cs</DependentUpon>
+    <EmbeddedResource Include="ShipmentOrderPartEdit.resx">
+      <DependentUpon>ShipmentOrderPartEdit.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TimeSlots.resx">
       <DependentUpon>TimeSlots.cs</DependentUpon>

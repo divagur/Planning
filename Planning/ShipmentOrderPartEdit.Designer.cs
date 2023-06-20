@@ -1,7 +1,7 @@
 ﻿
 namespace Planning
 {
-    partial class ShipmentOrderPartsEdit
+    partial class ShipmentOrderPartEdit
     {
         /// <summary>
         /// Required designer variable.
@@ -38,7 +38,7 @@ namespace Planning
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.edOrderPartId = new System.Windows.Forms.TextBox();
             this.btnGetOrderParts = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
@@ -118,12 +118,12 @@ namespace Planning
             this.label2.TabIndex = 2;
             this.label2.Text = "Код расходной партии";
             // 
-            // textBox1
+            // edOrderPartId
             // 
-            this.textBox1.Location = new System.Drawing.Point(136, 49);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(159, 20);
-            this.textBox1.TabIndex = 13;
+            this.edOrderPartId.Location = new System.Drawing.Point(136, 49);
+            this.edOrderPartId.Name = "edOrderPartId";
+            this.edOrderPartId.Size = new System.Drawing.Size(159, 20);
+            this.edOrderPartId.TabIndex = 13;
             // 
             // btnGetOrderParts
             // 
@@ -133,6 +133,7 @@ namespace Planning
             this.btnGetOrderParts.TabIndex = 14;
             this.btnGetOrderParts.Text = "...";
             this.btnGetOrderParts.UseVisualStyleBackColor = true;
+            this.btnGetOrderParts.Click += new System.EventHandler(this.btnGetOrderParts_Click);
             // 
             // btnSave
             // 
@@ -142,6 +143,7 @@ namespace Planning
             this.btnSave.TabIndex = 15;
             this.btnSave.Text = "Сохранить";
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // btnClose
             // 
@@ -151,8 +153,9 @@ namespace Planning
             this.btnClose.TabIndex = 16;
             this.btnClose.Text = "Закрыть";
             this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
-            // ShipmentOrderPartsEdit
+            // ShipmentOrderPartEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -160,7 +163,7 @@ namespace Planning
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnGetOrderParts);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.edOrderPartId);
             this.Controls.Add(this.txtPalletAmount);
             this.Controls.Add(this.txtManualUnload);
             this.Controls.Add(this.txtManualLoad);
@@ -171,9 +174,12 @@ namespace Planning
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Name = "ShipmentOrderPartsEdit";
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Name = "ShipmentOrderPartEdit";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Редактирование расходной партии";
+            this.Load += new System.EventHandler(this.ShipmentOrderPartsEdit_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -190,7 +196,7 @@ namespace Planning
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox edOrderPartId;
         private System.Windows.Forms.Button btnGetOrderParts;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnClose;

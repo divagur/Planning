@@ -37,6 +37,7 @@
             this.txtOrderComment = new System.Windows.Forms.TextBox();
             this.btnClose = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
+            this.btnGetOrder = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -108,11 +109,22 @@
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
+            // btnGetOrder
+            // 
+            this.btnGetOrder.Location = new System.Drawing.Point(333, 6);
+            this.btnGetOrder.Name = "btnGetOrder";
+            this.btnGetOrder.Size = new System.Drawing.Size(24, 20);
+            this.btnGetOrder.TabIndex = 15;
+            this.btnGetOrder.Text = "...";
+            this.btnGetOrder.UseVisualStyleBackColor = true;
+            this.btnGetOrder.Click += new System.EventHandler(this.btnGetOrder_Click);
+            // 
             // ShipmentOrderEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(454, 181);
+            this.Controls.Add(this.btnGetOrder);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.txtOrderComment);
@@ -123,9 +135,12 @@
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "ShipmentOrderEdit";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Редактирование заказа";
             this.Load += new System.EventHandler(this.ShipmentOrderEdit_Load);
             this.ResumeLayout(false);
@@ -143,5 +158,6 @@
         private System.Windows.Forms.TextBox txtOrderComment;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.Button btnGetOrder;
     }
 }

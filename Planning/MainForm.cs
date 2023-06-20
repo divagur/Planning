@@ -507,6 +507,7 @@ namespace Planning
 
 
             List<string> hideCols = DataService.settingsHandle.GetParamStringValue("View\\HideColumns").Split(',').ToList();
+           
             shipmentColumns = DataService.settingsHandle.GetParamList<ShipmentColumn>("View\\ShipmentColumns");
             if (shipmentColumns.Count == 0)
             {
@@ -544,14 +545,17 @@ namespace Planning
 
         private void SetShipmentColParam()
         {
+
             foreach (DataGridViewColumn col in tblShipments.Columns)
             {
                 var shpCol = shipmentColumns.FirstOrDefault(c => c.Id == col.Name);
+
                 if (shpCol != null)
                 {
                     col.DisplayIndex = shpCol.Order;
                 }
             }
+            
         }
 
         private void miDictDelayReasons_Click(object sender, EventArgs e)
@@ -1595,6 +1599,7 @@ namespace Planning
             var col = shipmentColumns.First(c => c.Id == e.Column.Name);
             col.Order = e.Column.DisplayIndex;
             DataService.settingsHandle.SetParamList<ShipmentColumn>("View\\ShipmentColumns", "ShipmentColumns", shipmentColumns);
+            
         }
     }
 }

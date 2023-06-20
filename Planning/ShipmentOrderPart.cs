@@ -22,6 +22,8 @@ namespace Planning
         public Nullable<int> ManualLoad { get; set; }
         public Nullable<int> ManualUnload { get; set; }
         public Nullable<int> PalletAmount { get; set; }
+        public Nullable<int> ShippingPlacesNumber { get; set; }
+        public Nullable<decimal> OrderPartWeight { get; set; }
     
         public virtual ShipmentOrder ShipmentOrder { get; set; }
     }
