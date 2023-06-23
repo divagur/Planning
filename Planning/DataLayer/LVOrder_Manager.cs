@@ -11,6 +11,8 @@ namespace Planning
 {
     class LVOrder_Manager
     {
+        
+
         public List<LVOrder> GetList(int? DepositorLVId, int Type, int IsAll = 1, int? OrderId = null)
         {
             List<LVOrder> listLVOrder = new List<LVOrder>();

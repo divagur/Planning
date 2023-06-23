@@ -46,7 +46,7 @@
   <ItemGroup>
     <Reference Include="Accessibility" />
     <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dapper.2.0.123\lib\net461\Dapper.dll</HintPath>
+      <HintPath>..\packages\Dapper.2.0.143\lib\net461\Dapper.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
@@ -70,6 +70,10 @@
     <Reference Include="PagedControl, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\PagedControl.2.2.0\lib\net35\PagedControl.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="Planning.DataLayer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Planning.DataLayer.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -164,6 +168,12 @@
       <DependentUpon>DictForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ExcelPrint.cs" />
+    <Compile Include="frmMainEx.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMainEx.Designer.cs">
+      <DependentUpon>frmMainEx.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormLogin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -461,6 +471,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmGetDateTime.resx">
       <DependentUpon>frmGetDateTime.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMainEx.resx">
+      <DependentUpon>frmMainEx.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmProgressBar.resx">
       <DependentUpon>frmProgressBar.cs</DependentUpon>
