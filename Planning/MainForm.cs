@@ -1596,7 +1596,12 @@ namespace Planning
         {
             if (IsFormLoad)
                 return;
-            var col = shipmentColumns.First(c => c.Id == e.Column.Name);
+            var col = shipmentColumns.Find(c => c.Id == e.Column.Name);
+            if (col == null)
+            {
+                col = new ShipmentColumn() { Id = e.Column.Name, Visible = true};
+                shipmentColumns.Add(col);
+            }
             col.Order = e.Column.DisplayIndex;
             DataService.settingsHandle.SetParamList<ShipmentColumn>("View\\ShipmentColumns", "ShipmentColumns", shipmentColumns);
             

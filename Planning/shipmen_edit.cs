@@ -25,6 +25,8 @@ namespace Planning
         bool getCalendarTime;
         bool IsShipment;
         bool _isNew;
+        List<ShipmentOrderPart> shipmentOrderParts = new List<ShipmentOrderPart>();
+
         protected override void WndProc(ref Message m)
         {
             if (m.Msg == WM_LBUTTONDOWN || (m.Msg == WM_PARENTNOTIFY &&
@@ -401,6 +403,7 @@ namespace Planning
 
                 _context.ShipmentOrders.Add(shipmentOrder);
                 tblShipmentOrders.DataSource = _shipment.ShipmentOrders.ToList();
+                BindOrderPart(shipmentOrder.Id);
             }
             //row["shipment_id"] =_shipment.id;
         }
@@ -629,18 +632,26 @@ namespace Planning
                 {
                     _context.Entry(shipmentOrder).Reload();
 
-                    if (shipmentOrder.IsBinding == null || shipmentOrder.IsBinding == false)
+                    foreach (var part in shipmentOrder.ShipmentOrderParts)
                     {
-                        MessageBox.Show($"Заказ [{shipmentOrder.OrderId} не найдет в Lvision]");
-                        isAllBindings = false;
+                        _context.Entry(part).Reload();
+
+                        if (part.IsBinding == null || part.IsBinding == false)
+                        {
+                            MessageBox.Show($"Расходная партия [{part.OsLvId}] заказа [{shipmentOrder.OrderId}] не найдена в Lvision]");
+                            isAllBindings = false;
+                        }
                     }
+
                 }
                 
-                _context.Entry(_shipment).Reload();
+               
                
                 tblShipmentOrders.DataSource = _shipment.ShipmentOrders.ToList();
+                if (tblShipmentOrders.CurrentCell != null)
+                    BindOrderPart((int)tblShipmentOrders.Rows[tblShipmentOrders.CurrentCell.RowIndex].Cells["colId"].Value);
                 if (isAllBindings)
-                    MessageBox.Show("Все заказы привязаны к отгрузке");
+                    MessageBox.Show("Все расходные партии привязаны к отгрузке");
             }
         }
 
@@ -654,6 +665,16 @@ namespace Planning
 
         }
 
+        private void ReloadShipment()
+        {
+            _context.Entry(_shipment).Reload();
+            foreach (var order in _shipment.ShipmentOrders)
+            {
+                _context.Entry(order).Reload();
+
+
+            }
+        }
 
         private void PopulateMovementItem()
         {
@@ -697,18 +718,34 @@ namespace Planning
 
         private void BindOrderPart(int OrderId)
         {
+            /*
             ShipmentOrder shipmentOrder = _context.ShipmentOrders.Find(OrderId);
             if (shipmentOrder == null)
                 return;
+            */
+            if (_shipment.ShipmentOrders == null || _shipment.ShipmentOrders.Count == 0)
+                return;
+
+            shipmentOrderParts.Clear();
+
+            foreach (var item in _shipment.ShipmentOrders)
+            {
+                shipmentOrderParts.AddRange(item.ShipmentOrderParts);
+            }
             tblOrderParts.AutoGenerateColumns = false;
-            tblOrderParts.DataSource = shipmentOrder.ShipmentOrderParts.ToList();
+            tblOrderParts.DataSource = null;
+            tblOrderParts.DataSource = shipmentOrderParts;
+            tblOrderParts.Refresh();
         }
 
         private void tblShipmentOrders_RowEnter(object sender, DataGridViewCellEventArgs e)
         {
             if (tblShipmentOrders.CurrentCell == null)
                 return;
-            BindOrderPart((int)tblShipmentOrders.Rows[tblShipmentOrders.CurrentCell.RowIndex].Cells["colId"].Value);
+
+            SelectOrderPart((int)tblShipmentOrders.Rows[e.RowIndex].Cells["colId"].Value);
+
+            //BindOrderPart((int)tblShipmentOrders.Rows[e.RowIndex].Cells["colId"].Value);
         }
 
         private void tbtnAddOrderPart_Click(object sender, EventArgs e)
@@ -750,6 +787,33 @@ namespace Planning
             tblOrderParts.Refresh();
         }
 
+        private void SelectOrder(int? OrderId)
+        {
+
+            tblShipmentOrders.ClearSelection();
+            for (int i = 0; i < tblShipmentOrders.RowCount; i++)
+            {
+                if ((int?)(tblShipmentOrders.Rows[i].Cells["colId"].Value)==OrderId)
+                {
+                    tblShipmentOrders.Rows[i].Selected = true;
+                    return;
+                }
+            }
+
+        }
+
+        private void SelectOrderPart(int? OrderId)
+        {
+            tblOrderParts.ClearSelection();
+            for (int i = 0; i < tblOrderParts.RowCount; i++)
+            {
+                if ((int?)(tblOrderParts.Rows[i].Cells["colPartsOrderCode"].Value) == OrderId)
+                {
+                    tblOrderParts.Rows[i].Selected = true;
+                    return;
+                }
+            }
+        }
         private void tbtnDelOrderPart_Click(object sender, EventArgs e)
         {
             if (tblShipmentOrders.CurrentCell == null)
@@ -763,8 +827,17 @@ namespace Planning
             {
                 ShipmentOrderPart shipmentOrderPart = shipmentOrder.ShipmentOrderParts.ToList().Find(o=>o.Id == int.Parse(tblOrderParts.Rows[tblOrderParts.CurrentCell.RowIndex].Cells["colPartsId"].Value.ToString()));
                 shipmentOrder.ShipmentOrderParts.Remove(shipmentOrderPart);
-                tblOrderParts.DataSource = shipmentOrder.ShipmentOrderParts.ToList();
+                BindOrderPart(0);
+                //tblOrderParts.DataSource = shipmentOrder.ShipmentOrderParts.ToList();
             }
+        }
+
+        private void tblOrderParts_RowEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            if (tblShipmentOrders.CurrentCell == null)
+                return;
+
+            SelectOrder((int)tblOrderParts.Rows[e.RowIndex].Cells["colPartsOrderCode"].Value);
         }
     }
 

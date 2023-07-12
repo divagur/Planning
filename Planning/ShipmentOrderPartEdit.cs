@@ -72,7 +72,10 @@ namespace Planning
             ChooseOrder frmChooseOrder = new ChooseOrder(selectResult, _shipmentOrder.Shipment,true, _shipmentOrder.LVOrderId);
             if (frmChooseOrder.ShowDialog() == DialogResult.OK && selectResult.Result != null)
             {
-                edOrderPartId.Text = ((LVOrder)selectResult.Result).OstCode;
+                var order = (LVOrder)selectResult.Result;
+                edOrderPartId.Text = order.OstCode;
+                _shipmentOrderPart.OsLvId = order.OstID;
+                _shipmentOrderPart.IsBinding = true;
             }
         }
     }

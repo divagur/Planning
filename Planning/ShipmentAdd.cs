@@ -67,6 +67,7 @@ namespace Planning
                 command.Parameters.Add(new SqlParameter { ParameterName = "@Split", Value = 0 });
                 command.Parameters.Add(new SqlParameter {ParameterName = "@In",Value = Type });
                 command.Parameters.Add(new SqlParameter { ParameterName = "@DepID", Value = DepositorLVId });
+
                 tblOrders.Rows.Clear();
                 var reader = command.ExecuteReader();
                 if (reader.HasRows)
@@ -144,7 +145,7 @@ namespace Planning
                         shipmentOrderPart.OsLvCode = tblShipmentItem.Rows[i].Cells["colItemOstCode"].Value.ToString();
                         shipmentOrderPart.OsLvId = (tblShipmentItem.Rows[i].Cells["colItemOstId"].Value as int?);
                         shipmentOrderPart.IsBinding = true;
-                        //shipmentOrder.ShipmentOrderParts.Add(shipmentOrderPart);
+                        shipmentOrder.ShipmentOrderParts.Add(shipmentOrderPart);
                     }
                    
                 }

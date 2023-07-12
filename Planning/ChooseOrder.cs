@@ -31,15 +31,36 @@ namespace Planning
             PopulateOrders();
         }
 
+        private List<LVOrder> GetOrderList()
+        {
+            List<LVOrder> result = new List<LVOrder>();
+            int? DepositorLVId = _shipment.DepositorId;
+            listOrders = Order_Manager.GetList(DepositorLVId, 0, 0, _LVOrderId);
+            
+            if (_isOrderParts)
+            {
+                ShipmentOrder shipmentOrder = _shipment.ShipmentOrders.First(o => o.LVOrderId == _LVOrderId);
+                var listExclusionID = shipmentOrder.ShipmentOrderParts.Select(p => (int?)p.OsLvId).ToList();
+                result = listOrders.Where(o => !listExclusionID.Contains(o.OstID)).ToList();
+            }
+            else
+            {
+                var listExclusionID = _shipment.ShipmentOrders.Select(o => o.LVOrderId).ToList();
+                result = listOrders.Where(o => !listExclusionID.Contains(o.LVID)).ToList();
+            }
+
+            return result;
+        }
+        
         private void PopulateOrders(/*int DepositorLVId, int Type*/)
         {
             if (_shipment == null)
                 return;
 
-            int? DepositorLVId = _shipment.DepositorId;
+            
             int? Type = _shipment.ShIn == null ? null : (int?)Convert.ToInt32(_shipment.ShIn);
-
-            listOrders = Order_Manager.GetList(DepositorLVId, 0, 0, _LVOrderId);
+            listOrders = GetOrderList();
+            
             if (!_isOrderParts)
             {
                 LVOrderIdComparer lVOrderIdComparer = new LVOrderIdComparer();
