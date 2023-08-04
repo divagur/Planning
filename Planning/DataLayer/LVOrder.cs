@@ -17,9 +17,9 @@ namespace Planning
 		public int? DepLVID { get; set; }
 		public int? OstID { get; set; }
 		public string OstCode { get; set; }
+		public int LVShipmentID { get; set; }
 
 
-		
 
 	}
 }

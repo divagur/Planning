@@ -1337,7 +1337,7 @@ namespace Planning
                                     where so.lv_order_code = '" + edSearch.Text+"'";
                 sql.IsResultSet = true;
                 sql.Execute();
-                if (sql.Reader.HasRows)
+                if (sql.HasRows())
                 {
                     sql.Reader.Read();
                     edCurrDay.Value = sql.Reader.GetDateTime(0).Date;

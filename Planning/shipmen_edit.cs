@@ -260,6 +260,68 @@ namespace Planning
             return dateControl.Text == "" ? DateTime.Now : Convert.ToDateTime(dateControl.Text);
         }
 
+        private List<string> GetUnattachedOrderShipment(int? LVOrdId)
+        {
+            List<string> result = new List<string>();
+
+            SqlHandle sql = new SqlHandle(DataService.connectionString);
+            sql.SqlStatement = "SP_PL_GetUnattachedOrderShipment";
+            sql.Connect();
+            sql.TypeCommand = CommandType.StoredProcedure;
+            sql.IsResultSet = true;
+            sql.AddCommandParametr(new SqlParameter { ParameterName = "@DepID", Value = _shipment.DepositorId });
+            sql.AddCommandParametr(new SqlParameter { ParameterName = "@OrdID", Value = LVOrdId });
+
+            try
+            {
+                sql.Execute();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show(sql.LastError, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+
+            if (sql.HasRows())
+            {
+
+                while (sql.Reader.Read())
+                {
+                    string lvOstCode = sql.Reader.GetString(2);
+                    result.Add(lvOstCode);
+
+                }
+            }
+
+            return result;
+        }
+
+        private void CheckUnaccountedOrderParts()
+        {
+            if (_shipment.EndTime == null)
+                return;
+            StringBuilder sb = new StringBuilder();
+            foreach (var order in _shipment.ShipmentOrders)
+            {
+                
+                var listOrderPartsCode = GetUnattachedOrderShipment(order.LVOrderId);
+                if (listOrderPartsCode.Count>0)
+                {
+                    
+                    foreach (var item in listOrderPartsCode)
+                    {
+                        sb.AppendLine(String.Format("для заказа с кодом [{0}] есть неучтенная отгрузка с кодом [{1}] ", order.lv_order_code.ToString(), item));
+                    }
+                }
+            }
+            if (sb.Length > 0)
+            {
+                MessageBox.Show(sb.ToString());
+            }
+            
+            
+        }
+
         bool CopyToShipment()
         {
             if (IsShipment)
@@ -295,6 +357,7 @@ namespace Planning
                 _shipment.TransportTypeId = DataService.GetDictIdByName("Типы_транспорта", cmbTransportType.Text);
                 _shipment.SpCondition = cbSpecCondition.Checked;
                 // _shipment.TimeSlotId =Convert.ToInt32(IsNull(cmbTimeSlot.Text,null));
+                CheckUnaccountedOrderParts();
                 return true;
             }
             else
@@ -778,6 +841,13 @@ namespace Planning
             if (tblOrderParts.CurrentCell == null)
                 return;
 
+            if (tblOrderParts.SelectedRows.Count > 1)
+            {
+                MessageBox.Show("Выберите строку для редактирования", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            
+            //
             ShipmentOrderPart shipmentOrderPart = shipmentOrder.ShipmentOrderParts.ToList().Find(o => o.Id == int.Parse(tblOrderParts.Rows[tblOrderParts.CurrentCell.RowIndex].Cells["colPartsId"].Value.ToString()));
 
             var frmShipmentOrderPart = new ShipmentOrderPartEdit(shipmentOrder, shipmentOrderPart);
@@ -810,7 +880,7 @@ namespace Planning
                 if ((int?)(tblOrderParts.Rows[i].Cells["colPartsOrderCode"].Value) == OrderId)
                 {
                     tblOrderParts.Rows[i].Selected = true;
-                    return;
+                    //return;
                 }
             }
         }
@@ -822,6 +892,12 @@ namespace Planning
 
             if (tblOrderParts.CurrentCell == null)
                 return;
+
+            if (tblOrderParts.SelectedRows.Count > 1)
+            {
+                MessageBox.Show("Выберите строку для удаления", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
             if (MessageBox.Show("Удалить расходную партию?", "Подверждение", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
