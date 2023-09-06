@@ -96,11 +96,11 @@ namespace Planning
                 sql.SqlStatement = $@"select min(dml_date) min_dml_date, max(dml_date) max_dml_date
                 from {table_name}
                 where {field_name} = " + _shipmentId;
-                bool Success = sql.Execute() && sql.Reader!=null && sql.Reader.Read() && sql.Reader.HasRows;
+                bool Success = sql.Execute() && sql.HasRows() && sql.Read();
                 if (Success)
                 {                   
-                    dtBegin.Value = sql.Reader.IsDBNull(0) ? DateTime.Now: sql.Reader.GetDateTime(0);  
-                    dtEnd.Value = sql.Reader.IsDBNull(1) ? DateTime.Now:sql.Reader.GetDateTime(1);
+                    dtBegin.Value = sql.IsNull(0) ? DateTime.Now: sql.GetDateTimeValue(0, true);  
+                    dtEnd.Value = sql.IsNull(1) ? DateTime.Now:sql.GetDateTimeValue(1, true);
                 }
                 sql.Disconnect();
 
@@ -130,13 +130,13 @@ namespace Planning
                 MessageBox.Show(sql.LastError, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-
+            /*
             DataSet ds = new DataSet();
             ds.Tables.Add();
             ds.Tables[0].Load(sql.Reader);
-
+            */
             tblShipmentLog.AutoGenerateColumns = false;
-            tblShipmentLog.DataSource = ds.Tables[0];
+            tblShipmentLog.DataSource = sql.DataSet.Tables[0];
             sql.Disconnect();
             CalcRowColor();
 

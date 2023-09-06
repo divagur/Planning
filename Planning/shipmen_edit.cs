@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using System.Diagnostics;
+using System.Threading;
 
 namespace Planning
 {
@@ -25,7 +27,11 @@ namespace Planning
         bool getCalendarTime;
         bool IsShipment;
         bool _isNew;
+        string _title;
+        StringBuilder sbLog = new StringBuilder();
         List<ShipmentOrderPart> shipmentOrderParts = new List<ShipmentOrderPart>();
+
+
 
         protected override void WndProc(ref Message m)
         {
@@ -51,6 +57,7 @@ namespace Planning
         {
             edSDate.Text = "";
             cmbTransportCompany.Text = "";
+            cmbSupplier.Text = "";
             edShipmentComment.Text = "";
             cmbDelayReasons.Text = "";
             edDelayComment.Text = "";
@@ -121,17 +128,46 @@ namespace Planning
             }*/
         }
 
+        public void AddLogItem(string Text)
+        {
+            sbLog.AppendLine(Text);
+        }
+
+        public void ClearLog()
+        {
+            sbLog.Clear();
+        }
+
+        public void SetTilte(string AddTilte)
+        {
+            Text = AddTilte != ""?_title + " ["+AddTilte+"]":_title;
+        }
+
+        private void PopulateComboBoxField(ComboBox comboBox, List<string> items)
+        {
+            comboBox.Items.Clear();
+            comboBox.Items.AddRange(items.ToArray());
+        }
 
         public void Populate()
         {
+
+
+            PopulateComboBoxField(cmbDelayReasons, _context.DelayReasons.Select(l=>l.Name).ToList());
+            PopulateComboBoxField(cmbGate, _context.Gateways.Select(l => l.Name.ToString()).ToList());
+            PopulateComboBoxField(cmbTimeSlot, _context.TimeSlots.OrderBy(t => t.SlotTime).Select(l => l.SlotTime.ToString()).ToList());
+            PopulateComboBoxField(cmbTransportCompany, _context.TransportCompanies.Where(t => t.IsActive == true).Select(l => l.Name).ToList());
+            PopulateComboBoxField(cmbTransportType, _context.TransportTypes.Select(l => l.Name).ToList());
+            PopulateComboBoxField(cmbSupplier, _context.Suppliers.Where(t => t.IsActive == true).Select(l => l.Name).ToList());
+            /*
             cmbDelayReasons.Items.Clear();
             foreach (var dr in _context.DelayReasons.ToList())
                 cmbDelayReasons.Items.Add(dr.Name);
-
+            
             cmbGate.Items.Clear();
             foreach (var g in _context.Gateways.ToList()) 
                 cmbGate.Items.Add(g.Name);
-
+            
             cmbTimeSlot.Items.Clear();
             foreach (var ts in _context.TimeSlots.OrderBy(t => t.SlotTime).ToList())
                 cmbTimeSlot.Items.Add(ts.SlotTime.ToString());
@@ -145,8 +181,13 @@ namespace Planning
             cmbTransportType.Items.Clear();
             foreach (var tt in _context.TransportTypes.ToList())
                 cmbTransportType.Items.Add(tt.Name);
+            */
+            
+           
             if (IsShipment)
             {
+
+
                 edSDate.Text = _shipment.SDate == null ? DateTime.Now.ToShortDateString() : _shipment.SDate.Value.ToShortDateString();
                 edShipmentComment.Text = _shipment.SComment;
                 cmbDelayReasons.Text = DataService.GetDictNameById("Причины_задержки", _shipment.DelayReasonsId);
@@ -171,16 +212,21 @@ namespace Planning
                 //DataService.GetDictValueById("ТаймСлоты","slot_time", _shipment.TimeSlotId);
                 //cbIsCourier.Checked = (bool)_shipment.IsCourier;
 
-                tblShipmentOrders.AutoGenerateColumns = false;
-                tblShipmentOrders.DataSource = _shipment.ShipmentOrders.ToList();
-                if (_shipment.ShipmentOrders.Count > 0)
-                {
-                    BindOrderPart(_shipment.ShipmentOrders.ToList()[0].Id);
-                }
-
-
                 cmbTransportCompany.Text = DataService.GetDictNameById("ТК", _shipment.TransportCompanyId);
                 cmbTransportType.Text = DataService.GetDictNameById("Типы_транспорта", _shipment.TransportTypeId);
+                cmbSupplier.Text = DataService.GetDictNameById("Поставщики", _shipment.SupplierId);
+
+                tblShipmentOrders.AutoGenerateColumns = false;
+                tblShipmentOrders.DataSource = _shipment.ShipmentOrders.ToList();
+
+
+                if (_shipment.ShipmentOrders.Count > 0)
+                {
+
+
+                    BindOrderPart(_shipment.ShipmentOrders.ToList()[0].Id);
+
+               }
 
                 DateTime specTime;
                 if (DateTime.TryParse(_shipment.SpecialTime.ToString(), out specTime))
@@ -285,9 +331,9 @@ namespace Planning
             if (sql.HasRows())
             {
 
-                while (sql.Reader.Read())
+                while (sql.Read())
                 {
-                    string lvOstCode = sql.Reader.GetString(2);
+                    string lvOstCode = sql.GetStringValue(2);
                     result.Add(lvOstCode);
 
                 }
@@ -329,8 +375,11 @@ namespace Planning
                 bool success = IsValidDate(edSDate) && IsValidDate(edSubmissionTime) && IsValidDate(edStartTime) && IsValidDate(edEndDate) && IsValidDate(edLeaveTime);
                 if (!success)
                     return false;
+                //
+                /*
                 if (_shipment.ShIn == false && !IsValidOrderParts())
                     return false;
+                */
                 //cbTransportCompany.Text = "";
                 _shipment.SDate = GetNullableDate(edSDate);
                 _shipment.SComment = edShipmentComment.Text;
@@ -355,6 +404,7 @@ namespace Planning
                 _shipment.GateId = DataService.GetDictIdByName("Ворота", cmbGate.Text);
                 _shipment.TransportCompanyId = DataService.GetDictIdByName("ТК", cmbTransportCompany.Text);
                 _shipment.TransportTypeId = DataService.GetDictIdByName("Типы_транспорта", cmbTransportType.Text);
+                _shipment.SupplierId = DataService.GetDictIdByName("Поставщики", cmbSupplier.Text);
                 _shipment.SpCondition = cbSpecCondition.Checked;
                 // _shipment.TimeSlotId =Convert.ToInt32(IsNull(cmbTimeSlot.Text,null));
                 CheckUnaccountedOrderParts();
@@ -403,12 +453,26 @@ namespace Planning
             _shipment = shipment;
             IsShipment = true;
             gbMovementItem.Visible = false;
+            tbObject.TabPages.Remove(tabOrders);
             _isNew = isNew;
-            this.Text = _shipment.ShIn == false? "Редактирование отгрузки": "Редактирование поставки";
-            gbOrderParts.Enabled = _shipment.ShIn == false;
+             _title = _shipment.ShIn == false? "Редактирование отгрузки": "Редактирование поставки";
+            if (!_isNew)
+                _title = _title +" ["+ _shipment.Id.ToString()+"]";
+            SetTilte(""); 
+            TabOrderView();
             AddHistory(shipment.Id);
+
         }
 
+        public void TabOrderView()
+        {
+            gbOrderParts.Enabled = _shipment.ShIn == false;
+            gbOrderParts.Visible = _shipment.ShIn == false;
+            tblShipmentOrders.Columns["colManualLoad"].Visible = _shipment.ShIn == true;
+            tblShipmentOrders.Columns["colManualUnload"].Visible = _shipment.ShIn == true;
+            tblShipmentOrders.Columns["colPalletCount"].Visible = _shipment.ShIn == true;
+            tblShipmentOrders.Columns["colBinding"].Visible = _shipment.ShIn == true;
+        }
 
         public shipmen_edit(Movement movement, bool isNew = false)
         {
@@ -419,14 +483,19 @@ namespace Planning
             gbOrders.Visible = false;
             btnAddToLV.Visible = false;
             btnBindLV.Visible = false;
+            pnShipment.Visible = false;
             _isNew = isNew;
-            this.Text = "Редактирование перемещения";
+            this.Text = "Редактирование перемещения ";
+            if (!_isNew)
+                Text = Text + " [" + _movement.Id.ToString() + "]";
             AddHistory(movement.Id);
             tbObject.TabPages.Remove(tabOrders);
         }
 
         public void AddHistory(int ItemId)
         {
+
+
             frmShipmentHistory frmShipmentLog = new frmShipmentHistory(ItemId, IsShipment);
             frmShipmentLog.Populate();
             frmShipmentLog.TopLevel = false;
@@ -435,7 +504,7 @@ namespace Planning
 
             frmShipmentLog.Dock = DockStyle.Fill;
 
-            tbObject.TabPages[2].Controls.Add(frmShipmentLog);
+            tbObject.TabPages["tabHistory"].Controls.Add(frmShipmentLog);
 
         }
 
@@ -711,10 +780,10 @@ namespace Planning
                
                
                 tblShipmentOrders.DataSource = _shipment.ShipmentOrders.ToList();
-                if (tblShipmentOrders.CurrentCell != null)
-                    BindOrderPart((int)tblShipmentOrders.Rows[tblShipmentOrders.CurrentCell.RowIndex].Cells["colId"].Value);
+                if (tblShipmentOrders.SelectedCells != null)
+                    BindOrderPart((int)tblShipmentOrders.Rows[tblShipmentOrders.SelectedCells[0].RowIndex].Cells["colId"].Value);
                 if (isAllBindings)
-                    MessageBox.Show("Все расходные партии привязаны к отгрузке");
+                    MessageBox.Show(IsShpIn()? "Все заказы привязаны к отгрузке":"Все расходные партии привязаны к отгрузке");
             }
         }
 
@@ -758,10 +827,12 @@ namespace Planning
             }
             else
             {
+                /*
                 DataSet dataSet = new DataSet();
                 dataSet.Tables.Add();
                 dataSet.Tables[0].Load((IDataReader)sqlHandle1.Reader);
-                this.tblMovementItem.DataSource = (object)dataSet.Tables[0];
+                */
+                this.tblMovementItem.DataSource = sqlHandle1.DataSet.Tables[0];
             }
         }
 
@@ -836,7 +907,7 @@ namespace Planning
         {
             if (tblShipmentOrders.CurrentCell == null)
                 return;
-            ShipmentOrder shipmentOrder = _context.ShipmentOrders.Find(tblShipmentOrders.Rows[tblShipmentOrders.CurrentCell.RowIndex].Cells["colId"].Value);
+            ShipmentOrder shipmentOrder = _context.ShipmentOrders.Find(tblShipmentOrders.Rows[tblShipmentOrders.SelectedRows[0].Index].Cells["colId"].Value);
 
             if (tblOrderParts.CurrentCell == null)
                 return;
@@ -846,9 +917,9 @@ namespace Planning
                 MessageBox.Show("Выберите строку для редактирования", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            
+
             //
-            ShipmentOrderPart shipmentOrderPart = shipmentOrder.ShipmentOrderParts.ToList().Find(o => o.Id == int.Parse(tblOrderParts.Rows[tblOrderParts.CurrentCell.RowIndex].Cells["colPartsId"].Value.ToString()));
+            ShipmentOrderPart shipmentOrderPart = shipmentOrderParts.Find(o => o.Id == int.Parse(tblOrderParts.Rows[tblOrderParts.CurrentCell.RowIndex].Cells["colPartsId"].Value.ToString())); //shipmentOrder.ShipmentOrderParts.ToList().Find(o => o.Id == int.Parse(tblOrderParts.Rows[tblOrderParts.CurrentCell.RowIndex].Cells["colPartsId"].Value.ToString()));
 
             var frmShipmentOrderPart = new ShipmentOrderPartEdit(shipmentOrder, shipmentOrderPart);
             frmShipmentOrderPart.ShowDialog();
@@ -866,6 +937,7 @@ namespace Planning
                 if ((int?)(tblShipmentOrders.Rows[i].Cells["colId"].Value)==OrderId)
                 {
                     tblShipmentOrders.Rows[i].Selected = true;
+                    tblShipmentOrders.FirstDisplayedScrollingRowIndex = i;
                     return;
                 }
             }
@@ -875,14 +947,19 @@ namespace Planning
         private void SelectOrderPart(int? OrderId)
         {
             tblOrderParts.ClearSelection();
+            int srollRowIdx = -1;
             for (int i = 0; i < tblOrderParts.RowCount; i++)
             {
                 if ((int?)(tblOrderParts.Rows[i].Cells["colPartsOrderCode"].Value) == OrderId)
                 {
                     tblOrderParts.Rows[i].Selected = true;
+                    if (srollRowIdx < 0)
+                        srollRowIdx = i;
                     //return;
                 }
             }
+            if (srollRowIdx >= 0)
+                tblOrderParts.FirstDisplayedScrollingRowIndex = srollRowIdx;
         }
         private void tbtnDelOrderPart_Click(object sender, EventArgs e)
         {
@@ -914,6 +991,16 @@ namespace Planning
                 return;
 
             SelectOrder((int)tblOrderParts.Rows[e.RowIndex].Cells["colPartsOrderCode"].Value);
+        }
+
+        private void panel2_Click(object sender, EventArgs e)
+        {
+            //MessageBox.Show(sbLog.ToString());
+            frmLog frmLog = new frmLog();
+            frmLog.SetText(sbLog.ToString());
+            frmLog.ShowDialog();
+
+
         }
     }
 

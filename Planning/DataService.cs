@@ -32,6 +32,8 @@ namespace Planning
         public int Width = 100;
         public bool IsVisible;
         public List<string> ItemValues;
+        public object DefaultValue;
+
     }
     public class DictSimple
     {
@@ -78,8 +80,8 @@ namespace Planning
         public static string entityConnectionString = "";
         public static Dictionary<string, DictInfo> Dicts = new Dictionary<string, DictInfo>();
         public static Settings setting = new Settings();
-        
-        public static SettingsHandle settingsHandle = new SettingsHandle("Settings.xml", setting);
+
+        public static SettingsHandle settingsHandle;
 
         //public static SqlConnectionStringBuilder connectionString = new SqlConnectionStringBuilder();
 
@@ -239,22 +241,15 @@ namespace Planning
             SqlHandle sql = new SqlHandle(DataService.connectionString);
             sql.SqlStatement = SQLExpr;
             sql.IsResultSet = true;
-            bool success = sql.Connect() && sql.Execute() && sql.Reader.Read();
+            bool success = sql.Connect() && sql.Execute() && sql.HasRows();
             if (success)
-                return sql.Reader.IsDBNull(0)?0:sql.Reader.GetSqlInt32(0).Value;
-            return 0;
-            /*
-            using (IDbConnection db = new SqlConnection(connectionString))
             {
-                if (db.State == ConnectionState.Closed)
-                {
-                    db.Open();
-                }
-                //
-                int? result = db.Query<int>(SQLExpr).FirstOrDefault();
-                return result;
-           
-            } */
+                int? value = sql.GetNullIntValue(sql.DataSet.Tables[0].Rows[0], 0);
+                return value == null ? 0 : (int)value;
+            }
+               
+            return 0;
+            
             
         }
 
@@ -319,6 +314,37 @@ namespace Planning
             
             
         }
+
+        public static DataSet GetShipment(DateTime DateFrom, DateTime? DateTill, string ShpId, string OrdId, int ShpType = -1, string AddCond = null)
+        {
+            SqlHandle sql = new SqlHandle(DataService.connectionString);
+            sql.SqlStatement = "SP_PL_MainQueryP";
+            sql.Connect();
+            sql.TypeCommand = CommandType.StoredProcedure;
+            sql.IsResultSet = true;
+            object shpType = null;
+            if (ShpType >= 0)
+                shpType = ShpType;
+            sql.AddCommandParametr(new SqlParameter { ParameterName = "@From", Value = DateFrom });
+            sql.AddCommandParametr(new SqlParameter { ParameterName = "@Till", Value = DateTill });
+            sql.AddCommandParametr(new SqlParameter { ParameterName = "@In", Value = shpType });
+            sql.AddCommandParametr(new SqlParameter { ParameterName = "@ShpId", Value = ShpId });
+            sql.AddCommandParametr(new SqlParameter { ParameterName = "@OrdID", Value = OrdId });
+            sql.AddCommandParametr(new SqlParameter { ParameterName = "@AddCond", Value = AddCond });
+
+            bool success = sql.Execute();
+
+            if (!success)
+            {
+                MessageBox.Show(sql.LastError, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+            sql.Disconnect();
+            return sql.DataSet;
+
+
+        }
+
         public static bool IsLoginExist(string Login)
         {
             SqlHandle sql = new SqlHandle(DataService.connectionString);
@@ -327,7 +353,7 @@ namespace Planning
             sql.IsResultSet = true;
             bool success =sql.Connect() && sql.Execute();
 
-            success = sql.Reader.HasRows && sql.Reader.Read() && (bool)(sql.Reader.GetSqlString(0) != null);
+            success = sql.HasRows() && sql.Read() && (bool)(sql.GetStringValue(0) != null);
 
             sql.Disconnect();
 
@@ -347,7 +373,8 @@ namespace Planning
             sql.IsResultSet = true;
             sql.SqlStatement = $"select  count(*) from {DB}.sys.database_principals where type = 'S' and name = '{User}'";
             success = sql.Execute();
-            success = sql.Reader.Read() && (bool)(sql.Reader.GetSqlInt32(0) > 0);
+            //success = sql.Reader.Read() && (bool)(sql.Reader.GetSqlInt32(0) > 0);
+            success = sql.HasRows() && (Int32.Parse(sql.DataSet.Tables[0].Rows[0][0].ToString())>0);
             /*
             sql.SqlStatement = $"USE {DataService.setting.BaseName}";
             sql.IsResultSet = false;

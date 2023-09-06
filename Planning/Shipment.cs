@@ -50,6 +50,7 @@ namespace Planning
         public Nullable<bool> IsAddLv { get; set; }
         public Nullable<int> TransportCompanyId { get; set; }
         public Nullable<int> TransportTypeId { get; set; }
+        public Nullable<int> SupplierId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ShipmentOrder> ShipmentOrders { get; set; }
@@ -59,5 +60,6 @@ namespace Planning
         public virtual TimeSlot TimeSlot { get; set; }
         public virtual TransportCompany TransportCompanies { get; set; }
         public virtual TransportType TransportTypes { get; set; }
+        public virtual Supplier suppliers { get; set; }
     }
 }

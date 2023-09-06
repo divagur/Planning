@@ -33,7 +33,7 @@ namespace Planning
             }
         }
 
-        private SqlDataReader GetCurrentTask(DateTime DateFrom, DateTime? DateTill)
+        private DataSet GetCurrentTask(DateTime DateFrom, DateTime? DateTill)
         {
             SqlHandle sql = new SqlHandle(DataService.connectionString);
             sql.SqlStatement = "SP_PL_CurrentTaskQuery";
@@ -52,21 +52,22 @@ namespace Planning
                 MessageBox.Show(sql.LastError, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }
-            return sql.Reader;
+            return sql.DataSet;
 
 
         }
         private void LoadTask()
         {
-            var reader = GetCurrentTask(DateTime.Now, null);
-            if (reader == null)
+            var ds = GetCurrentTask(DateTime.Now, null);
+            if (ds == null)
             {
                 return;
             }
+            /*
             DataSet ds = new DataSet();
             ds.Tables.Add();
             ds.Tables[0].Load(reader);
-
+            */
            
             tblTaks.DataSource = ds.Tables[0];
         }

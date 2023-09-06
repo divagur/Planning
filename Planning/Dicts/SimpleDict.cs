@@ -59,6 +59,13 @@ namespace Planning
         protected override void AddRow()
         {
             DataRow row = ds.Tables[0].NewRow(); // добавляем новую строку в DataTable
+            foreach (var dictCol in _dict.Columns)
+            {
+                if (dictCol.DefaultValue !=null)
+                {
+                    row[dictCol.DataField] = dictCol.DefaultValue;
+                }
+            }
             ds.Tables[0].Rows.Add(row);
         }
 

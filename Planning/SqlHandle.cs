@@ -16,6 +16,9 @@ namespace Planning
         private SqlConnection _connection;
         private SqlDataReader _reader;
         private SqlCommand _command;
+        private DataSet _dataSet;
+        private DataRow _currentRow;
+        private int _currentRowIdx;
         public static event Action<string> OnExecuteBeforeCommon;
         public static event Action<string> OnExecuteAfterCommon;
 
@@ -42,14 +45,136 @@ namespace Planning
                 _command.CommandType = value;
             }
         }
-        public SqlDataReader Reader
+        /*public SqlDataReader Reader
         {
             get
             {
                 return _reader;
             }
         }
+        */
+        public DataSet DataSet
+        {
+            get
+            {
+                return _dataSet;
+            }
+        }
+        public int GetIntValue(DataRow row, int columnIndex)
+        {
+            if (row == null)
+                return 0;
 
+            return row[columnIndex] == null ? 0 : Int32.Parse(row[columnIndex].ToString());
+
+        }
+        public int? GetNullIntValue(DataRow row, int columnIndex)
+        {
+            if (row == null)
+                return 0;
+
+            return row[columnIndex] == null ? 0 : (int?)(Int32.Parse(row[columnIndex].ToString()));
+
+        }
+        public string GetStringValue(DataRow row, int columnIndex)
+        {
+            if (row == null)
+                return String.Empty;
+
+            return row[columnIndex].ToString();
+
+        }
+        public decimal GetDecimalValue(DataRow row, int columnIndex)
+        {
+            if (row == null)
+                return 0;
+
+            return row[columnIndex] == null ? 0 : Decimal.Parse(row[columnIndex].ToString());
+
+        }
+        public DateTime? GetNullDateTimeValue(DataRow row, int columnIndex, bool onlyDate)
+        {
+            if (row == null)
+                return null;
+            DateTime? result = null;
+
+            if (row[columnIndex] != "Null")
+            {
+                string value = row[columnIndex].ToString();
+                value = onlyDate ? value.Substring(0, 10) : value;
+                result = (DateTime?)DateTime.Parse(value);
+            }
+
+
+
+            return result;
+        }
+        public DateTime GetDateTimeValue(DataRow row, int columnIndex, bool onlyDate)
+        {
+            if (row == null)
+                return DateTime.MinValue;
+            DateTime result = DateTime.MinValue;
+
+            if (row[columnIndex] != "Null")
+            {
+                string value = row[columnIndex].ToString();
+                value = onlyDate ? value.Substring(0, 10) : value;
+                result = DateTime.Parse(value);
+            }
+
+
+
+            return result;
+        }
+
+        public bool IsNull(DataRow row, int columnIndex)
+        {
+
+            return (row == null || row[columnIndex] == null);
+        }
+
+        public int GetIntValue(int columnIndex)
+        {
+         
+            return GetIntValue(_currentRow, columnIndex);
+
+        }
+
+        public int? GetNullIntValue(int columnIndex)
+        {
+            return GetNullIntValue(_currentRow, columnIndex);
+        }
+
+        public string GetStringValue(int columnIndex)
+        {
+            return GetStringValue(_currentRow, columnIndex);
+        }
+
+        public decimal GetDecimalValue(int columnIndex)
+        {
+            return GetDecimalValue(_currentRow, columnIndex);
+        }
+
+        public DateTime? GetNullDateTimeValue(int columnIndex, bool onlyDate )
+        {
+            return GetNullDateTimeValue(_currentRow, columnIndex, onlyDate);
+        }
+        public DateTime GetDateTimeValue(int columnIndex, bool onlyDate)
+        {
+            return GetDateTimeValue(_currentRow, columnIndex, onlyDate);
+        }
+        public bool IsNull(int columnIndex)
+        {
+
+            return IsNull(_currentRow, columnIndex);
+        }
+        public bool Read()
+        {
+            if (DataSet == null || !HasRows() || _currentRowIdx >= _dataSet.Tables[0].Rows.Count)
+                return false;
+            _currentRow = _dataSet.Tables[0].Rows[_currentRowIdx++];
+            return true;
+        }
         public SqlParameterCollection Parameters
         {
             get
@@ -62,6 +187,7 @@ namespace Planning
             _connectionString = connectionString;
             _connection = new SqlConnection(_connectionString);
             _command = new SqlCommand();
+            
             TypeCommand = CommandType.Text;
             IsResultSet = false;
         }
@@ -104,6 +230,7 @@ namespace Planning
 
             //SqlCommand command = new SqlCommand(SqlStatement, _connection);
             //_command.CommandText = SqlStatement;
+            _command.CommandTimeout = 180;
             _command.Connection = _connection;
             _command.CommandType = TypeCommand;
             
@@ -115,10 +242,16 @@ namespace Planning
                 {
                     _reader.Close();
                 }
-
+                
                 if (IsResultSet)
                 {
-                    _reader = _command.ExecuteReader();
+                    //_reader = _command.ExecuteReader();
+                    SqlDataAdapter dataAdapter = new SqlDataAdapter(_command);
+                    
+
+                    _dataSet = new DataSet();
+                    dataAdapter.Fill(_dataSet);
+                    _currentRowIdx = 0;
                 }
                     
                 else
@@ -130,11 +263,11 @@ namespace Planning
                 LastError = ex.Message;
                 return false;
             } 
-          /*  finally
+            finally
             {
                 Disconnect();
             }
-            */
+            
             return true;
 
             
@@ -142,7 +275,8 @@ namespace Planning
 
         public bool HasRows()
         {
-            return _reader != null && _reader.HasRows;
+            //return _reader != null && _reader.HasRows;
+            return _dataSet != null && _dataSet.Tables != null && _dataSet.Tables.Count>0 && _dataSet.Tables[0].Rows.Count>0;
         }
 
         public void AddCommandParametr(SqlParameter param)

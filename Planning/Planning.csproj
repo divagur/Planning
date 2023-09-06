@@ -133,34 +133,34 @@
     <Compile Include="Depositor.cs">
       <DependentUpon>DbPlaning.tt</DependentUpon>
     </Compile>
-    <Compile Include="DepositorEdit.cs">
+    <Compile Include="Dicts\DepositorEdit.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DepositorEdit.Designer.cs">
+    <Compile Include="Dicts\DepositorEdit.Designer.cs">
       <DependentUpon>DepositorEdit.cs</DependentUpon>
     </Compile>
-    <Compile Include="Depositors.cs">
+    <Compile Include="Dicts\Depositors.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Depositors.Designer.cs">
+    <Compile Include="Dicts\Depositors.Designer.cs">
       <DependentUpon>Depositors.cs</DependentUpon>
     </Compile>
-    <Compile Include="DictDelayReasons.cs">
+    <Compile Include="Dicts\DictDelayReasons.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DictDelayReasons.Designer.cs">
+    <Compile Include="Dicts\DictDelayReasons.Designer.cs">
       <DependentUpon>DictDelayReasons.cs</DependentUpon>
     </Compile>
-    <Compile Include="DictEditForm.cs">
+    <Compile Include="Dicts\DictEditForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DictEditForm.Designer.cs">
+    <Compile Include="Dicts\DictEditForm.Designer.cs">
       <DependentUpon>DictEditForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="DictForm.cs">
+    <Compile Include="Dicts\DictForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Dict.Designer.cs">
+    <Compile Include="Dicts\Dict.Designer.cs">
       <DependentUpon>DictForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ExcelPrint.cs" />
@@ -176,17 +176,23 @@
     <Compile Include="frmCurrentTask.Designer.cs">
       <DependentUpon>frmCurrentTask.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmDelayReasonsEdit.cs">
+    <Compile Include="Dicts\frmDelayReasonsEdit.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmDelayReasonsEdit.Designer.cs">
+    <Compile Include="Dicts\frmDelayReasonsEdit.Designer.cs">
       <DependentUpon>frmDelayReasonsEdit.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmGetDateTime.cs">
+    <Compile Include="Reports\frmGetDateTime.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmGetDateTime.Designer.cs">
+    <Compile Include="Reports\frmGetDateTime.Designer.cs">
       <DependentUpon>frmGetDateTime.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmLog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmLog.Designer.cs">
+      <DependentUpon>frmLog.cs</DependentUpon>
     </Compile>
     <Compile Include="frmProgressBar.cs">
       <SubType>Form</SubType>
@@ -248,14 +254,41 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PlanningDataSet1.xsd</DependentUpon>
     </Compile>
-    <Compile Include="ReportParams.cs" />
-    <Compile Include="RepPeriod.cs">
+    <Compile Include="Reports\ReportBase.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RepPeriod.Designer.cs">
+    <Compile Include="Reports\ReportBase.Designer.cs">
+      <DependentUpon>ReportBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\ReportParamItem.cs" />
+    <Compile Include="Reports\ReportParams.cs" />
+    <Compile Include="Reports\RepPeriod.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reports\RepPeriod.Designer.cs">
       <DependentUpon>RepPeriod.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reports\RepStatistic.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reports\RepStatistic.Designer.cs">
+      <DependentUpon>RepStatistic.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\RepTC.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reports\RepTC.Designer.cs">
+      <DependentUpon>RepTC.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SearchItem.cs" />
     <Compile Include="SettingsClass\CurrTaskColumn.cs" />
+    <Compile Include="SettingsClass\ReportSettingEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SettingsClass\ReportSettingEdit.Designer.cs">
+      <DependentUpon>ReportSettingEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SettingsClass\SettingReport.cs" />
     <Compile Include="SettingsClass\Settings.cs" />
     <Compile Include="SettingsClass\SettingsEdit.cs">
       <SubType>Form</SubType>
@@ -330,13 +363,28 @@
       <DependentUpon>DbPlaning.tt</DependentUpon>
     </Compile>
     <Compile Include="SqlHandle.cs" />
+    <Compile Include="Supplier.cs">
+      <DependentUpon>DbPlaning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Dicts\SupplierEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dicts\SupplierEdit.Designer.cs">
+      <DependentUpon>SupplierEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dicts\Suppliers.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dicts\Suppliers.Designer.cs">
+      <DependentUpon>Suppliers.cs</DependentUpon>
+    </Compile>
     <Compile Include="TimeSlot.cs">
       <DependentUpon>DbPlaning.tt</DependentUpon>
     </Compile>
-    <Compile Include="TimeSlots.cs">
+    <Compile Include="Dicts\TimeSlots.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="TimeSlots.Designer.cs">
+    <Compile Include="Dicts\TimeSlots.Designer.cs">
       <DependentUpon>TimeSlots.cs</DependentUpon>
     </Compile>
     <Compile Include="FormEdit.cs">
@@ -355,10 +403,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Planing.tt</DependentUpon>
     </Compile>
-    <Compile Include="SimpleDict.cs">
+    <Compile Include="Dicts\SimpleDict.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SimpleDict.Designer.cs">
+    <Compile Include="Dicts\SimpleDict.Designer.cs">
       <DependentUpon>SimpleDict.cs</DependentUpon>
     </Compile>
     <Compile Include="PlanningDataSet.Designer.cs">
@@ -381,10 +429,10 @@
     <Compile Include="shipmen_edit.Designer.cs">
       <DependentUpon>shipmen_edit.cs</DependentUpon>
     </Compile>
-    <Compile Include="TimeSlotEdit.cs">
+    <Compile Include="Dicts\TimeSlotEdit.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="TimeSlotEdit.Designer.cs">
+    <Compile Include="Dicts\TimeSlotEdit.Designer.cs">
       <DependentUpon>TimeSlotEdit.cs</DependentUpon>
     </Compile>
     <Compile Include="TransportCompany.cs">
@@ -396,64 +444,64 @@
     <Compile Include="User.cs">
       <DependentUpon>DbPlaning.tt</DependentUpon>
     </Compile>
-    <Compile Include="UserEditEx.cs">
+    <Compile Include="Dicts\UserEditEx.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UserEditEx.Designer.cs">
+    <Compile Include="Dicts\UserEditEx.Designer.cs">
       <DependentUpon>UserEditEx.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserEdit_.cs">
+    <Compile Include="Dicts\UserEdit_.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UserEdit_.Designer.cs">
+    <Compile Include="Dicts\UserEdit_.Designer.cs">
       <DependentUpon>UserEdit_.cs</DependentUpon>
     </Compile>
     <Compile Include="UserGroup.cs">
       <DependentUpon>DbPlaning.tt</DependentUpon>
     </Compile>
-    <Compile Include="UserGroupEdit.cs">
+    <Compile Include="Dicts\UserGroupEdit.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UserGroupEdit.Designer.cs">
+    <Compile Include="Dicts\UserGroupEdit.Designer.cs">
       <DependentUpon>UserGroupEdit.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserGroups.cs">
+    <Compile Include="Dicts\UserGroups.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UserGroups.Designer.cs">
+    <Compile Include="Dicts\UserGroups.Designer.cs">
       <DependentUpon>UserGroups.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserGrpEdit.cs">
+    <Compile Include="Dicts\UserGrpEdit.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UserGrpEdit.Designer.cs">
+    <Compile Include="Dicts\UserGrpEdit.Designer.cs">
       <DependentUpon>UserGrpEdit.cs</DependentUpon>
     </Compile>
     <Compile Include="UserGrpPrvlg.cs">
       <DependentUpon>DbPlaning.tt</DependentUpon>
     </Compile>
-    <Compile Include="Users.cs">
+    <Compile Include="Dicts\Users.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Users.Designer.cs">
+    <Compile Include="Dicts\Users.Designer.cs">
       <DependentUpon>Users.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="ChooseOrder.resx">
       <DependentUpon>ChooseOrder.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DepositorEdit.resx">
+    <EmbeddedResource Include="Dicts\DepositorEdit.resx">
       <DependentUpon>DepositorEdit.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Depositors.resx">
+    <EmbeddedResource Include="Dicts\Depositors.resx">
       <DependentUpon>Depositors.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dict.resx">
+    <EmbeddedResource Include="Dicts\Dict.resx">
       <DependentUpon>DictForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DictDelayReasons.resx">
+    <EmbeddedResource Include="Dicts\DictDelayReasons.resx">
       <DependentUpon>DictDelayReasons.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DictEditForm.resx">
+    <EmbeddedResource Include="Dicts\DictEditForm.resx">
       <DependentUpon>DictEditForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormLogin.resx">
@@ -462,11 +510,14 @@
     <EmbeddedResource Include="frmCurrentTask.resx">
       <DependentUpon>frmCurrentTask.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmDelayReasonsEdit.resx">
+    <EmbeddedResource Include="Dicts\frmDelayReasonsEdit.resx">
       <DependentUpon>frmDelayReasonsEdit.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmGetDateTime.resx">
+    <EmbeddedResource Include="Reports\frmGetDateTime.resx">
       <DependentUpon>frmGetDateTime.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmLog.resx">
+      <DependentUpon>frmLog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmProgressBar.resx">
       <DependentUpon>frmProgressBar.cs</DependentUpon>
@@ -483,8 +534,20 @@
     <EmbeddedResource Include="LvAttrEdit.resx">
       <DependentUpon>LvAttrEdit.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="RepPeriod.resx">
+    <EmbeddedResource Include="Reports\ReportBase.resx">
+      <DependentUpon>ReportBase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\RepPeriod.resx">
       <DependentUpon>RepPeriod.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\RepStatistic.resx">
+      <DependentUpon>RepStatistic.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\RepTC.resx">
+      <DependentUpon>RepTC.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SettingsClass\ReportSettingEdit.resx">
+      <DependentUpon>ReportSettingEdit.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SettingsClass\SettingsEdit.resx">
       <DependentUpon>SettingsEdit.cs</DependentUpon>
@@ -510,13 +573,13 @@
     <EmbeddedResource Include="ShipmentOrderPartEdit.resx">
       <DependentUpon>ShipmentOrderPartEdit.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="TimeSlots.resx">
+    <EmbeddedResource Include="Dicts\TimeSlots.resx">
       <DependentUpon>TimeSlots.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormEdit.resx">
       <DependentUpon>FormEdit.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SimpleDict.resx">
+    <EmbeddedResource Include="Dicts\SimpleDict.resx">
       <DependentUpon>SimpleDict.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
@@ -535,28 +598,35 @@
     <EmbeddedResource Include="shipmen_edit.resx">
       <DependentUpon>shipmen_edit.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="TimeSlotEdit.resx">
+    <EmbeddedResource Include="Dicts\TimeSlotEdit.resx">
       <DependentUpon>TimeSlotEdit.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserEditEx.resx">
+    <EmbeddedResource Include="Dicts\UserEditEx.resx">
       <DependentUpon>UserEditEx.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserEdit_.resx">
+    <EmbeddedResource Include="Dicts\UserEdit_.resx">
       <DependentUpon>UserEdit_.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserGroupEdit.resx">
+    <EmbeddedResource Include="Dicts\UserGroupEdit.resx">
       <DependentUpon>UserGroupEdit.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserGroups.resx">
+    <EmbeddedResource Include="Dicts\UserGroups.resx">
       <DependentUpon>UserGroups.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Users.resx">
+    <EmbeddedResource Include="Dicts\Users.resx">
       <DependentUpon>Users.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dicts\SupplierEdit.resx">
+      <DependentUpon>SupplierEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dicts\Suppliers.resx">
+      <DependentUpon>Suppliers.cs</DependentUpon>
     </EmbeddedResource>
     <EntityDeploy Include="DbPlaning.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>DbPlaning.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="ClassDiagram1.cd" />
     <None Include="DbPlaning.edmx.diagram">
       <DependentUpon>DbPlaning.edmx</DependentUpon>
     </None>

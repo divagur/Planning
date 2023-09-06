@@ -35,9 +35,26 @@ namespace Planning
                 return null;
             }
 
-            if (sql.Reader.HasRows)
+            if (sql.HasRows())
             {
-
+                
+                foreach (DataRow row in sql.DataSet.Tables[0].Rows)
+                {
+                    LVOrder order = new LVOrder();
+                    //LVID, LVCode, LVStatus, ExpDate, Company, DepLVID
+                    
+                    order.LVID = Int32.Parse(row[0].ToString());
+                    order.LVCode = row[1].ToString();
+                    order.LVStatus = row[2].ToString();
+                    order.ExpDate = row[3].ToString() != "Null" && row[3].ToString() !=""? (DateTime?)DateTime.Parse(row[3].ToString().Substring(0, 10)) : null;
+                    order.Company = row[4].ToString();
+                    order.DepLVID = row[5] == null? null: (int?)(Int32.Parse(row[5].ToString()));
+                    order.OstID = row[6] == null || row[6].ToString() =="" ? null : (int?)(Int32.Parse(row[6].ToString()));
+                    object objOstCode = row[7].ToString();
+                    order.OstCode = objOstCode == null ? "" : (string)objOstCode;
+                    listLVOrder.Add(order);
+                }
+                /*
                 while (sql.Reader.Read())
                 {
                     LVOrder order = new LVOrder();
@@ -54,6 +71,7 @@ namespace Planning
                     listLVOrder.Add(order);
 
                 }
+                */
             }
             
             

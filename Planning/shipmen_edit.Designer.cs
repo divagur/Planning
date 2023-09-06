@@ -128,8 +128,10 @@
             this.tbtnMoveItemEdit = new System.Windows.Forms.ToolStripButton();
             this.tbObject = new System.Windows.Forms.TabControl();
             this.tabMain = new System.Windows.Forms.TabPage();
+            this.label22 = new System.Windows.Forms.Label();
+            this.cmbSupplier = new System.Windows.Forms.ComboBox();
             this.btnSDate = new System.Windows.Forms.Button();
-            this.tabOrders = new System.Windows.Forms.TabPage();
+            this.pnShipment = new System.Windows.Forms.Panel();
             this.gbOrderParts = new System.Windows.Forms.GroupBox();
             this.tblOrderParts = new System.Windows.Forms.DataGridView();
             this.colPartsCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -145,6 +147,7 @@
             this.tbtnAddOrderPart = new System.Windows.Forms.ToolStripButton();
             this.tbtnEditOrderPart = new System.Windows.Forms.ToolStripButton();
             this.tbtnDelOrderPart = new System.Windows.Forms.ToolStripButton();
+            this.tabOrders = new System.Windows.Forms.TabPage();
             this.tabHistory = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -158,7 +161,7 @@
             this.toolStrip2.SuspendLayout();
             this.tbObject.SuspendLayout();
             this.tabMain.SuspendLayout();
-            this.tabOrders.SuspendLayout();
+            this.pnShipment.SuspendLayout();
             this.gbOrderParts.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tblOrderParts)).BeginInit();
             this.toolStrip3.SuspendLayout();
@@ -168,7 +171,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(7, 40);
+            this.label1.Location = new System.Drawing.Point(3, 65);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(132, 13);
             this.label1.TabIndex = 0;
@@ -177,7 +180,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(7, 64);
+            this.label2.Location = new System.Drawing.Point(3, 89);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(141, 13);
             this.label2.TabIndex = 1;
@@ -186,7 +189,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(7, 134);
+            this.label3.Location = new System.Drawing.Point(3, 159);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(107, 13);
             this.label3.TabIndex = 2;
@@ -195,7 +198,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(7, 161);
+            this.label4.Location = new System.Drawing.Point(3, 186);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(151, 13);
             this.label4.TabIndex = 3;
@@ -204,14 +207,14 @@
             // cmbTransportCompany
             // 
             this.cmbTransportCompany.FormattingEnabled = true;
-            this.cmbTransportCompany.Location = new System.Drawing.Point(145, 37);
+            this.cmbTransportCompany.Location = new System.Drawing.Point(141, 62);
             this.cmbTransportCompany.Name = "cmbTransportCompany";
             this.cmbTransportCompany.Size = new System.Drawing.Size(341, 21);
             this.cmbTransportCompany.TabIndex = 1;
             // 
             // edShipmentComment
             // 
-            this.edShipmentComment.Location = new System.Drawing.Point(154, 64);
+            this.edShipmentComment.Location = new System.Drawing.Point(150, 89);
             this.edShipmentComment.MaxLength = 500;
             this.edShipmentComment.Multiline = true;
             this.edShipmentComment.Name = "edShipmentComment";
@@ -223,14 +226,14 @@
             this.cmbDelayReasons.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.cmbDelayReasons.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cmbDelayReasons.FormattingEnabled = true;
-            this.cmbDelayReasons.Location = new System.Drawing.Point(120, 131);
+            this.cmbDelayReasons.Location = new System.Drawing.Point(116, 156);
             this.cmbDelayReasons.Name = "cmbDelayReasons";
             this.cmbDelayReasons.Size = new System.Drawing.Size(332, 21);
             this.cmbDelayReasons.TabIndex = 3;
             // 
             // edDelayComment
             // 
-            this.edDelayComment.Location = new System.Drawing.Point(164, 158);
+            this.edDelayComment.Location = new System.Drawing.Point(160, 183);
             this.edDelayComment.MaxLength = 200;
             this.edDelayComment.Name = "edDelayComment";
             this.edDelayComment.Size = new System.Drawing.Size(624, 20);
@@ -277,7 +280,7 @@
             this.gbTransport.Controls.Add(this.label6);
             this.gbTransport.Controls.Add(this.dtSpecialCond);
             this.gbTransport.Controls.Add(this.cmbTimeSlot);
-            this.gbTransport.Location = new System.Drawing.Point(10, 184);
+            this.gbTransport.Location = new System.Drawing.Point(6, 209);
             this.gbTransport.Name = "gbTransport";
             this.gbTransport.Size = new System.Drawing.Size(778, 252);
             this.gbTransport.TabIndex = 10;
@@ -638,7 +641,7 @@
             // cbIsCourier
             // 
             this.cbIsCourier.AutoSize = true;
-            this.cbIsCourier.Location = new System.Drawing.Point(506, 40);
+            this.cbIsCourier.Location = new System.Drawing.Point(502, 65);
             this.cbIsCourier.Name = "cbIsCourier";
             this.cbIsCourier.Size = new System.Drawing.Size(123, 17);
             this.cbIsCourier.TabIndex = 13;
@@ -649,10 +652,10 @@
             // 
             this.gbOrders.Controls.Add(this.tblShipmentOrders);
             this.gbOrders.Controls.Add(this.toolStrip1);
-            this.gbOrders.Dock = System.Windows.Forms.DockStyle.Top;
-            this.gbOrders.Location = new System.Drawing.Point(3, 3);
+            this.gbOrders.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gbOrders.Location = new System.Drawing.Point(0, 0);
             this.gbOrders.Name = "gbOrders";
-            this.gbOrders.Size = new System.Drawing.Size(793, 214);
+            this.gbOrders.Size = new System.Drawing.Size(778, 320);
             this.gbOrders.TabIndex = 14;
             this.gbOrders.TabStop = false;
             this.gbOrders.Text = "Заказы";
@@ -703,7 +706,7 @@
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.tblShipmentOrders.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.tblShipmentOrders.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.tblShipmentOrders.Size = new System.Drawing.Size(787, 170);
+            this.tblShipmentOrders.Size = new System.Drawing.Size(772, 276);
             this.tblShipmentOrders.TabIndex = 1;
             this.tblShipmentOrders.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.tblShipmentOrders_RowEnter);
             // 
@@ -810,7 +813,7 @@
             this.tbtnDel});
             this.toolStrip1.Location = new System.Drawing.Point(3, 16);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(787, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(772, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -938,9 +941,9 @@
             // 
             this.gbMovementItem.Controls.Add(this.tblMovementItem);
             this.gbMovementItem.Controls.Add(this.toolStrip2);
-            this.gbMovementItem.Location = new System.Drawing.Point(10, 442);
+            this.gbMovementItem.Location = new System.Drawing.Point(6, 467);
             this.gbMovementItem.Name = "gbMovementItem";
-            this.gbMovementItem.Size = new System.Drawing.Size(778, 214);
+            this.gbMovementItem.Size = new System.Drawing.Size(778, 320);
             this.gbMovementItem.TabIndex = 37;
             this.gbMovementItem.TabStop = false;
             // 
@@ -984,7 +987,7 @@
             dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.tblMovementItem.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
-            this.tblMovementItem.Size = new System.Drawing.Size(772, 170);
+            this.tblMovementItem.Size = new System.Drawing.Size(772, 276);
             this.tblMovementItem.TabIndex = 1;
             // 
             // colMvId
@@ -1059,11 +1062,13 @@
             this.tbObject.Location = new System.Drawing.Point(0, 0);
             this.tbObject.Name = "tbObject";
             this.tbObject.SelectedIndex = 0;
-            this.tbObject.Size = new System.Drawing.Size(807, 685);
+            this.tbObject.Size = new System.Drawing.Size(807, 819);
             this.tbObject.TabIndex = 38;
             // 
             // tabMain
             // 
+            this.tabMain.Controls.Add(this.label22);
+            this.tabMain.Controls.Add(this.cmbSupplier);
             this.tabMain.Controls.Add(this.pnGetDateTime);
             this.tabMain.Controls.Add(this.label5);
             this.tabMain.Controls.Add(this.btnSDate);
@@ -1078,14 +1083,32 @@
             this.tabMain.Controls.Add(this.gbTransport);
             this.tabMain.Controls.Add(this.label4);
             this.tabMain.Controls.Add(this.cmbTransportCompany);
+            this.tabMain.Controls.Add(this.pnShipment);
             this.tabMain.Controls.Add(this.gbMovementItem);
             this.tabMain.Location = new System.Drawing.Point(4, 22);
             this.tabMain.Name = "tabMain";
             this.tabMain.Padding = new System.Windows.Forms.Padding(3);
-            this.tabMain.Size = new System.Drawing.Size(799, 659);
+            this.tabMain.Size = new System.Drawing.Size(799, 793);
             this.tabMain.TabIndex = 0;
             this.tabMain.Text = "Основные сведения";
             this.tabMain.UseVisualStyleBackColor = true;
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(70, 38);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(65, 13);
+            this.label22.TabIndex = 38;
+            this.label22.Text = "Поставщик";
+            // 
+            // cmbSupplier
+            // 
+            this.cmbSupplier.FormattingEnabled = true;
+            this.cmbSupplier.Location = new System.Drawing.Point(141, 35);
+            this.cmbSupplier.Name = "cmbSupplier";
+            this.cmbSupplier.Size = new System.Drawing.Size(341, 21);
+            this.cmbSupplier.TabIndex = 39;
             // 
             // btnSDate
             // 
@@ -1097,26 +1120,23 @@
             this.btnSDate.UseVisualStyleBackColor = true;
             this.btnSDate.Click += new System.EventHandler(this.btnShowCalendar_Click);
             // 
-            // tabOrders
+            // pnShipment
             // 
-            this.tabOrders.Controls.Add(this.gbOrderParts);
-            this.tabOrders.Controls.Add(this.gbOrders);
-            this.tabOrders.Location = new System.Drawing.Point(4, 22);
-            this.tabOrders.Name = "tabOrders";
-            this.tabOrders.Padding = new System.Windows.Forms.Padding(3);
-            this.tabOrders.Size = new System.Drawing.Size(799, 659);
-            this.tabOrders.TabIndex = 2;
-            this.tabOrders.Text = "Заказы";
-            this.tabOrders.UseVisualStyleBackColor = true;
+            this.pnShipment.Controls.Add(this.gbOrderParts);
+            this.pnShipment.Controls.Add(this.gbOrders);
+            this.pnShipment.Location = new System.Drawing.Point(6, 467);
+            this.pnShipment.Name = "pnShipment";
+            this.pnShipment.Size = new System.Drawing.Size(778, 320);
+            this.pnShipment.TabIndex = 2;
             // 
             // gbOrderParts
             // 
             this.gbOrderParts.Controls.Add(this.tblOrderParts);
             this.gbOrderParts.Controls.Add(this.toolStrip3);
-            this.gbOrderParts.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gbOrderParts.Location = new System.Drawing.Point(3, 217);
+            this.gbOrderParts.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.gbOrderParts.Location = new System.Drawing.Point(0, 148);
             this.gbOrderParts.Name = "gbOrderParts";
-            this.gbOrderParts.Size = new System.Drawing.Size(793, 439);
+            this.gbOrderParts.Size = new System.Drawing.Size(778, 172);
             this.gbOrderParts.TabIndex = 15;
             this.gbOrderParts.TabStop = false;
             this.gbOrderParts.Text = "Расходные партии";
@@ -1163,7 +1183,7 @@
             dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.tblOrderParts.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
             this.tblOrderParts.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.tblOrderParts.Size = new System.Drawing.Size(787, 395);
+            this.tblOrderParts.Size = new System.Drawing.Size(772, 128);
             this.tblOrderParts.TabIndex = 1;
             this.tblOrderParts.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.tblOrderParts_RowEnter);
             // 
@@ -1245,7 +1265,7 @@
             this.tbtnDelOrderPart});
             this.toolStrip3.Location = new System.Drawing.Point(3, 16);
             this.toolStrip3.Name = "toolStrip3";
-            this.toolStrip3.Size = new System.Drawing.Size(787, 25);
+            this.toolStrip3.Size = new System.Drawing.Size(772, 25);
             this.toolStrip3.TabIndex = 0;
             this.toolStrip3.Text = "toolStrip3";
             // 
@@ -1282,12 +1302,22 @@
             this.tbtnDelOrderPart.ToolTipText = "Удалить заказ";
             this.tbtnDelOrderPart.Click += new System.EventHandler(this.tbtnDelOrderPart_Click);
             // 
+            // tabOrders
+            // 
+            this.tabOrders.Location = new System.Drawing.Point(4, 22);
+            this.tabOrders.Name = "tabOrders";
+            this.tabOrders.Padding = new System.Windows.Forms.Padding(3);
+            this.tabOrders.Size = new System.Drawing.Size(799, 793);
+            this.tabOrders.TabIndex = 2;
+            this.tabOrders.Text = "Заказы";
+            this.tabOrders.UseVisualStyleBackColor = true;
+            // 
             // tabHistory
             // 
             this.tabHistory.Location = new System.Drawing.Point(4, 22);
             this.tabHistory.Name = "tabHistory";
             this.tabHistory.Padding = new System.Windows.Forms.Padding(3);
-            this.tabHistory.Size = new System.Drawing.Size(799, 659);
+            this.tabHistory.Size = new System.Drawing.Size(799, 793);
             this.tabHistory.TabIndex = 1;
             this.tabHistory.Text = "История";
             this.tabHistory.UseVisualStyleBackColor = true;
@@ -1297,7 +1327,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(807, 685);
+            this.panel1.Size = new System.Drawing.Size(807, 819);
             this.panel1.TabIndex = 39;
             // 
             // panel2
@@ -1307,16 +1337,17 @@
             this.panel2.Controls.Add(this.btnCancel);
             this.panel2.Controls.Add(this.btnBindLV);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 685);
+            this.panel2.Location = new System.Drawing.Point(0, 819);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(807, 30);
             this.panel2.TabIndex = 40;
+            this.panel2.DoubleClick += new System.EventHandler(this.panel2_Click);
             // 
             // shipmen_edit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(807, 715);
+            this.ClientSize = new System.Drawing.Size(807, 849);
             this.Controls.Add(this.tbObject);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel2);
@@ -1343,7 +1374,7 @@
             this.tbObject.ResumeLayout(false);
             this.tabMain.ResumeLayout(false);
             this.tabMain.PerformLayout();
-            this.tabOrders.ResumeLayout(false);
+            this.pnShipment.ResumeLayout(false);
             this.gbOrderParts.ResumeLayout(false);
             this.gbOrderParts.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tblOrderParts)).EndInit();
@@ -1466,5 +1497,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colPartsId;
         private System.Windows.Forms.DataGridViewTextBoxColumn colPartsBindingId;
         private System.Windows.Forms.DataGridViewTextBoxColumn colPartsOstId;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.ComboBox cmbSupplier;
+        private System.Windows.Forms.Panel pnShipment;
     }
 }

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using Excel = Microsoft.Office.Interop.Excel;
 
 
@@ -35,15 +37,23 @@ namespace Planning
         [DllImport("gdi32.dll")]
         static extern int GetDeviceCaps(IntPtr hdc, int nIndex);
 
-        private void CreateApp()
+        public string Error { get; set; } = "";
+
+        private bool CreateApp()
         {
+            if (_template != null && !File.Exists(_template))
+            {
+                //MessageBox.Show($"Не найден шаблон отчета [{_template}]","Ошибка при формировании отчета", MessageBoxButton.OK,MessageBoxImage.Error);
+                Error = $"Не найден шаблон отчета [{_template}]";
+                return false;
+            }
             _app = new Excel.Application();
             _app.SheetsInNewWorkbook = 1;
             _app.Workbooks.Add(_template == null ? Type.Missing : _template);
             _workbooks = _app.Workbooks;
             _workbook = _workbooks[1];
 
-
+            return true;
         }
         private int GetDPI(int nIndex)
         {
@@ -54,7 +64,7 @@ namespace Planning
             ReleaseDC(hwnd, hdc);
             return result;
         }
-        private double PixelToPoint(int Pixel,int nIndex)
+        private double PixelToPoint(double Pixel,int nIndex)
         {
             int currentDPI = GetDPI(nIndex);
 
@@ -64,7 +74,10 @@ namespace Planning
         public ExcelPrint(string template)
         {
             _template = template;
-            CreateApp();
+            if (!CreateApp())
+            {
+                throw new Exception(Error);
+            }
         }
         public bool Visible
         {
@@ -121,7 +134,7 @@ namespace Planning
             //printRange.Value = Values;
         }
 
-        public void SetColumnWidth(int Sheet, int Col, int cWidth)
+        public void SetColumnWidth(int Sheet, int Col, double cWidth)
         {
             Excel.Worksheet worksheet  = (Excel.Worksheet)_sheets.get_Item(Sheet);
             //Excel.Range range = worksheet.Columns[1,Col];//, System.Type.Missing];

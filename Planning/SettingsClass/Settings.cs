@@ -26,7 +26,7 @@ namespace Planning
         public string PeriodReport { get; set; }
         public int IsGetLogin { get; set; }
         public bool IsWnd { get; set; }
-
+        public List<SettingReport> Reports = new List<SettingReport>();
         public List<CurrTaskColumn> CurrentTaskColumns = new List<CurrTaskColumn>();
 
         public List<VolumeCalcConstant> VolumeCalcTemplate = new List<VolumeCalcConstant>();

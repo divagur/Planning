@@ -30,12 +30,16 @@ namespace Planning
                 colOstCode.Visible = false;
             PopulateOrders();
         }
+        private bool IsShpIn()
+        {
+            return _shipment != null && (_shipment.ShIn == null || _shipment.ShIn == true);
+        }
 
         private List<LVOrder> GetOrderList()
         {
             List<LVOrder> result = new List<LVOrder>();
             int? DepositorLVId = _shipment.DepositorId;
-            listOrders = Order_Manager.GetList(DepositorLVId, 0, 0, _LVOrderId);
+            listOrders = Order_Manager.GetList(DepositorLVId, IsShpIn()?1:0, 0, _LVOrderId);
             
             if (_isOrderParts)
             {

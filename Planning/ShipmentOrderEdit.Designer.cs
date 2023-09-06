@@ -38,6 +38,14 @@
             this.btnClose = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnGetOrder = new System.Windows.Forms.Button();
+            this.txtPalletAmount = new System.Windows.Forms.TextBox();
+            this.txtManualUnload = new System.Windows.Forms.TextBox();
+            this.txtManualLoad = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.grpShInParam = new System.Windows.Forms.GroupBox();
+            this.grpShInParam.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -91,7 +99,7 @@
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(368, 146);
+            this.btnClose.Location = new System.Drawing.Point(367, 246);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
             this.btnClose.TabIndex = 8;
@@ -101,7 +109,7 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(287, 146);
+            this.btnSave.Location = new System.Drawing.Point(286, 246);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 8;
@@ -119,15 +127,78 @@
             this.btnGetOrder.UseVisualStyleBackColor = true;
             this.btnGetOrder.Click += new System.EventHandler(this.btnGetOrder_Click);
             // 
+            // txtPalletAmount
+            // 
+            this.txtPalletAmount.Location = new System.Drawing.Point(150, 65);
+            this.txtPalletAmount.Name = "txtPalletAmount";
+            this.txtPalletAmount.Size = new System.Drawing.Size(189, 20);
+            this.txtPalletAmount.TabIndex = 18;
+            // 
+            // txtManualUnload
+            // 
+            this.txtManualUnload.Location = new System.Drawing.Point(150, 40);
+            this.txtManualUnload.Name = "txtManualUnload";
+            this.txtManualUnload.Size = new System.Drawing.Size(189, 20);
+            this.txtManualUnload.TabIndex = 17;
+            // 
+            // txtManualLoad
+            // 
+            this.txtManualLoad.Location = new System.Drawing.Point(150, 12);
+            this.txtManualLoad.Name = "txtManualLoad";
+            this.txtManualLoad.Size = new System.Drawing.Size(189, 20);
+            this.txtManualLoad.TabIndex = 16;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(8, 68);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(104, 13);
+            this.label6.TabIndex = 19;
+            this.label6.Text = "Количество паллет";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(8, 43);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(137, 13);
+            this.label5.TabIndex = 20;
+            this.label5.Text = "Ручная разрузка коробов";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(8, 15);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(136, 13);
+            this.label4.TabIndex = 21;
+            this.label4.Text = "Ручная загрузка коробов";
+            // 
+            // grpShInParam
+            // 
+            this.grpShInParam.Controls.Add(this.txtManualLoad);
+            this.grpShInParam.Controls.Add(this.txtPalletAmount);
+            this.grpShInParam.Controls.Add(this.label4);
+            this.grpShInParam.Controls.Add(this.txtManualUnload);
+            this.grpShInParam.Controls.Add(this.label5);
+            this.grpShInParam.Controls.Add(this.label6);
+            this.grpShInParam.Location = new System.Drawing.Point(98, 146);
+            this.grpShInParam.Name = "grpShInParam";
+            this.grpShInParam.Size = new System.Drawing.Size(345, 94);
+            this.grpShInParam.TabIndex = 22;
+            this.grpShInParam.TabStop = false;
+            // 
             // ShipmentOrderEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(454, 181);
+            this.ClientSize = new System.Drawing.Size(454, 275);
+            this.Controls.Add(this.grpShInParam);
             this.Controls.Add(this.btnGetOrder);
             this.Controls.Add(this.btnSave);
-            this.Controls.Add(this.btnClose);
             this.Controls.Add(this.txtOrderComment);
+            this.Controls.Add(this.btnClose);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.txtOrderType);
             this.Controls.Add(this.label2);
@@ -143,6 +214,8 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Редактирование заказа";
             this.Load += new System.EventHandler(this.ShipmentOrderEdit_Load);
+            this.grpShInParam.ResumeLayout(false);
+            this.grpShInParam.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -159,5 +232,12 @@
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnGetOrder;
+        private System.Windows.Forms.TextBox txtPalletAmount;
+        private System.Windows.Forms.TextBox txtManualUnload;
+        private System.Windows.Forms.TextBox txtManualLoad;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.GroupBox grpShInParam;
     }
 }

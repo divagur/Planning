@@ -217,6 +217,7 @@
           <Property Name="is_add_lv" Type="bit" />
           <Property Name="transport_company_id" Type="int" />
           <Property Name="transport_type_id" Type="int" />
+          <Property Name="supplier_id" Type="int" />
         </EntityType>
         <EntityType Name="shipments_log">
           <Key>
@@ -257,6 +258,14 @@
           <Property Name="is_add_lv" Type="bit" />
           <Property Name="transport_company_id" Type="int" />
           <Property Name="transport_type_id" Type="int" />
+        </EntityType>
+        <EntityType Name="suppliers">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="254" />
+          <Property Name="is_active" Type="bit" />
         </EntityType>
         <EntityType Name="time_slot">
           <Key>
@@ -424,6 +433,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_shipments_supplier">
+          <End Role="suppliers" Type="Self.suppliers" Multiplicity="0..1" />
+          <End Role="shipments" Type="Self.shipments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="suppliers">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="shipments">
+              <PropertyRef Name="supplier_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_shipments_tc">
           <End Role="transport_company" Type="Self.transport_company" Multiplicity="0..1" />
           <End Role="shipments" Type="Self.shipments" Multiplicity="*" />
@@ -531,6 +552,7 @@
           <EntitySet Name="shipment_orders_log" EntityType="Self.shipment_orders_log" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="shipments" EntityType="Self.shipments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="shipments_log" EntityType="Self.shipments_log" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="suppliers" EntityType="Self.suppliers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="time_slot" EntityType="Self.time_slot" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="transport_company" EntityType="Self.transport_company" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="transport_type" EntityType="Self.transport_type" Schema="dbo" store:Type="Tables" />
@@ -568,6 +590,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_shipments_gate" Association="Self.FK_shipments_gate">
             <End Role="gateways" EntitySet="gateways" />
+            <End Role="shipments" EntitySet="shipments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_shipments_supplier" Association="Self.FK_shipments_supplier">
+            <End Role="suppliers" EntitySet="suppliers" />
             <End Role="shipments" EntitySet="shipments" />
           </AssociationSet>
           <AssociationSet Name="FK_shipments_tc" Association="Self.FK_shipments_tc">
@@ -701,6 +727,8 @@
           <Property Name="TransportTypeId" Type="Int32" />
           <NavigationProperty Name="TransportCompanies" Relationship="PlanningModel.FK_shipments_tc" FromRole="Shipment" ToRole="transport_company" />
           <NavigationProperty Name="TransportTypes" Relationship="PlanningModel.FK_shipments_transport_type" FromRole="Shipment" ToRole="transport_type" />
+          <Property Name="SupplierId" Type="Int32" />
+          <NavigationProperty Name="suppliers" Relationship="PlanningModel.FK_shipments_supplier" FromRole="Shipment" ToRole="Supplier" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -821,6 +849,11 @@
           <AssociationSet Name="sh_order_parts_sh_ord_fk" Association="PlanningModel.sh_order_parts_sh_ord_fk">
             <End Role="ShipmentOrder" EntitySet="ShipmentOrders" />
             <End Role="shipment_order_parts" EntitySet="ShipmentOrderParts" />
+          </AssociationSet>
+          <EntitySet Name="Suppliers" EntityType="PlanningModel.Supplier" />
+          <AssociationSet Name="FK_shipments_supplier" Association="PlanningModel.FK_shipments_supplier">
+            <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="Shipment" EntitySet="Shipments" />
           </AssociationSet>
         </EntityContainer>
         <Association Name="FK_shipments_delay_reasons">
@@ -1186,6 +1219,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="shipments" Relationship="PlanningModel.FK_shipments_supplier" FromRole="Supplier" ToRole="Shipment" />
+        </EntityType>
+        <Association Name="FK_shipments_supplier">
+          <End Type="PlanningModel.Supplier" Role="Supplier" Multiplicity="0..1" />
+          <End Type="PlanningModel.Shipment" Role="Shipment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Shipment">
+              <PropertyRef Name="SupplierId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1249,6 +1303,7 @@
           <EntitySetMapping Name="Shipments">
             <EntityTypeMapping TypeName="PlanningModel.Shipment">
               <MappingFragment StoreEntitySet="shipments">
+                <ScalarProperty Name="SupplierId" ColumnName="supplier_id" />
                 <ScalarProperty Name="TransportTypeId" ColumnName="transport_type_id" />
                 <ScalarProperty Name="TransportCompanyId" ColumnName="transport_company_id" />
                 <ScalarProperty Name="IsAddLv" ColumnName="is_add_lv" />
@@ -1528,6 +1583,15 @@
                 <ScalarProperty Name="OsLvCode" ColumnName="os_lvcode" />
                 <ScalarProperty Name="OsLvId" ColumnName="os_lvid" />
                 <ScalarProperty Name="ShOrderId" ColumnName="sh_order_id" />
+                <ScalarProperty Name="Id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Suppliers">
+            <EntityTypeMapping TypeName="PlanningModel.Supplier">
+              <MappingFragment StoreEntitySet="suppliers">
+                <ScalarProperty Name="IsActive" ColumnName="is_active" />
+                <ScalarProperty Name="Name" ColumnName="name" />
                 <ScalarProperty Name="Id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

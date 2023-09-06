@@ -57,6 +57,23 @@ namespace Planning.DataLayer
             if (sql.HasRows())
             {
 
+                while (sql.Read())
+                {
+                    VolumeCalcProduct poduct = new VolumeCalcProduct();
+                    //LVID, LVCode, LVStatus, ExpDate, Company, DepLVID
+                    poduct.ordCode = sql.GetStringValue(0);
+                    poduct.prdCode = sql.GetStringValue(1);
+                    poduct.prdName = sql.GetStringValue(2);
+                    poduct.Qty = sql.GetDecimalValue(3); 
+                    poduct.Length = sql.GetDecimalValue(4);
+                    poduct.Width = sql.GetDecimalValue(5);
+                    poduct.Height = sql.GetDecimalValue(6);
+                    poduct.Weight = sql.GetDecimalValue(7);
+                    poduct.Volume = sql.GetDecimalValue(9);
+
+                    listProduct.Add(poduct);
+                }
+                /*
                 while (sql.Reader.Read())
                 {
                     VolumeCalcProduct poduct = new VolumeCalcProduct();
@@ -74,9 +91,10 @@ namespace Planning.DataLayer
                     listProduct.Add(poduct);
 
                 }
+                */
             }
 
-
+            sql.Disconnect();
             return listProduct;
         }
         public static List<VolumeCalcProduct> GetList(int? DepositorLVId, List<LVOrder> LVOrders)

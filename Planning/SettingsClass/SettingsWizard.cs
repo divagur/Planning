@@ -19,6 +19,8 @@ namespace Planning
         BindingList<VolumeCalcConstant> bindingListVolumeCalcConstant;
         BindingSource sourceVolumeCalcConstant;
 
+        BindingList<SettingReport> bindingListReports;
+        BindingSource sourceReports;
         public SettingsWizard(Settings settings)
         {
             InitializeComponent();
@@ -85,6 +87,11 @@ namespace Planning
             txtImportColVendorCode.Text = _settings.volumeCalcParams.ImportColVendorCode.ToString();
             txtImportColName.Text = _settings.volumeCalcParams.ImportColName.ToString();
             txtImportColAmount.Text = _settings.volumeCalcParams.ImportColAmount.ToString();
+
+            bindingListReports = new BindingList<SettingReport>(_settings.Reports);
+            sourceReports = new BindingSource(bindingListReports, null);
+            tblReports.AutoGenerateColumns = false;
+            tblReports.DataSource = sourceReports;//_settings.Reports;
         }
 
         private void btnShipmentDlg_Click(object sender, EventArgs e)
@@ -299,6 +306,56 @@ namespace Planning
         private void groupBox2_Enter(object sender, EventArgs e)
         {
 
+        }
+
+        private void tbRepAdd_Click(object sender, EventArgs e)
+        {
+
+            SettingReport settingReport = new SettingReport();
+            Random random = new Random();
+            settingReport.Id = random.Next().ToString();
+
+            ReportSettingEdit reportSettingEdit = new ReportSettingEdit(settingReport);
+            if (reportSettingEdit.ShowDialog() == DialogResult.OK)
+                _settings.Reports.Add(settingReport);
+
+            sourceReports.ResetBindings(false);
+
+            //tblReports.Refresh();
+            
+        }
+
+        private void EditReportSetting()
+        {
+            SettingReport settingReport = _settings.Reports.Find(r => r.Name == tblReports.Rows[tblReports.SelectedRows[0].Index].Cells["colRepName"].Value.ToString());
+            if (settingReport == null)
+                return;
+            ReportSettingEdit reportSettingEdit = new ReportSettingEdit(settingReport);
+            reportSettingEdit.ShowDialog();
+            tblReports.Refresh();
+        }
+
+        private void tbRepEdit_Click(object sender, EventArgs e)
+        {
+            EditReportSetting();
+        }
+
+        private void tbRepDel_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Удалить настройку отчета?", "Удаление", MessageBoxButtons.OKCancel) != DialogResult.OK)
+                return;
+            
+            SettingReport settingReport = _settings.Reports.Find(r => r.Name == tblReports.Rows[tblReports.SelectedRows[0].Index].Cells["colRepName"].Value.ToString());
+            if (settingReport == null)
+                return;
+            _settings.Reports.Remove(settingReport);
+            sourceReports.ResetBindings(false);
+            
+        }
+
+        private void tblReports_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            EditReportSetting();
         }
     }
 }

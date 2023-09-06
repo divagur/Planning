@@ -19,7 +19,33 @@ namespace Planning
             InitializeComponent();
             _shipmentOrder = shipmentOrder;
             _shipment = shipment;
+            SetViewParam();
+        }
 
+
+        private bool IsShpIn()
+        {
+            return _shipment != null && (_shipment.ShIn == null || _shipment.ShIn == true);
+        }
+
+
+        public void SetViewParam()
+        {
+            
+            if (_shipment.ShIn == true)
+            {
+                grpShInParam.Visible =  true;
+                this.Height = 316;
+                btnClose.Top = 246;
+                btnSave.Top = 246;
+            }
+            else
+            {
+                grpShInParam.Visible = false;
+                this.Height = 217;
+                btnClose.Top = 146;
+                btnSave.Top = 146;
+            }
         }
 
         private void ShipmentOrderEdit_Load(object sender, EventArgs e)
@@ -27,11 +53,11 @@ namespace Planning
             txtOrderId.Text = _shipmentOrder.OrderId;
             txtOrderType.Text = _shipmentOrder.OrderType;
             txtOrderComment.Text = _shipmentOrder.Comment;
-            /*
+            
             txtManualLoad.Text = _shipmentOrder.ManualLoad.ToString();
             txtManualUnload.Text = _shipmentOrder.ManualUnload.ToString();
             txtPalletAmount.Text = _shipmentOrder.PalletAmount.ToString();
-            */
+            
             bool isEnable = _shipmentOrder.IsBinding == null ? false : !(bool)_shipmentOrder.IsBinding;
             txtOrderId.Enabled = isEnable;
             btnGetOrder.Enabled = isEnable;
@@ -61,11 +87,11 @@ namespace Planning
             _shipmentOrder.lv_order_code = txtOrderId.Text;
             _shipmentOrder.OrderType = txtOrderType.Text;
             _shipmentOrder.Comment = txtOrderComment.Text;
-           /*
+           
             _shipmentOrder.ManualLoad = GetNumber(txtManualLoad);
             _shipmentOrder.ManualUnload = GetNumber(txtManualUnload);
             _shipmentOrder.PalletAmount = GetNumber(txtPalletAmount);
-           */
+           
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -94,7 +120,7 @@ namespace Planning
                     ShipmentOrderPart orderPart = new ShipmentOrderPart();
                     orderPart.OsLvId = lVOrder.OstID;
                     orderPart.OsLvCode = lVOrder.OstCode;
-
+                    orderPart.ShOrderId = _shipmentOrder.Id;
                     _shipmentOrder.ShipmentOrderParts.Add(orderPart);
                 }
             }

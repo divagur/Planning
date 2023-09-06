@@ -110,7 +110,7 @@ namespace Planning
             this.edPeriodBegin.Location = new System.Drawing.Point(94, 6);
             this.edPeriodBegin.Name = "edPeriodBegin";
             this.edPeriodBegin.Size = new System.Drawing.Size(118, 20);
-            this.edPeriodBegin.TabIndex = 5;
+            this.edPeriodBegin.TabIndex = 0;
             // 
             // btnPeriodEnd
             // 
@@ -127,7 +127,7 @@ namespace Planning
             this.edPeriodEnd.Location = new System.Drawing.Point(94, 40);
             this.edPeriodEnd.Name = "edPeriodEnd";
             this.edPeriodEnd.Size = new System.Drawing.Size(118, 20);
-            this.edPeriodEnd.TabIndex = 7;
+            this.edPeriodEnd.TabIndex = 1;
             // 
             // pnGetDateTime
             // 
@@ -192,7 +192,7 @@ namespace Planning
             this.cbType.Location = new System.Drawing.Point(94, 73);
             this.cbType.Name = "cbType";
             this.cbType.Size = new System.Drawing.Size(155, 21);
-            this.cbType.TabIndex = 37;
+            this.cbType.TabIndex = 2;
             // 
             // RepPeriod
             // 

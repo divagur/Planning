@@ -15,14 +15,19 @@ using Microsoft.Office.Interop.Excel;
 using DataTable = System.Data.DataTable;
 using Rectangle = System.Drawing.Rectangle;
 using Font = System.Drawing.Font;
+using System.Text.RegularExpressions;
+//using System.Windows;
+
 namespace Planning
 {
     
     public partial class frmMain : Form
     {
         const int REPORT_PERIOD = 101;
+        const int REPORT_STATISTIC = 102;
+        const int REPORT_TC = 103;
 
-       private string CR = Environment.NewLine;
+        private string CR = Environment.NewLine;
 
         //DataService dataService = new DataService();
         // = new PlanningDbContext();
@@ -38,12 +43,14 @@ namespace Planning
         private int currShpId = 0;
         private int currColorIdx = 0;
         bool IsFormLoad = false;
+        bool isPaint = true;
         frmProgressBar wait;
         private List<Color> rowColors = new List<Color>()
         {
           Color.FromArgb(220, 220, 220),
           Color.FromArgb(220, 230, 241)
         };
+
         public frmMain()
         {
             InitializeComponent();
@@ -69,7 +76,7 @@ namespace Planning
             Clipboard.SetText(tblShipments.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
         }
 
-        private SqlDataReader GetShipment(DateTime DateFrom, DateTime? DateTill, string ShpId, string OrdId, int ShpType = -1)
+        private DataSet GetShipment(DateTime DateFrom, DateTime? DateTill, string ShpId, string OrdId, int ShpType = -1)
         {
             SqlHandle sql = new SqlHandle(DataService.connectionString);
             sql.SqlStatement = "SP_PL_MainQueryP";
@@ -92,7 +99,7 @@ namespace Planning
                 MessageBox.Show(sql.LastError, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }
-            return sql.Reader;
+            return sql.DataSet;
                 
 
         }
@@ -168,20 +175,19 @@ namespace Planning
             
             tbMain.Enabled = false;
             miDicts.Enabled = false;
-            var reader = GetShipment(edCurrDay.Value, null, null,null);
-            if (reader == null)
+            var dataSet = GetShipment(edCurrDay.Value, null, null,null);
+            if (dataSet == null)
             {
                 return;
             }
             tbMain.Enabled = true;
             miDicts.Enabled = true;
-            DataSet ds = new DataSet();
-            /*ds.Tables.Add();
-
-            ds.Tables[0].Load(reader);
-            */
+            
             shipmentsDataTable.Clear();
-            shipmentsDataTable.Load(reader);
+            shipmentsDataTable = dataSet.Tables[0].Clone();
+            shipmentsDataTable.Load(dataSet.Tables[0].CreateDataReader());
+            //shipmentsDataTable.Load(reader);
+            
             tblShipments.AutoGenerateColumns = false;
             tblShipments.DataSource = shipmentsDataTable;// ds.Tables[0];
 
@@ -378,7 +384,7 @@ namespace Planning
             }
             CloseAllTabs();
             DataService.settingsHandle.SetParamValue("Connection\\UserName", DataService.setting.UserName);
-            statusInfo.Text = "Пользователь: " + DataService.setting.UserName;
+            //statusInfo.Text = $"База данных:{DataService.setting.BaseName} Пользователь: {DataService.setting.UserName}";
 
             return true;
         }
@@ -396,35 +402,33 @@ namespace Planning
             }
             return String.Join(",", result);
         }
+
+        private void CheckCorrectSettings()
+        {
+            bool isOk = true;
+            foreach (var report in DataService.setting.Reports)
+            {
+                if (report.TemplatePath == "")
+                {
+                    isOk = false;
+                    break;
+                }
+            }
+            if (!isOk)
+            {
+                MessageBox.Show("Для некоторых отчетов не указаны шаблоны" + Environment.NewLine +
+                    "Без указания шаблонов работа отчетов будет не возможна", "Предупреждение", MessageBoxButtons.OK,MessageBoxIcon.Warning);
+            }
+        }
+
         private void frmMain_Load(object sender, EventArgs e)
         {
-            /*
-            //Получаем параметры из конфига
-            DataService.setting.ServerName = settingsHandle.GetParamStringValue("Connection\\ServerName");
-            DataService.setting.BaseName = settingsHandle.GetParamStringValue("Connection\\BaseName");
-            DataService.setting.UserName = settingsHandle.GetParamStringValue("Connection\\UserName");
-            //setting.Password = settingsHandle.GetParamStringValue("Connection\\Password");
-
-            DataService.setting.ShipmentReport = settingsHandle.GetParamStringValue("ReportTemplate\\ShipmentTemplate");
-            DataService.setting.ReceiptReport = settingsHandle.GetParamStringValue("ReportTemplate\\ReceiptTemplate");
-            DataService.setting.PeriodReport = settingsHandle.GetParamStringValue("ReportTemplate\\PeriodTemplate");
-            DataService.setting.TaskUpdateInterval = settingsHandle.GetParamDecimalCheckValue("TaskUpdateInterval",0,10);
-            DataService.setting.TaskViewFonSize= settingsHandle.GetParamDecimalCheckValue("TaskViewFonSize", 0, 5);
-
-
-            DataService.setting.CurrentTaskColumns = settingsHandle.GetParamList<CurrTaskColumn>("CurrentTaskColumns");
-
-            DataService.setting.VolumeCalcTemplate = settingsHandle.GetParamList<VolumeCalcConstant>("VolumeCalcTemplates");
-            */
+            cbPaint.Checked = isPaint;
             IsFormLoad = true;
+            DataService.settingsHandle  = new SettingsHandle("Settings.xml", DataService.setting);
             DataService.settingsHandle.Load();
-            /*
-            if(setting == null)
-            {
-                setting = new Settings();
-                UpdateSetting();
-            }
-            */
+
+           
             //Если нет сервера или базы, то выдадим окно настройки
             if (DataService.setting.BaseName == "" || DataService.setting.ServerName =="")
             {
@@ -454,32 +458,9 @@ namespace Planning
                     return;
                 }
             }
-            /*
-            //Если в настройках нет пользователя то запросим
-            if (DataService.setting.UserName == "")
-            {
-                if (!GetLogin())
-                {
-                    this.Close();
-                }
-            }
-            */
+          
             UpdateSetting();
-
-
-            //LVConnect = new SqlConnection(LVconnectionString);
-            //LVConnect.Open();
-            /*
-            SqlHandle hSql = new SqlHandle(DataService.connectionString);
-            hSql.Connect();
-            hSql.IsResultSet = false;
-            hSql.TypeCommand = CommandType.StoredProcedure;
-            hSql.SqlStatement = "Lvision.sys.sp_setapprole";
-            hSql.AddCommandParametr(new SqlParameter { ParameterName = "@rolename", Value = "pl_role" });
-            hSql.AddCommandParametr(new SqlParameter { ParameterName = "@password", Value = "planning" });
-            hSql.Execute();
-            hSql.Disconnect();
-            */
+            CheckCorrectSettings();
 
             List<string> action = DataService.settingsHandle.GetParamStringValue("View\\ActionFilter").Split(',').ToList();
             foreach (ToolStripMenuItem item in btnActionFilter.DropDownItems)
@@ -502,6 +483,7 @@ namespace Planning
             DataService.Dicts.Add("ТаймСлоты", new DictInfo { TableName = "time_slot", NameColumn = "name" });
             DataService.Dicts.Add("ТК", new DictInfo { TableName = "transport_company", NameColumn = "name" });
             DataService.Dicts.Add("Типы_транспорта", new DictInfo { TableName = "transport_type", NameColumn = "name" });
+            DataService.Dicts.Add("Поставщики", new DictInfo { TableName = "suppliers", NameColumn = "name" });
             //dataService.Dicts.Add("Ворота", "gateways");
 
 
@@ -536,10 +518,10 @@ namespace Planning
             }
 
 
-            
-            
 
-            statusInfo.Text = "Пользователь: " + DataService.setting.UserName;
+
+
+            statusInfo.Text = $"База данных:[{DataService.setting.BaseName}] Пользователь: [{DataService.setting.UserName}]";
             IsFormLoad = false ;
         }
 
@@ -560,16 +542,7 @@ namespace Planning
 
         private void miDictDelayReasons_Click(object sender, EventArgs e)
         {
-            /*
-            DictSimple dict = new DictSimple();
-            dict.TableName = "delay_reasons";
-            dict.Title = "Справочник: Причины задержки";
 
-            dict.Columns.Add(new DictColumn {Id = "Id", IsPK = true, IsVisible = false, Title = "Код", DataField = "id", DataType = SqlDbType.Int});
-            dict.Columns.Add(new DictColumn { Id = "name", IsPK = false, IsVisible = true, Title = "Наименование", DataField = "name", Width = 254, DataType = SqlDbType.NVarChar, Length = 254 });
-
-            SimpleDict frmDelayReasons = new SimpleDict(dict);
-            */
             var frmDelayReasons = new DictDelayReasons();
             SetFormPrivalage(frmDelayReasons, "DelayReasons");
             AddFormTab(frmDelayReasons, "Причины задержки");
@@ -637,12 +610,16 @@ namespace Planning
         {
             if (tblShipments.SelectedRows.Count <= 0)
                 return;
+
             DataService.InitContext();
             ShipmentParam shipmentAddResult = new ShipmentParam();
             if (tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colDirection"].Value.ToString()!="перем")
             {
+                
+
                 shipmentAddResult.IsShipment = true;
                 shipmentAddResult.Result = DataService.context.Shipments.Find(tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colId"].Value);
+                
             }
             else
             {
@@ -662,9 +639,14 @@ namespace Planning
                 frmShipmentEdit = new shipmen_edit((Shipment)shipmentAddResult.Result);
             else
                 frmShipmentEdit = new shipmen_edit((Movement)shipmentAddResult.Result);
+
+
+
             frmShipmentEdit.ClearFields();
             frmShipmentEdit.Populate();
             frmShipmentEdit.LockField(new List<string>() {"btnOK","btnCancel" }, mainFormAccess.IsEdit);
+
+            
             if (frmShipmentEdit.ShowDialog() == DialogResult.OK)
             {
                 DataService.context.SaveChanges();
@@ -786,7 +768,7 @@ namespace Planning
 
         private void tblShipments_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
-            if (e.RowIndex >= 0)
+            if (isPaint && e.RowIndex >= 0)
             {
                 if (e.ColumnIndex == ((DataGridView)sender).Columns["colCopmletePct"].Index)
                 {
@@ -855,6 +837,8 @@ namespace Planning
 
         private void tblShipments_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
         {
+            if (!isPaint)
+                return;
             var CellColor = (int)((DataGridView)sender).Rows[e.RowIndex].Cells["BackgroundColor"].Value;
             var CellShpId = (int)((DataGridView)sender).Rows[e.RowIndex].Cells["colId"].Value;
 
@@ -1099,6 +1083,7 @@ namespace Planning
 
         private void miTransportType_Click(object sender, EventArgs e)
         {
+            
             DictSimple dict = new DictSimple();
 
             dict.TableName = "transport_type";
@@ -1107,10 +1092,11 @@ namespace Planning
             dict.Columns.Add(new DictColumn { Id = "Id", IsPK = true, IsVisible = false, Title = "Код", DataField = "id", DataType = SqlDbType.Int });
             dict.Columns.Add(new DictColumn { Id = "Name", IsPK = false, IsVisible = true, Title = "Наименование", DataField = "name", Width = 254, DataType = SqlDbType.VarChar, Length = 20 });
             dict.Columns.Add(new DictColumn { Id = "Tonnage", IsPK = false, IsVisible = true, Title = "Тоннаж", DataField = "tonnage", Width = 80, DataType = SqlDbType.Int });
+            
 
-            var frmTypeTransport = new SimpleDict(dict);
-            SetFormPrivalage(frmTypeTransport, "TransporType");
-            AddFormTab(frmTypeTransport, "Типы транспорта");
+            var frmTransporType = new SimpleDict(dict);
+            SetFormPrivalage(frmTransporType, "TransporType");
+            AddFormTab(frmTransporType, "Типы транспорта");
         }
 
         private void miDictTC_Click(object sender, EventArgs e)
@@ -1140,15 +1126,24 @@ namespace Planning
             if (shipment == null)
                 return;
             Excel.Range range;
+            
+            SettingReport settingReport = DataService.setting.Reports.Find(r => r.Name == (shipment.ShIn == false ? "Лист отгрузки" : "Лист прихода"));
+            if (settingReport == null)
+            {
+                MessageBox.Show("Не задан шаблон печати", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             if (shipment.ShIn == false)
             {
+                /*
                 if (DataService.setting.ShipmentReport == "")
                 {
                     MessageBox.Show("Не задан шаблон печати листа отгрузки", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
+                */
                 DataRow[] printRows = (tblShipments.DataSource as DataTable).Select("ShpId = "+ tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colId"].Value.ToString());
-                ExcelPrint excel = new ExcelPrint(DataService.setting.ShipmentReport);
+                ExcelPrint excel = new ExcelPrint(settingReport.TemplatePath);
                 //Код отгрузки
                 excel.SetValue(1, 5, 2, "*PL"+printRows[0]["ShpId"] + "*");
                 excel.SetValue(1, 5, 3, "PL"+printRows[0]["ShpId"]);
@@ -1242,11 +1237,13 @@ namespace Planning
             }
            else
             {
+                /*
                 if (DataService.setting.ReceiptReport == "")
                 {
                     MessageBox.Show("Не задан шаблон печати листа отгрузки", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
+                */
                 if (tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colIdNakl"].Value.ToString() == "")
                 {
                     MessageBox.Show("Отгрузка не содержит ни одного заказа. Печать не возможна", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -1255,7 +1252,7 @@ namespace Planning
                 string filter = "ShpId = " + tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colId"].Value.ToString();
                 //                +" and OrdId = "+ tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colIdNakl"].Value.ToString();
                 DataRow[] printRows = (tblShipments.DataSource as DataTable).Select(filter);
-                ExcelPrint excel = new ExcelPrint(DataService.setting.ReceiptReport);
+                ExcelPrint excel = new ExcelPrint(settingReport.TemplatePath);
                 string orderLVCode = "";
                 //Соберем заказы
                 for (int i = 0; i < printRows.Count(); i++)
@@ -1339,8 +1336,8 @@ namespace Planning
                 sql.Execute();
                 if (sql.HasRows())
                 {
-                    sql.Reader.Read();
-                    edCurrDay.Value = sql.Reader.GetDateTime(0).Date;
+                    sql.Read();
+                    edCurrDay.Value = (DateTime)sql.GetNullDateTimeValue(0,true);
                     SearchByOrder(true);
                 }    
                 sql.Disconnect();
@@ -1375,6 +1372,34 @@ namespace Planning
             }
         }
 
+
+        private void miRepStatistic_Click(object sender, EventArgs e)
+        {
+            ReportParams reportParams = new ReportParams();
+            RepStatistic repStatistic = new RepStatistic(reportParams);
+            if (repStatistic.ShowDialog() == DialogResult.OK)
+            {
+                ShowReport(REPORT_STATISTIC, reportParams);
+            }
+        }
+
+        private void miRepTC_Click(object sender, EventArgs e)
+        {
+            ReportParams reportParams = new ReportParams();
+            RepTC repTC = new RepTC(reportParams);
+            if (repTC.ShowDialog() == DialogResult.OK)
+            {
+                ShowReport(REPORT_TC, reportParams);
+            }
+        }
+
+        #region Reports
+
+        private SettingReport GetReportSetting(string reportName)
+        {
+            return DataService.setting.Reports.Find(r => r.Name == reportName);
+            
+        }
         private void ShowReport(int ReportId, ReportParams reportParams)
         {
             switch (ReportId)
@@ -1382,47 +1407,322 @@ namespace Planning
                 case REPORT_PERIOD:
                                     ShowReportPeriod(reportParams);
                                     break;
+                case REPORT_STATISTIC:
+                                    ShowReportStatistic(reportParams);
+                                    break;
+                case REPORT_TC:
+                                    ShowReportTC(reportParams);
+                                    break;
                 default:
                     break;
             }
         }
 
-        private void ShowReportPeriod(ReportParams reportParams)
+        private void ShowReportTC(ReportParams reportParams)
         {
-            //bwProgress.RunWorkerAsync(reportParams);
-            
+            SettingReport settingReport = GetReportSetting("Отчет по ТС");
+            if (settingReport == null)
+            {
+                MessageBox.Show("Не задан шаблон", "Ошибка при формировании отчета", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            ExcelPrint excel;
+            Excel.Range range;
+            try
+            {
+
+                excel = new ExcelPrint(settingReport.TemplatePath);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка при формировании отчета", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            miRepTC.Enabled = false;
             frmProgressBar wait = new frmProgressBar(0, 100);
             wait.TopLevel = true;
             wait.TopMost = true;
             wait.Show();
-            
-            miRepPeriod.Enabled = false;
-            
-            List<string> columnOrder = new List<string> {"ShpId","OrdId","ShpDate","SlotTime","InOut","OrdLVCode","OrdLVType","KlientName","OrderStatus","PrcReady","ShpComment","OrdComment","GateName","ShpSpecialCond","ShpDriverPhone","ShpDriverFio","TransportCompanyName","TransportTypeName","ShpVehicleNumber","ShpTrailerNumber","ShpAttorneyNumber",
-                    "ShpAttorneyDate","ShpSubmissionTime","ShpStartTime", "ShpEndTimePlan","ShpEndTimeFact","ShpDelayReasonName", "ShpDelayComment", "DepCode", "ShpStampNumber" };
-            int[] colNumber = new int[columnOrder.Count];
-            Excel.Range range;
-
-            
-
-
             wait.SetText("Формирование отчета: получение данных....");
-            Excel.Application excelApp = new Excel.Application();
-            ExcelPrint excel = new ExcelPrint(DataService.setting.PeriodReport);
+
+
+            SqlHandle sql = new SqlHandle(DataService.connectionString);
+            sql.SqlStatement = "SP_PL_ReportTC";
+            sql.Connect();
+            sql.TypeCommand = CommandType.StoredProcedure;
+            sql.IsResultSet = true;
+
+            DateTime beginDate;
+            DateTime endDate;
+
+            DateTime? beginDateN = null;
+            DateTime? endDateN = null;
+
+
+            if (DateTime.TryParse(reportParams["PeriodBegin"], out beginDate))
+                beginDateN = (DateTime?)beginDate;
+
+            if (DateTime.TryParse(reportParams["PeriodEnd"], out endDate))
+                endDateN = (DateTime?)endDate;
+
+
+            sql.AddCommandParametr(new SqlParameter { ParameterName = "@From", Value = beginDateN });
+            sql.AddCommandParametr(new SqlParameter { ParameterName = "@Till", Value = endDateN });
+            bool success = sql.Execute();
+
+            if (!success)
+            {
+                MessageBox.Show(sql.LastError, "Ошибка при выборке данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            if (!sql.HasRows())
+            {
+                MessageBox.Show("Нет данных для формирования отчета", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            excel.SetValue(1, 1, 2, "Данные по ТС за период с " + reportParams["PeriodBegin"] + " по " + reportParams["PeriodEnd"]);
+            wait.SetRange(0, sql.DataSet.Tables[0].Rows.Count);
+            wait.SetPosition(1);
+            wait.SetText("Формирование отчета: вывод данных....");
+
+
+
+
+            int rowIdx = 0;
+            string[,] printRow = new string[1, sql.DataSet.Tables[0].Columns.Count];
+            foreach (DataRow r in sql.DataSet.Tables[0].Rows)
+            {
+
+                for (int colIdx = 0; colIdx < sql.DataSet.Tables[0].Columns.Count; colIdx++)
+                {
+                    printRow[0, colIdx] = r[colIdx].ToString();
+                }
+                excel.SetRowValues(1, rowIdx + 5, sql.DataSet.Tables[0].Columns.Count, printRow);
+                rowIdx++;
+                wait.SetPosition(rowIdx);
+            }
+
+
+            range = excel.SelectCells(1, 1, 5, sql.DataSet.Tables[0].Columns.Count, rowIdx + 4);
+            range.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
+            range.Borders.Item[Excel.XlBordersIndex.xlEdgeLeft].Weight = Excel.XlBorderWeight.xlMedium;
+            range.Borders.Item[Excel.XlBordersIndex.xlEdgeTop].Weight = Excel.XlBorderWeight.xlMedium;
+            range.Borders.Item[Excel.XlBordersIndex.xlEdgeRight].Weight = Excel.XlBorderWeight.xlMedium;
+            range.Borders.Item[Excel.XlBordersIndex.xlEdgeBottom].Weight = Excel.XlBorderWeight.xlMedium;
+            excel.Visible = true;
+            wait.Close();
+            miRepTC.Enabled = true;
+        }
+
+        private void ShowReportStatistic(ReportParams reportParams)
+        {
+            SettingReport settingReport = GetReportSetting("Статистика за период");
+            if (settingReport == null)
+            {
+                MessageBox.Show("Не задан шаблон", "Ошибка при формировании отчета", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+
+            ExcelPrint excel;
+            Excel.Range range;
+            try
+            {
+
+                excel = new ExcelPrint(settingReport.TemplatePath);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка при формировании отчета", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            
+
+            miRepStatistic.Enabled = false;
+            frmProgressBar wait = new frmProgressBar(0, 100);
+            wait.TopLevel = true;
+            wait.TopMost = true;
+            wait.Show();
+            wait.SetText("Формирование отчета: получение данных....");
+
+            string year = reportParams["Year"];
+            string monthBegin = reportParams["MonthBegin"];
+            string monthEnd = reportParams["MonthEnd"];
+            string admCoef = reportParams["AdmCoeff"];
+
+            string dateBegin = String.Format("01.{0}.{1}", monthBegin, year);
+            string dateEnd = String.Format("{0}.{1}.{2}",DateTime.DaysInMonth(Int32.Parse(year), Int32.Parse(monthEnd)), monthEnd, year);
+
+            SqlHandle sql = new SqlHandle(DataService.connectionString);
+            sql.SqlStatement = 
+                string.Format(@"select m.m_name,'' div_kpi,
+                    (
+			            select count(so1.id) so_count 
+			            from shipments s1			
+				            join shipment_orders so1 on s1.id = so1.shipment_id
+			            where 
+				            s1.submission_time is not null
+				            and YEAR(s_date) = t.s_year
+				            and MONTH(s_date) =t.s_month		
+		            ) s_count, 
+                    count(distinct t.s_id) tc_count, 
+		            sum(in_before_plan) in_before_plan,
+		            sum(in_after_plan) in_after_plan,
+		            sum(in_plan) in_plan,
+		            sum(out_before_plan) out_before_plan,
+		            sum(out_after_plan) out_after_plan,
+		            sum(out_plan) out_plan
+                from
+	                (select 1 m_id, 'Январь' m_name
+	                union
+	                select 2, 'Февраль'
+	                union
+	                select 3, 'Март'
+	                union
+	                select 4, 'Апрель'
+	                union
+	                select 5, 'Май'
+	                union
+	                select 6, 'Июнь'
+	                union
+	                select 7, 'Июль'
+	                union
+	                select 8, 'Август'
+	                union
+	                select 9, 'Сентябрь'
+	                union
+	                select 10, 'Октябрь'
+	                union
+	                select 11, 'Ноябрь'
+	                union
+	                select 12, 'Декабрь'
+                )m
+                left join
+                (
+                    select YEAR(s_date) s_year, MONTH(s_date) s_month,  s.s_date,s.id s_id,
+
+                    case when s_in = 1 and s.submission_time < dateadd(minute,-{0},convert(datetime,convert(varchar,s_date,103)+ ' '+cast(ts.slot_time as varchar),104)) then 1 else 0 end in_before_plan,
+                    case when s_in = 1 and s.submission_time > dateadd(minute,{0},convert(datetime,convert(varchar,s_date,103)+ ' '+cast(ts.slot_time as varchar),104)) then 1 else 0 end in_after_plan,
+                    case when s_in = 1 and dateadd(minute,-{0},convert(datetime,convert(varchar,s_date,103)+ ' '+cast( ts.slot_time as varchar),104))
+				                    <=s.submission_time and s.submission_time <=dateadd(minute,{0},convert(datetime,convert(varchar,s_date,103)+ ' '+cast( ts.slot_time as varchar),104)) then 1 else 0 end in_plan,
+
+                    case when s_in = 0 and s.submission_time < dateadd(minute,-{0},convert(datetime,convert(varchar,s_date,103)+ ' '+cast( ts.slot_time as varchar),104)) then 1 else 0 end out_before_plan,
+                    case when s_in = 0 and s.submission_time > dateadd(minute,{0},convert(datetime,convert(varchar,s_date,103)+ ' '+cast( ts.slot_time as varchar),104)) then 1 else 0 end out_after_plan,
+                    case when s_in = 0 and dateadd(minute,-{0},convert(datetime,convert(varchar,s_date,103)+ ' '+cast( ts.slot_time as varchar),104))
+				                    <=s.submission_time and s.submission_time <=dateadd(minute,{0},convert(datetime,convert(varchar,s_date,103)+ ' '+cast( ts.slot_time as varchar),104)) then 1 else 0 end out_plan
+
+                    from shipments s
+	                    join time_slot ts on s.time_slot_id = ts.id
+                    where 
+                        s.submission_time is not null
+	                    and s_date >= convert(datetime,'{1}', 104)
+	                    and s_date <=convert(datetime,'{2}', 104)
+                ) t on t.s_month = m.m_id
+                group by t.s_year,m.m_id, m.m_name,t.s_month
+                order by m.m_id", admCoef, dateBegin, dateEnd);
+            sql.Connect();
+            sql.TypeCommand = CommandType.Text;
+            sql.IsResultSet = true;
+
+            bool success = sql.Execute();
+
+            if (!success)
+            {
+                MessageBox.Show(sql.LastError, "Ошибка при выборке данных", MessageBoxButtons.OK, MessageBoxIcon.Error);              
+            }
+
+
+            excel.SetValue(1, 1, 2, "Статистика за " + year + " год ");
+            wait.SetRange(0, sql.DataSet.Tables[0].Rows.Count);
+            wait.SetPosition(1);
+            wait.SetText("Формирование отчета: вывод данных....");
+            int rowIdx = 0;
+            string[,] printRow = new string[1, sql.DataSet.Tables[0].Columns.Count];
+            foreach (DataRow r in sql.DataSet.Tables[0].Rows)
+            {
+                
+                for (int colIdx = 0; colIdx < sql.DataSet.Tables[0].Columns.Count; colIdx++)
+                {   
+                    printRow[0, colIdx] = r[colIdx].ToString();
+                }
+                excel.SetRowValues(1, rowIdx + 5, sql.DataSet.Tables[0].Columns.Count, printRow);
+                rowIdx++;
+                wait.SetPosition(rowIdx);
+            }
+            
+            range = excel.SelectCells(1, 1, 5, sql.DataSet.Tables[0].Columns.Count, rowIdx + 4);
+            range.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
+            range.Borders.Item[Excel.XlBordersIndex.xlEdgeLeft].Weight = Excel.XlBorderWeight.xlMedium;
+            range.Borders.Item[Excel.XlBordersIndex.xlEdgeTop].Weight = Excel.XlBorderWeight.xlMedium;
+            range.Borders.Item[Excel.XlBordersIndex.xlEdgeRight].Weight = Excel.XlBorderWeight.xlMedium;
+            range.Borders.Item[Excel.XlBordersIndex.xlEdgeBottom].Weight = Excel.XlBorderWeight.xlMedium;
+            excel.Visible = true;
+            wait.Close();
+            miRepStatistic.Enabled = true;
+        }
+
+
+        private void ShowReportPeriod(ReportParams reportParams)
+        {
+            //bwProgress.RunWorkerAsync(reportParams);
+            
+           
+            
+            
+            
+            List<string> columnOrder = new List<string> {"ShpId","OrdId","ShpDate","SlotTime","InOut","OrdLVCode","OrdLVType",
+                "KlientName","OrderStatus","PrcReady","ShpComment","OrdComment","GateName","ShpSpecialCond","ShpDriverPhone",
+                "ShpDriverFio","TransportCompanyName","TransportTypeName","ShpVehicleNumber","ShpTrailerNumber","ShpAttorneyNumber",
+                "ShpAttorneyDate","ShpSubmissionTime","ShpStartTime", "ShpEndTimePlan","ShpEndTimeFact","CALC:CONCAT(ShpDate,SlotTime)",
+                "CALC:DIFFTIME(ShpSubmissionTime,ShpStartTime)","CALC:DIFFTIME({26},ShpStartTime)","CALC:DIFFTIME({26},ShpSubmissionTime)",
+                "ShpDelayReasonName", "ShpDelayComment",  "ShpStampNumber" };
+            //"DepCode",
+            int[] colNumber = new int[columnOrder.Count];
+
+            SettingReport settingReport = GetReportSetting("Отгрузки за период");
+            if (settingReport == null)
+            {
+                MessageBox.Show("Не задан шаблон", "Ошибка при формировании отчета", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            ExcelPrint excel;
+            try
+            {
+                
+                excel = new ExcelPrint(settingReport.TemplatePath);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка при формировании отчета", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            miRepPeriod.Enabled = false;
+            frmProgressBar wait = new frmProgressBar(0, 100);
+            wait.TopLevel = true;
+            wait.TopMost = true;
+            wait.Show();
+            wait.SetText("Формирование отчета: получение данных....");
+
+            Excel.Range range;
             int ShpType = int.Parse(reportParams["ShpType"])-1;
 
-            SqlDataReader dataRows = GetShipment(DateTime.Parse(reportParams["PeriodBegin"]), DateTime.Parse(reportParams["PeriodEnd"]), null, null, ShpType);
+            DataSet dataSet = GetShipment(DateTime.Parse(reportParams["PeriodBegin"]), DateTime.Parse(reportParams["PeriodEnd"]), null, null, ShpType);
             
             //SqlDataReader dataRows = GetShipment(edCurrDay.Value, null, null, null);
 
 
             excel.SetValue(1, 6, 2, "Данные за период с "+ reportParams["PeriodBegin"]+" по "+ reportParams["PeriodEnd"]);
-
+            /*
             DataTable dt = new DataTable();
             dt.Load(dataRows);
-      
+      */
             
-            wait.SetRange(0, dt.Rows.Count);
+            wait.SetRange(0, dataSet.Tables[0].Rows.Count);
             wait.SetPosition(1);
             wait.SetText("Формирование отчета: вывод данных....");
             
@@ -1431,14 +1731,22 @@ namespace Planning
             int rowIdx = 0;
 
             string[,] printRow = new string[1, columnOrder.Count];
-            foreach (DataRow r in dt.Rows)
+            foreach (DataRow r in dataSet.Tables[0].Rows)
             {
                 string cellValue;
+                
                 for (int colIdx = 0; colIdx < columnOrder.Count; colIdx++)
                 {
-                    //
-                    cellValue = r[columnOrder[colIdx]].ToString();
-                    
+                    cellValue = "";
+                    if (!columnOrder[colIdx].StartsWith("CALC"))
+                    {
+
+                        cellValue = r[columnOrder[colIdx]].ToString();
+                    }
+                    else
+                    {
+                        cellValue = CalculateColumnValue(r, printRow, columnOrder[colIdx].Substring(5));
+                    }
                     if (columnOrder[colIdx] == "ShpDate")
                     {
                         //columnOrder[colIdx]
@@ -1448,6 +1756,7 @@ namespace Planning
                     
                     //excel.SetValue(1, colIdx + 1, rowIdx, cellValue);
                     // 
+                    
                 }
                 //excel.SetValues(1, 1, rowIdx + 5, columnOrder.Count, rowIdx + 5, printRow);
                 excel.SetRowValues(1, rowIdx + 5, columnOrder.Count, printRow);
@@ -1465,7 +1774,73 @@ namespace Planning
             wait.Close();
             miRepPeriod.Enabled = true;
         }
+        
+        private string CalculateColumnValue(DataRow context, string[,] currentPrintRow, string Expr)
+        {
+            string result = "";
+            
+            var m = Regex.Match(Expr, @"^\s*(\w+)\s*\((.*)\)");
+            string[] param= null;
+            if (m.Groups.Count > 2)
+            {
+                if (m.Groups[2].Value.IndexOf(',') > 0)
+                    param = m.Groups[2].Value.Split(new char[] { ',' });
+                else
+                    param = new string[] { m.Groups[2].Value };
 
+            }
+
+            for(int i = 0;i<param.Length;i++)
+            {
+                if (param[i].StartsWith("[") && param[i].EndsWith("]"))
+                    param[i] = param[i].Trim(new char[] { '[',']'});
+                else
+                {                    
+                     
+                    if (param[i].StartsWith("{") && param[i].EndsWith("}"))
+                    {
+                        param[i] = currentPrintRow[0, Int32.Parse(param[i].Trim('{', '}'))];
+                    }
+                   if (context.Table.Columns.Contains(param[i]))
+                    {
+                        if (param[i] == "ShpDate")
+                            param[i] = context[param[i]].ToString().Substring(0, 10);
+                        else
+                            param[i] = context[param[i]].ToString();
+                    }
+      
+                }
+            }
+
+            switch (m.Groups[1].Value)
+            {
+                case "CONCAT":
+                                result = String.Join(" ", param);
+                                break;
+                case "DIFFTIME":
+                    DateTime dateTime1;
+                    DateTime dateTime2;
+                    if (!DateTime.TryParse(param[0], out dateTime1))
+                        return "";
+                    if (!DateTime.TryParse(param[1], out dateTime2))
+                        return "";
+                    TimeSpan diff = dateTime1 - dateTime2;
+                    return diff.ToString(@"hh\:mm\:ss");
+                    break;
+                default:
+                    break;
+            }
+
+
+            foreach (Group item in m.Groups)
+            {
+                Console.WriteLine(item.Value);
+            }
+
+            return result;
+        }
+
+        #endregion
         private void tblShipments_Sorted(object sender, EventArgs e)
         {
             CalcRowColor();
@@ -1486,76 +1861,7 @@ namespace Planning
             wait.IncPosition();
         }
 
-        private void bwProgress_DoWork(object sender, DoWorkEventArgs e)
-        {
-            frmProgressBar wait = new frmProgressBar(0, 100);
-            wait.TopLevel = true;
-            wait.TopMost = true;
-            wait.Show();
-
-            List<string> columnOrder = new List<string> {"ShpId","OrdId","ShpDate","SlotTime","InOut","OrdLVCode","OrdLVType","KlientName","OrderStatus","PrcReady","ShpComment","OrdComment","GateName","ShpSpecialCond","ShpDriverPhone","ShpDriverFio","TransportCompanyName","TransportTypeName","ShpVehicleNumber","ShpTrailerNumber","ShpAttorneyNumber",
-                    "ShpAttorneyDate","ShpSubmissionTime","ShpStartTime", "ShpEndTimePlan","ShpEndTimeFact","ShpDelayReasonName", "ShpDelayComment", "DepCode", "ShpStampNumber" };
-            int[] colNumber = new int[columnOrder.Count];
-            Excel.Range range;
-
-
-            ReportParams reportParams = (ReportParams)e.Argument;
-
-
-            wait.SetText("Формирование отчета: получение данных....");
-            ExcelPrint excel = new ExcelPrint(DataService.setting.PeriodReport);
-            SqlDataReader dataRows = GetShipment(DateTime.Parse(reportParams["PeriodBegin"]), DateTime.Parse(reportParams["PeriodEnd"]), null, null);
-
-            //SqlDataReader dataRows = GetShipment(edCurrDay.Value, null, null, null);
-            if (dataRows == null)
-            {
-                wait.Close();
-                bwProgress.CancelAsync();
-                return;
-            }
-            DataTable dt = new DataTable();
-            dt.Load(dataRows);
-            wait.SetRange(0, dt.Rows.Count);
-            wait.SetPosition(1);
-            wait.SetText("Формирование отчета: вывод данных....");
-            //Получим индексы колонок в резалсете
-            int colNumberIdx = 0;
-            foreach (string item in columnOrder)
-            {
-                colNumber[colNumberIdx++] = dataRows.GetOrdinal(item);
-            }
-            int rowIdx = 5;
-
-            while (dataRows.Read())
-            {
-                //excel.SetValue(1, dataRows.GetOrdinal("ShpID"), rowIdx, dataRows.GetValue(dataRows.GetOrdinal("ShpID")));
-
-
-
-                string cellValue;
-                for (int colIdx = 0; colIdx < colNumberIdx; colIdx++)
-                {
-                    cellValue = dataRows.GetValue(colNumber[colIdx]).ToString();
-
-                    if (dataRows.GetName(colNumber[colIdx]) == "ShpDate")
-                    {
-                        cellValue = dataRows.GetValue(colNumber[colIdx]).ToString().Substring(0, 10);
-                    }
-                    excel.SetValue(1, colIdx + 1, rowIdx, cellValue);
-                }
-
-                rowIdx++;
-                bwProgress.ReportProgress(rowIdx);
-
-            }
-            range = excel.SelectCells(1, 1, 5, columnOrder.Count, rowIdx);
-            range.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
-            range.Borders.Item[Excel.XlBordersIndex.xlEdgeLeft].Weight = Excel.XlBorderWeight.xlMedium;
-            range.Borders.Item[Excel.XlBordersIndex.xlEdgeTop].Weight = Excel.XlBorderWeight.xlMedium;
-            range.Borders.Item[Excel.XlBordersIndex.xlEdgeRight].Weight = Excel.XlBorderWeight.xlMedium;
-            range.Borders.Item[Excel.XlBordersIndex.xlEdgeBottom].Weight = Excel.XlBorderWeight.xlMedium;
-            excel.Visible = true;
-        }
+        
 
         private void bwProgress_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
@@ -1606,5 +1912,46 @@ namespace Planning
             DataService.settingsHandle.SetParamList<ShipmentColumn>("View\\ShipmentColumns", "ShipmentColumns", shipmentColumns);
             
         }
+
+        private void btnSearchEx_Click(object sender, EventArgs e)
+        {
+            frmSearch frmSearch = new frmSearch(edCurrDay.Value);
+            AddFormTab(frmSearch, "Расширенный поиск");
+           
+        }
+
+        private void menuMain_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void miDictSupplier_Click(object sender, EventArgs e)
+        {
+            /*
+            DictSimple dict = new DictSimple();
+
+            dict.TableName = "suppliers";
+            dict.Title = "Справочник: Поставщики";
+
+            dict.Columns.Add(new DictColumn { Id = "Id", IsPK = true, IsVisible = false, Title = "Код", DataField = "id", DataType = SqlDbType.Int });
+            dict.Columns.Add(new DictColumn { Id = "Name", IsPK = false, IsVisible = true, Title = "Наименование", DataField = "name", Width = 254, DataType = SqlDbType.VarChar, Length = 254 });
+            dict.Columns.Add(new DictColumn { Id = "IsActive", IsPK = false, IsVisible = true, Title = "Активная", DataField = "is_active", Width = 80, DataType = SqlDbType.Bit, DefaultValue = 1 });
+            */
+
+            var frmSupplier = new Suppliers();
+            SetFormPrivalage(frmSupplier, "Supplier");
+            AddFormTab(frmSupplier, "Поставщики");
+        }
+
+        private void cbPaint_CheckedChanged(object sender, EventArgs e)
+        {
+            isPaint = cbPaint.Checked;
+            tblShipments.Invalidate();
+            tblShipments.Refresh();
+        }
+
+
+
+
     }
 }

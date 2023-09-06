@@ -6,11 +6,7 @@ using System.Threading.Tasks;
 
 namespace Planning
 {
-    class ReportParamItem
-    {
-        public string Name { get; set; }
-        public string Value { get; set; }
-    }
+   
     public class ReportParams
     {
         List<ReportParamItem> _reportParams = new List<ReportParamItem>();

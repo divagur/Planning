@@ -196,6 +196,7 @@ namespace Planning
             SetParamValue("TaskViewFonSize", _settings.TaskViewFonSize.ToString());
             SetParamList<CurrTaskColumn>("CurrentTaskColumns", "Column", _settings.CurrentTaskColumns);
             SetParamList<VolumeCalcConstant>("VolumeCalcTemplates", "Template", _settings.VolumeCalcTemplate);
+            SetParamList<SettingReport>("Reports", "Report", _settings.Reports);
             SetParamValue("VolumeCalcParams\\ImportStartRow", _settings.volumeCalcParams.ImportStartRow);
             SetParamValue("VolumeCalcParams\\ImportColVendorCode", _settings.volumeCalcParams.ImportColVendorCode);
             SetParamValue("VolumeCalcParams\\ImportColName", _settings.volumeCalcParams.ImportColName);
@@ -216,7 +217,16 @@ namespace Planning
             _settings.TaskViewFonSize = GetParamDecimalCheckValue("TaskViewFonSize", 0, 5);
             _settings.CurrentTaskColumns = GetParamList<CurrTaskColumn>("CurrentTaskColumns");
             _settings.VolumeCalcTemplate = GetParamList<VolumeCalcConstant>("VolumeCalcTemplates");
-
+            _settings.Reports = GetParamList<SettingReport>("Reports");
+            if (_settings.Reports.Count == 0)
+            {
+                _settings.Reports = new List<SettingReport>();
+                _settings.Reports.Add(new SettingReport() { Id = "1", Name = "Лист отгрузки", TemplatePath = _settings.ShipmentReport });
+                _settings.Reports.Add(new SettingReport() { Id = "2", Name = "Лист прихода", TemplatePath = _settings.ReceiptReport });
+                _settings.Reports.Add(new SettingReport() { Id = "3", Name = "Отгрузки за период", TemplatePath = _settings.PeriodReport });
+                _settings.Reports.Add(new SettingReport() { Id = "4", Name = "Статистика за период", TemplatePath = "" });
+                _settings.Reports.Add(new SettingReport() { Id = "5", Name = "Отчет по ТС", TemplatePath = "" });
+            }
             _settings.volumeCalcParams.ImportStartRow = GetParamIntValue("VolumeCalcParams\\ImportStartRow",2);
             _settings.volumeCalcParams.ImportColVendorCode = GetParamIntValue("VolumeCalcParams\\ImportColVendorCode",1);
             _settings.volumeCalcParams.ImportColName = GetParamIntValue("VolumeCalcParams\\ImportColName", 2);
