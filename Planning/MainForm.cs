@@ -1482,7 +1482,7 @@ namespace Planning
                 MessageBox.Show("Нет данных для формирования отчета", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            excel.SetValue(1, 1, 2, "Данные по ТС за период с " + reportParams["PeriodBegin"] + " по " + reportParams["PeriodEnd"]);
+            excel.SetValue(1, 1, 2, "Данные по ТС за период с " + reportParams["PeriodBegin"] + " по " + reportParams["PeriodEnd"]+ ". Опоздание (часы, минуты), с учетом допуска +20 мин");
             wait.SetRange(0, sql.DataSet.Tables[0].Rows.Count);
             wait.SetPosition(1);
             wait.SetText("Формирование отчета: вывод данных....");
@@ -1491,13 +1491,21 @@ namespace Planning
 
 
             int rowIdx = 0;
+            Char separator = System.Globalization.CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator[0];
             string[,] printRow = new string[1, sql.DataSet.Tables[0].Columns.Count];
             foreach (DataRow r in sql.DataSet.Tables[0].Rows)
             {
 
                 for (int colIdx = 0; colIdx < sql.DataSet.Tables[0].Columns.Count; colIdx++)
                 {
-                    printRow[0, colIdx] = r[colIdx].ToString();
+                    string value = r[colIdx].ToString();
+                    if (colIdx == 8)
+                    {
+                        
+                        value = value == "" ? "" : Decimal.Parse(r[colIdx].ToString().Replace(',', separator)).ToString().Replace(separator, ',');
+                    }
+                        
+                    printRow[0, colIdx] = value;
                 }
                 excel.SetRowValues(1, rowIdx + 5, sql.DataSet.Tables[0].Columns.Count, printRow);
                 rowIdx++;

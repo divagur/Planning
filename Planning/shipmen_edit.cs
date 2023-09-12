@@ -758,8 +758,16 @@ namespace Planning
             _context.SaveChanges();
             if (BindOrderToLV())
             {
-                
+               
                 bool isAllBindings = true;
+                var listOrdId = _shipment.ShipmentOrders.Select(o => (int?)o.Id).ToList();
+                var ordParts = _context.ShipmentOrderParts.Where(s => listOrdId.Contains(s.ShOrderId)).ToList();
+                /*foreach (var item in _context.ShipmentOrderParts.Where(s=> _shipment.ShipmentOrders.Select(o=>o.Id).ToList().Contains((int)s.ShOrderId)))
+                {
+                    _context.Entry(item).Reload();
+                }
+                */
+
                 foreach (var shipmentOrder in _shipment.ShipmentOrders)
                 {
                     _context.Entry(shipmentOrder).Reload();

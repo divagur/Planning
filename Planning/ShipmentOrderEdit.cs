@@ -110,7 +110,7 @@ namespace Planning
                 txtOrderId.Text = order.LVCode;
                 _shipmentOrder.LVOrderId = order.LVID;
                 int? DepositorLVId = _shipment.DepositorId;
-
+                _shipmentOrder.IsBinding = true;
                 LVOrder_Manager Order_Manager = new LVOrder_Manager();
 
                 var OrderParts = Order_Manager.GetList(DepositorLVId, 0, 0, order.LVID);
@@ -121,6 +121,7 @@ namespace Planning
                     orderPart.OsLvId = lVOrder.OstID;
                     orderPart.OsLvCode = lVOrder.OstCode;
                     orderPart.ShOrderId = _shipmentOrder.Id;
+                    orderPart.IsBinding = true;
                     _shipmentOrder.ShipmentOrderParts.Add(orderPart);
                 }
             }
