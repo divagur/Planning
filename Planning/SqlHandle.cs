@@ -72,8 +72,8 @@ namespace Planning
         {
             if (row == null)
                 return 0;
-
-            return row[columnIndex] == null ? 0 : (int?)(Int32.Parse(row[columnIndex].ToString()));
+             
+            return row[columnIndex] == null || row[columnIndex].ToString()==String.Empty? 0 : (int?)(Int32.Parse(row[columnIndex].ToString()));
 
         }
         public string GetStringValue(DataRow row, int columnIndex)
