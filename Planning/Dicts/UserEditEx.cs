@@ -122,7 +122,7 @@ namespace Planning
         {
             if (!CanSave())
                 return false;
-
+            
             if (_isNew)
             {
                 if (!DataService.CreateLogin(edLogin.Text, edPassword.Text, cbRegType.SelectedIndex == 0 ? true:false))
@@ -147,9 +147,10 @@ namespace Planning
                     return false;
                 }
             }
+            
 
             _user.Login = edLogin.Text;
-            
+           // _user.Password = DataService.EncryptHash(edPassword.Text);
             RemoveAllGroups();
             foreach (DataGridViewRow row in tblGroup.Rows)
             {
@@ -186,10 +187,17 @@ namespace Planning
             foreach(DataGridViewRow row in tblGroup.Rows)
             {
                 if (row.Selected)
+                {
+                    //UserGrpPrvlg userGrpPrvlg = _context.UserGrpPrvlgs.First(g=>g.GrpId == Int32.Parse(row.Cells["colGrpId"].Value.ToString()));
+                    UserGroup userGroup =_user.UserGroups.First(g=>g.Id == Int32.Parse(row.Cells["colGrpId"].Value.ToString()));
+                    if (userGroup != null)
+                    {
+                        _user.UserGroups.Remove(userGroup);
+                        tblGroup.Rows.Remove(tblGroup.CurrentRow);
+                    }
 
-
-
-                    tblGroup.Rows.Remove(tblGroup.CurrentRow);
+                }
+                    
             }
             
         }

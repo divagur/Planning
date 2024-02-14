@@ -11,6 +11,7 @@ using System.Configuration;
 using MDIWindowManager;
 using System.Data.SqlClient;
 using Excel = Microsoft.Office.Interop.Excel;
+
 using Microsoft.Office.Interop.Excel;
 using DataTable = System.Data.DataTable;
 using Rectangle = System.Drawing.Rectangle;
@@ -236,7 +237,7 @@ namespace Planning
                    */ 
         }
 
-        private void UpdateSetting()
+        private void InitContext()
         {
             
             DataService.connectionString = DataService.BuildConnectionString(DataService.setting.ServerName,
@@ -336,7 +337,7 @@ namespace Planning
 
         private void LoginUser()
         {
-            UpdateSetting();
+            InitContext();
             UserPrvlg = DataService.GetPrvlg(DataService.setting.UserName);
             UpdateFunctionPrvlg();
 
@@ -384,6 +385,7 @@ namespace Planning
             }
             CloseAllTabs();
             DataService.settingsHandle.SetParamValue("Connection\\UserName", DataService.setting.UserName);
+            //DataService.settingsHandle.SetParamValue("Connection\\LastLogin", DataService.setting.LastLogin);
             //statusInfo.Text = $"База данных:{DataService.setting.BaseName} Пользователь: {DataService.setting.UserName}";
 
             return true;
@@ -420,7 +422,7 @@ namespace Planning
                     "Без указания шаблонов работа отчетов будет не возможна", "Предупреждение", MessageBoxButtons.OK,MessageBoxIcon.Warning);
             }
         }
-
+        /*
         private void frmMain_Load(object sender, EventArgs e)
         {
             cbPaint.Checked = isPaint;
@@ -430,9 +432,10 @@ namespace Planning
 
            
             //Если нет сервера или базы, то выдадим окно настройки
-            if (DataService.setting.BaseName == "" || DataService.setting.ServerName =="")
+            if (DataService.setting.BaseName == "" || DataService.setting.ServerName =="" ||
+                DataService.setting.UserName == "" || DataService.setting.Password == "")
             {
-                DataService.setting = new Settings();
+                //DataService.setting = new Settings();
 
                 SettingsWizard frmSettingsWizard = new SettingsWizard(DataService.setting);
 
@@ -446,11 +449,13 @@ namespace Planning
                     this.Close();
             }
             DataService.setting.IsWnd = true;
-            DataService.setting.UserName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
-            //Попробуем подключиться под текущим пользователем виндовс
-            //Если не получится запросим имя пользователя и пароль
-            if (!DataService.TryDBConnect(DataService.setting.ServerName,DataService.setting.BaseName, "","", DataService.setting.IsWnd, false))
+
+            if (DataService.TryDBConnect(DataService.setting.ServerName, DataService.setting.BaseName, DataService.setting.UserName, DataService.setting.Password,
+                false, true))
             {
+
+                InitContext();
+
                 DataService.setting.IsWnd = false;
                 if (!GetLogin())
                 {
@@ -458,8 +463,11 @@ namespace Planning
                     return;
                 }
             }
-          
-            UpdateSetting();
+            else
+            {
+                return;
+            }
+            //InitContext();
             CheckCorrectSettings();
 
             List<string> action = DataService.settingsHandle.GetParamStringValue("View\\ActionFilter").Split(',').ToList();
@@ -523,6 +531,112 @@ namespace Planning
 
             statusInfo.Text = $"База данных:[{DataService.setting.BaseName}] Пользователь: [{DataService.setting.UserName}]";
             IsFormLoad = false ;
+        }
+
+        */
+
+        private void frmMain_Load(object sender, EventArgs e)
+        {
+            cbPaint.Checked = isPaint;
+            IsFormLoad = true;
+            DataService.settingsHandle = new SettingsHandle("Settings.xml", DataService.setting);
+            DataService.settingsHandle.Load();
+
+
+            //Если нет сервера или базы, то выдадим окно настройки
+            if (DataService.setting.BaseName == "" || DataService.setting.ServerName == "")
+            {
+                DataService.setting = new Settings();
+
+                SettingsWizard frmSettingsWizard = new SettingsWizard(DataService.setting);
+
+
+
+                if (frmSettingsWizard.ShowDialog() == DialogResult.OK)
+                {
+                    SaveSettings();
+                }
+                else
+                    this.Close();
+            }
+            DataService.setting.IsWnd = true;
+            DataService.setting.UserName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
+            //Попробуем подключиться под текущим пользователем виндовс
+            //Если не получится запросим имя пользователя и пароль
+            if (!DataService.TryDBConnect(DataService.setting.ServerName, DataService.setting.BaseName, "", "", DataService.setting.IsWnd, false))
+            {
+                DataService.setting.IsWnd = false;
+                if (!GetLogin())
+                {
+                    this.Close();
+                    return;
+                }
+            }
+
+            InitContext();
+            CheckCorrectSettings();
+
+            List<string> action = DataService.settingsHandle.GetParamStringValue("View\\ActionFilter").Split(',').ToList();
+            foreach (ToolStripMenuItem item in btnActionFilter.DropDownItems)
+            {
+                if (!action.Contains(item.Text))
+                    item.Checked = false;
+            }
+
+            LoginUser();
+
+
+
+
+
+            //DataService dataService = new DataService();
+            DataService.Dicts.Add("Причины_задержки", new DictInfo { TableName = "delay_reasons", NameColumn = "name" });
+            DataService.Dicts.Add("Типы_операций", new DictInfo { TableName = "opers_type", NameColumn = "name" });
+            DataService.Dicts.Add("Ворота", new DictInfo { TableName = "gateways", NameColumn = "name" });
+            DataService.Dicts.Add("Депозиторы", new DictInfo { TableName = "depositors", NameColumn = "name" });
+            DataService.Dicts.Add("ТаймСлоты", new DictInfo { TableName = "time_slot", NameColumn = "name" });
+            DataService.Dicts.Add("ТК", new DictInfo { TableName = "transport_company", NameColumn = "name" });
+            DataService.Dicts.Add("Типы_транспорта", new DictInfo { TableName = "transport_type", NameColumn = "name" });
+            DataService.Dicts.Add("Поставщики", new DictInfo { TableName = "suppliers", NameColumn = "name" });
+            //dataService.Dicts.Add("Ворота", "gateways");
+
+
+
+            List<string> hideCols = DataService.settingsHandle.GetParamStringValue("View\\HideColumns").Split(',').ToList();
+
+            shipmentColumns = DataService.settingsHandle.GetParamList<ShipmentColumn>("View\\ShipmentColumns");
+            if (shipmentColumns.Count == 0)
+            {
+                foreach (DataGridViewColumn col in tblShipments.Columns)
+                {
+                    shipmentColumns.Add(new ShipmentColumn() { Id = col.Name, Order = col.DisplayIndex });
+                }
+            }
+
+            SetShipmentColParam();
+
+            btnColumnVisible.DropDownItems.Clear();
+            foreach (DataGridViewColumn col in tblShipments.Columns)
+            {
+                if (col.Visible)
+                {
+                    ToolStripMenuItem item = (ToolStripMenuItem)btnColumnVisible.DropDownItems.Add(col.HeaderText);
+                    item.CheckOnClick = true;
+                    item.CheckState = hideCols.IndexOf(col.Name) < 0 ? CheckState.Checked : CheckState.Unchecked;
+                    item.Tag = col;
+                    item.Click += toolStripMenuItem3_Click;
+                    col.Visible = hideCols.IndexOf(col.Name) < 0;
+                }
+
+
+            }
+
+
+
+
+
+            statusInfo.Text = $"База данных:[{DataService.setting.BaseName}] Пользователь: [{DataService.setting.UserName}]";
+            IsFormLoad = false;
         }
 
         private void SetShipmentColParam()
@@ -1041,7 +1155,7 @@ namespace Planning
             if (frmSettingsWizard.ShowDialog()==DialogResult.OK)
             {
                 SaveSettings();
-                UpdateSetting();
+                InitContext();
                 return;
             }
 
@@ -1686,7 +1800,7 @@ namespace Planning
                 "ShpDriverFio","TransportCompanyName","TransportTypeName","ShpVehicleNumber","ShpTrailerNumber","ShpAttorneyNumber",
                 "ShpAttorneyDate","ShpSubmissionTime","ShpStartTime", "ShpEndTimePlan","ShpEndTimeFact","CALC:CONCAT(ShpDate,SlotTime)",
                 "CALC:DIFFTIME(ShpSubmissionTime,ShpStartTime)","CALC:DIFFTIME({26},ShpStartTime)","CALC:DIFFTIME({26},ShpSubmissionTime)",
-                "ShpDelayReasonName", "ShpDelayComment",  "ShpStampNumber" };
+                "ShpDelayReasonName", "ShpDelayComment",  "ShpStampNumber","ShpSupplierName" };
             //"DepCode",
             int[] colNumber = new int[columnOrder.Count];
 

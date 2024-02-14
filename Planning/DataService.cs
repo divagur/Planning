@@ -9,6 +9,7 @@ using System.Data.Entity.Core.EntityClient;
 using System.Configuration;
 using System.Windows.Forms;
 using Dapper;
+using System.Security.Cryptography;
 
 namespace Planning
 {
@@ -457,7 +458,7 @@ namespace Planning
 
             sql.Parameters["@rolename"].Value = "db_datareader";
             sql.Parameters["@membername"].Value = User;
-            success = sql.Execute();
+            success = sql.Connect() && sql.Execute();
             if (!success)
             {
                 MessageBox.Show(sql.LastError, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -468,7 +469,7 @@ namespace Planning
             sql.Parameters["@rolename"].Value = "db_datawriter";
             //sql.Parameters["@membername"].Value = User;
 
-            success = sql.Execute();
+            success = sql.Connect() && sql.Execute();
             if (!success)
             {
                 MessageBox.Show(sql.LastError, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -478,7 +479,7 @@ namespace Planning
             if (DB == DataService.setting.BaseName)
             {
                 sql.Parameters["@rolename"].Value = "pl_user";
-                success = sql.Execute();
+                success = sql.Connect() && sql.Execute();
                 if (!success)
                 {
                     MessageBox.Show(sql.LastError, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -487,10 +488,10 @@ namespace Planning
             }
             sql.TypeCommand = CommandType.Text;
             sql.SqlStatement = $"USE { DataService.setting.BaseName}";
-            success = sql.Execute();
+            success = sql.Connect() && sql.Execute();
 
 
-            sql.Disconnect();
+            //sql.Disconnect();
             return true;
 
         }
@@ -585,7 +586,11 @@ namespace Planning
 
         }
 
-        
+        public static string EncryptHash(string input)
+        {
+            SHA512 hash = SHA512.Create();
+            return Convert.ToBase64String(hash.ComputeHash(Encoding.ASCII.GetBytes(input)));
+        }
 
     }
 }

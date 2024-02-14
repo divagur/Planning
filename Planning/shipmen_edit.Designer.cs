@@ -652,10 +652,10 @@
             // 
             this.gbOrders.Controls.Add(this.tblShipmentOrders);
             this.gbOrders.Controls.Add(this.toolStrip1);
-            this.gbOrders.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gbOrders.Dock = System.Windows.Forms.DockStyle.Top;
             this.gbOrders.Location = new System.Drawing.Point(0, 0);
             this.gbOrders.Name = "gbOrders";
-            this.gbOrders.Size = new System.Drawing.Size(778, 320);
+            this.gbOrders.Size = new System.Drawing.Size(778, 132);
             this.gbOrders.TabIndex = 14;
             this.gbOrders.TabStop = false;
             this.gbOrders.Text = "Заказы";
@@ -706,7 +706,7 @@
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.tblShipmentOrders.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.tblShipmentOrders.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.tblShipmentOrders.Size = new System.Drawing.Size(772, 276);
+            this.tblShipmentOrders.Size = new System.Drawing.Size(772, 88);
             this.tblShipmentOrders.TabIndex = 1;
             this.tblShipmentOrders.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.tblShipmentOrders_RowEnter);
             // 
@@ -1133,10 +1133,10 @@
             // 
             this.gbOrderParts.Controls.Add(this.tblOrderParts);
             this.gbOrderParts.Controls.Add(this.toolStrip3);
-            this.gbOrderParts.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.gbOrderParts.Location = new System.Drawing.Point(0, 148);
+            this.gbOrderParts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gbOrderParts.Location = new System.Drawing.Point(0, 132);
             this.gbOrderParts.Name = "gbOrderParts";
-            this.gbOrderParts.Size = new System.Drawing.Size(778, 172);
+            this.gbOrderParts.Size = new System.Drawing.Size(778, 188);
             this.gbOrderParts.TabIndex = 15;
             this.gbOrderParts.TabStop = false;
             this.gbOrderParts.Text = "Расходные партии";
@@ -1172,6 +1172,7 @@
             this.tblOrderParts.DefaultCellStyle = dataGridViewCellStyle8;
             this.tblOrderParts.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tblOrderParts.Location = new System.Drawing.Point(3, 41);
+            this.tblOrderParts.MultiSelect = false;
             this.tblOrderParts.Name = "tblOrderParts";
             this.tblOrderParts.ReadOnly = true;
             dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -1183,7 +1184,7 @@
             dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.tblOrderParts.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
             this.tblOrderParts.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.tblOrderParts.Size = new System.Drawing.Size(772, 128);
+            this.tblOrderParts.Size = new System.Drawing.Size(772, 144);
             this.tblOrderParts.TabIndex = 1;
             this.tblOrderParts.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.tblOrderParts_RowEnter);
             // 
@@ -1470,6 +1471,15 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.TabPage tabOrders;
+        private System.Windows.Forms.GroupBox gbOrderParts;
+        private System.Windows.Forms.DataGridView tblOrderParts;
+        private System.Windows.Forms.ToolStrip toolStrip3;
+        private System.Windows.Forms.ToolStripButton tbtnAddOrderPart;
+        private System.Windows.Forms.ToolStripButton tbtnEditOrderPart;
+        private System.Windows.Forms.ToolStripButton tbtnDelOrderPart;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.ComboBox cmbSupplier;
+        private System.Windows.Forms.Panel pnShipment;
         private System.Windows.Forms.DataGridViewTextBoxColumn colOrderId;
         private System.Windows.Forms.DataGridViewTextBoxColumn colOstCode;
         private System.Windows.Forms.DataGridViewTextBoxColumn colOrderType;
@@ -1482,12 +1492,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colBindingId;
         private System.Windows.Forms.DataGridViewTextBoxColumn colOstId;
         private System.Windows.Forms.DataGridViewTextBoxColumn colShipmentId;
-        private System.Windows.Forms.GroupBox gbOrderParts;
-        private System.Windows.Forms.DataGridView tblOrderParts;
-        private System.Windows.Forms.ToolStrip toolStrip3;
-        private System.Windows.Forms.ToolStripButton tbtnAddOrderPart;
-        private System.Windows.Forms.ToolStripButton tbtnEditOrderPart;
-        private System.Windows.Forms.ToolStripButton tbtnDelOrderPart;
         private System.Windows.Forms.DataGridViewTextBoxColumn colPartsCode;
         private System.Windows.Forms.DataGridViewTextBoxColumn colPartsOrderCode;
         private System.Windows.Forms.DataGridViewTextBoxColumn colPartsManualLoad;
@@ -1497,8 +1501,5 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colPartsId;
         private System.Windows.Forms.DataGridViewTextBoxColumn colPartsBindingId;
         private System.Windows.Forms.DataGridViewTextBoxColumn colPartsOstId;
-        private System.Windows.Forms.Label label22;
-        private System.Windows.Forms.ComboBox cmbSupplier;
-        private System.Windows.Forms.Panel pnShipment;
     }
 }

@@ -49,7 +49,55 @@ namespace Planning
                 cmbTimeSlot.Items.Add(ts.SlotTime.ToString());
 
         }
-        private void PopulateOrders(/*int DepositorLVId, int Type*/)
+
+
+        private void PopulateOrders()
+        {
+            int? DepositorLVId = DataService.GetDictIdByName("Депозиторы", cmbDepositor.Text);
+            int? Type = cmbType.SelectedIndex < 2 ? (int?)cmbType.SelectedIndex : null;
+
+            SqlHandle sql = new SqlHandle(DataService.connectionString);
+            sql.SqlStatement = "sp_AddLoadingLVList";
+            sql.Connect();
+            sql.TypeCommand = CommandType.StoredProcedure;
+            sql.IsResultSet = true;
+
+            sql.AddCommandParametr(new SqlParameter { ParameterName = "@Split", Value = 0 });
+            sql.AddCommandParametr(new SqlParameter { ParameterName = "@In", Value = Type });
+            sql.AddCommandParametr(new SqlParameter { ParameterName = "@DepID", Value = DepositorLVId });
+
+
+            bool success = sql.Execute();
+
+            if (!success)
+            {
+                MessageBox.Show(sql.LastError, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            tblOrders.Rows.Clear();
+            if (sql.HasRows())
+            {
+                foreach (DataRow sqlRow in sql.DataSet.Tables[0].Rows)
+                {
+                    int Row = tblOrders.Rows.Add();
+                    //object[] readerVal = new object[reader.FieldCount];
+                    //reader.GetValues(readerVal);
+                    tblOrders.Rows[Row].Cells[0].Value = sqlRow.Field<string>(1);
+                    tblOrders.Rows[Row].Cells[1].Value = sqlRow[7];
+                    tblOrders.Rows[Row].Cells[2].Value = sqlRow.Field<string>(2);
+                    tblOrders.Rows[Row].Cells[3].Value = !sqlRow.IsNull(3) ? sqlRow.Field<DateTime>(3).ToString().Substring(0, 10) : "";
+                    tblOrders.Rows[Row].Cells[4].Value = sqlRow.Field<string>(4);
+                    tblOrders.Rows[Row].Cells[5].Value = sqlRow.Field<int>(0);
+
+                    tblOrders.Rows[Row].Cells[6].Value = sqlRow[6];
+                } 
+
+            }
+                
+        }
+        /*
+        private void PopulateOrders()
         {
             int? DepositorLVId = DataService.GetDictIdByName("Депозиторы", cmbDepositor.Text);
             int? Type = cmbType.SelectedIndex<2?(int?)cmbType.SelectedIndex: null;
@@ -69,6 +117,8 @@ namespace Planning
                 command.Parameters.Add(new SqlParameter { ParameterName = "@DepID", Value = DepositorLVId });
 
                 tblOrders.Rows.Clear();
+
+
                 var reader = command.ExecuteReader();
                 if (reader.HasRows)
                 {
@@ -92,6 +142,7 @@ namespace Planning
                 
             }
         }
+                */
         private void MoveRow(DataGridView TableSource, DataGridView TableTarged)
         {
             if (TableSource.RowCount <= 0) return;

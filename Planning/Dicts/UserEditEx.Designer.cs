@@ -36,11 +36,11 @@
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tblGroup = new System.Windows.Forms.DataGridView();
+            this.colGrp = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.colGrpId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tbUserGrp = new System.Windows.Forms.ToolStrip();
             this.btnAdd = new System.Windows.Forms.ToolStripButton();
             this.btnDel = new System.Windows.Forms.ToolStripButton();
-            this.colGrp = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.colGrpId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tblGroup)).BeginInit();
             this.tbUserGrp.SuspendLayout();
@@ -75,6 +75,7 @@
             this.label2.Size = new System.Drawing.Size(125, 13);
             this.label2.TabIndex = 12;
             this.label2.Text = "Проверка подлинности";
+            this.label2.Visible = false;
             // 
             // cbRegType
             // 
@@ -86,12 +87,14 @@
             this.cbRegType.Name = "cbRegType";
             this.cbRegType.Size = new System.Drawing.Size(189, 21);
             this.cbRegType.TabIndex = 0;
+            this.cbRegType.Visible = false;
             this.cbRegType.SelectedIndexChanged += new System.EventHandler(this.cbRegType_SelectedIndexChanged);
             // 
             // edPassword
             // 
             this.edPassword.Location = new System.Drawing.Point(74, 63);
             this.edPassword.Name = "edPassword";
+            this.edPassword.PasswordChar = '*';
             this.edPassword.Size = new System.Drawing.Size(269, 20);
             this.edPassword.TabIndex = 2;
             this.edPassword.UseSystemPasswordChar = true;
@@ -136,6 +139,20 @@
             this.tblGroup.TabIndex = 1;
             this.tblGroup.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.tblGroup_CellValueChanged);
             // 
+            // colGrp
+            // 
+            this.colGrp.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.colGrp.HeaderText = "Группа";
+            this.colGrp.Name = "colGrp";
+            this.colGrp.Width = 250;
+            // 
+            // colGrpId
+            // 
+            this.colGrpId.DataPropertyName = "Id";
+            this.colGrpId.HeaderText = "Id";
+            this.colGrpId.Name = "colGrpId";
+            this.colGrpId.Visible = false;
+            // 
             // tbUserGrp
             // 
             this.tbUserGrp.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -168,20 +185,6 @@
             this.btnDel.Text = "toolStripButton1";
             this.btnDel.ToolTipText = "Удалить из группы";
             this.btnDel.Click += new System.EventHandler(this.btnDel_Click);
-            // 
-            // colGrp
-            // 
-            this.colGrp.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.colGrp.HeaderText = "Группа";
-            this.colGrp.Name = "colGrp";
-            this.colGrp.Width = 250;
-            // 
-            // colGrpId
-            // 
-            this.colGrpId.DataPropertyName = "Id";
-            this.colGrpId.HeaderText = "Id";
-            this.colGrpId.Name = "colGrpId";
-            this.colGrpId.Visible = false;
             // 
             // UserEditEx
             // 

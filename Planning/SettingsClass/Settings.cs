@@ -26,6 +26,8 @@ namespace Planning
         public string PeriodReport { get; set; }
         public int IsGetLogin { get; set; }
         public bool IsWnd { get; set; }
+        public string LastLogin { get; set; }
+
         public List<SettingReport> Reports = new List<SettingReport>();
         public List<CurrTaskColumn> CurrentTaskColumns = new List<CurrTaskColumn>();
 

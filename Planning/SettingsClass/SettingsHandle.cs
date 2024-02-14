@@ -184,16 +184,44 @@ namespace Planning
             _xDoc.Save(_settingPath);
         }
 
+        static public string Encode(string data)
+        {
+            string result = data;
+
+            byte[] encData_byte = Encoding.UTF8.GetBytes(data);
+            result = Convert.ToBase64String(encData_byte);
+
+            return result;
+        }
+
+        static public string Decode(string data)
+        {
+            string result = data;
+            string decode = string.Empty;
+
+            UTF8Encoding encoder = new UTF8Encoding();
+            Decoder utf8Decode = encoder.GetDecoder();
+            byte[] todecode_byte = Convert.FromBase64String(data);
+            int charCount = utf8Decode.GetCharCount(todecode_byte, 0, todecode_byte.Length);
+            char[] decoded_char = new char[charCount];
+            utf8Decode.GetChars(todecode_byte, 0, todecode_byte.Length, decoded_char, 0);
+            result = new String(decoded_char);
+
+            return result;
+        }
+
         public void Save()
         {
             SetParamValue("Connection\\ServerName", _settings.ServerName);
             SetParamValue("Connection\\UserName", _settings.UserName);
-            SetParamValue("Connection\\BaseName", _settings.BaseName);            
+            SetParamValue("Connection\\BaseName", _settings.BaseName);
+            SetParamValue("Connection\\Password", Encode(_settings.BaseName));
             SetParamValue("ReportTemplate\\ShipmentTemplate", _settings.ShipmentReport);
             SetParamValue("ReportTemplate\\ReceiptTemplate", _settings.ReceiptReport);
             SetParamValue("ReportTemplate\\PeriodTemplate", _settings.PeriodReport);
             SetParamValue("TaskUpdateInterval", _settings.TaskUpdateInterval.ToString());
             SetParamValue("TaskViewFonSize", _settings.TaskViewFonSize.ToString());
+            SetParamValue("Connection\\LastLogin", _settings.LastLogin);
             SetParamList<CurrTaskColumn>("CurrentTaskColumns", "Column", _settings.CurrentTaskColumns);
             SetParamList<VolumeCalcConstant>("VolumeCalcTemplates", "Template", _settings.VolumeCalcTemplate);
             SetParamList<SettingReport>("Reports", "Report", _settings.Reports);
@@ -208,8 +236,9 @@ namespace Planning
             _settings.ServerName = GetParamStringValue("Connection\\ServerName");
             _settings.BaseName = GetParamStringValue("Connection\\BaseName");
             _settings.UserName = GetParamStringValue("Connection\\UserName");
-            
-
+            string hash = GetParamStringValue("Connection\\Password");
+            _settings.Password = Decode(GetParamStringValue("Connection\\Password"));
+            _settings.LastLogin = GetParamStringValue("Connection\\LastLogin");
             _settings.ShipmentReport = GetParamStringValue("ReportTemplate\\ShipmentTemplate");
             _settings.ReceiptReport = GetParamStringValue("ReportTemplate\\ReceiptTemplate");
             _settings.PeriodReport = GetParamStringValue("ReportTemplate\\PeriodTemplate");

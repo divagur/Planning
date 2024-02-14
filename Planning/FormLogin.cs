@@ -19,8 +19,34 @@ namespace Planning
             _setting = setting;
         }
 
+        private User GetUserByLogin(string login)
+        {
+
+            User user = DataService.context.Users.FirstOrDefault(u=>u.Login == login);
+
+            
+            return user;
+        }
+
         private void OkClick()
         {
+            /*
+            User user = GetUserByLogin(edUserName.Text);
+            string hash = DataService.EncryptHash(edPassword.Text);
+            bool bSuccess = user!=null && user.Password == DataService.EncryptHash(edPassword.Text);
+
+            if (!bSuccess)
+            {
+                MessageBox.Show("Не правильное имя пользователя или пароль", "Ошибка входа", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                _setting.LastLogin = edUserName.Text;
+                DialogResult = DialogResult.OK;
+                Close();
+            }
+            */
+            
             _setting.UserName = edUserName.Text;
             _setting.Password = edPassword.Text;
             //MessageBox.Show($"Подключение к серверу: {DataService.setting.ServerName} базе: {DataService.setting.BaseName} пользователь: {DataService.setting.UserName} ");
@@ -34,6 +60,7 @@ namespace Planning
             {
                 MessageBox.Show("Не правильное имя пользователя или пароль", "Ошибка входа", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            
         }
 
         private void btnOk_Click(object sender, EventArgs e)
@@ -49,7 +76,7 @@ namespace Planning
 
         private void FormLogin_Load(object sender, EventArgs e)
         {
-            edUserName.Text = _setting.UserName;
+            edUserName.Text = _setting.LastLogin;
         }
 
         private void edUserName_KeyDown(object sender, KeyEventArgs e)

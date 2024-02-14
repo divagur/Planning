@@ -882,11 +882,11 @@ namespace Planning
 
         private void tblShipmentOrders_RowEnter(object sender, DataGridViewCellEventArgs e)
         {
-            if (tblShipmentOrders.CurrentCell == null)
+            if (isSelectAction || tblShipmentOrders.CurrentCell == null)
                 return;
-
+            isSelectAction = true;
             SelectOrderPart((int)tblShipmentOrders.Rows[e.RowIndex].Cells["colId"].Value);
-
+            isSelectAction = false;
             //BindOrderPart((int)tblShipmentOrders.Rows[e.RowIndex].Cells["colId"].Value);
         }
 
@@ -944,14 +944,16 @@ namespace Planning
             {
                 if ((int?)(tblShipmentOrders.Rows[i].Cells["colId"].Value)==OrderId)
                 {
+
                     tblShipmentOrders.Rows[i].Selected = true;
+                    tblShipmentOrders.Rows[i].Cells[0].Selected = true;
                     tblShipmentOrders.FirstDisplayedScrollingRowIndex = i;
                     return;
                 }
             }
 
         }
-
+        bool isSelectAction = false;
         private void SelectOrderPart(int? OrderId)
         {
             tblOrderParts.ClearSelection();
@@ -961,6 +963,7 @@ namespace Planning
                 if ((int?)(tblOrderParts.Rows[i].Cells["colPartsOrderCode"].Value) == OrderId)
                 {
                     tblOrderParts.Rows[i].Selected = true;
+                    tblOrderParts.Rows[i].Cells[0].Selected = true;
                     if (srollRowIdx < 0)
                         srollRowIdx = i;
                     //return;
@@ -995,10 +998,12 @@ namespace Planning
 
         private void tblOrderParts_RowEnter(object sender, DataGridViewCellEventArgs e)
         {
-            if (tblShipmentOrders.CurrentCell == null)
+            
+            if (isSelectAction || tblShipmentOrders.CurrentCell == null)
                 return;
-
+            isSelectAction = true;
             SelectOrder((int)tblOrderParts.Rows[e.RowIndex].Cells["colPartsOrderCode"].Value);
+            isSelectAction = false;
         }
 
         private void panel2_Click(object sender, EventArgs e)
@@ -1009,6 +1014,24 @@ namespace Planning
             frmLog.ShowDialog();
 
 
+        }
+
+        private void tblShipmentOrders_SelectionChanged(object sender, EventArgs e)
+        {
+            if (isSelectAction || tblShipmentOrders.CurrentCell == null || tblShipmentOrders.Rows.Count == 0)
+                return;
+            isSelectAction = true;
+            SelectOrderPart((int)tblShipmentOrders.Rows[tblShipmentOrders.CurrentCell.RowIndex].Cells["colId"].Value);
+            isSelectAction = false;
+        }
+
+        private void tblOrderParts_SelectionChanged(object sender, EventArgs e)
+        {
+
+            if (tblShipmentOrders.CurrentCell == null || tblOrderParts.Rows.Count == 0)
+                return;
+
+            SelectOrder((int)tblOrderParts.Rows[tblShipmentOrders.CurrentCell.RowIndex].Cells["colPartsOrderCode"].Value);
         }
     }
 
