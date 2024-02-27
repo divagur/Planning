@@ -1291,7 +1291,7 @@ namespace Planning
                 
 
                 range = excel.SelectCells(1, 1, 17, 1, 17 + printRows.Count());
-                range.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
+                range.HorizontalAlignment = Excel.XlHAlign.xlHAlignLeft;
 
                 range = excel.SelectCells(1, 2, 17, 2, 17 + printRows.Count());
                 range.HorizontalAlignment = Excel.XlHAlign.xlHAlignLeft;
