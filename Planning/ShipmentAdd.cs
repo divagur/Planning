@@ -91,6 +91,7 @@ namespace Planning
                     tblOrders.Rows[Row].Cells[5].Value = sqlRow.Field<int>(0);
 
                     tblOrders.Rows[Row].Cells[6].Value = sqlRow[6];
+                    tblOrders.Rows[Row].Cells[7].Value = sqlRow[8];
                 } 
 
             }

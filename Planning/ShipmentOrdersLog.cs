@@ -33,5 +33,6 @@ namespace Planning
         public string LvOrderCode { get; set; }
         public Nullable<int> shipping_places_number { get; set; }
         public Nullable<decimal> order_weight { get; set; }
+        public Nullable<bool> is_edm { get; set; }
     }
 }

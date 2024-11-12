@@ -40,7 +40,7 @@ namespace Planning
 
         public VolumeCalcParams volumeCalcParams = new VolumeCalcParams();
         
-
+        public bool ShowDetailOrderColumn { get; set; }
     }
 
 }

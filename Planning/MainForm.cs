@@ -52,6 +52,7 @@ namespace Planning
           Color.FromArgb(220, 230, 241)
         };
 
+        List<OrderDetailItem> orderDetailCount = new List<OrderDetailItem>();
         public frmMain()
         {
             InitializeComponent();
@@ -72,9 +73,42 @@ namespace Planning
 
         private void tblShipments_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            DataGridView dataGridView = (DataGridView)sender;
             if (e.RowIndex < 0) return;
+            if (dataGridView.Columns[e.ColumnIndex].Name == "colOrderDetail")
+            {
+                ShowOrderDetail();
+            }
+            else
+            {
+                object cellValue = tblShipments.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
+                
+                if (cellValue !=null)
+                    Clipboard.SetText(cellValue.ToString());
+            }
             
-            Clipboard.SetText(tblShipments.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
+        }
+
+        private void ShowOrderDetail()
+        {
+            string direction = (string)tblShipments.CurrentRow.Cells["colDirection"].Value;
+            
+            int? DepositorLVId = DataService.GetDictIdByName("Депозиторы", (string)tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colDepositor"].Value);
+            if (direction == "перем")
+                return;
+          
+            int inOut = direction == "вход" ? 1 : 0;
+            frmOrderDetail frmOrderDetail = new frmOrderDetail(
+                    (string)tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colOrderId"].Value,
+                    (int)tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colIdNakl"].Value, inOut, (int)DepositorLVId);
+            frmOrderDetail.ShowDialog();
+        }
+
+        private void GetOrderDetailCount()
+        {
+            OrderDetailItem_Manager orderDetailItem_Manager = new OrderDetailItem_Manager();
+
+            orderDetailCount = orderDetailItem_Manager.GetOrderDetailItems(1, 0, 0, true);
         }
 
         private DataSet GetShipment(DateTime DateFrom, DateTime? DateTill, string ShpId, string OrdId, int ShpType = -1)
@@ -100,6 +134,9 @@ namespace Planning
                 MessageBox.Show(sql.LastError, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }
+
+            //GetOrderDetailCount();
+
             return sql.DataSet;
                 
 
@@ -191,7 +228,11 @@ namespace Planning
             
             tblShipments.AutoGenerateColumns = false;
             tblShipments.DataSource = shipmentsDataTable;// ds.Tables[0];
-
+            foreach (var column in tblShipments.Columns)
+            {
+                if (column is DataGridViewImageColumn)
+                    (column as DataGridViewImageColumn).DefaultCellStyle.NullValue = null;
+            }
             if (restoreRow)
                 SearchBy(true, i => tblShipments.Rows[i].Cells["colId"].Value.ToString() == rowShpId && tblShipments.Rows[i].Cells["colIdNakl"].Value.ToString() == rowShpOrdId);
             //this.Cursor = Cursors.Default;
@@ -422,118 +463,7 @@ namespace Planning
                     "Без указания шаблонов работа отчетов будет не возможна", "Предупреждение", MessageBoxButtons.OK,MessageBoxIcon.Warning);
             }
         }
-        /*
-        private void frmMain_Load(object sender, EventArgs e)
-        {
-            cbPaint.Checked = isPaint;
-            IsFormLoad = true;
-            DataService.settingsHandle  = new SettingsHandle("Settings.xml", DataService.setting);
-            DataService.settingsHandle.Load();
-
-           
-            //Если нет сервера или базы, то выдадим окно настройки
-            if (DataService.setting.BaseName == "" || DataService.setting.ServerName =="" ||
-                DataService.setting.UserName == "" || DataService.setting.Password == "")
-            {
-                //DataService.setting = new Settings();
-
-                SettingsWizard frmSettingsWizard = new SettingsWizard(DataService.setting);
-
-
-
-                if (frmSettingsWizard.ShowDialog() == DialogResult.OK)
-                {
-                    SaveSettings();
-                }
-                else
-                    this.Close();
-            }
-            DataService.setting.IsWnd = true;
-
-            if (DataService.TryDBConnect(DataService.setting.ServerName, DataService.setting.BaseName, DataService.setting.UserName, DataService.setting.Password,
-                false, true))
-            {
-
-                InitContext();
-
-                DataService.setting.IsWnd = false;
-                if (!GetLogin())
-                {
-                    this.Close();
-                    return;
-                }
-            }
-            else
-            {
-                return;
-            }
-            //InitContext();
-            CheckCorrectSettings();
-
-            List<string> action = DataService.settingsHandle.GetParamStringValue("View\\ActionFilter").Split(',').ToList();
-            foreach (ToolStripMenuItem item in btnActionFilter.DropDownItems)
-            {
-                if (!action.Contains(item.Text))
-                    item.Checked = false;
-            }
-
-            LoginUser();
-
-
-            
-
-
-            //DataService dataService = new DataService();
-            DataService.Dicts.Add("Причины_задержки", new DictInfo{ TableName = "delay_reasons", NameColumn = "name" });
-            DataService.Dicts.Add("Типы_операций", new DictInfo { TableName = "opers_type", NameColumn = "name" });
-            DataService.Dicts.Add("Ворота",new DictInfo {TableName= "gateways", NameColumn = "name" });
-            DataService.Dicts.Add("Депозиторы", new DictInfo { TableName = "depositors", NameColumn = "name" });
-            DataService.Dicts.Add("ТаймСлоты", new DictInfo { TableName = "time_slot", NameColumn = "name" });
-            DataService.Dicts.Add("ТК", new DictInfo { TableName = "transport_company", NameColumn = "name" });
-            DataService.Dicts.Add("Типы_транспорта", new DictInfo { TableName = "transport_type", NameColumn = "name" });
-            DataService.Dicts.Add("Поставщики", new DictInfo { TableName = "suppliers", NameColumn = "name" });
-            //dataService.Dicts.Add("Ворота", "gateways");
-
-
-
-            List<string> hideCols = DataService.settingsHandle.GetParamStringValue("View\\HideColumns").Split(',').ToList();
-           
-            shipmentColumns = DataService.settingsHandle.GetParamList<ShipmentColumn>("View\\ShipmentColumns");
-            if (shipmentColumns.Count == 0)
-            {
-                foreach (DataGridViewColumn col in tblShipments.Columns)
-                {
-                    shipmentColumns.Add(new ShipmentColumn() { Id = col.Name, Order = col.DisplayIndex });
-                }
-            }
-            
-            SetShipmentColParam();
-
-            btnColumnVisible.DropDownItems.Clear();
-            foreach(DataGridViewColumn col in tblShipments.Columns)
-            {
-                if (col.Visible)
-                {
-                    ToolStripMenuItem item = (ToolStripMenuItem)btnColumnVisible.DropDownItems.Add(col.HeaderText);
-                    item.CheckOnClick = true;
-                    item.CheckState = hideCols.IndexOf(col.Name) < 0?CheckState.Checked:CheckState.Unchecked;
-                    item.Tag = col;
-                    item.Click += toolStripMenuItem3_Click;
-                    col.Visible = hideCols.IndexOf(col.Name) < 0;
-                }
-                
-                
-            }
-
-
-
-
-
-            statusInfo.Text = $"База данных:[{DataService.setting.BaseName}] Пользователь: [{DataService.setting.UserName}]";
-            IsFormLoad = false ;
-        }
-
-        */
+       
 
         private void frmMain_Load(object sender, EventArgs e)
         {
@@ -620,7 +550,8 @@ namespace Planning
             {
                 if (col.Visible)
                 {
-                    ToolStripMenuItem item = (ToolStripMenuItem)btnColumnVisible.DropDownItems.Add(col.HeaderText);
+                    string headerText = String.IsNullOrEmpty(col.HeaderText) ? col.ToolTipText : col.HeaderText;
+                    ToolStripMenuItem item = (ToolStripMenuItem)btnColumnVisible.DropDownItems.Add(headerText);
                     item.CheckOnClick = true;
                     item.CheckState = hideCols.IndexOf(col.Name) < 0 ? CheckState.Checked : CheckState.Unchecked;
                     item.Tag = col;
@@ -645,8 +576,16 @@ namespace Planning
             foreach (DataGridViewColumn col in tblShipments.Columns)
             {
                 var shpCol = shipmentColumns.FirstOrDefault(c => c.Id == col.Name);
+                if (col.Name == "colOrderDetail")
+                {
+                    col.DisplayIndex = 0;
+                }
+                else if (col.Name == "col")
+                {
+                    col.DisplayIndex = 1;
+                }
 
-                if (shpCol != null)
+                else if (shpCol != null)
                 {
                     col.DisplayIndex = shpCol.Order;
                 }
@@ -886,7 +825,7 @@ namespace Planning
             {
                 if (e.ColumnIndex == ((DataGridView)sender).Columns["colCopmletePct"].Index)
                 {
-                                          
+
 
                     using (
                         Brush gridBrush = new SolidBrush(this.tblShipments.GridColor),
@@ -936,7 +875,9 @@ namespace Planning
                 {
                     e.CellStyle.ForeColor = Color.Blue;
                 }
-             }
+
+
+            }
         }
 
         private void edCurrDay_ValueChanged(object sender, EventArgs e)
@@ -945,14 +886,32 @@ namespace Planning
         }
 
         private void tblShipments_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
-        {
-      
+        {/*
+            if (e.ColumnIndex == ((DataGridView)sender).Columns["colOrderDetail"].Index)
+            {
+                string direction = Convert.ToString(tblShipments.Rows[e.RowIndex].Cells["colDirection"].Value);
+                int inOut = Convert.ToString(tblShipments.Rows[e.RowIndex].Cells["colDirection"].Value) == "вход" ? 1 : 0;
+                if (!HasOrderDetail((int)tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colIdNakl"].Value, inOut))
+                {
+
+                    e.Graphics.DrawImage(new Bitmap(10, 10), e.);
+                    //(tblShipments.Rows[e.RowIndex].Cells["colDirection"] as DataGridViewImageCell).Image
+                }
+                else
+                {
+                    //Bitmap img = new Bitmap(Properties.Resources.view_detailed_2595);
+                    e.Graphics.DrawImage(Properties.Resources.view_detailed_2595, e.CellBounds);
+                    //e.Value = Properties.Resources.view_detailed_2595;
+
+                }
+            }*/
         }
 
         private void tblShipments_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
         {
             if (!isPaint)
                 return;
+            
             var CellColor = (int)((DataGridView)sender).Rows[e.RowIndex].Cells["BackgroundColor"].Value;
             var CellShpId = (int)((DataGridView)sender).Rows[e.RowIndex].Cells["colId"].Value;
 
@@ -963,7 +922,7 @@ namespace Planning
                 currColorIdx = currColorIdx == 0 ? 1 : 0;
             }
             //((DataGridView)sender).Rows[e.RowIndex].DefaultCellStyle.BackColor = rowColors[currColorIdx];
-            //if (CellColor != 0)
+           // if (CellColor >=0 )
                 ((DataGridView)sender).Rows[e.RowIndex].DefaultCellStyle.BackColor = rowColors[CellColor];// Color.FromArgb(CellColor);
 
             CellColor = (int)((DataGridView)sender).Rows[e.RowIndex].Cells["FontColor"].Value;
@@ -1145,6 +1104,8 @@ namespace Planning
 
         private void tblShipments_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (tblShipments.Columns[e.ColumnIndex].Name == "colOrderDetail")
+                return;
             ShipmentRowEdit();
         }
 
@@ -2072,8 +2033,48 @@ namespace Planning
             tblShipments.Refresh();
         }
 
+        private void mnuContext_Opening(object sender, CancelEventArgs e)
+        {
 
+        }
 
+        private void mciOrderDetail_Click(object sender, EventArgs e)
+        {
+            ShowOrderDetail();
+        }
 
+        private bool HasOrderDetail(int OrdId, int InOut)
+        {
+            OrderDetailItem orderDetailItem = orderDetailCount.Find(i => i.ID == OrdId && i.DetailType == InOut );            
+            return orderDetailItem !=null && orderDetailItem.Quantity>0;
+        }
+        private void tblShipments_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            /*
+                if (tblShipments.Columns[e.ColumnIndex].Name == "colOrderDetail")
+                {
+                    string direction = Convert.ToString(tblShipments.Rows[e.RowIndex].Cells["colDirection"].Value);
+                int inOut = Convert.ToString(tblShipments.Rows[e.RowIndex].Cells["colDirection"].Value) == "вход" ? 1 : 0;
+                    if (!HasOrderDetail((int)tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colIdNakl"].Value,inOut))
+                    {
+                    (((DataGridView)sender).Rows[e.RowIndex].Cells[e.ColumnIndex] as DataGridViewButtonCell).Value
+                    e.Value = null;// new Bitmap(10, 10);
+                    e.FormattingApplied = true;
+                    //(tblShipments.Rows[e.RowIndex].Cells["colDirection"] as DataGridViewImageCell).Image
+                }  
+                    else
+                    {
+                    //e.Value = Properties.Resources.view_detailed_2595;
+                    e.FormattingApplied = true;
+                }
+                    
+            }
+            */
+        }
+
+        private void tblShipments_CellValueNeeded(object sender, DataGridViewCellValueEventArgs e)
+        {
+
+        }
     }
 }

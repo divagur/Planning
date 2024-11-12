@@ -43,6 +43,7 @@ namespace PlanningTasks
             settingsHandle.SetParamValue("Connection\\DataBase", DataBase);
             settingsHandle.SetParamValue("Connection\\Login", Login);
             settingsHandle.SetParamValue("Connection\\Password", SettingsHandle.Encode(Password));
+            settingsHandle.SetParamList<CurrentTaskColumn>("CurrentTaskColumns", "Column",VisibleColumns);
         }
 
         public static void Load(string FileName)
@@ -76,6 +77,8 @@ namespace PlanningTasks
                 foreach (string item in colorConditions)
                 {
                     string[] rule = item.Split(new char[] { ':' });
+                    if (rule.Length < 5)
+                        continue;
                     RuleRowColor ruleRowColor = new RuleRowColor();
                     ruleRowColor.Operation = rule[0];
                     int value;
@@ -83,12 +86,12 @@ namespace PlanningTasks
                         ruleRowColor.Param1 = value;
                     if (Int32.TryParse(rule[2], out value))
                         ruleRowColor.Param2 = value;
-                    
-                    //if (Int32.TryParse(rule[3], out value))
-                    //ruleRowColor.Color = -1*int.Parse(rule[3], System.Globalization.NumberStyles.HexNumber);
-                    ruleRowColor.BackgroundColorRGB = ColorTranslator.FromHtml(rule[3]);
+                    ruleRowColor.FontColorRGB = Color.Black;
+                    ruleRowColor.BackgroundColorRGB = Color.White;
+                    if (!string.IsNullOrEmpty(rule[4]) && rule[4] != "0")
+                        ruleRowColor.BackgroundColorRGB = ColorTranslator.FromHtml(rule[3]);
 
-                    if (rule.Length > 5 && !string.IsNullOrEmpty(rule[4]) && rule[4] !="0")
+                    if (rule.Length >= 5 && !string.IsNullOrEmpty(rule[4]) && rule[4] !="0")
                     {
                         ruleRowColor.FontColorRGB = ColorTranslator.FromHtml(rule[4]);
                     }

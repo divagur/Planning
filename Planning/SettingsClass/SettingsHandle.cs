@@ -86,7 +86,10 @@ namespace Planning
         {
             SetParamValue(Name, Convert.ToString(Value));
         }
-
+        public void SetParamValue(string Name, bool Value)
+        {
+            SetParamValue(Name, Convert.ToString(Value));
+        }
         public void SetParamValue(string Name, DateTime Value)
         {
             SetParamValue(Name, Convert.ToString(Value));
@@ -99,6 +102,14 @@ namespace Planning
             return elem.InnerText;
         }
 
+        public bool GetParamBoolValue(string Name, bool DefaultValue)
+        {
+            XmlElement elem = GetNodeByPath(Name);
+            bool result;
+            if (!Boolean.TryParse(elem.InnerText, out result))
+                result = DefaultValue;
+            return result;
+        }
         public int GetParamIntValue(string Name, int Default = -1)
         {
             XmlElement elem = GetNodeByPath(Name);
@@ -215,7 +226,7 @@ namespace Planning
             SetParamValue("Connection\\ServerName", _settings.ServerName);
             SetParamValue("Connection\\UserName", _settings.UserName);
             SetParamValue("Connection\\BaseName", _settings.BaseName);
-            SetParamValue("Connection\\Password", Encode(_settings.BaseName));
+            SetParamValue("Connection\\Password", Encode(_settings.Password));
             SetParamValue("ReportTemplate\\ShipmentTemplate", _settings.ShipmentReport);
             SetParamValue("ReportTemplate\\ReceiptTemplate", _settings.ReceiptReport);
             SetParamValue("ReportTemplate\\PeriodTemplate", _settings.PeriodReport);
@@ -229,6 +240,7 @@ namespace Planning
             SetParamValue("VolumeCalcParams\\ImportColVendorCode", _settings.volumeCalcParams.ImportColVendorCode);
             SetParamValue("VolumeCalcParams\\ImportColName", _settings.volumeCalcParams.ImportColName);
             SetParamValue("VolumeCalcParams\\ImportColAmount", _settings.volumeCalcParams.ImportColAmount);
+            SetParamValue("ShowOrderDetailColumn", _settings.ShowDetailOrderColumn);
         }
 
         public void Load()
@@ -260,6 +272,7 @@ namespace Planning
             _settings.volumeCalcParams.ImportColVendorCode = GetParamIntValue("VolumeCalcParams\\ImportColVendorCode",1);
             _settings.volumeCalcParams.ImportColName = GetParamIntValue("VolumeCalcParams\\ImportColName", 2);
             _settings.volumeCalcParams.ImportColAmount = GetParamIntValue("VolumeCalcParams\\ImportColAmount", 3);
+            _settings.ShowDetailOrderColumn = GetParamBoolValue("ShowOrderDetailColumn", true);
         }
 
     }

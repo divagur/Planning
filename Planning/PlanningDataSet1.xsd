@@ -4,7 +4,7 @@
     <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
       <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
         <Connections>
-          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="ConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="ConnectionString (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.Planning.Properties.Settings.GlobalReference.Default.ConnectionString" Provider="System.Data.SqlClient" />
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="ConnectionString" IsAppSettingsProperty="true" Modifier="Assembly" Name="ConnectionString (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.Planning.Properties.Settings.GlobalReference.Default.ConnectionString" Provider="System.Data.SqlClient" />
         </Connections>
         <Tables>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="depositorsTableAdapter" GeneratorDataComponentClassName="depositorsTableAdapter" Name="depositors" UserDataComponentName="depositorsTableAdapter">
@@ -64,7 +64,7 @@ SELECT id, name FROM depositors WHERE (id = @id)</CommandText>
   <xs:element name="PlanningDataSet1" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="PlanningDataSet1" msprop:Generator_UserDSName="PlanningDataSet1">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="depositors" msprop:Generator_TableClassName="depositorsDataTable" msprop:Generator_TableVarName="tabledepositors" msprop:Generator_TablePropName="depositors" msprop:Generator_RowDeletingName="depositorsRowDeleting" msprop:Generator_RowChangingName="depositorsRowChanging" msprop:Generator_RowEvHandlerName="depositorsRowChangeEventHandler" msprop:Generator_RowDeletedName="depositorsRowDeleted" msprop:Generator_UserTableName="depositors" msprop:Generator_RowChangedName="depositorsRowChanged" msprop:Generator_RowEvArgName="depositorsRowChangeEvent" msprop:Generator_RowClassName="depositorsRow">
+        <xs:element name="depositors" msprop:Generator_TableClassName="depositorsDataTable" msprop:Generator_TableVarName="tabledepositors" msprop:Generator_RowChangedName="depositorsRowChanged" msprop:Generator_TablePropName="depositors" msprop:Generator_RowDeletingName="depositorsRowDeleting" msprop:Generator_RowChangingName="depositorsRowChanging" msprop:Generator_RowEvHandlerName="depositorsRowChangeEventHandler" msprop:Generator_RowDeletedName="depositorsRowDeleted" msprop:Generator_RowClassName="depositorsRow" msprop:Generator_UserTableName="depositors" msprop:Generator_RowEvArgName="depositorsRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="id" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnid" msprop:Generator_ColumnPropNameInRow="id" msprop:Generator_ColumnPropNameInTable="idColumn" msprop:Generator_UserColumnName="id" type="xs:int" />

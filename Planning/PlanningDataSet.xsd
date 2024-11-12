@@ -4,7 +4,7 @@
     <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
       <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
         <Connections>
-          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="ConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="ConnectionString (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.Planning.Properties.Settings.GlobalReference.Default.ConnectionString" Provider="System.Data.SqlClient" />
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="ConnectionString" IsAppSettingsProperty="true" Modifier="Assembly" Name="ConnectionString (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.Planning.Properties.Settings.GlobalReference.Default.ConnectionString" Provider="System.Data.SqlClient" />
         </Connections>
         <Tables>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="delay_reasonsTableAdapter" GeneratorDataComponentClassName="delay_reasonsTableAdapter" Name="delay_reasons" UserDataComponentName="delay_reasonsTableAdapter">
@@ -64,7 +64,7 @@ SELECT id, name FROM delay_reasons WHERE (id = @id)</CommandText>
   <xs:element name="PlanningDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="PlanningDataSet" msprop:Generator_UserDSName="PlanningDataSet">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="delay_reasons" msprop:Generator_TableClassName="delay_reasonsDataTable" msprop:Generator_TableVarName="tabledelay_reasons" msprop:Generator_TablePropName="delay_reasons" msprop:Generator_RowDeletingName="delay_reasonsRowDeleting" msprop:Generator_RowChangingName="delay_reasonsRowChanging" msprop:Generator_RowEvHandlerName="delay_reasonsRowChangeEventHandler" msprop:Generator_RowDeletedName="delay_reasonsRowDeleted" msprop:Generator_UserTableName="delay_reasons" msprop:Generator_RowChangedName="delay_reasonsRowChanged" msprop:Generator_RowEvArgName="delay_reasonsRowChangeEvent" msprop:Generator_RowClassName="delay_reasonsRow">
+        <xs:element name="delay_reasons" msprop:Generator_TableClassName="delay_reasonsDataTable" msprop:Generator_TableVarName="tabledelay_reasons" msprop:Generator_RowChangedName="delay_reasonsRowChanged" msprop:Generator_TablePropName="delay_reasons" msprop:Generator_RowDeletingName="delay_reasonsRowDeleting" msprop:Generator_RowChangingName="delay_reasonsRowChanging" msprop:Generator_RowEvHandlerName="delay_reasonsRowChangeEventHandler" msprop:Generator_RowDeletedName="delay_reasonsRowDeleted" msprop:Generator_RowClassName="delay_reasonsRow" msprop:Generator_UserTableName="delay_reasons" msprop:Generator_RowEvArgName="delay_reasonsRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="id" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnid" msprop:Generator_ColumnPropNameInRow="id" msprop:Generator_ColumnPropNameInTable="idColumn" msprop:Generator_UserColumnName="id" type="xs:int" />

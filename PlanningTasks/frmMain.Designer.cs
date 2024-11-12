@@ -30,8 +30,6 @@ namespace PlanningTasks
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.tblTaks = new System.Windows.Forms.DataGridView();
             this.timerUpdateTask = new System.Windows.Forms.Timer(this.components);
@@ -47,6 +45,7 @@ namespace PlanningTasks
             this.colAssemblyPicking = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colAssemblyPallet = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colAssemblyMezzanine = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colIsEDM = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDoneShare = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FontColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.BackgroundColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -75,38 +74,27 @@ namespace PlanningTasks
             this.colAssemblyPicking,
             this.colAssemblyPallet,
             this.colAssemblyMezzanine,
+            this.colIsEDM,
             this.colDoneShare,
             this.FontColor,
             this.BackgroundColor,
             this.BackgroundColorRGB,
             this.FontColorRGB});
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.MenuHighlight;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.ControlLightLight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.tblTaks.DefaultCellStyle = dataGridViewCellStyle1;
             this.tblTaks.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tblTaks.Location = new System.Drawing.Point(0, 0);
             this.tblTaks.MultiSelect = false;
             this.tblTaks.Name = "tblTaks";
             this.tblTaks.ReadOnly = true;
             this.tblTaks.RowHeadersVisible = false;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.Transparent;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Transparent;
-            this.tblTaks.RowsDefaultCellStyle = dataGridViewCellStyle2;
-            this.tblTaks.RowTemplate.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.Transparent;
             this.tblTaks.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.tblTaks.Size = new System.Drawing.Size(1098, 632);
             this.tblTaks.TabIndex = 0;
             this.tblTaks.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tblTaks_CellContentClick);
             this.tblTaks.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.tblTaks_CellPainting);
+            this.tblTaks.ColumnHeaderMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.tblTaks_ColumnHeaderMouseDoubleClick);
             this.tblTaks.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.tblTaks_RowPrePaint);
             this.tblTaks.Scroll += new System.Windows.Forms.ScrollEventHandler(this.tblTaks_Scroll);
+            this.tblTaks.SelectionChanged += new System.EventHandler(this.tblTaks_SelectionChanged);
             this.tblTaks.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tblTaks_KeyDown);
             this.tblTaks.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tblTaks_KeyUp);
             // 
@@ -198,6 +186,12 @@ namespace PlanningTasks
             this.colAssemblyMezzanine.Name = "colAssemblyMezzanine";
             this.colAssemblyMezzanine.ReadOnly = true;
             // 
+            // colIsEDM
+            // 
+            this.colIsEDM.HeaderText = "ЭДО";
+            this.colIsEDM.Name = "colIsEDM";
+            this.colIsEDM.ReadOnly = true;
+            // 
             // colDoneShare
             // 
             this.colDoneShare.DataPropertyName = "DoneShare";
@@ -251,6 +245,7 @@ namespace PlanningTasks
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Текущие операционные задачи";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmMain_FormClosed);
             this.Load += new System.EventHandler(this.frmCurrentTask_Load);
             ((System.ComponentModel.ISupportInitialize)(this.tblTaks)).EndInit();
             this.ResumeLayout(false);
@@ -273,6 +268,7 @@ namespace PlanningTasks
         private System.Windows.Forms.DataGridViewTextBoxColumn colAssemblyPicking;
         private System.Windows.Forms.DataGridViewTextBoxColumn colAssemblyPallet;
         private System.Windows.Forms.DataGridViewTextBoxColumn colAssemblyMezzanine;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colIsEDM;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDoneShare;
         private System.Windows.Forms.DataGridViewTextBoxColumn FontColor;
         private System.Windows.Forms.DataGridViewTextBoxColumn BackgroundColor;

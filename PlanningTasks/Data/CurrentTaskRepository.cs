@@ -61,7 +61,7 @@ namespace PlanningTasks
                     RuleRowColor rule = GetValidRule(currentTask.ShpDate, currentTask.SlotTime);
                     currentTask.FontColorRGB = Color.Black;
                     currentTask.BackgroundColorRGB = Color.White;
-                    if (rule != null)
+                    if (rule != null )
                     {
                         currentTask.FontColorRGB = rule.FontColorRGB;
                         currentTask.BackgroundColorRGB = rule.BackgroundColorRGB;
@@ -77,6 +77,10 @@ namespace PlanningTasks
 
         }
 
+        public async Task<List<CurrentTask>> GetListAsync()
+        {
+            return  await Task<List<CurrentTask>>.Run(() => GetList(DateTime.Now, null));
+        }
         private RuleRowColor GetValidRule(DateTime? ShpDate, TimeSpan? TimeSlot)
         {
             RuleRowColor rule = null;
@@ -88,7 +92,7 @@ namespace PlanningTasks
             date1 = date1.Add((TimeSpan)TimeSlot);
 
             TimeSpan timeSubtract = date1.Subtract(DateTime.Now);
-
+            //int timeSubtractMinutes = Math.Abs((int)timeSubtract.TotalMinutes);
             int timeSubtractMinutes = (int)timeSubtract.TotalMinutes;
             bool isValid;
             foreach (var ruleItem in Config.RulesRowColor)

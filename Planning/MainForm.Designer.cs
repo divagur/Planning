@@ -63,6 +63,7 @@
             this.tblShipments = new System.Windows.Forms.DataGridView();
             this.mnuContext = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mciPrint = new System.Windows.Forms.ToolStripMenuItem();
+            this.mciOrderDetail = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.cbPaint = new System.Windows.Forms.CheckBox();
             this.cbUpdate = new System.Windows.Forms.CheckBox();
@@ -98,8 +99,10 @@
             this.statusStrip2 = new System.Windows.Forms.StatusStrip();
             this.statusInfo = new System.Windows.Forms.ToolStripStatusLabel();
             this.bwProgress = new System.ComponentModel.BackgroundWorker();
+            this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
             this.shipmentBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.UniqueKey = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colOrderDetail = new System.Windows.Forms.DataGridViewButtonColumn();
             this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colIdNakl = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -140,6 +143,7 @@
             this.colShippingPlacesNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colOrderWeight = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colSupplier = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colIsEdm = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.menuMain.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -389,6 +393,7 @@
             this.tblShipments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.tblShipments.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.UniqueKey,
+            this.colOrderDetail,
             this.colId,
             this.colIdNakl,
             this.colDate,
@@ -428,7 +433,8 @@
             this.IsAddLv,
             this.colShippingPlacesNumber,
             this.colOrderWeight,
-            this.colSupplier});
+            this.colSupplier,
+            this.colIsEdm});
             this.tblShipments.ContextMenuStrip = this.mnuContext;
             this.tblShipments.Cursor = System.Windows.Forms.Cursors.Arrow;
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -458,7 +464,9 @@
             this.tblShipments.TabIndex = 2;
             this.tblShipments.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tblShipments_CellContentClick);
             this.tblShipments.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tblShipments_CellDoubleClick);
+            this.tblShipments.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.tblShipments_CellFormatting);
             this.tblShipments.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.tblShipments_CellPainting);
+            this.tblShipments.CellValueNeeded += new System.Windows.Forms.DataGridViewCellValueEventHandler(this.tblShipments_CellValueNeeded);
             this.tblShipments.ColumnDisplayIndexChanged += new System.Windows.Forms.DataGridViewColumnEventHandler(this.tblShipments_ColumnDisplayIndexChanged);
             this.tblShipments.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.tblShipments_RowPostPaint);
             this.tblShipments.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.tblShipments_RowPrePaint);
@@ -467,17 +475,27 @@
             // mnuContext
             // 
             this.mnuContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mciPrint});
+            this.mciPrint,
+            this.mciOrderDetail});
             this.mnuContext.Name = "mnuContext";
-            this.mnuContext.Size = new System.Drawing.Size(114, 26);
+            this.mnuContext.Size = new System.Drawing.Size(145, 48);
+            this.mnuContext.Opening += new System.ComponentModel.CancelEventHandler(this.mnuContext_Opening);
             // 
             // mciPrint
             // 
             this.mciPrint.Image = global::Planning.Properties.Resources.printer;
             this.mciPrint.Name = "mciPrint";
-            this.mciPrint.Size = new System.Drawing.Size(113, 22);
+            this.mciPrint.Size = new System.Drawing.Size(144, 22);
             this.mciPrint.Text = "Печать";
             this.mciPrint.Click += new System.EventHandler(this.mciPrint_Click);
+            // 
+            // mciOrderDetail
+            // 
+            this.mciOrderDetail.Image = global::Planning.Properties.Resources.view_detailed_2595;
+            this.mciOrderDetail.Name = "mciOrderDetail";
+            this.mciOrderDetail.Size = new System.Drawing.Size(144, 22);
+            this.mciOrderDetail.Text = "Детализация";
+            this.mciOrderDetail.Click += new System.EventHandler(this.mciOrderDetail_Click);
             // 
             // panel1
             // 
@@ -706,7 +724,7 @@
             this.входToolStripMenuItem.CheckOnClick = true;
             this.входToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.входToolStripMenuItem.Name = "входToolStripMenuItem";
-            this.входToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
+            this.входToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.входToolStripMenuItem.Text = "вход";
             this.входToolStripMenuItem.Click += new System.EventHandler(this.входToolStripMenuItem_Click);
             // 
@@ -716,7 +734,7 @@
             this.выходToolStripMenuItem.CheckOnClick = true;
             this.выходToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.выходToolStripMenuItem.Name = "выходToolStripMenuItem";
-            this.выходToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
+            this.выходToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.выходToolStripMenuItem.Text = "выход";
             this.выходToolStripMenuItem.Click += new System.EventHandler(this.входToolStripMenuItem_Click);
             // 
@@ -726,7 +744,7 @@
             this.перемещениеToolStripMenuItem.CheckOnClick = true;
             this.перемещениеToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.перемещениеToolStripMenuItem.Name = "перемещениеToolStripMenuItem";
-            this.перемещениеToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
+            this.перемещениеToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.перемещениеToolStripMenuItem.Text = "перем";
             this.перемещениеToolStripMenuItem.Click += new System.EventHandler(this.входToolStripMenuItem_Click);
             // 
@@ -827,12 +845,31 @@
             this.bwProgress.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.bwProgress_ProgressChanged);
             this.bwProgress.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bwProgress_RunWorkerCompleted);
             // 
+            // dataGridViewImageColumn1
+            // 
+            this.dataGridViewImageColumn1.HeaderText = "";
+            this.dataGridViewImageColumn1.Image = global::Planning.Properties.Resources.calendar;
+            this.dataGridViewImageColumn1.Name = "dataGridViewImageColumn1";
+            this.dataGridViewImageColumn1.Width = 30;
+            // 
             // UniqueKey
             // 
             this.UniqueKey.HeaderText = "UniqueKey";
             this.UniqueKey.Name = "UniqueKey";
             this.UniqueKey.ReadOnly = true;
+            this.UniqueKey.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.UniqueKey.Visible = false;
+            // 
+            // colOrderDetail
+            // 
+            this.colOrderDetail.HeaderText = "";
+            this.colOrderDetail.Name = "colOrderDetail";
+            this.colOrderDetail.ReadOnly = true;
+            this.colOrderDetail.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colOrderDetail.Text = "...";
+            this.colOrderDetail.ToolTipText = "Детализация заказа";
+            this.colOrderDetail.UseColumnTextForButtonValue = true;
+            this.colOrderDetail.Width = 20;
             // 
             // colId
             // 
@@ -1130,6 +1167,13 @@
             this.colSupplier.ReadOnly = true;
             this.colSupplier.Width = 200;
             // 
+            // colIsEdm
+            // 
+            this.colIsEdm.DataPropertyName = "IsEdm";
+            this.colIsEdm.HeaderText = "ЭДО";
+            this.colIsEdm.Name = "colIsEdm";
+            this.colIsEdm.ReadOnly = true;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1232,7 +1276,10 @@
         private System.Windows.Forms.ToolStripMenuItem miRepStatistic;
         private System.Windows.Forms.ToolStripMenuItem miRepTC;
         private System.Windows.Forms.CheckBox cbPaint;
+        private System.Windows.Forms.ToolStripMenuItem mciOrderDetail;
+        private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn UniqueKey;
+        private System.Windows.Forms.DataGridViewButtonColumn colOrderDetail;
         private System.Windows.Forms.DataGridViewTextBoxColumn colId;
         private System.Windows.Forms.DataGridViewTextBoxColumn colIdNakl;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDate;
@@ -1273,6 +1320,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colShippingPlacesNumber;
         private System.Windows.Forms.DataGridViewTextBoxColumn colOrderWeight;
         private System.Windows.Forms.DataGridViewTextBoxColumn colSupplier;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn colIsEdm;
     }
 }
 

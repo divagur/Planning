@@ -34,6 +34,7 @@ namespace Planning
         public string lv_order_code { get; set; }
         public Nullable<int> shipping_places_number { get; set; }
         public Nullable<decimal> order_weight { get; set; }
+        public Nullable<bool> IsEdm { get; set; }
     
         public virtual Shipment Shipment { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
