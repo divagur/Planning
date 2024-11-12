@@ -144,6 +144,7 @@
             this.colOrderWeight = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colSupplier = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colIsEdm = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.colOrdLvId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.menuMain.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -434,7 +435,8 @@
             this.colShippingPlacesNumber,
             this.colOrderWeight,
             this.colSupplier,
-            this.colIsEdm});
+            this.colIsEdm,
+            this.colOrdLvId});
             this.tblShipments.ContextMenuStrip = this.mnuContext;
             this.tblShipments.Cursor = System.Windows.Forms.Cursors.Arrow;
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -681,7 +683,7 @@
             this.toolStripMenuItem3.CheckOnClick = true;
             this.toolStripMenuItem3.CheckState = System.Windows.Forms.CheckState.Checked;
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(80, 22);
             this.toolStripMenuItem3.Text = "2";
             this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
             // 
@@ -689,14 +691,14 @@
             // 
             this.toolStripMenuItem1.CheckOnClick = true;
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(80, 22);
             this.toolStripMenuItem1.Text = "1";
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.CheckOnClick = true;
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(80, 22);
             this.toolStripMenuItem2.Text = "3";
             // 
             // toolStripSeparator3
@@ -724,7 +726,7 @@
             this.входToolStripMenuItem.CheckOnClick = true;
             this.входToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.входToolStripMenuItem.Name = "входToolStripMenuItem";
-            this.входToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.входToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
             this.входToolStripMenuItem.Text = "вход";
             this.входToolStripMenuItem.Click += new System.EventHandler(this.входToolStripMenuItem_Click);
             // 
@@ -734,7 +736,7 @@
             this.выходToolStripMenuItem.CheckOnClick = true;
             this.выходToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.выходToolStripMenuItem.Name = "выходToolStripMenuItem";
-            this.выходToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.выходToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
             this.выходToolStripMenuItem.Text = "выход";
             this.выходToolStripMenuItem.Click += new System.EventHandler(this.входToolStripMenuItem_Click);
             // 
@@ -744,7 +746,7 @@
             this.перемещениеToolStripMenuItem.CheckOnClick = true;
             this.перемещениеToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.перемещениеToolStripMenuItem.Name = "перемещениеToolStripMenuItem";
-            this.перемещениеToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.перемещениеToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
             this.перемещениеToolStripMenuItem.Text = "перем";
             this.перемещениеToolStripMenuItem.Click += new System.EventHandler(this.входToolStripMenuItem_Click);
             // 
@@ -1174,6 +1176,14 @@
             this.colIsEdm.Name = "colIsEdm";
             this.colIsEdm.ReadOnly = true;
             // 
+            // colOrdLvId
+            // 
+            this.colOrdLvId.DataPropertyName = "OrdLVID";
+            this.colOrdLvId.HeaderText = "colOrdLvId";
+            this.colOrdLvId.Name = "colOrdLvId";
+            this.colOrdLvId.ReadOnly = true;
+            this.colOrdLvId.Visible = false;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1321,6 +1331,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colOrderWeight;
         private System.Windows.Forms.DataGridViewTextBoxColumn colSupplier;
         private System.Windows.Forms.DataGridViewCheckBoxColumn colIsEdm;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colOrdLvId;
     }
 }
 
