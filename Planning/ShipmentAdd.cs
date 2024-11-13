@@ -27,6 +27,8 @@ namespace Planning
             
             cmbDepositor.Enabled = !Lock;
             cmbType.Enabled = !Lock;
+            btnEdit.Enabled = Lock;
+                
             
         }
         public ShipmentAdd(ShipmentParam shipmentAddResult)
@@ -163,6 +165,10 @@ namespace Planning
         }
         private void Save()
         {
+            if (tblShipmentItem.RowCount == 0)
+            {
+                return;
+            }
             if (cmbType.SelectedIndex < 2)
             {
                 _shipmentAddResult.IsShipment = true;
@@ -320,23 +326,27 @@ namespace Planning
 
         private void btnFromShipmentAll_Click(object sender, EventArgs e)
         {
+
+            if (tblShipmentItem.RowCount > 0)
+            {
+                int i = 0;
+                while (tblShipmentItem.RowCount>0)
+                {
+                    tblShipmentItem.Rows[0].Selected = true;
+                    MoveRow(tblShipmentItem, tblOrders);
+                    i++;
+                }
+
+            } 
+
+
             LockChangeType(false);
+            //LockChangeType(false);
         }
 
         private void btnFromShipment_Click(object sender, EventArgs e)
         {
-            /*
-            DataRow row = ds.Tables[0].NewRow(); 
-            ds.Tables[0].Rows.Add(row);
 
-            int currentRow = tblShipmentItem.CurrentCell.RowIndex;
-            row[1] = tblShipmentItem.Rows[currentRow].Cells[0].Value;
-            row[2] = tblShipmentItem.Rows[currentRow].Cells[1].Value;
-            row[3] = tblShipmentItem.Rows[currentRow].Cells[2].Value;
-            row[4] = tblShipmentItem.Rows[currentRow].Cells[3].Value;
-
-            tblShipmentItem.Rows.Remove(tblShipmentItem.CurrentRow);
-            */
             MoveRow(tblShipmentItem, tblOrders);
             if (tblShipmentItem.RowCount == 0)
                 LockChangeType(false);

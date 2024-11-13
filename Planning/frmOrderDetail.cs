@@ -40,7 +40,7 @@ namespace Planning
             SLDocument sl = new SLDocument();
 
             SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "Excel files(*.xls)|*.xls";
+            saveFileDialog.Filter = "Excel files(*.xlsx)|*.xlsx|Excel files(*.xls)|*.xls";
             if (saveFileDialog.ShowDialog()==DialogResult.OK)
             {
                 sl.SetCellValue("A1", "Код артикула");

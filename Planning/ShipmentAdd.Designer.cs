@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ShipmentAdd));
             this.pnlToolBar = new System.Windows.Forms.Panel();
             this.btnCancel = new System.Windows.Forms.Button();
@@ -39,6 +39,14 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
             this.tblShipmentItem = new System.Windows.Forms.DataGridView();
+            this.colItemId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colItemOstCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colItemStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colItemDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colItemKlient = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colLVOrdId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colItemOstId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colItemIsEDM = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel6 = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
             this.cmbTimeSlot = new System.Windows.Forms.ComboBox();
@@ -50,14 +58,6 @@
             this.btnFromShipment = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.tblOrders = new System.Windows.Forms.DataGridView();
-            this.panel5 = new System.Windows.Forms.Panel();
-            this.btnFind = new System.Windows.Forms.Button();
-            this.txtOrderId = new System.Windows.Forms.TextBox();
-            this.cmbType = new System.Windows.Forms.ComboBox();
-            this.cmbDepositor = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
             this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colOstCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colState = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -66,14 +66,14 @@
             this.colLVOrderId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colOstId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colIsEDM = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colItemId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colItemOstCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colItemStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colItemDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colItemKlient = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colLVOrdId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colItemOstId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colItemIsEDM = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.btnFind = new System.Windows.Forms.Button();
+            this.txtOrderId = new System.Windows.Forms.TextBox();
+            this.cmbType = new System.Windows.Forms.ComboBox();
+            this.cmbDepositor = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.pnlToolBar.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel4.SuspendLayout();
@@ -108,6 +108,7 @@
             // 
             // btnEdit
             // 
+            this.btnEdit.Enabled = false;
             this.btnEdit.Location = new System.Drawing.Point(86, 3);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(121, 23);
@@ -168,6 +169,60 @@
             this.tblShipmentItem.RowHeadersVisible = false;
             this.tblShipmentItem.Size = new System.Drawing.Size(525, 461);
             this.tblShipmentItem.TabIndex = 1;
+            // 
+            // colItemId
+            // 
+            this.colItemId.HeaderText = "Код заказа";
+            this.colItemId.Name = "colItemId";
+            this.colItemId.ReadOnly = true;
+            this.colItemId.Width = 200;
+            // 
+            // colItemOstCode
+            // 
+            this.colItemOstCode.HeaderText = "Код расходной партии";
+            this.colItemOstCode.Name = "colItemOstCode";
+            this.colItemOstCode.ReadOnly = true;
+            this.colItemOstCode.Width = 200;
+            // 
+            // colItemStatus
+            // 
+            this.colItemStatus.HeaderText = "Status";
+            this.colItemStatus.Name = "colItemStatus";
+            this.colItemStatus.ReadOnly = true;
+            this.colItemStatus.Visible = false;
+            // 
+            // colItemDate
+            // 
+            this.colItemDate.HeaderText = "Date";
+            this.colItemDate.Name = "colItemDate";
+            this.colItemDate.ReadOnly = true;
+            this.colItemDate.Visible = false;
+            // 
+            // colItemKlient
+            // 
+            this.colItemKlient.HeaderText = "Klient";
+            this.colItemKlient.Name = "colItemKlient";
+            this.colItemKlient.ReadOnly = true;
+            this.colItemKlient.Visible = false;
+            // 
+            // colLVOrdId
+            // 
+            this.colLVOrdId.HeaderText = "ID заказа";
+            this.colLVOrdId.Name = "colLVOrdId";
+            this.colLVOrdId.ReadOnly = true;
+            // 
+            // colItemOstId
+            // 
+            this.colItemOstId.HeaderText = "colItemOstId";
+            this.colItemOstId.Name = "colItemOstId";
+            this.colItemOstId.ReadOnly = true;
+            this.colItemOstId.Visible = false;
+            // 
+            // colItemIsEDM
+            // 
+            this.colItemIsEDM.HeaderText = "ЭДО";
+            this.colItemIsEDM.Name = "colItemIsEDM";
+            this.colItemIsEDM.ReadOnly = true;
             // 
             // panel6
             // 
@@ -271,14 +326,14 @@
             // 
             this.tblOrders.AllowUserToAddRows = false;
             this.tblOrders.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.tblOrders.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.tblOrders.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.tblOrders.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.tblOrders.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colId,
@@ -289,32 +344,88 @@
             this.colLVOrderId,
             this.colOstId,
             this.colIsEDM});
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.tblOrders.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.tblOrders.DefaultCellStyle = dataGridViewCellStyle2;
             this.tblOrders.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tblOrders.Location = new System.Drawing.Point(0, 62);
             this.tblOrders.Name = "tblOrders";
             this.tblOrders.ReadOnly = true;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.tblOrders.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.tblOrders.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.tblOrders.RowHeadersVisible = false;
             this.tblOrders.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.tblOrders.Size = new System.Drawing.Size(606, 516);
             this.tblOrders.TabIndex = 1;
             this.tblOrders.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tblOrders_CellContentClick);
             this.tblOrders.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tblOrders_CellDoubleClick);
+            // 
+            // colId
+            // 
+            this.colId.DataPropertyName = "LVCode";
+            this.colId.HeaderText = "Код";
+            this.colId.Name = "colId";
+            this.colId.ReadOnly = true;
+            // 
+            // colOstCode
+            // 
+            this.colOstCode.HeaderText = "Расходная партия";
+            this.colOstCode.Name = "colOstCode";
+            this.colOstCode.ReadOnly = true;
+            // 
+            // colState
+            // 
+            this.colState.DataPropertyName = "LVStatus";
+            this.colState.HeaderText = "Статус";
+            this.colState.Name = "colState";
+            this.colState.ReadOnly = true;
+            // 
+            // colDate
+            // 
+            this.colDate.DataPropertyName = "ExpDate";
+            this.colDate.HeaderText = "Ожид. дата";
+            this.colDate.Name = "colDate";
+            this.colDate.ReadOnly = true;
+            // 
+            // colKlient
+            // 
+            this.colKlient.DataPropertyName = "Company";
+            this.colKlient.HeaderText = "Клиент";
+            this.colKlient.Name = "colKlient";
+            this.colKlient.ReadOnly = true;
+            this.colKlient.Width = 200;
+            // 
+            // colLVOrderId
+            // 
+            this.colLVOrderId.DataPropertyName = "LVID";
+            this.colLVOrderId.HeaderText = "LVOrderId";
+            this.colLVOrderId.Name = "colLVOrderId";
+            this.colLVOrderId.ReadOnly = true;
+            this.colLVOrderId.Visible = false;
+            // 
+            // colOstId
+            // 
+            this.colOstId.HeaderText = "colOstId";
+            this.colOstId.Name = "colOstId";
+            this.colOstId.ReadOnly = true;
+            this.colOstId.Visible = false;
+            // 
+            // colIsEDM
+            // 
+            this.colIsEDM.HeaderText = "ЭДО";
+            this.colIsEDM.Name = "colIsEDM";
+            this.colIsEDM.ReadOnly = true;
             // 
             // panel5
             // 
@@ -397,116 +508,6 @@
             this.label1.Size = new System.Drawing.Size(63, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Депозитор";
-            // 
-            // colId
-            // 
-            this.colId.DataPropertyName = "LVCode";
-            this.colId.HeaderText = "Код";
-            this.colId.Name = "colId";
-            this.colId.ReadOnly = true;
-            // 
-            // colOstCode
-            // 
-            this.colOstCode.HeaderText = "Расходная партия";
-            this.colOstCode.Name = "colOstCode";
-            this.colOstCode.ReadOnly = true;
-            // 
-            // colState
-            // 
-            this.colState.DataPropertyName = "LVStatus";
-            this.colState.HeaderText = "Статус";
-            this.colState.Name = "colState";
-            this.colState.ReadOnly = true;
-            // 
-            // colDate
-            // 
-            this.colDate.DataPropertyName = "ExpDate";
-            this.colDate.HeaderText = "Ожид. дата";
-            this.colDate.Name = "colDate";
-            this.colDate.ReadOnly = true;
-            // 
-            // colKlient
-            // 
-            this.colKlient.DataPropertyName = "Company";
-            this.colKlient.HeaderText = "Клиент";
-            this.colKlient.Name = "colKlient";
-            this.colKlient.ReadOnly = true;
-            this.colKlient.Width = 200;
-            // 
-            // colLVOrderId
-            // 
-            this.colLVOrderId.DataPropertyName = "LVID";
-            this.colLVOrderId.HeaderText = "LVOrderId";
-            this.colLVOrderId.Name = "colLVOrderId";
-            this.colLVOrderId.ReadOnly = true;
-            this.colLVOrderId.Visible = false;
-            // 
-            // colOstId
-            // 
-            this.colOstId.HeaderText = "colOstId";
-            this.colOstId.Name = "colOstId";
-            this.colOstId.ReadOnly = true;
-            this.colOstId.Visible = false;
-            // 
-            // colIsEDM
-            // 
-            this.colIsEDM.HeaderText = "ЭДО";
-            this.colIsEDM.Name = "colIsEDM";
-            this.colIsEDM.ReadOnly = true;
-            // 
-            // colItemId
-            // 
-            this.colItemId.HeaderText = "Код заказа";
-            this.colItemId.Name = "colItemId";
-            this.colItemId.ReadOnly = true;
-            this.colItemId.Width = 200;
-            // 
-            // colItemOstCode
-            // 
-            this.colItemOstCode.HeaderText = "Код расходной партии";
-            this.colItemOstCode.Name = "colItemOstCode";
-            this.colItemOstCode.ReadOnly = true;
-            this.colItemOstCode.Width = 200;
-            // 
-            // colItemStatus
-            // 
-            this.colItemStatus.HeaderText = "Status";
-            this.colItemStatus.Name = "colItemStatus";
-            this.colItemStatus.ReadOnly = true;
-            this.colItemStatus.Visible = false;
-            // 
-            // colItemDate
-            // 
-            this.colItemDate.HeaderText = "Date";
-            this.colItemDate.Name = "colItemDate";
-            this.colItemDate.ReadOnly = true;
-            this.colItemDate.Visible = false;
-            // 
-            // colItemKlient
-            // 
-            this.colItemKlient.HeaderText = "Klient";
-            this.colItemKlient.Name = "colItemKlient";
-            this.colItemKlient.ReadOnly = true;
-            this.colItemKlient.Visible = false;
-            // 
-            // colLVOrdId
-            // 
-            this.colLVOrdId.HeaderText = "ID заказа";
-            this.colLVOrdId.Name = "colLVOrdId";
-            this.colLVOrdId.ReadOnly = true;
-            // 
-            // colItemOstId
-            // 
-            this.colItemOstId.HeaderText = "colItemOstId";
-            this.colItemOstId.Name = "colItemOstId";
-            this.colItemOstId.ReadOnly = true;
-            this.colItemOstId.Visible = false;
-            // 
-            // colItemIsEDM
-            // 
-            this.colItemIsEDM.HeaderText = "ЭДО";
-            this.colItemIsEDM.Name = "colItemIsEDM";
-            this.colItemIsEDM.ReadOnly = true;
             // 
             // ShipmentAdd
             // 
