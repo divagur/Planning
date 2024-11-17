@@ -1075,6 +1075,7 @@
             this.tbObject.SelectedIndex = 0;
             this.tbObject.Size = new System.Drawing.Size(807, 819);
             this.tbObject.TabIndex = 38;
+            this.tbObject.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tbObject_Selecting);
             // 
             // tabMain
             // 

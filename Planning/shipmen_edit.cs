@@ -30,8 +30,8 @@ namespace Planning
         string _title;
         StringBuilder sbLog = new StringBuilder();
         List<ShipmentOrderPart> shipmentOrderParts = new List<ShipmentOrderPart>();
-
-
+        int itemId;
+        frmShipmentHistory frmShipmentLog = null;
 
         protected override void WndProc(ref Message m)
         {
@@ -452,6 +452,7 @@ namespace Planning
             _context = DataService.context;
             _shipment = shipment;
             IsShipment = true;
+            itemId = shipment.Id;
             gbMovementItem.Visible = false;
             tbObject.TabPages.Remove(tabOrders);
             _isNew = isNew;
@@ -480,6 +481,7 @@ namespace Planning
             _context = DataService.context;
             _movement = movement;
             IsShipment = false;
+            itemId = movement.Id;
             gbOrders.Visible = false;
             btnAddToLV.Visible = false;
             btnBindLV.Visible = false;
@@ -488,15 +490,17 @@ namespace Planning
             this.Text = "Редактирование перемещения ";
             if (!_isNew)
                 Text = Text + " [" + _movement.Id.ToString() + "]";
-            AddHistory(movement.Id);
+            //AddHistory(movement.Id);
             tbObject.TabPages.Remove(tabOrders);
         }
 
         public void AddHistory(int ItemId)
         {
 
+            if (frmShipmentLog != null)
+                return;
 
-            frmShipmentHistory frmShipmentLog = new frmShipmentHistory(ItemId, IsShipment);
+            frmShipmentLog = new frmShipmentHistory(ItemId, IsShipment);
             frmShipmentLog.Populate();
             frmShipmentLog.TopLevel = false;
             frmShipmentLog.Visible = true;
@@ -1032,6 +1036,14 @@ namespace Planning
                 return;
 
             SelectOrder((int)tblOrderParts.Rows[tblShipmentOrders.CurrentCell.RowIndex].Cells["colPartsOrderCode"].Value);
+        }
+
+        private void tbObject_Selecting(object sender, TabControlCancelEventArgs e)
+        {
+            if (e.TabPage.Name =="tabHistory")
+            {
+                AddHistory(itemId);
+            }
         }
     }
 
