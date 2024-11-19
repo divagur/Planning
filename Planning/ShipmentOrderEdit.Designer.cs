@@ -45,6 +45,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.grpShInParam = new System.Windows.Forms.GroupBox();
+            this.cbIsEDM = new System.Windows.Forms.CheckBox();
             this.grpShInParam.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -189,11 +190,22 @@
             this.grpShInParam.TabIndex = 22;
             this.grpShInParam.TabStop = false;
             // 
+            // cbIsEDM
+            // 
+            this.cbIsEDM.AutoSize = true;
+            this.cbIsEDM.Location = new System.Drawing.Point(265, 34);
+            this.cbIsEDM.Name = "cbIsEDM";
+            this.cbIsEDM.Size = new System.Drawing.Size(50, 17);
+            this.cbIsEDM.TabIndex = 23;
+            this.cbIsEDM.Text = "ЭДО";
+            this.cbIsEDM.UseVisualStyleBackColor = true;
+            // 
             // ShipmentOrderEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(454, 275);
+            this.Controls.Add(this.cbIsEDM);
             this.Controls.Add(this.grpShInParam);
             this.Controls.Add(this.btnGetOrder);
             this.Controls.Add(this.btnSave);
@@ -239,5 +251,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.GroupBox grpShInParam;
+        private System.Windows.Forms.CheckBox cbIsEDM;
     }
 }

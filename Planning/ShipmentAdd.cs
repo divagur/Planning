@@ -165,10 +165,12 @@ namespace Planning
         }
         private void Save()
         {
+            /*
             if (tblShipmentItem.RowCount == 0)
             {
                 return;
             }
+            */
             if (cmbType.SelectedIndex < 2)
             {
                 _shipmentAddResult.IsShipment = true;

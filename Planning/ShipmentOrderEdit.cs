@@ -57,7 +57,7 @@ namespace Planning
             txtManualLoad.Text = _shipmentOrder.ManualLoad.ToString();
             txtManualUnload.Text = _shipmentOrder.ManualUnload.ToString();
             txtPalletAmount.Text = _shipmentOrder.PalletAmount.ToString();
-            
+            cbIsEDM.Checked = _shipmentOrder.IsEdm == null ? false : (bool)_shipmentOrder.IsEdm;
             bool isEnable = _shipmentOrder.IsBinding == null ? false : !(bool)_shipmentOrder.IsBinding;
             txtOrderId.Enabled = isEnable;
             btnGetOrder.Enabled = isEnable;
@@ -87,7 +87,7 @@ namespace Planning
             _shipmentOrder.lv_order_code = txtOrderId.Text;
             _shipmentOrder.OrderType = txtOrderType.Text;
             _shipmentOrder.Comment = txtOrderComment.Text;
-           
+            _shipmentOrder.IsEdm = cbIsEDM.Checked;
             _shipmentOrder.ManualLoad = GetNumber(txtManualLoad);
             _shipmentOrder.ManualUnload = GetNumber(txtManualUnload);
             _shipmentOrder.PalletAmount = GetNumber(txtPalletAmount);
