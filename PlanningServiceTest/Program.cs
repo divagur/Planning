@@ -38,6 +38,7 @@ namespace PlanningServiceTest
             settings.LogDirPath = settingsHandle.GetParamStringValue("LogDirPath");
             settings.FileInvoiceCustomMask = settingsHandle.GetParamStringValue("FileInvoiceCustomMask");
             settings.FileInvoiceProductionMask = settingsHandle.GetParamStringValue("FileInvoiceProductionMask");
+            /*
             logger = new Logger(settings);
             //Thread loggerThread = new Thread(new ThreadStart(logger.Start));
             //loggerThread.Start();
@@ -58,10 +59,14 @@ namespace PlanningServiceTest
                         break;
                 }
                 Invoice invoice = invoiceHandler.LoadFromXml(file);
-
-                LogHandler log = new LogHandler(@"D:\Temp\PlanningServices",true);
-            } 
             
+    
+            } 
+            */
+            LogHandler log = new LogHandler(@"D:\Temp\PlanningServices", true);
+            log.Open();
+            log.AddRow("file1", DateTime.Now, "Успешно", "", @"D:\Temp\PlanningServices\FileLogStorage", true);
+            log.AddRow("file2", DateTime.Now, "Ошибка", "НЕ верный формат файла", @"D:\Temp\PlanningServices\FileLogStorage", true);
         }
     }
 }
