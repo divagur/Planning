@@ -12,14 +12,14 @@ namespace PlanningServiceTest.InvoiceData
         public DateTime InvoiceDate { get; set; }
         public string InvoiceNumber { get; set; }
         public DateTime ActualDate { get; set; }
-        public int RecipientCode { get; set; }
+        public string RecipientCode { get; set; }
         public string DeliveryType { get; set; }
         public string ContainerNumber { get; set; }
         public string TruckNumber { get; set; }
         public string TrailerNumber { get; set; }
         public string Driver { get; set; }
         public string Status { get; set; }
-        public string SupplierCode { get; set; }
-        public string CustomsCode { get; set; }
+        //public string SupplierCode { get; set; }
+        //public string CustomsCode { get; set; }
     }
 }

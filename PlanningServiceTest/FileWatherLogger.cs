@@ -140,11 +140,11 @@ namespace Planning.Service
             string status = "Успешно";
             string error = "";
             try
-            {
+            {/*
                 switch (invoiceType)
                 {
                     case InvoiceType.Product:
-                        InvoiceHandlerProduct invoiceHandlerProduct = new InvoiceHandlerProduct();
+                        InvoiceHandlerProduction invoiceHandlerProduct = new InvoiceHandlerProduction();
                         //InvoiceProduction invoiceProduction = invoiceHandlerProduct.LoadFromXml(e.Name);
                         break;
                     case InvoiceType.Custom:
@@ -155,7 +155,7 @@ namespace Planning.Service
                         break;
                     default:
                         break;
-                }
+                }*/
             }
             catch (Exception ex)
             {

@@ -108,6 +108,7 @@ namespace Planning
                 var order = (LVOrder)selectResult.Result;
 
                 txtOrderId.Text = order.LVCode;
+                cbIsEDM.Checked = (bool)order.IsEdm;
                 _shipmentOrder.LVOrderId = order.LVID;
                 int? DepositorLVId = _shipment.DepositorId;
                 _shipmentOrder.IsBinding = true;

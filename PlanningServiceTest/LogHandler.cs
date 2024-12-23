@@ -15,7 +15,7 @@ namespace PlanningServiceTest
         int _rowCount = 0;
         List<LogRow> _logRows = new List<LogRow>();
         string _logName = "FileProcessLog.xml";
-        string _logFullName
+        
         bool _isLoaded = false;
         bool _isOpened = false;
         public LogHandler(string LogPath, bool IsLoad = false)
@@ -26,18 +26,19 @@ namespace PlanningServiceTest
         }
         public void Open()
         {
-            if (String.IsNullOrEmpty(_logPath) || !Directory.Exists(_logPath))
+            string logPath = Path.GetDirectoryName(_logPath);
+            if (String.IsNullOrEmpty(logPath) || !Directory.Exists(logPath))
                 return;
-            string logFileName = Path.Combine(_logPath, _logName);
-            if (!File.Exists(logFileName))
+            //string logFileName = Path.Combine(_logPath, _logName);
+            if (!File.Exists(_logPath))
             {
-                File.WriteAllLines(logFileName, new string[] { @"<?xml version=""1.0"" encoding=""UTF - 8""?>", @"<FilesProcessLog/>" });
+                File.WriteAllLines(_logPath, new string[] { @"<?xml version=""1.0"" encoding=""UTF - 8""?>", @"<FilesProcessLog/>" });
             }
 
             _xmlLog = new XmlDocument();
             try
             {
-                _xmlLog.Load(logFileName);
+                _xmlLog.Load(_logPath);
                 _isOpened = true;
             }
             catch (Exception ex)

@@ -18,8 +18,7 @@ namespace Planning
 		public int? OstID { get; set; }
 		public string OstCode { get; set; }
 		public int LVShipmentID { get; set; }
-
-
+		public bool? IsEdm { get; set; }
 
 	}
 }

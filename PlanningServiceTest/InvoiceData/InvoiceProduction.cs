@@ -8,6 +8,6 @@ namespace PlanningServiceTest.InvoiceData
 {
     public class InvoiceProduction:Invoice
     {
-        //public int SupplierCode { get; set; }
+        public int SupplierCode { get; set; }
     }
 }

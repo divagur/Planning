@@ -193,6 +193,7 @@
             // cbIsEDM
             // 
             this.cbIsEDM.AutoSize = true;
+            this.cbIsEDM.Enabled = false;
             this.cbIsEDM.Location = new System.Drawing.Point(265, 34);
             this.cbIsEDM.Name = "cbIsEDM";
             this.cbIsEDM.Size = new System.Drawing.Size(50, 17);

@@ -7,12 +7,60 @@ using System.Xml;
 
 namespace PlanningServiceTest.InvoiceData
 {
-    public class InvoiceHandlerCustom:InvoiceHandler
+    public class InvoiceHandlerCustomN:InvoiceHandlerBase
     {
-        public override Invoice LoadFromXml(string FileName)
+        public override void LoadFromXml(string FileName, Invoice invoice)
+        {
+            try
+            {
+                base.LoadFromXml(FileName, invoice);
+            }
+            catch (Exception)
+            {
+                return;
+            }
+
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.Load(FileName);
+            ((InvoiceCustom)invoice).CustomsCode = xmlDoc.GetElementsByTagName("CustomsCode").Item(0).InnerText;
+
+        }
+    }
+    public class InvoiceHandlerCustomEx : InvoiceHandlerEx,  IInvoiceHandler<InvoiceCustom>
+    {
+        public void LoadFromXml(string FileName, InvoiceCustom invoice)
+
+        {
+            //InvoiceCustom invoice = base.LoadFromXml(FileName);
+            //InvoiceCustom invoice = new InvoiceCustom();
+            try
+            {
+                LoadBase(FileName, invoice);
+            }
+            catch (Exception)
+            {
+                return;                
+            }
+
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.Load(FileName);
+            XmlNode docElement = xmlDoc.GetElementsByTagName("Document").Item(0);
+            invoice.CustomsCode = xmlDoc.GetElementsByTagName("CustomsCode").Item(0).InnerText;
+
+            //return invoice;
+        }
+
+        public void Save(InvoiceCustom invoice)
+        {
+            throw new NotImplementedException();
+        }
+    }
+   public class InvoiceHandlerCustom:InvoiceHandler<InvoiceCustom>
+    {
+        public override InvoiceCustom LoadFromXml(string FileName)
             
         {
-            Invoice invoice = base.LoadFromXml(FileName);
+            InvoiceCustom invoice = base.LoadFromXml(FileName);
             //InvoiceCustom invoiceCustom = (InvoiceCustom)invoice;
             if (invoice != null)
             {

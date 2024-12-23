@@ -51,7 +51,9 @@ namespace Planning
                     order.DepLVID = row[5] == null? null: (int?)(Int32.Parse(row[5].ToString()));
                     order.OstID = row[6] == null || row[6].ToString() =="" ? null : (int?)(Int32.Parse(row[6].ToString()));
                     object objOstCode = row[7].ToString();
+                    order.IsEdm = row[8].ToString() == "Null" || string.IsNullOrEmpty(row[8].ToString()) ? false:(bool?)(bool.Parse(row[8].ToString()));
                     order.OstCode = objOstCode == null ? "" : (string)objOstCode;
+                    
                     listLVOrder.Add(order);
                 }
                 /*

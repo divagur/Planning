@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileWatherLogger.cs" />
+    <Compile Include="InvoiceData\IInvoiceHandler.cs" />
     <Compile Include="InvoiceData\Invoice.cs" />
     <Compile Include="InvoiceData\InvoiceCustom.cs" />
     <Compile Include="InvoiceData\InvoiceHandler.cs" />

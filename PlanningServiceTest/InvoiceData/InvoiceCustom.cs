@@ -8,6 +8,6 @@ namespace PlanningServiceTest.InvoiceData
 {
     public class InvoiceCustom:Invoice
     {
-        //public string CustomsCode { get; set; }
+        public string CustomsCode { get; set; }
     }
 }

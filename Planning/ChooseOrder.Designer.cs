@@ -46,6 +46,7 @@ namespace Planning
             this.colState = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colKlient = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colIsEDM = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.colLVOrderId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colOstId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.tblOrders)).BeginInit();
@@ -72,6 +73,7 @@ namespace Planning
             this.colState,
             this.colDate,
             this.colKlient,
+            this.colIsEDM,
             this.colLVOrderId,
             this.colOstId});
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -203,6 +205,15 @@ namespace Planning
             this.colKlient.ReadOnly = true;
             this.colKlient.Width = 200;
             // 
+            // colIsEDM
+            // 
+            this.colIsEDM.DataPropertyName = "IsEdm";
+            this.colIsEDM.HeaderText = "ЭДО";
+            this.colIsEDM.Name = "colIsEDM";
+            this.colIsEDM.ReadOnly = true;
+            this.colIsEDM.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colIsEDM.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
             // colLVOrderId
             // 
             this.colLVOrderId.DataPropertyName = "LVID";
@@ -252,6 +263,7 @@ namespace Planning
         private System.Windows.Forms.DataGridViewTextBoxColumn colState;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDate;
         private System.Windows.Forms.DataGridViewTextBoxColumn colKlient;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn colIsEDM;
         private System.Windows.Forms.DataGridViewTextBoxColumn colLVOrderId;
         private System.Windows.Forms.DataGridViewTextBoxColumn colOstId;
     }
