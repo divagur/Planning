@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataLayer
+namespace Planning.Kernel
 {
-    public class BaseObject
+    public static class DBUtilites
     {
-        public int Id { get; set; }
-
-        public EditState State { get; set; }
+        public static string ConnectionString = String.Empty;
     }
 }

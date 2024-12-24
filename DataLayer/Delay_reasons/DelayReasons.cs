@@ -1,13 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace PlanningTasks.DataLayer
+
+namespace Planning.Kernel
 {
-    public class DelayReasons : BaseObject
-    {        
-        public string Name { get; set; }
+    public class DelayReasons:BaseDataItem
+    {
+        string _name = String.Empty;
+        public string Name 
+            { 
+                get =>_name; 
+                set 
+                    {
+                        if (!_name.Equals(value))
+                        { 
+                            _name = value;
+                            Edit();
+                            
+                        }
+                    } 
+            }
+        
     }
 }
