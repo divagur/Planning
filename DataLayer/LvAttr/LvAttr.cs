@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Planning.Kernel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PlanningTasks.DataLayer
 {
-    public class LvAttr:BaseObject
+    public class LvAttr: BaseDataItem
     {
         public Nullable<bool> LvaIn { get; set; }
         public Nullable<int> LvaAttrLvId { get; set; }

@@ -8,51 +8,15 @@ using System.Threading.Tasks;
 using Dapper;
 using DapperExtensions;
 using DapperExtensions.Predicate;
+using Planning.Kernel;
 
-namespace PlanningTasks.DataLayer
+namespace Planning.DataLayer
 {
-    public class DepositorRepository : BaseRepository<Depositor>
+    public class DepositorRepository : BaseRepository<Depositor, DepositorAdapter>
     {
-        public override IBaseDataAdapter<Depositor> GetDataAdapter()
+        public DepositorRepository(string ConnectionString)
+        : base(ConnectionString)
         {
-            throw new NotImplementedException();
-        }
-
-        public DepositorRepository(string connectionString)
-            :base(connectionString)
-        {
-
-        }
-
-        public override Depositor GetItem(int Id)
-        {
-            return null;
-        }
-
-        public override List<Depositor> GetList()
-        {
-            using (IDbConnection db = new SqlConnection(ConnectionString))
-            {
-                if (db.State == ConnectionState.Closed)
-                {
-                    db.Open();
-                }
-                //
-                
-                
-                var predicate = Predicates.Field<Depositor>(f => f.Name, Operator.Eq, "BAXI");
-                string sQuery = $"SELECT id as {nameof(Depositor.Id)}, " +
-                    $"name as {nameof(Depositor.Name)}, lv_base as {nameof(Depositor.LvBase)}, lv_id as {nameof(Depositor.LvId)} FROM depositors";
-                
-                
-
-
-                var result =  db.Query<Depositor>($"SELECT id as {nameof(Depositor.Id)}, " +
-                    $"name as {nameof(Depositor.Name)}, lv_base as {nameof(Depositor.LvBase)}, lv_id as {nameof(Depositor.LvId)} FROM depositors", predicate).ToList();
-                db.Close();
-                return result;
-                // db.GetList<Depositor>(predicate).ToList(); 
-            }
 
         }
     }

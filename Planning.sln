@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Planning", "Planning\Planni
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Patcher", "Patcher\Patcher.csproj", "{F2966E8E-F655-4FA8-B932-0691DDE95C92}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLayer", "DataLayer\DataLayer.csproj", "{99E207B1-780D-49B7-B6E3-B5567EF4796F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Planning.DataLayer", "DataLayer\Planning.DataLayer.csproj", "{99E207B1-780D-49B7-B6E3-B5567EF4796F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlanningTest", "PlanningTest\PlanningTest.csproj", "{F2910B13-73B9-48F6-AB50-E006148B1090}"
 EndProject

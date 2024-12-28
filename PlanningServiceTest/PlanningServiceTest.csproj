@@ -33,6 +33,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Planning.DataLayer">
+      <HintPath>..\DataLayer\bin\Debug\Planning.DataLayer.dll</HintPath>
+    </Reference>
+    <Reference Include="Planning.Kernel">
+      <HintPath>..\Planning.Kernel\bin\Debug\Planning.Kernel.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />

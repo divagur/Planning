@@ -140,6 +140,9 @@
       <DependentUpon>ChooseOrder.cs</DependentUpon>
     </Compile>
     <Compile Include="CommonFuctions.cs" />
+    <Compile Include="CustomPost.cs">
+      <DependentUpon>DbPlaning.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataLayer\LVOrder.cs" />
     <Compile Include="DataLayer\LVOrder_Manager.cs" />
     <Compile Include="DataLayer\OrderDetailItem.cs" />
@@ -165,8 +168,23 @@
     <Compile Include="DelayReason.cs">
       <DependentUpon>DbPlaning.tt</DependentUpon>
     </Compile>
+    <Compile Include="DeliveryPeriod.cs">
+      <DependentUpon>DbPlaning.tt</DependentUpon>
+    </Compile>
     <Compile Include="Depositor.cs">
       <DependentUpon>DbPlaning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Dicts\CustomPostEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dicts\CustomPostEdit.Designer.cs">
+      <DependentUpon>CustomPostEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dicts\CustomPosts.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dicts\CustomPosts.Designer.cs">
+      <DependentUpon>CustomPosts.cs</DependentUpon>
     </Compile>
     <Compile Include="Dicts\DepositorEdit.cs">
       <SubType>Form</SubType>
@@ -197,6 +215,18 @@
     </Compile>
     <Compile Include="Dicts\Dict.Designer.cs">
       <DependentUpon>DictForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dicts\WarehouseEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dicts\WarehouseEdit.Designer.cs">
+      <DependentUpon>WarehouseEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dicts\Warehouses.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dicts\Warehouses.Designer.cs">
+      <DependentUpon>Warehouses.cs</DependentUpon>
     </Compile>
     <Compile Include="ExcelPrint.cs" />
     <Compile Include="FormLogin.cs">
@@ -527,8 +557,17 @@
     <Compile Include="Dicts\Users.Designer.cs">
       <DependentUpon>Users.cs</DependentUpon>
     </Compile>
+    <Compile Include="Warehouse.cs">
+      <DependentUpon>DbPlaning.tt</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="ChooseOrder.resx">
       <DependentUpon>ChooseOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dicts\CustomPostEdit.resx">
+      <DependentUpon>CustomPostEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dicts\CustomPosts.resx">
+      <DependentUpon>CustomPosts.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dicts\DepositorEdit.resx">
       <DependentUpon>DepositorEdit.cs</DependentUpon>
@@ -544,6 +583,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dicts\DictEditForm.resx">
       <DependentUpon>DictEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dicts\WarehouseEdit.resx">
+      <DependentUpon>WarehouseEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dicts\Warehouses.resx">
+      <DependentUpon>Warehouses.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormLogin.resx">
       <DependentUpon>FormLogin.cs</DependentUpon>
@@ -670,7 +715,6 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>DbPlaning.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="ClassDiagram1.cd" />
     <None Include="DbPlaning.edmx.diagram">
       <DependentUpon>DbPlaning.edmx</DependentUpon>
     </None>

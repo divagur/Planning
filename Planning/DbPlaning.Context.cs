@@ -53,5 +53,8 @@ namespace Planning
         public virtual DbSet<ShipmentsLog> ShipmentsLog { get; set; }
         public virtual DbSet<ShipmentOrderPart> ShipmentOrderParts { get; set; }
         public virtual DbSet<Supplier> Suppliers { get; set; }
+        public virtual DbSet<CustomPost> CustomPosts { get; set; }
+        public virtual DbSet<DeliveryPeriod> DeliveryPeriods { get; set; }
+        public virtual DbSet<Warehouse> Warehouses { get; set; }
     }
 }

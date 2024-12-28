@@ -5,12 +5,30 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="PlanningModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="custom_posts">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="code" Type="varchar" MaxLength="32" />
+          <Property Name="name" Type="varchar" MaxLength="254" />
+          <Property Name="descr" Type="varchar" MaxLength="254" />
+        </EntityType>
         <EntityType Name="delay_reasons">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="254" />
+        </EntityType>
+        <EntityType Name="delivery_period">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="custom_post_id" Type="int" />
+          <Property Name="warehouse_id" Type="int" />
+          <Property Name="delivery_day" Type="int" />
         </EntityType>
         <EntityType Name="depositors">
           <Key>
@@ -158,7 +176,7 @@
           <Property Name="lv_order_code" Type="varchar" MaxLength="32" />
           <Property Name="shipping_places_number" Type="int" />
           <Property Name="order_weight" Type="decimal" Precision="19" Scale="6" />
-          <Property Name="is_edm" Type="bit" StoreGeneratedPattern="None" />
+          <Property Name="is_edm" Type="bit" />
         </EntityType>
         <EntityType Name="shipment_orders_log">
           <Key>
@@ -335,6 +353,27 @@
           <Property Name="name" Type="varchar" MaxLength="254" />
           <Property Name="access" Type="tinyint" />
         </EntityType>
+        <EntityType Name="warehouses">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="code" Type="varchar" MaxLength="32" />
+          <Property Name="name" Type="varchar" MaxLength="254" />
+          <Property Name="descr" Type="varchar" MaxLength="254" />
+        </EntityType>
+        <Association Name="FK_custom_post_fk">
+          <End Role="custom_posts" Type="Self.custom_posts" Multiplicity="0..1" />
+          <End Role="delivery_period" Type="Self.delivery_period" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="custom_posts">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="delivery_period">
+              <PropertyRef Name="custom_post_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_movement_DelayReasonID">
           <End Role="delay_reasons" Type="Self.delay_reasons" Multiplicity="0..1" />
           <End Role="movement" Type="Self.movement" Multiplicity="*" />
@@ -523,6 +562,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_warehouse_delivery_period_fk">
+          <End Role="warehouses" Type="Self.warehouses" Multiplicity="0..1" />
+          <End Role="delivery_period" Type="Self.delivery_period" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="warehouses">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="delivery_period">
+              <PropertyRef Name="warehouse_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="sh_order_parts_sh_ord_fk">
           <End Role="shipment_orders" Type="Self.shipment_orders" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -538,7 +589,9 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="PlanningModelStoreContainer">
+          <EntitySet Name="custom_posts" EntityType="Self.custom_posts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="delay_reasons" EntityType="Self.delay_reasons" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="delivery_period" EntityType="Self.delivery_period" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="depositors" EntityType="Self.depositors" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="functions" EntityType="Self.functions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="gateways" EntityType="Self.gateways" Schema="dbo" store:Type="Tables" />
@@ -562,6 +615,11 @@
           <EntitySet Name="user_grp_prvlg" EntityType="Self.user_grp_prvlg" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="users_group" EntityType="Self.users_group" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="warehouses" EntityType="Self.warehouses" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_custom_post_fk" Association="Self.FK_custom_post_fk">
+            <End Role="custom_posts" EntitySet="custom_posts" />
+            <End Role="delivery_period" EntitySet="delivery_period" />
+          </AssociationSet>
           <AssociationSet Name="FK_movement_DelayReasonID" Association="Self.FK_movement_DelayReasonID">
             <End Role="delay_reasons" EntitySet="delay_reasons" />
             <End Role="movement" EntitySet="movement" />
@@ -621,6 +679,10 @@
           <AssociationSet Name="FK_user_group_lnk_users_group" Association="Self.FK_user_group_lnk_users_group">
             <End Role="users_group" EntitySet="users_group" />
             <End Role="user_group_lnk" EntitySet="user_group_lnk" />
+          </AssociationSet>
+          <AssociationSet Name="FK_warehouse_delivery_period_fk" Association="Self.FK_warehouse_delivery_period_fk">
+            <End Role="warehouses" EntitySet="warehouses" />
+            <End Role="delivery_period" EntitySet="delivery_period" />
           </AssociationSet>
           <AssociationSet Name="sh_order_parts_sh_ord_fk" Association="Self.sh_order_parts_sh_ord_fk">
             <End Role="shipment_orders" EntitySet="shipment_orders" />
@@ -857,6 +919,17 @@
           <AssociationSet Name="FK_shipments_supplier" Association="PlanningModel.FK_shipments_supplier">
             <End Role="Supplier" EntitySet="Suppliers" />
             <End Role="Shipment" EntitySet="Shipments" />
+          </AssociationSet>
+          <EntitySet Name="CustomPosts" EntityType="PlanningModel.CustomPost" />
+          <EntitySet Name="DeliveryPeriods" EntityType="PlanningModel.DeliveryPeriod" />
+          <EntitySet Name="Warehouses" EntityType="PlanningModel.Warehouse" />
+          <AssociationSet Name="FK_custom_post_fk" Association="PlanningModel.FK_custom_post_fk">
+            <End Role="custom_posts" EntitySet="CustomPosts" />
+            <End Role="delivery_period" EntitySet="DeliveryPeriods" />
+          </AssociationSet>
+          <AssociationSet Name="FK_warehouse_delivery_period_fk" Association="PlanningModel.FK_warehouse_delivery_period_fk">
+            <End Role="warehouses" EntitySet="Warehouses" />
+            <End Role="delivery_period" EntitySet="DeliveryPeriods" />
           </AssociationSet>
         </EntityContainer>
         <Association Name="FK_shipments_delay_reasons">
@@ -1244,6 +1317,61 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="CustomPost">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+          <Property Name="Descr" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="DeliveryPeriods" Relationship="PlanningModel.FK_custom_post_fk" FromRole="custom_posts" ToRole="delivery_period" />
+          <Property Name="Code" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="DeliveryPeriod">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomPostId" Type="Int32" />
+          <Property Name="WarehouseId" Type="Int32" />
+          <Property Name="DeliveryDay" Type="Int32" />
+          <NavigationProperty Name="CustomPosts" Relationship="PlanningModel.FK_custom_post_fk" FromRole="delivery_period" ToRole="custom_posts" />
+          <NavigationProperty Name="Warehouses" Relationship="PlanningModel.FK_warehouse_delivery_period_fk" FromRole="delivery_period" ToRole="warehouses" />
+        </EntityType>
+        <EntityType Name="Warehouse">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+          <Property Name="Descr" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="DeliveryPeriods" Relationship="PlanningModel.FK_warehouse_delivery_period_fk" FromRole="warehouses" ToRole="delivery_period" />
+          <Property Name="Code" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_custom_post_fk">
+          <End Type="PlanningModel.CustomPost" Role="custom_posts" Multiplicity="0..1" />
+          <End Type="PlanningModel.DeliveryPeriod" Role="delivery_period" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="custom_posts">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="delivery_period">
+              <PropertyRef Name="CustomPostId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_warehouse_delivery_period_fk">
+          <End Type="PlanningModel.Warehouse" Role="warehouses" Multiplicity="0..1" />
+          <End Type="PlanningModel.DeliveryPeriod" Role="delivery_period" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="warehouses">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="delivery_period">
+              <PropertyRef Name="WarehouseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1597,6 +1725,36 @@
             <EntityTypeMapping TypeName="PlanningModel.Supplier">
               <MappingFragment StoreEntitySet="suppliers">
                 <ScalarProperty Name="IsActive" ColumnName="is_active" />
+                <ScalarProperty Name="Name" ColumnName="name" />
+                <ScalarProperty Name="Id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomPosts">
+            <EntityTypeMapping TypeName="PlanningModel.CustomPost">
+              <MappingFragment StoreEntitySet="custom_posts">
+                <ScalarProperty Name="Code" ColumnName="code" />
+                <ScalarProperty Name="Descr" ColumnName="descr" />
+                <ScalarProperty Name="Name" ColumnName="name" />
+                <ScalarProperty Name="Id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DeliveryPeriods">
+            <EntityTypeMapping TypeName="PlanningModel.DeliveryPeriod">
+              <MappingFragment StoreEntitySet="delivery_period">
+                <ScalarProperty Name="DeliveryDay" ColumnName="delivery_day" />
+                <ScalarProperty Name="WarehouseId" ColumnName="warehouse_id" />
+                <ScalarProperty Name="CustomPostId" ColumnName="custom_post_id" />
+                <ScalarProperty Name="Id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Warehouses">
+            <EntityTypeMapping TypeName="PlanningModel.Warehouse">
+              <MappingFragment StoreEntitySet="warehouses">
+                <ScalarProperty Name="Code" ColumnName="code" />
+                <ScalarProperty Name="Descr" ColumnName="descr" />
                 <ScalarProperty Name="Name" ColumnName="name" />
                 <ScalarProperty Name="Id" ColumnName="id" />
               </MappingFragment>

@@ -530,6 +530,8 @@ namespace Planning
             DataService.Dicts.Add("ТК", new DictInfo { TableName = "transport_company", NameColumn = "name" });
             DataService.Dicts.Add("Типы_транспорта", new DictInfo { TableName = "transport_type", NameColumn = "name" });
             DataService.Dicts.Add("Поставщики", new DictInfo { TableName = "suppliers", NameColumn = "name" });
+            DataService.Dicts.Add("Склады", new DictInfo {TableName = "warehouses", NameColumn = "name" });
+            DataService.Dicts.Add("Таможенные_посты", new DictInfo { TableName = "custom_posts", NameColumn = "name" });
             //dataService.Dicts.Add("Ворота", "gateways");
 
 
@@ -2012,16 +2014,7 @@ namespace Planning
 
         private void miDictSupplier_Click(object sender, EventArgs e)
         {
-            /*
-            DictSimple dict = new DictSimple();
 
-            dict.TableName = "suppliers";
-            dict.Title = "Справочник: Поставщики";
-
-            dict.Columns.Add(new DictColumn { Id = "Id", IsPK = true, IsVisible = false, Title = "Код", DataField = "id", DataType = SqlDbType.Int });
-            dict.Columns.Add(new DictColumn { Id = "Name", IsPK = false, IsVisible = true, Title = "Наименование", DataField = "name", Width = 254, DataType = SqlDbType.VarChar, Length = 254 });
-            dict.Columns.Add(new DictColumn { Id = "IsActive", IsPK = false, IsVisible = true, Title = "Активная", DataField = "is_active", Width = 80, DataType = SqlDbType.Bit, DefaultValue = 1 });
-            */
 
             var frmSupplier = new Suppliers();
             SetFormPrivalage(frmSupplier, "Supplier");
@@ -2077,6 +2070,22 @@ namespace Planning
         private void tblShipments_CellValueNeeded(object sender, DataGridViewCellValueEventArgs e)
         {
 
+        }
+
+
+
+        private void miDictWarehouse_Click(object sender, EventArgs e)
+        {
+            var frmWarehouse = new Warehouses();
+            SetFormPrivalage(frmWarehouse, "Warehouse");
+            AddFormTab(frmWarehouse, "Склады");
+        }
+
+        private void miCustomPosts_Click(object sender, EventArgs e)
+        {
+            var frmCustomPosts = new CustomPosts();
+            SetFormPrivalage(frmCustomPosts, "CustomPost");
+            AddFormTab(frmCustomPosts, "Таможенные посты");
         }
     }
 }
