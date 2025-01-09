@@ -39,6 +39,7 @@ namespace Planning.DataLayer
         int? _transportCompanyId;
         int? _transportTypeId;
         int? _supplierId;
+        string _lvCode;
 
         public int? LvId
         {
@@ -430,6 +431,18 @@ namespace Planning.DataLayer
                 }
             }
         }
+        public string LvCode
+        {
+            get => _lvCode;
+            set
+            {
+                if (!_lvCode.Equals(value))
+                {
+                    _lvCode = value;
+                    Edit();
 
+                }
+            }
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Planning.DataLayer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,40 @@ namespace PlanningServiceTest.InvoiceData
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load(FileName);
             ((InvoiceProduction)invoice).RecipientCode = xmlDoc.GetElementsByTagName("RecipientCode").Item(0).InnerText;
+            ((InvoiceProduction)invoice).SupplierDeliveryDay = Int32.Parse(xmlDoc.GetElementsByTagName("RecipientCode").Item(0).InnerText);
+
+        }
+
+        public override void Save(Invoice invoice)
+        {
+           
+            String connectionString = "";
+            InvoiceProduction invoiceProduction = (InvoiceProduction)invoice;
+
+            ShipmentRepository shipmentRepository = new ShipmentRepository(connectionString);
+            Shipment shipment = null;
+
+            ShipmentOrderRepository shipmentOrderRepository = new ShipmentOrderRepository(connectionString);
+            ShipmentOrder shipmentOrder = shipmentOrderRepository.GetByLvCode(invoiceProduction.InvoiceNumber);
+
+            if (shipmentOrder == null)
+            {
+                shipment = new Shipment();
+                shipmentOrder = new ShipmentOrder();
+            }
+            else
+            {
+                shipment = shipmentRepository.GetById((int)shipmentOrder.ShipmentId);
+            }
+            shipment.SDate = invoiceProduction.ActualDate.AddDays(invoiceProduction.SupplierDeliveryDay);
+            shipment.TrailerNumber = invoiceProduction.TrailerNumber;
+            shipment.VehicleNumber = invoiceProduction.TruckNumber;
+            shipment.DriverFio = invoiceProduction.Driver;
+            
+            
+            shipmentRepository.Save(shipment);
+
+            base.Save(invoice);
 
         }
     }

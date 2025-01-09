@@ -13,7 +13,7 @@ namespace Planning.DataLayer
 		DateTime? _createDate;
 		DateTime? _actualDate;
 		string _number;
-		byte? _invoiceType;
+		string _invoiceType;
 		string _sourceCode;
 		string _recipientCode;
 		string _deliveryType;
@@ -70,7 +70,7 @@ namespace Planning.DataLayer
                 }
             }
         }
-        public byte? InvoiceType
+        public string InvoiceType
         {
             get => _invoiceType;
             set

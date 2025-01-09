@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Planning.DataLayer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -55,8 +56,18 @@ namespace PlanningServiceTest.InvoiceData
 
         }
         public virtual void Save(Invoice invoice)
-        { 
-        
+        {
+            ShipmentInvoice shipmentInvoice = new ShipmentInvoice();
+            shipmentInvoice.ShpId = 0;
+            shipmentInvoice.CreateDate = invoice.InvoiceDate;
+            shipmentInvoice.ActualDate = invoice.ActualDate;
+            shipmentInvoice.Number = invoice.InvoiceNumber;
+            shipmentInvoice.InvoiceType = invoice.InvoiceType;
+            shipmentInvoice.RecipientCode = invoice.RecipientCode;
+            shipmentInvoice.DeliveryType = invoice.DeliveryType;
+
+
+
         }
         private bool IsXmlValid(XmlDocument xmlDoc)
         {

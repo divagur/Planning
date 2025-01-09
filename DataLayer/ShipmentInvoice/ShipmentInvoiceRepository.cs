@@ -7,9 +7,9 @@ using Planning.Kernel;
 
 namespace Planning.DataLayer
 {
-    public class ShipmentRepository:BaseRepository<Shipment,ShipmentDataAdapter>
+    public class ShipmentInvoiceRepository:BaseRepository<Shipment,ShipmentDataAdapter>
     {
-        public ShipmentRepository(string ConnectionString)
+        public ShipmentInvoiceRepository(string ConnectionString)
             : base(ConnectionString)
         {
 

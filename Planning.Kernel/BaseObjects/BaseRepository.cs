@@ -14,7 +14,7 @@ namespace Planning.Kernel
         //IBaseDataAdapter<T> _dataAdapter;
         string _connectionString;
         protected IDbConnection dbConnection = null;
-        private M dataAdapter;
+        protected M dataAdapter;
         public BaseRepository(string connectionString)
         {
             //_dataAdapter = GetDataAdapter();

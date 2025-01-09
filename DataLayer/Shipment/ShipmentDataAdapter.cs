@@ -30,7 +30,6 @@ namespace Planning.DataLayer
                                             @{nameof(Shipment.SpecialTime)},@{nameof(Shipment.IsAddLv)},@{nameof(Shipment.TransportCompanyId)},@{nameof(Shipment.TransportTypeId)},
                                             @{nameof(Shipment.SupplierId)}
                                         )";
-                    break;
                 case EditState.Edit:
                     return $@"update {Table}  lv_id = @{nameof(Shipment.LvId)},time_slot_id = @{nameof(Shipment.TimeSlotId)},
                                             s_date = @{nameof(Shipment.SDate)},s_comment = @{nameof(Shipment.SComment)},o_comment = @{nameof(Shipment.OComment)},
@@ -44,16 +43,12 @@ namespace Planning.DataLayer
                                             special_time = @{nameof(Shipment.SpecialTime)},is_add_lv = @{nameof(Shipment.IsAddLv)},transport_company_id = @{nameof(Shipment.TransportCompanyId)},
                                             transport_type_id = @{nameof(Shipment.TransportTypeId)},supplier_id = @{nameof(Shipment.SupplierId)}
                         where id = @Id";
-                    break;
                 case EditState.Delete:
                     return $"delete from {Table} where id = @Id";
-                    break;
             }
 
             return String.Empty;
         }
-
-
 
         public string GetSelectItemSql()
         {
