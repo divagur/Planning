@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Planning.Kernel;
 using Dapper;
+using System.Data;
+
 namespace Planning.DataLayer
 {
     public class ShipmentOrderRepository:BaseRepository<ShipmentOrder, ShipmentOrderDataAdapter>
@@ -25,6 +27,17 @@ namespace Planning.DataLayer
                 item = queryResult.FirstOrDefault();
             }
             return item;
+        }
+
+        public int? GetLvIdByCode(string LvCode)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@LvCode", LvCode);
+            parameters.Add("@In", 1);
+            parameters.Add("@DepId", 1);
+            var queryResult = dbConnection.Query<int?>("SP_PL_GetShipmentLvIdByCode", parameters, commandType: CommandType.StoredProcedure);
+
+            return queryResult.FirstOrDefault();
         }
     }
 }

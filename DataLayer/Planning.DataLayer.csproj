@@ -85,6 +85,9 @@
     <Compile Include="Shipment\Shipment.cs" />
     <Compile Include="Shipment\ShipmentDataAdapter.cs" />
     <Compile Include="Shipment\ShipmentRepository.cs" />
+    <Compile Include="ShipmentOrder\ShipmentOrder.cs" />
+    <Compile Include="ShipmentOrder\ShipmentOrderDataAdapter.cs" />
+    <Compile Include="ShipmentOrder\ShipmentOrderRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

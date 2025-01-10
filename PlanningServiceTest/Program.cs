@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Planning.Service;
 using PlanningServiceTest.InvoiceData;
+using Planning.DataLayer;
 
 namespace PlanningServiceTest
 {
@@ -39,9 +40,11 @@ namespace PlanningServiceTest
             
             settings.FileInvoiceCustomMask = settingsHandle.GetParamStringValue("FileInvoiceCustomMask");
             settings.FileInvoiceProductionMask = settingsHandle.GetParamStringValue("FileInvoiceProductionMask");
-            
-            //logger = new Logger(settings);
 
+            //logger = new Logger(settings);
+            string connetionString = @"Data Source=DZHURAVLEV;Initial Catalog=Planning_curr;Integrated Security=False;User ID=sysadm;Password=sysadm";
+            ShipmentOrderRepository shipmentOrderRepository = new ShipmentOrderRepository(connetionString);
+            var lvId = shipmentOrderRepository.GetLvIdByCode("4591");
 
             LogHandler log = new LogHandler(@"D:\Temp\PlanningServices\FileProcessLog.xml", true);
             log.Open();
