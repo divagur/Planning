@@ -16,13 +16,13 @@ namespace Planning.DataLayer
             switch (editState)
             {
                 case EditState.New:
-                    return $@"INSERT INTO {Table} (shp_id,create_date,actual_date,number,invoice_type,source_code,recipient_code,delivery_type) \
+                    return $@"INSERT INTO {Table} (shp_id,create_date,actual_date,number,invoice_type,source_code,recipient_code,delivery_type)
                                 values(@{nameof(ShipmentInvoice.ShpId)},@{nameof(ShipmentInvoice.CreateDate)},@{nameof(ShipmentInvoice.ActualDate)},
                                         @{nameof(ShipmentInvoice.Number)},@{nameof(ShipmentInvoice.InvoiceType)},@{nameof(ShipmentInvoice.SourceCode)},
                                         @{nameof(ShipmentInvoice.RecipientCode)},@{nameof(ShipmentInvoice.DeliveryType)})";
                     break;
                 case EditState.Edit:
-                    return $@"update {Table} shp_id = @{nameof(ShipmentInvoice.ShpId)}, create_date = @{nameof(ShipmentInvoice.CreateDate)},
+                    return $@"update {Table} set shp_id = @{nameof(ShipmentInvoice.ShpId)}, create_date = @{nameof(ShipmentInvoice.CreateDate)},
                                             actual_date = @{nameof(ShipmentInvoice.ActualDate)},number = @{nameof(ShipmentInvoice.Number)},
                                             invoice_type = @{nameof(ShipmentInvoice.InvoiceType)}, source_code = @{nameof(ShipmentInvoice.SourceCode)},
                                             recipient_code = @{nameof(ShipmentInvoice.RecipientCode)}, delivery_type = @{nameof(ShipmentInvoice.DeliveryType)}

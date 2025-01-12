@@ -67,6 +67,15 @@
   <ItemGroup>
     <Compile Include="BaseObjects\IBaseDataAdapter.cs" />
     <Compile Include="BaseObjects\BaseObject.cs" />
+    <Compile Include="DeliveryPeriod\DeliveryPeriod.cs" />
+    <Compile Include="DeliveryPeriod\DeliveryPeriodDataAdapter.cs" />
+    <Compile Include="DeliveryPeriod\DeliveryPeriodRepository.cs" />
+    <Compile Include="Warehouse\Warehouse.cs" />
+    <Compile Include="Warehouse\WarehouseDataAdapter.cs" />
+    <Compile Include="Warehouse\WarehouseRepository.cs" />
+    <Compile Include="CustomPost\CustomPost.cs" />
+    <Compile Include="CustomPost\CustomPostDataAdapter.cs" />
+    <Compile Include="CustomPost\CustomPostRepository.cs" />
     <Compile Include="Delay_reasons\DelayReasons.cs" />
     <Compile Include="Depositor\Depositor.cs" />
     <Compile Include="Depositor\DepositorAdapter.cs" />

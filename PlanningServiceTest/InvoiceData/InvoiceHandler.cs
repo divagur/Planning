@@ -56,18 +56,20 @@ namespace PlanningServiceTest.InvoiceData
 
 
         }
-        public virtual void Save(Invoice invoice)
+        public virtual void Save(Invoice invoice, string connectionString)
         {
+            ShipmentInvoiceRepository shipmentInvoiceRepository = new ShipmentInvoiceRepository(connectionString);
             ShipmentInvoice shipmentInvoice = new ShipmentInvoice();
-            shipmentInvoice.ShpId = 0;
+            shipmentInvoice.ShpId = invoice.ShpId;
             shipmentInvoice.CreateDate = invoice.InvoiceDate;
             shipmentInvoice.ActualDate = invoice.ActualDate;
             shipmentInvoice.Number = invoice.InvoiceNumber;
             shipmentInvoice.InvoiceType = invoice.InvoiceType;
             shipmentInvoice.RecipientCode = invoice.RecipientCode;
             shipmentInvoice.DeliveryType = invoice.DeliveryType;
-
-
+            shipmentInvoice.Status = invoice.Status;
+            shipmentInvoice.Error = invoice.Error;
+            shipmentInvoiceRepository.Save(shipmentInvoice);
 
         }
         private bool IsXmlValid(XmlDocument xmlDoc)

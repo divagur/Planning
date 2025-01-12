@@ -159,12 +159,12 @@ namespace Planning.DataLayer
             get => _lvOrderCode;
             set
             {
-                if (!_lvOrderCode.Equals(value))
-                {
+                //if (!_lvOrderCode.Equals(value))
+                //{
                     _lvOrderCode = value;
                     Edit();
 
-                }
+                //}
             }
         }
         public int? ShippingPlacesNumber

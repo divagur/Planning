@@ -17,7 +17,8 @@ namespace Planning.DataLayer
 		string _sourceCode;
 		string _recipientCode;
 		string _deliveryType;
-
+        string _status;
+        string _error;
         public int? ShpId
         {
             get => _shpId;
@@ -62,12 +63,12 @@ namespace Planning.DataLayer
             get => _number;
             set
             {
-                if (!_number.Equals(value))
-                {
+                //if (!_number.Equals(value))
+                //{
                     _number = value;
                     Edit();
 
-                }
+                //}
             }
         }
         public string InvoiceType
@@ -75,12 +76,12 @@ namespace Planning.DataLayer
             get => _invoiceType;
             set
             {
-                if (!_invoiceType.Equals(value))
-                {
+                //if (!_invoiceType.Equals(value))
+                //{
                     _invoiceType = value;
                     Edit();
 
-                }
+                //}
             }
         }
         public string SourceCode
@@ -88,12 +89,12 @@ namespace Planning.DataLayer
             get => _sourceCode;
             set
             {
-                if (!_sourceCode.Equals(value))
-                {
+                //if (!_sourceCode.Equals(value))
+                //{
                     _sourceCode = value;
                     Edit();
 
-                }
+                //}
             }
         }
         public string RecipientCode
@@ -101,12 +102,12 @@ namespace Planning.DataLayer
             get => _recipientCode;
             set
             {
-                if (!_recipientCode.Equals(value))
-                {
+                //if (!_recipientCode.Equals(value))
+                //{
                     _recipientCode = value;
                     Edit();
 
-                }
+                //}
             }
         }
         public string DeliveryType
@@ -114,12 +115,39 @@ namespace Planning.DataLayer
             get => _deliveryType;
             set
             {
-                if (!_deliveryType.Equals(value))
-                {
+                //if (!_deliveryType.Equals(value))
+                //{
                     _deliveryType = value;
                     Edit();
 
-                }
+                //}
+            }
+        }
+
+        public string Status
+        {
+            get => _status;
+            set
+            {
+                //if (!_status.Equals(value))
+                //{
+                    _status = value;
+                    Edit();
+
+                //}
+            }
+        }
+        public string Error
+        {
+            get => _error;
+            set
+            {
+                //if (!_error.Equals(value))
+                //{
+                    _error = value;
+                    Edit();
+
+                //}
             }
         }
     }

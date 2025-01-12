@@ -13,6 +13,7 @@ namespace Planning.Kernel
     {
         //IBaseDataAdapter<T> _dataAdapter;
         string _connectionString;
+        string _lastError = "";
         protected IDbConnection dbConnection = null;
         protected M dataAdapter;
         public BaseRepository(string connectionString)
@@ -55,8 +56,17 @@ namespace Planning.Kernel
             {
                 case EditState.New:
                     sql = sql + " select SCOPE_IDENTITY()";
-                   var ids = dbConnection.Query<int>(sql, Item);
-                    Item.Id = ids.First();
+                    try
+                    {
+                        var ids = dbConnection.Query<int>(sql, Item);
+                        Item.Id = ids.First();
+                    }
+                    catch (Exception ex )
+                    {
+
+                        _lastError = ex.Message;
+                    }
+
                     break;
                 case EditState.Edit:
                 case EditState.Delete:
@@ -76,6 +86,8 @@ namespace Planning.Kernel
         }
 
         public string ConnectionString { get => _connectionString; }
+
+        public string LastError { get => _lastError; }
 
     }
 }

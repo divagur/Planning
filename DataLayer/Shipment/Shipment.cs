@@ -39,7 +39,7 @@ namespace Planning.DataLayer
         int? _transportCompanyId;
         int? _transportTypeId;
         int? _supplierId;
-        string _lvCode;
+        int? _customPostId;
 
         public int? LvId
         {
@@ -150,12 +150,12 @@ namespace Planning.DataLayer
             get => _driverFio;
             set
             {
-                if (!_driverFio.Equals(value))
-                {
+                //if (!_driverFio.Equals(value))
+                //{
                     _driverFio = value;
                     Edit();
 
-                }
+                //}
             }
         }
         public string VehicleNumber
@@ -163,6 +163,9 @@ namespace Planning.DataLayer
             get => _vehicleNumber;
             set
             {
+                if (_vehicleNumber == null)
+                    _vehicleNumber = "";
+
                 if (!_vehicleNumber.Equals(value))
                 {
                     _vehicleNumber = value;
@@ -176,12 +179,12 @@ namespace Planning.DataLayer
             get => _trailerNumber;
             set
             {
-                if (!_trailerNumber.Equals(value))
-                {
+               // if (_trailerNumber != null && !_trailerNumber.Equals(value))
+                //{
                     _trailerNumber = value;
                     Edit();
 
-                }
+                //}
             }
         }
         public string AttorneyNumber
@@ -431,14 +434,14 @@ namespace Planning.DataLayer
                 }
             }
         }
-        public string LvCode
+        public int? CustomPostId
         {
-            get => _lvCode;
+            get => _customPostId;
             set
             {
-                if (!_lvCode.Equals(value))
+                if (!_customPostId.Equals(value))
                 {
-                    _lvCode = value;
+                    _customPostId = value;
                     Edit();
 
                 }

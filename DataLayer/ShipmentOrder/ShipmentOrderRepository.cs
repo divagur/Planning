@@ -18,7 +18,7 @@ namespace Planning.DataLayer
         }
         public ShipmentOrder GetByLvCode(string LvCode)
         {
-            string sql = dataAdapter.GetSelectItemSql() + " where lv_code = @lvCode";
+            string sql = dataAdapter.GetSelectItemSql() + " where lv_order_code = @lvCode";
             ShipmentOrder item = null;
             var queryResult = dbConnection.Query<ShipmentOrder>(sql, new { lvCode = LvCode });
 

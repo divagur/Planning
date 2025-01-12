@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using Planning.DataLayer;
 
 namespace PlanningServiceTest.InvoiceData
 {
@@ -25,9 +26,66 @@ namespace PlanningServiceTest.InvoiceData
             ((InvoiceCustom)invoice).CustomsCode = xmlDoc.GetElementsByTagName("CustomsCode").Item(0).InnerText;
 
         }
-        public override void Save(Invoice invoice)
+        public override void Save(Invoice invoice, string connectionString)
         {
-            base.Save(invoice);
+            InvoiceCustom invoiceCustom = (InvoiceCustom)invoice;
+
+            ShipmentRepository shipmentRepository = new ShipmentRepository(connectionString);
+            Shipment shipment = null;
+
+            ShipmentOrderRepository shipmentOrderRepository = new ShipmentOrderRepository(connectionString);
+            ShipmentOrder shipmentOrder = shipmentOrderRepository.GetByLvCode(invoiceCustom.InvoiceNumber);
+
+            if (shipmentOrder == null)
+            {
+                shipment = new Shipment();
+                shipmentOrder = new ShipmentOrder();
+            }
+            else
+            {
+                shipment = shipmentRepository.GetById((int)shipmentOrder.ShipmentId);
+            }
+
+            CustomPost customPost = GetCustomPostByCode(invoiceCustom.CustomsCode, connectionString);
+            if (customPost == null)
+            {
+                invoice.Status = "Ошибка";
+                invoice.Error = "Не найден код таможенного поста";
+            }
+            else
+            {
+                shipment.SDate = invoiceCustom.ActualDate.AddDays(customPost.);
+            }
+            
+            shipment.TrailerNumber = invoiceCustom.TrailerNumber;
+            shipment.VehicleNumber = invoiceCustom.TruckNumber;
+            shipment.DriverFio = invoiceCustom.Driver;
+
+
+            shipmentRepository.Save(shipment);
+
+
+
+            shipmentOrder.ShipmentId = shipment.Id;
+            shipmentOrder.LvOrderCode = invoice.InvoiceNumber;
+            var lvId = shipmentOrderRepository.GetLvIdByCode(invoice.InvoiceNumber);
+            if (lvId != null)
+            {
+                shipmentOrder.LvOrderId = lvId;
+                shipmentOrder.IsBinding = true;
+            }
+
+            shipmentOrderRepository.Save(shipmentOrder);
+
+            invoice.ShpId = shipment.Id;
+            base.Save(invoice, connectionString);
+        }
+
+        private CustomPost GetCustomPostByCode(string CustomPostCode, string connectionString)
+        {
+            CustomPostRepository customPostRepository = new CustomPostRepository(connectionString);
+            CustomPost customPost = customPostRepository.GetByCode(CustomPostCode);
+            return customPost;
         }
     }
     public class InvoiceHandlerCustomEx : InvoiceHandlerEx,  IInvoiceHandler<InvoiceCustom>

@@ -19,6 +19,8 @@ namespace PlanningServiceTest.InvoiceData
         public string TrailerNumber { get; set; }
         public string Driver { get; set; }
         public string Status { get; set; }
+        public string Error { get; set; }
+        public int ShpId { get; set; }
         //public string SupplierCode { get; set; }
         //public string CustomsCode { get; set; }
     }

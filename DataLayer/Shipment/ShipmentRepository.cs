@@ -16,17 +16,6 @@ namespace Planning.DataLayer
 
         }
 
-        public Shipment GetByLvCode(string LvCode)
-        {
-            string sql = dataAdapter.GetSelectItemSql() + " where lv_code = @lvCode";
-            Shipment item = null;
-            var queryResult = dbConnection.Query<Shipment>(sql, new { lvCode = LvCode });
-
-            if (queryResult != null)
-            {
-                item = queryResult.FirstOrDefault();
-            }
-            return item;
-        }
+       
     }
 }

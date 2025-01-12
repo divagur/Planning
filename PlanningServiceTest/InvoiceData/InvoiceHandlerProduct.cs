@@ -25,14 +25,13 @@ namespace PlanningServiceTest.InvoiceData
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load(FileName);
             ((InvoiceProduction)invoice).RecipientCode = xmlDoc.GetElementsByTagName("RecipientCode").Item(0).InnerText;
-            ((InvoiceProduction)invoice).SupplierDeliveryDay = Int32.Parse(xmlDoc.GetElementsByTagName("RecipientCode").Item(0).InnerText);
+            ((InvoiceProduction)invoice).SupplierDeliveryDay = Int32.Parse(xmlDoc.GetElementsByTagName("SupplierDeliveryDay").Item(0).InnerText);
 
         }
 
-        public override void Save(Invoice invoice)
+        public override void Save(Invoice invoice, String connectionString)
         {
            
-            String connectionString = "";
             InvoiceProduction invoiceProduction = (InvoiceProduction)invoice;
 
             ShipmentRepository shipmentRepository = new ShipmentRepository(connectionString);
@@ -53,15 +52,38 @@ namespace PlanningServiceTest.InvoiceData
             shipment.SDate = invoiceProduction.ActualDate.AddDays(invoiceProduction.SupplierDeliveryDay);
             shipment.TrailerNumber = invoiceProduction.TrailerNumber;
             shipment.VehicleNumber = invoiceProduction.TruckNumber;
-            shipment.DriverFio = invoiceProduction.Driver;
+            shipment.DriverFio = invoiceProduction.Driver;     
             
-            
+
             shipmentRepository.Save(shipment);
 
-            base.Save(invoice);
+
+
+            shipmentOrder.ShipmentId = shipment.Id;
+            shipmentOrder.LvOrderCode = invoice.InvoiceNumber;
+            var lvId = shipmentOrderRepository.GetLvIdByCode(invoice.InvoiceNumber);
+            if (lvId !=null)
+            {
+                shipmentOrder.LvOrderId = lvId;
+                shipmentOrder.IsBinding = true;
+            }
+
+            shipmentOrderRepository.Save(shipmentOrder);
+
+            invoice.ShpId = shipment.Id;
+            base.Save(invoice, connectionString);
 
         }
+        private int? GetCustomPostId(string CustomPostCode, string connectionString)
+        {
+            CustomPostRepository customPostRepository = new CustomPostRepository(connectionString);
+            CustomPost customPost = customPostRepository.GetByCode(CustomPostCode);
+            return customPost == null ? null : (int?)customPost.Id;
+        }
     }
+
+    
+
     public class InvoiceHandlerProductionEx : InvoiceHandlerCustomEx,  IInvoiceHandler<InvoiceProduction>
     {
 

@@ -9,6 +9,7 @@ using Planning.Service;
 using PlanningServiceTest.InvoiceData;
 using Planning.DataLayer;
 
+
 namespace PlanningServiceTest
 {
     class Program
@@ -21,13 +22,23 @@ namespace PlanningServiceTest
         }
         static InvoiceType GetFileType(string fileName, Settings settings)
         {
-            if (fileName.Contains(settings.FileInvoiceCustomMask))
+            if (!String.IsNullOrEmpty(settings.FileInvoiceCustomMask) && fileName.Contains(settings.FileInvoiceCustomMask))
                 return InvoiceType.Custom;
-            else if (fileName.Contains(settings.FileInvoiceProductionMask))
+            else if (!String.IsNullOrEmpty(settings.FileInvoiceProductionMask) && fileName.Contains(settings.FileInvoiceProductionMask))
                 return InvoiceType.Product;
             else
                 return InvoiceType.Unknown;
         }
+
+        static void InsertToDict(string connectionString)
+        {
+            CustomPost customPost = new CustomPost();
+            CustomPostRepository customPostRepository = new CustomPostRepository(connectionString);
+            customPost.Code = "444";
+            customPost.Name = "Test";
+            customPostRepository.Save(customPost);
+        }
+
         static void Main(string[] args)
         {
             Logger logger;
@@ -42,9 +53,11 @@ namespace PlanningServiceTest
             settings.FileInvoiceProductionMask = settingsHandle.GetParamStringValue("FileInvoiceProductionMask");
 
             //logger = new Logger(settings);
-            string connetionString = @"Data Source=DZHURAVLEV;Initial Catalog=Planning_curr;Integrated Security=False;User ID=sysadm;Password=sysadm";
-            ShipmentOrderRepository shipmentOrderRepository = new ShipmentOrderRepository(connetionString);
-            var lvId = shipmentOrderRepository.GetLvIdByCode("4591");
+            string connetionString = @"Data Source=ZDV\MSSQL2017DEV;Initial Catalog=Planning;Integrated Security=False;User ID=sysadm;Password=sysadm";
+
+            //InsertToDict(connetionString);
+            //return;
+
 
             LogHandler log = new LogHandler(@"D:\Temp\PlanningServices\FileProcessLog.xml", true);
             log.Open();
@@ -76,30 +89,42 @@ namespace PlanningServiceTest
                     default:
                         break;
                 }
-
-                try
-                {
-                    invoiceHandler?.LoadFromXml(file, invoice);
-                }
-                catch (Exception ex)
+                if (invoiceHandler == null)
                 {
                     status = "Ошибка";
-                    error = ex.Message;
-                    
+                    error = "Неизвестный тип файла";
                 }
-               finally
+                else
                 {
-                    if (!String.IsNullOrEmpty(settings.LogDirPath))
+                    try
                     {
-                        fileLogPath = Path.Combine(settings.LogDirPath, Path.GetFileName(file));
-                        File.Move(file, fileLogPath);
+                        invoiceHandler?.LoadFromXml(file, invoice);
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        File.Delete(file);
+                        status = "Ошибка";
+                        error = ex.Message;
+
                     }
-                    log.AddRow(Path.GetFileName(file), DateTime.Now, status, error, fileLogPath, true);
+                    /*
+                    finally
+                    {
+                        if (!String.IsNullOrEmpty(settings.LogDirPath))
+                        {
+                            fileLogPath = Path.Combine(settings.LogDirPath, Path.GetFileName(file));
+                            File.Move(file, fileLogPath);
+                        }
+                        else
+                        {
+                            File.Delete(file);
+                        }
+                        log.AddRow(Path.GetFileName(file), DateTime.Now, status, error, fileLogPath, true);
+                    }
+                    */
+                    invoiceHandler.Save(invoice, connetionString);
+
                 }
+                
                 
                 
             } 
