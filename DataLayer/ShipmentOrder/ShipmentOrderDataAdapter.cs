@@ -29,7 +29,7 @@ namespace Planning.DataLayer
                             order_type = @{ nameof(ShipmentOrder.OrderType)}, comment = @{ nameof(ShipmentOrder.Comment)}, is_binding = @{ nameof(ShipmentOrder.IsBinding)}, 
                             manual_load = @{ nameof(ShipmentOrder.ManualLoad)}, manual_unload = @{ nameof(ShipmentOrder.ManualUnload)}, pallet_amount = @{ nameof(ShipmentOrder.PalletAmount)}, 
                             binding_id = @{ nameof(ShipmentOrder.BindingId)}, lv_order_id = @{ nameof(ShipmentOrder.LvOrderId)}, lv_order_code = @{ nameof(ShipmentOrder.LvOrderCode)}, 
-                            shipping_places_number as { nameof(ShipmentOrder.ShippingPlacesNumber)}, order_weight as { nameof(ShipmentOrder.OrderWeight)}, 
+                            shipping_places_number = @{nameof(ShipmentOrder.ShippingPlacesNumber)}, order_weight = @{ nameof(ShipmentOrder.OrderWeight)}, 
                             is_edm = @{ nameof(ShipmentOrder.IsEdm)}
                         where id = @Id";
                 case EditState.Delete:

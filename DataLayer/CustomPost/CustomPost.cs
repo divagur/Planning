@@ -45,12 +45,12 @@ namespace Planning.DataLayer
             get => _descr;
             set
             {
-                if (!_descr.Equals(value))
-                {
+                //if (!_descr.Equals(value))
+                //{
                     _descr = value;
                     Edit();
 
-                }
+                //}
             }
         }
 

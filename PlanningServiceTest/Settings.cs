@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Planning.Service
+namespace PlanningServiceTest
 {
     public class Settings
     {
@@ -16,6 +16,10 @@ namespace Planning.Service
         public string FileInvoiceCustomMask { get; set; }
         public string FileInvoiceProductionMask { get; set; }
         public int RecalcCount { get; set; }
+        public string ServerName { get; set; }
+        public string PlanningBaseName { get; set; }
+        public string PlanningBaseLogin { get; set; }
+        public string PlanningBasePwd { get; set; }
 
     }
 }

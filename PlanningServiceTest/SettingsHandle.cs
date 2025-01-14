@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace Planning.Service
+namespace PlanningServiceTest
 {
 
     public class SettingsHandle

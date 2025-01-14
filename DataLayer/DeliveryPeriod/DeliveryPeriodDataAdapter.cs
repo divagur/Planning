@@ -35,7 +35,7 @@ namespace Planning.DataLayer
         {
             return $@"
                     select 
-	                    id as {nameof(DeliveryPeriod.Id)}, custom_post_id as {nameof(DeliveryPeriod.CustPostId)},warehouse_id as {nameof(DeliveryPeriod.WarehouseId)},
+	                    {Table}.id as {nameof(DeliveryPeriod.Id)}, custom_post_id as {nameof(DeliveryPeriod.CustPostId)},warehouse_id as {nameof(DeliveryPeriod.WarehouseId)},
                         delivery_day as {nameof(DeliveryPeriod.DeliveryDay)}
                     from 
 	                    {Table}

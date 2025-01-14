@@ -54,13 +54,26 @@ namespace PlanningServiceTest.InvoiceData
             }
             else
             {
-                shipment.SDate = invoiceCustom.ActualDate.AddDays(customPost.);
+                shipment.CustomPostId = customPost.Id;
+                DeliveryPeriodRepository deliveryPeriodRepository = new DeliveryPeriodRepository(connectionString);
+                DeliveryPeriod deliveryPeriod = deliveryPeriodRepository.GetByCode(invoiceCustom.CustomsCode, invoiceCustom.RecipientCode);
+                if (deliveryPeriod == null)
+                {
+                    invoice.Status = "Ошибка";
+                    invoice.Error = $"Не задан срок доставки от таможенного поста [{customPost.Name}] до склада";
+                }
+                else
+                {
+                    shipment.SDate = invoiceCustom.ActualDate.AddDays(deliveryPeriod.DeliveryDay);
+                }
+                
+                
             }
             
             shipment.TrailerNumber = invoiceCustom.TrailerNumber;
             shipment.VehicleNumber = invoiceCustom.TruckNumber;
             shipment.DriverFio = invoiceCustom.Driver;
-
+            
 
             shipmentRepository.Save(shipment);
 

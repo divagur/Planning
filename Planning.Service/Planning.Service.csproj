@@ -45,6 +45,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileWatherLogger.cs" />
+    <Compile Include="LogHandler.cs" />
+    <Compile Include="LogRow.cs" />
     <Compile Include="PlanningService.cs">
       <SubType>Component</SubType>
     </Compile>

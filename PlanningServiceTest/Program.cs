@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Planning.Service;
+//using Planning.Service;
 using PlanningServiceTest.InvoiceData;
 using Planning.DataLayer;
 
@@ -51,21 +51,23 @@ namespace PlanningServiceTest
             
             settings.FileInvoiceCustomMask = settingsHandle.GetParamStringValue("FileInvoiceCustomMask");
             settings.FileInvoiceProductionMask = settingsHandle.GetParamStringValue("FileInvoiceProductionMask");
+            settings.ServerName = settingsHandle.GetParamStringValue("ServerName");
+            settings.PlanningBaseName = settingsHandle.GetParamStringValue("PlanningBaseName");
+            settings.PlanningBaseLogin = settingsHandle.GetParamStringValue("PlanningBaseLogin");
+            settings.PlanningBasePwd = settingsHandle.GetParamStringValue("PlanningBasePwd");
 
-            //logger = new Logger(settings);
-            string connetionString = @"Data Source=ZDV\MSSQL2017DEV;Initial Catalog=Planning;Integrated Security=False;User ID=sysadm;Password=sysadm";
+            logger = new Logger(settings);
+            Thread loggerThread = new Thread(new ThreadStart(logger.Start));
+            loggerThread.Start();
 
-            //InsertToDict(connetionString);
-            //return;
-
-
+            /*
+            string connetionString = @"Data Source=DZHURAVLEV;Initial Catalog=Planning_curr;Integrated Security=False;User ID=sysadm;Password=sysadm";
             LogHandler log = new LogHandler(@"D:\Temp\PlanningServices\FileProcessLog.xml", true);
             log.Open();
 
-            //Thread loggerThread = new Thread(new ThreadStart(logger.Start));
-            //loggerThread.Start();
             InvoiceHandlerBase invoiceHandler = null ;
             Invoice invoice = null;
+            
             foreach (var file in Directory.GetFiles(settings.InputFileDirPath))
             {
                 string fileName = Path.GetFileName(file);
@@ -106,7 +108,7 @@ namespace PlanningServiceTest
                         error = ex.Message;
 
                     }
-                    /*
+                    
                     finally
                     {
                         if (!String.IsNullOrEmpty(settings.LogDirPath))
@@ -120,7 +122,7 @@ namespace PlanningServiceTest
                         }
                         log.AddRow(Path.GetFileName(file), DateTime.Now, status, error, fileLogPath, true);
                     }
-                    */
+                    
                     invoiceHandler.Save(invoice, connetionString);
 
                 }
@@ -131,7 +133,7 @@ namespace PlanningServiceTest
             
 
             
-
+            */
             //log.AddRow("file1", DateTime.Now, "Успешно", "", @"D:\Temp\PlanningServices\FileLogStorage", true);
             //log.AddRow("file2", DateTime.Now, "Ошибка", "НЕ верный формат файла", @"D:\Temp\PlanningServices\FileLogStorage", true);
         }

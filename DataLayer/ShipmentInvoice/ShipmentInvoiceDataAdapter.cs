@@ -9,7 +9,7 @@ namespace Planning.DataLayer
 {
     public class ShipmentInvoiceDataAdapter : IDataAdaper
     {
-        public string Table => "shipmnet_invoices";
+        public string Table => "shipment_invoices";
 
         public string GetSaveSql(EditState editState)
         {
