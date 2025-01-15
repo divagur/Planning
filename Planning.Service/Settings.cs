@@ -8,21 +8,18 @@ namespace Planning.Service
 {
     public class Settings
     {
-        public string RootDirPath { get; set; }
+        public string InputFileDirPath { get; set; }
+        public string SuccessFileDirPath { get; set; }
+        public string ErrorFileDirPath { get; set; }
+        public string FileType { get; set; } = "*.xml";
         public string LogDirPath { get; set; }
-        public string SubDirList { get; set; }
-        public string FileType { get; set; } = "*";
-        public int ActionType { get; set; } = 0;
-
-
-        public string MailAddressFrom { get; set; }
-        public string MailAddressTo { get; set; }
-
-        public string SmtpHost { get; set; }
-        public int SmtpPort { get; set; }
-        public string SmtpUsername { get; set; }
-        public string SmtpPassword { get; set; }
-        public string MailHeader { get; set; }
-        public string MailBodyTemplate { get; set; }
+        public string FileInvoiceCustomMask { get; set; }
+        public string FileInvoiceProductionMask { get; set; }
+        public int RecalcCount { get; set; }
+        public string ServerName { get; set; }
+        public string PlanningBaseName { get; set; }
+        public string PlanningBaseLogin { get; set; }
+        public string PlanningBasePwd { get; set; }
+        public int TimerInterval { get; set; }
     }
 }

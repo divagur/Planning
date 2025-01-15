@@ -86,7 +86,15 @@ namespace PlanningServiceTest
         {
             SetParamValue(Name, Convert.ToString(Value));
         }
+        public int GetParamIntValue(string Name, int DefaultValue)
+        {
+            XmlElement elem = GetNodeByPath(Name);
+            int result;
+            if (!int.TryParse(elem.InnerText, out result))
+                result = DefaultValue;
+            return result;
 
+        }
         public void SetParamValue(string Name, DateTime Value)
         {
             SetParamValue(Name, Convert.ToString(Value));

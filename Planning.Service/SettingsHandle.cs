@@ -114,6 +114,15 @@ namespace Planning.Service
             return result;
 
         }
+        public int GetParamIntValue(string Name, int DefaultValue)
+        {
+            XmlElement elem = GetNodeByPath(Name);
+            int result;
+            if (!int.TryParse(elem.InnerText, out result))
+                result = DefaultValue;
+            return result;
+
+        }
         public decimal GetParamDecimalValue(string Name)
         {
             XmlElement elem = GetNodeByPath(Name);

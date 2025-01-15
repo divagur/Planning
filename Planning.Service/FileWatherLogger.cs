@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Planning.Service.InvoiceData;
 
 namespace Planning.Service
 {
@@ -20,7 +22,10 @@ namespace Planning.Service
     class Logger
     {
         FileSystemWatcher watcher;
+        System.Timers.Timer watchTimer;
         Settings _settings;
+        string _connetionString;
+        LogHandler log;
         object obj = new object();
         bool enabled = true;
         string[] extensions;
@@ -37,7 +42,7 @@ namespace Planning.Service
             }*/
             if (_settings.FileType != "*")
                 extensions = _settings.FileType.Split(new char[] { ';' });
-
+            /*
             watcher = new FileSystemWatcher(_settings.RootDirPath);
             watcher.Filter = _settings.FileType;
             
@@ -45,16 +50,111 @@ namespace Planning.Service
             watcher.Created += Watcher_Created;
             watcher.Changed += Watcher_Changed;
             watcher.Renamed += Watcher_Renamed;
-            
+            */
+            watchTimer = new System.Timers.Timer();
+            watchTimer.Interval = _settings.TimerInterval;
+            watchTimer.Elapsed += WatchTimer_Elapsed;
+
+            SqlConnectionStringBuilder sqlConnectionStringBuilder = new SqlConnectionStringBuilder();
+            sqlConnectionStringBuilder.DataSource = _settings.ServerName;
+            sqlConnectionStringBuilder.InitialCatalog = _settings.PlanningBaseName;
+            sqlConnectionStringBuilder.UserID = _settings.PlanningBaseLogin;
+            sqlConnectionStringBuilder.Password = _settings.PlanningBasePwd;
+
+            _connetionString = sqlConnectionStringBuilder.ToString();
+            log = new LogHandler(Path.Combine(_settings.LogDirPath, "FileProcessLog.xml"), false);
         }
+
+        private InvoiceType GetFileType(string fileName, Settings settings)
+        {
+            if (!String.IsNullOrEmpty(settings.FileInvoiceCustomMask) && fileName.Contains(settings.FileInvoiceCustomMask))
+                return InvoiceType.Custom;
+            else if (!String.IsNullOrEmpty(settings.FileInvoiceProductionMask) && fileName.Contains(settings.FileInvoiceProductionMask))
+                return InvoiceType.Product;
+            else
+                return InvoiceType.Unknown;
+        }
+        private void WatchTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            InvoiceHandlerBase invoiceHandler = null;
+            Invoice invoice = null;
+  
+            foreach (var file in Directory.GetFiles(_settings.InputFileDirPath))
+            {
+                string fileName = Path.GetFileName(file);
+                string status = "Успешно";
+                string error = "";
+                string fileLogPath = "Файл удален";
+                switch (GetFileType(fileName, _settings))
+                {
+                    case InvoiceType.Product:
+                        invoiceHandler = new InvoiceHandlerProductionN();
+                        invoice = new InvoiceProduction();
+                        //InvoiceProduction invoiceProduction = invoiceHandlerProduct.LoadFromXml(file);
+                        break;
+                    case InvoiceType.Custom:
+                        invoiceHandler = new InvoiceHandlerCustomN();
+                        invoice = new InvoiceCustom();
+                        //InvoiceCustom invoiceCustom = invoiceHandlerCustom.LoadFromXml(file);
+                        break;
+                    case InvoiceType.Unknown:
+                        break;
+                    default:
+                        break;
+                }
+                if (invoiceHandler == null)
+                {
+                    status = "Ошибка";
+                    error = "Неизвестный тип файла";
+                }
+                else
+                {
+                    try
+                    {
+                        invoiceHandler?.LoadFromXml(file, invoice);
+                    }
+                    catch (Exception ex)
+                    {
+                        status = "Ошибка";
+                        error = ex.Message;
+
+                    }
+
+                    finally
+                    {
+                        if (!String.IsNullOrEmpty(_settings.LogDirPath))
+                        {
+                            fileLogPath = Path.Combine(_settings.LogDirPath, Path.GetFileName(file));
+                            File.Move(file, fileLogPath);
+                        }
+                        else
+                        {
+                            File.Delete(file);
+                        }
+                        log.AddRow(Path.GetFileName(file), DateTime.Now, status, error, fileLogPath, true);
+                    }
+
+                    invoiceHandler.Save(invoice, _connetionString);
+
+                }
+
+
+
+            }
+
+        }
+        
 
         public void Start()
         {
+            /*
             watcher.EnableRaisingEvents = true;
             while (enabled)
             {
                 Thread.Sleep(1000);
             }
+            */
+            watchTimer.Start();
         }
 
         private bool IsFileMatching(string FileName)
@@ -67,8 +167,11 @@ namespace Planning.Service
         }
         public void Stop()
         {
+            /*
             watcher.EnableRaisingEvents = false;
             enabled = false;
+            */
+            watchTimer.Stop();
         }
 
         private void WatcherAction(FileSystemActionType systemActionType, FileSystemEventArgs e)
@@ -102,41 +205,21 @@ namespace Planning.Service
         private void Watcher_Renamed(object sender, RenamedEventArgs e)
         {
             WatcherAction(FileSystemActionType.Renamed, e);
-            /*
-            string fileEvent = "переименован в " + e.FullPath;
-            string filePath = e.OldFullPath;
-            RecordEntry(fileEvent, filePath);*/
         }
         // изменение файлов
         private void Watcher_Changed(object sender, FileSystemEventArgs e)
         {
             WatcherAction(FileSystemActionType.Changed, e);
-            /*
-            string fileEvent = "изменен";
-            string filePath = e.FullPath;
-            
-            RecordEntry(fileEvent, filePath);*/
         }
         // создание файлов
         private void Watcher_Created(object sender, FileSystemEventArgs e)
         {
             WatcherAction(FileSystemActionType.Created, e);
-            /*
-            string fileEvent = "создан";
-            string filePath = e.FullPath;
-            RecordEntry(fileEvent, filePath);*/
         }
         // удаление файлов
         private void Watcher_Deleted(object sender, FileSystemEventArgs e)
         {
             WatcherAction(FileSystemActionType.Deleted, e);
-            /*
-            string fileEvent = "удален";
-            string filePath = e.FullPath;
-            
-            File.Copy(filePath, _settings.LogDirPath+"\\"+e.Name, true);
-            RecordEntry(fileEvent, filePath);*/
-
         }
 
         private void RecordEntry(string fileEvent, string filePath)
@@ -151,7 +234,7 @@ namespace Planning.Service
                 }
             }
         }
-
+        /*
         private bool IsSettingsValid(out string ErrorMessage)
         {
             if (_settings.RootDirPath == String.Empty)
@@ -176,5 +259,6 @@ namespace Planning.Service
             ErrorMessage = string.Empty;
             return true;
         }
+        */
     }
 }

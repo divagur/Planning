@@ -7,7 +7,7 @@
     <ProjectGuid>{D155395A-1E19-4C0C-80D1-16C9054FA4C0}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>Planning.Service</RootNamespace>
-    <AssemblyName>Planning.Service</AssemblyName>
+    <AssemblyName>PlanningService</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -33,6 +33,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Planning.DataLayer">
+      <HintPath>..\DataLayer\bin\Debug\Planning.DataLayer.dll</HintPath>
+    </Reference>
+    <Reference Include="Planning.Kernel">
+      <HintPath>..\Planning.Kernel\bin\Debug\Planning.Kernel.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -45,6 +51,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileWatherLogger.cs" />
+    <Compile Include="InvoiceData\IInvoiceHandler.cs" />
+    <Compile Include="InvoiceData\Invoice.cs" />
+    <Compile Include="InvoiceData\InvoiceCustom.cs" />
+    <Compile Include="InvoiceData\InvoiceHandler.cs" />
+    <Compile Include="InvoiceData\InvoiceHandlerCustom.cs" />
+    <Compile Include="InvoiceData\InvoiceHandlerProduct.cs" />
+    <Compile Include="InvoiceData\InvoiceProduction.cs" />
+    <Compile Include="InvoiceData\InvoiceType.cs" />
     <Compile Include="LogHandler.cs" />
     <Compile Include="LogRow.cs" />
     <Compile Include="PlanningService.cs">

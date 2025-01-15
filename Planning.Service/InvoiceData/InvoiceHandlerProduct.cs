@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using Planning.DataLayer;
 
-namespace PlanningServiceTest.InvoiceData
+namespace Planning.Service.InvoiceData
 {
     public class InvoiceHandlerProductionN : InvoiceHandlerBase
     {
@@ -29,7 +29,7 @@ namespace PlanningServiceTest.InvoiceData
 
         }
 
-        public override void Save(Invoice invoice,  String connectionString)
+        public override void Save(Invoice invoice, String connectionString)
         {
            
             InvoiceProduction invoiceProduction = (InvoiceProduction)invoice;

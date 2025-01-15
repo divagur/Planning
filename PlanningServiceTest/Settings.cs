@@ -20,6 +20,7 @@ namespace PlanningServiceTest
         public string PlanningBaseName { get; set; }
         public string PlanningBaseLogin { get; set; }
         public string PlanningBasePwd { get; set; }
+        public int TimerInterval { get; set; }
 
     }
 }
