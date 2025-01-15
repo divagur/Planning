@@ -17,21 +17,24 @@ namespace Planning.Service
     {
         Logger logger;
         Settings _settings;
-        SettingsHandle settingsHandle = new SettingsHandle("PlanningServiceConfig.xml");
+        SettingsHandle settingsHandle = new SettingsHandle(@"D:\Repository\Planning\master\Planning.Service\bin\Debug\PlanningServiceConfig.xml");
 
         public PlanningService()
         {
             InitializeComponent();
+            this.CanStop = true;
+            this.CanPauseAndContinue = true;
+            this.AutoLog = true;
         }
 
         protected override void OnStart(string[] args)
         {
-            
-            try
-            {
+            //System.Diagnostics.Debugger.Launch();
+            AddEventToLog("EVENT_START", "Запуск службы");
                 LoadSettings();
                 if (!ValidateSettings())
                 {
+                    AddEventToLog("EVENT", "Проверка настроек не пройдена");
                     Stop();
                     return;
                 }
@@ -41,21 +44,33 @@ namespace Planning.Service
                     Stop();
                     return;
                 }
+                AddEventToLog("EVENT", "Проверки пройдены");
+            
+            try
+            {
+                AddEventToLog("EVENT", "Create Logger");
                 logger = new Logger(_settings);
+                AddEventToLog("EVENT", "Logger created");
+                AddEventToLog("EVENT", "Create Thread");
                 Thread loggerThread = new Thread(new ThreadStart(logger.Start));
+                AddEventToLog("EVENT", "Thread start");
                 loggerThread.Start();
+                AddEventToLog("EVENT", "Thread started");
             }
             catch (Exception ex)
             {
-
+                Stop();
                 AddEventToLog("ERROR", ex.Message);
             }
+
+            
         }
 
         protected override void OnStop()
         {
             logger.Stop();
             Thread.Sleep(1000);
+            AddEventToLog("EVENT", "Служба остановлена");
         }
 
         private void LoadSettings()
@@ -106,7 +121,7 @@ namespace Planning.Service
         }
         private void AddEventToLog(string eventLog, string descr)
         {
-            using (StreamWriter writer = new StreamWriter("PlanningServieLog.txt", true))
+            using (StreamWriter writer = new StreamWriter("D:\\Temp\\PlanningServices\\PlanningServieLog.txt", true))
             {
                 writer.WriteLine(String.Format("[{0}][{1}]: {2}",
                     DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss"), eventLog, descr));

@@ -160,7 +160,7 @@ namespace PlanningServiceTest
         }
         static void Main(string[] args)
         {
-            if (!OnStart());
+            if (!OnStart())
                 return;
             Console.ReadLine();
             OnStop();

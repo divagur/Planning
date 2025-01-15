@@ -31,6 +31,7 @@ namespace Planning.Service
         string[] extensions;
         public Logger(Settings Settings)
         {
+            AddEventToLog("Logger EVENT", "Create begin");
             _settings = Settings;
 
             string settingVaildError = "";
@@ -40,6 +41,7 @@ namespace Planning.Service
                 //throw new Exception(settingVaildError);
 
             }*/
+            AddEventToLog("Logger EVENT", "Split extensions");
             if (_settings.FileType != "*")
                 extensions = _settings.FileType.Split(new char[] { ';' });
             /*
@@ -51,6 +53,7 @@ namespace Planning.Service
             watcher.Changed += Watcher_Changed;
             watcher.Renamed += Watcher_Renamed;
             */
+            AddEventToLog("Logger EVENT", "Create timer");
             watchTimer = new System.Timers.Timer();
             watchTimer.Interval = _settings.TimerInterval;
             watchTimer.Elapsed += WatchTimer_Elapsed;
@@ -62,6 +65,7 @@ namespace Planning.Service
             sqlConnectionStringBuilder.Password = _settings.PlanningBasePwd;
 
             _connetionString = sqlConnectionStringBuilder.ToString();
+            AddEventToLog("Logger EVENT", "Подключение к файлу лога");
             log = new LogHandler(Path.Combine(_settings.LogDirPath, "FileProcessLog.xml"), false);
         }
 
@@ -147,8 +151,9 @@ namespace Planning.Service
 
         public void Start()
         {
+            
+            //watcher.EnableRaisingEvents = true;
             /*
-            watcher.EnableRaisingEvents = true;
             while (enabled)
             {
                 Thread.Sleep(1000);
@@ -167,10 +172,10 @@ namespace Planning.Service
         }
         public void Stop()
         {
-            /*
-            watcher.EnableRaisingEvents = false;
+            
+            //watcher.EnableRaisingEvents = false;
             enabled = false;
-            */
+            
             watchTimer.Stop();
         }
 
@@ -232,6 +237,15 @@ namespace Planning.Service
                         DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss"), filePath, fileEvent));
                     writer.Flush();
                 }
+            }
+        }
+        private void AddEventToLog(string eventLog, string descr)
+        {
+            using (StreamWriter writer = new StreamWriter("D:\\Temp\\PlanningServices\\PlanningServieLog.txt", true))
+            {
+                writer.WriteLine(String.Format("[{0}][{1}]: {2}",
+                    DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss"), eventLog, descr));
+                writer.Flush();
             }
         }
         /*
