@@ -17,7 +17,7 @@ namespace Planning.Service
     {
         Logger logger;
         Settings _settings;
-        SettingsHandle settingsHandle = new SettingsHandle(@"D:\Repository\Planning\master\Planning.Service\bin\Debug\PlanningServiceConfig.xml");
+        SettingsHandle settingsHandle = new SettingsHandle(Path.Combine(Environment.CurrentDirectory,"PlanningServiceConfig.xml"));
 
         public PlanningService()
         {

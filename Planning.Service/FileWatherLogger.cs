@@ -241,7 +241,8 @@ namespace Planning.Service
         }
         private void AddEventToLog(string eventLog, string descr)
         {
-            using (StreamWriter writer = new StreamWriter("D:\\Temp\\PlanningServices\\PlanningServieLog.txt", true))
+            
+            using (StreamWriter writer = new StreamWriter(Path.Combine(Environment.CurrentDirectory,"PlanningServieLog.txt"), true))
             {
                 writer.WriteLine(String.Format("[{0}][{1}]: {2}",
                     DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss"), eventLog, descr));

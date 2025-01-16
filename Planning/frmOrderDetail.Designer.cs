@@ -39,9 +39,12 @@ namespace Planning
             this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnOk = new System.Windows.Forms.Button();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.toolStripLabelRowCount = new System.Windows.Forms.ToolStripStatusLabel();
             ((System.ComponentModel.ISupportInitialize)(this.tblOrderDetail)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tblOrderDetail
@@ -59,7 +62,7 @@ namespace Planning
             this.tblOrderDetail.Name = "tblOrderDetail";
             this.tblOrderDetail.ReadOnly = true;
             this.tblOrderDetail.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.tblOrderDetail.Size = new System.Drawing.Size(745, 392);
+            this.tblOrderDetail.Size = new System.Drawing.Size(745, 370);
             this.tblOrderDetail.TabIndex = 0;
             // 
             // colID
@@ -126,7 +129,7 @@ namespace Planning
             // 
             this.panel1.Controls.Add(this.btnOk);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 417);
+            this.panel1.Location = new System.Drawing.Point(0, 395);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(745, 33);
             this.panel1.TabIndex = 2;
@@ -141,6 +144,21 @@ namespace Planning
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabelRowCount});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 428);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(745, 22);
+            this.statusStrip1.TabIndex = 3;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // toolStripLabelRowCount
+            // 
+            this.toolStripLabelRowCount.Name = "toolStripLabelRowCount";
+            this.toolStripLabelRowCount.Size = new System.Drawing.Size(0, 17);
+            // 
             // frmOrderDetail
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -149,6 +167,7 @@ namespace Planning
             this.Controls.Add(this.tblOrderDetail);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.toolStrip1);
+            this.Controls.Add(this.statusStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -160,6 +179,8 @@ namespace Planning
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.panel1.ResumeLayout(false);
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -177,5 +198,7 @@ namespace Planning
         private System.Windows.Forms.DataGridViewTextBoxColumn colPrimaryCode;
         private System.Windows.Forms.DataGridViewTextBoxColumn colShortDescription;
         private System.Windows.Forms.DataGridViewTextBoxColumn colQuantity;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripLabelRowCount;
     }
 }

@@ -2087,5 +2087,21 @@ namespace Planning
             SetFormPrivalage(frmCustomPosts, "CustomPost");
             AddFormTab(frmCustomPosts, "Таможенные посты");
         }
+
+        private void miTransportView_Click(object sender, EventArgs e)
+        {
+            DictSimple dict = new DictSimple();
+
+            dict.TableName = "transport_view";
+            dict.Title = "Справочник: Вид транспорта";
+
+            dict.Columns.Add(new DictColumn { Id = "Id", IsPK = true, IsVisible = false, Title = "Код", DataField = "id", DataType = SqlDbType.Int });
+            dict.Columns.Add(new DictColumn { Id = "Name", IsPK = false, IsVisible = true, Title = "Наименование", DataField = "name", Width = 254, DataType = SqlDbType.VarChar, Length = 20 });
+
+
+            var frmTransporView = new SimpleDict(dict);
+            SetFormPrivalage(frmTransporView, "TransporView");
+            AddFormTab(frmTransporView, "Виды транспорта");
+        }
     }
 }
