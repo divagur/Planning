@@ -58,6 +58,8 @@ namespace Planning
             edSDate.Text = "";
             cmbTransportCompany.Text = "";
             cmbSupplier.Text = "";
+            cmbWarehouse.Text = "";
+            cmbTransportView.Text = "";
             edShipmentComment.Text = "";
             cmbDelayReasons.Text = "";
             edDelayComment.Text = "";
@@ -159,31 +161,9 @@ namespace Planning
             PopulateComboBoxField(cmbTransportCompany, _context.TransportCompanies.Where(t => t.IsActive == true).Select(l => l.Name).ToList());
             PopulateComboBoxField(cmbTransportType, _context.TransportTypes.Select(l => l.Name).ToList());
             PopulateComboBoxField(cmbSupplier, _context.Suppliers.Where(t => t.IsActive == true).Select(l => l.Name).ToList());
-            /*
-            cmbDelayReasons.Items.Clear();
-            foreach (var dr in _context.DelayReasons.ToList())
-                cmbDelayReasons.Items.Add(dr.Name);
-            
-            cmbGate.Items.Clear();
-            foreach (var g in _context.Gateways.ToList()) 
-                cmbGate.Items.Add(g.Name);
-            
-            cmbTimeSlot.Items.Clear();
-            foreach (var ts in _context.TimeSlots.OrderBy(t => t.SlotTime).ToList())
-                cmbTimeSlot.Items.Add(ts.SlotTime.ToString());
-            
+            PopulateComboBoxField(cmbWarehouse, _context.Warehouses.Select(l => l.Name).ToList());
+            PopulateComboBoxField(cmbTransportView, _context.TransportViews.Select(l => l.Name).ToList());
 
-            cmbTransportCompany.Items.Clear();
-            foreach (var tc in _context.TransportCompanies.Where(t=>t.IsActive == true).ToList())
-                
-                cmbTransportCompany.Items.Add(tc.Name);
-
-            cmbTransportType.Items.Clear();
-            foreach (var tt in _context.TransportTypes.ToList())
-                cmbTransportType.Items.Add(tt.Name);
-            */
-            
-           
             if (IsShipment)
             {
 
@@ -215,6 +195,8 @@ namespace Planning
                 cmbTransportCompany.Text = DataService.GetDictNameById("ТК", _shipment.TransportCompanyId);
                 cmbTransportType.Text = DataService.GetDictNameById("Типы_транспорта", _shipment.TransportTypeId);
                 cmbSupplier.Text = DataService.GetDictNameById("Поставщики", _shipment.SupplierId);
+                cmbWarehouse.Text = DataService.GetDictNameById("Склады", _shipment.WarehouseId);
+                cmbTransportView.Text = DataService.GetDictNameById("Виды_транспорта", _shipment.TransportViewId);
 
                 tblShipmentOrders.AutoGenerateColumns = false;
                 tblShipmentOrders.DataSource = _shipment.ShipmentOrders.ToList();
@@ -405,6 +387,8 @@ namespace Planning
                 _shipment.TransportCompanyId = DataService.GetDictIdByName("ТК", cmbTransportCompany.Text);
                 _shipment.TransportTypeId = DataService.GetDictIdByName("Типы_транспорта", cmbTransportType.Text);
                 _shipment.SupplierId = DataService.GetDictIdByName("Поставщики", cmbSupplier.Text);
+                _shipment.WarehouseId = DataService.GetDictIdByName("Склады", cmbWarehouse.Text);
+                _shipment.TransportViewId= DataService.GetDictIdByName("Виды_транспорта", cmbTransportView.Text);
                 _shipment.SpCondition = cbSpecCondition.Checked;
                 // _shipment.TimeSlotId =Convert.ToInt32(IsNull(cmbTimeSlot.Text,null));
                 CheckUnaccountedOrderParts();
@@ -660,8 +644,11 @@ namespace Planning
             {
                 
                 Point pt = pnGetDateTime.Location;
-                pt.Y = gbTransport.Top + ((Button)sender).Location.Y+((Button)sender).Size.Height + 5;
-                pt.X = gbTransport.Left + ((Button)sender).Location.X-pnGetDateTime.Size.Width+((Button)sender).Size.Width;
+                //pt.Y = gbTransport.Top + ((Button)sender).Location.Y+((Button)sender).Size.Height + 5;
+                //pt.X = gbTransport.Left + ((Button)sender).Location.X-pnGetDateTime.Size.Width+((Button)sender).Size.Width;
+                pt.Y = ((Button)sender).Parent.Top  + ((Button)sender).Location.Y+((Button)sender).Size.Height + 5;
+                pt.X = ((Button)sender).Parent.Left + ((Button)sender).Location.X-pnGetDateTime.Size.Width+((Button)sender).Size.Width;
+
                 pnGetDateTime.Location = pt;
                 pnGetDateTime.Tag = sender;
                 DateTime dateStart = ((TextBox)((Button)sender).Tag).Text == "" ? DateTime.Now :DateTime.Parse(((TextBox)((Button)sender).Tag).Text);

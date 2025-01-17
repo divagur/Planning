@@ -69,6 +69,21 @@ namespace PlanningServiceTest.InvoiceData
             shipmentInvoice.DeliveryType = invoice.DeliveryType;
             shipmentInvoice.Status = invoice.Status;
             shipmentInvoice.Error = invoice.Error;
+            shipmentInvoice.ContainerNumber = invoice.ContainerNumber;
+            shipmentInvoice.TruckNumber = invoice.TruckNumber;
+            shipmentInvoice.TrailerNumber = invoice.TrailerNumber;
+            shipmentInvoice.Driver = invoice.Driver;
+
+            if (invoice is InvoiceCustom)
+            {
+                shipmentInvoice.CustomsCode = (invoice as InvoiceCustom).CustomsCode;
+            }
+            else if (invoice is InvoiceProduction)
+            {
+                shipmentInvoice.SupplierCode = (invoice as InvoiceProduction).SupplierCode;
+                shipmentInvoice.SupplierDeliveryDay = (invoice as InvoiceProduction).SupplierDeliveryDay;
+            }
+
             shipmentInvoiceRepository.Save(shipmentInvoice);
 
         }

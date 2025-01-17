@@ -8,7 +8,7 @@ namespace PlanningServiceTest.InvoiceData
 {
     public class InvoiceProduction:Invoice
     {
-        public int SupplierCode { get; set; }
+        public string SupplierCode { get; set; }
         public int SupplierDeliveryDay { get; set; } = 0;
     }
 }

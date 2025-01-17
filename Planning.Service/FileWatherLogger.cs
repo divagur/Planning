@@ -31,7 +31,6 @@ namespace Planning.Service
         string[] extensions;
         public Logger(Settings Settings)
         {
-            AddEventToLog("Logger EVENT", "Create begin");
             _settings = Settings;
 
             string settingVaildError = "";
@@ -41,7 +40,6 @@ namespace Planning.Service
                 //throw new Exception(settingVaildError);
 
             }*/
-            AddEventToLog("Logger EVENT", "Split extensions");
             if (_settings.FileType != "*")
                 extensions = _settings.FileType.Split(new char[] { ';' });
             /*
@@ -53,7 +51,6 @@ namespace Planning.Service
             watcher.Changed += Watcher_Changed;
             watcher.Renamed += Watcher_Renamed;
             */
-            AddEventToLog("Logger EVENT", "Create timer");
             watchTimer = new System.Timers.Timer();
             watchTimer.Interval = _settings.TimerInterval;
             watchTimer.Elapsed += WatchTimer_Elapsed;
@@ -65,8 +62,9 @@ namespace Planning.Service
             sqlConnectionStringBuilder.Password = _settings.PlanningBasePwd;
 
             _connetionString = sqlConnectionStringBuilder.ToString();
-            AddEventToLog("Logger EVENT", "Подключение к файлу лога");
-            log = new LogHandler(Path.Combine(_settings.LogDirPath, "FileProcessLog.xml"), false);
+            AddEventToLog("EVENT Logger", "Подключение к файлу лога");
+            log = new LogHandler(Path.Combine(_settings.RootPath, "FileProcessLog.xml"), false);
+            log.Open();
         }
 
         private InvoiceType GetFileType(string fileName, Settings settings)

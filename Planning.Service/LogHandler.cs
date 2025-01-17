@@ -38,11 +38,13 @@ namespace Planning.Service
             _xmlLog = new XmlDocument();
             try
             {
-                _xmlLog.Load(_logPath);
+                StreamReader streamReader = new StreamReader(_logPath, Encoding.UTF8);
+                _xmlLog.Load(streamReader);
                 _isOpened = true;
             }
             catch (Exception ex)
             {
+                Common.AddEventToLog("ERROR", ex.Message);
                 throw new Exception(ex.Message);
             }
         }
@@ -58,15 +60,6 @@ namespace Planning.Service
             int rowIdx = 1;
             foreach (XmlNode item in _xmlLog.DocumentElement.ChildNodes)
             {
-                /*
-                LogRow logRow = new LogRow();
-                logRow.RowIndex = rowIdx++;
-                logRow.FileName = item.Attributes["FileName"].Value;
-                logRow.ProcessDate = DateTime.Parse(item.Attributes["ProcessDate"].Value);
-                logRow.Status = item.Attributes["Status"].Value;
-                logRow.Error = item.Attributes["Error"].Value;
-                logRow.FilePath = item.Attributes["FilePath"].Value;
-                _logRows.Add(logRow);*/
                 AddRowToList(
                     item.Attributes["FileName"].Value, DateTime.Parse(item.Attributes["ProcessDate"].Value),
                     item.Attributes["Status"].Value, item.Attributes["Error"].Value, item.Attributes["FilePath"].Value
@@ -127,22 +120,21 @@ namespace Planning.Service
                 int idx = 1;
                 foreach (LogRow logRow in _logRows)
                 {
-                    /*
-                    XmlElement rowNode = _xmlLog.CreateElement("File");
-                    rowNode.SetAttribute("RowIndex",logRow.RowIndex.ToString());
-                    rowNode.SetAttribute("FileName", logRow.FileName);
-                    rowNode.SetAttribute("ProcessDate", logRow.ProcessDate.ToString("G"));
-                    rowNode.SetAttribute("Status", logRow.Status);
-                    rowNode.SetAttribute("Error", logRow.Error);
-                    rowNode.SetAttribute("FilePath", logRow.FilePath);
-
-                    root.AppendChild(rowNode);
-                    */
                     AddRowToFile(logRow.FileName, logRow.ProcessDate, logRow.Status, logRow.Error, logRow.FilePath);
-
                 }                
             }
-            _xmlLog.Save(_logPath);
+            try
+            {
+                using (TextWriter sw = new StreamWriter(_logPath, false, Encoding.UTF8)) //Set encoding
+                {
+                    _xmlLog.Save(sw);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                Common.AddEventToLog("ERROR", ex.Message);
+            }
         }
 
         public List<LogRow> Rows { get => _logRows; }

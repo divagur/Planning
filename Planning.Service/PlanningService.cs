@@ -29,42 +29,40 @@ namespace Planning.Service
 
         protected override void OnStart(string[] args)
         {
-            //System.Diagnostics.Debugger.Launch();
             _servicePath = System.AppDomain.CurrentDomain.BaseDirectory;
-            AddEventToLog("EVENT_START", "Запуск службы");
-            string configPath = Path.Combine(_servicePath, "PlanningServiceConfig.xml");
-            AddEventToLog("EVENT", $"Загрузка настроек из файла {configPath}") ;
+            Common.AddEventToLog("EVENT", "Запуск службы");
+            string configPath = Path.Combine(Common.ServicePath, "PlanningServiceConfig.xml");
+            Common.AddEventToLog("EVENT", $"Загрузка настроек из файла {configPath}") ;
             settingsHandle = new SettingsHandle(configPath);
             LoadSettings();
                 if (!ValidateSettings())
                 {
-                    AddEventToLog("EVENT", "Проверка настроек не пройдена");
+                    Common.AddEventToLog("EVENT", "Проверка настроек не пройдена");
                     Stop();
                     return;
                 }
                 if (!TryDBConnect(_settings.ServerName, _settings.PlanningBaseName, _settings.PlanningBaseLogin, _settings.PlanningBasePwd))
                 {
-                    AddEventToLog("ERROR", "Не удалось подключиться к базе данных. Проверте настройки соединения");
+                    Common.AddEventToLog("ERROR", "Не удалось подключиться к базе данных. Проверте настройки соединения");
                     Stop();
                     return;
                 }
-                AddEventToLog("EVENT", "Проверки пройдены");
+                Common.AddEventToLog("EVENT", "Проверки пройдены");
             
             try
             {
-                AddEventToLog("EVENT", "Create Logger");
+                Common.AddEventToLog("EVENT", "Создание объекта Logger");
                 logger = new Logger(_settings);
-                AddEventToLog("EVENT", "Logger created");
-                AddEventToLog("EVENT", "Create Thread");
+                Common.AddEventToLog("EVENT", "Создание потока выполнения");
                 Thread loggerThread = new Thread(new ThreadStart(logger.Start));
-                AddEventToLog("EVENT", "Thread start");
+                Common.AddEventToLog("EVENT", "Запуск потока выполнения");
                 loggerThread.Start();
-                AddEventToLog("EVENT", "Thread started");
+                Common.AddEventToLog("EVENT", "Поток запущен");
             }
             catch (Exception ex)
             {
                 Stop();
-                AddEventToLog("ERROR", ex.Message);
+                Common.AddEventToLog("ERROR", ex.Message);
             }
 
             
@@ -74,7 +72,7 @@ namespace Planning.Service
         {
             logger.Stop();
             Thread.Sleep(1000);
-            AddEventToLog("EVENT", "Служба остановлена");
+            Common.AddEventToLog("EVENT", "Служба остановлена");
         }
 
         private void LoadSettings()
@@ -82,7 +80,7 @@ namespace Planning.Service
             _settings = new Settings();
             _settings.InputFileDirPath = settingsHandle.GetParamStringValue("InputFileDirPath");
             _settings.LogDirPath = settingsHandle.GetParamStringValue("LogDirPath");
-
+            _settings.RootPath = settingsHandle.GetParamStringValue("RootPath", Common.ServicePath);
             _settings.FileInvoiceCustomMask = settingsHandle.GetParamStringValue("FileInvoiceCustomMask");
             _settings.FileInvoiceProductionMask = settingsHandle.GetParamStringValue("FileInvoiceProductionMask");
             _settings.ServerName = settingsHandle.GetParamStringValue("ServerName");
@@ -123,7 +121,7 @@ namespace Planning.Service
             }
             return true;
         }
-        private void AddEventToLog(string eventLog, string descr)
+        private void AddEventToLogs(string eventLog, string descr)
         {
             using (StreamWriter writer = new StreamWriter(Path.Combine(_servicePath,"PlanningServieLog.txt"), true))
             {
@@ -138,20 +136,20 @@ namespace Planning.Service
             if (String.IsNullOrEmpty(_settings.InputFileDirPath))
             {
 
-                AddEventToLog("ERROR", "Не задан каталог входящих файлов");
+                Common.AddEventToLog("ERROR", "Не задан каталог входящих файлов");
                 return false;
             }
             if (String.IsNullOrEmpty(_settings.FileInvoiceCustomMask) || String.IsNullOrEmpty(_settings.FileInvoiceProductionMask))
             {
 
-                AddEventToLog("ERROR", "Не заданы шаблоны для поиска файлов инвойсов");
+                Common.AddEventToLog("ERROR", "Не заданы шаблоны для поиска файлов инвойсов");
                 return false;
             }
             if (String.IsNullOrEmpty(_settings.ServerName) || String.IsNullOrEmpty(_settings.PlanningBaseName) ||
                  String.IsNullOrEmpty(_settings.PlanningBaseLogin))
             {
 
-                AddEventToLog("ERROR", "Не заданы параметры доступа к базе данных");
+                Common.AddEventToLog("ERROR", "Не заданы параметры доступа к базе данных");
                 return false;
             }
             return true;

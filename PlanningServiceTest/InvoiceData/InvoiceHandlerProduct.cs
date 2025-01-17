@@ -24,12 +24,12 @@ namespace PlanningServiceTest.InvoiceData
 
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load(FileName);
-            ((InvoiceProduction)invoice).RecipientCode = xmlDoc.GetElementsByTagName("RecipientCode").Item(0).InnerText;
+            ((InvoiceProduction)invoice).SupplierCode = xmlDoc.GetElementsByTagName("SupplierCode").Item(0).InnerText;
             ((InvoiceProduction)invoice).SupplierDeliveryDay = Int32.Parse(xmlDoc.GetElementsByTagName("SupplierDeliveryDay").Item(0).InnerText);
 
         }
 
-        public override void Save(Invoice invoice,  String connectionString)
+        public override void Save(Invoice invoice, String connectionString)
         {
            
             InvoiceProduction invoiceProduction = (InvoiceProduction)invoice;
@@ -52,8 +52,9 @@ namespace PlanningServiceTest.InvoiceData
             shipment.SDate = invoiceProduction.ActualDate.AddDays(invoiceProduction.SupplierDeliveryDay);
             shipment.TrailerNumber = invoiceProduction.TrailerNumber;
             shipment.VehicleNumber = invoiceProduction.TruckNumber;
-            shipment.DriverFio = invoiceProduction.Driver;     
-            
+            shipment.DriverFio = invoiceProduction.Driver;           
+            shipment.WarehouseId = GetWarehouseId(invoiceProduction.RecipientCode, connectionString);
+            shipment.TransportViewId = GetTransportViewId(invoiceProduction.DeliveryType, connectionString);
 
             shipmentRepository.Save(shipment);
 
@@ -80,6 +81,21 @@ namespace PlanningServiceTest.InvoiceData
             CustomPost customPost = customPostRepository.GetByCode(CustomPostCode);
             return customPost == null ? null : (int?)customPost.Id;
         }
+
+        private int? GetWarehouseId(string WarehouseCode, string connectionString)
+        {
+            WarehouseRepository warehouseRepository = new WarehouseRepository(connectionString);
+            Warehouse warehouse = warehouseRepository.GetByCode(WarehouseCode);
+            return warehouse == null ? null : (int?)warehouse.Id;
+        }
+
+        private int? GetTransportViewId(string TransportViewName, string connectionString)
+        {
+            TransportViewRepository transportViewRepository = new TransportViewRepository(connectionString);
+            TransportView transportView = transportViewRepository.GetByNameOrCreate(TransportViewName);
+            return transportView.Id;
+        }
+
     }
 
     

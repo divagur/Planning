@@ -512,6 +512,9 @@
     <Compile Include="TransportType.cs">
       <DependentUpon>DbPlaning.tt</DependentUpon>
     </Compile>
+    <Compile Include="TransportView.cs">
+      <DependentUpon>DbPlaning.tt</DependentUpon>
+    </Compile>
     <Compile Include="User.cs">
       <DependentUpon>DbPlaning.tt</DependentUpon>
     </Compile>

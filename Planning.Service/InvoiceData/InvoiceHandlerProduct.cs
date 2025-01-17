@@ -24,7 +24,7 @@ namespace Planning.Service.InvoiceData
 
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load(FileName);
-            ((InvoiceProduction)invoice).RecipientCode = xmlDoc.GetElementsByTagName("RecipientCode").Item(0).InnerText;
+            ((InvoiceProduction)invoice).SupplierCode = xmlDoc.GetElementsByTagName("SupplierCode").Item(0).InnerText;
             ((InvoiceProduction)invoice).SupplierDeliveryDay = Int32.Parse(xmlDoc.GetElementsByTagName("SupplierDeliveryDay").Item(0).InnerText);
 
         }
@@ -74,12 +74,6 @@ namespace Planning.Service.InvoiceData
             invoice.ShpId = shipment.Id;
             base.Save(invoice, connectionString);
 
-        }
-        private int? GetCustomPostId(string CustomPostCode, string connectionString)
-        {
-            CustomPostRepository customPostRepository = new CustomPostRepository(connectionString);
-            CustomPost customPost = customPostRepository.GetByCode(CustomPostCode);
-            return customPost == null ? null : (int?)customPost.Id;
         }
 
         private int? GetWarehouseId(string WarehouseCode, string connectionString)

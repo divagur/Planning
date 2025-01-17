@@ -238,6 +238,9 @@
           <Property Name="transport_company_id" Type="int" />
           <Property Name="transport_type_id" Type="int" />
           <Property Name="supplier_id" Type="int" />
+          <Property Name="custom_post_id" Type="int" />
+          <Property Name="warehouse_id" Type="int" />
+          <Property Name="transport_view_id" Type="int" />
         </EntityType>
         <EntityType Name="shipments_log">
           <Key>
@@ -311,6 +314,13 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="50" />
           <Property Name="tonnage" Type="int" />
+        </EntityType>
+        <EntityType Name="transport_view">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="user_group_lnk">
           <Key>
@@ -438,6 +448,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_shipments_custom_post">
+          <End Role="custom_posts" Type="Self.custom_posts" Multiplicity="0..1" />
+          <End Role="shipments" Type="Self.shipments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="custom_posts">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="shipments">
+              <PropertyRef Name="custom_post_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_shipments_delay_reasons">
           <End Role="delay_reasons" Type="Self.delay_reasons" Multiplicity="0..1" />
           <End Role="shipments" Type="Self.shipments" Multiplicity="*" />
@@ -519,6 +541,30 @@
             </Principal>
             <Dependent Role="shipments">
               <PropertyRef Name="transport_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_shipments_transport_view">
+          <End Role="transport_view" Type="Self.transport_view" Multiplicity="0..1" />
+          <End Role="shipments" Type="Self.shipments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="transport_view">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="shipments">
+              <PropertyRef Name="transport_view_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_shipments_warehouse">
+          <End Role="warehouses" Type="Self.warehouses" Multiplicity="0..1" />
+          <End Role="shipments" Type="Self.shipments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="warehouses">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="shipments">
+              <PropertyRef Name="warehouse_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -611,6 +657,7 @@
           <EntitySet Name="time_slot" EntityType="Self.time_slot" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="transport_company" EntityType="Self.transport_company" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="transport_type" EntityType="Self.transport_type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="transport_view" EntityType="Self.transport_view" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="user_group_lnk" EntityType="Self.user_group_lnk" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="user_grp_prvlg" EntityType="Self.user_grp_prvlg" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
@@ -640,6 +687,10 @@
             <End Role="shipments" EntitySet="shipments" />
             <End Role="shipment_orders" EntitySet="shipment_orders" />
           </AssociationSet>
+          <AssociationSet Name="FK_shipments_custom_post" Association="Self.FK_shipments_custom_post">
+            <End Role="custom_posts" EntitySet="custom_posts" />
+            <End Role="shipments" EntitySet="shipments" />
+          </AssociationSet>
           <AssociationSet Name="FK_shipments_delay_reasons" Association="Self.FK_shipments_delay_reasons">
             <End Role="delay_reasons" EntitySet="delay_reasons" />
             <End Role="shipments" EntitySet="shipments" />
@@ -666,6 +717,14 @@
           </AssociationSet>
           <AssociationSet Name="FK_shipments_transport_type" Association="Self.FK_shipments_transport_type">
             <End Role="transport_type" EntitySet="transport_type" />
+            <End Role="shipments" EntitySet="shipments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_shipments_transport_view" Association="Self.FK_shipments_transport_view">
+            <End Role="transport_view" EntitySet="transport_view" />
+            <End Role="shipments" EntitySet="shipments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_shipments_warehouse" Association="Self.FK_shipments_warehouse">
+            <End Role="warehouses" EntitySet="warehouses" />
             <End Role="shipments" EntitySet="shipments" />
           </AssociationSet>
           <AssociationSet Name="FK_time_slot_depositors" Association="Self.FK_time_slot_depositors">
@@ -794,6 +853,12 @@
           <NavigationProperty Name="TransportTypes" Relationship="PlanningModel.FK_shipments_transport_type" FromRole="Shipment" ToRole="transport_type" />
           <Property Name="SupplierId" Type="Int32" />
           <NavigationProperty Name="suppliers" Relationship="PlanningModel.FK_shipments_supplier" FromRole="Shipment" ToRole="Supplier" />
+          <Property Name="CustomPostId" Type="Int32" />
+          <Property Name="WarehouseId" Type="Int32" />
+          <Property Name="TransportViewId" Type="Int32" />
+          <NavigationProperty Name="custom_posts" Relationship="PlanningModel.FK_shipments_custom_post" FromRole="Shipment" ToRole="CustomPost" />
+          <NavigationProperty Name="transport_view" Relationship="PlanningModel.FK_shipments_transport_view" FromRole="Shipment" ToRole="transport_view" />
+          <NavigationProperty Name="warehouses" Relationship="PlanningModel.FK_shipments_warehouse" FromRole="Shipment" ToRole="Warehouse" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -930,6 +995,19 @@
           <AssociationSet Name="FK_warehouse_delivery_period_fk" Association="PlanningModel.FK_warehouse_delivery_period_fk">
             <End Role="warehouses" EntitySet="Warehouses" />
             <End Role="delivery_period" EntitySet="DeliveryPeriods" />
+          </AssociationSet>
+          <EntitySet Name="TransportViews" EntityType="PlanningModel.TransportView" />
+          <AssociationSet Name="FK_shipments_custom_post" Association="PlanningModel.FK_shipments_custom_post">
+            <End Role="CustomPost" EntitySet="CustomPosts" />
+            <End Role="Shipment" EntitySet="Shipments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_shipments_transport_view" Association="PlanningModel.FK_shipments_transport_view">
+            <End Role="transport_view" EntitySet="TransportViews" />
+            <End Role="Shipment" EntitySet="Shipments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_shipments_warehouse" Association="PlanningModel.FK_shipments_warehouse">
+            <End Role="Warehouse" EntitySet="Warehouses" />
+            <End Role="Shipment" EntitySet="Shipments" />
           </AssociationSet>
         </EntityContainer>
         <Association Name="FK_shipments_delay_reasons">
@@ -1326,6 +1404,7 @@
           <Property Name="Descr" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="DeliveryPeriods" Relationship="PlanningModel.FK_custom_post_fk" FromRole="custom_posts" ToRole="delivery_period" />
           <Property Name="Code" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="shipments" Relationship="PlanningModel.FK_shipments_custom_post" FromRole="CustomPost" ToRole="Shipment" />
         </EntityType>
         <EntityType Name="DeliveryPeriod">
           <Key>
@@ -1347,6 +1426,7 @@
           <Property Name="Descr" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="DeliveryPeriods" Relationship="PlanningModel.FK_warehouse_delivery_period_fk" FromRole="warehouses" ToRole="delivery_period" />
           <Property Name="Code" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="shipments" Relationship="PlanningModel.FK_shipments_warehouse" FromRole="Warehouse" ToRole="Shipment" />
         </EntityType>
         <Association Name="FK_custom_post_fk">
           <End Type="PlanningModel.CustomPost" Role="custom_posts" Multiplicity="0..1" />
@@ -1368,6 +1448,50 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="delivery_period">
+              <PropertyRef Name="WarehouseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TransportView">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Shipments" Relationship="PlanningModel.FK_shipments_transport_view" FromRole="transport_view" ToRole="Shipment" />
+        </EntityType>
+        <Association Name="FK_shipments_custom_post">
+          <End Type="PlanningModel.CustomPost" Role="CustomPost" Multiplicity="0..1" />
+          <End Type="PlanningModel.Shipment" Role="Shipment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomPost">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Shipment">
+              <PropertyRef Name="CustomPostId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_shipments_transport_view">
+          <End Type="PlanningModel.TransportView" Role="transport_view" Multiplicity="0..1" />
+          <End Type="PlanningModel.Shipment" Role="Shipment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="transport_view">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Shipment">
+              <PropertyRef Name="TransportViewId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_shipments_warehouse">
+          <End Type="PlanningModel.Warehouse" Role="Warehouse" Multiplicity="0..1" />
+          <End Type="PlanningModel.Shipment" Role="Shipment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Shipment">
               <PropertyRef Name="WarehouseId" />
             </Dependent>
           </ReferentialConstraint>
@@ -1436,6 +1560,9 @@
           <EntitySetMapping Name="Shipments">
             <EntityTypeMapping TypeName="PlanningModel.Shipment">
               <MappingFragment StoreEntitySet="shipments">
+                <ScalarProperty Name="TransportViewId" ColumnName="transport_view_id" />
+                <ScalarProperty Name="WarehouseId" ColumnName="warehouse_id" />
+                <ScalarProperty Name="CustomPostId" ColumnName="custom_post_id" />
                 <ScalarProperty Name="SupplierId" ColumnName="supplier_id" />
                 <ScalarProperty Name="TransportTypeId" ColumnName="transport_type_id" />
                 <ScalarProperty Name="TransportCompanyId" ColumnName="transport_company_id" />
@@ -1755,6 +1882,14 @@
               <MappingFragment StoreEntitySet="warehouses">
                 <ScalarProperty Name="Code" ColumnName="code" />
                 <ScalarProperty Name="Descr" ColumnName="descr" />
+                <ScalarProperty Name="Name" ColumnName="name" />
+                <ScalarProperty Name="Id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TransportViews">
+            <EntityTypeMapping TypeName="PlanningModel.TransportView">
+              <MappingFragment StoreEntitySet="transport_view">
                 <ScalarProperty Name="Name" ColumnName="name" />
                 <ScalarProperty Name="Id" ColumnName="id" />
               </MappingFragment>

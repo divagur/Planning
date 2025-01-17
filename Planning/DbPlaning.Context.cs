@@ -56,5 +56,6 @@ namespace Planning
         public virtual DbSet<CustomPost> CustomPosts { get; set; }
         public virtual DbSet<DeliveryPeriod> DeliveryPeriods { get; set; }
         public virtual DbSet<Warehouse> Warehouses { get; set; }
+        public virtual DbSet<TransportView> TransportViews { get; set; }
     }
 }

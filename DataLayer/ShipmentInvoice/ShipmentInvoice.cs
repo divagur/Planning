@@ -14,9 +14,16 @@ namespace Planning.DataLayer
 		DateTime? _actualDate;
 		string _number;
 		string _invoiceType;
-		string _sourceCode;
-		string _recipientCode;
+        string _customsCode;
+        string _supplierCode;
+        string _sourceCode;
+        string _recipientCode;
 		string _deliveryType;
+        string _containerNumber;
+        string _truckNumber;
+        string _trailerNumber;
+        string _driver;
+        int _supplierDeliveryDay;
         string _status;
         string _error;
         public int? ShpId
@@ -84,19 +91,34 @@ namespace Planning.DataLayer
                 //}
             }
         }
-        public string SourceCode
+        public string CustomsCode
         {
-            get => _sourceCode;
+            get => _customsCode;
             set
             {
-                //if (!_sourceCode.Equals(value))
-                //{
-                    _sourceCode = value;
+                if (_customsCode == null || !_sourceCode.Equals(value))
+                {
+                    _customsCode = value;
                     Edit();
 
-                //}
+                }
             }
         }
+
+        public string SupplierCode
+        {
+            get => _supplierCode;
+            set
+            {
+                if (_supplierCode == null || !_supplierCode.Equals(value))
+                {
+                    _supplierCode = value;
+                    Edit();
+
+                }
+            }
+        }
+
         public string RecipientCode
         {
             get => _recipientCode;
@@ -121,6 +143,71 @@ namespace Planning.DataLayer
                     Edit();
 
                 //}
+            }
+        }
+        public string ContainerNumber
+        {
+            get => _containerNumber;
+            set
+            {
+                if (_containerNumber == null || !_containerNumber.Equals(value))
+                {
+                _containerNumber = value;
+                Edit();
+
+                }
+            }
+        }
+        public string TruckNumber
+        {
+            get => _truckNumber;
+            set
+            {
+                if (_truckNumber == null || !_truckNumber.Equals(value))
+                {
+                    _truckNumber = value;
+                    Edit();
+
+                }
+            }
+        }
+        public string TrailerNumber
+        {
+            get => _trailerNumber;
+            set
+            {
+                if (_trailerNumber == null || !_trailerNumber.Equals(value))
+                {
+                    _trailerNumber = value;
+                    Edit();
+
+                }
+            }
+        }
+        public string Driver
+        {
+            get => _driver;
+            set
+            {
+                if (_driver == null || !_driver.Equals(value))
+                {
+                    _driver = value;
+                    Edit();
+
+                }
+            }
+        }
+        public int SupplierDeliveryDay
+        {
+            get => _supplierDeliveryDay;
+            set
+            {
+                if (_supplierDeliveryDay == null || !_supplierDeliveryDay.Equals(value))
+                {
+                    _supplierDeliveryDay = value;
+                    Edit();
+
+                }
             }
         }
 

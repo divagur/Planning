@@ -18,6 +18,7 @@ namespace Planning
         public CustomPost()
         {
             this.DeliveryPeriods = new HashSet<DeliveryPeriod>();
+            this.shipments = new HashSet<Shipment>();
         }
     
         public int Id { get; set; }
@@ -27,5 +28,7 @@ namespace Planning
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DeliveryPeriod> DeliveryPeriods { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Shipment> shipments { get; set; }
     }
 }

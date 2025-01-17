@@ -22,7 +22,7 @@ namespace Planning.DataLayer
             TransportView item = null;
             var queryResult = dbConnection.Query<TransportView>(sql, new { ViewName = Name });
 
-            if (queryResult != null)
+            if (queryResult != null && queryResult.Count() > 0)
             {
                 item = queryResult.FirstOrDefault();
             }

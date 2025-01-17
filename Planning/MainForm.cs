@@ -532,6 +532,7 @@ namespace Planning
             DataService.Dicts.Add("Поставщики", new DictInfo { TableName = "suppliers", NameColumn = "name" });
             DataService.Dicts.Add("Склады", new DictInfo {TableName = "warehouses", NameColumn = "name" });
             DataService.Dicts.Add("Таможенные_посты", new DictInfo { TableName = "custom_posts", NameColumn = "name" });
+            DataService.Dicts.Add("Виды_транспорта", new DictInfo { TableName = "transport_view", NameColumn = "name" });
             //dataService.Dicts.Add("Ворота", "gateways");
 
 

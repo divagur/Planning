@@ -12,23 +12,18 @@ namespace Planning
     using System;
     using System.Collections.Generic;
     
-    public partial class Warehouse
+    public partial class TransportView
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Warehouse()
+        public TransportView()
         {
-            this.DeliveryPeriods = new HashSet<DeliveryPeriod>();
-            this.shipments = new HashSet<Shipment>();
+            this.Shipments = new HashSet<Shipment>();
         }
     
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Descr { get; set; }
-        public string Code { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DeliveryPeriod> DeliveryPeriods { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Shipment> shipments { get; set; }
+        public virtual ICollection<Shipment> Shipments { get; set; }
     }
 }

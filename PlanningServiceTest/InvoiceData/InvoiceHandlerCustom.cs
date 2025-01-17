@@ -26,7 +26,7 @@ namespace PlanningServiceTest.InvoiceData
             ((InvoiceCustom)invoice).CustomsCode = xmlDoc.GetElementsByTagName("CustomsCode").Item(0).InnerText;
 
         }
-        public override void Save(Invoice invoice,  string connectionString)
+        public override void Save(Invoice invoice, string connectionString)
         {
             InvoiceCustom invoiceCustom = (InvoiceCustom)invoice;
 

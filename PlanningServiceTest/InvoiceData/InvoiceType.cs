@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace Planning.Service.InvoiceData
 {
-    public class InvoiceProduction:Invoice
+    public enum InvoiceType
     {
-        public string SupplierCode { get; set; }
-        public int SupplierDeliveryDay { get; set; } = 0;
+        Product,
+        Custom,
+        Unknown
     }
 }

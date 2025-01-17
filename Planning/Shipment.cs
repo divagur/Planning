@@ -51,6 +51,9 @@ namespace Planning
         public Nullable<int> TransportCompanyId { get; set; }
         public Nullable<int> TransportTypeId { get; set; }
         public Nullable<int> SupplierId { get; set; }
+        public Nullable<int> CustomPostId { get; set; }
+        public Nullable<int> WarehouseId { get; set; }
+        public Nullable<int> TransportViewId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ShipmentOrder> ShipmentOrders { get; set; }
@@ -61,5 +64,8 @@ namespace Planning
         public virtual TransportCompany TransportCompanies { get; set; }
         public virtual TransportType TransportTypes { get; set; }
         public virtual Supplier suppliers { get; set; }
+        public virtual CustomPost custom_posts { get; set; }
+        public virtual TransportView transport_view { get; set; }
+        public virtual Warehouse warehouses { get; set; }
     }
 }

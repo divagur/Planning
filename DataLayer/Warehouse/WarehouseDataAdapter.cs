@@ -9,7 +9,7 @@ namespace Planning.DataLayer
 {
     public class WarehouseDataAdapter : IDataAdaper
     {
-        public string Table => "wrehouse";
+        public string Table => "warehouses";
 
         public string GetSaveSql(EditState editState)
         {

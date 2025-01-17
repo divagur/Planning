@@ -84,7 +84,7 @@ namespace PlanningServiceTest
             InvoiceHandlerBase invoiceHandler = null;
             Invoice invoice = null;
             LogHandler log = new LogHandler(Path.Combine(_settings.LogDirPath,"FileProcessLog.xml"), false);
-            //log.Open();
+            log.Open();
 
 
 
