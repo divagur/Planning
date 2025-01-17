@@ -40,7 +40,8 @@ namespace Planning.DataLayer
         int? _transportTypeId;
         int? _supplierId;
         int? _customPostId;
-
+        int? _warehouseId;
+        int? _transportViewId;
         public int? LvId
         {
             get => _lvId;
@@ -442,6 +443,32 @@ namespace Planning.DataLayer
                 if (!_customPostId.Equals(value))
                 {
                     _customPostId = value;
+                    Edit();
+
+                }
+            }
+        }
+        public int? WarehouseId
+        {
+            get => _warehouseId;
+            set
+            {
+                if (!_warehouseId.Equals(value))
+                {
+                    _warehouseId = value;
+                    Edit();
+
+                }
+            }
+        }
+        public int? TransportViewId
+        {
+            get => _transportViewId;
+            set
+            {
+                if (!_transportViewId.Equals(value))
+                {
+                    _transportViewId = value;
                     Edit();
 
                 }

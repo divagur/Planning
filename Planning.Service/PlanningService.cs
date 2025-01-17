@@ -17,8 +17,8 @@ namespace Planning.Service
     {
         Logger logger;
         Settings _settings;
-        SettingsHandle settingsHandle = new SettingsHandle(Path.Combine(Environment.CurrentDirectory,"PlanningServiceConfig.xml"));
-
+        SettingsHandle settingsHandle;
+        string _servicePath;
         public PlanningService()
         {
             InitializeComponent();
@@ -30,8 +30,12 @@ namespace Planning.Service
         protected override void OnStart(string[] args)
         {
             //System.Diagnostics.Debugger.Launch();
+            _servicePath = System.AppDomain.CurrentDomain.BaseDirectory;
             AddEventToLog("EVENT_START", "Запуск службы");
-                LoadSettings();
+            string configPath = Path.Combine(_servicePath, "PlanningServiceConfig.xml");
+            AddEventToLog("EVENT", $"Загрузка настроек из файла {configPath}") ;
+            settingsHandle = new SettingsHandle(configPath);
+            LoadSettings();
                 if (!ValidateSettings())
                 {
                     AddEventToLog("EVENT", "Проверка настроек не пройдена");
@@ -121,7 +125,7 @@ namespace Planning.Service
         }
         private void AddEventToLog(string eventLog, string descr)
         {
-            using (StreamWriter writer = new StreamWriter("D:\\Temp\\PlanningServices\\PlanningServieLog.txt", true))
+            using (StreamWriter writer = new StreamWriter(Path.Combine(_servicePath,"PlanningServieLog.txt"), true))
             {
                 writer.WriteLine(String.Format("[{0}][{1}]: {2}",
                     DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss"), eventLog, descr));

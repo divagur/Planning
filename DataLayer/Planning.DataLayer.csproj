@@ -67,6 +67,9 @@
   <ItemGroup>
     <Compile Include="BaseObjects\IBaseDataAdapter.cs" />
     <Compile Include="BaseObjects\BaseObject.cs" />
+    <Compile Include="TransportView\TransportView.cs" />
+    <Compile Include="TransportView\TransportViewDataAdapter.cs" />
+    <Compile Include="TransportView\TransportViewRepository.cs" />
     <Compile Include="DeliveryPeriod\DeliveryPeriod.cs" />
     <Compile Include="DeliveryPeriod\DeliveryPeriodDataAdapter.cs" />
     <Compile Include="DeliveryPeriod\DeliveryPeriodRepository.cs" />
