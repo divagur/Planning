@@ -129,9 +129,7 @@
             this.tbtnMoveItemEdit = new System.Windows.Forms.ToolStripButton();
             this.tbObject = new System.Windows.Forms.TabControl();
             this.tabMain = new System.Windows.Forms.TabPage();
-            this.label22 = new System.Windows.Forms.Label();
-            this.cmbSupplier = new System.Windows.Forms.ComboBox();
-            this.btnSDate = new System.Windows.Forms.Button();
+            this.pnDocTables = new System.Windows.Forms.Panel();
             this.pnShipment = new System.Windows.Forms.Panel();
             this.gbOrderParts = new System.Windows.Forms.GroupBox();
             this.tblOrderParts = new System.Windows.Forms.DataGridView();
@@ -148,16 +146,18 @@
             this.tbtnAddOrderPart = new System.Windows.Forms.ToolStripButton();
             this.tbtnEditOrderPart = new System.Windows.Forms.ToolStripButton();
             this.tbtnDelOrderPart = new System.Windows.Forms.ToolStripButton();
+            this.pnDocHeader = new System.Windows.Forms.Panel();
+            this.label24 = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
+            this.cmbTransportView = new System.Windows.Forms.ComboBox();
+            this.cmbWarehouse = new System.Windows.Forms.ComboBox();
+            this.btnSDate = new System.Windows.Forms.Button();
+            this.cmbSupplier = new System.Windows.Forms.ComboBox();
+            this.label22 = new System.Windows.Forms.Label();
             this.tabOrders = new System.Windows.Forms.TabPage();
             this.tabHistory = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.pnDocHeader = new System.Windows.Forms.Panel();
-            this.pnDocTables = new System.Windows.Forms.Panel();
-            this.label23 = new System.Windows.Forms.Label();
-            this.cmbWarehouse = new System.Windows.Forms.ComboBox();
-            this.cmbTransportView = new System.Windows.Forms.ComboBox();
-            this.label24 = new System.Windows.Forms.Label();
             this.gbTransport.SuspendLayout();
             this.gbOrders.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tblShipmentOrders)).BeginInit();
@@ -168,13 +168,13 @@
             this.toolStrip2.SuspendLayout();
             this.tbObject.SuspendLayout();
             this.tabMain.SuspendLayout();
+            this.pnDocTables.SuspendLayout();
             this.pnShipment.SuspendLayout();
             this.gbOrderParts.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tblOrderParts)).BeginInit();
             this.toolStrip3.SuspendLayout();
-            this.panel2.SuspendLayout();
             this.pnDocHeader.SuspendLayout();
-            this.pnDocTables.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -1098,32 +1098,15 @@
             this.tabMain.Text = "Основные сведения";
             this.tabMain.UseVisualStyleBackColor = true;
             // 
-            // label22
+            // pnDocTables
             // 
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(70, 38);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(65, 13);
-            this.label22.TabIndex = 38;
-            this.label22.Text = "Поставщик";
-            // 
-            // cmbSupplier
-            // 
-            this.cmbSupplier.FormattingEnabled = true;
-            this.cmbSupplier.Location = new System.Drawing.Point(141, 35);
-            this.cmbSupplier.Name = "cmbSupplier";
-            this.cmbSupplier.Size = new System.Drawing.Size(341, 21);
-            this.cmbSupplier.TabIndex = 39;
-            // 
-            // btnSDate
-            // 
-            this.btnSDate.Image = global::Planning.Properties.Resources.calendar;
-            this.btnSDate.Location = new System.Drawing.Point(278, 7);
-            this.btnSDate.Name = "btnSDate";
-            this.btnSDate.Size = new System.Drawing.Size(31, 22);
-            this.btnSDate.TabIndex = 1;
-            this.btnSDate.UseVisualStyleBackColor = true;
-            this.btnSDate.Click += new System.EventHandler(this.btnShowCalendar_Click);
+            this.pnDocTables.Controls.Add(this.pnShipment);
+            this.pnDocTables.Controls.Add(this.gbMovementItem);
+            this.pnDocTables.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnDocTables.Location = new System.Drawing.Point(3, 500);
+            this.pnDocTables.Name = "pnDocTables";
+            this.pnDocTables.Size = new System.Drawing.Size(793, 335);
+            this.pnDocTables.TabIndex = 41;
             // 
             // pnShipment
             // 
@@ -1309,47 +1292,6 @@
             this.tbtnDelOrderPart.ToolTipText = "Удалить заказ";
             this.tbtnDelOrderPart.Click += new System.EventHandler(this.tbtnDelOrderPart_Click);
             // 
-            // tabOrders
-            // 
-            this.tabOrders.Location = new System.Drawing.Point(4, 22);
-            this.tabOrders.Name = "tabOrders";
-            this.tabOrders.Padding = new System.Windows.Forms.Padding(3);
-            this.tabOrders.Size = new System.Drawing.Size(799, 793);
-            this.tabOrders.TabIndex = 2;
-            this.tabOrders.Text = "Заказы";
-            this.tabOrders.UseVisualStyleBackColor = true;
-            // 
-            // tabHistory
-            // 
-            this.tabHistory.Location = new System.Drawing.Point(4, 22);
-            this.tabHistory.Name = "tabHistory";
-            this.tabHistory.Padding = new System.Windows.Forms.Padding(3);
-            this.tabHistory.Size = new System.Drawing.Size(799, 793);
-            this.tabHistory.TabIndex = 1;
-            this.tabHistory.Text = "История";
-            this.tabHistory.UseVisualStyleBackColor = true;
-            // 
-            // panel1
-            // 
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(807, 864);
-            this.panel1.TabIndex = 39;
-            // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.btnAddToLV);
-            this.panel2.Controls.Add(this.btnOK);
-            this.panel2.Controls.Add(this.btnCancel);
-            this.panel2.Controls.Add(this.btnBindLV);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 864);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(807, 30);
-            this.panel2.TabIndex = 40;
-            this.panel2.DoubleClick += new System.EventHandler(this.panel2_Click);
-            // 
             // pnDocHeader
             // 
             this.pnDocHeader.Controls.Add(this.label24);
@@ -1377,15 +1319,14 @@
             this.pnDocHeader.Size = new System.Drawing.Size(793, 497);
             this.pnDocHeader.TabIndex = 40;
             // 
-            // pnDocTables
+            // label24
             // 
-            this.pnDocTables.Controls.Add(this.pnShipment);
-            this.pnDocTables.Controls.Add(this.gbMovementItem);
-            this.pnDocTables.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnDocTables.Location = new System.Drawing.Point(3, 500);
-            this.pnDocTables.Name = "pnDocTables";
-            this.pnDocTables.Size = new System.Drawing.Size(793, 335);
-            this.pnDocTables.TabIndex = 41;
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(278, 92);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(87, 13);
+            this.label24.TabIndex = 40;
+            this.label24.Text = "Вид транспорта";
             // 
             // label23
             // 
@@ -1396,14 +1337,6 @@
             this.label23.TabIndex = 40;
             this.label23.Text = "Склад";
             // 
-            // cmbWarehouse
-            // 
-            this.cmbWarehouse.FormattingEnabled = true;
-            this.cmbWarehouse.Location = new System.Drawing.Point(70, 89);
-            this.cmbWarehouse.Name = "cmbWarehouse";
-            this.cmbWarehouse.Size = new System.Drawing.Size(202, 21);
-            this.cmbWarehouse.TabIndex = 1;
-            // 
             // cmbTransportView
             // 
             this.cmbTransportView.FormattingEnabled = true;
@@ -1412,14 +1345,81 @@
             this.cmbTransportView.Size = new System.Drawing.Size(265, 21);
             this.cmbTransportView.TabIndex = 1;
             // 
-            // label24
+            // cmbWarehouse
             // 
-            this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(278, 92);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(87, 13);
-            this.label24.TabIndex = 40;
-            this.label24.Text = "Вид транспорта";
+            this.cmbWarehouse.FormattingEnabled = true;
+            this.cmbWarehouse.Location = new System.Drawing.Point(70, 89);
+            this.cmbWarehouse.Name = "cmbWarehouse";
+            this.cmbWarehouse.Size = new System.Drawing.Size(202, 21);
+            this.cmbWarehouse.TabIndex = 1;
+            // 
+            // btnSDate
+            // 
+            this.btnSDate.Image = global::Planning.Properties.Resources.calendar;
+            this.btnSDate.Location = new System.Drawing.Point(278, 7);
+            this.btnSDate.Name = "btnSDate";
+            this.btnSDate.Size = new System.Drawing.Size(31, 22);
+            this.btnSDate.TabIndex = 1;
+            this.btnSDate.UseVisualStyleBackColor = true;
+            this.btnSDate.Click += new System.EventHandler(this.btnShowCalendar_Click);
+            // 
+            // cmbSupplier
+            // 
+            this.cmbSupplier.FormattingEnabled = true;
+            this.cmbSupplier.Location = new System.Drawing.Point(141, 35);
+            this.cmbSupplier.Name = "cmbSupplier";
+            this.cmbSupplier.Size = new System.Drawing.Size(341, 21);
+            this.cmbSupplier.TabIndex = 39;
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(70, 38);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(65, 13);
+            this.label22.TabIndex = 38;
+            this.label22.Text = "Поставщик";
+            // 
+            // tabOrders
+            // 
+            this.tabOrders.Location = new System.Drawing.Point(4, 22);
+            this.tabOrders.Name = "tabOrders";
+            this.tabOrders.Padding = new System.Windows.Forms.Padding(3);
+            this.tabOrders.Size = new System.Drawing.Size(799, 838);
+            this.tabOrders.TabIndex = 2;
+            this.tabOrders.Text = "Заказы";
+            this.tabOrders.UseVisualStyleBackColor = true;
+            // 
+            // tabHistory
+            // 
+            this.tabHistory.Location = new System.Drawing.Point(4, 22);
+            this.tabHistory.Name = "tabHistory";
+            this.tabHistory.Padding = new System.Windows.Forms.Padding(3);
+            this.tabHistory.Size = new System.Drawing.Size(799, 838);
+            this.tabHistory.TabIndex = 1;
+            this.tabHistory.Text = "История";
+            this.tabHistory.UseVisualStyleBackColor = true;
+            // 
+            // panel1
+            // 
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(807, 864);
+            this.panel1.TabIndex = 39;
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.btnAddToLV);
+            this.panel2.Controls.Add(this.btnOK);
+            this.panel2.Controls.Add(this.btnCancel);
+            this.panel2.Controls.Add(this.btnBindLV);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel2.Location = new System.Drawing.Point(0, 864);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(807, 30);
+            this.panel2.TabIndex = 40;
+            this.panel2.DoubleClick += new System.EventHandler(this.panel2_Click);
             // 
             // shipmen_edit
             // 
@@ -1451,16 +1451,16 @@
             this.toolStrip2.PerformLayout();
             this.tbObject.ResumeLayout(false);
             this.tabMain.ResumeLayout(false);
+            this.pnDocTables.ResumeLayout(false);
             this.pnShipment.ResumeLayout(false);
             this.gbOrderParts.ResumeLayout(false);
             this.gbOrderParts.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tblOrderParts)).EndInit();
             this.toolStrip3.ResumeLayout(false);
             this.toolStrip3.PerformLayout();
-            this.panel2.ResumeLayout(false);
             this.pnDocHeader.ResumeLayout(false);
             this.pnDocHeader.PerformLayout();
-            this.pnDocTables.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

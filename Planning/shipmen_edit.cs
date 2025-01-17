@@ -444,8 +444,8 @@ namespace Planning
             if (!_isNew)
                 _title = _title +" ["+ _shipment.Id.ToString()+"]";
             SetTilte(""); 
-            TabOrderView();
-            AddHistory(shipment.Id);
+            //TabOrderView();
+            //AddHistory(shipment.Id);
 
         }
 
@@ -457,6 +457,10 @@ namespace Planning
             tblShipmentOrders.Columns["colManualUnload"].Visible = _shipment.ShIn == true;
             tblShipmentOrders.Columns["colPalletCount"].Visible = _shipment.ShIn == true;
             tblShipmentOrders.Columns["colBinding"].Visible = _shipment.ShIn == true;
+            if (!gbOrderParts.Visible)
+            {
+                gbOrders.Dock = DockStyle.Fill;
+            }
         }
 
         public shipmen_edit(Movement movement, bool isNew = false)
@@ -698,6 +702,8 @@ namespace Planning
                 
                 //btnBindLV.Visible = false;
             }
+            TabOrderView();
+            AddHistory(_shipment.Id);
         }
 
         private void monthCalendarSpecial_DateSelected(object sender, DateRangeEventArgs e)
