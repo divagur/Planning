@@ -84,7 +84,7 @@ namespace PlanningServiceTest
             _settings = new Settings();
             _settings.InputFileDirPath = settingsHandle.GetParamStringValue("InputFileDirPath");
             _settings.LogDirPath = settingsHandle.GetParamStringValue("LogDirPath");
-
+            _settings.RootPath = settingsHandle.GetParamStringValue("RootPath", Environment.CurrentDirectory);
             _settings.FileInvoiceCustomMask = settingsHandle.GetParamStringValue("FileInvoiceCustomMask");
             _settings.FileInvoiceProductionMask = settingsHandle.GetParamStringValue("FileInvoiceProductionMask");
             _settings.ServerName = settingsHandle.GetParamStringValue("ServerName");

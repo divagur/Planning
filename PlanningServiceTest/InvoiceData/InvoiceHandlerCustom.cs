@@ -69,7 +69,9 @@ namespace PlanningServiceTest.InvoiceData
                 
                 
             }
-            
+            shipment.ShIn = true;
+            shipment.DepositorId = 1;
+            shipment.IsAddLv = false;
             shipment.TrailerNumber = invoiceCustom.TrailerNumber;
             shipment.VehicleNumber = invoiceCustom.TruckNumber;
             shipment.DriverFio = invoiceCustom.Driver;
@@ -81,11 +83,13 @@ namespace PlanningServiceTest.InvoiceData
 
             shipmentOrder.ShipmentId = shipment.Id;
             shipmentOrder.LvOrderCode = invoice.InvoiceNumber;
+            shipmentOrder.OrderId = invoice.InvoiceNumber;
             var lvId = shipmentOrderRepository.GetLvIdByCode(invoice.InvoiceNumber);
             if (lvId != null)
             {
                 shipmentOrder.LvOrderId = lvId;
                 shipmentOrder.IsBinding = true;
+                shipment.IsAddLv = true;
             }
 
             shipmentOrderRepository.Save(shipmentOrder);

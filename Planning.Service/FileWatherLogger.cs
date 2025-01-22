@@ -78,8 +78,7 @@ namespace Planning.Service
         }
         private void WatchTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            InvoiceHandlerBase invoiceHandler = null;
-            Invoice invoice = null;
+
   
             foreach (var file in Directory.GetFiles(_settings.InputFileDirPath))
             {
@@ -87,6 +86,9 @@ namespace Planning.Service
                 string status = "Успешно";
                 string error = "";
                 string fileLogPath = "Файл удален";
+                InvoiceHandlerBase invoiceHandler = null;
+                Invoice invoice = null;
+
                 switch (GetFileType(fileName, _settings))
                 {
                     case InvoiceType.Product:
@@ -100,7 +102,7 @@ namespace Planning.Service
                         //InvoiceCustom invoiceCustom = invoiceHandlerCustom.LoadFromXml(file);
                         break;
                     case InvoiceType.Unknown:
-                        break;
+                        continue;
                     default:
                         break;
                 }

@@ -50,6 +50,9 @@ namespace PlanningServiceTest.InvoiceData
                 shipment = shipmentRepository.GetById((int)shipmentOrder.ShipmentId);
             }
             shipment.SDate = invoiceProduction.ActualDate.AddDays(invoiceProduction.SupplierDeliveryDay);
+            shipment.ShIn = true;
+            shipment.DepositorId = 1;
+            shipment.IsAddLv = false;
             shipment.TrailerNumber = invoiceProduction.TrailerNumber;
             shipment.VehicleNumber = invoiceProduction.TruckNumber;
             shipment.DriverFio = invoiceProduction.Driver;           
@@ -62,11 +65,13 @@ namespace PlanningServiceTest.InvoiceData
 
             shipmentOrder.ShipmentId = shipment.Id;
             shipmentOrder.LvOrderCode = invoice.InvoiceNumber;
+            shipmentOrder.OrderId = invoice.InvoiceNumber;
             var lvId = shipmentOrderRepository.GetLvIdByCode(invoice.InvoiceNumber);
             if (lvId !=null)
             {
                 shipmentOrder.LvOrderId = lvId;
                 shipmentOrder.IsBinding = true;
+                shipment.IsAddLv = true;
             }
 
             shipmentOrderRepository.Save(shipmentOrder);

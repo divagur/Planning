@@ -29,11 +29,8 @@ namespace Planning
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tblOrderDetail = new System.Windows.Forms.DataGridView();
-            this.colID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPrimaryCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colShortDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colQuantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButtonExportExcel = new System.Windows.Forms.ToolStripButton();
             this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
@@ -41,6 +38,10 @@ namespace Planning
             this.btnOk = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripLabelRowCount = new System.Windows.Forms.ToolStripStatusLabel();
+            this.colID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPrimaryCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colShortDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colQuantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.tblOrderDetail)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -64,40 +65,6 @@ namespace Planning
             this.tblOrderDetail.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.tblOrderDetail.Size = new System.Drawing.Size(745, 370);
             this.tblOrderDetail.TabIndex = 0;
-            // 
-            // colID
-            // 
-            this.colID.DataPropertyName = "ID";
-            this.colID.HeaderText = "ID";
-            this.colID.Name = "colID";
-            this.colID.ReadOnly = true;
-            this.colID.Visible = false;
-            // 
-            // colPrimaryCode
-            // 
-            this.colPrimaryCode.DataPropertyName = "PrimaryCode";
-            this.colPrimaryCode.FillWeight = 150F;
-            this.colPrimaryCode.HeaderText = "Код артикула";
-            this.colPrimaryCode.Name = "colPrimaryCode";
-            this.colPrimaryCode.ReadOnly = true;
-            this.colPrimaryCode.Width = 150;
-            // 
-            // colShortDescription
-            // 
-            this.colShortDescription.DataPropertyName = "ShortDescription";
-            this.colShortDescription.FillWeight = 300F;
-            this.colShortDescription.HeaderText = "Описание";
-            this.colShortDescription.Name = "colShortDescription";
-            this.colShortDescription.ReadOnly = true;
-            this.colShortDescription.Width = 450;
-            // 
-            // colQuantity
-            // 
-            this.colQuantity.DataPropertyName = "Quantity";
-            this.colQuantity.FillWeight = 80F;
-            this.colQuantity.HeaderText = "Количество";
-            this.colQuantity.Name = "colQuantity";
-            this.colQuantity.ReadOnly = true;
             // 
             // toolStrip1
             // 
@@ -159,6 +126,43 @@ namespace Planning
             this.toolStripLabelRowCount.Name = "toolStripLabelRowCount";
             this.toolStripLabelRowCount.Size = new System.Drawing.Size(0, 17);
             // 
+            // colID
+            // 
+            this.colID.DataPropertyName = "ID";
+            this.colID.HeaderText = "ID";
+            this.colID.Name = "colID";
+            this.colID.ReadOnly = true;
+            this.colID.Visible = false;
+            // 
+            // colPrimaryCode
+            // 
+            this.colPrimaryCode.DataPropertyName = "PrimaryCode";
+            this.colPrimaryCode.FillWeight = 150F;
+            this.colPrimaryCode.HeaderText = "Код артикула";
+            this.colPrimaryCode.Name = "colPrimaryCode";
+            this.colPrimaryCode.ReadOnly = true;
+            this.colPrimaryCode.Width = 150;
+            // 
+            // colShortDescription
+            // 
+            this.colShortDescription.DataPropertyName = "ShortDescription";
+            this.colShortDescription.FillWeight = 300F;
+            this.colShortDescription.HeaderText = "Описание";
+            this.colShortDescription.Name = "colShortDescription";
+            this.colShortDescription.ReadOnly = true;
+            this.colShortDescription.Width = 450;
+            // 
+            // colQuantity
+            // 
+            this.colQuantity.DataPropertyName = "Quantity";
+            dataGridViewCellStyle1.Format = "N0";
+            dataGridViewCellStyle1.NullValue = null;
+            this.colQuantity.DefaultCellStyle = dataGridViewCellStyle1;
+            this.colQuantity.FillWeight = 80F;
+            this.colQuantity.HeaderText = "Количество";
+            this.colQuantity.Name = "colQuantity";
+            this.colQuantity.ReadOnly = true;
+            // 
             // frmOrderDetail
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -194,11 +198,11 @@ namespace Planning
         private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnOk;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripLabelRowCount;
         private System.Windows.Forms.DataGridViewTextBoxColumn colID;
         private System.Windows.Forms.DataGridViewTextBoxColumn colPrimaryCode;
         private System.Windows.Forms.DataGridViewTextBoxColumn colShortDescription;
         private System.Windows.Forms.DataGridViewTextBoxColumn colQuantity;
-        private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripLabelRowCount;
     }
 }

@@ -32,6 +32,7 @@ namespace PlanningServiceTest
         System.Timers.Timer watchTimer;
         Settings _settings;
         string _connetionString;
+        LogHandler log;
         object obj = new object();
         bool enabled = true;
         string[] extensions;
@@ -60,14 +61,17 @@ namespace PlanningServiceTest
             watchTimer = new System.Timers.Timer();
             watchTimer.Interval = _settings.TimerInterval;
             watchTimer.Elapsed += WatchTimer_Elapsed;
-            SqlConnectionStringBuilder sqlConnectionStringBuilder = new SqlConnectionStringBuilder();
 
+            SqlConnectionStringBuilder sqlConnectionStringBuilder = new SqlConnectionStringBuilder();
             sqlConnectionStringBuilder.DataSource = _settings.ServerName;
             sqlConnectionStringBuilder.InitialCatalog = _settings.PlanningBaseName;
             sqlConnectionStringBuilder.UserID = _settings.PlanningBaseLogin;
             sqlConnectionStringBuilder.Password = _settings.PlanningBasePwd;
 
             _connetionString = sqlConnectionStringBuilder.ToString();
+            AddEventToLog("EVENT Logger", "Подключение к файлу лога");
+            log = new LogHandler(Path.Combine(_settings.RootPath, "FileProcessLog.xml"), false);
+            log.Open();
         }
 
         private InvoiceType GetFileType(string fileName, Settings settings)
@@ -81,11 +85,6 @@ namespace PlanningServiceTest
         }
         private void WatchTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            InvoiceHandlerBase invoiceHandler = null;
-            Invoice invoice = null;
-            LogHandler log = new LogHandler(Path.Combine(_settings.LogDirPath,"FileProcessLog.xml"), false);
-            log.Open();
-
 
 
             foreach (var file in Directory.GetFiles(_settings.InputFileDirPath))
@@ -94,6 +93,9 @@ namespace PlanningServiceTest
                 string status = "Успешно";
                 string error = "";
                 string fileLogPath = "Файл удален";
+                InvoiceHandlerBase invoiceHandler = null;
+                Invoice invoice = null;
+
                 switch (GetFileType(fileName, _settings))
                 {
                     case InvoiceType.Product:
@@ -107,7 +109,7 @@ namespace PlanningServiceTest
                         //InvoiceCustom invoiceCustom = invoiceHandlerCustom.LoadFromXml(file);
                         break;
                     case InvoiceType.Unknown:
-                        break;
+                        continue;
                     default:
                         break;
                 }
@@ -176,10 +178,9 @@ namespace PlanningServiceTest
         }
         public void Stop()
         {
-            /*
-            watcher.EnableRaisingEvents = false;
+            
+            //watcher.EnableRaisingEvents = false;
             enabled = false;
-            */
             watchTimer.Stop();
         }
 
@@ -241,6 +242,16 @@ namespace PlanningServiceTest
                         DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss"), filePath, fileEvent));
                     writer.Flush();
                 }
+            }
+        }
+        private void AddEventToLog(string eventLog, string descr)
+        {
+            
+            using (StreamWriter writer = new StreamWriter(Path.Combine(Environment.CurrentDirectory,"PlanningServieLog.txt"), true))
+            {
+                writer.WriteLine(String.Format("[{0}][{1}]: {2}",
+                    DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss"), eventLog, descr));
+                writer.Flush();
             }
         }
         /*

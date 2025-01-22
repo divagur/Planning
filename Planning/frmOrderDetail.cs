@@ -29,7 +29,7 @@ namespace Planning
             List<OrderDetailItem> orderDetailItems = orderDetailItem_Manager.GetOrderDetailItems(depId, inOut, ordId);
             tblOrderDetail.DataSource = orderDetailItems;
 
-            toolStripLabelRowCount.Text = $"Всего кол-во строк - {orderDetailItems.Count}, единиц товара - {orderDetailItems.Sum(i=>i.Quantity)}  ";
+            toolStripLabelRowCount.Text = String.Format("Всего кол-во строк - {0}, единиц товара - {1:f0}", orderDetailItems.Count, orderDetailItems.Sum(i => i.Quantity));
         }
 
         private void btnOk_Click(object sender, EventArgs e)

@@ -29,7 +29,7 @@ namespace Planning.DataLayer
             get => _orderId;
             set
             {
-                if (!_orderId.Equals(value))
+                if (_orderId == null || !_orderId.Equals(value))
                 {
                     _orderId = value;
                     Edit();
