@@ -495,7 +495,8 @@ namespace Planning
             DataService.setting.UserName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
             //Попробуем подключиться под текущим пользователем виндовс
             //Если не получится запросим имя пользователя и пароль
-            if (!DataService.TryDBConnect(DataService.setting.ServerName, DataService.setting.BaseName, "", "", DataService.setting.IsWnd, false))
+            //DataService.setting.IsWnd
+            if (!DataService.TryDBConnect(DataService.setting.ServerName, DataService.setting.BaseName, "", "", false, false))
             {
                 DataService.setting.IsWnd = false;
                 if (!GetLogin())
@@ -1417,8 +1418,12 @@ namespace Planning
                 if (sql.HasRows())
                 {
                     sql.Read();
-                    edCurrDay.Value = (DateTime)sql.GetNullDateTimeValue(0,true);
-                    SearchByOrder(true);
+                    DateTime? date = sql.GetNullDateTimeValue(0, true);
+                    if (date !=null)
+                    {
+                        edCurrDay.Value = (DateTime)date;
+                        SearchByOrder(true);
+                    }
                 }    
                 sql.Disconnect();
             }

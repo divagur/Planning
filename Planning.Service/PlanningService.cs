@@ -88,7 +88,7 @@ namespace Planning.Service
             _settings.PlanningBaseLogin = settingsHandle.GetParamStringValue("PlanningBaseLogin");
             _settings.PlanningBasePwd = settingsHandle.GetParamStringValue("PlanningBasePwd");
             _settings.TimerInterval = settingsHandle.GetParamIntValue("TimerInterval",60) * 1000;
-            
+            _settings.DebugFileProcessing = settingsHandle.GetParamIntValue("DebugFileProcessing", 0);
         }
 
         private bool TryDBConnect(string Server, string DB, string Login, string Pwd)

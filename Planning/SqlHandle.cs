@@ -101,6 +101,10 @@ namespace Planning
             if (row[columnIndex] != "Null")
             {
                 string value = row[columnIndex].ToString();
+                if (String.IsNullOrEmpty(value))
+                {
+                    return null;
+                }
                 value = onlyDate ? value.Substring(0, 10) : value;
                 result = (DateTime?)DateTime.Parse(value);
             }

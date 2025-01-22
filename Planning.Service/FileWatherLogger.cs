@@ -88,17 +88,19 @@ namespace Planning.Service
                 string fileLogPath = "Файл удален";
                 InvoiceHandlerBase invoiceHandler = null;
                 Invoice invoice = null;
-
+                string invoiceType = "";
                 switch (GetFileType(fileName, _settings))
                 {
                     case InvoiceType.Product:
                         invoiceHandler = new InvoiceHandlerProductionN();
                         invoice = new InvoiceProduction();
+                        invoiceType = "InvoiceTimeSlot";
                         //InvoiceProduction invoiceProduction = invoiceHandlerProduct.LoadFromXml(file);
                         break;
                     case InvoiceType.Custom:
                         invoiceHandler = new InvoiceHandlerCustomN();
                         invoice = new InvoiceCustom();
+                        invoiceType = "InvoiceCustom";
                         //InvoiceCustom invoiceCustom = invoiceHandlerCustom.LoadFromXml(file);
                         break;
                     case InvoiceType.Unknown:
@@ -110,17 +112,22 @@ namespace Planning.Service
                 {
                     status = "Ошибка";
                     error = "Неизвестный тип файла";
+                    AddDebugEvent($"Ошибка при обработке файла {file}  - {error}");
+
                 }
                 else
                 {
                     try
                     {
+
+                        AddDebugEvent($"Обработка файла {file}  с типом {invoiceType}");
                         invoiceHandler?.LoadFromXml(file, invoice);
                     }
                     catch (Exception ex)
                     {
                         status = "Ошибка";
                         error = ex.Message;
+                        AddDebugEvent($"Ошибка при обработке файла {file} - {ex.Message}");
 
                     }
 
@@ -129,17 +136,40 @@ namespace Planning.Service
                         if (!String.IsNullOrEmpty(_settings.LogDirPath))
                         {
                             fileLogPath = Path.Combine(_settings.LogDirPath, Path.GetFileName(file));
-                            File.Move(file, fileLogPath);
+                            AddDebugEvent($"Перемещение файла {file} в каталог {fileLogPath}");
+                            try
+                            {
+                                File.Move(file, fileLogPath);
+                                //File.Copy(file, fileLogPath, true);
+                            }
+                            catch (Exception ex)
+                            {
+
+                                AddDebugEvent($"Ошибка при перемещении файла {file} - {ex.Message}");
+                            }
+                            
+                            AddDebugEvent($"Файла {file} перемещен");
                         }
                         else
                         {
-                            File.Delete(file);
+                            AddDebugEvent($"Удаление файла {file} из входящего каталога каталога");
+                            try
+                            {
+                                File.Delete(file);
+                            }
+                            catch (Exception ex)
+                            {
+
+                                AddDebugEvent($"Ошибка при удалении файла {file} - {ex.Message}");
+                            }
+                            
+                            AddDebugEvent($"Файла {file} удален");
                         }
                         log.AddRow(Path.GetFileName(file), DateTime.Now, status, error, fileLogPath, true);
                     }
-
+                    AddDebugEvent($"Сохранение инвойса из файла {file} в базу данных");
                     invoiceHandler.Save(invoice, _connetionString);
-
+                    AddDebugEvent($"Инвойса из файла {file} сохранен");
                 }
 
 
@@ -148,7 +178,15 @@ namespace Planning.Service
 
         }
         
+        private void AddDebugEvent(string eventMessage)
+        {
+            if (_settings.DebugFileProcessing != 1)
+            {
+                return;
 
+            }
+            Common.AddEventToLog("EVENT_FILE_PROSEEING", eventMessage);
+        }
         public void Start()
         {
             
