@@ -198,7 +198,7 @@ namespace Planning
             // colDeliveryDay
             // 
             this.colDeliveryDay.DataPropertyName = "DeliveryDay";
-            this.colDeliveryDay.HeaderText = "Срок доставки (дни)";
+            this.colDeliveryDay.HeaderText = "Срок доставки (часы)";
             this.colDeliveryDay.Name = "colDeliveryDay";
             this.colDeliveryDay.Width = 135;
             // 
@@ -206,7 +206,7 @@ namespace Planning
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(405, 361);
+            this.ClientSize = new System.Drawing.Size(407, 361);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.txtDescr);
             this.Controls.Add(this.txtCode);

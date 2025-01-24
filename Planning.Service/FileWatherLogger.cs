@@ -135,7 +135,8 @@ namespace Planning.Service
                     {
                         if (!String.IsNullOrEmpty(_settings.LogDirPath))
                         {
-                            fileLogPath = Path.Combine(_settings.LogDirPath, Path.GetFileName(file));
+                            fileLogPath = Path.Combine(_settings.LogDirPath,String.Format("{0}_{1}{2}",
+                                        Path.GetFileNameWithoutExtension(file), DateTime.Now.ToString("ddMMyyyyhhmmss"), Path.GetExtension(file)));
                             AddDebugEvent($"Перемещение файла {file} в каталог {fileLogPath}");
                             try
                             {

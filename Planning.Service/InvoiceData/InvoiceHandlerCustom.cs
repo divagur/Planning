@@ -46,6 +46,8 @@ namespace Planning.Service.InvoiceData
                 shipment = shipmentRepository.GetById((int)shipmentOrder.ShipmentId);
             }
 
+            shipment.SDate = invoiceCustom.ActualDate;
+
             CustomPost customPost = GetCustomPostByCode(invoiceCustom.CustomsCode, connectionString);
             if (customPost == null)
             {
@@ -64,18 +66,28 @@ namespace Planning.Service.InvoiceData
                 }
                 else
                 {
-                    shipment.SDate = invoiceCustom.ActualDate.AddDays(deliveryPeriod.DeliveryDay);
+                    shipment.SDate = invoiceCustom.ActualDate.AddHours(deliveryPeriod.DeliveryDay);
                 }
                 
                 
             }
+            
             shipment.ShIn = true;
             shipment.DepositorId = 1;
             shipment.IsAddLv = false;
             shipment.TrailerNumber = invoiceCustom.TrailerNumber;
             shipment.VehicleNumber = invoiceCustom.TruckNumber;
             shipment.DriverFio = invoiceCustom.Driver;
-            
+            shipment.WarehouseId = Common.GetWarehouseId(invoiceCustom.RecipientCode, connectionString);
+            shipment.TransportViewId = Common.GetTransportViewId(invoiceCustom.DeliveryType, connectionString);
+
+            var lvId = shipmentOrderRepository.GetLvIdByCode(invoice.InvoiceNumber);
+            if (lvId != null)
+            {
+                shipmentOrder.LvOrderId = lvId;
+                shipmentOrder.IsBinding = true;
+                shipment.IsAddLv = true;
+            }
 
             shipmentRepository.Save(shipment);
 
@@ -84,13 +96,7 @@ namespace Planning.Service.InvoiceData
             shipmentOrder.ShipmentId = shipment.Id;
             shipmentOrder.LvOrderCode = invoice.InvoiceNumber;
             shipmentOrder.OrderId = invoice.InvoiceNumber;
-            var lvId = shipmentOrderRepository.GetLvIdByCode(invoice.InvoiceNumber);
-            if (lvId != null)
-            {
-                shipmentOrder.LvOrderId = lvId;
-                shipmentOrder.IsBinding = true;
-                shipment.IsAddLv = true;
-            }
+            
 
             shipmentOrderRepository.Save(shipmentOrder);
 

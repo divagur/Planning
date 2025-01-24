@@ -56,8 +56,16 @@ namespace Planning.Service.InvoiceData
             shipment.TrailerNumber = invoiceProduction.TrailerNumber;
             shipment.VehicleNumber = invoiceProduction.TruckNumber;
             shipment.DriverFio = invoiceProduction.Driver;           
-            shipment.WarehouseId = GetWarehouseId(invoiceProduction.RecipientCode, connectionString);
-            shipment.TransportViewId = GetTransportViewId(invoiceProduction.DeliveryType, connectionString);
+            shipment.WarehouseId = Common.GetWarehouseId(invoiceProduction.RecipientCode, connectionString);
+            shipment.TransportViewId = Common.GetTransportViewId(invoiceProduction.DeliveryType, connectionString);
+
+            var lvId = shipmentOrderRepository.GetLvIdByCode(invoice.InvoiceNumber);
+            if (lvId != null)
+            {
+                shipmentOrder.LvOrderId = lvId;
+                shipmentOrder.IsBinding = true;
+                shipment.IsAddLv = true;
+            }
 
             shipmentRepository.Save(shipment);
 
@@ -66,13 +74,7 @@ namespace Planning.Service.InvoiceData
             shipmentOrder.ShipmentId = shipment.Id;
             shipmentOrder.LvOrderCode = invoice.InvoiceNumber;
             shipmentOrder.OrderId = invoice.InvoiceNumber;
-            var lvId = shipmentOrderRepository.GetLvIdByCode(invoice.InvoiceNumber);
-            if (lvId !=null)
-            {
-                shipmentOrder.LvOrderId = lvId;
-                shipmentOrder.IsBinding = true;
-                shipment.IsAddLv = true;
-            }
+            
 
             shipmentOrderRepository.Save(shipmentOrder);
 
@@ -81,19 +83,7 @@ namespace Planning.Service.InvoiceData
 
         }
 
-        private int? GetWarehouseId(string WarehouseCode, string connectionString)
-        {
-            WarehouseRepository warehouseRepository = new WarehouseRepository(connectionString);
-            Warehouse warehouse = warehouseRepository.GetByCode(WarehouseCode);
-            return warehouse == null ? null : (int?)warehouse.Id;
-        }
-
-        private int? GetTransportViewId(string TransportViewName, string connectionString)
-        {
-            TransportViewRepository transportViewRepository = new TransportViewRepository(connectionString);
-            TransportView transportView = transportViewRepository.GetByNameOrCreate(TransportViewName);
-            return transportView.Id;
-        }
+        
 
     }
 
