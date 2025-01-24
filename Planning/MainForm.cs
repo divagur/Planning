@@ -100,6 +100,10 @@ namespace Planning
             int inOut = direction == "вход" ? 1 : 0;
             var idNakl = tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colIdNakl"].Value;
             var orderId = tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colOrdLvId"].Value;
+            
+            if (string.IsNullOrEmpty(orderId.ToString()))
+                return;
+
             frmOrderDetail frmOrderDetail = new frmOrderDetail(
                     (string)tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colOrderId"].Value,
                     (int)tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colOrdLvId"].Value, inOut, (int)DepositorLVId);
@@ -716,8 +720,9 @@ namespace Planning
                     if (shipment.ShIn == true)
                     {
                         DataService.ForceMergeLVAttribute(shipment.Id);
+
                     }
-                    if (shipment.IsAddLv == true)
+                    if (shipment.ShIn == false && shipment.IsAddLv == true)
                     {
                         AddShToLV(shipment);
                     }

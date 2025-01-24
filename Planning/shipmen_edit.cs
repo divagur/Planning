@@ -757,6 +757,7 @@ namespace Planning
             {
                
                 bool isAllBindings = true;
+                _shipment.IsAddLv = true;
                 var listOrdId = _shipment.ShipmentOrders.Select(o => (int?)o.Id).ToList();
                 var ordParts = _context.ShipmentOrderParts.Where(s => listOrdId.Contains(s.ShOrderId)).ToList();
                 /*foreach (var item in _context.ShipmentOrderParts.Where(s=> _shipment.ShipmentOrders.Select(o=>o.Id).ToList().Contains((int)s.ShOrderId)))

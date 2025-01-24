@@ -22,5 +22,6 @@ namespace PlanningServiceTest
         public string PlanningBasePwd { get; set; }
         public int TimerInterval { get; set; }
         public string RootPath { get; set; }
+        public int DebugFileProcessing { get; set; }
     }
 }

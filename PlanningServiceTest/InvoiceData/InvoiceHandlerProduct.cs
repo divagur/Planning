@@ -31,7 +31,7 @@ namespace PlanningServiceTest.InvoiceData
 
         public override void Save(Invoice invoice, String connectionString)
         {
-           
+
             InvoiceProduction invoiceProduction = (InvoiceProduction)invoice;
 
             ShipmentRepository shipmentRepository = new ShipmentRepository(connectionString);
@@ -55,9 +55,17 @@ namespace PlanningServiceTest.InvoiceData
             shipment.IsAddLv = false;
             shipment.TrailerNumber = invoiceProduction.TrailerNumber;
             shipment.VehicleNumber = invoiceProduction.TruckNumber;
-            shipment.DriverFio = invoiceProduction.Driver;           
-            shipment.WarehouseId = GetWarehouseId(invoiceProduction.RecipientCode, connectionString);
-            shipment.TransportViewId = GetTransportViewId(invoiceProduction.DeliveryType, connectionString);
+            shipment.DriverFio = invoiceProduction.Driver;
+            shipment.WarehouseId = Common.GetWarehouseId(invoiceProduction.RecipientCode, connectionString);
+            shipment.TransportViewId = Common.GetTransportViewId(invoiceProduction.DeliveryType, connectionString);
+
+            var lvId = shipmentOrderRepository.GetLvIdByCode(invoice.InvoiceNumber);
+            if (lvId != null)
+            {
+                shipmentOrder.LvOrderId = lvId;
+                shipmentOrder.IsBinding = true;
+                shipment.IsAddLv = true;
+            }
 
             shipmentRepository.Save(shipment);
 
@@ -66,13 +74,7 @@ namespace PlanningServiceTest.InvoiceData
             shipmentOrder.ShipmentId = shipment.Id;
             shipmentOrder.LvOrderCode = invoice.InvoiceNumber;
             shipmentOrder.OrderId = invoice.InvoiceNumber;
-            var lvId = shipmentOrderRepository.GetLvIdByCode(invoice.InvoiceNumber);
-            if (lvId !=null)
-            {
-                shipmentOrder.LvOrderId = lvId;
-                shipmentOrder.IsBinding = true;
-                shipment.IsAddLv = true;
-            }
+
 
             shipmentOrderRepository.Save(shipmentOrder);
 

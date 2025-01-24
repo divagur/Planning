@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Planning.DataLayer;
 
 namespace PlanningServiceTest
 {
@@ -18,6 +19,20 @@ namespace PlanningServiceTest
                     DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss"), eventLog, descr));
                 writer.Flush();
             }
+        }
+
+        public static int? GetWarehouseId(string WarehouseCode, string connectionString)
+        {
+            WarehouseRepository warehouseRepository = new WarehouseRepository(connectionString);
+            Warehouse warehouse = warehouseRepository.GetByCode(WarehouseCode);
+            return warehouse == null ? null : (int?)warehouse.Id;
+        }
+
+        public static int? GetTransportViewId(string TransportViewName, string connectionString)
+        {
+            TransportViewRepository transportViewRepository = new TransportViewRepository(connectionString);
+            TransportView transportView = transportViewRepository.GetByNameOrCreate(TransportViewName);
+            return transportView.Id;
         }
 
     }
