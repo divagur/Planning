@@ -500,6 +500,7 @@ namespace Planning
             //Попробуем подключиться под текущим пользователем виндовс
             //Если не получится запросим имя пользователя и пароль
             //
+            DataService.setting.IsWnd = false;
             if (!DataService.TryDBConnect(DataService.setting.ServerName, DataService.setting.BaseName, "", "", DataService.setting.IsWnd, false))
             {
                 DataService.setting.IsWnd = false;
@@ -1192,7 +1193,8 @@ namespace Planning
             dict.TableName = "transport_company";
             dict.Title = "Справочник: Транспортные компании";
 
-            dict.Columns.Add(new DictColumn { Id = "Id", IsPK = true, IsVisible = false, Title = "Код", DataField = "id", DataType = SqlDbType.Int });
+            dict.Columns.Add(new DictColumn { Id = "Id", IsPK = true, IsVisible = false, Title = "ID", DataField = "id", DataType = SqlDbType.Int });
+            dict.Columns.Add(new DictColumn { Id = "Code", IsPK = false, IsVisible = true, Title = "Код", DataField = "code", Width = 80, DataType = SqlDbType.Int });
             dict.Columns.Add(new DictColumn { Id = "Name", IsPK = false, IsVisible = true, Title = "Наименование", DataField = "name", Width = 254, DataType = SqlDbType.VarChar, Length = 254 });
             dict.Columns.Add(new DictColumn { Id = "IsActive", IsPK = false, IsVisible = true, Title = "Активная", DataField = "is_active", Width = 80, DataType = SqlDbType.Bit });
             

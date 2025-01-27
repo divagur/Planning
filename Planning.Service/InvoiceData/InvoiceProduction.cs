@@ -10,5 +10,6 @@ namespace Planning.Service.InvoiceData
     {
         public string SupplierCode { get; set; }
         public int SupplierDeliveryDay { get; set; } = 0;
+        public int ShippingСompany { get; set; }
     }
 }

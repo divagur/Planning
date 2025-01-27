@@ -306,6 +306,7 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="254" />
           <Property Name="is_active" Type="bit" />
+          <Property Name="code" Type="int" />
         </EntityType>
         <EntityType Name="transport_type">
           <Key>
@@ -1113,6 +1114,7 @@
           <Property Name="Name" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
           <Property Name="IsActive" Type="Boolean" />
           <NavigationProperty Name="Shipments" Relationship="PlanningModel.FK_shipments_tc" FromRole="transport_company" ToRole="Shipment" />
+          <Property Name="Code" Type="Int32" />
         </EntityType>
         <EntityType Name="TransportType">
           <Key>
@@ -1666,6 +1668,7 @@
           <EntitySetMapping Name="TransportCompanies">
             <EntityTypeMapping TypeName="PlanningModel.TransportCompany">
               <MappingFragment StoreEntitySet="transport_company">
+                <ScalarProperty Name="Code" ColumnName="code" />
                 <ScalarProperty Name="IsActive" ColumnName="is_active" />
                 <ScalarProperty Name="Name" ColumnName="name" />
                 <ScalarProperty Name="Id" ColumnName="id" />
