@@ -41,6 +41,9 @@ namespace Planning
         public VolumeCalcParams volumeCalcParams = new VolumeCalcParams();
         
         public bool ShowDetailOrderColumn { get; set; }
+
+        public string DefaultWarehouseCode { get; set;  }
+        public string DefaultTransportViewName { get; set; }
     }
 
 }

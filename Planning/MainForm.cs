@@ -500,7 +500,7 @@ namespace Planning
             //Попробуем подключиться под текущим пользователем виндовс
             //Если не получится запросим имя пользователя и пароль
             //
-            DataService.setting.IsWnd = false;
+            //DataService.setting.IsWnd = false;
             if (!DataService.TryDBConnect(DataService.setting.ServerName, DataService.setting.BaseName, "", "", DataService.setting.IsWnd, false))
             {
                 DataService.setting.IsWnd = false;
@@ -735,24 +735,13 @@ namespace Planning
         }
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            /*
-            
-            shipmen_edit frmShipmentEdit = new shipmen_edit(shipment, context);
-            frmShipmentEdit.ClearFields();
-            if (frmShipmentEdit.ShowDialog()==DialogResult.OK)
-            {
-                DataService.Add(shipment);
-            }
-            */
+
             ShipmentParam shipmentAddResult = new ShipmentParam();
            // Shipment shipment = new Shipment();
             ShipmentAdd frmShipmentAdd = new ShipmentAdd(shipmentAddResult);
             DialogResult result = frmShipmentAdd.ShowDialog();
             if (result == DialogResult.OK || result == DialogResult.Retry)
             {
-                //DataService.context.Shipments.Add(shipment);
-                //DataService.context.SaveChanges();
-                //AddShToLV(shipment);
 
                 
                 if (result == DialogResult.Retry)

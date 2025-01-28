@@ -180,7 +180,7 @@ namespace Planning
                 _shipment.ShIn = cmbType.Text == "Вход" ? true : false;
                 _shipment.DepositorId = DataService.GetDictIdByName("Депозиторы", cmbDepositor.Text);
                 _shipment.TimeSlotId = DataService.GetDictIdByCondition("ТаймСлоты", $"depositor_id = {_shipment.DepositorId} and slot_time = '{cmbTimeSlot.Text}'");
-                _shipment.IsAddLv = false;
+                
 
                 for (int i = 0; i < tblShipmentItem.RowCount; i++)
                 {
@@ -196,12 +196,16 @@ namespace Planning
                         shipmentOrder.OrderId = tblShipmentItem.Rows[i].Cells["colItemId"].Value.ToString();
                         shipmentOrder.LVOrderId = (int?)tblShipmentItem.Rows[i].Cells["colLVOrdId"].Value;
                         shipmentOrder.lv_order_code = tblShipmentItem.Rows[i].Cells["colItemId"].Value.ToString();
-                        shipmentOrder.IsEdm = (bool?)tblShipmentItem.Rows[i].Cells["colItemIsEDM"].Value;
+                        shipmentOrder.IsEdm = !String.IsNullOrEmpty(tblShipmentItem.Rows[i].Cells["colItemIsEDM"].Value.ToString()) ?
+                                (bool?)tblShipmentItem.Rows[i].Cells["colItemIsEDM"].Value : null;
                         shipmentOrder.IsBinding = true;
                         _shipment.ShipmentOrders.Add(shipmentOrder);
                     }
                     if (cmbType.SelectedIndex == 0)
                     {
+                        _shipment.TransportViewId = GetTransportViewId(DataService.setting.DefaultTransportViewName);
+                        _shipment.WarehouseId = GetWarehouseId(DataService.setting.DefaultWarehouseCode);
+
                         ShipmentOrderPart shipmentOrderPart = new ShipmentOrderPart();
                         shipmentOrderPart.OsLvCode = tblShipmentItem.Rows[i].Cells["colItemOstCode"].Value.ToString();
                         shipmentOrderPart.OsLvId = (tblShipmentItem.Rows[i].Cells["colItemOstId"].Value as int?);
@@ -210,6 +214,7 @@ namespace Planning
                     }
                    
                 }
+                _shipment.IsAddLv = true;
                 _shipmentAddResult.Result = _shipment;
                 _context.Shipments.Add(_shipment);
             }
@@ -233,6 +238,21 @@ namespace Planning
             _context.SaveChanges();
 
         }
+
+        private int? GetWarehouseId(string WarehouseCode)
+        {
+
+            Warehouse warehouse = _context.Warehouses.FirstOrDefault(w => w.Code == WarehouseCode);
+
+            return warehouse == null ? null : (int?)warehouse.Id;
+        }
+
+        private int? GetTransportViewId(string TransportViewName)
+        {            
+            TransportView transportView = _context.TransportViews.FirstOrDefault(tv=>tv.Name == TransportViewName);
+            return transportView == null? null:(int?)transportView.Id;
+        }
+
         private void btnOk_Click(object sender, EventArgs e)
         {
             Save();
