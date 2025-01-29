@@ -357,12 +357,7 @@ namespace Planning
                 bool success = IsValidDate(edSDate) && IsValidDate(edSubmissionTime) && IsValidDate(edStartTime) && IsValidDate(edEndDate) && IsValidDate(edLeaveTime);
                 if (!success)
                     return false;
-                //
-                /*
-                if (_shipment.ShIn == false && !IsValidOrderParts())
-                    return false;
-                */
-                //cbTransportCompany.Text = "";
+
                 _shipment.SDate = GetNullableDate(edSDate);
                 _shipment.SComment = edShipmentComment.Text;
                 _shipment.DelayReasonsId = DataService.GetDictIdByName("Причины_задержки", cmbDelayReasons.Text);//Convert.ToInt32(IsNull(cmbDelayReasons.Text, "0"));
@@ -390,29 +385,13 @@ namespace Planning
                 _shipment.WarehouseId = DataService.GetDictIdByName("Склады", cmbWarehouse.Text);
                 _shipment.TransportViewId= DataService.GetDictIdByName("Виды_транспорта", cmbTransportView.Text);
                 _shipment.SpCondition = cbSpecCondition.Checked;
+                _shipment.IsAddLv = IsAllOrderBindToLv();
                 // _shipment.TimeSlotId =Convert.ToInt32(IsNull(cmbTimeSlot.Text,null));
                 CheckUnaccountedOrderParts();
                 return true;
             }
             else
-            {
-                /*
-                 edSDate.Text = _movement.MDate==null?DateTime.Now.ToShortDateString(): _movement.MDate.ToShortDateString();
-                edShipmentComment.Text = _movement.Comment;
-                cmbDelayReasons.Text = DataService.GetDictNameById("Причины_задержки", _movement.DelayReasonsId);
-                edDelayComment.Text = _movement.DelayComment;
-                edDriverFIO.Text = _movement.Performer;
-                cmbTimeSlot.Text = _movement.TimeSlots == null ? "" : _movement.TimeSlots.SlotTime.ToString();
-                tblShipmentOrders.AutoGenerateColumns = false;
-                tblShipmentOrders.DataSource = _movement.MovementItems.ToList();
-
-
-                DateTime specTime;
-                if (DateTime.TryParse(_movement.SpecialTime.ToString(), out specTime))
-                    dtSpecialTime.Value = specTime;
-
-                dtSpecialCond.Visible = cbSpecCondition.Checked;
-                 */
+            {               
 
                 bool success = IsValidDate(edSDate);
                 if (!success)
@@ -757,7 +736,7 @@ namespace Planning
             {
                
                 bool isAllBindings = true;
-                _shipment.IsAddLv = true;
+               
                 var listOrdId = _shipment.ShipmentOrders.Select(o => (int?)o.Id).ToList();
                 var ordParts = _context.ShipmentOrderParts.Where(s => listOrdId.Contains(s.ShOrderId)).ToList();
                 /*foreach (var item in _context.ShipmentOrderParts.Where(s=> _shipment.ShipmentOrders.Select(o=>o.Id).ToList().Contains((int)s.ShOrderId)))
@@ -790,7 +769,34 @@ namespace Planning
                     BindOrderPart((int)tblShipmentOrders.Rows[tblShipmentOrders.SelectedCells[0].RowIndex].Cells["colId"].Value);
                 if (isAllBindings)
                     MessageBox.Show(IsShpIn()? "Все заказы привязаны к отгрузке":"Все расходные партии привязаны к отгрузке");
+                _shipment.IsAddLv = isAllBindings;
             }
+        }
+
+        private bool IsAllOrderBindToLv()
+        {
+            bool isAllBindings = false;
+            int orderNoBindCount = _shipment.ShipmentOrders.Count(o => o.IsBinding == null || o.IsBinding == false);
+
+            int orderPartNoBindCount = _shipment.ShipmentOrders.Count(o => o.IsBinding == null || o.IsBinding == false);
+            
+
+            bool isAllOrderBind = _shipment.ShipmentOrders.Count() > 0;
+            bool isAllOrderPartBind = true;
+            foreach (var shipmentOrder in _shipment.ShipmentOrders)
+            {
+                //_context.Entry(shipmentOrder).Reload();
+                isAllOrderBind = isAllOrderBind && shipmentOrder.IsBinding == true;
+
+                foreach (var part in shipmentOrder.ShipmentOrderParts)
+                {
+                    //_context.Entry(part).Reload();
+                    isAllOrderPartBind = isAllOrderPartBind && part.IsBinding == true;
+
+                }
+
+            }
+            return isAllOrderBind && isAllOrderPartBind;
         }
 
         private void label14_Click(object sender, EventArgs e)
@@ -893,7 +899,10 @@ namespace Planning
 
             if (tblShipmentOrders.CurrentCell == null)
                 return;
-            ShipmentOrder shipmentOrder = _context.ShipmentOrders.Find(tblShipmentOrders.Rows[tblShipmentOrders.CurrentCell.RowIndex].Cells["colId"].Value);
+            string ordId = tblShipmentOrders.Rows[tblShipmentOrders.CurrentCell.RowIndex].Cells["colId"].Value.ToString();
+            if (String.IsNullOrEmpty(ordId) || ordId == "0")
+                return;
+            ShipmentOrder shipmentOrder = _context.ShipmentOrders.FirstOrDefault(o=> o.Id ==Int32.Parse(ordId));
 
 
             ShipmentOrderPart shipmentOrderPart = new ShipmentOrderPart();

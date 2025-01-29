@@ -723,11 +723,12 @@ namespace Planning
                         DataService.ForceMergeLVAttribute(shipment.Id);
 
                     }
+                    /*
                     if (shipment.ShIn == false && shipment.IsAddLv == true)
                     {
                         AddShToLV(shipment);
                     }
-
+                    */
                 }
 
                 tblShipments.Refresh();
@@ -872,9 +873,31 @@ namespace Planning
                         }
                     }
                 }
-                else if ((bool)((DataGridView)sender).Rows[e.RowIndex].Cells["IsAddLv"].Value != true)
+               
+                else 
                 {
-                    e.CellStyle.ForeColor = Color.Blue;
+                    e.CellStyle.ForeColor = Color.Black;
+                       DataGridView dataGrid = (DataGridView)sender;
+                    bool isDone = false;
+                    bool isAddLv = false;
+                    if (dataGrid.Rows[e.RowIndex].Cells["colStatus"].Value != DBNull.Value)
+                    {
+                        
+                           isDone = ((string)dataGrid.Rows[e.RowIndex].Cells["colStatus"].Value).Contains("Выполнено");
+                    }
+                   if (dataGrid.Rows[e.RowIndex].Cells["IsAddLv"].Value != DBNull.Value )
+                    {
+                        isAddLv = (bool)dataGrid.Rows[e.RowIndex].Cells["IsAddLv"].Value;
+                    }
+                    if (isDone)
+                    {
+                        e.CellStyle.ForeColor = Color.DarkGray;
+                    }
+                    else if ((bool)dataGrid.Rows[e.RowIndex].Cells["IsAddLv"].Value != true)
+                    {
+                        e.CellStyle.ForeColor = Color.Blue;
+                    }
+                        
                 }
 
 

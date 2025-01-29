@@ -180,7 +180,7 @@ namespace Planning
                 _shipment.ShIn = cmbType.Text == "Вход" ? true : false;
                 _shipment.DepositorId = DataService.GetDictIdByName("Депозиторы", cmbDepositor.Text);
                 _shipment.TimeSlotId = DataService.GetDictIdByCondition("ТаймСлоты", $"depositor_id = {_shipment.DepositorId} and slot_time = '{cmbTimeSlot.Text}'");
-                
+                bool isAddLv = false;
 
                 for (int i = 0; i < tblShipmentItem.RowCount; i++)
                 {
@@ -199,6 +199,7 @@ namespace Planning
                         shipmentOrder.IsEdm = !String.IsNullOrEmpty(tblShipmentItem.Rows[i].Cells["colItemIsEDM"].Value.ToString()) ?
                                 (bool?)tblShipmentItem.Rows[i].Cells["colItemIsEDM"].Value : null;
                         shipmentOrder.IsBinding = true;
+                        isAddLv = true;
                         _shipment.ShipmentOrders.Add(shipmentOrder);
                     }
                     if (cmbType.SelectedIndex == 0)
@@ -214,7 +215,7 @@ namespace Planning
                     }
                    
                 }
-                _shipment.IsAddLv = true;
+                _shipment.IsAddLv = isAddLv;
                 _shipmentAddResult.Result = _shipment;
                 _context.Shipments.Add(_shipment);
             }
