@@ -385,7 +385,7 @@ namespace Planning
                 _shipment.WarehouseId = DataService.GetDictIdByName("Склады", cmbWarehouse.Text);
                 _shipment.TransportViewId= DataService.GetDictIdByName("Виды_транспорта", cmbTransportView.Text);
                 _shipment.SpCondition = cbSpecCondition.Checked;
-                _shipment.IsAddLv = IsAllOrderBindToLv();
+                //_shipment.IsAddLv = IsAllOrderBindToLv();
                 // _shipment.TimeSlotId =Convert.ToInt32(IsNull(cmbTimeSlot.Text,null));
                 CheckUnaccountedOrderParts();
                 return true;
@@ -769,7 +769,7 @@ namespace Planning
                     BindOrderPart((int)tblShipmentOrders.Rows[tblShipmentOrders.SelectedCells[0].RowIndex].Cells["colId"].Value);
                 if (isAllBindings)
                     MessageBox.Show(IsShpIn()? "Все заказы привязаны к отгрузке":"Все расходные партии привязаны к отгрузке");
-                _shipment.IsAddLv = isAllBindings;
+                //_shipment.IsAddLv = isAllBindings;
             }
         }
 

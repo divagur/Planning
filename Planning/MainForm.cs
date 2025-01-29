@@ -883,7 +883,7 @@ namespace Planning
                     if (dataGrid.Rows[e.RowIndex].Cells["colStatus"].Value != DBNull.Value)
                     {
                         
-                           isDone = ((string)dataGrid.Rows[e.RowIndex].Cells["colStatus"].Value).Contains("Выполнено");
+                           isDone = ((string)dataGrid.Rows[e.RowIndex].Cells["colStatus"].Value).Contains("Выполнен");
                     }
                    if (dataGrid.Rows[e.RowIndex].Cells["IsAddLv"].Value != DBNull.Value )
                     {
