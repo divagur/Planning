@@ -876,7 +876,7 @@ namespace Planning
                
                 else 
                 {
-                    e.CellStyle.ForeColor = Color.Black;
+                    //e.CellStyle.ForeColor = Color.Black;
                        DataGridView dataGrid = (DataGridView)sender;
                     bool isDone = false;
                     bool isAddLv = false;
