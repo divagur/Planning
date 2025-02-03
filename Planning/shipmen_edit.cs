@@ -902,7 +902,8 @@ namespace Planning
             string ordId = tblShipmentOrders.Rows[tblShipmentOrders.CurrentCell.RowIndex].Cells["colId"].Value.ToString();
             if (String.IsNullOrEmpty(ordId) || ordId == "0")
                 return;
-            ShipmentOrder shipmentOrder = _context.ShipmentOrders.FirstOrDefault(o=> o.Id ==Int32.Parse(ordId));
+            int ordIdInt = Int32.Parse(ordId);
+            ShipmentOrder shipmentOrder = _context.ShipmentOrders.FirstOrDefault(o=> o.Id == ordIdInt);
 
 
             ShipmentOrderPart shipmentOrderPart = new ShipmentOrderPart();

@@ -723,12 +723,10 @@ namespace Planning
                         DataService.ForceMergeLVAttribute(shipment.Id);
 
                     }
-                    /*
-                    if (shipment.ShIn == false && shipment.IsAddLv == true)
+                    if (shipment.IsAddLv == true)
                     {
                         AddShToLV(shipment);
                     }
-                    */
                 }
 
                 tblShipments.Refresh();
