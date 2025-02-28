@@ -65,8 +65,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseObjects\IBaseDataAdapter.cs" />
-    <Compile Include="BaseObjects\BaseObject.cs" />
+    <Compile Include="BaseObjects\ConnectionParams.cs" />
+    <Compile Include="ShipmentMain\ShipmentMainAdapter.cs" />
     <Compile Include="TransportCompany\TransportCompany.cs" />
     <Compile Include="TransportCompany\TransportCompanyDataAdapter.cs" />
     <Compile Include="TransportCompany\TransportCompanyRepository.cs" />

@@ -237,7 +237,7 @@ namespace Planning
             _command.CommandTimeout = 180;
             _command.Connection = _connection;
             _command.CommandType = TypeCommand;
-            
+            var text = _command.CommandText;
             try
             {
                 OnExecuteBeforeCommon?.Invoke(SqlStatement);

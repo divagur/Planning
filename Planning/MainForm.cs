@@ -132,7 +132,7 @@ namespace Planning
             sql.AddCommandParametr(new SqlParameter { ParameterName = "@In", Value = shpType });
             sql.AddCommandParametr(new SqlParameter { ParameterName = "@ShpId", Value = ShpId });
             sql.AddCommandParametr(new SqlParameter { ParameterName = "@OrdID", Value = OrdId });
-
+           
             bool success = sql.Execute();
 
             if (!success)

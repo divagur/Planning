@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PlanningTasks.DataLayer
+namespace Planning.DataLayer
 {
     public class Movement: BaseDataItem
     {

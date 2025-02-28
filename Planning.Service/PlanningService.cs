@@ -96,7 +96,7 @@ namespace Planning.Service
             if (Server == null || DB == null || Login == null)
                 return false;
             SqlConnectionStringBuilder sqlConnectionStringBuilder = new SqlConnectionStringBuilder();
-
+            
             sqlConnectionStringBuilder.DataSource = Server;
             sqlConnectionStringBuilder.InitialCatalog = DB;
             sqlConnectionStringBuilder.UserID = Login;

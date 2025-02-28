@@ -1,7 +1,8 @@
 ﻿using System;
+using Planning.Kernel;
 
 
-namespace Planning.Kernel
+namespace Planning.DataLayer
 {
     public class DelayReasons:BaseDataItem
     {

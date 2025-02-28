@@ -5,54 +5,56 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PlanningTasks.DataLayer
+namespace Planning.DataLayer
 {
 	public class ShipmentMain : BaseDataItem
 	{
-		int? OrdID { get; set; }
-		int? OrdLVID { get; set; }
-		DateTime? ShpDate { get; set; }
-		int? ShpSlotID { get; set; }
-		TimeSpan? SlotTime { get; set; }
-		bool? ShpIn { get; set; }
-		string InOut { get; set; }
-		string OrdLVCode { get; set; }
-		string OrdPartLVCode { get; set; }
-		int? ShpDepLVID { get; set; }
-		string DepCode { get; set; }
-		bool? ShpSpecialCond { get; set; }
-		bool? ShpIsCourier { get; set; }
-		int? ShpGateID { get; set; }
-		string GateName { get; set; }
-		string KlientName { get; set; }
-		string OrderStatus { get; set; }
-		string PrcReady { get; set; }
-		decimal? DoneShare { get; set; }
-		string ShpComment { get; set; }
-		string OrdComment { get; set; }
-		string ShpDriverPhone { get; set; }
-		string ShpDriverFio { get; set; }
-		string TransportCompanyName { get; set; }
-		string TransportTypeName { get; set; }
-		string ShpVehicleNumber { get; set; }
-		string ShpTrailerNumber { get; set; }
-		string ShpAttorneyNumber { get; set; }
-		DateTime? ShpAttorneyDate { get; set; }
-		DateTime? ShpSubmissionTime { get; set; }
-		DateTime? ShpStartTime { get; set; }
-		DateTime? ShpEndTimePlan { get; set; }
-		DateTime? ShpEndTimeFact { get; set; }
-		string ShpDelayReasonName { get; set; }
-		string ShpDelayComment { get; set; }
-		string ShpForwarderFio { get; set; }
-		string OrdLVType { get; set; }
-		string ShpStampNumber { get; set; }
-		bool? IsAddLv { get; set; }
-		int? ShippingPlacesNumber { get; set; }
-		decimal? OrderWeight { get; set; }
-		string ShpSupplierName { get; set; }
-		int? FontColor { get; set; }
-		int? BackgroundColor { get; set; }
+		public int? ShpId { get; set; }
+		public int? OrdId { get; set; }
+		public int? OrdLVID { get; set; }
+		public DateTime? ShpDate { get; set; }
+		public int? ShpSlotID { get; set; }
+		public TimeSpan? SlotTime { get; set; }
+		public bool? ShpIn { get; set; }
+		public string InOut { get; set; }
+		public string OrdLVCode { get; set; }
+		public string OrdPartLVCode { get; set; }
+		public int? ShpDepLVID { get; set; }
+		public string DepCode { get; set; }
+		public bool? ShpSpecialCond { get; set; }
+		public bool? ShpIsCourier { get; set; }
+		public int? ShpGateID { get; set; }
+		public string GateName { get; set; }
+		public string KlientName { get; set; }
+		public string OrderStatus { get; set; }
+		public string PrcReady { get; set; }
+		public decimal? DoneShare { get; set; }
+		public string ShpComment { get; set; }
+		public string OrdComment { get; set; }
+		public string ShpDriverPhone { get; set; }
+		public string ShpDriverFio { get; set; }
+		public string TransportCompanyName { get; set; }
+		public string TransportTypeName { get; set; }
+		public string ShpVehicleNumber { get; set; }
+		public string ShpTrailerNumber { get; set; }
+		public string ShpAttorneyNumber { get; set; }
+		public DateTime? ShpAttorneyDate { get; set; }
+		public DateTime? ShpSubmissionTime { get; set; }
+		public DateTime? ShpStartTime { get; set; }
+		public DateTime? ShpEndTimePlan { get; set; }
+		public DateTime? ShpEndTimeFact { get; set; }
+		public string ShpDelayReasonName { get; set; }
+		public string ShpDelayComment { get; set; }
+		public string ShpForwarderFio { get; set; }
+		public string OrdLVType { get; set; }
+		public string ShpStampNumber { get; set; }
+		public bool? IsAddLv { get; set; }
+		public int? ShippingPlacesNumber { get; set; }
+		public decimal? OrderWeight { get; set; }
+		public string ShpSupplierName { get; set; }
+		public int? FontColor { get; set; }
+		public int? BackgroundColor { get; set; }
+		public string OrderDetailInit { get; set; } = "...";
 		
     }
 }

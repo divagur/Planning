@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Planning.Kernel;
 
 namespace Planning.DataLayer
 
 {
-    public class Gateways: BaseObject
+    public class Gateways: BaseDataItem
     {
-        public Nullable<int> Name { get; set; }
+        public string Name { get; set; }
     }
 }

@@ -20,18 +20,36 @@ namespace Planning.Kernel
         {
             //_dataAdapter = GetDataAdapter();
             _connectionString = connectionString;
-            dbConnection = new SqlConnection(ConnectionString);
-            dataAdapter = new M();
+            InitConnection(connectionString);
+            
         }
 
+        public BaseRepository()
+        {
+
+        }
+
+        protected virtual void InitConnection(string connectionString)
+        {
+            dbConnection = new SqlConnection(connectionString);
+            dataAdapter = new M();
+        }
         //public abstract IBaseDataAdapter<T> GetDataAdapter();
 
         public virtual List<T> GetAll()
         {
-            //string sql = $@"select id as {nameof(DelayReasons.Id)}, name as {nameof(DelayReasons.Name)} from delay_reasons";
-            var queryResult = dbConnection.Query<T>(dataAdapter.GetSelectItemSql());
-
-            return queryResult.ToList();
+            List<T> result = new List<T>();
+            string queryText = dataAdapter.GetSelectItemSql();
+            if (!String.IsNullOrEmpty(queryText))
+            {
+                var queryResult = dbConnection.Query<T>(queryText);
+                if (queryResult != null)
+                {
+                    result = queryResult.ToList();
+                }
+            }
+            
+            return result.ToList();
         }
 
         public virtual T GetById(int id)

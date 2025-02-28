@@ -82,17 +82,30 @@
     <Reference Include="FastReport.Data.MsSql, Version=2021.3.0.0, Culture=neutral, PublicKeyToken=b33a9a06fcc00c4c, processorArchitecture=MSIL">
       <HintPath>..\packages\FastReport.OpenSource.Data.MsSql.2021.3.0\lib\net452\FastReport.Data.MsSql.dll</HintPath>
     </Reference>
+    <Reference Include="ListViewPrinter, Version=2.7.1.31255, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ObjectListView.2.7.1.5\lib\ListViewPrinter.dll</HintPath>
+    </Reference>
     <Reference Include="MDIWindowManager, Version=2.1.2521.32075, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MDIWindowManager.2.1.0\lib\MDIWindowManager.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="ObjectListView, Version=2.9.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ObjectListView.Updated.2.9.3\lib\net40\ObjectListView.dll</HintPath>
     </Reference>
     <Reference Include="PagedControl, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\PagedControl.2.2.0\lib\net35\PagedControl.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-    <Reference Include="PresentationFramework.Aero" />
+    <Reference Include="Planning.DataLayer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\DataLayer\bin\Debug\Planning.DataLayer.dll</HintPath>
+    </Reference>
+    <Reference Include="Planning.Kernel">
+      <HintPath>..\Planning.Kernel\bin\Debug\Planning.Kernel.dll</HintPath>
+    </Reference>
+    <Reference Include="SparkleLibrary, Version=2.7.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ObjectListView.2.7.1.5\lib\SparkleLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="SpreadsheetLight, Version=3.5.0.0, Culture=neutral, PublicKeyToken=32fbb46dc1730c57, processorArchitecture=MSIL">
       <HintPath>..\packages\SpreadsheetLight.3.5.0\lib\netstandard2.0\SpreadsheetLight.dll</HintPath>
     </Reference>
@@ -140,16 +153,19 @@
       <DependentUpon>ChooseOrder.cs</DependentUpon>
     </Compile>
     <Compile Include="CommonFuctions.cs" />
+    <Compile Include="Controls\MenuButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="CustomPost.cs">
       <DependentUpon>DbPlaning.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataLayer\LVOrder.cs" />
-    <Compile Include="DataLayer\LVOrder_Manager.cs" />
-    <Compile Include="DataLayer\OrderDetailItem.cs" />
-    <Compile Include="DataLayer\OrderDetailItem_Manager.cs" />
-    <Compile Include="DataLayer\VolumeCalc.cs" />
-    <Compile Include="DataLayer\VolumeCalcProduct.cs" />
-    <Compile Include="DataLayer\VolumeCalcProduct_Manager.cs" />
+    <Compile Include="DataLayers\LVOrder.cs" />
+    <Compile Include="DataLayers\LVOrder_Manager.cs" />
+    <Compile Include="DataLayers\OrderDetailItem.cs" />
+    <Compile Include="DataLayers\OrderDetailItem_Manager.cs" />
+    <Compile Include="DataLayers\VolumeCalc.cs" />
+    <Compile Include="DataLayers\VolumeCalcProduct.cs" />
+    <Compile Include="DataLayers\VolumeCalcProduct_Manager.cs" />
     <Compile Include="DbPlaning.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -253,6 +269,12 @@
     <Compile Include="frmOrderDetail.Designer.cs">
       <DependentUpon>frmOrderDetail.cs</DependentUpon>
     </Compile>
+    <Compile Include="MainFormEx.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainFormEx.Designer.cs">
+      <DependentUpon>MainFormEx.cs</DependentUpon>
+    </Compile>
     <Compile Include="Reports\frmGetDateTime.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -304,7 +326,7 @@
     <Compile Include="LvAttrEdit.Designer.cs">
       <DependentUpon>LvAttrEdit.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataLayer\LVOrderIdComparer.cs" />
+    <Compile Include="DataLayers\LVOrderIdComparer.cs" />
     <Compile Include="Movement.cs">
       <DependentUpon>DbPlaning.tt</DependentUpon>
     </Compile>
@@ -605,6 +627,9 @@
     <EmbeddedResource Include="frmOrderDetail.resx">
       <DependentUpon>frmOrderDetail.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="MainFormEx.resx">
+      <DependentUpon>MainFormEx.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reports\frmGetDateTime.resx">
       <DependentUpon>frmGetDateTime.cs</DependentUpon>
     </EmbeddedResource>
@@ -808,6 +833,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Planing.cs</LastGenOutput>
     </Content>
+    <None Include="Resources\ShpIn.png" />
     <None Include="Resources\view_detailed_2595.png" />
     <None Include="Resources\Print.png" />
     <None Include="Resources\EditView.png" />
@@ -823,6 +849,9 @@
     <None Include="Resources\painters_palette2.png" />
     <None Include="Resources\paint_bucket.png" />
     <None Include="Resources\font.png" />
+    <None Include="Resources\icons8-sync-16.png" />
+    <None Include="Resources\icons8-enter-16.png" />
+    <None Include="Resources\icons8-exit-16.png" />
     <Content Include="Resources\printer.png" />
     <None Include="Resources\arrow_refresh_8563.png" />
     <Content Include="PlanningLogo.ico" />
