@@ -7,17 +7,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Planning.DataLayer;
 
 namespace Planning
 {
     public partial class ShipmentOrderEdit : Form
     {
-        ShipmentOrder _shipmentOrder;
-        Shipment _shipment;
-        public ShipmentOrderEdit(Shipment shipment, ShipmentOrder shipmentOrder)
+        Planning.DataLayer.ShipmentOrder _shipmentOrder;
+        Planning.DataLayer.ShipmentOrderPart _shipmentOrderParts;
+        Planning.DataLayer.Shipment _shipment;
+        public ShipmentOrderEdit(Planning.DataLayer.Shipment shipment, Planning.DataLayer.ShipmentOrder shipmentOrder,
+            Planning.DataLayer.ShipmentOrderPart shipmentOrderParts)
         {
             InitializeComponent();
-            _shipmentOrder = shipmentOrder;
+            _shipmentOrders = shipmentOrder;
+            _shipmentOrderParts = shipmentOrderParts;
             _shipment = shipment;
             SetViewParam();
         }
@@ -84,7 +88,7 @@ namespace Planning
         private void CopyToShipmentOrder()
         {
             _shipmentOrder.OrderId = txtOrderId.Text;
-            _shipmentOrder.lv_order_code = txtOrderId.Text;
+            _shipmentOrder.LvOrderCode = txtOrderId.Text;
             _shipmentOrder.OrderType = txtOrderType.Text;
             _shipmentOrder.Comment = txtOrderComment.Text;
             _shipmentOrder.IsEdm = cbIsEDM.Checked;
@@ -102,14 +106,14 @@ namespace Planning
         private void btnGetOrder_Click(object sender, EventArgs e)
         {
             ShipmentAddResult selectResult = new ShipmentAddResult();
-            ChooseOrder frmChooseOrder = new ChooseOrder(selectResult, _shipment);
+            ChooseOrder frmChooseOrder = new ChooseOrder(selectResult,_shipment.DepositorId,_shipment.ShIn,_shipmentOrders,_shipmentOrderParts);
             if (frmChooseOrder.ShowDialog() == DialogResult.OK && selectResult.Result != null)
             {
                 var order = (LVOrder)selectResult.Result;
 
                 txtOrderId.Text = order.LVCode;
                 cbIsEDM.Checked = (bool)order.IsEdm;
-                _shipmentOrder.LVOrderId = order.LVID;
+                _shipmentOrder.LvOrderId = order.LVID;
                 int? DepositorLVId = _shipment.DepositorId;
                 _shipmentOrder.IsBinding = true;
                 LVOrder_Manager Order_Manager = new LVOrder_Manager();

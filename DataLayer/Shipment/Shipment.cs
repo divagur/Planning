@@ -42,6 +42,9 @@ namespace Planning.DataLayer
         int? _customPostId;
         int? _warehouseId;
         int? _transportViewId;
+        TimeSlot _timeSlot;
+
+
         public int? LvId
         {
             get => _lvId;
@@ -86,7 +89,7 @@ namespace Planning.DataLayer
             get => _sComment;
             set
             {
-                if (!_sComment.Equals(value))
+                if (_sComment == null || !_sComment.Equals(value))
                 {
                     _sComment = value;
                     Edit();
@@ -99,7 +102,7 @@ namespace Planning.DataLayer
             get => _oComment;
             set
             {
-                if (!_oComment.Equals(value))
+                if (_oComment == null || !_oComment.Equals(value))
                 {
                     _oComment = value;
                     Edit();
@@ -138,7 +141,7 @@ namespace Planning.DataLayer
             get => _driverPhone;
             set
             {
-                if (!_driverPhone.Equals(value))
+                if (_driverPhone == null || !_driverPhone.Equals(value))
                 {
                     _driverPhone = value;
                     Edit();
@@ -151,12 +154,12 @@ namespace Planning.DataLayer
             get => _driverFio;
             set
             {
-                //if (!_driverFio.Equals(value))
-                //{
+                if (_driverFio == null ||  !_driverFio.Equals(value))
+                {
                     _driverFio = value;
                     Edit();
 
-                //}
+                }
             }
         }
         public string VehicleNumber
@@ -164,10 +167,8 @@ namespace Planning.DataLayer
             get => _vehicleNumber;
             set
             {
-                if (_vehicleNumber == null)
-                    _vehicleNumber = "";
 
-                if (!_vehicleNumber.Equals(value))
+                if (_vehicleNumber == null || !_vehicleNumber.Equals(value))
                 {
                     _vehicleNumber = value;
                     Edit();
@@ -180,12 +181,12 @@ namespace Planning.DataLayer
             get => _trailerNumber;
             set
             {
-               // if (_trailerNumber != null && !_trailerNumber.Equals(value))
-                //{
+                if (_trailerNumber == null || !_trailerNumber.Equals(value))
+               {
                     _trailerNumber = value;
                     Edit();
 
-                //}
+                }
             }
         }
         public string AttorneyNumber
@@ -193,7 +194,7 @@ namespace Planning.DataLayer
             get => _attorneyNumber;
             set
             {
-                if (!_attorneyNumber.Equals(value))
+                if (_attorneyNumber == null || !_attorneyNumber.Equals(value))
                 {
                     _attorneyNumber = value;
                     Edit();
@@ -258,7 +259,7 @@ namespace Planning.DataLayer
             get => _delayComment;
             set
             {
-                if (!_delayComment.Equals(value))
+                if (_delayComment == null || !_delayComment.Equals(value))
                 {
                     _delayComment = value;
                     Edit();
@@ -297,7 +298,7 @@ namespace Planning.DataLayer
             get => _forwarderFio;
             set
             {
-                if (!_forwarderFio.Equals(value))
+                if (_forwarderFio == null || !_forwarderFio.Equals(value))
                 {
                     _forwarderFio = value;
                     Edit();
@@ -310,7 +311,7 @@ namespace Planning.DataLayer
             get => _stampNumber;
             set
             {
-                if (!_stampNumber.Equals(value))
+                if (_stampNumber == null ||!_stampNumber.Equals(value))
                 {
                     _stampNumber = value;
                     Edit();
@@ -323,7 +324,7 @@ namespace Planning.DataLayer
             get => _attorneyIssued;
             set
             {
-                if (!_attorneyIssued.Equals(value))
+                if (_attorneyIssued == null || !_attorneyIssued.Equals(value))
                 {
                     _attorneyIssued = value;
                     Edit();
@@ -472,6 +473,19 @@ namespace Planning.DataLayer
                     Edit();
 
                 }
+            }
+        }
+
+        public TimeSlot TimeSlot
+        {
+            get
+            {
+                if (_timeSlot == null)
+                {
+                    TimeSlotRepository timeSlotRepository = new TimeSlotRepository();
+                    _timeSlot = timeSlotRepository.GetById(_timeSlotId);
+                }
+                return _timeSlot;
             }
         }
     }

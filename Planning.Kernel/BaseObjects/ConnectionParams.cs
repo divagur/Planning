@@ -4,16 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Planning.DataLayer
+namespace Planning.Kernel
 {
-    /*
     public static class ConnectionParams
     {
         public static string ServerName;
         public static string BaseName;
         public static string UserName;
         public static string Pwd;
-
-
-    }*/
+    }
 }

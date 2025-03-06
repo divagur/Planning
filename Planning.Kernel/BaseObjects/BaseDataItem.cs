@@ -6,7 +6,7 @@ namespace Planning.Kernel
     [Serializable]
     public class BaseDataItem
     {
-        public int Id {  get; set; }
+        public int? Id {  get; set; }
         protected EditState State { get; set; }
 
         public BaseDataItem()

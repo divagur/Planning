@@ -66,6 +66,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseObjects\ConnectionParams.cs" />
+    <Compile Include="ShipmentOrderPart\ShipmentOrderPart.cs" />
+    <Compile Include="ShipmentOrderPart\ShipmentOrderPartDataAdapter.cs" />
+    <Compile Include="ShipmentOrderPart\ShipmentOrderPartRepository.cs" />
+    <Compile Include="TimeSlot\TimeSlot.cs" />
+    <Compile Include="TimeSlot\TimeSlotAdapter.cs" />
+    <Compile Include="TimeSlot\TimeSlotRepository.cs" />
+    <Compile Include="Movement\MovementDataAdapter.cs" />
+    <Compile Include="Movement\MovementRepository.cs" />
     <Compile Include="ShipmentMain\ShipmentMainAdapter.cs" />
     <Compile Include="TransportCompany\TransportCompany.cs" />
     <Compile Include="TransportCompany\TransportCompanyDataAdapter.cs" />

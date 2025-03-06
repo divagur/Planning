@@ -18,6 +18,12 @@ namespace Planning.DataLayer
 
         }
         public ShipmentMainRepository()
+            :base()
+        {
+
+        }
+        /*
+        public ShipmentMainRepository()
         {
             SqlConnectionStringBuilder sqlConnectionString = new SqlConnectionStringBuilder();
             sqlConnectionString.DataSource = ConnectionParams.ServerName;
@@ -26,6 +32,7 @@ namespace Planning.DataLayer
             sqlConnectionString.Password = ConnectionParams.Pwd;
             InitConnection(sqlConnectionString.ToString());
         }
+        */
         public List<ShipmentMain> GetAll(DateTime DateFrom, DateTime? DateTill, string ShpId, string OrdId, int ShpType = -1)
         {
             string sql = dataAdapter.GetSelectItemSql();

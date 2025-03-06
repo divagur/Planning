@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="BaseObjects\BaseDataItem.cs" />
     <Compile Include="BaseObjects\BaseRepository.cs" />
+    <Compile Include="BaseObjects\ConnectionParams.cs" />
     <Compile Include="BaseObjects\EditState.cs" />
     <Compile Include="BaseObjects\IDataAdaper.cs" />
     <Compile Include="BaseObjects\DBUtilites.cs" />

@@ -696,7 +696,9 @@ namespace Planning
         }
         private void ShipmentEdit(ShipmentParam shipmentAddResult)
         {
-            shipmen_edit frmShipmentEdit;
+             /*
+            shipmen_edit frmShipmentEdit = new shipmen_edit();
+           
             frmShipmentEdit = shipmentAddResult.IsShipment == true ? new shipmen_edit((Shipment)shipmentAddResult.Result) : new shipmen_edit((Movement)shipmentAddResult.Result);
 
             if (shipmentAddResult.IsShipment)
@@ -704,7 +706,7 @@ namespace Planning
             else
                 frmShipmentEdit = new shipmen_edit((Movement)shipmentAddResult.Result);
 
-
+            
 
             frmShipmentEdit.ClearFields();
             frmShipmentEdit.Populate();
@@ -731,6 +733,7 @@ namespace Planning
 
                 tblShipments.Refresh();
             }
+                */
         }
         private void btnAdd_Click(object sender, EventArgs e)
         {

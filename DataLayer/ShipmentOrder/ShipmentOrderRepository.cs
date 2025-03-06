@@ -12,7 +12,12 @@ namespace Planning.DataLayer
     public class ShipmentOrderRepository:BaseRepository<ShipmentOrder, ShipmentOrderDataAdapter>
     {
         public ShipmentOrderRepository(string ConnectionString)
-      : base(ConnectionString)
+            : base(ConnectionString)
+        {
+
+        }
+        public ShipmentOrderRepository()
+            : base()
         {
 
         }
@@ -38,6 +43,15 @@ namespace Planning.DataLayer
             var queryResult = dbConnection.Query<int?>("SP_PL_GetShipmentLvIdByCode", parameters, commandType: CommandType.StoredProcedure);
 
             return queryResult.FirstOrDefault();
+        }
+
+        public List<ShipmentOrder> GetShipmentOrders(int? ShipmentId)
+        {
+            List<ShipmentOrder> result;
+            string sql = dataAdapter.GetSelectItemSql() + " where shipment_id = @shipmentId";
+            var queryResult = dbConnection.Query<ShipmentOrder>(sql, new { shipmentId = ShipmentId });
+            result = queryResult.ToList();
+            return result;
         }
     }
 }

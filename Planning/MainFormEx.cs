@@ -11,6 +11,8 @@ using BrightIdeasSoftware;
 using Planning.DataLayer;
 using Planning.Properties;
 using Planning.Controls;
+using Planning.Kernel;
+
 namespace Planning
 {
     public partial class MainFormEx : Form
@@ -94,9 +96,140 @@ namespace Planning
             ToolTip btnAddToolTip = new ToolTip();
             btnAddToolTip.SetToolTip(btnAdd, "Добавить отгрузку");
         }
+        private void ShipmentRowEdit()
+        {
+            if (tblShipments.SelectedIndex<0)
+                return;
+
+            ShipmentMain itemObject = (ShipmentMain)tblShipments.GetItem(tblShipments.SelectedIndex).RowObject;
+            
+            ShipmentParam shipmentAddResult = new ShipmentParam();
+            if (itemObject.InOut != "перем")
+            {
+                ShipmentRepository shipmentRepository = new ShipmentRepository();
+
+                shipmentAddResult.IsShipment = true;
+                shipmentAddResult.Result = shipmentRepository.GetById(itemObject.ShpId);
+
+            }
+            else
+            {
+                MovementRepository movementRepository = new MovementRepository();
+                shipmentAddResult.IsShipment = false;
+                shipmentAddResult.Result = movementRepository.GetById(itemObject.ShpId);
+            }
+
+            ShipmentEdit(shipmentAddResult);
+            ShipmentsLoad();
+        }
+        private void ShipmentEdit(ShipmentParam shipmentAddResult)
+        {
+            shipmen_edit frmShipmentEdit;
+            frmShipmentEdit = shipmentAddResult.IsShipment == true ? new shipmen_edit((Planning.DataLayer.Shipment)shipmentAddResult.Result) : 
+                new shipmen_edit((Planning.DataLayer.Movement)shipmentAddResult.Result);
+            /*
+            if (shipmentAddResult.IsShipment)
+                frmShipmentEdit = new shipmen_edit((Shipment)shipmentAddResult.Result);
+            else
+                frmShipmentEdit = new shipmen_edit((Movement)shipmentAddResult.Result);
+            */
+
+
+            frmShipmentEdit.ClearFields();
+            frmShipmentEdit.Populate();
+            //frmShipmentEdit.LockField(new List<string>() { "btnOK", "btnCancel" }, mainFormAccess.IsEdit);
+
+
+            if (frmShipmentEdit.ShowDialog() == DialogResult.OK)
+            {
+                DataService.context.SaveChanges();
+                if (shipmentAddResult.IsShipment)
+                {
+                    Shipment shipment = (Shipment)shipmentAddResult.Result;
+
+                    if (shipment.ShIn == true)
+                    {
+                        DataService.ForceMergeLVAttribute(shipment.Id);
+
+                    }
+                    /*
+                    if (shipment.IsAddLv == true)
+                    {
+                        AddShToLV(shipment);
+                    }
+                    */
+                }
+
+                tblShipments.Refresh();
+            }
+        }
+        private void ShipmentsLoad()
+        {
+            /*
+            if (mainFormAccess != null && !mainFormAccess.IsView)
+            {
+                MessageBox.Show("Нет доступа на просмотр списка отгрузок", "Ошибка доступа", MessageBoxButtons.OK);
+                return;
+            }
+            
+            string rowShpId = "";
+            string rowShpOrdId = "";
+            bool restoreRow = false;
+            
+            if (tblShipments.CurrentCell != null)
+            {
+                rowShpId = tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colId"].Value.ToString();
+                rowShpOrdId = tblShipments.Rows[tblShipments.CurrentCell.RowIndex].Cells["colIdNakl"].Value.ToString();
+                restoreRow = true;
+            }
+
+            tbMain.Enabled = false;
+            miDicts.Enabled = false;
+            var dataSet = GetShipment(edCurrDay.Value, null, null, null);
+            if (dataSet == null)
+            {
+                return;
+            }
+            tbMain.Enabled = true;
+            miDicts.Enabled = true;
+
+            shipmentsDataTable.Clear();
+            shipmentsDataTable = dataSet.Tables[0].Clone();
+            shipmentsDataTable.Load(dataSet.Tables[0].CreateDataReader());
+            
+
+            tblShipments.AutoGenerateColumns = false;
+            tblShipments.DataSource = shipmentsDataTable;// ds.Tables[0];
+            foreach (var column in tblShipments.Columns)
+            {
+                if (column is DataGridViewImageColumn)
+                    (column as DataGridViewImageColumn).DefaultCellStyle.NullValue = null;
+            }
+            if (restoreRow)
+                SearchBy(true, i => tblShipments.Rows[i].Cells["colId"].Value.ToString() == rowShpId && tblShipments.Rows[i].Cells["colIdNakl"].Value.ToString() == rowShpOrdId);
+            //this.Cursor = Cursors.Default;
+            CalcRowColor();
+            GetOrderWight();
+            ShipmentsUIFilter();
+            */
+        }
         private void tblShipments_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnEdit_Click(object sender, EventArgs e)
+        {
+            ShipmentRowEdit();
+        }
+
+        private void tblShipments_FormatRow(object sender, FormatRowEventArgs e)
+        {
+            ShipmentMain item = (ShipmentMain)e.Item.RowObject;
+            if (item.GateName == "127")
+            {
+                e.Item.BackColor = Color.AliceBlue;
+            }
         }
     }
 }

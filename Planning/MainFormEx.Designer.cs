@@ -32,9 +32,9 @@ namespace Planning
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            BrightIdeasSoftware.HeaderStateStyle headerStateStyle10 = new BrightIdeasSoftware.HeaderStateStyle();
-            BrightIdeasSoftware.HeaderStateStyle headerStateStyle11 = new BrightIdeasSoftware.HeaderStateStyle();
-            BrightIdeasSoftware.HeaderStateStyle headerStateStyle12 = new BrightIdeasSoftware.HeaderStateStyle();
+            BrightIdeasSoftware.HeaderStateStyle headerStateStyle7 = new BrightIdeasSoftware.HeaderStateStyle();
+            BrightIdeasSoftware.HeaderStateStyle headerStateStyle8 = new BrightIdeasSoftware.HeaderStateStyle();
+            BrightIdeasSoftware.HeaderStateStyle headerStateStyle9 = new BrightIdeasSoftware.HeaderStateStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainFormEx));
             this.menuMain = new System.Windows.Forms.MenuStrip();
             this.mtiFile = new System.Windows.Forms.ToolStripMenuItem();
@@ -116,9 +116,12 @@ namespace Planning
             this.headerFormatStyle1 = new BrightIdeasSoftware.HeaderFormatStyle();
             this.imageListInOut = new System.Windows.Forms.ImageList(this.components);
             this.panelMain = new System.Windows.Forms.Panel();
+            this.edSearch = new System.Windows.Forms.TextBox();
             this.edCurrDay = new System.Windows.Forms.DateTimePicker();
             this.btnGetNextDay = new System.Windows.Forms.Button();
+            this.btnSearchNext = new System.Windows.Forms.Button();
             this.btnGetCurrentDay = new System.Windows.Forms.Button();
+            this.btnSearch = new System.Windows.Forms.Button();
             this.btnGetLastDay = new System.Windows.Forms.Button();
             this.btnPrint = new System.Windows.Forms.Button();
             this.btnShowLog = new System.Windows.Forms.Button();
@@ -126,16 +129,13 @@ namespace Planning
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
-            this.btnColumnVisible = new Planning.Controls.MenuButton();
             this.contextMenuColumns = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.imageListMain16 = new System.Windows.Forms.ImageList(this.components);
-            this.imageListMain32 = new System.Windows.Forms.ImageList(this.components);
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
-            this.edSearch = new System.Windows.Forms.TextBox();
-            this.btnSearch = new System.Windows.Forms.Button();
-            this.btnSearchNext = new System.Windows.Forms.Button();
+            this.imageListMain16 = new System.Windows.Forms.ImageList(this.components);
+            this.imageListMain32 = new System.Windows.Forms.ImageList(this.components);
+            this.btnColumnVisible = new Planning.Controls.MenuButton();
             this.menuMain.SuspendLayout();
             this.statusStrip2.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -486,6 +486,7 @@ namespace Planning
             this.tblShipments.UseAlternatingBackColors = true;
             this.tblShipments.UseCompatibleStateImageBehavior = false;
             this.tblShipments.View = System.Windows.Forms.View.Details;
+            this.tblShipments.FormatRow += new System.EventHandler<BrightIdeasSoftware.FormatRowEventArgs>(this.tblShipments_FormatRow);
             this.tblShipments.SelectedIndexChanged += new System.EventHandler(this.tblShipments_SelectedIndexChanged);
             // 
             // colOrderDetail
@@ -609,8 +610,11 @@ namespace Planning
             // colSpecCond
             // 
             this.colSpecCond.AspectName = "ShpSpecialCond";
+            this.colSpecCond.CellVerticalAlignment = System.Drawing.StringAlignment.Center;
             this.colSpecCond.CheckBoxes = true;
+            this.colSpecCond.IsEditable = false;
             this.colSpecCond.Text = "Спец. Условия";
+            this.colSpecCond.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // colDriverPhone
             // 
@@ -772,10 +776,10 @@ namespace Planning
             // 
             // headerFormatStyle1
             // 
-            this.headerFormatStyle1.Hot = headerStateStyle10;
-            headerStateStyle11.FrameWidth = 2F;
-            this.headerFormatStyle1.Normal = headerStateStyle11;
-            this.headerFormatStyle1.Pressed = headerStateStyle12;
+            this.headerFormatStyle1.Hot = headerStateStyle7;
+            headerStateStyle8.FrameWidth = 2F;
+            this.headerFormatStyle1.Normal = headerStateStyle8;
+            this.headerFormatStyle1.Pressed = headerStateStyle9;
             // 
             // imageListInOut
             // 
@@ -808,6 +812,13 @@ namespace Planning
             this.panelMain.Size = new System.Drawing.Size(890, 56);
             this.panelMain.TabIndex = 5;
             // 
+            // edSearch
+            // 
+            this.edSearch.Location = new System.Drawing.Point(386, 5);
+            this.edSearch.Name = "edSearch";
+            this.edSearch.Size = new System.Drawing.Size(134, 20);
+            this.edSearch.TabIndex = 8;
+            // 
             // edCurrDay
             // 
             this.edCurrDay.Format = System.Windows.Forms.DateTimePickerFormat.Short;
@@ -827,6 +838,17 @@ namespace Planning
             this.btnGetNextDay.TabIndex = 0;
             this.btnGetNextDay.UseVisualStyleBackColor = true;
             // 
+            // btnSearchNext
+            // 
+            this.btnSearchNext.FlatAppearance.BorderSize = 0;
+            this.btnSearchNext.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSearchNext.Image = ((System.Drawing.Image)(resources.GetObject("btnSearchNext.Image")));
+            this.btnSearchNext.Location = new System.Drawing.Point(422, 26);
+            this.btnSearchNext.Name = "btnSearchNext";
+            this.btnSearchNext.Size = new System.Drawing.Size(30, 20);
+            this.btnSearchNext.TabIndex = 0;
+            this.btnSearchNext.UseVisualStyleBackColor = true;
+            // 
             // btnGetCurrentDay
             // 
             this.btnGetCurrentDay.FlatAppearance.BorderSize = 0;
@@ -837,6 +859,17 @@ namespace Planning
             this.btnGetCurrentDay.Size = new System.Drawing.Size(30, 20);
             this.btnGetCurrentDay.TabIndex = 0;
             this.btnGetCurrentDay.UseVisualStyleBackColor = true;
+            // 
+            // btnSearch
+            // 
+            this.btnSearch.FlatAppearance.BorderSize = 0;
+            this.btnSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSearch.Image = ((System.Drawing.Image)(resources.GetObject("btnSearch.Image")));
+            this.btnSearch.Location = new System.Drawing.Point(386, 26);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(30, 20);
+            this.btnSearch.TabIndex = 0;
+            this.btnSearch.UseVisualStyleBackColor = true;
             // 
             // btnGetLastDay
             // 
@@ -903,6 +936,7 @@ namespace Planning
             this.btnEdit.Size = new System.Drawing.Size(49, 49);
             this.btnEdit.TabIndex = 0;
             this.btnEdit.UseVisualStyleBackColor = true;
+            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
             // 
             // btnAdd
             // 
@@ -915,19 +949,6 @@ namespace Planning
             this.btnAdd.TabIndex = 0;
             this.btnAdd.UseVisualStyleBackColor = true;
             // 
-            // btnColumnVisible
-            // 
-            this.btnColumnVisible.FlatAppearance.BorderSize = 0;
-            this.btnColumnVisible.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnColumnVisible.Image = ((System.Drawing.Image)(resources.GetObject("btnColumnVisible.Image")));
-            this.btnColumnVisible.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnColumnVisible.Location = new System.Drawing.Point(330, 4);
-            this.btnColumnVisible.Menu = this.contextMenuColumns;
-            this.btnColumnVisible.Name = "btnColumnVisible";
-            this.btnColumnVisible.Size = new System.Drawing.Size(50, 49);
-            this.btnColumnVisible.TabIndex = 0;
-            this.btnColumnVisible.UseVisualStyleBackColor = true;
-            // 
             // contextMenuColumns
             // 
             this.contextMenuColumns.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -936,6 +957,26 @@ namespace Planning
             this.toolStripMenuItem4});
             this.contextMenuColumns.Name = "contextMenuColumns";
             this.contextMenuColumns.Size = new System.Drawing.Size(81, 70);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Checked = true;
+            this.toolStripMenuItem2.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(80, 22);
+            this.toolStripMenuItem2.Text = "1";
+            // 
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(80, 22);
+            this.toolStripMenuItem3.Text = "2";
+            // 
+            // toolStripMenuItem4
+            // 
+            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(80, 22);
+            this.toolStripMenuItem4.Text = "3";
             // 
             // imageListMain16
             // 
@@ -965,54 +1006,18 @@ namespace Planning
             this.imageListMain32.Images.SetKeyName(4, "icons8-print-32.png");
             this.imageListMain32.Images.SetKeyName(5, "icons8-refresh-32_1.png");
             // 
-            // toolStripMenuItem2
+            // btnColumnVisible
             // 
-            this.toolStripMenuItem2.Checked = true;
-            this.toolStripMenuItem2.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(80, 22);
-            this.toolStripMenuItem2.Text = "1";
-            // 
-            // toolStripMenuItem3
-            // 
-            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(80, 22);
-            this.toolStripMenuItem3.Text = "2";
-            // 
-            // toolStripMenuItem4
-            // 
-            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(80, 22);
-            this.toolStripMenuItem4.Text = "3";
-            // 
-            // edSearch
-            // 
-            this.edSearch.Location = new System.Drawing.Point(386, 5);
-            this.edSearch.Name = "edSearch";
-            this.edSearch.Size = new System.Drawing.Size(134, 20);
-            this.edSearch.TabIndex = 8;
-            // 
-            // btnSearch
-            // 
-            this.btnSearch.FlatAppearance.BorderSize = 0;
-            this.btnSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSearch.Image = ((System.Drawing.Image)(resources.GetObject("btnSearch.Image")));
-            this.btnSearch.Location = new System.Drawing.Point(386, 26);
-            this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(30, 20);
-            this.btnSearch.TabIndex = 0;
-            this.btnSearch.UseVisualStyleBackColor = true;
-            // 
-            // btnSearchNext
-            // 
-            this.btnSearchNext.FlatAppearance.BorderSize = 0;
-            this.btnSearchNext.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSearchNext.Image = ((System.Drawing.Image)(resources.GetObject("btnSearchNext.Image")));
-            this.btnSearchNext.Location = new System.Drawing.Point(422, 26);
-            this.btnSearchNext.Name = "btnSearchNext";
-            this.btnSearchNext.Size = new System.Drawing.Size(30, 20);
-            this.btnSearchNext.TabIndex = 0;
-            this.btnSearchNext.UseVisualStyleBackColor = true;
+            this.btnColumnVisible.FlatAppearance.BorderSize = 0;
+            this.btnColumnVisible.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnColumnVisible.Image = ((System.Drawing.Image)(resources.GetObject("btnColumnVisible.Image")));
+            this.btnColumnVisible.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnColumnVisible.Location = new System.Drawing.Point(330, 4);
+            this.btnColumnVisible.Menu = this.contextMenuColumns;
+            this.btnColumnVisible.Name = "btnColumnVisible";
+            this.btnColumnVisible.Size = new System.Drawing.Size(50, 49);
+            this.btnColumnVisible.TabIndex = 0;
+            this.btnColumnVisible.UseVisualStyleBackColor = true;
             // 
             // MainFormEx
             // 

@@ -26,7 +26,12 @@ namespace Planning.Kernel
 
         public BaseRepository()
         {
-
+            SqlConnectionStringBuilder sqlConnectionString = new SqlConnectionStringBuilder();
+            sqlConnectionString.DataSource = ConnectionParams.ServerName;
+            sqlConnectionString.InitialCatalog = ConnectionParams.BaseName;
+            sqlConnectionString.UserID = ConnectionParams.UserName;
+            sqlConnectionString.Password = ConnectionParams.Pwd;
+            InitConnection(sqlConnectionString.ToString());
         }
 
         protected virtual void InitConnection(string connectionString)
@@ -52,7 +57,7 @@ namespace Planning.Kernel
             return result.ToList();
         }
 
-        public virtual T GetById(int id)
+        public virtual T GetById(int? id)
         {
             string sql = dataAdapter.GetSelectItemSql() + " where id = @Id";
             T item = null;
