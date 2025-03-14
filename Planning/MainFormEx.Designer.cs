@@ -32,9 +32,9 @@ namespace Planning
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            BrightIdeasSoftware.HeaderStateStyle headerStateStyle7 = new BrightIdeasSoftware.HeaderStateStyle();
-            BrightIdeasSoftware.HeaderStateStyle headerStateStyle8 = new BrightIdeasSoftware.HeaderStateStyle();
-            BrightIdeasSoftware.HeaderStateStyle headerStateStyle9 = new BrightIdeasSoftware.HeaderStateStyle();
+            BrightIdeasSoftware.HeaderStateStyle headerStateStyle4 = new BrightIdeasSoftware.HeaderStateStyle();
+            BrightIdeasSoftware.HeaderStateStyle headerStateStyle5 = new BrightIdeasSoftware.HeaderStateStyle();
+            BrightIdeasSoftware.HeaderStateStyle headerStateStyle6 = new BrightIdeasSoftware.HeaderStateStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainFormEx));
             this.menuMain = new System.Windows.Forms.MenuStrip();
             this.mtiFile = new System.Windows.Forms.ToolStripMenuItem();
@@ -113,6 +113,7 @@ namespace Planning
             this.colTransportView = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.colWarehouseName = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.colOrdLvId = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvRowNumberRange = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.headerFormatStyle1 = new BrightIdeasSoftware.HeaderFormatStyle();
             this.imageListInOut = new System.Windows.Forms.ImageList(this.components);
             this.panelMain = new System.Windows.Forms.Panel();
@@ -129,13 +130,13 @@ namespace Planning
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
+            this.btnColumnVisible = new Planning.Controls.MenuButton();
             this.contextMenuColumns = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
             this.imageListMain16 = new System.Windows.Forms.ImageList(this.components);
             this.imageListMain32 = new System.Windows.Forms.ImageList(this.components);
-            this.btnColumnVisible = new Planning.Controls.MenuButton();
             this.menuMain.SuspendLayout();
             this.statusStrip2.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -427,6 +428,7 @@ namespace Planning
             this.tblShipments.AllColumns.Add(this.colTransportView);
             this.tblShipments.AllColumns.Add(this.colWarehouseName);
             this.tblShipments.AllColumns.Add(this.colOrdLvId);
+            this.tblShipments.AllColumns.Add(this.olvRowNumberRange);
             this.tblShipments.AlternateRowBackColor = System.Drawing.SystemColors.ActiveCaption;
             this.tblShipments.CellEditUseWholeCell = false;
             this.tblShipments.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -480,6 +482,8 @@ namespace Planning
             this.tblShipments.Location = new System.Drawing.Point(3, 3);
             this.tblShipments.Name = "tblShipments";
             this.tblShipments.RowHeight = 25;
+            this.tblShipments.SelectColumnsOnRightClick = false;
+            this.tblShipments.SelectColumnsOnRightClickBehaviour = BrightIdeasSoftware.ObjectListView.ColumnSelectBehaviour.None;
             this.tblShipments.ShowGroups = false;
             this.tblShipments.Size = new System.Drawing.Size(876, 476);
             this.tblShipments.TabIndex = 1;
@@ -729,7 +733,9 @@ namespace Planning
             // 
             this.IsAddLv.AspectName = "IsAddLv";
             this.IsAddLv.CheckBoxes = true;
+            this.IsAddLv.IsEditable = false;
             this.IsAddLv.Text = "Привязка к отгрузке";
+            this.IsAddLv.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.IsAddLv.Width = 100;
             // 
             // colShippingPlacesNumber
@@ -754,7 +760,9 @@ namespace Planning
             // 
             this.colIsEdm.AspectName = "IsEdm";
             this.colIsEdm.CheckBoxes = true;
+            this.colIsEdm.IsEditable = false;
             this.colIsEdm.Text = "ЭДО";
+            this.colIsEdm.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // colTransportView
             // 
@@ -774,12 +782,18 @@ namespace Planning
             this.colOrdLvId.IsVisible = false;
             this.colOrdLvId.Text = "colOrdLvId";
             // 
+            // olvRowNumberRange
+            // 
+            this.olvRowNumberRange.AspectName = "RowNumberRange";
+            this.olvRowNumberRange.DisplayIndex = 41;
+            this.olvRowNumberRange.IsVisible = false;
+            // 
             // headerFormatStyle1
             // 
-            this.headerFormatStyle1.Hot = headerStateStyle7;
-            headerStateStyle8.FrameWidth = 2F;
-            this.headerFormatStyle1.Normal = headerStateStyle8;
-            this.headerFormatStyle1.Pressed = headerStateStyle9;
+            this.headerFormatStyle1.Hot = headerStateStyle4;
+            headerStateStyle5.FrameWidth = 2F;
+            this.headerFormatStyle1.Normal = headerStateStyle5;
+            this.headerFormatStyle1.Pressed = headerStateStyle6;
             // 
             // imageListInOut
             // 
@@ -826,6 +840,7 @@ namespace Planning
             this.edCurrDay.Name = "edCurrDay";
             this.edCurrDay.Size = new System.Drawing.Size(102, 20);
             this.edCurrDay.TabIndex = 7;
+            this.edCurrDay.ValueChanged += new System.EventHandler(this.edCurrDay_ValueChanged);
             // 
             // btnGetNextDay
             // 
@@ -837,6 +852,7 @@ namespace Planning
             this.btnGetNextDay.Size = new System.Drawing.Size(30, 20);
             this.btnGetNextDay.TabIndex = 0;
             this.btnGetNextDay.UseVisualStyleBackColor = true;
+            this.btnGetNextDay.Click += new System.EventHandler(this.btnGetNextDay_Click);
             // 
             // btnSearchNext
             // 
@@ -859,6 +875,7 @@ namespace Planning
             this.btnGetCurrentDay.Size = new System.Drawing.Size(30, 20);
             this.btnGetCurrentDay.TabIndex = 0;
             this.btnGetCurrentDay.UseVisualStyleBackColor = true;
+            this.btnGetCurrentDay.Click += new System.EventHandler(this.btnGetCurrentDay_Click);
             // 
             // btnSearch
             // 
@@ -881,6 +898,7 @@ namespace Planning
             this.btnGetLastDay.Size = new System.Drawing.Size(30, 20);
             this.btnGetLastDay.TabIndex = 0;
             this.btnGetLastDay.UseVisualStyleBackColor = true;
+            this.btnGetLastDay.Click += new System.EventHandler(this.btnGetLastDay_Click);
             // 
             // btnPrint
             // 
@@ -948,6 +966,20 @@ namespace Planning
             this.btnAdd.Size = new System.Drawing.Size(49, 49);
             this.btnAdd.TabIndex = 0;
             this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            // 
+            // btnColumnVisible
+            // 
+            this.btnColumnVisible.FlatAppearance.BorderSize = 0;
+            this.btnColumnVisible.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnColumnVisible.Image = ((System.Drawing.Image)(resources.GetObject("btnColumnVisible.Image")));
+            this.btnColumnVisible.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnColumnVisible.Location = new System.Drawing.Point(330, 4);
+            this.btnColumnVisible.Menu = this.contextMenuColumns;
+            this.btnColumnVisible.Name = "btnColumnVisible";
+            this.btnColumnVisible.Size = new System.Drawing.Size(50, 49);
+            this.btnColumnVisible.TabIndex = 0;
+            this.btnColumnVisible.UseVisualStyleBackColor = true;
             // 
             // contextMenuColumns
             // 
@@ -1005,19 +1037,6 @@ namespace Planning
             this.imageListMain32.Images.SetKeyName(3, "icons8-history-32.png");
             this.imageListMain32.Images.SetKeyName(4, "icons8-print-32.png");
             this.imageListMain32.Images.SetKeyName(5, "icons8-refresh-32_1.png");
-            // 
-            // btnColumnVisible
-            // 
-            this.btnColumnVisible.FlatAppearance.BorderSize = 0;
-            this.btnColumnVisible.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnColumnVisible.Image = ((System.Drawing.Image)(resources.GetObject("btnColumnVisible.Image")));
-            this.btnColumnVisible.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnColumnVisible.Location = new System.Drawing.Point(330, 4);
-            this.btnColumnVisible.Menu = this.contextMenuColumns;
-            this.btnColumnVisible.Name = "btnColumnVisible";
-            this.btnColumnVisible.Size = new System.Drawing.Size(50, 49);
-            this.btnColumnVisible.TabIndex = 0;
-            this.btnColumnVisible.UseVisualStyleBackColor = true;
             // 
             // MainFormEx
             // 
@@ -1150,5 +1169,6 @@ namespace Planning
         private System.Windows.Forms.TextBox edSearch;
         private System.Windows.Forms.Button btnSearchNext;
         private System.Windows.Forms.Button btnSearch;
+        private BrightIdeasSoftware.OLVColumn olvRowNumberRange;
     }
 }

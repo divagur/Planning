@@ -508,16 +508,17 @@ namespace Planning
         private void tbtnAdd_Click(object sender, EventArgs e)
         {
 
-            ShipmentOrder shipmentOrder = new ShipmentOrder();
-            var frmShipmentOrderEdit = new ShipmentOrderEdit(_shipment, shipmentOrder);
+            Planning.DataLayer.ShipmentOrder shipmentOrder = new Planning.DataLayer.ShipmentOrder();
+            var frmShipmentOrderEdit = new ShipmentOrderEdit(_shipment, shipmentOrder, _shipmentOrderParts);
             shipmentOrder.ShipmentId = _shipment.Id;
             shipmentOrder.IsBinding = false;
             if (frmShipmentOrderEdit.ShowDialog() == DialogResult.OK)
             {
 
-                _context.ShipmentOrders.Add(shipmentOrder);
+                //_context.ShipmentOrders.Add(shipmentOrder);
+                _shipmentOrders.Add(shipmentOrder);
                 tblShipmentOrders.DataSource = _shipmentOrders;
-                BindOrderPart(shipmentOrder.Id);
+                BindOrderPart((int)shipmentOrder.Id);
             }
             //row["shipment_id"] =_shipment.id;
         }
@@ -526,8 +527,9 @@ namespace Planning
         {
             if (tblShipmentOrders.CurrentCell == null)
                 return;
-            ShipmentOrder shipmentOrder = _context.ShipmentOrders.Find(tblShipmentOrders.Rows[tblShipmentOrders.CurrentCell.RowIndex].Cells["colId"].Value);
-            var frmShipmentOrderEdit = new ShipmentOrderEdit(_shipment, shipmentOrder);
+            //ShipmentOrder shipmentOrder = _context.ShipmentOrders.Find(tblShipmentOrders.Rows[tblShipmentOrders.CurrentCell.RowIndex].Cells["colId"].Value);
+            Planning.DataLayer.ShipmentOrder shipmentOrder = _shipmentOrders.Find(o => o.Id == Int32.Parse(tblShipmentOrders.Rows[tblShipmentOrders.CurrentCell.RowIndex].Cells["colId"].Value.ToString()));
+            var frmShipmentOrderEdit = new ShipmentOrderEdit(_shipment, shipmentOrder, _shipmentOrderParts);
             
             frmShipmentOrderEdit.ShowDialog();
             if (frmShipmentOrderEdit.DialogResult == DialogResult.Cancel)
@@ -542,9 +544,11 @@ namespace Planning
 
             if (MessageBox.Show("Удалить заказ?", "Подверждение", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
-                ShipmentOrder shipmentOrder = _context.ShipmentOrders.Find(tblShipmentOrders.Rows[tblShipmentOrders.CurrentCell.RowIndex].Cells["colId"].Value);
-                _context.ShipmentOrders.Remove(shipmentOrder);
-                tblShipmentOrders.DataSource = _shipment.ShipmentOrders.ToList();
+                //ShipmentOrder shipmentOrder = _context.ShipmentOrders.Find(tblShipmentOrders.Rows[tblShipmentOrders.CurrentCell.RowIndex].Cells["colId"].Value);
+                Planning.DataLayer.ShipmentOrder shipmentOrder = _shipmentOrders.Find(o => o.Id == Int32.Parse(tblShipmentOrders.Rows[tblShipmentOrders.CurrentCell.RowIndex].Cells["colId"].Value.ToString()));
+                shipmentOrder.Delete();
+                //_context.ShipmentOrders.Remove(shipmentOrder);
+                tblShipmentOrders.DataSource = _shipmentOrders;
             }
         }
 
@@ -609,22 +613,7 @@ namespace Planning
             }
         }
 
-        private void PopulateOrders()
-        {
-           /* 
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                connection.Open();
-                adapter = new SqlDataAdapter($"select id,order_id,shipment_id,order_type,comment,manual_load,manual_unload,pallet_amount,binding_id from shipment_orders where shipment_id = {_shipment.id}", connection);
-                
-                ds = new DataSet();
-               
-                adapter.Fill(ds);
-                tblShipmentOrders.AutoGenerateColumns = false;
-                tblShipmentOrders.DataSource = ds.Tables[0];
-            }
-            */
-        }
+       
 
         private void cbSpecCondition_CheckedChanged(object sender, EventArgs e)
         {
@@ -693,7 +682,7 @@ namespace Planning
                 //btnBindLV.Visible = false;
             }
             TabOrderView();
-            AddHistory(_shipment.Id);
+            AddHistory((int)_shipment.Id);
         }
 
         private void monthCalendarSpecial_DateSelected(object sender, DateRangeEventArgs e)
@@ -705,7 +694,7 @@ namespace Planning
         {
 
                 
-            if (DataService.AddShipmentToLV(_shipment.Id))
+            if (DataService.AddShipmentToLV((int)_shipment.Id))
             {
                 _shipment.IsAddLv = true;
                 MessageBox.Show("Отгрузка создана в Lvision");
@@ -748,15 +737,15 @@ namespace Planning
                
                 bool isAllBindings = true;
                
-                var listOrdId = _shipment.ShipmentOrders.Select(o => (int?)o.Id).ToList();
+                var listOrdId = _shipmentOrders.Select(o => (int?)o.Id).ToList();
                 var ordParts = _context.ShipmentOrderParts.Where(s => listOrdId.Contains(s.ShOrderId)).ToList();
                 /*foreach (var item in _context.ShipmentOrderParts.Where(s=> _shipment.ShipmentOrders.Select(o=>o.Id).ToList().Contains((int)s.ShOrderId)))
                 {
                     _context.Entry(item).Reload();
                 }
                 */
-
-                foreach (var shipmentOrder in _shipment.ShipmentOrders)
+                /*
+                foreach (var shipmentOrder in _shipmentOrders)
                 {
                     _context.Entry(shipmentOrder).Reload();
 
@@ -772,10 +761,19 @@ namespace Planning
                     }
 
                 }
-                
+                */
+                foreach (var part in _shipmentOrderParts)
+                {
+                    if (part.IsBinding == null || part.IsBinding == false)
+                    {
+                        Planning.DataLayer.ShipmentOrder shipmentOrder = _shipmentOrders.Find(o => o.Id == part.ShOrderId);
+                        MessageBox.Show($"Расходная партия [{part.OsLvId}] заказа [{shipmentOrder.OrderId}] не найдена в Lvision]");
+                        isAllBindings = false;
+                    }
+                }
                
                
-                tblShipmentOrders.DataSource = _shipment.ShipmentOrders.ToList();
+                tblShipmentOrders.DataSource = _shipmentOrders;
                 if (tblShipmentOrders.SelectedCells != null)
                     BindOrderPart((int)tblShipmentOrders.Rows[tblShipmentOrders.SelectedCells[0].RowIndex].Cells["colId"].Value);
                 if (isAllBindings)
@@ -787,21 +785,19 @@ namespace Planning
         private bool IsAllOrderBindToLv()
         {
             bool isAllBindings = false;
-            int orderNoBindCount = _shipment.ShipmentOrders.Count(o => o.IsBinding == null || o.IsBinding == false);
+            int orderNoBindCount = _shipmentOrders.Count(o => o.IsBinding == null || o.IsBinding == false);
 
-            int orderPartNoBindCount = _shipment.ShipmentOrders.Count(o => o.IsBinding == null || o.IsBinding == false);
+            int orderPartNoBindCount = _shipmentOrderParts.Count(o => o.IsBinding == null || o.IsBinding == false);
             
 
-            bool isAllOrderBind = _shipment.ShipmentOrders.Count() > 0;
+            bool isAllOrderBind = _shipmentOrders.Count() > 0;
             bool isAllOrderPartBind = true;
-            foreach (var shipmentOrder in _shipment.ShipmentOrders)
-            {
-                //_context.Entry(shipmentOrder).Reload();
+            foreach (var shipmentOrder in _shipmentOrders)
+            {                
                 isAllOrderBind = isAllOrderBind && shipmentOrder.IsBinding == true;
 
-                foreach (var part in shipmentOrder.ShipmentOrderParts)
+                foreach (var part in _shipmentOrderParts.Where(p=>p.ShOrderId == shipmentOrder.Id))
                 {
-                    //_context.Entry(part).Reload();
                     isAllOrderPartBind = isAllOrderPartBind && part.IsBinding == true;
 
                 }
@@ -822,13 +818,13 @@ namespace Planning
 
         private void ReloadShipment()
         {
-            _context.Entry(_shipment).Reload();
-            foreach (var order in _shipment.ShipmentOrders)
-            {
-                _context.Entry(order).Reload();
+            //_context.Entry(_shipment).Reload();
+            //foreach (var order in _shipment.ShipmentOrders)
+            //{
+            //    _context.Entry(order).Reload();
 
 
-            }
+            //}
         }
 
         private void PopulateMovementItem()
@@ -880,18 +876,18 @@ namespace Planning
             if (shipmentOrder == null)
                 return;
             */
-            if (_shipment.ShipmentOrders == null || _shipment.ShipmentOrders.Count == 0)
+            if (_shipmentOrders == null || _shipmentOrders.Count == 0)
                 return;
-
+            /*
             shipmentOrderParts.Clear();
 
-            foreach (var item in _shipment.ShipmentOrders)
+            foreach (var item in _shipmentOrders)
             {
                 shipmentOrderParts.AddRange(item.ShipmentOrderParts);
-            }
+            }*/
             tblOrderParts.AutoGenerateColumns = false;
             tblOrderParts.DataSource = null;
-            tblOrderParts.DataSource = shipmentOrderParts;
+            tblOrderParts.DataSource = _shipmentOrderParts;
             tblOrderParts.Refresh();
         }
 
@@ -914,19 +910,19 @@ namespace Planning
             if (String.IsNullOrEmpty(ordId) || ordId == "0")
                 return;
             int ordIdInt = Int32.Parse(ordId);
-            ShipmentOrder shipmentOrder = _context.ShipmentOrders.FirstOrDefault(o=> o.Id == ordIdInt);
+            Planning.DataLayer.ShipmentOrder shipmentOrder = _shipmentOrders.FirstOrDefault(o=> o.Id == ordIdInt);
 
 
-            ShipmentOrderPart shipmentOrderPart = new ShipmentOrderPart();
+            Planning.DataLayer.ShipmentOrderPart shipmentOrderPart = new Planning.DataLayer.ShipmentOrderPart();
             shipmentOrderPart.ShOrderId = shipmentOrder.Id;
-            var frmShipmentOrderPart = new ShipmentOrderPartEdit(shipmentOrder, shipmentOrderPart);
+            var frmShipmentOrderPart = new ShipmentOrderPartEdit(_shipment, shipmentOrder, shipmentOrderPart);
            
             shipmentOrderPart.IsBinding = false;
             if (frmShipmentOrderPart.ShowDialog() == DialogResult.OK)
             {
 
-                shipmentOrder.ShipmentOrderParts.Add(shipmentOrderPart);
-                BindOrderPart(shipmentOrder.Id);
+                _shipmentOrderParts.Add(shipmentOrderPart);
+                BindOrderPart((int)shipmentOrder.Id);
             }
         }
 
@@ -934,7 +930,7 @@ namespace Planning
         {
             if (tblShipmentOrders.CurrentCell == null)
                 return;
-            ShipmentOrder shipmentOrder = _context.ShipmentOrders.Find(tblShipmentOrders.Rows[tblShipmentOrders.SelectedRows[0].Index].Cells["colId"].Value);
+            Planning.DataLayer.ShipmentOrder shipmentOrder = _shipmentOrders.Find(o=>o.Id == int.Parse(tblShipmentOrders.Rows[tblShipmentOrders.SelectedRows[0].Index].Cells["colId"].Value.ToString()));
 
             if (tblOrderParts.CurrentCell == null)
                 return;
@@ -946,9 +942,9 @@ namespace Planning
             }
 
             //
-            ShipmentOrderPart shipmentOrderPart = shipmentOrderParts.Find(o => o.Id == int.Parse(tblOrderParts.Rows[tblOrderParts.CurrentCell.RowIndex].Cells["colPartsId"].Value.ToString())); //shipmentOrder.ShipmentOrderParts.ToList().Find(o => o.Id == int.Parse(tblOrderParts.Rows[tblOrderParts.CurrentCell.RowIndex].Cells["colPartsId"].Value.ToString()));
+            Planning.DataLayer.ShipmentOrderPart shipmentOrderPart = _shipmentOrderParts.Find(o => o.Id == int.Parse(tblOrderParts.Rows[tblOrderParts.CurrentCell.RowIndex].Cells["colPartsId"].Value.ToString())); 
 
-            var frmShipmentOrderPart = new ShipmentOrderPartEdit(shipmentOrder, shipmentOrderPart);
+            var frmShipmentOrderPart = new ShipmentOrderPartEdit(_shipment,shipmentOrder, shipmentOrderPart);
             frmShipmentOrderPart.ShowDialog();
             if (frmShipmentOrderPart.DialogResult == DialogResult.Cancel)
                 return;

@@ -14,13 +14,13 @@ namespace Planning
     public partial class ShipmentOrderEdit : Form
     {
         Planning.DataLayer.ShipmentOrder _shipmentOrder;
-        Planning.DataLayer.ShipmentOrderPart _shipmentOrderParts;
+        List<Planning.DataLayer.ShipmentOrderPart> _shipmentOrderParts;
         Planning.DataLayer.Shipment _shipment;
         public ShipmentOrderEdit(Planning.DataLayer.Shipment shipment, Planning.DataLayer.ShipmentOrder shipmentOrder,
-            Planning.DataLayer.ShipmentOrderPart shipmentOrderParts)
+            List<Planning.DataLayer.ShipmentOrderPart> shipmentOrderParts)
         {
             InitializeComponent();
-            _shipmentOrders = shipmentOrder;
+            _shipmentOrder = shipmentOrder;
             _shipmentOrderParts = shipmentOrderParts;
             _shipment = shipment;
             SetViewParam();
@@ -106,7 +106,7 @@ namespace Planning
         private void btnGetOrder_Click(object sender, EventArgs e)
         {
             ShipmentAddResult selectResult = new ShipmentAddResult();
-            ChooseOrder frmChooseOrder = new ChooseOrder(selectResult,_shipment.DepositorId,_shipment.ShIn,_shipmentOrders,_shipmentOrderParts);
+            ChooseOrder frmChooseOrder = new ChooseOrder(selectResult, _shipment.Id, _shipment.DepositorId,_shipment.ShIn,_shipmentOrder);
             if (frmChooseOrder.ShowDialog() == DialogResult.OK && selectResult.Result != null)
             {
                 var order = (LVOrder)selectResult.Result;
@@ -122,12 +122,12 @@ namespace Planning
                 if (OrderParts.Count() == 1)
                 {
                     LVOrder lVOrder = OrderParts.FirstOrDefault();
-                    ShipmentOrderPart orderPart = new ShipmentOrderPart();
+                    Planning.DataLayer.ShipmentOrderPart orderPart = new Planning.DataLayer.ShipmentOrderPart();                    
                     orderPart.OsLvId = lVOrder.OstID;
                     orderPart.OsLvCode = lVOrder.OstCode;
                     orderPart.ShOrderId = _shipmentOrder.Id;
                     orderPart.IsBinding = true;
-                    _shipmentOrder.ShipmentOrderParts.Add(orderPart);
+                    _shipmentOrderParts.Add(orderPart);
                 }
             }
         }

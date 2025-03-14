@@ -34,8 +34,11 @@ namespace Planning
         }
     }
 
-    class CommonFuctions
+    public class CommonFuctions
     {
+
+        public static SettingsHandle settingsHandle;
+
         public static void WaitBegin(ref object Param)
         {
             Cursor cur = (Cursor)Param;

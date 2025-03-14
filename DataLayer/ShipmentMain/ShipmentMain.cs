@@ -9,6 +9,7 @@ namespace Planning.DataLayer
 {
 	public class ShipmentMain : BaseDataItem
 	{
+		public int? RowNumberRange { get; set; }
 		public int? ShpId { get; set; }
 		public int? OrdId { get; set; }
 		public int? OrdLVID { get; set; }
@@ -22,7 +23,7 @@ namespace Planning.DataLayer
 		public int? ShpDepLVID { get; set; }
 		public string DepCode { get; set; }
 		public bool? ShpSpecialCond { get; set; }
-		public bool? ShpIsCourier { get; set; }
+		public bool? ShpIsCourier { get; set; } = false;
 		public int? ShpGateID { get; set; }
 		public string GateName { get; set; }
 		public string KlientName { get; set; }
@@ -48,7 +49,8 @@ namespace Planning.DataLayer
 		public string ShpForwarderFio { get; set; }
 		public string OrdLVType { get; set; }
 		public string ShpStampNumber { get; set; }
-		public bool? IsAddLv { get; set; }
+		public bool? IsAddLv { get; set; } = false;
+		public bool? IsEdm { get; set; } = false;
 		public int? ShippingPlacesNumber { get; set; }
 		public decimal? OrderWeight { get; set; }
 		public string ShpSupplierName { get; set; }

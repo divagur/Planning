@@ -18,6 +18,12 @@ namespace Planning
     public partial class MainFormEx : Form
     {
 
+        List<string> hideCols;
+        private List<Color> rowColors = new List<Color>()
+        {
+          Color.FromArgb(220, 220, 220),
+          Color.FromArgb(220, 230, 241)
+        };
         public MainFormEx()
         {
             InitializeComponent();
@@ -45,6 +51,9 @@ namespace Planning
                     this.Close();
             }
             */
+
+            Init();
+
             ConnectionParams.ServerName = "DZHURAVLEV";
             ConnectionParams.BaseName = "Planning_test";
             ConnectionParams.UserName ="sysadm";
@@ -55,10 +64,11 @@ namespace Planning
             SetupColumns();
             SetupButtons();
 
-            ShipmentMainRepository shipmentMainRepository = new ShipmentMainRepository();
-            List<ShipmentMain> shipmentMains = shipmentMainRepository.GetAll(DateTime.Now, null, null, null);
-            tblShipments.SetObjects(shipmentMains);
+            ShipmentsLoad();
             tblShipments.DrawSubItem += TblShipments_DrawSubItem;
+
+
+
         }
 
         private void TblShipments_DrawSubItem(object sender, DrawListViewSubItemEventArgs e)
@@ -165,6 +175,10 @@ namespace Planning
         }
         private void ShipmentsLoad()
         {
+            ShipmentMainRepository shipmentMainRepository = new ShipmentMainRepository();
+            List<ShipmentMain> shipmentMains = shipmentMainRepository.GetAll(edCurrDay.Value, null, null, null);
+            tblShipments.ClearObjects();
+            tblShipments.SetObjects(shipmentMains);
             /*
             if (mainFormAccess != null && !mainFormAccess.IsView)
             {
@@ -213,6 +227,60 @@ namespace Planning
             ShipmentsUIFilter();
             */
         }
+        private void Init()
+        {
+
+            CommonFuctions.settingsHandle = new SettingsHandle("Settings.xml", DataService.setting);
+            CommonFuctions.settingsHandle.Load();
+
+            hideCols = CommonFuctions.settingsHandle.GetParamStringValue("View\\HideColumns").Split(',').ToList();
+
+            PopulateVisibleColumn();
+
+        }
+        private void PopulateVisibleColumn()
+        {
+            contextMenuColumns.Items.Clear();
+            
+            foreach (OLVColumn col in tblShipments.AllColumns)
+            {
+                
+                
+                if (col.IsVisible)
+                {
+                    string headerText = String.IsNullOrEmpty(col.Text) ? col.ToolTipText : col.Text;
+                    ToolStripMenuItem item = (ToolStripMenuItem)contextMenuColumns.Items.Add(headerText);
+                    item.CheckOnClick = true;
+                    item.CheckState = hideCols.IndexOf(col.Name) < 0 ? CheckState.Checked : CheckState.Unchecked;
+                    item.Tag = col;
+                    item.Click += Item_Click;
+                    col.IsVisible = hideCols.IndexOf(col.Name) < 0;
+                }
+                
+
+
+            }
+        }
+        private string GetHideColumns()
+        {
+
+            List<string> result = new List<string>();
+            foreach (OLVColumn col in tblShipments.AllColumns)
+            {
+                if (!col.IsVisible)
+                {
+                    result.Add(col.Name);
+                }
+            }
+            return String.Join(",", result);
+        }
+        private void Item_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem item = (ToolStripMenuItem)sender;
+            (item.Tag as OLVColumn).IsVisible = item.CheckState == CheckState.Checked ? true : false;
+            CommonFuctions.settingsHandle.SetParamValue("View\\HideColumns", GetHideColumns());
+        }
+
         private void tblShipments_SelectedIndexChanged(object sender, EventArgs e)
         {
 
@@ -226,10 +294,35 @@ namespace Planning
         private void tblShipments_FormatRow(object sender, FormatRowEventArgs e)
         {
             ShipmentMain item = (ShipmentMain)e.Item.RowObject;
-            if (item.GateName == "127")
-            {
-                e.Item.BackColor = Color.AliceBlue;
-            }
+            e.Item.BackColor = rowColors[(int)item.RowNumberRange % 2];
+        }
+
+        private void btnGetCurrentDay_Click(object sender, EventArgs e)
+        {
+            edCurrDay.Value = DateTime.Now;
+        }
+
+        private void btnGetLastDay_Click(object sender, EventArgs e)
+        {
+            edCurrDay.Value = edCurrDay.Value.AddDays(-1);
+        }
+
+        private void btnGetNextDay_Click(object sender, EventArgs e)
+        {
+            edCurrDay.Value = edCurrDay.Value.AddDays(1);    
+        }
+
+        private void edCurrDay_ValueChanged(object sender, EventArgs e)
+        {
+            ShipmentsLoad();
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            
+            tblShipments.AllColumns[4].IsVisible = false;
+            //tblShipments.
+            
         }
     }
 }

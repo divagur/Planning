@@ -16,25 +16,29 @@ namespace Planning
         ShipmentAddResult _selectedResult;
 
         List<Planning.DataLayer.ShipmentOrder> _shipmentOrders;
+        Planning.DataLayer.ShipmentOrder _shipmentOrder;
         List<Planning.DataLayer.ShipmentOrderPart> _shipmentOrderParts;
 
         //Planning.DataLayer.Shipment _shipment;
         bool _isOrderParts;
         int? _LVOrderId;
         int? _depositorId;
+        int? _shipmentId;
         bool? _isShIn;
         LVOrder_Manager Order_Manager = new LVOrder_Manager();
         List<LVOrder> listOrders;
         //public ChooseOrder(ShipmentAddResult selectedResult, Planning.DataLayer.Shipment shipment, bool isOrderParts = false, int? LVOrderId = null)
-        public ChooseOrder(ShipmentAddResult selectedResult, int? DepositorId, bool IsShIn, List<Planning.DataLayer.ShipmentOrder> _shipmentOrders,
+        public ChooseOrder(ShipmentAddResult selectedResult,int? ShipmentId, int? DepositorId, bool? IsShIn, Planning.DataLayer.ShipmentOrder shipmentOrder,
                     bool isOrderParts = false, int? LVOrderId = null)
         {
             InitializeComponent();
             _selectedResult = selectedResult;            
             _depositorId = DepositorId;
             _isShIn = IsShIn;
+            _shipmentOrder = shipmentOrder;
             _isOrderParts = isOrderParts;
             _LVOrderId = LVOrderId;
+            _shipmentId = ShipmentId;
             if (!isOrderParts)
                 colOstCode.Visible = false;
             PopulateOrders();
@@ -51,14 +55,22 @@ namespace Planning
             
             if (_isOrderParts)
             {
-                Planning.DataLayer.ShipmentOrder shipmentOrder = _shipmentOrders.First(o => o.LvOrderId == _LVOrderId);
-                var listExclusionID = _shipmentOrderParts.Where(p => p.ShOrderId == shipmentOrder.Id).Select(p => p.OsLvId).ToList();
+                //Planning.DataLayer.ShipmentOrder shipmentOrder = _shipmentOrders.First(o => o.LvOrderId == _LVOrderId);
+                ShipmentOrderPartRepository shipmentOrderPartRepository = new ShipmentOrderPartRepository();
+                _shipmentOrderParts = shipmentOrderPartRepository.GetShipmentOrderParts(new List<int?>() {_shipmentOrder.Id});
+
+                var listExclusionID = _shipmentOrderParts.Where(p => p.ShOrderId == _shipmentOrder.Id).Select(p => p.OsLvId).ToList();
                     //shipmentOrder.ShipmentOrderParts.Select(p => (int?)p.OsLvId).ToList();
                 result = listOrders.Where(o => !listExclusionID.Contains(o.OstID)).ToList();
             }
             else
             {
-                var listExclusionID = _shipmentOrders.Select(o => o.LvOrderId).ToList();
+
+                ShipmentOrderRepository shipmentOrderRepository = new ShipmentOrderRepository();
+
+                List<Planning.DataLayer.ShipmentOrder> shipmentOrders = shipmentOrderRepository.GetShipmentOrders(_shipmentId);
+
+                var listExclusionID = shipmentOrders.Select(o => o.LvOrderId).ToList();
                 result = listOrders.Where(o => !listExclusionID.Contains(o.LVID)).ToList();
             }
 

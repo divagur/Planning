@@ -7,18 +7,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using Planning.DataLayer;
 namespace Planning
 {
     public partial class ShipmentOrderPartEdit : Form
     {
-        ShipmentOrderPart _shipmentOrderPart;
-        ShipmentOrder _shipmentOrder;
-        public ShipmentOrderPartEdit(ShipmentOrder shipmentOrder, ShipmentOrderPart shipmentOrderPart)
+       Planning.DataLayer.ShipmentOrderPart _shipmentOrderPart;
+       Planning.DataLayer.ShipmentOrder _shipmentOrder;
+       Planning.DataLayer.Shipment _shipment;
+        public ShipmentOrderPartEdit(Planning.DataLayer.Shipment shipment, Planning.DataLayer.ShipmentOrder shipmentOrder, Planning.DataLayer.ShipmentOrderPart shipmentOrderPart)
         {
             InitializeComponent();
             _shipmentOrderPart = shipmentOrderPart;
             _shipmentOrder = shipmentOrder;
+            _shipment = shipment;
         }
 
         private int? GetNumber(TextBox dateControl)
@@ -50,7 +52,7 @@ namespace Planning
         }
         private void ShipmentOrderPartsEdit_Load(object sender, EventArgs e)
         {
-            edOrderId.Text = _shipmentOrder.lv_order_code;
+            edOrderId.Text = _shipmentOrder.LvOrderCode;
             edOrderPartId.Text = _shipmentOrderPart.OsLvCode;
            txtManualLoad.Text = _shipmentOrderPart.ManualLoad.ToString();
            txtManualUnload.Text = _shipmentOrderPart.ManualUnload.ToString();
@@ -69,7 +71,8 @@ namespace Planning
         private void btnGetOrderParts_Click(object sender, EventArgs e)
         {
             ShipmentAddResult selectResult = new ShipmentAddResult();
-            ChooseOrder frmChooseOrder = new ChooseOrder(selectResult, _shipmentOrder.Shipment,true, _shipmentOrder.LVOrderId);
+            ChooseOrder frmChooseOrder = new ChooseOrder(selectResult, _shipment.Id,
+                _shipment.DepositorId, _shipment.ShIn, _shipmentOrder, true, _shipmentOrder.LvOrderId);
             if (frmChooseOrder.ShowDialog() == DialogResult.OK && selectResult.Result != null)
             {
                 var order = (LVOrder)selectResult.Result;
