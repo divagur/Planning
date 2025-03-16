@@ -32,9 +32,9 @@ namespace Planning
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            BrightIdeasSoftware.HeaderStateStyle headerStateStyle4 = new BrightIdeasSoftware.HeaderStateStyle();
-            BrightIdeasSoftware.HeaderStateStyle headerStateStyle5 = new BrightIdeasSoftware.HeaderStateStyle();
-            BrightIdeasSoftware.HeaderStateStyle headerStateStyle6 = new BrightIdeasSoftware.HeaderStateStyle();
+            BrightIdeasSoftware.HeaderStateStyle headerStateStyle1 = new BrightIdeasSoftware.HeaderStateStyle();
+            BrightIdeasSoftware.HeaderStateStyle headerStateStyle2 = new BrightIdeasSoftware.HeaderStateStyle();
+            BrightIdeasSoftware.HeaderStateStyle headerStateStyle3 = new BrightIdeasSoftware.HeaderStateStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainFormEx));
             this.menuMain = new System.Windows.Forms.MenuStrip();
             this.mtiFile = new System.Windows.Forms.ToolStripMenuItem();
@@ -499,31 +499,35 @@ namespace Planning
             this.colOrderDetail.ButtonSizing = BrightIdeasSoftware.OLVColumn.ButtonSizingMode.CellBounds;
             this.colOrderDetail.CellPadding = new System.Drawing.Rectangle(0, 0, 5, 0);
             this.colOrderDetail.IsButton = true;
+            this.colOrderDetail.Name = "colOrderDetail";
             this.colOrderDetail.Text = "...";
             this.colOrderDetail.Width = 31;
             // 
             // colId
             // 
             this.colId.AspectName = "ShpId";
-            this.colId.IsTileViewColumn = true;
+            this.colId.Name = "colId";
             this.colId.Text = "ID погр.";
             this.colId.Width = 100;
             // 
             // colIdNakl
             // 
             this.colIdNakl.AspectName = "OrdId";
+            this.colIdNakl.Name = "colIdNakl";
             this.colIdNakl.Text = "ID накл.";
             this.colIdNakl.Width = 100;
             // 
             // colDate
             // 
             this.colDate.AspectName = "ShpDate";
+            this.colDate.Name = "colDate";
             this.colDate.Text = "Дата";
             this.colDate.Width = 100;
             // 
             // colTime
             // 
             this.colTime.AspectName = "SlotTime";
+            this.colTime.Name = "colTime";
             this.colTime.Text = "Время";
             this.colTime.Width = 85;
             // 
@@ -531,6 +535,7 @@ namespace Planning
             // 
             this.colDirection.AspectName = "InOut";
             this.colDirection.CellVerticalAlignment = System.Drawing.StringAlignment.Center;
+            this.colDirection.Name = "colDirection";
             this.colDirection.Text = "Напр.";
             this.colDirection.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.colDirection.Width = 43;
@@ -538,53 +543,62 @@ namespace Planning
             // colOrderId
             // 
             this.colOrderId.AspectName = "OrdLVCode";
+            this.colOrderId.Name = "colOrderId";
             this.colOrderId.Text = "Код заказа";
             this.colOrderId.Width = 100;
             // 
             // colOrdPartLVCode
             // 
             this.colOrdPartLVCode.AspectName = "OrdPartLVCode";
+            this.colOrdPartLVCode.Name = "colOrdPartLVCode";
             this.colOrdPartLVCode.Text = "Код расходной партии";
             this.colOrdPartLVCode.Width = 150;
             // 
             // colOrderType
             // 
             this.colOrderType.AspectName = "OrdLVType";
+            this.colOrderType.Name = "colOrderType";
             this.colOrderType.Text = "Тип заказа";
             this.colOrderType.Width = 100;
             // 
             // colKlientId
             // 
             this.colKlientId.IsVisible = false;
+            this.colKlientId.Name = "colKlientId";
             this.colKlientId.Text = "Код клиента";
             // 
             // colKlientName
             // 
             this.colKlientName.AspectName = "KlientName";
+            this.colKlientName.Name = "colKlientName";
             this.colKlientName.Text = "Клиент";
             this.colKlientName.Width = 100;
             // 
             // colStatus
             // 
             this.colStatus.AspectName = "OrderStatus";
+            this.colStatus.Name = "colStatus";
             this.colStatus.Text = "Статус";
             this.colStatus.Width = 100;
             // 
             // colCopmletePct
             // 
             this.colCopmletePct.AspectName = "PrcReady";
+            this.colCopmletePct.Name = "colCopmletePct";
             this.colCopmletePct.Text = "Собран (в %)";
             this.colCopmletePct.Width = 100;
             // 
             // PrcValue
             // 
             this.PrcValue.AspectName = "PrcReady";
+            this.PrcValue.Name = "PrcValue";
             this.PrcValue.Text = "PrcValue";
             this.PrcValue.Width = 100;
             // 
             // colDoneShare
             // 
             this.colDoneShare.AspectName = "DoneShare";
+            this.colDoneShare.Name = "colDoneShare";
             this.colDoneShare.Renderer = this.barRenderer1;
             this.colDoneShare.Text = "DoneShare";
             this.colDoneShare.Width = 92;
@@ -596,18 +610,21 @@ namespace Planning
             // colComment
             // 
             this.colComment.AspectName = "ShpComment";
+            this.colComment.Name = "colComment";
             this.colComment.Text = "Комментарий по загрузке";
             this.colComment.Width = 100;
             // 
             // colOrderComment
             // 
             this.colOrderComment.AspectName = "OrdComment";
+            this.colOrderComment.Name = "colOrderComment";
             this.colOrderComment.Text = "Комментарий по заказу";
             this.colOrderComment.Width = 100;
             // 
             // colGate
             // 
             this.colGate.AspectName = "GateName";
+            this.colGate.Name = "colGate";
             this.colGate.Text = "Ворота";
             this.colGate.Width = 100;
             // 
@@ -617,102 +634,119 @@ namespace Planning
             this.colSpecCond.CellVerticalAlignment = System.Drawing.StringAlignment.Center;
             this.colSpecCond.CheckBoxes = true;
             this.colSpecCond.IsEditable = false;
+            this.colSpecCond.Name = "colSpecCond";
             this.colSpecCond.Text = "Спец. Условия";
             this.colSpecCond.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // colDriverPhone
             // 
             this.colDriverPhone.AspectName = "ShpDriverPhone";
+            this.colDriverPhone.Name = "colDriverPhone";
             this.colDriverPhone.Text = "Телефон водителя";
             this.colDriverPhone.Width = 100;
             // 
             // colDriverName
             // 
             this.colDriverName.AspectName = "ShpDriverFio";
+            this.colDriverName.Name = "colDriverName";
             this.colDriverName.Text = "ФИО водителя";
             this.colDriverName.Width = 150;
             // 
             // colTransComp
             // 
             this.colTransComp.AspectName = "TransportCompanyName";
+            this.colTransComp.Name = "colTransComp";
             this.colTransComp.Text = "Транспортная компания";
             this.colTransComp.Width = 100;
             // 
             // colTransportType
             // 
             this.colTransportType.AspectName = "TransportTypeName";
+            this.colTransportType.Name = "colTransportType";
             this.colTransportType.Text = "Марка ТС";
             this.colTransportType.Width = 100;
             // 
             // colTrackNumber
             // 
             this.colTrackNumber.AspectName = "ShpVehicleNumber";
+            this.colTrackNumber.Name = "colTrackNumber";
             this.colTrackNumber.Text = "Номер ТС";
             this.colTrackNumber.Width = 100;
             // 
             // colTrailerNumber
             // 
             this.colTrailerNumber.AspectName = "ShpTrailerNumber";
+            this.colTrailerNumber.Name = "colTrailerNumber";
             this.colTrailerNumber.Text = "Номер прицепа";
             this.colTrailerNumber.Width = 100;
             // 
             // colAttorneyNumber
             // 
             this.colAttorneyNumber.AspectName = "ShpAttorneyNumber";
+            this.colAttorneyNumber.Name = "colAttorneyNumber";
             this.colAttorneyNumber.Text = "Номер доверенности";
             this.colAttorneyNumber.Width = 100;
             // 
             // colAttorneyDate
             // 
             this.colAttorneyDate.AspectName = "ShpAttorneyDate";
+            this.colAttorneyDate.Name = "colAttorneyDate";
             this.colAttorneyDate.Text = "Дата доверенности";
             this.colAttorneyDate.Width = 100;
             // 
             // colSubmissionTime
             // 
             this.colSubmissionTime.AspectName = "ShpSubmissionTime";
+            this.colSubmissionTime.Name = "colSubmissionTime";
             this.colSubmissionTime.Text = "Время подачи документов";
             this.colSubmissionTime.Width = 100;
             // 
             // colStartTime
             // 
             this.colStartTime.AspectName = "ShpStartTime";
+            this.colStartTime.Name = "colStartTime";
             this.colStartTime.Text = "Время начала";
             this.colStartTime.Width = 100;
             // 
             // colEndTimePlan
             // 
             this.colEndTimePlan.AspectName = "ShpEndTimePlan";
+            this.colEndTimePlan.Name = "colEndTimePlan";
             this.colEndTimePlan.Text = "Время окончания";
             this.colEndTimePlan.Width = 100;
             // 
             // colEndTimeFact
             // 
             this.colEndTimeFact.AspectName = "ShpEndTimeFact";
+            this.colEndTimeFact.Name = "colEndTimeFact";
             this.colEndTimeFact.Text = "Убытие по факту";
             this.colEndTimeFact.Width = 100;
             // 
             // colDelayReason
             // 
             this.colDelayReason.AspectName = "ShpDelayReasonName";
+            this.colDelayReason.Name = "colDelayReason";
             this.colDelayReason.Text = "Причина опоздания";
             this.colDelayReason.Width = 100;
             // 
             // colDelayComment
             // 
             this.colDelayComment.AspectName = "ShpDelayComment";
+            this.colDelayComment.Name = "colDelayComment";
             this.colDelayComment.Text = "Комментарий по опозданию";
             this.colDelayComment.Width = 100;
             // 
             // colDepositor
             // 
             this.colDepositor.AspectName = "DepCode";
+            this.colDepositor.Name = "colDepositor";
             this.colDepositor.Text = "Депозитор";
             this.colDepositor.Width = 100;
             // 
             // colStampNumber
             // 
             this.colStampNumber.AspectName = "ShpStampNumber";
+            this.colStampNumber.Name = "colStampNumber";
             this.colStampNumber.Text = "№ пломбы";
             this.colStampNumber.Width = 100;
             // 
@@ -720,6 +754,7 @@ namespace Planning
             // 
             this.FontColor.AspectName = "FontColor";
             this.FontColor.IsVisible = false;
+            this.FontColor.Name = "FontColor";
             this.FontColor.Text = "FontColor";
             // 
             // BackgroundColor
@@ -727,6 +762,7 @@ namespace Planning
             this.BackgroundColor.AspectName = "BackgroundColor";
             this.BackgroundColor.DisplayIndex = 32;
             this.BackgroundColor.IsVisible = false;
+            this.BackgroundColor.Name = "BackgroundColor";
             this.BackgroundColor.Text = "BackgroundColor";
             // 
             // IsAddLv
@@ -734,6 +770,7 @@ namespace Planning
             this.IsAddLv.AspectName = "IsAddLv";
             this.IsAddLv.CheckBoxes = true;
             this.IsAddLv.IsEditable = false;
+            this.IsAddLv.Name = "IsAddLv";
             this.IsAddLv.Text = "Привязка к отгрузке";
             this.IsAddLv.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.IsAddLv.Width = 100;
@@ -741,18 +778,21 @@ namespace Planning
             // colShippingPlacesNumber
             // 
             this.colShippingPlacesNumber.AspectName = "ShippingPlacesNumber";
+            this.colShippingPlacesNumber.Name = "colShippingPlacesNumber";
             this.colShippingPlacesNumber.Text = "Кол-во отгрузочных мест";
             this.colShippingPlacesNumber.Width = 100;
             // 
             // colOrderWeight
             // 
             this.colOrderWeight.AspectName = "OrderWeight";
+            this.colOrderWeight.Name = "colOrderWeight";
             this.colOrderWeight.Text = "Вес заказа";
             this.colOrderWeight.Width = 100;
             // 
             // colSupplier
             // 
             this.colSupplier.AspectName = "ShpSupplierName";
+            this.colSupplier.Name = "colSupplier";
             this.colSupplier.Text = "Поставщик";
             this.colSupplier.Width = 200;
             // 
@@ -761,18 +801,21 @@ namespace Planning
             this.colIsEdm.AspectName = "IsEdm";
             this.colIsEdm.CheckBoxes = true;
             this.colIsEdm.IsEditable = false;
+            this.colIsEdm.Name = "colIsEdm";
             this.colIsEdm.Text = "ЭДО";
             this.colIsEdm.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // colTransportView
             // 
             this.colTransportView.AspectName = "TransportViewName";
+            this.colTransportView.Name = "colTransportView";
             this.colTransportView.Text = "Вид транспорта";
             this.colTransportView.Width = 100;
             // 
             // colWarehouseName
             // 
             this.colWarehouseName.AspectName = "WarehouseName";
+            this.colWarehouseName.Name = "colWarehouseName";
             this.colWarehouseName.Text = "Склад";
             this.colWarehouseName.Width = 100;
             // 
@@ -780,6 +823,7 @@ namespace Planning
             // 
             this.colOrdLvId.AspectName = "OrdLVID";
             this.colOrdLvId.IsVisible = false;
+            this.colOrdLvId.Name = "colOrdLvId";
             this.colOrdLvId.Text = "colOrdLvId";
             // 
             // olvRowNumberRange
@@ -787,13 +831,14 @@ namespace Planning
             this.olvRowNumberRange.AspectName = "RowNumberRange";
             this.olvRowNumberRange.DisplayIndex = 41;
             this.olvRowNumberRange.IsVisible = false;
+            this.olvRowNumberRange.Name = "olvRowNumberRange";
             // 
             // headerFormatStyle1
             // 
-            this.headerFormatStyle1.Hot = headerStateStyle4;
-            headerStateStyle5.FrameWidth = 2F;
-            this.headerFormatStyle1.Normal = headerStateStyle5;
-            this.headerFormatStyle1.Pressed = headerStateStyle6;
+            this.headerFormatStyle1.Hot = headerStateStyle1;
+            headerStateStyle2.FrameWidth = 2F;
+            this.headerFormatStyle1.Normal = headerStateStyle2;
+            this.headerFormatStyle1.Pressed = headerStateStyle3;
             // 
             // imageListInOut
             // 
@@ -932,6 +977,7 @@ namespace Planning
             this.btnRefresh.Size = new System.Drawing.Size(49, 49);
             this.btnRefresh.TabIndex = 0;
             this.btnRefresh.UseVisualStyleBackColor = true;
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
             // btnDelete
             // 

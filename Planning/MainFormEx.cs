@@ -54,8 +54,8 @@ namespace Planning
 
             Init();
 
-            ConnectionParams.ServerName = "DZHURAVLEV";
-            ConnectionParams.BaseName = "Planning_test";
+            ConnectionParams.ServerName = @"ZDV\MS2019DVG";
+            ConnectionParams.BaseName = "Planning";
             ConnectionParams.UserName ="sysadm";
             ConnectionParams.Pwd = "sysadm";
 
@@ -82,8 +82,6 @@ namespace Planning
         private void SetupColumns()
         {
 
-            
-
             colDirection.AspectGetter = delegate (object row) {
                 if (((ShipmentMain)row).InOut == "вход")
                     return "In";
@@ -105,6 +103,24 @@ namespace Planning
 
             ToolTip btnAddToolTip = new ToolTip();
             btnAddToolTip.SetToolTip(btnAdd, "Добавить отгрузку");
+
+            ToolTip btnEditToolTip = new ToolTip();
+            btnEditToolTip.SetToolTip(btnEdit, "Редактировать отгрузку");
+
+            ToolTip btnDeleteToolTip = new ToolTip();
+            btnDeleteToolTip.SetToolTip(btnDelete, "Удалить отгрузку");
+
+            ToolTip btnRefreshToolTip = new ToolTip();
+            btnRefreshToolTip.SetToolTip(btnRefresh, "Обновить");
+
+            ToolTip btnShowLogToolTip = new ToolTip();
+            btnShowLogToolTip.SetToolTip(btnShowLog, "Показать историю изменений");
+
+            ToolTip btnPrintToolTip = new ToolTip();
+            btnPrintToolTip.SetToolTip(btnPrint, "Печать");
+
+            ToolTip btnColumnVisibleToolTip = new ToolTip();
+            btnColumnVisibleToolTip.SetToolTip(btnColumnVisible, "Видимость колонок");
         }
         private void ShipmentRowEdit()
         {
@@ -241,7 +257,7 @@ namespace Planning
         private void PopulateVisibleColumn()
         {
             contextMenuColumns.Items.Clear();
-            
+
             foreach (OLVColumn col in tblShipments.AllColumns)
             {
                 
@@ -278,6 +294,7 @@ namespace Planning
         {
             ToolStripMenuItem item = (ToolStripMenuItem)sender;
             (item.Tag as OLVColumn).IsVisible = item.CheckState == CheckState.Checked ? true : false;
+            tblShipments.RebuildColumns();
             CommonFuctions.settingsHandle.SetParamValue("View\\HideColumns", GetHideColumns());
         }
 
@@ -294,7 +311,7 @@ namespace Planning
         private void tblShipments_FormatRow(object sender, FormatRowEventArgs e)
         {
             ShipmentMain item = (ShipmentMain)e.Item.RowObject;
-            e.Item.BackColor = rowColors[(int)item.RowNumberRange % 2];
+            e.Item.BackColor = item.RowNumberRange == null?Color.White: rowColors[(int)item.RowNumberRange % 2];
         }
 
         private void btnGetCurrentDay_Click(object sender, EventArgs e)
@@ -319,10 +336,18 @@ namespace Planning
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            
-            tblShipments.AllColumns[4].IsVisible = false;
-            //tblShipments.
-            
+
+            //tblShipments.AllColumns[4].IsVisible = false;
+            List < OLVColumn > cols= tblShipments.AllColumns;
+            bool v = colDate.IsVisible;
+            List<OLVColumn> columns = tblShipments.GetFilteredColumns(tblShipments.View);
+            //tblShipments.RebuildColumns();
+
+        }
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            ShipmentsLoad();
         }
     }
 }
