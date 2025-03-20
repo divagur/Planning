@@ -12,12 +12,21 @@ using Planning.DataLayer;
 using Planning.Properties;
 using Planning.Controls;
 using Planning.Kernel;
+using System.Drawing.Drawing2D;
+using System.IO;
+using System.Runtime.InteropServices;
 
 namespace Planning
 {
     public partial class MainFormEx : Form
     {
+        public const int WM_NCLBUTTONDOWN = 0xA1;
+        public const int HT_CAPTION = 0x2;
 
+        [DllImport("user32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+        [DllImport("user32.dll")]
+        public static extern bool ReleaseCapture();
         List<string> hideCols;
         private List<Color> rowColors = new List<Color>()
         {
@@ -54,8 +63,10 @@ namespace Planning
 
             Init();
 
-            ConnectionParams.ServerName = @"ZDV\MS2019DVG";
-            ConnectionParams.BaseName = "Planning";
+            // ConnectionParams.ServerName = @"ZDV\MS2019DVG";
+            // ConnectionParams.BaseName = "Planning";
+            ConnectionParams.ServerName = @"DZHURAVLEV";
+            ConnectionParams.BaseName = "Planning_test";
             ConnectionParams.UserName ="sysadm";
             ConnectionParams.Pwd = "sysadm";
 
@@ -348,6 +359,53 @@ namespace Planning
         private void btnRefresh_Click(object sender, EventArgs e)
         {
             ShipmentsLoad();
+        }
+
+        private void tabForms_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            RectangleF tabTextArea = RectangleF.Empty;
+            for (int nIndex = 0; nIndex < tabForms.TabCount; nIndex++)
+            {
+                if (nIndex != tabForms.SelectedIndex)
+                {
+                    /*if not active draw ,inactive close button*/
+                    tabTextArea = (RectangleF)tabForms.GetTabRect(nIndex);
+                    
+                    e.Graphics.DrawImage(Resources.TabClose,
+                            tabTextArea.X + tabTextArea.Width - 16, 5, 13, 13);
+                }
+                else
+                {
+                    tabTextArea = (RectangleF)tabForms.GetTabRect(nIndex);
+                    LinearGradientBrush br = new LinearGradientBrush(tabTextArea,
+                        SystemColors.ControlLightLight, SystemColors.Control,
+                        LinearGradientMode.Vertical);
+                    e.Graphics.FillRectangle(br, tabTextArea);
+
+                    /*if active draw ,inactive close button*/
+                        e.Graphics.DrawImage(Resources.TabCloseRed,
+                            tabTextArea.X + tabTextArea.Width - 16, 5, 13, 13);
+                    br.Dispose();
+                }
+                string str = tabForms.TabPages[nIndex].Text;
+                StringFormat stringFormat = new StringFormat(); 
+                stringFormat.Alignment = StringAlignment.Center;
+                using (SolidBrush brush = new SolidBrush(tabForms.TabPages[nIndex].ForeColor))
+                {
+                    /*Draw the tab header text*/
+                    e.Graphics.DrawString(str,this.Font, brush,
+                    tabTextArea,stringFormat);
+                }
+            }
+        }
+
+        private void panelFormHeader_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                ReleaseCapture();
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+            }
         }
     }
 }

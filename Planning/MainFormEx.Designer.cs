@@ -32,10 +32,10 @@ namespace Planning
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            BrightIdeasSoftware.HeaderStateStyle headerStateStyle1 = new BrightIdeasSoftware.HeaderStateStyle();
-            BrightIdeasSoftware.HeaderStateStyle headerStateStyle2 = new BrightIdeasSoftware.HeaderStateStyle();
-            BrightIdeasSoftware.HeaderStateStyle headerStateStyle3 = new BrightIdeasSoftware.HeaderStateStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainFormEx));
+            BrightIdeasSoftware.HeaderStateStyle headerStateStyle4 = new BrightIdeasSoftware.HeaderStateStyle();
+            BrightIdeasSoftware.HeaderStateStyle headerStateStyle5 = new BrightIdeasSoftware.HeaderStateStyle();
+            BrightIdeasSoftware.HeaderStateStyle headerStateStyle6 = new BrightIdeasSoftware.HeaderStateStyle();
             this.menuMain = new System.Windows.Forms.MenuStrip();
             this.mtiFile = new System.Windows.Forms.ToolStripMenuItem();
             this.miSettings = new System.Windows.Forms.ToolStripMenuItem();
@@ -64,7 +64,7 @@ namespace Planning
             this.miCurrentTask = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip2 = new System.Windows.Forms.StatusStrip();
             this.statusInfo = new System.Windows.Forms.ToolStripStatusLabel();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabForms = new System.Windows.Forms.TabControl();
             this.tabMain = new System.Windows.Forms.TabPage();
             this.tblShipments = new BrightIdeasSoftware.ObjectListView();
             this.colOrderDetail = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
@@ -114,8 +114,6 @@ namespace Planning
             this.colWarehouseName = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.colOrdLvId = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvRowNumberRange = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.headerFormatStyle1 = new BrightIdeasSoftware.HeaderFormatStyle();
-            this.imageListInOut = new System.Windows.Forms.ImageList(this.components);
             this.panelMain = new System.Windows.Forms.Panel();
             this.edSearch = new System.Windows.Forms.TextBox();
             this.edCurrDay = new System.Windows.Forms.DateTimePicker();
@@ -135,11 +133,14 @@ namespace Planning
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
+            this.headerFormatStyle1 = new BrightIdeasSoftware.HeaderFormatStyle();
+            this.imageListInOut = new System.Windows.Forms.ImageList(this.components);
             this.imageListMain16 = new System.Windows.Forms.ImageList(this.components);
             this.imageListMain32 = new System.Windows.Forms.ImageList(this.components);
+            this.panelFormHeader = new System.Windows.Forms.Panel();
             this.menuMain.SuspendLayout();
             this.statusStrip2.SuspendLayout();
-            this.tabControl1.SuspendLayout();
+            this.tabForms.SuspendLayout();
             this.tabMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tblShipments)).BeginInit();
             this.panelMain.SuspendLayout();
@@ -153,7 +154,7 @@ namespace Planning
             this.miDicts,
             this.miReports,
             this.miAdditional});
-            this.menuMain.Location = new System.Drawing.Point(0, 0);
+            this.menuMain.Location = new System.Drawing.Point(0, 25);
             this.menuMain.Name = "menuMain";
             this.menuMain.Size = new System.Drawing.Size(890, 24);
             this.menuMain.TabIndex = 1;
@@ -361,23 +362,27 @@ namespace Planning
             this.statusInfo.Name = "statusInfo";
             this.statusInfo.Size = new System.Drawing.Size(0, 17);
             // 
-            // tabControl1
+            // tabForms
             // 
-            this.tabControl1.Controls.Add(this.tabMain);
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(0, 80);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(890, 508);
-            this.tabControl1.TabIndex = 4;
+            this.tabForms.Controls.Add(this.tabMain);
+            this.tabForms.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabForms.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
+            this.tabForms.ItemSize = new System.Drawing.Size(80, 18);
+            this.tabForms.Location = new System.Drawing.Point(0, 49);
+            this.tabForms.Name = "tabForms";
+            this.tabForms.SelectedIndex = 0;
+            this.tabForms.Size = new System.Drawing.Size(890, 539);
+            this.tabForms.TabIndex = 4;
+            this.tabForms.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.tabForms_DrawItem);
             // 
             // tabMain
             // 
             this.tabMain.Controls.Add(this.tblShipments);
+            this.tabMain.Controls.Add(this.panelMain);
             this.tabMain.Location = new System.Drawing.Point(4, 22);
             this.tabMain.Name = "tabMain";
             this.tabMain.Padding = new System.Windows.Forms.Padding(3);
-            this.tabMain.Size = new System.Drawing.Size(882, 482);
+            this.tabMain.Size = new System.Drawing.Size(882, 513);
             this.tabMain.TabIndex = 0;
             this.tabMain.UseVisualStyleBackColor = true;
             // 
@@ -479,13 +484,13 @@ namespace Planning
             this.tblShipments.GridLines = true;
             this.tblShipments.HeaderWordWrap = true;
             this.tblShipments.HideSelection = false;
-            this.tblShipments.Location = new System.Drawing.Point(3, 3);
+            this.tblShipments.Location = new System.Drawing.Point(3, 59);
             this.tblShipments.Name = "tblShipments";
             this.tblShipments.RowHeight = 25;
             this.tblShipments.SelectColumnsOnRightClick = false;
             this.tblShipments.SelectColumnsOnRightClickBehaviour = BrightIdeasSoftware.ObjectListView.ColumnSelectBehaviour.None;
             this.tblShipments.ShowGroups = false;
-            this.tblShipments.Size = new System.Drawing.Size(876, 476);
+            this.tblShipments.Size = new System.Drawing.Size(876, 451);
             this.tblShipments.TabIndex = 1;
             this.tblShipments.UseAlternatingBackColors = true;
             this.tblShipments.UseCompatibleStateImageBehavior = false;
@@ -833,22 +838,6 @@ namespace Planning
             this.olvRowNumberRange.IsVisible = false;
             this.olvRowNumberRange.Name = "olvRowNumberRange";
             // 
-            // headerFormatStyle1
-            // 
-            this.headerFormatStyle1.Hot = headerStateStyle1;
-            headerStateStyle2.FrameWidth = 2F;
-            this.headerFormatStyle1.Normal = headerStateStyle2;
-            this.headerFormatStyle1.Pressed = headerStateStyle3;
-            // 
-            // imageListInOut
-            // 
-            this.imageListInOut.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListInOut.ImageStream")));
-            this.imageListInOut.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageListInOut.Images.SetKeyName(0, "icons8-enter-16.png");
-            this.imageListInOut.Images.SetKeyName(1, "In");
-            this.imageListInOut.Images.SetKeyName(2, "Out");
-            this.imageListInOut.Images.SetKeyName(3, "Move");
-            // 
             // panelMain
             // 
             this.panelMain.Controls.Add(this.edSearch);
@@ -866,9 +855,9 @@ namespace Planning
             this.panelMain.Controls.Add(this.btnAdd);
             this.panelMain.Controls.Add(this.btnColumnVisible);
             this.panelMain.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelMain.Location = new System.Drawing.Point(0, 24);
+            this.panelMain.Location = new System.Drawing.Point(3, 3);
             this.panelMain.Name = "panelMain";
-            this.panelMain.Size = new System.Drawing.Size(890, 56);
+            this.panelMain.Size = new System.Drawing.Size(876, 56);
             this.panelMain.TabIndex = 5;
             // 
             // edSearch
@@ -1056,6 +1045,22 @@ namespace Planning
             this.toolStripMenuItem4.Size = new System.Drawing.Size(80, 22);
             this.toolStripMenuItem4.Text = "3";
             // 
+            // headerFormatStyle1
+            // 
+            this.headerFormatStyle1.Hot = headerStateStyle4;
+            headerStateStyle5.FrameWidth = 2F;
+            this.headerFormatStyle1.Normal = headerStateStyle5;
+            this.headerFormatStyle1.Pressed = headerStateStyle6;
+            // 
+            // imageListInOut
+            // 
+            this.imageListInOut.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListInOut.ImageStream")));
+            this.imageListInOut.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageListInOut.Images.SetKeyName(0, "icons8-enter-16.png");
+            this.imageListInOut.Images.SetKeyName(1, "In");
+            this.imageListInOut.Images.SetKeyName(2, "Out");
+            this.imageListInOut.Images.SetKeyName(3, "Move");
+            // 
             // imageListMain16
             // 
             this.imageListMain16.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListMain16.ImageStream")));
@@ -1084,15 +1089,24 @@ namespace Planning
             this.imageListMain32.Images.SetKeyName(4, "icons8-print-32.png");
             this.imageListMain32.Images.SetKeyName(5, "icons8-refresh-32_1.png");
             // 
+            // panelFormHeader
+            // 
+            this.panelFormHeader.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelFormHeader.Location = new System.Drawing.Point(0, 0);
+            this.panelFormHeader.Name = "panelFormHeader";
+            this.panelFormHeader.Size = new System.Drawing.Size(890, 25);
+            this.panelFormHeader.TabIndex = 6;
+            this.panelFormHeader.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panelFormHeader_MouseMove);
+            // 
             // MainFormEx
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(890, 610);
-            this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.tabForms);
             this.Controls.Add(this.statusStrip2);
-            this.Controls.Add(this.panelMain);
             this.Controls.Add(this.menuMain);
+            this.Controls.Add(this.panelFormHeader);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainFormEx";
             this.Text = "Planning";
@@ -1102,7 +1116,7 @@ namespace Planning
             this.menuMain.PerformLayout();
             this.statusStrip2.ResumeLayout(false);
             this.statusStrip2.PerformLayout();
-            this.tabControl1.ResumeLayout(false);
+            this.tabForms.ResumeLayout(false);
             this.tabMain.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.tblShipments)).EndInit();
             this.panelMain.ResumeLayout(false);
@@ -1143,7 +1157,7 @@ namespace Planning
         private System.Windows.Forms.ToolStripMenuItem miCurrentTask;
         private System.Windows.Forms.StatusStrip statusStrip2;
         private System.Windows.Forms.ToolStripStatusLabel statusInfo;
-        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabControl tabForms;
         private System.Windows.Forms.TabPage tabMain;
         private BrightIdeasSoftware.ObjectListView tblShipments;
         private BrightIdeasSoftware.OLVColumn colOrderDetail;
@@ -1216,5 +1230,6 @@ namespace Planning
         private System.Windows.Forms.Button btnSearchNext;
         private System.Windows.Forms.Button btnSearch;
         private BrightIdeasSoftware.OLVColumn olvRowNumberRange;
+        private System.Windows.Forms.Panel panelFormHeader;
     }
 }

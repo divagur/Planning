@@ -833,6 +833,9 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Planing.cs</LastGenOutput>
     </Content>
+    <None Include="Resources\TabCloseRed.png" />
+    <None Include="Resources\TabClose.png" />
+    <None Include="Resources\TabClose.bmp" />
     <None Include="Resources\ShpIn.png" />
     <None Include="Resources\view_detailed_2595.png" />
     <None Include="Resources\Print.png" />
