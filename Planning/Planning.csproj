@@ -855,6 +855,14 @@
     <None Include="Resources\icons8-sync-16.png" />
     <None Include="Resources\icons8-enter-16.png" />
     <None Include="Resources\icons8-exit-16.png" />
+    <None Include="Resources\icons8-close-window-16.png" />
+    <None Include="Resources\icons8-close-window-32.png" />
+    <None Include="Resources\icons8-maximize-window-32.png" />
+    <None Include="Resources\icons8-minimize-window-32.png" />
+    <None Include="Resources\icons8-menu-32.png" />
+    <None Include="Resources\icons8-minimize-window-16.png" />
+    <None Include="Resources\icons8-maximize-window-32 %281%29.png" />
+    <None Include="Resources\icons8-minimize-window-32 %281%29.png" />
     <Content Include="Resources\printer.png" />
     <None Include="Resources\arrow_refresh_8563.png" />
     <Content Include="PlanningLogo.ico" />

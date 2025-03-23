@@ -26,7 +26,6 @@ namespace Planning.DataLayer
                                         @{nameof(ShipmentInvoice.TrailerNumber)}, @{nameof(ShipmentInvoice.Driver)},
                                         @{nameof(ShipmentInvoice.SupplierDeliveryDay)},
                                         @{nameof(ShipmentInvoice.Status)}, @{nameof(ShipmentInvoice.Error)})";
-                    break;
                 case EditState.Edit:
                     return $@"update {Table} set shp_id = @{nameof(ShipmentInvoice.ShpId)}, create_date = @{nameof(ShipmentInvoice.CreateDate)},
                                             actual_date = @{nameof(ShipmentInvoice.ActualDate)},number = @{nameof(ShipmentInvoice.Number)},
@@ -39,10 +38,8 @@ namespace Planning.DataLayer
                                             error =  @{nameof(ShipmentInvoice.Error)}
 
                             where id = @Id";
-                    break;
                 case EditState.Delete:
                     return $"delete from {Table} where id = @Id";
-                    break;
             }
 
             return String.Empty;

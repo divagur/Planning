@@ -784,7 +784,7 @@ namespace Planning
 
         private bool IsAllOrderBindToLv()
         {
-            bool isAllBindings = false;
+            //bool isAllBindings = false;
             int orderNoBindCount = _shipmentOrders.Count(o => o.IsBinding == null || o.IsBinding == false);
 
             int orderPartNoBindCount = _shipmentOrderParts.Count(o => o.IsBinding == null || o.IsBinding == false);

@@ -65,8 +65,8 @@ namespace Planning
 
             // ConnectionParams.ServerName = @"ZDV\MS2019DVG";
             // ConnectionParams.BaseName = "Planning";
-            ConnectionParams.ServerName = @"DZHURAVLEV";
-            ConnectionParams.BaseName = "Planning_test";
+            ConnectionParams.ServerName = @"ZDV\MS2019DVG";
+            ConnectionParams.BaseName = "Planning";
             ConnectionParams.UserName ="sysadm";
             ConnectionParams.Pwd = "sysadm";
 
@@ -75,7 +75,7 @@ namespace Planning
             SetupColumns();
             SetupButtons();
 
-            ShipmentsLoad();
+            //ShipmentsLoad();
             tblShipments.DrawSubItem += TblShipments_DrawSubItem;
 
 
@@ -157,7 +157,7 @@ namespace Planning
             }
 
             ShipmentEdit(shipmentAddResult);
-            ShipmentsLoad();
+           // ShipmentsLoad();
         }
         private void ShipmentEdit(ShipmentParam shipmentAddResult)
         {
@@ -301,6 +301,21 @@ namespace Planning
             }
             return String.Join(",", result);
         }
+
+        private void MaximideWindows()
+        {
+            WindowState = WindowState == FormWindowState.Maximized ? FormWindowState.Normal : FormWindowState.Maximized;
+        }
+        private void AddFormTab(Form frm, String Name)
+        {
+            frm.TopLevel = false;
+            frm.Visible = true;
+            frm.FormBorderStyle = FormBorderStyle.None;
+            frm.Dock = DockStyle.Fill;
+            tabForms.TabPages.Add(Name);
+            tabForms.TabPages[tabForms.TabPages.Count - 1].Controls.Add(frm);
+            tabForms.SelectedTab = tabForms.TabPages[tabForms.TabPages.Count - 1];
+        }
         private void Item_Click(object sender, EventArgs e)
         {
             ToolStripMenuItem item = (ToolStripMenuItem)sender;
@@ -405,6 +420,57 @@ namespace Planning
             {
                 ReleaseCapture();
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+            }
+        }
+
+        private void panelFormHeader_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            MaximideWindows();
+        }
+
+        private void btnMinimizeWindow_Click(object sender, EventArgs e)
+        {
+            WindowState = FormWindowState.Minimized;
+        }
+
+        private void btnMaximizeWindow_Click(object sender, EventArgs e)
+        {
+            MaximideWindows();
+        }
+
+        private void btnCloseWindow_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnMainMenu_Click(object sender, EventArgs mevent)
+        {
+           
+        }
+
+        private void btnMainMenu_MouseDown(object sender, MouseEventArgs mevent)
+        {
+            base.OnMouseDown(mevent);
+
+            if ( mevent.Button == MouseButtons.Left)
+            {
+                Point menuLocation;
+                /*
+                if (ShowMenuUnderCursor)
+                {
+                    menuLocation = mevent.Location;
+                }
+                else
+                {*/
+                    menuLocation = new Point(3, btnMainMenu.Height);
+                //}
+
+                contextMenuMain.Show(this, menuLocation);
             }
         }
     }

@@ -1939,7 +1939,6 @@ namespace Planning
                         return "";
                     TimeSpan diff = dateTime1 - dateTime2;
                     return diff.ToString(@"hh\:mm\:ss");
-                    break;
                 default:
                     break;
             }

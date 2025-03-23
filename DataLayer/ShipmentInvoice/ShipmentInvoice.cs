@@ -16,7 +16,6 @@ namespace Planning.DataLayer
 		string _invoiceType;
         string _customsCode;
         string _supplierCode;
-        string _sourceCode;
         string _recipientCode;
 		string _deliveryType;
         string _containerNumber;
@@ -96,7 +95,7 @@ namespace Planning.DataLayer
             get => _customsCode;
             set
             {
-                if (_customsCode == null || !_sourceCode.Equals(value))
+                if (_customsCode == null || !_customsCode.Equals(value))
                 {
                     _customsCode = value;
                     Edit();
@@ -124,12 +123,12 @@ namespace Planning.DataLayer
             get => _recipientCode;
             set
             {
-                //if (!_recipientCode.Equals(value))
-                //{
+                if (_recipientCode ==null || !_recipientCode.Equals(value))
+                {
                     _recipientCode = value;
                     Edit();
 
-                //}
+                }
             }
         }
         public string DeliveryType
@@ -202,7 +201,7 @@ namespace Planning.DataLayer
             get => _supplierDeliveryDay;
             set
             {
-                if (_supplierDeliveryDay == null || !_supplierDeliveryDay.Equals(value))
+                if (!_supplierDeliveryDay.Equals(value))
                 {
                     _supplierDeliveryDay = value;
                     Edit();

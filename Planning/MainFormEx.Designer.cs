@@ -33,9 +33,9 @@ namespace Planning
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainFormEx));
-            BrightIdeasSoftware.HeaderStateStyle headerStateStyle4 = new BrightIdeasSoftware.HeaderStateStyle();
-            BrightIdeasSoftware.HeaderStateStyle headerStateStyle5 = new BrightIdeasSoftware.HeaderStateStyle();
-            BrightIdeasSoftware.HeaderStateStyle headerStateStyle6 = new BrightIdeasSoftware.HeaderStateStyle();
+            BrightIdeasSoftware.HeaderStateStyle headerStateStyle1 = new BrightIdeasSoftware.HeaderStateStyle();
+            BrightIdeasSoftware.HeaderStateStyle headerStateStyle2 = new BrightIdeasSoftware.HeaderStateStyle();
+            BrightIdeasSoftware.HeaderStateStyle headerStateStyle3 = new BrightIdeasSoftware.HeaderStateStyle();
             this.menuMain = new System.Windows.Forms.MenuStrip();
             this.mtiFile = new System.Windows.Forms.ToolStripMenuItem();
             this.miSettings = new System.Windows.Forms.ToolStripMenuItem();
@@ -138,6 +138,32 @@ namespace Planning
             this.imageListMain16 = new System.Windows.Forms.ImageList(this.components);
             this.imageListMain32 = new System.Windows.Forms.ImageList(this.components);
             this.panelFormHeader = new System.Windows.Forms.Panel();
+            this.btnMainMenu = new System.Windows.Forms.Button();
+            this.btnMinimizeWindow = new System.Windows.Forms.Button();
+            this.btnMaximizeWindow = new System.Windows.Forms.Button();
+            this.btnCloseWindow = new System.Windows.Forms.Button();
+            this.contextMenuMain = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItemFile = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemSettings = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemConnect = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemDict = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemDictTimeSlot = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemDictDepositor = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemDictOpersType = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemDictDelayReasons = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemDictGates = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemDictTC = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemDoctSupplier = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemDictAttributes = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemDictTransportType = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemDictTransportView = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemDictWarehouse = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemDictCustomPosts = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemReport = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemReportPeriod = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemReportStatistic = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemReportTC = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemAdd = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMain.SuspendLayout();
             this.statusStrip2.SuspendLayout();
             this.tabForms.SuspendLayout();
@@ -145,6 +171,8 @@ namespace Planning
             ((System.ComponentModel.ISupportInitialize)(this.tblShipments)).BeginInit();
             this.panelMain.SuspendLayout();
             this.contextMenuColumns.SuspendLayout();
+            this.panelFormHeader.SuspendLayout();
+            this.contextMenuMain.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuMain
@@ -154,7 +182,7 @@ namespace Planning
             this.miDicts,
             this.miReports,
             this.miAdditional});
-            this.menuMain.Location = new System.Drawing.Point(0, 25);
+            this.menuMain.Location = new System.Drawing.Point(0, 39);
             this.menuMain.Name = "menuMain";
             this.menuMain.Size = new System.Drawing.Size(890, 24);
             this.menuMain.TabIndex = 1;
@@ -368,10 +396,10 @@ namespace Planning
             this.tabForms.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabForms.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
             this.tabForms.ItemSize = new System.Drawing.Size(80, 18);
-            this.tabForms.Location = new System.Drawing.Point(0, 49);
+            this.tabForms.Location = new System.Drawing.Point(0, 63);
             this.tabForms.Name = "tabForms";
             this.tabForms.SelectedIndex = 0;
-            this.tabForms.Size = new System.Drawing.Size(890, 539);
+            this.tabForms.Size = new System.Drawing.Size(890, 525);
             this.tabForms.TabIndex = 4;
             this.tabForms.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.tabForms_DrawItem);
             // 
@@ -382,8 +410,9 @@ namespace Planning
             this.tabMain.Location = new System.Drawing.Point(4, 22);
             this.tabMain.Name = "tabMain";
             this.tabMain.Padding = new System.Windows.Forms.Padding(3);
-            this.tabMain.Size = new System.Drawing.Size(882, 513);
+            this.tabMain.Size = new System.Drawing.Size(882, 499);
             this.tabMain.TabIndex = 0;
+            this.tabMain.Text = "Операции";
             this.tabMain.UseVisualStyleBackColor = true;
             // 
             // tblShipments
@@ -490,7 +519,7 @@ namespace Planning
             this.tblShipments.SelectColumnsOnRightClick = false;
             this.tblShipments.SelectColumnsOnRightClickBehaviour = BrightIdeasSoftware.ObjectListView.ColumnSelectBehaviour.None;
             this.tblShipments.ShowGroups = false;
-            this.tblShipments.Size = new System.Drawing.Size(876, 451);
+            this.tblShipments.Size = new System.Drawing.Size(876, 437);
             this.tblShipments.TabIndex = 1;
             this.tblShipments.UseAlternatingBackColors = true;
             this.tblShipments.UseCompatibleStateImageBehavior = false;
@@ -1047,10 +1076,10 @@ namespace Planning
             // 
             // headerFormatStyle1
             // 
-            this.headerFormatStyle1.Hot = headerStateStyle4;
-            headerStateStyle5.FrameWidth = 2F;
-            this.headerFormatStyle1.Normal = headerStateStyle5;
-            this.headerFormatStyle1.Pressed = headerStateStyle6;
+            this.headerFormatStyle1.Hot = headerStateStyle1;
+            headerStateStyle2.FrameWidth = 2F;
+            this.headerFormatStyle1.Normal = headerStateStyle2;
+            this.headerFormatStyle1.Pressed = headerStateStyle3;
             // 
             // imageListInOut
             // 
@@ -1091,12 +1120,230 @@ namespace Planning
             // 
             // panelFormHeader
             // 
+            this.panelFormHeader.Controls.Add(this.btnMainMenu);
+            this.panelFormHeader.Controls.Add(this.btnMinimizeWindow);
+            this.panelFormHeader.Controls.Add(this.btnMaximizeWindow);
+            this.panelFormHeader.Controls.Add(this.btnCloseWindow);
             this.panelFormHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelFormHeader.Location = new System.Drawing.Point(0, 0);
             this.panelFormHeader.Name = "panelFormHeader";
-            this.panelFormHeader.Size = new System.Drawing.Size(890, 25);
+            this.panelFormHeader.Size = new System.Drawing.Size(890, 39);
             this.panelFormHeader.TabIndex = 6;
+            this.panelFormHeader.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.panelFormHeader_MouseDoubleClick);
             this.panelFormHeader.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panelFormHeader_MouseMove);
+            // 
+            // btnMainMenu
+            // 
+            this.btnMainMenu.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnMainMenu.Image = global::Planning.Properties.Resources.icons8_menu_32;
+            this.btnMainMenu.Location = new System.Drawing.Point(0, 0);
+            this.btnMainMenu.Margin = new System.Windows.Forms.Padding(1, 3, 1, 3);
+            this.btnMainMenu.Name = "btnMainMenu";
+            this.btnMainMenu.Size = new System.Drawing.Size(37, 39);
+            this.btnMainMenu.TabIndex = 0;
+            this.btnMainMenu.UseVisualStyleBackColor = true;
+            this.btnMainMenu.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnMainMenu_MouseDown);
+            // 
+            // btnMinimizeWindow
+            // 
+            this.btnMinimizeWindow.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnMinimizeWindow.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnMinimizeWindow.FlatAppearance.BorderSize = 0;
+            this.btnMinimizeWindow.Image = global::Planning.Properties.Resources.icons8_minimize_window_32__1_;
+            this.btnMinimizeWindow.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.btnMinimizeWindow.Location = new System.Drawing.Point(773, 0);
+            this.btnMinimizeWindow.Margin = new System.Windows.Forms.Padding(1, 3, 1, 3);
+            this.btnMinimizeWindow.Name = "btnMinimizeWindow";
+            this.btnMinimizeWindow.Size = new System.Drawing.Size(43, 39);
+            this.btnMinimizeWindow.TabIndex = 0;
+            this.btnMinimizeWindow.UseVisualStyleBackColor = true;
+            this.btnMinimizeWindow.Click += new System.EventHandler(this.btnMinimizeWindow_Click);
+            // 
+            // btnMaximizeWindow
+            // 
+            this.btnMaximizeWindow.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnMaximizeWindow.Image = global::Planning.Properties.Resources.icons8_maximize_window_32;
+            this.btnMaximizeWindow.Location = new System.Drawing.Point(816, 0);
+            this.btnMaximizeWindow.Margin = new System.Windows.Forms.Padding(1, 3, 1, 3);
+            this.btnMaximizeWindow.Name = "btnMaximizeWindow";
+            this.btnMaximizeWindow.Size = new System.Drawing.Size(37, 39);
+            this.btnMaximizeWindow.TabIndex = 0;
+            this.btnMaximizeWindow.UseVisualStyleBackColor = true;
+            this.btnMaximizeWindow.Click += new System.EventHandler(this.btnMaximizeWindow_Click);
+            // 
+            // btnCloseWindow
+            // 
+            this.btnCloseWindow.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnCloseWindow.Image = global::Planning.Properties.Resources.icons8_close_window_32;
+            this.btnCloseWindow.Location = new System.Drawing.Point(853, 0);
+            this.btnCloseWindow.Margin = new System.Windows.Forms.Padding(1, 3, 3, 3);
+            this.btnCloseWindow.Name = "btnCloseWindow";
+            this.btnCloseWindow.Size = new System.Drawing.Size(37, 39);
+            this.btnCloseWindow.TabIndex = 0;
+            this.btnCloseWindow.UseVisualStyleBackColor = true;
+            this.btnCloseWindow.Click += new System.EventHandler(this.btnCloseWindow_Click);
+            // 
+            // contextMenuMain
+            // 
+            this.contextMenuMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemFile,
+            this.toolStripMenuItemDict,
+            this.toolStripMenuItemReport,
+            this.toolStripMenuItemAdd});
+            this.contextMenuMain.Name = "contextMenuMain";
+            this.contextMenuMain.Size = new System.Drawing.Size(163, 92);
+            // 
+            // toolStripMenuItemFile
+            // 
+            this.toolStripMenuItemFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemSettings,
+            this.menuItemConnect});
+            this.toolStripMenuItemFile.Name = "toolStripMenuItemFile";
+            this.toolStripMenuItemFile.Size = new System.Drawing.Size(162, 22);
+            this.toolStripMenuItemFile.Text = "Файл";
+            // 
+            // menuItemSettings
+            // 
+            this.menuItemSettings.Name = "menuItemSettings";
+            this.menuItemSettings.Size = new System.Drawing.Size(152, 22);
+            this.menuItemSettings.Text = "Настройки";
+            // 
+            // menuItemConnect
+            // 
+            this.menuItemConnect.Name = "menuItemConnect";
+            this.menuItemConnect.Size = new System.Drawing.Size(152, 22);
+            this.menuItemConnect.Text = "Подключение";
+            // 
+            // toolStripMenuItemDict
+            // 
+            this.toolStripMenuItemDict.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemDictTimeSlot,
+            this.menuItemDictDepositor,
+            this.menuItemDictOpersType,
+            this.menuItemDictDelayReasons,
+            this.menuItemDictGates,
+            this.menuItemDictTC,
+            this.menuItemDoctSupplier,
+            this.menuItemDictAttributes,
+            this.menuItemDictTransportType,
+            this.menuItemDictTransportView,
+            this.menuItemDictWarehouse,
+            this.menuItemDictCustomPosts});
+            this.toolStripMenuItemDict.Name = "toolStripMenuItemDict";
+            this.toolStripMenuItemDict.Size = new System.Drawing.Size(162, 22);
+            this.toolStripMenuItemDict.Text = "Справочники";
+            // 
+            // menuItemDictTimeSlot
+            // 
+            this.menuItemDictTimeSlot.Name = "menuItemDictTimeSlot";
+            this.menuItemDictTimeSlot.Size = new System.Drawing.Size(230, 22);
+            this.menuItemDictTimeSlot.Tag = "TimeSlot";
+            this.menuItemDictTimeSlot.Text = "Тайм слоты";
+            // 
+            // menuItemDictDepositor
+            // 
+            this.menuItemDictDepositor.Name = "menuItemDictDepositor";
+            this.menuItemDictDepositor.Size = new System.Drawing.Size(230, 22);
+            this.menuItemDictDepositor.Tag = "Depositor";
+            this.menuItemDictDepositor.Text = "Депозиторы";
+            // 
+            // menuItemDictOpersType
+            // 
+            this.menuItemDictOpersType.Name = "menuItemDictOpersType";
+            this.menuItemDictOpersType.Size = new System.Drawing.Size(230, 22);
+            this.menuItemDictOpersType.Tag = "OperType";
+            this.menuItemDictOpersType.Text = "Типы операций";
+            // 
+            // menuItemDictDelayReasons
+            // 
+            this.menuItemDictDelayReasons.Name = "menuItemDictDelayReasons";
+            this.menuItemDictDelayReasons.Size = new System.Drawing.Size(230, 22);
+            this.menuItemDictDelayReasons.Tag = "DelayReasons";
+            this.menuItemDictDelayReasons.Text = "Причины задержки";
+            // 
+            // menuItemDictGates
+            // 
+            this.menuItemDictGates.Name = "menuItemDictGates";
+            this.menuItemDictGates.Size = new System.Drawing.Size(230, 22);
+            this.menuItemDictGates.Tag = "Gate";
+            this.menuItemDictGates.Text = "Ворота";
+            // 
+            // menuItemDictTC
+            // 
+            this.menuItemDictTC.Name = "menuItemDictTC";
+            this.menuItemDictTC.Size = new System.Drawing.Size(230, 22);
+            this.menuItemDictTC.Tag = "TC";
+            this.menuItemDictTC.Text = "Справочник ТК";
+            // 
+            // menuItemDoctSupplier
+            // 
+            this.menuItemDoctSupplier.Name = "menuItemDoctSupplier";
+            this.menuItemDoctSupplier.Size = new System.Drawing.Size(230, 22);
+            this.menuItemDoctSupplier.Text = "Поставщики";
+            // 
+            // menuItemDictAttributes
+            // 
+            this.menuItemDictAttributes.Name = "menuItemDictAttributes";
+            this.menuItemDictAttributes.Size = new System.Drawing.Size(230, 22);
+            this.menuItemDictAttributes.Text = "Аттрибуты";
+            // 
+            // menuItemDictTransportType
+            // 
+            this.menuItemDictTransportType.Name = "menuItemDictTransportType";
+            this.menuItemDictTransportType.Size = new System.Drawing.Size(230, 22);
+            this.menuItemDictTransportType.Text = "Типы транспортных средств";
+            // 
+            // menuItemDictTransportView
+            // 
+            this.menuItemDictTransportView.Name = "menuItemDictTransportView";
+            this.menuItemDictTransportView.Size = new System.Drawing.Size(230, 22);
+            this.menuItemDictTransportView.Text = "Виды транспорта";
+            // 
+            // menuItemDictWarehouse
+            // 
+            this.menuItemDictWarehouse.Name = "menuItemDictWarehouse";
+            this.menuItemDictWarehouse.Size = new System.Drawing.Size(230, 22);
+            this.menuItemDictWarehouse.Text = "Склады";
+            // 
+            // menuItemDictCustomPosts
+            // 
+            this.menuItemDictCustomPosts.Name = "menuItemDictCustomPosts";
+            this.menuItemDictCustomPosts.Size = new System.Drawing.Size(230, 22);
+            this.menuItemDictCustomPosts.Text = "Таможенные посты";
+            // 
+            // toolStripMenuItemReport
+            // 
+            this.toolStripMenuItemReport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemReportPeriod,
+            this.menuItemReportStatistic,
+            this.menuItemReportTC});
+            this.toolStripMenuItemReport.Name = "toolStripMenuItemReport";
+            this.toolStripMenuItemReport.Size = new System.Drawing.Size(162, 22);
+            this.toolStripMenuItemReport.Text = "Отчеты";
+            // 
+            // menuItemReportPeriod
+            // 
+            this.menuItemReportPeriod.Name = "menuItemReportPeriod";
+            this.menuItemReportPeriod.Size = new System.Drawing.Size(192, 22);
+            this.menuItemReportPeriod.Text = "Отгрузки за период";
+            // 
+            // menuItemReportStatistic
+            // 
+            this.menuItemReportStatistic.Name = "menuItemReportStatistic";
+            this.menuItemReportStatistic.Size = new System.Drawing.Size(192, 22);
+            this.menuItemReportStatistic.Text = "Статистика за период";
+            // 
+            // menuItemReportTC
+            // 
+            this.menuItemReportTC.Name = "menuItemReportTC";
+            this.menuItemReportTC.Size = new System.Drawing.Size(192, 22);
+            this.menuItemReportTC.Text = "Отчёт по ТС";
+            // 
+            // toolStripMenuItemAdd
+            // 
+            this.toolStripMenuItemAdd.Name = "toolStripMenuItemAdd";
+            this.toolStripMenuItemAdd.Size = new System.Drawing.Size(162, 22);
+            this.toolStripMenuItemAdd.Text = "Дополнительно";
             // 
             // MainFormEx
             // 
@@ -1107,6 +1354,7 @@ namespace Planning
             this.Controls.Add(this.statusStrip2);
             this.Controls.Add(this.menuMain);
             this.Controls.Add(this.panelFormHeader);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainFormEx";
             this.Text = "Planning";
@@ -1122,6 +1370,8 @@ namespace Planning
             this.panelMain.ResumeLayout(false);
             this.panelMain.PerformLayout();
             this.contextMenuColumns.ResumeLayout(false);
+            this.panelFormHeader.ResumeLayout(false);
+            this.contextMenuMain.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1231,5 +1481,31 @@ namespace Planning
         private System.Windows.Forms.Button btnSearch;
         private BrightIdeasSoftware.OLVColumn olvRowNumberRange;
         private System.Windows.Forms.Panel panelFormHeader;
+        private System.Windows.Forms.Button btnCloseWindow;
+        private System.Windows.Forms.Button btnMinimizeWindow;
+        private System.Windows.Forms.Button btnMaximizeWindow;
+        private System.Windows.Forms.Button btnMainMenu;
+        private System.Windows.Forms.ContextMenuStrip contextMenuMain;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemFile;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemDict;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemReport;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemAdd;
+        private System.Windows.Forms.ToolStripMenuItem menuItemSettings;
+        private System.Windows.Forms.ToolStripMenuItem menuItemConnect;
+        private System.Windows.Forms.ToolStripMenuItem menuItemDictTimeSlot;
+        private System.Windows.Forms.ToolStripMenuItem menuItemDictDepositor;
+        private System.Windows.Forms.ToolStripMenuItem menuItemDictOpersType;
+        private System.Windows.Forms.ToolStripMenuItem menuItemDictDelayReasons;
+        private System.Windows.Forms.ToolStripMenuItem menuItemDictGates;
+        private System.Windows.Forms.ToolStripMenuItem menuItemDictTC;
+        private System.Windows.Forms.ToolStripMenuItem menuItemDoctSupplier;
+        private System.Windows.Forms.ToolStripMenuItem menuItemDictAttributes;
+        private System.Windows.Forms.ToolStripMenuItem menuItemDictTransportType;
+        private System.Windows.Forms.ToolStripMenuItem menuItemDictTransportView;
+        private System.Windows.Forms.ToolStripMenuItem menuItemDictWarehouse;
+        private System.Windows.Forms.ToolStripMenuItem menuItemDictCustomPosts;
+        private System.Windows.Forms.ToolStripMenuItem menuItemReportPeriod;
+        private System.Windows.Forms.ToolStripMenuItem menuItemReportStatistic;
+        private System.Windows.Forms.ToolStripMenuItem menuItemReportTC;
     }
 }
