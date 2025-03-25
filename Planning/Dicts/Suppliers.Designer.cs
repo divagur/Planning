@@ -33,6 +33,7 @@ namespace Planning
             this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colIsActive = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.colCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.tblSuppliers)).BeginInit();
             this.SuspendLayout();
             // 
@@ -44,7 +45,8 @@ namespace Planning
             this.tblSuppliers.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colId,
             this.colName,
-            this.colIsActive});
+            this.colIsActive,
+            this.colCode});
             this.tblSuppliers.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tblSuppliers.Location = new System.Drawing.Point(0, 25);
             this.tblSuppliers.Name = "tblSuppliers";
@@ -77,6 +79,13 @@ namespace Planning
             this.colIsActive.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.colIsActive.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
+            // colCode
+            // 
+            this.colCode.DataPropertyName = "Code";
+            this.colCode.HeaderText = "Код";
+            this.colCode.Name = "colCode";
+            this.colCode.ReadOnly = true;
+            // 
             // Suppliers
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -96,5 +105,6 @@ namespace Planning
         private System.Windows.Forms.DataGridViewTextBoxColumn colId;
         private System.Windows.Forms.DataGridViewTextBoxColumn colName;
         private System.Windows.Forms.DataGridViewCheckBoxColumn colIsActive;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colCode;
     }
 }

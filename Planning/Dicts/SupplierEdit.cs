@@ -29,12 +29,14 @@ namespace Planning
 
             _supplier.Name = txtName.Text;
             _supplier.IsActive = cbIsActive.Checked;
+            _supplier.Code = txtCode.Text;
             return true;
         }
 
         protected override void Populate()
         {
             txtName.Text = _supplier.Name;
+            txtCode.Text = _supplier.Code;
             cbIsActive.Checked = _supplier.IsActive == null?true:(bool)_supplier.IsActive;
         }
     }

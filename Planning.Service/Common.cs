@@ -42,6 +42,11 @@ namespace Planning.Service
             TransportCompany transportCompany = transportCompanyRepository.GetByCode(TransportCompanyCode);
             return transportCompany == null? null : (int?)transportCompany.Id;
         }
-
+        public static int? GetSupplierId(string SupplierCode, string connectionString)
+        {
+            SupplierRepository supplierRepository = new SupplierRepository(connectionString);
+            Supplier supplier = supplierRepository.GetByCode(SupplierCode);
+            return supplier == null ? null : (int?)supplier.Id;
+        }
     }
 }

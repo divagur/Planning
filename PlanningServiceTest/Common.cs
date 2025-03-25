@@ -34,6 +34,11 @@ namespace PlanningServiceTest
             TransportView transportView = transportViewRepository.GetByNameOrCreate(TransportViewName);
             return transportView.Id;
         }
-
+        public static int? GetSupplierId(string SupplierCode, string connectionString)
+        {
+            SupplierRepository supplierRepository = new SupplierRepository(connectionString);
+            Supplier supplier = supplierRepository.GetByCode(SupplierCode);
+            return supplier == null ? null : (int?)supplier.Id;
+        }
     }
 }

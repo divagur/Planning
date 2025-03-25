@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+    <configSections>
+    </configSections>
+    <connectionStrings>
+        <add name="Planning4Dashboard.Properties.Settings.connectionString"
+            connectionString="Data Source=10.28.10.4;Initial Catalog=GCR;Persist Security Info=True;User ID=lvtest;Password=1"
+            providerName="System.Data.SqlClient" />
+    </connectionStrings>
+</configuration>

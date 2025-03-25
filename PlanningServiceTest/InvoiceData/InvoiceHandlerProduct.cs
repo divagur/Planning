@@ -58,6 +58,7 @@ namespace PlanningServiceTest.InvoiceData
             shipment.DriverFio = invoiceProduction.Driver;
             shipment.WarehouseId = Common.GetWarehouseId(invoiceProduction.RecipientCode, connectionString);
             shipment.TransportViewId = Common.GetTransportViewId(invoiceProduction.DeliveryType, connectionString);
+            shipment.SupplierId = Common.GetSupplierId(invoiceProduction.SupplierCode, connectionString);
 
             var lvId = shipmentOrderRepository.GetLvIdByCode(invoice.InvoiceNumber);
             if (lvId != null)

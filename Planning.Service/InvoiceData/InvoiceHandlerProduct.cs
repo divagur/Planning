@@ -59,6 +59,7 @@ namespace Planning.Service.InvoiceData
             shipment.WarehouseId = Common.GetWarehouseId(invoiceProduction.RecipientCode, connectionString);
             shipment.TransportViewId = Common.GetTransportViewId(invoiceProduction.DeliveryType, connectionString);
             shipment.TransportCompanyId = Common.GetTransportCompanyId(invoiceProduction.ShippingСompany, connectionString);
+            shipment.SupplierId = Common.GetSupplierId(invoiceProduction.SupplierCode, connectionString);
 
 
             var lvId = shipmentOrderRepository.GetLvIdByCode(invoice.InvoiceNumber);

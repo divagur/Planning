@@ -1360,6 +1360,8 @@ namespace Planning
                     orderLVCode= orderLVCode+printRows[i]["OrdLVCode"];
                     
                 }
+                //Штрихкод 
+                excel.SetValue(1, 2, 1, "*" + printRows[0]["ShpId"] + "*");
                 //Прибыл по плану
                 excel.SetValue(1, 2, 6, printRows[0]["ShpDate"].ToString().Substring(0, 10) + " " + printRows[0]["SlotTime"]);
                 //Прибыл по факту

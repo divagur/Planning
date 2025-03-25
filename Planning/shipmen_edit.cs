@@ -148,7 +148,8 @@ namespace Planning
         private void PopulateComboBoxField(ComboBox comboBox, List<string> items)
         {
             comboBox.Items.Clear();
-            comboBox.Items.AddRange(items.ToArray());
+            comboBox.Items.AddRange(items.ToArray());           
+            
         }
 
         public void Populate()
