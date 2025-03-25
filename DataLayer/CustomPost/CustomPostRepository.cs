@@ -16,6 +16,11 @@ namespace Planning.DataLayer
 
         }
 
+        public CustomPostRepository()
+        : base()
+        {
+
+        }
         public CustomPost GetByCode(string code)
         {
             string sql = dataAdapter.GetSelectItemSql() + " where code = @Code";

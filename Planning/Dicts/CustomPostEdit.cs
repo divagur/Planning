@@ -12,9 +12,9 @@ namespace Planning
 {
     public partial class CustomPostEdit : DictEditForm
     {
-        CustomPost _customPost;
+        DataLayer.CustomPost _customPost;
         PlanningDbContext _context;
-        public CustomPostEdit(CustomPost customPost)
+        public CustomPostEdit(DataLayer.CustomPost customPost)
         {
             InitializeComponent();
             _customPost = customPost;
@@ -54,10 +54,12 @@ namespace Planning
         }
         private void RemoveAllDelivery()
         {
+            /*
             foreach (DataGridViewRow row in tblDelivery.Rows)
             {
                 _customPost.DeliveryPeriods.Remove(_context.DeliveryPeriods.Find(row.Cells["colId"].Value));
             }
+            */
         }
         protected override void Populate()
         {
@@ -69,7 +71,7 @@ namespace Planning
             {
                 colWarehouse.Items.Add(item.Name);
             }
-            
+            /*
             foreach (var item in _customPost.DeliveryPeriods)
             {
                 int rowIdx = tblDelivery.Rows.Add();
@@ -80,6 +82,7 @@ namespace Planning
                 tblDelivery.Rows[rowIdx].Cells["colWarehouse"].Value = DataService.GetDictNameById("Склады", item.WarehouseId);
 
             }
+            */
         }
 
         private void btnAddDelivery_Click(object sender, EventArgs e)
@@ -93,6 +96,7 @@ namespace Planning
 
         private void btnDelDelivery_Click(object sender, EventArgs e)
         {
+            /*
             foreach (DataGridViewRow row in tblDelivery.SelectedRows)
             {
                 if (row.Cells["colId"].Value != null)
@@ -106,6 +110,7 @@ namespace Planning
                     tblDelivery.Rows.Remove(row);
                 }
             } 
+            */
         }
 
         private void tblDelivery_CellValueChanged(object sender, DataGridViewCellEventArgs e)

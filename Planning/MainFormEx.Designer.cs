@@ -182,7 +182,7 @@ namespace Planning
             this.miDicts,
             this.miReports,
             this.miAdditional});
-            this.menuMain.Location = new System.Drawing.Point(0, 39);
+            this.menuMain.Location = new System.Drawing.Point(0, 38);
             this.menuMain.Name = "menuMain";
             this.menuMain.Size = new System.Drawing.Size(890, 24);
             this.menuMain.TabIndex = 1;
@@ -396,10 +396,10 @@ namespace Planning
             this.tabForms.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabForms.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
             this.tabForms.ItemSize = new System.Drawing.Size(80, 18);
-            this.tabForms.Location = new System.Drawing.Point(0, 63);
+            this.tabForms.Location = new System.Drawing.Point(0, 62);
             this.tabForms.Name = "tabForms";
             this.tabForms.SelectedIndex = 0;
-            this.tabForms.Size = new System.Drawing.Size(890, 525);
+            this.tabForms.Size = new System.Drawing.Size(890, 526);
             this.tabForms.TabIndex = 4;
             this.tabForms.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.tabForms_DrawItem);
             // 
@@ -410,7 +410,7 @@ namespace Planning
             this.tabMain.Location = new System.Drawing.Point(4, 22);
             this.tabMain.Name = "tabMain";
             this.tabMain.Padding = new System.Windows.Forms.Padding(3);
-            this.tabMain.Size = new System.Drawing.Size(882, 499);
+            this.tabMain.Size = new System.Drawing.Size(882, 500);
             this.tabMain.TabIndex = 0;
             this.tabMain.Text = "Операции";
             this.tabMain.UseVisualStyleBackColor = true;
@@ -519,7 +519,7 @@ namespace Planning
             this.tblShipments.SelectColumnsOnRightClick = false;
             this.tblShipments.SelectColumnsOnRightClickBehaviour = BrightIdeasSoftware.ObjectListView.ColumnSelectBehaviour.None;
             this.tblShipments.ShowGroups = false;
-            this.tblShipments.Size = new System.Drawing.Size(876, 437);
+            this.tblShipments.Size = new System.Drawing.Size(876, 438);
             this.tblShipments.TabIndex = 1;
             this.tblShipments.UseAlternatingBackColors = true;
             this.tblShipments.UseCompatibleStateImageBehavior = false;
@@ -1127,7 +1127,7 @@ namespace Planning
             this.panelFormHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelFormHeader.Location = new System.Drawing.Point(0, 0);
             this.panelFormHeader.Name = "panelFormHeader";
-            this.panelFormHeader.Size = new System.Drawing.Size(890, 39);
+            this.panelFormHeader.Size = new System.Drawing.Size(890, 38);
             this.panelFormHeader.TabIndex = 6;
             this.panelFormHeader.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.panelFormHeader_MouseDoubleClick);
             this.panelFormHeader.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panelFormHeader_MouseMove);
@@ -1139,7 +1139,7 @@ namespace Planning
             this.btnMainMenu.Location = new System.Drawing.Point(0, 0);
             this.btnMainMenu.Margin = new System.Windows.Forms.Padding(1, 3, 1, 3);
             this.btnMainMenu.Name = "btnMainMenu";
-            this.btnMainMenu.Size = new System.Drawing.Size(37, 39);
+            this.btnMainMenu.Size = new System.Drawing.Size(37, 38);
             this.btnMainMenu.TabIndex = 0;
             this.btnMainMenu.UseVisualStyleBackColor = true;
             this.btnMainMenu.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnMainMenu_MouseDown);
@@ -1154,7 +1154,7 @@ namespace Planning
             this.btnMinimizeWindow.Location = new System.Drawing.Point(773, 0);
             this.btnMinimizeWindow.Margin = new System.Windows.Forms.Padding(1, 3, 1, 3);
             this.btnMinimizeWindow.Name = "btnMinimizeWindow";
-            this.btnMinimizeWindow.Size = new System.Drawing.Size(43, 39);
+            this.btnMinimizeWindow.Size = new System.Drawing.Size(43, 38);
             this.btnMinimizeWindow.TabIndex = 0;
             this.btnMinimizeWindow.UseVisualStyleBackColor = true;
             this.btnMinimizeWindow.Click += new System.EventHandler(this.btnMinimizeWindow_Click);
@@ -1166,7 +1166,7 @@ namespace Planning
             this.btnMaximizeWindow.Location = new System.Drawing.Point(816, 0);
             this.btnMaximizeWindow.Margin = new System.Windows.Forms.Padding(1, 3, 1, 3);
             this.btnMaximizeWindow.Name = "btnMaximizeWindow";
-            this.btnMaximizeWindow.Size = new System.Drawing.Size(37, 39);
+            this.btnMaximizeWindow.Size = new System.Drawing.Size(37, 38);
             this.btnMaximizeWindow.TabIndex = 0;
             this.btnMaximizeWindow.UseVisualStyleBackColor = true;
             this.btnMaximizeWindow.Click += new System.EventHandler(this.btnMaximizeWindow_Click);
@@ -1178,7 +1178,7 @@ namespace Planning
             this.btnCloseWindow.Location = new System.Drawing.Point(853, 0);
             this.btnCloseWindow.Margin = new System.Windows.Forms.Padding(1, 3, 3, 3);
             this.btnCloseWindow.Name = "btnCloseWindow";
-            this.btnCloseWindow.Size = new System.Drawing.Size(37, 39);
+            this.btnCloseWindow.Size = new System.Drawing.Size(37, 38);
             this.btnCloseWindow.TabIndex = 0;
             this.btnCloseWindow.UseVisualStyleBackColor = true;
             this.btnCloseWindow.Click += new System.EventHandler(this.btnCloseWindow_Click);

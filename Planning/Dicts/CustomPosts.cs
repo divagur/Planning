@@ -7,11 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DataLayer = Planning.DataLayer;
 
 namespace Planning
 {
     public partial class CustomPosts : DictForm
     {
+        List<DataLayer.CustomPost> _customPosts = new List<DataLayer.CustomPost>();
         public CustomPosts()
         {
             InitializeComponent();
@@ -19,16 +21,21 @@ namespace Planning
         protected override void Populate()
         {
             tblCustomPosts.AutoGenerateColumns = false;
-            tblCustomPosts.DataSource = _context.CustomPosts.ToList();
+            //tblCustomPosts.DataSource = _context.CustomPosts.ToList();
+
+            DataLayer.CustomPostRepository customPostRepository = new DataLayer.CustomPostRepository();
+            _customPosts = customPostRepository.GetAll();
+            tblCustomPosts.DataSource = _customPosts;
         }
         protected override void AddRow()
         {
-            CustomPost customPost = new CustomPost();
+            DataLayer.CustomPost customPost = new DataLayer.CustomPost();
             CustomPostEdit frmCustomPostEdit = new CustomPostEdit(customPost);
             frmCustomPostEdit.ShowDialog();
             if (frmCustomPostEdit.DialogResult == DialogResult.Cancel)
                 return;
-            DataService.context.CustomPosts.Add(customPost);
+            _customPosts.Add(customPost);
+            //DataService.context.CustomPosts.Add(customPost);
 
             Save();
         }
@@ -36,7 +43,7 @@ namespace Planning
         protected override void EditRow()
         {
             if (tblCustomPosts.SelectedCells.Count <= 0) return;
-            CustomPost customPost = _context.CustomPosts.Find(tblCustomPosts.Rows[tblCustomPosts.CurrentCell.RowIndex].Cells["colId"].Value);
+            DataLayer.CustomPost customPost = _customPosts.Find(cp=>cp.Id==Int32.Parse(tblCustomPosts.Rows[tblCustomPosts.CurrentCell.RowIndex].Cells["colId"].Value.ToString()));
             CustomPostEdit frmCustomPostEdit = new CustomPostEdit(customPost);
             frmCustomPostEdit.ShowDialog();
             if (frmCustomPostEdit.DialogResult == DialogResult.Cancel)

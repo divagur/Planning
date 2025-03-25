@@ -8,12 +8,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Planning.Kernel;
 
 namespace Planning
 {
     public partial class DictForm : Form
     {
         protected PlanningDbContext _context;
+        protected List<BaseDataItem> _dataSource;     
+
         private IWait waitHandler;
 
         internal IWait WaitHandler { get => waitHandler; set => waitHandler = value; }
