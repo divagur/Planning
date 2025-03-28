@@ -105,7 +105,15 @@ namespace Planning.Kernel
 
         public bool Save(List<T> Items)
         {
-            throw new NotImplementedException();
+            bool result = false;
+
+            foreach (var item in Items)
+            {
+                result = Save(item);
+                if (!result)
+                    break;
+            }
+            return result;
         }
 
         public string ConnectionString { get => _connectionString; }

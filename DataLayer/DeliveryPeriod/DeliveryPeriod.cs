@@ -9,11 +9,11 @@ namespace Planning.DataLayer
 {
     public class DeliveryPeriod: BaseDataItem
     {
-        int _custPostId;
-        int _warehouseId;
+        int? _custPostId;
+        int? _warehouseId;
         int _deliveryDay;
 
-        public int CustPostId
+        public int? CustPostId
         {
             get => _custPostId;
             set
@@ -26,7 +26,7 @@ namespace Planning.DataLayer
                 //}
             }
         }
-        public int WarehouseId
+        public int? WarehouseId
         {
             get => _warehouseId;
             set

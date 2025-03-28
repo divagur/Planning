@@ -80,7 +80,7 @@ namespace Planning.Service.InvoiceData
 
             shipmentOrderRepository.Save(shipmentOrder);
 
-            invoice.ShpId = shipment.Id;
+            invoice.ShpId = (int)shipment.Id;
             base.Save(invoice, connectionString);
 
         }

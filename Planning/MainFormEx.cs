@@ -65,8 +65,8 @@ namespace Planning
 
             // ConnectionParams.ServerName = @"ZDV\MS2019DVG";
             // ConnectionParams.BaseName = "Planning";
-            ConnectionParams.ServerName = @"ZDV\MS2019DVG";
-            ConnectionParams.BaseName = "Planning";
+            ConnectionParams.ServerName = @"DZHURAVLEV";
+            ConnectionParams.BaseName = "Planning_curr";
             ConnectionParams.UserName ="sysadm";
             ConnectionParams.Pwd = "sysadm";
 
@@ -378,38 +378,44 @@ namespace Planning
 
         private void tabForms_DrawItem(object sender, DrawItemEventArgs e)
         {
+            
             RectangleF tabTextArea = RectangleF.Empty;
             for (int nIndex = 0; nIndex < tabForms.TabCount; nIndex++)
             {
-                if (nIndex != tabForms.SelectedIndex)
+                tabTextArea = (RectangleF)tabForms.GetTabRect(nIndex);
+                if (nIndex > 0)
                 {
-                    /*if not active draw ,inactive close button*/
-                    tabTextArea = (RectangleF)tabForms.GetTabRect(nIndex);
-                    
-                    e.Graphics.DrawImage(Resources.TabClose,
-                            tabTextArea.X + tabTextArea.Width - 16, 5, 13, 13);
-                }
-                else
-                {
-                    tabTextArea = (RectangleF)tabForms.GetTabRect(nIndex);
-                    LinearGradientBrush br = new LinearGradientBrush(tabTextArea,
-                        SystemColors.ControlLightLight, SystemColors.Control,
-                        LinearGradientMode.Vertical);
-                    e.Graphics.FillRectangle(br, tabTextArea);
 
-                    /*if active draw ,inactive close button*/
+
+                    if (nIndex != tabForms.SelectedIndex)
+                    {
+                        /*if not active draw ,inactive close button*/
+                        
+
+                        e.Graphics.DrawImage(Resources.TabClose,
+                                tabTextArea.X + tabTextArea.Width - 16, 5, 13, 13);
+                    }
+                    else
+                    {                        
+                        LinearGradientBrush br = new LinearGradientBrush(tabTextArea,
+                            SystemColors.ControlLightLight, SystemColors.Control,
+                            LinearGradientMode.Vertical);
+                        e.Graphics.FillRectangle(br, tabTextArea);
+
+                        /*if active draw ,inactive close button*/
                         e.Graphics.DrawImage(Resources.TabCloseRed,
                             tabTextArea.X + tabTextArea.Width - 16, 5, 13, 13);
-                    br.Dispose();
+                        br.Dispose();
+                    }
                 }
                 string str = tabForms.TabPages[nIndex].Text;
                 StringFormat stringFormat = new StringFormat(); 
                 stringFormat.Alignment = StringAlignment.Center;
+                stringFormat.LineAlignment = StringAlignment.Center;
                 using (SolidBrush brush = new SolidBrush(tabForms.TabPages[nIndex].ForeColor))
                 {
                     /*Draw the tab header text*/
-                    e.Graphics.DrawString(str,this.Font, brush,
-                    tabTextArea,stringFormat);
+                    e.Graphics.DrawString(str,this.Font, brush, tabTextArea,stringFormat);
                 }
             }
         }
@@ -472,6 +478,32 @@ namespace Planning
 
                 contextMenuMain.Show(this, menuLocation);
             }
+        }
+
+        private void menuItemDictWarehouse_Click(object sender, EventArgs e)
+        {
+            var frmWarehouse = new Warehouses();
+            //SetFormPrivalage(frmWarehouse, "Warehouse");
+            AddFormTab(frmWarehouse, "Склады");
+        }
+
+        private void tabForms_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (this.tabForms.SelectedIndex == 0)
+                return;
+            Rectangle r = tabForms.GetTabRect(this.tabForms.SelectedIndex);
+            Rectangle closeButton = new Rectangle(r.Right - 15, r.Top + 4, 13, 13);
+            if (closeButton.Contains(e.Location))
+            {
+                this.tabForms.TabPages.Remove(this.tabForms.SelectedTab);
+            }
+        }
+
+        private void menuItemDictCustomPosts_Click(object sender, EventArgs e)
+        {
+            var frmCustomPosts = new CustomPosts();
+            //SetFormPrivalage(frmCustomPosts, "CustomPost");
+            AddFormTab(frmCustomPosts, "Таможенные посты");
         }
     }
 }

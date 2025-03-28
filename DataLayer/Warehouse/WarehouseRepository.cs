@@ -15,7 +15,11 @@ namespace Planning.DataLayer
         {
 
         }
+        public WarehouseRepository()
+        : base()
+        {
 
+        }
         public Warehouse GetByCode(string code)
         {
             string sql = dataAdapter.GetSelectItemSql() + " where code = @Code";

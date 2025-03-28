@@ -37,14 +37,14 @@ namespace Planning
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tblDelivery = new System.Windows.Forms.DataGridView();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.btnAddDelivery = new System.Windows.Forms.ToolStripButton();
-            this.btnDelDelivery = new System.Windows.Forms.ToolStripButton();
             this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colCustomPostId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colWarehouseId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colWarehouse = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.colDeliveryDay = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.btnAddDelivery = new System.Windows.Forms.ToolStripButton();
+            this.btnDelDelivery = new System.Windows.Forms.ToolStripButton();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tblDelivery)).BeginInit();
             this.toolStrip1.SuspendLayout();
@@ -134,37 +134,6 @@ namespace Planning
             this.tblDelivery.TabIndex = 1;
             this.tblDelivery.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.tblDelivery_CellValueChanged);
             // 
-            // toolStrip1
-            // 
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnAddDelivery,
-            this.btnDelDelivery});
-            this.toolStrip1.Location = new System.Drawing.Point(3, 16);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(381, 25);
-            this.toolStrip1.TabIndex = 0;
-            this.toolStrip1.Text = "toolStrip1";
-            // 
-            // btnAddDelivery
-            // 
-            this.btnAddDelivery.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnAddDelivery.Image = global::Planning.Properties.Resources.Add;
-            this.btnAddDelivery.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnAddDelivery.Name = "btnAddDelivery";
-            this.btnAddDelivery.Size = new System.Drawing.Size(23, 22);
-            this.btnAddDelivery.Text = "Добавить срок доставки";
-            this.btnAddDelivery.Click += new System.EventHandler(this.btnAddDelivery_Click);
-            // 
-            // btnDelDelivery
-            // 
-            this.btnDelDelivery.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnDelDelivery.Image = global::Planning.Properties.Resources.Delete;
-            this.btnDelDelivery.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnDelDelivery.Name = "btnDelDelivery";
-            this.btnDelDelivery.Size = new System.Drawing.Size(23, 22);
-            this.btnDelDelivery.Text = "Удалить срок доставки";
-            this.btnDelDelivery.Click += new System.EventHandler(this.btnDelDelivery_Click);
-            // 
             // colId
             // 
             this.colId.DataPropertyName = "Id";
@@ -201,6 +170,37 @@ namespace Planning
             this.colDeliveryDay.HeaderText = "Срок доставки (часы)";
             this.colDeliveryDay.Name = "colDeliveryDay";
             this.colDeliveryDay.Width = 135;
+            // 
+            // toolStrip1
+            // 
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnAddDelivery,
+            this.btnDelDelivery});
+            this.toolStrip1.Location = new System.Drawing.Point(3, 16);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(381, 25);
+            this.toolStrip1.TabIndex = 0;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // btnAddDelivery
+            // 
+            this.btnAddDelivery.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnAddDelivery.Image = global::Planning.Properties.Resources.icons8_add_16;
+            this.btnAddDelivery.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnAddDelivery.Name = "btnAddDelivery";
+            this.btnAddDelivery.Size = new System.Drawing.Size(23, 22);
+            this.btnAddDelivery.Text = "Добавить срок доставки";
+            this.btnAddDelivery.Click += new System.EventHandler(this.btnAddDelivery_Click);
+            // 
+            // btnDelDelivery
+            // 
+            this.btnDelDelivery.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnDelDelivery.Image = global::Planning.Properties.Resources.icons8_close_16;
+            this.btnDelDelivery.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnDelDelivery.Name = "btnDelDelivery";
+            this.btnDelDelivery.Size = new System.Drawing.Size(23, 22);
+            this.btnDelDelivery.Text = "Удалить срок доставки";
+            this.btnDelDelivery.Click += new System.EventHandler(this.btnDelDelivery_Click);
             // 
             // CustomPostEdit
             // 

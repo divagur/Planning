@@ -12,8 +12,8 @@ namespace Planning
 {
     public partial class WarehouseEdit : DictEditForm
     {
-        Warehouse _warehouse;
-        public WarehouseEdit(Warehouse warehouse)
+        DataLayer.Warehouse _warehouse;
+        public WarehouseEdit(DataLayer.Warehouse warehouse)
         {
             InitializeComponent();
             _warehouse = warehouse;

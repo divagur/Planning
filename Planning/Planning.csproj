@@ -600,14 +600,14 @@
     <EmbeddedResource Include="Dicts\Depositors.resx">
       <DependentUpon>Depositors.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dicts\Dict.resx">
-      <DependentUpon>DictForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Dicts\DictDelayReasons.resx">
       <DependentUpon>DictDelayReasons.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dicts\DictEditForm.resx">
       <DependentUpon>DictEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dicts\DictForm.resx">
+      <DependentUpon>DictForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dicts\WarehouseEdit.resx">
       <DependentUpon>WarehouseEdit.cs</DependentUpon>
@@ -863,6 +863,9 @@
     <None Include="Resources\icons8-minimize-window-16.png" />
     <None Include="Resources\icons8-maximize-window-32 %281%29.png" />
     <None Include="Resources\icons8-minimize-window-32 %281%29.png" />
+    <None Include="Resources\icons8-edit-16.png" />
+    <None Include="Resources\icons8-add-16.png" />
+    <None Include="Resources\icons8-close-16.png" />
     <Content Include="Resources\printer.png" />
     <None Include="Resources\arrow_refresh_8563.png" />
     <Content Include="PlanningLogo.ico" />

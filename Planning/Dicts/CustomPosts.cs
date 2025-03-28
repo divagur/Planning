@@ -14,17 +14,26 @@ namespace Planning
     public partial class CustomPosts : DictForm
     {
         List<DataLayer.CustomPost> _customPosts = new List<DataLayer.CustomPost>();
+        DataLayer.CustomPostRepository _customPostRepository = new DataLayer.CustomPostRepository();
         public CustomPosts()
         {
             InitializeComponent();
         }
+        private void UpdateDataSource()
+        {
+            tblCustomPosts.DataSource = null;
+            tblCustomPosts.DataSource = _customPosts;
+            tblCustomPosts.Refresh();
+        }
+
+
         protected override void Populate()
         {
             tblCustomPosts.AutoGenerateColumns = false;
             //tblCustomPosts.DataSource = _context.CustomPosts.ToList();
 
-            DataLayer.CustomPostRepository customPostRepository = new DataLayer.CustomPostRepository();
-            _customPosts = customPostRepository.GetAll();
+            
+            _customPosts = _customPostRepository.GetAll();
             tblCustomPosts.DataSource = _customPosts;
         }
         protected override void AddRow()
@@ -35,9 +44,11 @@ namespace Planning
             if (frmCustomPostEdit.DialogResult == DialogResult.Cancel)
                 return;
             _customPosts.Add(customPost);
+            _customPostRepository.Save(customPost);
+            UpdateDataSource();
             //DataService.context.CustomPosts.Add(customPost);
 
-            Save();
+            //Save();
         }
 
         protected override void EditRow()

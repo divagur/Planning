@@ -15,8 +15,8 @@ namespace Planning
     public partial class DictForm : Form
     {
         protected PlanningDbContext _context;
-        protected List<BaseDataItem> _dataSource;     
-
+        protected List<BaseDataItem> _dataSource;
+        //protected IRepository<BaseDataItem> repository;
         private IWait waitHandler;
 
         internal IWait WaitHandler { get => waitHandler; set => waitHandler = value; }
@@ -77,7 +77,7 @@ namespace Planning
             try
             {
                 Cursor = Cursors.AppStarting;
-                _context.SaveChanges();
+               // _context.SaveChanges();
 
             }
             catch (DbEntityValidationException ex)

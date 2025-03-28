@@ -15,6 +15,11 @@ namespace Planning.DataLayer
         {
 
         }
+        public DeliveryPeriodRepository()
+        : base()
+        {
+
+        }
 
         public DeliveryPeriod GetByCode(string CustomPostCode, string WarehouseCode)
         {
@@ -30,6 +35,22 @@ namespace Planning.DataLayer
                 item = queryResult.FirstOrDefault();
             }
             return item;
+        }
+        public List<DeliveryPeriod> GetByCustomPostCode(string CustomPostCode)
+        {
+            DeliveryPeriodDataAdapter deliveryPeriodDataAdapter = new DeliveryPeriodDataAdapter();
+            List<DeliveryPeriod> deliveryPeriods = new List<DeliveryPeriod>();
+
+            string sql = dataAdapter.GetSelectItemSql() + $@"join custom_posts cp on cp.id = {deliveryPeriodDataAdapter.Table}.custom_post_id
+                    where cp.code = @customPostCode";
+          
+            var queryResult = dbConnection.Query<DeliveryPeriod>(sql, new { customPostCode = CustomPostCode});
+
+            if (queryResult != null)
+            {
+                deliveryPeriods = queryResult.ToList();
+            }
+            return deliveryPeriods;
         }
     }
 }

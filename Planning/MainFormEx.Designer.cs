@@ -128,7 +128,6 @@ namespace Planning
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
-            this.btnColumnVisible = new Planning.Controls.MenuButton();
             this.contextMenuColumns = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
@@ -164,6 +163,7 @@ namespace Planning
             this.menuItemReportStatistic = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemReportTC = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemAdd = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnColumnVisible = new Planning.Controls.MenuButton();
             this.menuMain.SuspendLayout();
             this.statusStrip2.SuspendLayout();
             this.tabForms.SuspendLayout();
@@ -395,13 +395,15 @@ namespace Planning
             this.tabForms.Controls.Add(this.tabMain);
             this.tabForms.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabForms.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
-            this.tabForms.ItemSize = new System.Drawing.Size(80, 18);
+            this.tabForms.ItemSize = new System.Drawing.Size(180, 18);
             this.tabForms.Location = new System.Drawing.Point(0, 62);
             this.tabForms.Name = "tabForms";
             this.tabForms.SelectedIndex = 0;
             this.tabForms.Size = new System.Drawing.Size(890, 526);
+            this.tabForms.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabForms.TabIndex = 4;
             this.tabForms.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.tabForms_DrawItem);
+            this.tabForms.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tabForms_MouseDown);
             // 
             // tabMain
             // 
@@ -1032,19 +1034,6 @@ namespace Planning
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
-            // btnColumnVisible
-            // 
-            this.btnColumnVisible.FlatAppearance.BorderSize = 0;
-            this.btnColumnVisible.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnColumnVisible.Image = ((System.Drawing.Image)(resources.GetObject("btnColumnVisible.Image")));
-            this.btnColumnVisible.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnColumnVisible.Location = new System.Drawing.Point(330, 4);
-            this.btnColumnVisible.Menu = this.contextMenuColumns;
-            this.btnColumnVisible.Name = "btnColumnVisible";
-            this.btnColumnVisible.Size = new System.Drawing.Size(50, 49);
-            this.btnColumnVisible.TabIndex = 0;
-            this.btnColumnVisible.UseVisualStyleBackColor = true;
-            // 
             // contextMenuColumns
             // 
             this.contextMenuColumns.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -1304,12 +1293,14 @@ namespace Planning
             this.menuItemDictWarehouse.Name = "menuItemDictWarehouse";
             this.menuItemDictWarehouse.Size = new System.Drawing.Size(230, 22);
             this.menuItemDictWarehouse.Text = "Склады";
+            this.menuItemDictWarehouse.Click += new System.EventHandler(this.menuItemDictWarehouse_Click);
             // 
             // menuItemDictCustomPosts
             // 
             this.menuItemDictCustomPosts.Name = "menuItemDictCustomPosts";
             this.menuItemDictCustomPosts.Size = new System.Drawing.Size(230, 22);
             this.menuItemDictCustomPosts.Text = "Таможенные посты";
+            this.menuItemDictCustomPosts.Click += new System.EventHandler(this.menuItemDictCustomPosts_Click);
             // 
             // toolStripMenuItemReport
             // 
@@ -1345,6 +1336,19 @@ namespace Planning
             this.toolStripMenuItemAdd.Size = new System.Drawing.Size(162, 22);
             this.toolStripMenuItemAdd.Text = "Дополнительно";
             // 
+            // btnColumnVisible
+            // 
+            this.btnColumnVisible.FlatAppearance.BorderSize = 0;
+            this.btnColumnVisible.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnColumnVisible.Image = ((System.Drawing.Image)(resources.GetObject("btnColumnVisible.Image")));
+            this.btnColumnVisible.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnColumnVisible.Location = new System.Drawing.Point(330, 4);
+            this.btnColumnVisible.Menu = this.contextMenuColumns;
+            this.btnColumnVisible.Name = "btnColumnVisible";
+            this.btnColumnVisible.Size = new System.Drawing.Size(50, 49);
+            this.btnColumnVisible.TabIndex = 0;
+            this.btnColumnVisible.UseVisualStyleBackColor = true;
+            // 
             // MainFormEx
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1354,11 +1358,8 @@ namespace Planning
             this.Controls.Add(this.statusStrip2);
             this.Controls.Add(this.menuMain);
             this.Controls.Add(this.panelFormHeader);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainFormEx";
-            this.Text = "Planning";
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.MainFormEx_Load);
             this.menuMain.ResumeLayout(false);
             this.menuMain.PerformLayout();

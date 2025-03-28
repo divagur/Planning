@@ -13,12 +13,15 @@ namespace Planning
     public partial class CustomPostEdit : DictEditForm
     {
         DataLayer.CustomPost _customPost;
-        PlanningDbContext _context;
+        List<DataLayer.DeliveryPeriod> _deliveryPeriods = new List<DataLayer.DeliveryPeriod>();
+        DataLayer.DeliveryPeriodRepository _deliveryPeriodRepository = new DataLayer.DeliveryPeriodRepository();
+
+        //PlanningDbContext _context;
         public CustomPostEdit(DataLayer.CustomPost customPost)
         {
             InitializeComponent();
             _customPost = customPost;
-            _context = DataService.context;
+            //_context = DataService.context;
         }
         protected override bool Save()
         {
@@ -45,7 +48,7 @@ namespace Planning
                     deliveryPeriod.CustomPostId = _customPost.Id;// (int)row.Cells["colCustomPostId"].Value;
                     deliveryPeriod.WarehouseId = (int)row.Cells["colWarehouseId"].Value;
                     deliveryPeriod.DeliveryDay = Int32.Parse(row.Cells["colDeliveryDay"].Value.ToString());
-                    _context.DeliveryPeriods.Add(deliveryPeriod);
+                    //_context.DeliveryPeriods.Add(deliveryPeriod);
                 }
      
             }
@@ -67,10 +70,26 @@ namespace Planning
             txtName.Text = _customPost.Name;
             txtDescr.Text = _customPost.Descr;
             //tblDelivery.DataSource = _customPost.DeliveryPeriods;
-            foreach (var item in _context.Warehouses)
+            _deliveryPeriods = _deliveryPeriodRepository.GetByCustomPostCode(_customPost.Code);
+            tblDelivery.AutoGenerateColumns = false;
+            
+
+            DataLayer.WarehouseRepository warehouseRepository = new DataLayer.WarehouseRepository();
+            List<DataLayer.Warehouse> warehouses = warehouseRepository.GetAll();
+            BindingList<DataLayer.DeliveryPeriod> deliveryPeriodsBinding = new BindingList<DataLayer.DeliveryPeriod>(_deliveryPeriods);
+            tblDelivery.DataSource = deliveryPeriodsBinding;
+            
+            colWarehouse.DataSource = warehouses;
+            colWarehouse.DisplayMember = "Name";
+            colWarehouse.DataPropertyName = "WarehouseId";
+            colWarehouse.ValueMember = "Id";
+            
+            /*
+            foreach (var item in warehouses)
             {
                 colWarehouse.Items.Add(item.Name);
             }
+            */
             /*
             foreach (var item in _customPost.DeliveryPeriods)
             {
@@ -85,13 +104,32 @@ namespace Planning
             */
         }
 
+        private void UpdateDataSourceDeliveryPeriod()
+        {
+            tblDelivery.DataSource = null;
+            tblDelivery.DataSource = _deliveryPeriods;
+            tblDelivery.Refresh();
+
+            /*
+            colWarehouse.DataSource = warehouses;
+            colWarehouse.DisplayMember = "Name";
+            colWarehouse.DataPropertyName = "WarehouseId";
+            colWarehouse.ValueMember = "Id";
+            */
+
+        }
+
         private void btnAddDelivery_Click(object sender, EventArgs e)
         {
-            tblDelivery.Rows.Add();
-            //DeliveryPeriod deliveryPeriod = new DeliveryPeriod();
+            //tblDelivery.Rows.Add();
+            DataLayer.DeliveryPeriod deliveryPeriod = new DataLayer.DeliveryPeriod();
+            deliveryPeriod.CustPostId = _customPost.Id;
+            deliveryPeriod.DeliveryDay = 1;
+            _deliveryPeriods.Add(deliveryPeriod);
+            UpdateDataSourceDeliveryPeriod();
             //_customPost.DeliveryPeriods.Add(deliveryPeriod);
             //_context.DeliveryPeriods.Add(deliveryPeriod);
-            
+
         }
 
         private void btnDelDelivery_Click(object sender, EventArgs e)
@@ -115,11 +153,13 @@ namespace Planning
 
         private void tblDelivery_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
+            /*
             if (e.RowIndex < 0 || tblDelivery.Columns[e.ColumnIndex].Name != "colWarehouse")
                 return;
             string value = (string)tblDelivery.Rows[e.RowIndex].Cells["colWarehouse"].Value;
             var Warehouses = _context.Warehouses.Where(x => x.Name == value).First();
             tblDelivery.Rows[e.RowIndex].Cells["colWarehouseId"].Value = Warehouses.Id;
+            */
         }
     }
 }

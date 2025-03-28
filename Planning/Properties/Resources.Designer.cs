@@ -223,6 +223,26 @@ namespace Planning.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap icons8_add_16 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-add-16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap icons8_close_16 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-close-16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap icons8_close_window_16 {
             get {
                 object obj = ResourceManager.GetObject("icons8-close-window-16", resourceCulture);
@@ -236,6 +256,16 @@ namespace Planning.Properties {
         public static System.Drawing.Bitmap icons8_close_window_32 {
             get {
                 object obj = ResourceManager.GetObject("icons8-close-window-32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap icons8_edit_16 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-edit-16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
