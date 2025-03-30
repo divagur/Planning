@@ -83,6 +83,7 @@ namespace Planning.Kernel
                     {
                         var ids = dbConnection.Query<int>(sql, Item);
                         Item.Id = ids.First();
+                        count = ids.Count();
                     }
                     catch (Exception ex )
                     {

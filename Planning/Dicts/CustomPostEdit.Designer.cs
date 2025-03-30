@@ -120,6 +120,7 @@ namespace Planning
             // 
             // tblDelivery
             // 
+            this.tblDelivery.AllowUserToAddRows = false;
             this.tblDelivery.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.tblDelivery.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colId,
@@ -130,6 +131,7 @@ namespace Planning
             this.tblDelivery.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tblDelivery.Location = new System.Drawing.Point(3, 41);
             this.tblDelivery.Name = "tblDelivery";
+            this.tblDelivery.RowHeadersVisible = false;
             this.tblDelivery.Size = new System.Drawing.Size(381, 132);
             this.tblDelivery.TabIndex = 1;
             this.tblDelivery.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.tblDelivery_CellValueChanged);

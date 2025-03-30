@@ -65,8 +65,8 @@ namespace Planning
 
             // ConnectionParams.ServerName = @"ZDV\MS2019DVG";
             // ConnectionParams.BaseName = "Planning";
-            ConnectionParams.ServerName = @"DZHURAVLEV";
-            ConnectionParams.BaseName = "Planning_curr";
+            ConnectionParams.ServerName = @"ZDV\MS2019DVG";
+            ConnectionParams.BaseName = "Planning";
             ConnectionParams.UserName ="sysadm";
             ConnectionParams.Pwd = "sysadm";
 
