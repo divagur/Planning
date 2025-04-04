@@ -40,6 +40,8 @@ namespace Planning
 
         private void MainFormEx_Load(object sender, EventArgs e)
         {
+            
+            //.Width = Screen.PrimaryScreen.WorkingArea.Width;
             /*
             DataService.settingsHandle = new SettingsHandle("Settings.xml", DataService.setting);
             DataService.settingsHandle.Load();
@@ -65,8 +67,8 @@ namespace Planning
 
             // ConnectionParams.ServerName = @"ZDV\MS2019DVG";
             // ConnectionParams.BaseName = "Planning";
-            ConnectionParams.ServerName = @"ZDV\MS2019DVG";
-            ConnectionParams.BaseName = "Planning";
+            ConnectionParams.ServerName = @"DZHURAVLEV";
+            ConnectionParams.BaseName = "Planning_curr";
             ConnectionParams.UserName ="sysadm";
             ConnectionParams.Pwd = "sysadm";
 
@@ -304,6 +306,7 @@ namespace Planning
 
         private void MaximideWindows()
         {
+            MaximizedBounds = Screen.FromHandle(this.Handle).WorkingArea;
             WindowState = WindowState == FormWindowState.Maximized ? FormWindowState.Normal : FormWindowState.Maximized;
         }
         private void AddFormTab(Form frm, String Name)
@@ -313,7 +316,7 @@ namespace Planning
             frm.FormBorderStyle = FormBorderStyle.None;
             frm.Dock = DockStyle.Fill;
             tabForms.TabPages.Add(Name);
-            tabForms.TabPages[tabForms.TabPages.Count - 1].Controls.Add(frm);
+            tabForms.TabPages[tabForms.TabPages.Count - 1].Controls.Add(frm);            
             tabForms.SelectedTab = tabForms.TabPages[tabForms.TabPages.Count - 1];
         }
         private void Item_Click(object sender, EventArgs e)
@@ -495,6 +498,7 @@ namespace Planning
             Rectangle closeButton = new Rectangle(r.Right - 15, r.Top + 4, 13, 13);
             if (closeButton.Contains(e.Location))
             {
+                (this.tabForms.SelectedTab.Controls[0] as Form).Close();
                 this.tabForms.TabPages.Remove(this.tabForms.SelectedTab);
             }
         }
@@ -504,6 +508,27 @@ namespace Planning
             var frmCustomPosts = new CustomPosts();
             //SetFormPrivalage(frmCustomPosts, "CustomPost");
             AddFormTab(frmCustomPosts, "Таможенные посты");
+        }
+
+        private void menuItemDictGates_Click(object sender, EventArgs e)
+        {
+            DictSimple dict = new DictSimple();
+            dict.TableName = "gateways";
+            dict.Title = "Справочник: Ворота";
+
+            dict.Columns.Add(new DictColumn { Id = "Id", IsPK = true, IsVisible = false, Title = "Код", DataField = "id", DataType = SqlDbType.Int });
+            dict.Columns.Add(new DictColumn { Id = "GatewayNum", IsPK = false, IsVisible = true, Title = "Номер ворот", DataField = "name", Width = 254, DataType = SqlDbType.Int });
+
+
+            SimpleDict<DataLayer.Gateway, DataLayer.GatewayRepository> frmGate = new SimpleDict<DataLayer.Gateway, DataLayer.GatewayRepository>(dict);
+            //SetFormPrivalage(frmGate, "Gate");
+            AddFormTab(frmGate, "Ворота");
+            
+        }
+
+        private void panelFormHeader_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

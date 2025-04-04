@@ -19,7 +19,7 @@ namespace Planning.DataLayer
                 case EditState.New:
                     return $@"INSERT INTO {Table} (name) values(@{nameof(TimeSlot.DepositorId)}, @{nameof(TimeSlot.Name)}, @{nameof(TimeSlot.SlotTime)})";
                 case EditState.Edit:
-                    return $@"update {Table} id = @{nameof(TimeSlot.Id)},depositor_id = @{nameof(TimeSlot.DepositorId)}, 
+                    return $@"update {Table} set depositor_id = @{nameof(TimeSlot.DepositorId)}, 
                                 name = @{nameof(TimeSlot.Name)}, slot_time = @{nameof(TimeSlot.SlotTime)}";
                 case EditState.Delete:
                     return $"delete from {Table} where id = @Id";

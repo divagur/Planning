@@ -620,10 +620,11 @@ namespace Planning
 
             dict.Columns.Add(new DictColumn { Id = "Id", IsPK = true, IsVisible = false, Title = "Код", DataField = "id", DataType = SqlDbType.Int });
             dict.Columns.Add(new DictColumn { Id = "name", IsPK = false, IsVisible = true, Title = "Наименование", DataField = "name", Width = 254, DataType = SqlDbType.NVarChar, Length = 20 });
-
+            /*
             SimpleDict frmOperType = new SimpleDict(dict);
             SetFormPrivalage(frmOperType, "OperType");
             AddFormTab(frmOperType, "Типы операций");
+            */
         }
         
         private void AddFormTab(Form frm,String Name)
@@ -645,18 +646,10 @@ namespace Planning
 
             dict.Columns.Add(new DictColumn { Id = "Id", IsPK = true, IsVisible = false, Title = "Код", DataField = "id", DataType = SqlDbType.Int });
             dict.Columns.Add(new DictColumn { Id = "GatewayNum", IsPK = false, IsVisible = true, Title = "Номер ворот", DataField = "name", Width = 254, DataType = SqlDbType.Int });
-
+            /*
             SimpleDict frmGate = new SimpleDict(dict);
             SetFormPrivalage(frmGate, "Gate");
             AddFormTab(frmGate, "Ворота");
-            /*
-            frmOperType.TopLevel = false;
-            frmOperType.Visible = true;
-            frmOperType.FormBorderStyle = FormBorderStyle.None;
-            frmOperType.Dock = DockStyle.Fill;
-            tabForms.TabPages.Add("Ворота");
-            tabForms.TabPages[tabForms.TabPages.Count-1].Controls.Add(frmOperType);
-            //frmOperType.Show();
             */
         }
         
@@ -1193,10 +1186,11 @@ namespace Planning
             dict.Columns.Add(new DictColumn { Id = "Name", IsPK = false, IsVisible = true, Title = "Наименование", DataField = "name", Width = 254, DataType = SqlDbType.VarChar, Length = 20 });
             dict.Columns.Add(new DictColumn { Id = "Tonnage", IsPK = false, IsVisible = true, Title = "Тоннаж", DataField = "tonnage", Width = 80, DataType = SqlDbType.Int });
             
-
+            /*
             var frmTransporType = new SimpleDict(dict);
             SetFormPrivalage(frmTransporType, "TransporType");
             AddFormTab(frmTransporType, "Типы транспорта");
+            */
         }
 
         private void miDictTC_Click(object sender, EventArgs e)
@@ -1211,10 +1205,11 @@ namespace Planning
             dict.Columns.Add(new DictColumn { Id = "Name", IsPK = false, IsVisible = true, Title = "Наименование", DataField = "name", Width = 254, DataType = SqlDbType.VarChar, Length = 254 });
             dict.Columns.Add(new DictColumn { Id = "IsActive", IsPK = false, IsVisible = true, Title = "Активная", DataField = "is_active", Width = 80, DataType = SqlDbType.Bit });
             
-
+            /*
             var frmTransportCompany = new SimpleDict(dict);
             SetFormPrivalage(frmTransportCompany, "TC");
             AddFormTab(frmTransportCompany, "Транспортные компании");
+            */
         }
 
         private void mciPrint_Click(object sender, EventArgs e)
@@ -2123,10 +2118,11 @@ namespace Planning
             dict.Columns.Add(new DictColumn { Id = "Id", IsPK = true, IsVisible = false, Title = "Код", DataField = "id", DataType = SqlDbType.Int });
             dict.Columns.Add(new DictColumn { Id = "Name", IsPK = false, IsVisible = true, Title = "Наименование", DataField = "name", Width = 254, DataType = SqlDbType.VarChar, Length = 20 });
 
-
+            /*
             var frmTransporView = new SimpleDict(dict);
             SetFormPrivalage(frmTransporView, "TransporView");
             AddFormTab(frmTransporView, "Виды транспорта");
+            */
         }
     }
 }
