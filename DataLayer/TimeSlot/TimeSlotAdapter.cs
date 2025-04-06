@@ -32,7 +32,8 @@ namespace Planning.DataLayer
         {
             return $@"
                     select 
-	                    {nameof(TimeSlot.Id)}, {nameof(TimeSlot.Name)},{nameof(TimeSlot.DepositorId)},{nameof(TimeSlot.SlotTime)}
+	                    id as {nameof(TimeSlot.Id)}, name as {nameof(TimeSlot.Name)},depositor_id as {nameof(TimeSlot.DepositorId)},
+                        slot_time as {nameof(TimeSlot.SlotTime)}
                     from 
 	                    {Table}
                     ";

@@ -33,9 +33,9 @@ namespace Planning
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainFormEx));
-            BrightIdeasSoftware.HeaderStateStyle headerStateStyle1 = new BrightIdeasSoftware.HeaderStateStyle();
-            BrightIdeasSoftware.HeaderStateStyle headerStateStyle2 = new BrightIdeasSoftware.HeaderStateStyle();
-            BrightIdeasSoftware.HeaderStateStyle headerStateStyle3 = new BrightIdeasSoftware.HeaderStateStyle();
+            BrightIdeasSoftware.HeaderStateStyle headerStateStyle4 = new BrightIdeasSoftware.HeaderStateStyle();
+            BrightIdeasSoftware.HeaderStateStyle headerStateStyle5 = new BrightIdeasSoftware.HeaderStateStyle();
+            BrightIdeasSoftware.HeaderStateStyle headerStateStyle6 = new BrightIdeasSoftware.HeaderStateStyle();
             this.menuMain = new System.Windows.Forms.MenuStrip();
             this.mtiFile = new System.Windows.Forms.ToolStripMenuItem();
             this.miSettings = new System.Windows.Forms.ToolStripMenuItem();
@@ -128,6 +128,7 @@ namespace Planning
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
+            this.btnColumnVisible = new Planning.Controls.MenuButton();
             this.contextMenuColumns = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
@@ -163,7 +164,6 @@ namespace Planning
             this.menuItemReportStatistic = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemReportTC = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemAdd = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnColumnVisible = new Planning.Controls.MenuButton();
             this.menuMain.SuspendLayout();
             this.statusStrip2.SuspendLayout();
             this.tabForms.SuspendLayout();
@@ -1034,6 +1034,19 @@ namespace Planning
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
+            // btnColumnVisible
+            // 
+            this.btnColumnVisible.FlatAppearance.BorderSize = 0;
+            this.btnColumnVisible.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnColumnVisible.Image = ((System.Drawing.Image)(resources.GetObject("btnColumnVisible.Image")));
+            this.btnColumnVisible.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnColumnVisible.Location = new System.Drawing.Point(330, 4);
+            this.btnColumnVisible.Menu = this.contextMenuColumns;
+            this.btnColumnVisible.Name = "btnColumnVisible";
+            this.btnColumnVisible.Size = new System.Drawing.Size(50, 49);
+            this.btnColumnVisible.TabIndex = 0;
+            this.btnColumnVisible.UseVisualStyleBackColor = true;
+            // 
             // contextMenuColumns
             // 
             this.contextMenuColumns.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -1065,10 +1078,10 @@ namespace Planning
             // 
             // headerFormatStyle1
             // 
-            this.headerFormatStyle1.Hot = headerStateStyle1;
-            headerStateStyle2.FrameWidth = 2F;
-            this.headerFormatStyle1.Normal = headerStateStyle2;
-            this.headerFormatStyle1.Pressed = headerStateStyle3;
+            this.headerFormatStyle1.Hot = headerStateStyle4;
+            headerStateStyle5.FrameWidth = 2F;
+            this.headerFormatStyle1.Normal = headerStateStyle5;
+            this.headerFormatStyle1.Pressed = headerStateStyle6;
             // 
             // imageListInOut
             // 
@@ -1125,6 +1138,8 @@ namespace Planning
             // btnMainMenu
             // 
             this.btnMainMenu.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnMainMenu.FlatAppearance.BorderSize = 0;
+            this.btnMainMenu.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnMainMenu.Image = global::Planning.Properties.Resources.icons8_menu_32;
             this.btnMainMenu.Location = new System.Drawing.Point(0, 0);
             this.btnMainMenu.Margin = new System.Windows.Forms.Padding(1, 3, 1, 3);
@@ -1153,6 +1168,7 @@ namespace Planning
             // btnMaximizeWindow
             // 
             this.btnMaximizeWindow.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnMaximizeWindow.FlatAppearance.BorderSize = 0;
             this.btnMaximizeWindow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnMaximizeWindow.Image = global::Planning.Properties.Resources.icons8_maximize_window_32;
             this.btnMaximizeWindow.Location = new System.Drawing.Point(870, 0);
@@ -1166,6 +1182,7 @@ namespace Planning
             // btnCloseWindow
             // 
             this.btnCloseWindow.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnCloseWindow.FlatAppearance.BorderSize = 0;
             this.btnCloseWindow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCloseWindow.Image = global::Planning.Properties.Resources.icons8_close_window_32;
             this.btnCloseWindow.Location = new System.Drawing.Point(907, 0);
@@ -1232,6 +1249,7 @@ namespace Planning
             this.menuItemDictTimeSlot.Size = new System.Drawing.Size(230, 22);
             this.menuItemDictTimeSlot.Tag = "TimeSlot";
             this.menuItemDictTimeSlot.Text = "Тайм слоты";
+            this.menuItemDictTimeSlot.Click += new System.EventHandler(this.menuItemDictTimeSlot_Click);
             // 
             // menuItemDictDepositor
             // 
@@ -1239,6 +1257,7 @@ namespace Planning
             this.menuItemDictDepositor.Size = new System.Drawing.Size(230, 22);
             this.menuItemDictDepositor.Tag = "Depositor";
             this.menuItemDictDepositor.Text = "Депозиторы";
+            this.menuItemDictDepositor.Click += new System.EventHandler(this.menuItemDictDepositor_Click);
             // 
             // menuItemDictOpersType
             // 
@@ -1246,6 +1265,8 @@ namespace Planning
             this.menuItemDictOpersType.Size = new System.Drawing.Size(230, 22);
             this.menuItemDictOpersType.Tag = "OperType";
             this.menuItemDictOpersType.Text = "Типы операций";
+            this.menuItemDictOpersType.Visible = false;
+            this.menuItemDictOpersType.Click += new System.EventHandler(this.menuItemDictOpersType_Click);
             // 
             // menuItemDictDelayReasons
             // 
@@ -1340,19 +1361,6 @@ namespace Planning
             this.toolStripMenuItemAdd.Name = "toolStripMenuItemAdd";
             this.toolStripMenuItemAdd.Size = new System.Drawing.Size(162, 22);
             this.toolStripMenuItemAdd.Text = "Дополнительно";
-            // 
-            // btnColumnVisible
-            // 
-            this.btnColumnVisible.FlatAppearance.BorderSize = 0;
-            this.btnColumnVisible.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnColumnVisible.Image = ((System.Drawing.Image)(resources.GetObject("btnColumnVisible.Image")));
-            this.btnColumnVisible.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnColumnVisible.Location = new System.Drawing.Point(330, 4);
-            this.btnColumnVisible.Menu = this.contextMenuColumns;
-            this.btnColumnVisible.Name = "btnColumnVisible";
-            this.btnColumnVisible.Size = new System.Drawing.Size(50, 49);
-            this.btnColumnVisible.TabIndex = 0;
-            this.btnColumnVisible.UseVisualStyleBackColor = true;
             // 
             // MainFormEx
             // 

@@ -59,16 +59,19 @@ namespace Planning
             frmCustomPostEdit.ShowDialog();
             if (frmCustomPostEdit.DialogResult == DialogResult.Cancel)
                 return;
-
-            Save();
+            _customPostRepository.Save(customPost);
+            UpdateDataSource();
+            //Save();
         }
         protected override void DelRow()
         {
-            CustomPost customPost = _context.CustomPosts.Find(tblCustomPosts.Rows[tblCustomPosts.CurrentCell.RowIndex].Cells["colId"].Value);
+            DataLayer.CustomPost customPost = _customPosts.Find(cp => cp.Id == Int32.Parse(tblCustomPosts.Rows[tblCustomPosts.CurrentCell.RowIndex].Cells["colId"].Value.ToString()));
+            //_context.CustomPosts.Find(tblCustomPosts.Rows[tblCustomPosts.CurrentCell.RowIndex].Cells["colId"].Value);
             if (MessageBox.Show("Удалить склад?", "Подтверждение", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
             {
-                _context.CustomPosts.Remove(customPost);
-                Save();
+                customPost.Delete();
+                _customPostRepository.Save(customPost);
+                UpdateDataSource();
             }
         }
     }

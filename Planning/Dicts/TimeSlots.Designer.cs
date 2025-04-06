@@ -31,13 +31,13 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TimeSlots));
             this.tblTimeSlot = new System.Windows.Forms.DataGridView();
+            this.depositorsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.planningDataSet1 = new Planning.PlanningDataSet1();
+            this.depositorsTableAdapter = new Planning.PlanningDataSet1TableAdapters.depositorsTableAdapter();
             this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDepositor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colTimeSlot = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.depId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.depositorsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.planningDataSet1 = new Planning.PlanningDataSet1();
-            this.depositorsTableAdapter = new Planning.PlanningDataSet1TableAdapters.depositorsTableAdapter();
             ((System.ComponentModel.ISupportInitialize)(this.tblTimeSlot)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.depositorsBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.planningDataSet1)).BeginInit();
@@ -54,16 +54,30 @@
             this.colTimeSlot,
             this.depId});
             this.tblTimeSlot.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tblTimeSlot.Location = new System.Drawing.Point(0, 0);
+            this.tblTimeSlot.Location = new System.Drawing.Point(0, 25);
             this.tblTimeSlot.Name = "tblTimeSlot";
             this.tblTimeSlot.ReadOnly = true;
             this.tblTimeSlot.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.tblTimeSlot.Size = new System.Drawing.Size(829, 469);
+            this.tblTimeSlot.Size = new System.Drawing.Size(829, 444);
             this.tblTimeSlot.TabIndex = 2;
+            // 
+            // depositorsBindingSource
+            // 
+            this.depositorsBindingSource.DataMember = "depositors";
+            this.depositorsBindingSource.DataSource = this.planningDataSet1;
+            // 
+            // planningDataSet1
+            // 
+            this.planningDataSet1.DataSetName = "PlanningDataSet1";
+            this.planningDataSet1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // depositorsTableAdapter
+            // 
+            this.depositorsTableAdapter.ClearBeforeFill = true;
             // 
             // colId
             // 
-            this.colId.DataPropertyName = "ts_id";
+            this.colId.DataPropertyName = "Id";
             this.colId.HeaderText = "Id";
             this.colId.Name = "colId";
             this.colId.ReadOnly = true;
@@ -80,32 +94,18 @@
             // 
             // colTimeSlot
             // 
-            this.colTimeSlot.DataPropertyName = "slot_time";
+            this.colTimeSlot.DataPropertyName = "SlotTime";
             this.colTimeSlot.HeaderText = "Тайм слот";
             this.colTimeSlot.Name = "colTimeSlot";
             this.colTimeSlot.ReadOnly = true;
             // 
             // depId
             // 
-            this.depId.DataPropertyName = "dep_id";
+            this.depId.DataPropertyName = "DepositorId";
             this.depId.HeaderText = "depId";
             this.depId.Name = "depId";
             this.depId.ReadOnly = true;
             this.depId.Visible = false;
-            // 
-            // depositorsBindingSource
-            // 
-            this.depositorsBindingSource.DataMember = "depositors";
-            this.depositorsBindingSource.DataSource = this.planningDataSet1;
-            // 
-            // planningDataSet1
-            // 
-            this.planningDataSet1.DataSetName = "PlanningDataSet1";
-            this.planningDataSet1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // depositorsTableAdapter
-            // 
-            this.depositorsTableAdapter.ClearBeforeFill = true;
             // 
             // TimeSlots
             // 

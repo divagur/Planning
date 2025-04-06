@@ -14,62 +14,68 @@ namespace Planning
 {
     public partial class TimeSlots : DictForm
     {
+        List<DataLayer.TimeSlot> _timeSlots = new List<DataLayer.TimeSlot>();
+        DataLayer.TimeSlotRepository _timeSlotRepository = new DataLayer.TimeSlotRepository();
+
         public TimeSlots()
         {
             InitializeComponent();
         }
 
+        private void UpdateDataSource()
+        {
+            tblTimeSlot.DataSource = null;
+            tblTimeSlot.DataSource = _timeSlots;
+            tblTimeSlot.Refresh();
+        }
+
+        private DataLayer.TimeSlot GetSelectedObject()
+        {
+           return _timeSlots.Find(t => t.Id == Int32.Parse(tblTimeSlot.Rows[tblTimeSlot.CurrentCell.RowIndex].Cells["colId"].Value.ToString()));
+        }
         protected override void AddRow()
         {
-            TimeSlot timeSlot = new TimeSlot();
+            DataLayer.TimeSlot timeSlot = new DataLayer.TimeSlot();
             var frmTimeSlotEdit = new TimeSlotEdit(timeSlot);
 
             frmTimeSlotEdit.ShowDialog();
             if (frmTimeSlotEdit.DialogResult == DialogResult.Cancel)
                 return;
-            DataService.context.TimeSlots.Add(timeSlot);
-            Save();
+
+            _timeSlots.Add(timeSlot);
+            _timeSlotRepository.Save(timeSlot);
+            UpdateDataSource();
         }
 
         protected override void EditRow()
         {
-            TimeSlot timeSlot = _context.TimeSlots.Find(tblTimeSlot.Rows[tblTimeSlot.CurrentCell.RowIndex].Cells["colId"].Value);
+            DataLayer.TimeSlot timeSlot = GetSelectedObject();
             var frmTimeSlotEdit = new TimeSlotEdit(timeSlot);
 
             frmTimeSlotEdit.ShowDialog();
             if (frmTimeSlotEdit.DialogResult == DialogResult.Cancel)
                 return;
 
-            Save();
+            _timeSlotRepository.Save(timeSlot);
+            UpdateDataSource();
         }
 
         protected override void DelRow()
         {
             if (MessageBox.Show("Удалить запись?", "Подтверждение удаления", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
-                TimeSlot timeSlot = _context.TimeSlots.Find(tblTimeSlot.Rows[tblTimeSlot.CurrentCell.RowIndex].Cells["colId"].Value);
-                _context.TimeSlots.Remove(timeSlot);
-                Save();
+                DataLayer.TimeSlot timeSlot = GetSelectedObject();
+                timeSlot.Delete();
+                _timeSlotRepository.Save(timeSlot);
             }
         }
        
 
         protected override void Populate()
         {
-            using (SqlConnection connection = new SqlConnection(DataService.connectionString))
-            {
-                if (connection.State == ConnectionState.Closed)
-                    connection.Open();
-                string sqlText = @"select ts.id ts_id,d.id dep_id, d.name dep_name, ts.slot_time
-                                    from 
-                                            time_slot ts join depositors d on (ts.depositor_id = d.id)";
-                SqlDataAdapter adapter = new SqlDataAdapter(sqlText, connection);
-
-                DataSet ds = new DataSet();
-                adapter.Fill(ds);
-                tblTimeSlot.AutoGenerateColumns = false;
-                tblTimeSlot.DataSource = ds.Tables[0];
-            }
+            tblTimeSlot.AutoGenerateColumns = false;
+            _timeSlots = _timeSlotRepository.GetAll();
+            UpdateDataSource();
         }
 
 

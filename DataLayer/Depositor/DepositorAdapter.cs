@@ -31,7 +31,7 @@ namespace Planning.DataLayer
         {
             return $@"
                     select 
-	                    {nameof(Depositor.Id)}, {nameof(Depositor.Name)},{nameof(Depositor.LvId)},{nameof(Depositor.LvBase)}
+	                    id as {nameof(Depositor.Id)}, name as {nameof(Depositor.Name)},lv_id as {nameof(Depositor.LvId)},lv_base as {nameof(Depositor.LvBase)}
                     from 
 	                    {Table}
                     ";

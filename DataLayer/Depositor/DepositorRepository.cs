@@ -19,5 +19,10 @@ namespace Planning.DataLayer
         {
 
         }
+        public DepositorRepository()
+            : base()
+        {
+
+        }
     }
 }

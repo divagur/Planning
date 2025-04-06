@@ -14,7 +14,7 @@ namespace Planning.DataLayer
     {
         int? _depositorId;
         string _name; 
-        TimeSpan _slotTime;
+        TimeSpan? _slotTime;
 
         public int? DepositorId
         {
@@ -42,7 +42,7 @@ namespace Planning.DataLayer
                 }
             }
         }
-        public TimeSpan SlotTime
+        public TimeSpan? SlotTime
         {
             get => _slotTime;
             set

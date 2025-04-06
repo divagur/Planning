@@ -14,6 +14,8 @@ namespace Planning
 {
     public partial class Depositors : DictForm
     {
+        List<DataLayer.Depositor> _depositors = new List<DataLayer.Depositor>();
+        DataLayer.DepositorRepository _depositorRepository = new DataLayer.DepositorRepository();
         public Depositors()
         {
             InitializeComponent();
@@ -40,29 +42,11 @@ namespace Planning
         }
 
         protected override void Populate()
-        {
-
-            WaitBegin();
-           // Cursor = Cursors.AppStarting;
-            tblDict.DataSource = _context.Depositors.ToList<Depositor>();
-            WaitEnd();
-            //Cursor = Cursors.Default;
-
-            /*
-            using (SqlConnection connection = new SqlConnection(DataService.connectionString))
-            {
-                if (connection.State == ConnectionState.Closed)
-                    connection.Open();
-                string sqlText = @"select id, name, lv_base, lv_id
-                                    from depositors";
-                SqlDataAdapter adapter = new SqlDataAdapter(sqlText, connection);
-
-                DataSet ds = new DataSet();
-                adapter.Fill(ds);
-                
-                tblDict.DataSource = ds.Tables[0];
-            }
-            */
+        {     
+            //tblDict.DataSource = _context.Depositors.ToList<Depositor>();
+            tblDict.AutoGenerateColumns = false;
+            _depositors = _depositorRepository.GetAll();
+            tblDict.DataSource = _depositors;
         }
 
         protected override void EditRow()

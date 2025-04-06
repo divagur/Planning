@@ -65,10 +65,10 @@ namespace Planning
 
             Init();
 
-            // ConnectionParams.ServerName = @"ZDV\MS2019DVG";
-            // ConnectionParams.BaseName = "Planning";
-            ConnectionParams.ServerName = @"DZHURAVLEV";
-            ConnectionParams.BaseName = "Planning_curr";
+            ConnectionParams.ServerName = @"ZDV\MS2019DVG";
+            ConnectionParams.BaseName = "Planning";
+            //ConnectionParams.ServerName = @"DZHURAVLEV";
+            //ConnectionParams.BaseName = "Planning_curr";
             ConnectionParams.UserName ="sysadm";
             ConnectionParams.Pwd = "sysadm";
 
@@ -529,6 +529,45 @@ namespace Planning
         private void panelFormHeader_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void menuItemDictDepositor_Click(object sender, EventArgs e)
+        {
+            DictSimple dict = new DictSimple();
+
+            dict.TableName = "depositors";
+            dict.Title = "Справочник: Депозиторы";
+
+            dict.Columns.Add(new DictColumn { Id = "Id", IsPK = true, IsVisible = false, Title = "Код", DataField = "id", DataType = SqlDbType.Int });
+            dict.Columns.Add(new DictColumn { Id = "Name", IsPK = false, IsVisible = true, Title = "Наименование", DataField = "name", Width = 254, DataType = SqlDbType.VarChar, Length = 20 });
+            dict.Columns.Add(new DictColumn { Id = "DB", IsPK = false, IsVisible = true, Title = "База данных", DataField = "lv_base", Width = 128, DataType = SqlDbType.VarChar, Length = 128 });
+            dict.Columns.Add(new DictColumn { Id = "LVId", IsPK = false, IsVisible = true, Title = "Код в LVision", DataField = "lv_id", Width = 80, DataType = SqlDbType.Int });
+
+            Depositors frmDepositors = new Depositors();
+
+            //SetFormPrivalage(frmDepositors, "Depositor");
+            AddFormTab(frmDepositors, "Депозиторы");
+        }
+
+        private void menuItemDictOpersType_Click(object sender, EventArgs e)
+        {
+            DictSimple dict = new DictSimple();
+            dict.TableName = "opers_type";
+            dict.Title = "Справочник: Типы операций";
+
+            dict.Columns.Add(new DictColumn { Id = "Id", IsPK = true, IsVisible = false, Title = "Код", DataField = "id", DataType = SqlDbType.Int });
+            dict.Columns.Add(new DictColumn { Id = "name", IsPK = false, IsVisible = true, Title = "Наименование", DataField = "name", Width = 254, DataType = SqlDbType.NVarChar, Length = 20 });
+
+            //SimpleDict<DataLayer.OperTy, DataLayer.GatewayRepository> frmOperType = new SimpleDict(dict);
+            //SetFormPrivalage(frmOperType, "OperType");
+            //AddFormTab(frmOperType, "Типы операций");
+        }
+
+        private void menuItemDictTimeSlot_Click(object sender, EventArgs e)
+        {
+            var frmTimeSlot = new TimeSlots();
+            //SetFormPrivalage(frmTimeSlot, "TimeSlot");
+            AddFormTab(frmTimeSlot, "Тайм слоты");
         }
     }
 }
