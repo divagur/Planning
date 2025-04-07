@@ -35,7 +35,7 @@
             this.planningDataSet1 = new Planning.PlanningDataSet1();
             this.depositorsTableAdapter = new Planning.PlanningDataSet1TableAdapters.depositorsTableAdapter();
             this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDepositor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDepositor = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.colTimeSlot = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.depId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.tblTimeSlot)).BeginInit();
@@ -85,11 +85,11 @@
             // 
             // colDepositor
             // 
-            this.colDepositor.DataPropertyName = "dep_name";
             this.colDepositor.HeaderText = "Депозитор";
             this.colDepositor.Name = "colDepositor";
             this.colDepositor.ReadOnly = true;
             this.colDepositor.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colDepositor.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.colDepositor.Width = 200;
             // 
             // colTimeSlot
@@ -131,7 +131,7 @@
         private System.Windows.Forms.BindingSource depositorsBindingSource;
         private PlanningDataSet1TableAdapters.depositorsTableAdapter depositorsTableAdapter;
         private System.Windows.Forms.DataGridViewTextBoxColumn colId;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colDepositor;
+        private System.Windows.Forms.DataGridViewComboBoxColumn colDepositor;
         private System.Windows.Forms.DataGridViewTextBoxColumn colTimeSlot;
         private System.Windows.Forms.DataGridViewTextBoxColumn depId;
     }

@@ -94,7 +94,16 @@ namespace Planning.Kernel
                     break;
                 case EditState.Edit:
                 case EditState.Delete:
-                    count = dbConnection.Execute(sql, Item);
+                    try
+                    {
+                        count = dbConnection.Execute(sql, Item);
+                    }
+                    catch (Exception ex)
+                    {
+
+                        string s = ex.Message;
+                    }
+                    
                     break;
                 default:
                     break;

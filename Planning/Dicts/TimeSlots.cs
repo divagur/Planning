@@ -67,6 +67,7 @@ namespace Planning
                 DataLayer.TimeSlot timeSlot = GetSelectedObject();
                 timeSlot.Delete();
                 _timeSlotRepository.Save(timeSlot);
+                UpdateDataSource();
             }
         }
        
@@ -75,7 +76,18 @@ namespace Planning
         {
             tblTimeSlot.AutoGenerateColumns = false;
             _timeSlots = _timeSlotRepository.GetAll();
+
             UpdateDataSource();
+
+            DataLayer.DepositorRepository depositorRepository = new DataLayer.DepositorRepository();
+            List<DataLayer.Depositor> depositors = depositorRepository.GetAll();
+            //tblTimeSlot.DataSource = depositors;
+
+            colDepositor.DataSource = depositors;
+            colDepositor.DisplayMember = "Name";
+            colDepositor.DataPropertyName = "DepositorId";
+            colDepositor.ValueMember = "Id";
+
         }
 
 

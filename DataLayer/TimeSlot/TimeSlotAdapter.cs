@@ -17,10 +17,11 @@ namespace Planning.DataLayer
             switch (editState)
             {
                 case EditState.New:
-                    return $@"INSERT INTO {Table} (name) values(@{nameof(TimeSlot.DepositorId)}, @{nameof(TimeSlot.Name)}, @{nameof(TimeSlot.SlotTime)})";
+                    return $@"INSERT INTO {Table} (depositor_id, name, slot_time) values(@{nameof(TimeSlot.DepositorId)}, @{nameof(TimeSlot.Name)}, @{nameof(TimeSlot.SlotTime)})";
                 case EditState.Edit:
                     return $@"update {Table} set depositor_id = @{nameof(TimeSlot.DepositorId)}, 
-                                name = @{nameof(TimeSlot.Name)}, slot_time = @{nameof(TimeSlot.SlotTime)}";
+                                name = @{nameof(TimeSlot.Name)}, slot_time = @{nameof(TimeSlot.SlotTime)}
+                                where id = @Id";
                 case EditState.Delete:
                     return $"delete from {Table} where id = @Id";
             }
