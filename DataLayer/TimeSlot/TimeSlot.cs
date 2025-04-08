@@ -34,7 +34,7 @@ namespace Planning.DataLayer
             get => _name;
             set
             {
-                if (_name == null || !_depositorId.Equals(value))
+                if (_name == null || !_name.Equals(value))
                 {
                     _name = value;
                     Edit();

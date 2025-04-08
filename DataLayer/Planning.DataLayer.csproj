@@ -68,6 +68,7 @@
     <Compile Include="BaseObjects\ConnectionParams.cs" />
     <Compile Include="DelayReason\DelayReasonDataAdapter.cs" />
     <Compile Include="DelayReason\DelayReasonRepository.cs" />
+    <Compile Include="DepositorAttribute\DepositorAttribute.cs" />
     <Compile Include="UsersGroup\UsersGroup.cs" />
     <Compile Include="UsersGroup\UsersGroupDataAdapter.cs" />
     <Compile Include="UsersGroup\UsersGroupRepository.cs" />

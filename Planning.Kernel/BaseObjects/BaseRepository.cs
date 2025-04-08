@@ -7,7 +7,7 @@ using Dapper;
 
 namespace Planning.Kernel
 {
-    public class BaseRepository<T, M>:IRepository<T>
+    public class BaseRepository<T, M> : IRepository<T>
         where T : BaseDataItem
         where M : IDataAdaper, new()
     {
@@ -21,7 +21,7 @@ namespace Planning.Kernel
             //_dataAdapter = GetDataAdapter();
             _connectionString = connectionString;
             InitConnection(connectionString);
-            
+
         }
 
         public BaseRepository()
@@ -53,7 +53,7 @@ namespace Planning.Kernel
                     result = queryResult.ToList();
                 }
             }
-            
+
             return result.ToList();
         }
 
@@ -68,48 +68,40 @@ namespace Planning.Kernel
                 item = queryResult.FirstOrDefault();
             }
             return item;
-        }    
-   
+        }
+
         public virtual bool Save(T Item)
         {
             EditState itemState = Item.GetState();
             int count = 0;
             string sql = dataAdapter.GetSaveSql(itemState);
-            switch (itemState)
+            try
             {
-                case EditState.New:
-                    sql = sql + " select SCOPE_IDENTITY()";
-                    try
-                    {
+                switch (itemState)
+                {
+                    case EditState.New:
+                        sql = sql + " select SCOPE_IDENTITY()";
+
                         var ids = dbConnection.Query<int>(sql, Item);
                         Item.Id = ids.First();
                         count = ids.Count();
-                    }
-                    catch (Exception ex )
-                    {
 
-                        _lastError = ex.Message;
-                    }
 
-                    break;
-                case EditState.Edit:
-                case EditState.Delete:
-                    try
-                    {
+                        break;
+                    case EditState.Edit:
+                    case EditState.Delete:
                         count = dbConnection.Execute(sql, Item);
-                    }
-                    catch (Exception ex)
-                    {
-
-                        string s = ex.Message;
-                    }
-                    
-                    break;
-                default:
-                    break;
+                        break;
+                    default:
+                        break;
+        }
             }
+            catch (Exception ex)
+            {
 
-            
+                _lastError = ex.Message;
+                throw new Exception(ex.Message);
+            }
             return count > 0;
         }
 
