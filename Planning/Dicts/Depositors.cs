@@ -21,8 +21,13 @@ namespace Planning
             InitializeComponent();
             tblDict.AutoGenerateColumns = false;
         }
-
-        void CreateEdtiForm(Depositor depositor, bool isNew)
+        private void UpdateDataSource()
+        {
+            tblDict.DataSource = null;
+            tblDict.DataSource = _depositors;
+            tblDict.Refresh();
+        }
+        void CreateEdtiForm(DataLayer.Depositor depositor, bool isNew)
         {
             var frmDepositorEdit = new DepositorEdit(depositor);
 
@@ -30,13 +35,15 @@ namespace Planning
             if (frmDepositorEdit.DialogResult == DialogResult.Cancel)
                 return;
             if (isNew)
-                DataService.context.Depositors.Add(depositor);
-            Save();
+                _depositors.Add(depositor);
+            _depositorRepository.Save(depositor);
+            UpdateDataSource();
+            
         }
 
         protected override void AddRow()
         {
-            Depositor depositor = new Depositor();
+            DataLayer.Depositor depositor = new DataLayer.Depositor();
             CreateEdtiForm(depositor, true);
            
         }
@@ -49,9 +56,13 @@ namespace Planning
             tblDict.DataSource = _depositors;
         }
 
+        private DataLayer.Depositor GetCurrentRowObject()
+        {
+            return _depositors.Find(d => d.Id == Int32.Parse(tblDict.Rows[tblDict.CurrentCell.RowIndex].Cells["colId"].Value.ToString()));
+        }
         protected override void EditRow()
         {
-            Depositor depositor = _context.Depositors.Find(tblDict.Rows[tblDict.CurrentCell.RowIndex].Cells["colId"].Value);
+            DataLayer.Depositor depositor = GetCurrentRowObject();
             CreateEdtiForm(depositor, false);
         }
 
@@ -59,9 +70,10 @@ namespace Planning
         {
             if (MessageBox.Show("Удалить запись?", "Подтверждение удаления", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
-                Depositor depositor = _context.Depositors.Find(tblDict.Rows[tblDict.CurrentCell.RowIndex].Cells["colId"].Value);
-                _context.Depositors.Remove(depositor);
-                Save();
+                DataLayer.Depositor depositor = GetCurrentRowObject();
+                depositor.Delete();
+                _depositorRepository.Save(depositor);
+                UpdateDataSource();
             }
         }
 

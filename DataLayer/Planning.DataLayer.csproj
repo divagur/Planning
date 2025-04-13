@@ -68,7 +68,9 @@
     <Compile Include="BaseObjects\ConnectionParams.cs" />
     <Compile Include="DelayReason\DelayReasonDataAdapter.cs" />
     <Compile Include="DelayReason\DelayReasonRepository.cs" />
-    <Compile Include="DepositorAttribute\DepositorAttribute.cs" />
+    <Compile Include="DepositorAttribute\DepositorAttributeAdapter.cs" />
+    <Compile Include="DepositorAttribute\DepositorAttributeRepository.cs" />
+    <Compile Include="LvAttr\LvAttribute.cs" />
     <Compile Include="UsersGroup\UsersGroup.cs" />
     <Compile Include="UsersGroup\UsersGroupDataAdapter.cs" />
     <Compile Include="UsersGroup\UsersGroupRepository.cs" />
@@ -115,7 +117,7 @@
     <Compile Include="Depositor\Depositor.cs" />
     <Compile Include="Depositor\DepositorAdapter.cs" />
     <Compile Include="Depositor\DepositorRepository.cs" />
-    <Compile Include="LvAttr\LvAttr.cs" />
+    <Compile Include="DepositorAttribute\DepositorAttribute.cs" />
     <Compile Include="MovementItem\MovementItem.cs" />
     <Compile Include="Movement\Movement.cs" />
     <Compile Include="PlanningFunctions\PlanningFunctions.cs" />
@@ -136,5 +138,6 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

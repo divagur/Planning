@@ -83,7 +83,6 @@
             this.label3.Size = new System.Drawing.Size(63, 13);
             this.label3.TabIndex = 0;
             this.label3.Text = "ID в Lvision";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // edName
             // 
@@ -158,8 +157,6 @@
             this.tblAttrShipment.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.tblAttrShipment.Size = new System.Drawing.Size(538, 263);
             this.tblAttrShipment.TabIndex = 0;
-            this.tblAttrShipment.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tblAttr_CellContentClick);
-            this.tblAttrShipment.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tblAttr_CellDoubleClick);
             // 
             // Id
             // 

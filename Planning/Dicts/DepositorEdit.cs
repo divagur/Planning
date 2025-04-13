@@ -13,13 +13,11 @@ namespace Planning
 {
     public partial class DepositorEdit : Form
     {
-        PlanningDbContext _context;
-        Depositor _depositor;
+        DataLayer.Depositor _depositor;
 
-        public DepositorEdit(Depositor depositor)
+        public DepositorEdit(DataLayer.Depositor depositor)
         {
             InitializeComponent();
-            _context = DataService.context;
             _depositor = depositor;
         }
       
@@ -36,14 +34,7 @@ namespace Planning
                 command.CommandType = CommandType.StoredProcedure;
 
                 command.Parameters.Add(new SqlParameter { ParameterName = "@DepId", Value = _depositor.Id });
-                //command.Parameters.Add(new SqlParameter { ParameterName = "@ShpIn", Value = 0 });
-                /*
-                SqlDataAdapter adapter = new SqlDataAdapter(command);
-                DataSet ds = new DataSet();
-                adapter.Fill(ds);
-                tblAttr.AutoGenerateColumns = false;
-                tblAttr.DataSource = ds.Tables[0];
-                */
+
                 var reader = command.ExecuteReader();
 
                 if (reader.HasRows)
@@ -153,19 +144,5 @@ namespace Planning
             }
         }
 
-        private void tblAttr_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tblAttr_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
     }
 }

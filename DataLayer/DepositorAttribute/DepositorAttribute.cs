@@ -1,52 +1,121 @@
-﻿using System;
+﻿using Planning.Kernel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Planning.Kernel;
 
 namespace Planning.DataLayer
 {
-    public class DepositorAttribute:BaseDataItem
+    public class DepositorAttribute: BaseDataItem
     {
-        string _name;
-        int? _typeId;
-        string _typeName;
+        int? _sheId;
+        bool? _lvaIn;
+        int? _lvaAttrLvId;
+        bool? _lvaUseOrdAttr;
+        string _lvaDB;
+        string _lvaField;
+        int? _plDepId;
+        int? _plElemId;
+        public bool? LvaIn 
+        { 
+            get => _lvaIn;
+            set 
+            {
+                if (!_lvaIn.Equals(value))
+                {
+                    _lvaIn = value;
+                    Edit();
 
-        public string Name
-        {
-            get => _name;
+                }
+            } 
+        }
+        public int? LvaAttrLvId 
+        { 
+            get => _lvaAttrLvId;
             set
             {
-                if (_name == null || !_name.Equals(value))
+                if (!_lvaAttrLvId.Equals(value))
                 {
-                    _name = value;
+                    _lvaAttrLvId = value;
+                    Edit();
+
+                }
+            } 
+        }
+        public bool? LvaUseOrdAttr 
+        {
+            get => _lvaUseOrdAttr;
+            set
+            {
+                if (!_lvaUseOrdAttr.Equals(value))
+                {
+                    _lvaUseOrdAttr = value;
                     Edit();
 
                 }
             }
         }
-        public int? TypeId
+        public string LvaDB 
         {
-            get => _typeId;
+            get => _lvaDB;
             set
             {
-                if (!_typeId.Equals(value))
+                if (_lvaDB == null || !_lvaDB.Equals(value))
                 {
-                    _typeId = value;
+                    _lvaDB = value;
                     Edit();
 
                 }
             }
         }
-        public string TypeName
+        public string LvaField 
         {
-            get => _typeName;
+            get => _lvaField;
             set
             {
-                if (_typeName == null || !_typeName.Equals(value))
+                if (_lvaField == null || !_lvaField.Equals(value))
                 {
-                    _typeName = value;
+                    _lvaField = value;
+                    Edit();
+
+                }
+            }
+        }
+        public int? PlDepId
+        {
+            get => _plDepId;
+            set
+            {
+                if (!_plDepId.Equals(value))
+                {
+                    _plDepId = value;
+                    Edit();
+
+                }
+            }
+        }
+        public int? PlElemId
+        {
+            get => _plElemId;
+            set
+            {
+                if (!_plElemId.Equals(value))
+                {
+                    _plElemId = value;
+                    Edit();
+
+                }
+            }
+        }
+        public int? SheId
+        {
+            get => _sheId;
+            set
+            {
+                if (!_sheId.Equals(value))
+                {
+                    _sheId = value;
                     Edit();
 
                 }
