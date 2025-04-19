@@ -163,7 +163,7 @@ namespace Planning
             PopulateComboBoxField(cmbTransportType, _context.TransportTypes.Select(l => l.Name).ToList());
             PopulateComboBoxField(cmbSupplier, _context.Suppliers.Where(t => t.IsActive == true).Select(l => l.Name).ToList());
             PopulateComboBoxField(cmbWarehouse, _context.Warehouses.Select(l => l.Name).ToList());
-            PopulateComboBoxField(cmbTransportView, _context.TransportViews.Select(l => l.Name).ToList());
+            PopulateComboBoxField(cmbTransportView, _context.TransportViews.Where(l=>l.Name !=null).Select(l => l.Name).ToList()) ;
 
             if (IsShipment)
             {

@@ -10,11 +10,11 @@ namespace PlanningServiceTest.InvoiceData
 {
     public class InvoiceHandlerCustomN:InvoiceHandlerBase
     {
-        public override void LoadFromXml(string FileName, Invoice invoice)
+        public override void LoadFromXml(string FileName, Invoice invoice, string DeliveryTypeDefault)
         {
             try
             {
-                base.LoadFromXml(FileName, invoice);
+                base.LoadFromXml(FileName, invoice, DeliveryTypeDefault);
             }
             catch (Exception)
             {

@@ -113,7 +113,7 @@ namespace PlanningServiceTest
                     {
 
                         AddDebugEvent($"Обработка файла {file}  с типом {invoiceType}");
-                        invoiceHandler?.LoadFromXml(file, invoice);
+                        invoiceHandler?.LoadFromXml(file, invoice,_settings.DeliveryTypeDefault);
                     }
                     catch (Exception ex)
                     {

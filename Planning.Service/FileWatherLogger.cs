@@ -69,13 +69,13 @@ namespace Planning.Service
                 switch (GetFileType(fileName, _settings))
                 {
                     case InvoiceType.Product:
-                        invoiceHandler = new InvoiceHandlerProductionN();
+                        invoiceHandler = new InvoiceHandlerProduction();
                         invoice = new InvoiceProduction();
                         invoiceType = "InvoiceTimeSlot";
                         //InvoiceProduction invoiceProduction = invoiceHandlerProduct.LoadFromXml(file);
                         break;
                     case InvoiceType.Custom:
-                        invoiceHandler = new InvoiceHandlerCustomN();
+                        invoiceHandler = new InvoiceHandlerCustom();
                         invoice = new InvoiceCustom();
                         invoiceType = "InvoiceCustom";
                         //InvoiceCustom invoiceCustom = invoiceHandlerCustom.LoadFromXml(file);
@@ -98,7 +98,7 @@ namespace Planning.Service
                     {
 
                         AddDebugEvent($"Обработка файла {file}  с типом {invoiceType}");
-                        invoiceHandler?.LoadFromXml(file, invoice);
+                        invoiceHandler?.LoadFromXml(file, invoice, _settings.DeliveryTypeDefault);
                     }
                     catch (Exception ex)
                     {

@@ -23,5 +23,8 @@ namespace Planning.Service
         public int TimerInterval { get; set; }
         public string RootPath { get; set; }
         public int DebugFileProcessing { get; set; }
+        public string DeliveryTypeDefault { get; set; } 
+
+
     }
 }
