@@ -15,7 +15,11 @@ namespace Planning.DataLayer
         {
 
         }
+        public TransportCompanyRepository()
+        : base()
+        {
 
+        }
         public TransportCompany GetByCode(int code)
         {
             string sql = dataAdapter.GetSelectItemSql() + " where code = @Code";

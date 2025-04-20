@@ -30,10 +30,10 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DictForm));
             this.tbMain = new System.Windows.Forms.ToolStrip();
+            this.btnAddRow = new System.Windows.Forms.ToolStripButton();
             this.btnEdit = new System.Windows.Forms.ToolStripButton();
             this.btnDelRow = new System.Windows.Forms.ToolStripButton();
             this.btnSave = new System.Windows.Forms.ToolStripButton();
-            this.btnAddRow = new System.Windows.Forms.ToolStripButton();
             this.tbMain.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -49,6 +49,18 @@
             this.tbMain.Size = new System.Drawing.Size(765, 25);
             this.tbMain.TabIndex = 4;
             this.tbMain.Text = "toolStrip1";
+            // 
+            // btnAddRow
+            // 
+            this.btnAddRow.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnAddRow.Image = ((System.Drawing.Image)(resources.GetObject("btnAddRow.Image")));
+            this.btnAddRow.ImageTransparentColor = System.Drawing.Color.White;
+            this.btnAddRow.Name = "btnAddRow";
+            this.btnAddRow.Size = new System.Drawing.Size(23, 22);
+            this.btnAddRow.Text = "toolStripButton1";
+            this.btnAddRow.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnAddRow.ToolTipText = "Добавить";
+            this.btnAddRow.Click += new System.EventHandler(this.btnAddRow_Click);
             // 
             // btnEdit
             // 
@@ -75,25 +87,13 @@
             // btnSave
             // 
             this.btnSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnSave.Image = ((System.Drawing.Image)(resources.GetObject("btnSave.Image")));
             this.btnSave.ImageTransparentColor = System.Drawing.Color.Transparent;
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(23, 22);
             this.btnSave.Text = "toolStripButton1";
             this.btnSave.ToolTipText = "Сохранить";
-            this.btnSave.Visible = false;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-            // 
-            // btnAddRow
-            // 
-            this.btnAddRow.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnAddRow.Image = ((System.Drawing.Image)(resources.GetObject("btnAddRow.Image")));
-            this.btnAddRow.ImageTransparentColor = System.Drawing.Color.White;
-            this.btnAddRow.Name = "btnAddRow";
-            this.btnAddRow.Size = new System.Drawing.Size(23, 22);
-            this.btnAddRow.Text = "toolStripButton1";
-            this.btnAddRow.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnAddRow.ToolTipText = "Добавить";
-            this.btnAddRow.Click += new System.EventHandler(this.btnAddRow_Click);
             // 
             // DictForm
             // 

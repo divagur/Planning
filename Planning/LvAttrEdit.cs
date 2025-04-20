@@ -13,61 +13,45 @@ namespace Planning
 {
     public partial class LvAttrEdit : Form
     {
-        LvAttr _attr;
-        int _depId;
+        DataLayer.DepositorAttribute _attr;
+        int? _depId;
         List<string> _attrName;
-        PlanningDbContext _context;
-        Dictionary<int, string> LVAttr;
-        Dictionary<int, string> PLAttr;
+        Dictionary<int?, string> LVAttr;
+        Dictionary<int?, string> PLAttr;
        
 
-        public LvAttrEdit(LvAttr attr, int DepId, List<string> attrName)
+        public LvAttrEdit(DataLayer.DepositorAttribute attr, int? DepId, List<string> attrName)
         {
             InitializeComponent();
             _attr = attr;
             _depId = DepId;
-            _context = DataService.context;
             _attrName = attrName;
             cmbAttrType.SelectedIndex = _attr.LvaIn == false ? 0 : 1;
         }
 
 
-        private void GetAttr(bool lvIn)
+        private void GetAttr()
         {
             if (LVAttr == null)
-                LVAttr = new Dictionary<int, string>();
+                LVAttr = new Dictionary<int?, string>();
 
             if (PLAttr == null)
-                PLAttr = new Dictionary<int, string>();
+                PLAttr = new Dictionary<int?, string>();
 
 
-            using (SqlConnection connection = new SqlConnection(DataService.connectionString))
+            DataLayer.LvAttributeRepository lvAttributeRepository = new DataLayer.LvAttributeRepository();
+            List<DataLayer.LvAttribute> lvAttributes = lvAttributeRepository.GetAll(_depId, _attr.LvaIn);
+
+            foreach (var item in lvAttributes)
             {
-                if (connection.State == ConnectionState.Closed)
-                    connection.Open();
-
-                string sqlText = "sp_LVAttrList";
-
-                SqlCommand command = new SqlCommand(sqlText, connection);
-                command.CommandType = CommandType.StoredProcedure;
-
-                command.Parameters.Add(new SqlParameter { ParameterName = "@DepId", Value = _depId });
-                command.Parameters.Add(new SqlParameter { ParameterName = "@ShpIn", Value = _attr.LvaIn });
-
-                var reader = command.ExecuteReader();
-                if (reader.HasRows)
-                {
-                    LVAttr.Clear();
-                    while (reader.Read())
-                    {
-                        LVAttr.Add(reader.GetInt32(0), reader.GetString(1));
-
-                    }
-                }
-
+                LVAttr.Add(item.Id, item.Name);
             }
+
+            DataLayer.ShipmentElementRepository shipmentElementRepository = new DataLayer.ShipmentElementRepository();
+            List<DataLayer.ShipmentElement> shipmentElements = shipmentElementRepository.GetAll();
+
             PLAttr.Clear();
-            foreach (ShipmentElement se in _context.ShipmentElements.ToList())
+            foreach (DataLayer.ShipmentElement se in shipmentElements)
             {
                 PLAttr.Add(se.Id, se.FieldName);
             }
@@ -82,11 +66,11 @@ namespace Planning
         }
 
 
-        int? GetKeyByValue(Dictionary<int, string> d, string value)
+        int? GetKeyByValue(Dictionary<int?, string> d, string value)
         {
             if (d.ContainsValue(value))
             {
-                foreach (KeyValuePair<int, string> kv in d)
+                foreach (KeyValuePair<int?, string> kv in d)
                 {
                     if (kv.Value == value)
                     {
@@ -135,7 +119,7 @@ namespace Planning
             _attr.LvaIn = cmbAttrType.SelectedIndex == 0 ? false : true;
             cmbLVAttr.Text = "";
             cmbPLAttr.Text = "";
-            GetAttr((bool)_attr.LvaIn);
+            GetAttr();
         }
     }
 }

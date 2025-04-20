@@ -70,7 +70,12 @@
     <Compile Include="DelayReason\DelayReasonRepository.cs" />
     <Compile Include="DepositorAttribute\DepositorAttributeAdapter.cs" />
     <Compile Include="DepositorAttribute\DepositorAttributeRepository.cs" />
-    <Compile Include="LvAttr\LvAttribute.cs" />
+    <Compile Include="PLAttribute\PLAttribute.cs" />
+    <Compile Include="PLAttribute\PLAttributeAdapter.cs" />
+    <Compile Include="PLAttribute\PLAttributeRepository.cs" />
+    <Compile Include="LvAttribute\LvAttribute.cs" />
+    <Compile Include="LvAttribute\LvAttributeAdapter.cs" />
+    <Compile Include="LvAttribute\LvAttributeRepository.cs" />
     <Compile Include="UsersGroup\UsersGroup.cs" />
     <Compile Include="UsersGroup\UsersGroupDataAdapter.cs" />
     <Compile Include="UsersGroup\UsersGroupRepository.cs" />

@@ -10,13 +10,11 @@ namespace Planning
 {
     public partial class frmDelayReasonsEdit : Planning.DictEditForm
     {
-        PlanningDbContext _context;
-        DelayReason _delayReason;
+        DataLayer.DelayReason _delayReason;
 
-        public frmDelayReasonsEdit(DelayReason delayReason)
+        public frmDelayReasonsEdit(DataLayer.DelayReason delayReason)
         {
             InitializeComponent();
-            _context = DataService.context;
             _delayReason = delayReason;
         }
 

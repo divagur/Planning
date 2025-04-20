@@ -39,6 +39,11 @@
             this.btnClose = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tblAttrShipment = new System.Windows.Forms.DataGridView();
+            this.tbAttr = new System.Windows.Forms.ToolStrip();
+            this.btnAdd = new System.Windows.Forms.ToolStripButton();
+            this.btnEdit = new System.Windows.Forms.ToolStripButton();
+            this.btnDel = new System.Windows.Forms.ToolStripButton();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.LVAttrName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PLField = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -46,11 +51,6 @@
             this.PLFieldId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.LVIn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.LvType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tbAttr = new System.Windows.Forms.ToolStrip();
-            this.btnAdd = new System.Windows.Forms.ToolStripButton();
-            this.btnEdit = new System.Windows.Forms.ToolStripButton();
-            this.btnDel = new System.Windows.Forms.ToolStripButton();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tblAttrShipment)).BeginInit();
             this.tbAttr.SuspendLayout();
@@ -158,63 +158,6 @@
             this.tblAttrShipment.Size = new System.Drawing.Size(538, 263);
             this.tblAttrShipment.TabIndex = 0;
             // 
-            // Id
-            // 
-            this.Id.DataPropertyName = "id";
-            this.Id.HeaderText = "Id";
-            this.Id.Name = "Id";
-            this.Id.ReadOnly = true;
-            this.Id.Visible = false;
-            // 
-            // LVAttrName
-            // 
-            this.LVAttrName.DataPropertyName = "spa_Name";
-            this.LVAttrName.HeaderText = "Аттрибут Lvision";
-            this.LVAttrName.Name = "LVAttrName";
-            this.LVAttrName.ReadOnly = true;
-            this.LVAttrName.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.LVAttrName.Width = 200;
-            // 
-            // PLField
-            // 
-            this.PLField.DataPropertyName = "PLField";
-            this.PLField.HeaderText = "Аттрибут планинга";
-            this.PLField.Name = "PLField";
-            this.PLField.ReadOnly = true;
-            this.PLField.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.PLField.Width = 200;
-            // 
-            // LVAttrId
-            // 
-            this.LVAttrId.DataPropertyName = "spa_ID";
-            this.LVAttrId.HeaderText = "LVAttrId";
-            this.LVAttrId.Name = "LVAttrId";
-            this.LVAttrId.ReadOnly = true;
-            this.LVAttrId.Visible = false;
-            // 
-            // PLFieldId
-            // 
-            this.PLFieldId.DataPropertyName = "PLFieldId";
-            this.PLFieldId.HeaderText = "PLFieldId";
-            this.PLFieldId.Name = "PLFieldId";
-            this.PLFieldId.ReadOnly = true;
-            this.PLFieldId.Visible = false;
-            // 
-            // LVIn
-            // 
-            this.LVIn.DataPropertyName = "lva_in";
-            this.LVIn.HeaderText = "LvIn";
-            this.LVIn.Name = "LVIn";
-            this.LVIn.ReadOnly = true;
-            this.LVIn.Visible = false;
-            // 
-            // LvType
-            // 
-            this.LvType.DataPropertyName = "lva_type";
-            this.LvType.HeaderText = "Тип аттрибута";
-            this.LvType.Name = "LvType";
-            this.LvType.ReadOnly = true;
-            // 
             // tbAttr
             // 
             this.tbAttr.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
@@ -275,6 +218,63 @@
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Данные депозитора";
+            // 
+            // Id
+            // 
+            this.Id.DataPropertyName = "Id";
+            this.Id.HeaderText = "Id";
+            this.Id.Name = "Id";
+            this.Id.ReadOnly = true;
+            this.Id.Visible = false;
+            // 
+            // LVAttrName
+            // 
+            this.LVAttrName.DataPropertyName = "SpaName";
+            this.LVAttrName.HeaderText = "Аттрибут Lvision";
+            this.LVAttrName.Name = "LVAttrName";
+            this.LVAttrName.ReadOnly = true;
+            this.LVAttrName.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.LVAttrName.Width = 200;
+            // 
+            // PLField
+            // 
+            this.PLField.DataPropertyName = "PLField";
+            this.PLField.HeaderText = "Аттрибут планинга";
+            this.PLField.Name = "PLField";
+            this.PLField.ReadOnly = true;
+            this.PLField.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.PLField.Width = 200;
+            // 
+            // LVAttrId
+            // 
+            this.LVAttrId.DataPropertyName = "SpaId";
+            this.LVAttrId.HeaderText = "LVAttrId";
+            this.LVAttrId.Name = "LVAttrId";
+            this.LVAttrId.ReadOnly = true;
+            this.LVAttrId.Visible = false;
+            // 
+            // PLFieldId
+            // 
+            this.PLFieldId.DataPropertyName = "PLFieldId";
+            this.PLFieldId.HeaderText = "PLFieldId";
+            this.PLFieldId.Name = "PLFieldId";
+            this.PLFieldId.ReadOnly = true;
+            this.PLFieldId.Visible = false;
+            // 
+            // LVIn
+            // 
+            this.LVIn.DataPropertyName = "LvaIn";
+            this.LVIn.HeaderText = "LvIn";
+            this.LVIn.Name = "LVIn";
+            this.LVIn.ReadOnly = true;
+            this.LVIn.Visible = false;
+            // 
+            // LvType
+            // 
+            this.LvType.DataPropertyName = "LvaType";
+            this.LvType.HeaderText = "Тип аттрибута";
+            this.LvType.Name = "LvType";
+            this.LvType.ReadOnly = true;
             // 
             // DepositorEdit
             // 

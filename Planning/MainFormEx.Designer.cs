@@ -128,7 +128,6 @@ namespace Planning
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
-            this.btnColumnVisible = new Planning.Controls.MenuButton();
             this.contextMenuColumns = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
@@ -164,6 +163,7 @@ namespace Planning
             this.menuItemReportStatistic = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemReportTC = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemAdd = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnColumnVisible = new Planning.Controls.MenuButton();
             this.menuMain.SuspendLayout();
             this.statusStrip2.SuspendLayout();
             this.tabForms.SuspendLayout();
@@ -1034,19 +1034,6 @@ namespace Planning
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
-            // btnColumnVisible
-            // 
-            this.btnColumnVisible.FlatAppearance.BorderSize = 0;
-            this.btnColumnVisible.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnColumnVisible.Image = ((System.Drawing.Image)(resources.GetObject("btnColumnVisible.Image")));
-            this.btnColumnVisible.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnColumnVisible.Location = new System.Drawing.Point(330, 4);
-            this.btnColumnVisible.Menu = this.contextMenuColumns;
-            this.btnColumnVisible.Name = "btnColumnVisible";
-            this.btnColumnVisible.Size = new System.Drawing.Size(50, 49);
-            this.btnColumnVisible.TabIndex = 0;
-            this.btnColumnVisible.UseVisualStyleBackColor = true;
-            // 
             // contextMenuColumns
             // 
             this.contextMenuColumns.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -1201,7 +1188,7 @@ namespace Planning
             this.toolStripMenuItemReport,
             this.toolStripMenuItemAdd});
             this.contextMenuMain.Name = "contextMenuMain";
-            this.contextMenuMain.Size = new System.Drawing.Size(163, 92);
+            this.contextMenuMain.Size = new System.Drawing.Size(181, 114);
             // 
             // toolStripMenuItemFile
             // 
@@ -1209,7 +1196,7 @@ namespace Planning
             this.menuItemSettings,
             this.menuItemConnect});
             this.toolStripMenuItemFile.Name = "toolStripMenuItemFile";
-            this.toolStripMenuItemFile.Size = new System.Drawing.Size(162, 22);
+            this.toolStripMenuItemFile.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItemFile.Text = "Файл";
             // 
             // menuItemSettings
@@ -1240,7 +1227,7 @@ namespace Planning
             this.menuItemDictWarehouse,
             this.menuItemDictCustomPosts});
             this.toolStripMenuItemDict.Name = "toolStripMenuItemDict";
-            this.toolStripMenuItemDict.Size = new System.Drawing.Size(162, 22);
+            this.toolStripMenuItemDict.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItemDict.Text = "Справочники";
             // 
             // menuItemDictTimeSlot
@@ -1274,6 +1261,7 @@ namespace Planning
             this.menuItemDictDelayReasons.Size = new System.Drawing.Size(230, 22);
             this.menuItemDictDelayReasons.Tag = "DelayReasons";
             this.menuItemDictDelayReasons.Text = "Причины задержки";
+            this.menuItemDictDelayReasons.Click += new System.EventHandler(this.menuItemDictDelayReasons_Click);
             // 
             // menuItemDictGates
             // 
@@ -1289,6 +1277,7 @@ namespace Planning
             this.menuItemDictTC.Size = new System.Drawing.Size(230, 22);
             this.menuItemDictTC.Tag = "TC";
             this.menuItemDictTC.Text = "Справочник ТК";
+            this.menuItemDictTC.Click += new System.EventHandler(this.menuItemDictTC_Click);
             // 
             // menuItemDoctSupplier
             // 
@@ -1335,7 +1324,7 @@ namespace Planning
             this.menuItemReportStatistic,
             this.menuItemReportTC});
             this.toolStripMenuItemReport.Name = "toolStripMenuItemReport";
-            this.toolStripMenuItemReport.Size = new System.Drawing.Size(162, 22);
+            this.toolStripMenuItemReport.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItemReport.Text = "Отчеты";
             // 
             // menuItemReportPeriod
@@ -1359,8 +1348,21 @@ namespace Planning
             // toolStripMenuItemAdd
             // 
             this.toolStripMenuItemAdd.Name = "toolStripMenuItemAdd";
-            this.toolStripMenuItemAdd.Size = new System.Drawing.Size(162, 22);
+            this.toolStripMenuItemAdd.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItemAdd.Text = "Дополнительно";
+            // 
+            // btnColumnVisible
+            // 
+            this.btnColumnVisible.FlatAppearance.BorderSize = 0;
+            this.btnColumnVisible.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnColumnVisible.Image = ((System.Drawing.Image)(resources.GetObject("btnColumnVisible.Image")));
+            this.btnColumnVisible.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnColumnVisible.Location = new System.Drawing.Point(330, 4);
+            this.btnColumnVisible.Menu = this.contextMenuColumns;
+            this.btnColumnVisible.Name = "btnColumnVisible";
+            this.btnColumnVisible.Size = new System.Drawing.Size(50, 49);
+            this.btnColumnVisible.TabIndex = 0;
+            this.btnColumnVisible.UseVisualStyleBackColor = true;
             // 
             // MainFormEx
             // 

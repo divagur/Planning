@@ -12,12 +12,11 @@ using Planning.Kernel;
 namespace Planning
 {
     public partial class SimpleDict<T,R> : DictForm
-        where T: BaseDataItem
+        where T: BaseDataItem, new()
         where R: IRepository<T>, new()
     {
         DataSet ds;
         DictSimple _dict;
-        SqlDataAdapter adapter;
         BindingList<T> _listDataItemBinding;
         List<T> _listDataItem = new List<T>();
         R _repository = new R();
@@ -96,7 +95,11 @@ namespace Planning
 
         protected override void AddRow()
         {
-            DataRow row = ds.Tables[0].NewRow(); // добавляем новую строку в DataTable
+            T Item = new T();
+            _repository.Save(Item);
+            _listDataItemBinding.Add(Item);
+            //DataRow row = ds.Tables[0].NewRow(); // добавляем новую строку в DataTable
+            /*
             foreach (var dictCol in _dict.Columns)
             {
                 if (dictCol.DefaultValue !=null)
@@ -104,7 +107,8 @@ namespace Planning
                     row[dictCol.DataField] = dictCol.DefaultValue;
                 }
             }
-            ds.Tables[0].Rows.Add(row);
+            */
+           // ds.Tables[0].Rows.Add(row);
         }
 
         protected override void DelRow()

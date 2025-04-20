@@ -572,5 +572,30 @@ namespace Planning
             //SetFormPrivalage(frmTimeSlot, "TimeSlot");
             AddFormTab(frmTimeSlot, "Тайм слоты");
         }
+
+        private void menuItemDictTC_Click(object sender, EventArgs e)
+        {
+            DictSimple dict = new DictSimple();
+
+            dict.TableName = "transport_company";
+            dict.Title = "Справочник: Транспортные компании";
+
+            dict.Columns.Add(new DictColumn { Id = "Id", IsPK = true, IsVisible = false, Title = "ID", DataField = "id", DataType = SqlDbType.Int });
+            dict.Columns.Add(new DictColumn { Id = "Code", IsPK = false, IsVisible = true, Title = "Код", DataField = "code", Width = 80, DataType = SqlDbType.Int });
+            dict.Columns.Add(new DictColumn { Id = "Name", IsPK = false, IsVisible = true, Title = "Наименование", DataField = "name", Width = 254, DataType = SqlDbType.VarChar, Length = 254 });
+            dict.Columns.Add(new DictColumn { Id = "IsActive", IsPK = false, IsVisible = true, Title = "Активная", DataField = "is_active", Width = 80, DataType = SqlDbType.Bit });
+            
+            SimpleDict<DataLayer.TransportCompany, DataLayer.TransportCompanyRepository> frmTransportCompany = new SimpleDict<DataLayer.TransportCompany, DataLayer.TransportCompanyRepository>(dict);
+            //SetFormPrivalage(frmTransportCompany, "TC");
+            AddFormTab(frmTransportCompany, "Транспортные компании");
+        }
+
+        private void menuItemDictDelayReasons_Click(object sender, EventArgs e)
+        {
+
+            var frmDelayReasons = new DictDelayReasons();
+            //SetFormPrivalage(frmDelayReasons, "DelayReasons");
+            AddFormTab(frmDelayReasons, "Причины задержки");
+        }
     }
 }

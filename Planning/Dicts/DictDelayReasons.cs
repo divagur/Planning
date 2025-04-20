@@ -11,47 +11,67 @@ namespace Planning
 {
     public partial class DictDelayReasons : Planning.DictForm
     {
+        List<DataLayer.DelayReason> _delayReasons;
+        DataLayer.DelayReasonRepository _delayReasonRepository = new DataLayer.DelayReasonRepository();
+
         public DictDelayReasons()
         {
             InitializeComponent();
         }
+
+        private void UpdateDataSource()
+        {
+            
+            tblDelayReasons.DataSource = null;
+            tblDelayReasons.DataSource = _delayReasons;
+            tblDelayReasons.Refresh();
+        }
+
         protected override void Populate()
         {
             tblDelayReasons.AutoGenerateColumns = false;
-            tblDelayReasons.DataSource = _context.DelayReasons.ToList();
+            _delayReasons = _delayReasonRepository.GetAll();
+            UpdateDataSource();
+        }
+        private DataLayer.DelayReason GetCurrentRowObject()
+        {
+            return _delayReasons.Find(d => d.Id == Int32.Parse(tblDelayReasons.Rows[tblDelayReasons.CurrentCell.RowIndex].Cells["colId"].Value.ToString()));
         }
         protected override void AddRow()
         {
-            DelayReason delayReason = new DelayReason();
+            DataLayer.DelayReason delayReason = new DataLayer.DelayReason();
             frmDelayReasonsEdit frmDelayReasonsEdit = new frmDelayReasonsEdit(delayReason);
             frmDelayReasonsEdit.ShowDialog();
             if (frmDelayReasonsEdit.DialogResult == DialogResult.Cancel)
                 return;
-            DataService.context.DelayReasons.Add(delayReason);
-
-
-            Save();
+            _delayReasons.Add(delayReason);
+            _delayReasonRepository.Save(delayReason);
+            UpdateDataSource();
         }
 
         protected override void EditRow()
         {
             if (tblDelayReasons.SelectedCells.Count <= 0) return;
-            DelayReason delayReason = _context.DelayReasons.Find(tblDelayReasons.Rows[tblDelayReasons.CurrentCell.RowIndex].Cells["colId"].Value);
+            DataLayer.DelayReason delayReason = GetCurrentRowObject();
             frmDelayReasonsEdit frmDelayReasonsEdit = new frmDelayReasonsEdit(delayReason);
             frmDelayReasonsEdit.ShowDialog();
             if (frmDelayReasonsEdit.DialogResult == DialogResult.Cancel)
                 return;
-
-            Save();
+            _delayReasonRepository.Save(delayReason);
+            UpdateDataSource();
         }
 
         protected override void DelRow()
         {
-            DelayReason delayReason = _context.DelayReasons.Find(tblDelayReasons.Rows[tblDelayReasons.CurrentCell.RowIndex].Cells["colId"].Value);
+            DataLayer.DelayReason delayReason = GetCurrentRowObject();
             if (MessageBox.Show("Удалить причину задержки?", "Подтверждение", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
             {
-                _context.DelayReasons.Remove(delayReason);
-                Save();
+                delayReason.Delete();
+                if (_delayReasonRepository.Save(delayReason))
+                {
+                    _delayReasons.Remove(delayReason);
+                }
+                UpdateDataSource();                
             }
         }
 
