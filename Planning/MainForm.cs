@@ -500,7 +500,7 @@ namespace Planning
             //Попробуем подключиться под текущим пользователем виндовс
             //Если не получится запросим имя пользователя и пароль
             //
-            //DataService.setting.IsWnd = false;
+            DataService.setting.IsWnd = false;
             if (!DataService.TryDBConnect(DataService.setting.ServerName, DataService.setting.BaseName, "", "", DataService.setting.IsWnd, false))
             {
                 DataService.setting.IsWnd = false;

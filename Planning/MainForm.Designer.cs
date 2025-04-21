@@ -32,9 +32,9 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.menuMain = new System.Windows.Forms.MenuStrip();
             this.mtiFile = new System.Windows.Forms.ToolStripMenuItem();
             this.miSettings = new System.Windows.Forms.ToolStripMenuItem();
@@ -51,6 +51,7 @@
             this.miDictSupplier = new System.Windows.Forms.ToolStripMenuItem();
             this.miAttributes = new System.Windows.Forms.ToolStripMenuItem();
             this.miTransportType = new System.Windows.Forms.ToolStripMenuItem();
+            this.miTransportView = new System.Windows.Forms.ToolStripMenuItem();
             this.miDictWarehouse = new System.Windows.Forms.ToolStripMenuItem();
             this.miCustomPosts = new System.Windows.Forms.ToolStripMenuItem();
             this.miReports = new System.Windows.Forms.ToolStripMenuItem();
@@ -63,47 +64,6 @@
             this.tabMain = new System.Windows.Forms.TabPage();
             this.panel2 = new System.Windows.Forms.Panel();
             this.tblShipments = new System.Windows.Forms.DataGridView();
-            this.mnuContext = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.mciPrint = new System.Windows.Forms.ToolStripMenuItem();
-            this.mciOrderDetail = new System.Windows.Forms.ToolStripMenuItem();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.cbPaint = new System.Windows.Forms.CheckBox();
-            this.cbUpdate = new System.Windows.Forms.CheckBox();
-            this.edInterval = new System.Windows.Forms.NumericUpDown();
-            this.edCurrDay = new System.Windows.Forms.DateTimePicker();
-            this.tbMain = new System.Windows.Forms.ToolStrip();
-            this.btnAdd = new System.Windows.Forms.ToolStripButton();
-            this.btnEdit = new System.Windows.Forms.ToolStripButton();
-            this.btnDel = new System.Windows.Forms.ToolStripButton();
-            this.btnRefresh = new System.Windows.Forms.ToolStripButton();
-            this.btnShowLog = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnPrint = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnColumnVisible = new System.Windows.Forms.ToolStripSplitButton();
-            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnActionFilter = new System.Windows.Forms.ToolStripDropDownButton();
-            this.входToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.выходToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.перемещениеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.edSearch = new System.Windows.Forms.ToolStripTextBox();
-            this.btnSearch = new System.Windows.Forms.ToolStripButton();
-            this.btnSearchNext = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnSearchEx = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            this.tabForms = new System.Windows.Forms.TabControl();
-            this.tmUpdate = new System.Windows.Forms.Timer(this.components);
-            this.statusStrip2 = new System.Windows.Forms.StatusStrip();
-            this.statusInfo = new System.Windows.Forms.ToolStripStatusLabel();
-            this.bwProgress = new System.ComponentModel.BackgroundWorker();
-            this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
-            this.shipmentBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.miTransportView = new System.Windows.Forms.ToolStripMenuItem();
             this.UniqueKey = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colOrderDetail = new System.Windows.Forms.DataGridViewButtonColumn();
             this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -150,6 +110,46 @@
             this.colTransportView = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colWarehouseName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colOrdLvId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.mnuContext = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.mciPrint = new System.Windows.Forms.ToolStripMenuItem();
+            this.mciOrderDetail = new System.Windows.Forms.ToolStripMenuItem();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.cbPaint = new System.Windows.Forms.CheckBox();
+            this.cbUpdate = new System.Windows.Forms.CheckBox();
+            this.edInterval = new System.Windows.Forms.NumericUpDown();
+            this.edCurrDay = new System.Windows.Forms.DateTimePicker();
+            this.tbMain = new System.Windows.Forms.ToolStrip();
+            this.btnAdd = new System.Windows.Forms.ToolStripButton();
+            this.btnEdit = new System.Windows.Forms.ToolStripButton();
+            this.btnDel = new System.Windows.Forms.ToolStripButton();
+            this.btnRefresh = new System.Windows.Forms.ToolStripButton();
+            this.btnShowLog = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnPrint = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnColumnVisible = new System.Windows.Forms.ToolStripSplitButton();
+            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnActionFilter = new System.Windows.Forms.ToolStripDropDownButton();
+            this.входToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.выходToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.перемещениеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.edSearch = new System.Windows.Forms.ToolStripTextBox();
+            this.btnSearch = new System.Windows.Forms.ToolStripButton();
+            this.btnSearchNext = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnSearchEx = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.tabForms = new System.Windows.Forms.TabControl();
+            this.tmUpdate = new System.Windows.Forms.Timer(this.components);
+            this.statusStrip2 = new System.Windows.Forms.StatusStrip();
+            this.statusInfo = new System.Windows.Forms.ToolStripStatusLabel();
+            this.bwProgress = new System.ComponentModel.BackgroundWorker();
+            this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
+            this.shipmentBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.menuMain.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -189,7 +189,7 @@
             // miSettings
             // 
             this.miSettings.Name = "miSettings";
-            this.miSettings.Size = new System.Drawing.Size(152, 22);
+            this.miSettings.Size = new System.Drawing.Size(180, 22);
             this.miSettings.Tag = "Settings";
             this.miSettings.Text = "Настройки";
             this.miSettings.Click += new System.EventHandler(this.miSettings_Click);
@@ -197,7 +197,7 @@
             // miConnect
             // 
             this.miConnect.Name = "miConnect";
-            this.miConnect.Size = new System.Drawing.Size(152, 22);
+            this.miConnect.Size = new System.Drawing.Size(180, 22);
             this.miConnect.Text = "Подключение";
             this.miConnect.Click += new System.EventHandler(this.miConnect_Click);
             // 
@@ -309,6 +309,13 @@
             this.miTransportType.Tag = "TransporType";
             this.miTransportType.Text = "Типы транспортных средств";
             this.miTransportType.Click += new System.EventHandler(this.miTransportType_Click);
+            // 
+            // miTransportView
+            // 
+            this.miTransportView.Name = "miTransportView";
+            this.miTransportView.Size = new System.Drawing.Size(230, 22);
+            this.miTransportView.Text = "Виды транспорта";
+            this.miTransportView.Click += new System.EventHandler(this.miTransportView_Click);
             // 
             // miDictWarehouse
             // 
@@ -497,6 +504,350 @@
             this.tblShipments.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.tblShipments_RowPostPaint);
             this.tblShipments.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.tblShipments_RowPrePaint);
             this.tblShipments.Sorted += new System.EventHandler(this.tblShipments_Sorted);
+            // 
+            // UniqueKey
+            // 
+            this.UniqueKey.HeaderText = "UniqueKey";
+            this.UniqueKey.Name = "UniqueKey";
+            this.UniqueKey.ReadOnly = true;
+            this.UniqueKey.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.UniqueKey.Visible = false;
+            // 
+            // colOrderDetail
+            // 
+            this.colOrderDetail.HeaderText = "";
+            this.colOrderDetail.Name = "colOrderDetail";
+            this.colOrderDetail.ReadOnly = true;
+            this.colOrderDetail.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colOrderDetail.Text = "...";
+            this.colOrderDetail.ToolTipText = "Детализация заказа";
+            this.colOrderDetail.UseColumnTextForButtonValue = true;
+            this.colOrderDetail.Width = 20;
+            // 
+            // colId
+            // 
+            this.colId.DataPropertyName = "ShpId";
+            this.colId.HeaderText = "ID погр.";
+            this.colId.Name = "colId";
+            this.colId.ReadOnly = true;
+            // 
+            // colIdNakl
+            // 
+            this.colIdNakl.DataPropertyName = "OrdId";
+            this.colIdNakl.HeaderText = "ID накл.";
+            this.colIdNakl.Name = "colIdNakl";
+            this.colIdNakl.ReadOnly = true;
+            // 
+            // colDate
+            // 
+            this.colDate.DataPropertyName = "ShpDate";
+            this.colDate.HeaderText = "Дата";
+            this.colDate.Name = "colDate";
+            this.colDate.ReadOnly = true;
+            // 
+            // colTime
+            // 
+            this.colTime.DataPropertyName = "SlotTime";
+            this.colTime.HeaderText = "Время";
+            this.colTime.Name = "colTime";
+            this.colTime.ReadOnly = true;
+            // 
+            // colDirection
+            // 
+            this.colDirection.DataPropertyName = "InOut";
+            this.colDirection.HeaderText = "Напр.";
+            this.colDirection.Name = "colDirection";
+            this.colDirection.ReadOnly = true;
+            // 
+            // colOrderId
+            // 
+            this.colOrderId.DataPropertyName = "OrdLVCode";
+            this.colOrderId.HeaderText = "Код заказа";
+            this.colOrderId.Name = "colOrderId";
+            this.colOrderId.ReadOnly = true;
+            // 
+            // colOrdPartLVCode
+            // 
+            this.colOrdPartLVCode.DataPropertyName = "OrdPartLVCode";
+            this.colOrdPartLVCode.HeaderText = "Код расходной партии";
+            this.colOrdPartLVCode.Name = "colOrdPartLVCode";
+            this.colOrdPartLVCode.ReadOnly = true;
+            this.colOrdPartLVCode.Width = 150;
+            // 
+            // colOrderType
+            // 
+            this.colOrderType.DataPropertyName = "OrdLVType";
+            this.colOrderType.HeaderText = "Тип заказа";
+            this.colOrderType.Name = "colOrderType";
+            this.colOrderType.ReadOnly = true;
+            // 
+            // colKlientId
+            // 
+            this.colKlientId.HeaderText = "Код клиента";
+            this.colKlientId.Name = "colKlientId";
+            this.colKlientId.ReadOnly = true;
+            this.colKlientId.Visible = false;
+            // 
+            // colKlientName
+            // 
+            this.colKlientName.DataPropertyName = "KlientName";
+            this.colKlientName.HeaderText = "Клиент";
+            this.colKlientName.Name = "colKlientName";
+            this.colKlientName.ReadOnly = true;
+            // 
+            // colStatus
+            // 
+            this.colStatus.DataPropertyName = "OrderStatus";
+            this.colStatus.HeaderText = "Статус";
+            this.colStatus.Name = "colStatus";
+            this.colStatus.ReadOnly = true;
+            // 
+            // colCopmletePct
+            // 
+            this.colCopmletePct.DataPropertyName = "PrcReady";
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.colCopmletePct.DefaultCellStyle = dataGridViewCellStyle2;
+            this.colCopmletePct.HeaderText = "Собран (в %)";
+            this.colCopmletePct.Name = "colCopmletePct";
+            this.colCopmletePct.ReadOnly = true;
+            // 
+            // PrcValue
+            // 
+            this.PrcValue.DataPropertyName = "PrcReady";
+            this.PrcValue.HeaderText = "PrcValue";
+            this.PrcValue.Name = "PrcValue";
+            this.PrcValue.ReadOnly = true;
+            this.PrcValue.Visible = false;
+            // 
+            // colDoneShare
+            // 
+            this.colDoneShare.DataPropertyName = "DoneShare";
+            this.colDoneShare.HeaderText = "DoneShare";
+            this.colDoneShare.Name = "colDoneShare";
+            this.colDoneShare.ReadOnly = true;
+            this.colDoneShare.Visible = false;
+            // 
+            // colComment
+            // 
+            this.colComment.DataPropertyName = "ShpComment";
+            this.colComment.HeaderText = "Комментарий по загрузке";
+            this.colComment.Name = "colComment";
+            this.colComment.ReadOnly = true;
+            // 
+            // colOrderComment
+            // 
+            this.colOrderComment.DataPropertyName = "OrdComment";
+            this.colOrderComment.HeaderText = "Комментарий по заказу";
+            this.colOrderComment.Name = "colOrderComment";
+            this.colOrderComment.ReadOnly = true;
+            // 
+            // colGate
+            // 
+            this.colGate.DataPropertyName = "GateName";
+            this.colGate.HeaderText = "Ворота";
+            this.colGate.Name = "colGate";
+            this.colGate.ReadOnly = true;
+            // 
+            // colSpecCond
+            // 
+            this.colSpecCond.DataPropertyName = "ShpSpecialCond";
+            this.colSpecCond.HeaderText = "Спец. Условия";
+            this.colSpecCond.Name = "colSpecCond";
+            this.colSpecCond.ReadOnly = true;
+            this.colSpecCond.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colSpecCond.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // colDriverPhone
+            // 
+            this.colDriverPhone.DataPropertyName = "ShpDriverPhone";
+            this.colDriverPhone.HeaderText = "Телефон водителя";
+            this.colDriverPhone.Name = "colDriverPhone";
+            this.colDriverPhone.ReadOnly = true;
+            // 
+            // colDriverName
+            // 
+            this.colDriverName.DataPropertyName = "ShpDriverFio";
+            this.colDriverName.HeaderText = "ФИО водителя";
+            this.colDriverName.Name = "colDriverName";
+            this.colDriverName.ReadOnly = true;
+            this.colDriverName.Width = 150;
+            // 
+            // colTransComp
+            // 
+            this.colTransComp.DataPropertyName = "TransportCompanyName";
+            this.colTransComp.HeaderText = "Транспортная компания";
+            this.colTransComp.Name = "colTransComp";
+            this.colTransComp.ReadOnly = true;
+            // 
+            // colTransportType
+            // 
+            this.colTransportType.DataPropertyName = "TransportTypeName";
+            this.colTransportType.HeaderText = "Марка ТС";
+            this.colTransportType.Name = "colTransportType";
+            this.colTransportType.ReadOnly = true;
+            // 
+            // colTrackNumber
+            // 
+            this.colTrackNumber.DataPropertyName = "ShpVehicleNumber";
+            this.colTrackNumber.HeaderText = "Номер ТС";
+            this.colTrackNumber.Name = "colTrackNumber";
+            this.colTrackNumber.ReadOnly = true;
+            // 
+            // colTrailerNumber
+            // 
+            this.colTrailerNumber.DataPropertyName = "ShpTrailerNumber";
+            this.colTrailerNumber.HeaderText = "Номер прицепа";
+            this.colTrailerNumber.Name = "colTrailerNumber";
+            this.colTrailerNumber.ReadOnly = true;
+            // 
+            // colAttorneyNumber
+            // 
+            this.colAttorneyNumber.DataPropertyName = "ShpAttorneyNumber";
+            this.colAttorneyNumber.HeaderText = "Номер доверенности";
+            this.colAttorneyNumber.Name = "colAttorneyNumber";
+            this.colAttorneyNumber.ReadOnly = true;
+            // 
+            // colAttorneyDate
+            // 
+            this.colAttorneyDate.DataPropertyName = "ShpAttorneyDate";
+            this.colAttorneyDate.HeaderText = "Дата доверенности";
+            this.colAttorneyDate.Name = "colAttorneyDate";
+            this.colAttorneyDate.ReadOnly = true;
+            // 
+            // colSubmissionTime
+            // 
+            this.colSubmissionTime.DataPropertyName = "ShpSubmissionTime";
+            this.colSubmissionTime.HeaderText = "Время подачи документов";
+            this.colSubmissionTime.Name = "colSubmissionTime";
+            this.colSubmissionTime.ReadOnly = true;
+            // 
+            // colStartTime
+            // 
+            this.colStartTime.DataPropertyName = "ShpStartTime";
+            this.colStartTime.HeaderText = "Время начала";
+            this.colStartTime.Name = "colStartTime";
+            this.colStartTime.ReadOnly = true;
+            // 
+            // colEndTimePlan
+            // 
+            this.colEndTimePlan.DataPropertyName = "ShpEndTimePlan";
+            this.colEndTimePlan.HeaderText = "Время окончания";
+            this.colEndTimePlan.Name = "colEndTimePlan";
+            this.colEndTimePlan.ReadOnly = true;
+            // 
+            // colEndTimeFact
+            // 
+            this.colEndTimeFact.DataPropertyName = "ShpEndTimeFact";
+            this.colEndTimeFact.HeaderText = "Убытие по факту";
+            this.colEndTimeFact.Name = "colEndTimeFact";
+            this.colEndTimeFact.ReadOnly = true;
+            // 
+            // colDelayReason
+            // 
+            this.colDelayReason.DataPropertyName = "ShpDelayReasonName";
+            this.colDelayReason.HeaderText = "Причина опоздания";
+            this.colDelayReason.Name = "colDelayReason";
+            this.colDelayReason.ReadOnly = true;
+            // 
+            // colDelayComment
+            // 
+            this.colDelayComment.DataPropertyName = "ShpDelayComment";
+            this.colDelayComment.HeaderText = "Комментарий по опозданию";
+            this.colDelayComment.Name = "colDelayComment";
+            this.colDelayComment.ReadOnly = true;
+            // 
+            // colDepositor
+            // 
+            this.colDepositor.DataPropertyName = "DepCode";
+            this.colDepositor.HeaderText = "Депозитор";
+            this.colDepositor.Name = "colDepositor";
+            this.colDepositor.ReadOnly = true;
+            // 
+            // colStampNumber
+            // 
+            this.colStampNumber.DataPropertyName = "ShpStampNumber";
+            this.colStampNumber.HeaderText = "№ пломбы";
+            this.colStampNumber.Name = "colStampNumber";
+            this.colStampNumber.ReadOnly = true;
+            // 
+            // FontColor
+            // 
+            this.FontColor.DataPropertyName = "FontColor";
+            this.FontColor.HeaderText = "FontColor";
+            this.FontColor.Name = "FontColor";
+            this.FontColor.ReadOnly = true;
+            this.FontColor.Visible = false;
+            // 
+            // BackgroundColor
+            // 
+            this.BackgroundColor.DataPropertyName = "BackgroundColor";
+            this.BackgroundColor.HeaderText = "BackgroudColor";
+            this.BackgroundColor.Name = "BackgroundColor";
+            this.BackgroundColor.ReadOnly = true;
+            this.BackgroundColor.Visible = false;
+            // 
+            // IsAddLv
+            // 
+            this.IsAddLv.DataPropertyName = "IsAddLv";
+            this.IsAddLv.HeaderText = "Привязка к отгрузке";
+            this.IsAddLv.Name = "IsAddLv";
+            this.IsAddLv.ReadOnly = true;
+            this.IsAddLv.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.IsAddLv.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // colShippingPlacesNumber
+            // 
+            this.colShippingPlacesNumber.DataPropertyName = "ShippingPlacesNumber";
+            this.colShippingPlacesNumber.HeaderText = "Кол-во отгрузочных мест";
+            this.colShippingPlacesNumber.Name = "colShippingPlacesNumber";
+            this.colShippingPlacesNumber.ReadOnly = true;
+            // 
+            // colOrderWeight
+            // 
+            this.colOrderWeight.DataPropertyName = "OrderWeight";
+            dataGridViewCellStyle3.Format = "N2";
+            dataGridViewCellStyle3.NullValue = null;
+            this.colOrderWeight.DefaultCellStyle = dataGridViewCellStyle3;
+            this.colOrderWeight.HeaderText = "Вес заказа";
+            this.colOrderWeight.Name = "colOrderWeight";
+            this.colOrderWeight.ReadOnly = true;
+            // 
+            // colSupplier
+            // 
+            this.colSupplier.DataPropertyName = "ShpSupplierName";
+            this.colSupplier.HeaderText = "Поставщик";
+            this.colSupplier.Name = "colSupplier";
+            this.colSupplier.ReadOnly = true;
+            this.colSupplier.Width = 200;
+            // 
+            // colIsEdm
+            // 
+            this.colIsEdm.DataPropertyName = "IsEdm";
+            this.colIsEdm.HeaderText = "ЭДО";
+            this.colIsEdm.Name = "colIsEdm";
+            this.colIsEdm.ReadOnly = true;
+            // 
+            // colTransportView
+            // 
+            this.colTransportView.DataPropertyName = "TransportViewName";
+            this.colTransportView.HeaderText = "Вид транспорта";
+            this.colTransportView.Name = "colTransportView";
+            this.colTransportView.ReadOnly = true;
+            // 
+            // colWarehouseName
+            // 
+            this.colWarehouseName.DataPropertyName = "WarehouseName";
+            this.colWarehouseName.HeaderText = "Склад";
+            this.colWarehouseName.Name = "colWarehouseName";
+            this.colWarehouseName.ReadOnly = true;
+            // 
+            // colOrdLvId
+            // 
+            this.colOrdLvId.DataPropertyName = "OrdLVID";
+            this.colOrdLvId.HeaderText = "colOrdLvId";
+            this.colOrdLvId.Name = "colOrdLvId";
+            this.colOrdLvId.ReadOnly = true;
+            this.colOrdLvId.Visible = false;
             // 
             // mnuContext
             // 
@@ -877,357 +1228,6 @@
             this.dataGridViewImageColumn1.Image = global::Planning.Properties.Resources.calendar;
             this.dataGridViewImageColumn1.Name = "dataGridViewImageColumn1";
             this.dataGridViewImageColumn1.Width = 30;
-            // 
-            // miTransportView
-            // 
-            this.miTransportView.Name = "miTransportView";
-            this.miTransportView.Size = new System.Drawing.Size(230, 22);
-            this.miTransportView.Text = "Виды транспорта";
-            this.miTransportView.Click += new System.EventHandler(this.miTransportView_Click);
-            // 
-            // UniqueKey
-            // 
-            this.UniqueKey.HeaderText = "UniqueKey";
-            this.UniqueKey.Name = "UniqueKey";
-            this.UniqueKey.ReadOnly = true;
-            this.UniqueKey.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.UniqueKey.Visible = false;
-            // 
-            // colOrderDetail
-            // 
-            this.colOrderDetail.HeaderText = "";
-            this.colOrderDetail.Name = "colOrderDetail";
-            this.colOrderDetail.ReadOnly = true;
-            this.colOrderDetail.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colOrderDetail.Text = "...";
-            this.colOrderDetail.ToolTipText = "Детализация заказа";
-            this.colOrderDetail.UseColumnTextForButtonValue = true;
-            this.colOrderDetail.Width = 20;
-            // 
-            // colId
-            // 
-            this.colId.DataPropertyName = "ShpId";
-            this.colId.HeaderText = "ID погр.";
-            this.colId.Name = "colId";
-            this.colId.ReadOnly = true;
-            // 
-            // colIdNakl
-            // 
-            this.colIdNakl.DataPropertyName = "OrdId";
-            this.colIdNakl.HeaderText = "ID накл.";
-            this.colIdNakl.Name = "colIdNakl";
-            this.colIdNakl.ReadOnly = true;
-            // 
-            // colDate
-            // 
-            this.colDate.DataPropertyName = "ShpDate";
-            this.colDate.HeaderText = "Дата";
-            this.colDate.Name = "colDate";
-            this.colDate.ReadOnly = true;
-            // 
-            // colTime
-            // 
-            this.colTime.DataPropertyName = "SlotTime";
-            this.colTime.HeaderText = "Время";
-            this.colTime.Name = "colTime";
-            this.colTime.ReadOnly = true;
-            // 
-            // colDirection
-            // 
-            this.colDirection.DataPropertyName = "InOut";
-            this.colDirection.HeaderText = "Напр.";
-            this.colDirection.Name = "colDirection";
-            this.colDirection.ReadOnly = true;
-            // 
-            // colOrderId
-            // 
-            this.colOrderId.DataPropertyName = "OrdLVCode";
-            this.colOrderId.HeaderText = "Код заказа";
-            this.colOrderId.Name = "colOrderId";
-            this.colOrderId.ReadOnly = true;
-            // 
-            // colOrdPartLVCode
-            // 
-            this.colOrdPartLVCode.DataPropertyName = "OrdPartLVCode";
-            this.colOrdPartLVCode.HeaderText = "Код расходной партии";
-            this.colOrdPartLVCode.Name = "colOrdPartLVCode";
-            this.colOrdPartLVCode.ReadOnly = true;
-            this.colOrdPartLVCode.Width = 150;
-            // 
-            // colOrderType
-            // 
-            this.colOrderType.DataPropertyName = "OrdLVType";
-            this.colOrderType.HeaderText = "Тип заказа";
-            this.colOrderType.Name = "colOrderType";
-            this.colOrderType.ReadOnly = true;
-            // 
-            // colKlientId
-            // 
-            this.colKlientId.HeaderText = "Код клиента";
-            this.colKlientId.Name = "colKlientId";
-            this.colKlientId.ReadOnly = true;
-            this.colKlientId.Visible = false;
-            // 
-            // colKlientName
-            // 
-            this.colKlientName.DataPropertyName = "KlientName";
-            this.colKlientName.HeaderText = "Клиент";
-            this.colKlientName.Name = "colKlientName";
-            this.colKlientName.ReadOnly = true;
-            // 
-            // colStatus
-            // 
-            this.colStatus.DataPropertyName = "OrderStatus";
-            this.colStatus.HeaderText = "Статус";
-            this.colStatus.Name = "colStatus";
-            this.colStatus.ReadOnly = true;
-            // 
-            // colCopmletePct
-            // 
-            this.colCopmletePct.DataPropertyName = "PrcReady";
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.colCopmletePct.DefaultCellStyle = dataGridViewCellStyle2;
-            this.colCopmletePct.HeaderText = "Собран (в %)";
-            this.colCopmletePct.Name = "colCopmletePct";
-            this.colCopmletePct.ReadOnly = true;
-            // 
-            // PrcValue
-            // 
-            this.PrcValue.DataPropertyName = "PrcReady";
-            this.PrcValue.HeaderText = "PrcValue";
-            this.PrcValue.Name = "PrcValue";
-            this.PrcValue.ReadOnly = true;
-            this.PrcValue.Visible = false;
-            // 
-            // colDoneShare
-            // 
-            this.colDoneShare.DataPropertyName = "DoneShare";
-            this.colDoneShare.HeaderText = "DoneShare";
-            this.colDoneShare.Name = "colDoneShare";
-            this.colDoneShare.ReadOnly = true;
-            this.colDoneShare.Visible = false;
-            // 
-            // colComment
-            // 
-            this.colComment.DataPropertyName = "ShpComment";
-            this.colComment.HeaderText = "Комментарий по загрузке";
-            this.colComment.Name = "colComment";
-            this.colComment.ReadOnly = true;
-            // 
-            // colOrderComment
-            // 
-            this.colOrderComment.DataPropertyName = "OrdComment";
-            this.colOrderComment.HeaderText = "Комментарий по заказу";
-            this.colOrderComment.Name = "colOrderComment";
-            this.colOrderComment.ReadOnly = true;
-            // 
-            // colGate
-            // 
-            this.colGate.DataPropertyName = "GateName";
-            this.colGate.HeaderText = "Ворота";
-            this.colGate.Name = "colGate";
-            this.colGate.ReadOnly = true;
-            // 
-            // colSpecCond
-            // 
-            this.colSpecCond.DataPropertyName = "ShpSpecialCond";
-            this.colSpecCond.HeaderText = "Спец. Условия";
-            this.colSpecCond.Name = "colSpecCond";
-            this.colSpecCond.ReadOnly = true;
-            this.colSpecCond.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colSpecCond.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // colDriverPhone
-            // 
-            this.colDriverPhone.DataPropertyName = "ShpDriverPhone";
-            this.colDriverPhone.HeaderText = "Телефон водителя";
-            this.colDriverPhone.Name = "colDriverPhone";
-            this.colDriverPhone.ReadOnly = true;
-            // 
-            // colDriverName
-            // 
-            this.colDriverName.DataPropertyName = "ShpDriverFio";
-            this.colDriverName.HeaderText = "ФИО водителя";
-            this.colDriverName.Name = "colDriverName";
-            this.colDriverName.ReadOnly = true;
-            this.colDriverName.Width = 150;
-            // 
-            // colTransComp
-            // 
-            this.colTransComp.DataPropertyName = "TransportCompanyName";
-            this.colTransComp.HeaderText = "Транспортная компания";
-            this.colTransComp.Name = "colTransComp";
-            this.colTransComp.ReadOnly = true;
-            // 
-            // colTransportType
-            // 
-            this.colTransportType.DataPropertyName = "TransportTypeName";
-            this.colTransportType.HeaderText = "Марка ТС";
-            this.colTransportType.Name = "colTransportType";
-            this.colTransportType.ReadOnly = true;
-            // 
-            // colTrackNumber
-            // 
-            this.colTrackNumber.DataPropertyName = "ShpVehicleNumber";
-            this.colTrackNumber.HeaderText = "Номер ТС";
-            this.colTrackNumber.Name = "colTrackNumber";
-            this.colTrackNumber.ReadOnly = true;
-            // 
-            // colTrailerNumber
-            // 
-            this.colTrailerNumber.DataPropertyName = "ShpTrailerNumber";
-            this.colTrailerNumber.HeaderText = "Номер прицепа";
-            this.colTrailerNumber.Name = "colTrailerNumber";
-            this.colTrailerNumber.ReadOnly = true;
-            // 
-            // colAttorneyNumber
-            // 
-            this.colAttorneyNumber.DataPropertyName = "ShpAttorneyNumber";
-            this.colAttorneyNumber.HeaderText = "Номер доверенности";
-            this.colAttorneyNumber.Name = "colAttorneyNumber";
-            this.colAttorneyNumber.ReadOnly = true;
-            // 
-            // colAttorneyDate
-            // 
-            this.colAttorneyDate.DataPropertyName = "ShpAttorneyDate";
-            this.colAttorneyDate.HeaderText = "Дата доверенности";
-            this.colAttorneyDate.Name = "colAttorneyDate";
-            this.colAttorneyDate.ReadOnly = true;
-            // 
-            // colSubmissionTime
-            // 
-            this.colSubmissionTime.DataPropertyName = "ShpSubmissionTime";
-            this.colSubmissionTime.HeaderText = "Время подачи документов";
-            this.colSubmissionTime.Name = "colSubmissionTime";
-            this.colSubmissionTime.ReadOnly = true;
-            // 
-            // colStartTime
-            // 
-            this.colStartTime.DataPropertyName = "ShpStartTime";
-            this.colStartTime.HeaderText = "Время начала";
-            this.colStartTime.Name = "colStartTime";
-            this.colStartTime.ReadOnly = true;
-            // 
-            // colEndTimePlan
-            // 
-            this.colEndTimePlan.DataPropertyName = "ShpEndTimePlan";
-            this.colEndTimePlan.HeaderText = "Время окончания";
-            this.colEndTimePlan.Name = "colEndTimePlan";
-            this.colEndTimePlan.ReadOnly = true;
-            // 
-            // colEndTimeFact
-            // 
-            this.colEndTimeFact.DataPropertyName = "ShpEndTimeFact";
-            this.colEndTimeFact.HeaderText = "Убытие по факту";
-            this.colEndTimeFact.Name = "colEndTimeFact";
-            this.colEndTimeFact.ReadOnly = true;
-            // 
-            // colDelayReason
-            // 
-            this.colDelayReason.DataPropertyName = "ShpDelayReasonName";
-            this.colDelayReason.HeaderText = "Причина опоздания";
-            this.colDelayReason.Name = "colDelayReason";
-            this.colDelayReason.ReadOnly = true;
-            // 
-            // colDelayComment
-            // 
-            this.colDelayComment.DataPropertyName = "ShpDelayComment";
-            this.colDelayComment.HeaderText = "Комментарий по опозданию";
-            this.colDelayComment.Name = "colDelayComment";
-            this.colDelayComment.ReadOnly = true;
-            // 
-            // colDepositor
-            // 
-            this.colDepositor.DataPropertyName = "DepCode";
-            this.colDepositor.HeaderText = "Депозитор";
-            this.colDepositor.Name = "colDepositor";
-            this.colDepositor.ReadOnly = true;
-            // 
-            // colStampNumber
-            // 
-            this.colStampNumber.DataPropertyName = "ShpStampNumber";
-            this.colStampNumber.HeaderText = "№ пломбы";
-            this.colStampNumber.Name = "colStampNumber";
-            this.colStampNumber.ReadOnly = true;
-            // 
-            // FontColor
-            // 
-            this.FontColor.DataPropertyName = "FontColor";
-            this.FontColor.HeaderText = "FontColor";
-            this.FontColor.Name = "FontColor";
-            this.FontColor.ReadOnly = true;
-            this.FontColor.Visible = false;
-            // 
-            // BackgroundColor
-            // 
-            this.BackgroundColor.DataPropertyName = "BackgroundColor";
-            this.BackgroundColor.HeaderText = "BackgroudColor";
-            this.BackgroundColor.Name = "BackgroundColor";
-            this.BackgroundColor.ReadOnly = true;
-            this.BackgroundColor.Visible = false;
-            // 
-            // IsAddLv
-            // 
-            this.IsAddLv.DataPropertyName = "IsAddLv";
-            this.IsAddLv.HeaderText = "Привязка к отгрузке";
-            this.IsAddLv.Name = "IsAddLv";
-            this.IsAddLv.ReadOnly = true;
-            this.IsAddLv.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.IsAddLv.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // colShippingPlacesNumber
-            // 
-            this.colShippingPlacesNumber.DataPropertyName = "ShippingPlacesNumber";
-            this.colShippingPlacesNumber.HeaderText = "Кол-во отгрузочных мест";
-            this.colShippingPlacesNumber.Name = "colShippingPlacesNumber";
-            this.colShippingPlacesNumber.ReadOnly = true;
-            // 
-            // colOrderWeight
-            // 
-            this.colOrderWeight.DataPropertyName = "OrderWeight";
-            dataGridViewCellStyle3.Format = "N2";
-            dataGridViewCellStyle3.NullValue = null;
-            this.colOrderWeight.DefaultCellStyle = dataGridViewCellStyle3;
-            this.colOrderWeight.HeaderText = "Вес заказа";
-            this.colOrderWeight.Name = "colOrderWeight";
-            this.colOrderWeight.ReadOnly = true;
-            // 
-            // colSupplier
-            // 
-            this.colSupplier.DataPropertyName = "ShpSupplierName";
-            this.colSupplier.HeaderText = "Поставщик";
-            this.colSupplier.Name = "colSupplier";
-            this.colSupplier.ReadOnly = true;
-            this.colSupplier.Width = 200;
-            // 
-            // colIsEdm
-            // 
-            this.colIsEdm.DataPropertyName = "IsEdm";
-            this.colIsEdm.HeaderText = "ЭДО";
-            this.colIsEdm.Name = "colIsEdm";
-            this.colIsEdm.ReadOnly = true;
-            // 
-            // colTransportView
-            // 
-            this.colTransportView.DataPropertyName = "TransportViewName";
-            this.colTransportView.HeaderText = "Вид транспорта";
-            this.colTransportView.Name = "colTransportView";
-            this.colTransportView.ReadOnly = true;
-            // 
-            // colWarehouseName
-            // 
-            this.colWarehouseName.DataPropertyName = "WarehouseName";
-            this.colWarehouseName.HeaderText = "Склад";
-            this.colWarehouseName.Name = "colWarehouseName";
-            this.colWarehouseName.ReadOnly = true;
-            // 
-            // colOrdLvId
-            // 
-            this.colOrdLvId.DataPropertyName = "OrdLVID";
-            this.colOrdLvId.HeaderText = "colOrdLvId";
-            this.colOrdLvId.Name = "colOrdLvId";
-            this.colOrdLvId.ReadOnly = true;
-            this.colOrdLvId.Visible = false;
             // 
             // frmMain
             // 

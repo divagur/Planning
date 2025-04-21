@@ -92,6 +92,7 @@ namespace PlanningServiceTest
             _settings.PlanningBaseLogin = settingsHandle.GetParamStringValue("PlanningBaseLogin");
             _settings.PlanningBasePwd = settingsHandle.GetParamStringValue("PlanningBasePwd");
             _settings.TimerInterval = settingsHandle.GetParamIntValue("TimerInterval", 60) * 1000;
+            _settings.DeliveryTypeDefault = settingsHandle.GetParamStringValue("DeliveryTypeDefault", "Truck");
 
         }
 

@@ -11,7 +11,7 @@ namespace PlanningServiceTest.InvoiceData
 {
     public class InvoiceHandlerBase
     {
-        public virtual void LoadFromXml(string FileName, Invoice invoice)
+        public virtual void LoadFromXml(string FileName, Invoice invoice,string DeliveryTypeDefault)
         {
 
             try
@@ -35,7 +35,7 @@ namespace PlanningServiceTest.InvoiceData
                         case "Status": invoice.Status = elem.InnerText; break;
                         case "ActualDate": invoice.ActualDate = DateTime.Parse(elem.InnerText); break;
                         case "RecipientCode": invoice.RecipientCode = elem.InnerText; break;
-                        case "DeliveryType": invoice.DeliveryType = elem.InnerText; break;
+                        case "DeliveryType": invoice.DeliveryType = String.IsNullOrEmpty(elem.InnerText) ? DeliveryTypeDefault : elem.InnerText; break;
                         case "ContainerNumber": invoice.ContainerNumber = elem.InnerText; break;
                         case "TruckNumber": invoice.TruckNumber = elem.InnerText; break;
                         case "TrailerNumber": invoice.TrailerNumber = elem.InnerText; break;
