@@ -160,7 +160,8 @@ namespace Planning.DataLayer
             db.Dispose();
         }
 
-        public bool Save(T _instance)
+        public bool Save<T>(T _instance)
+            where T: BaseObject
         {
             if (!IsConnectionStringValid())
             {

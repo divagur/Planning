@@ -48,6 +48,9 @@
     <Compile Include="BaseObject.cs" />
     <Compile Include="BaseSqlAdapter.cs" />
     <Compile Include="DBFieldAttribute.cs" />
+    <Compile Include="LVOrder.cs" />
+    <Compile Include="LVOrderIdComparer.cs" />
+    <Compile Include="LVOrder_Manager.cs" />
     <Compile Include="MSSqlAdapter.cs" />
     <Compile Include="ObjectState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
