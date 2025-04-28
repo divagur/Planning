@@ -11,9 +11,9 @@ namespace Planning.DataLayer
            switch (editState) 
             {
                 case EditState.New:
-                    return $@"INSERT INTO {Table} (name,is_active) values(@{nameof(Supplier.Name)}, @{nameof(Supplier.IsActive)})";
+                    return $@"INSERT INTO {Table} (name,code,is_active) values(@{nameof(Supplier.Name)},@{nameof(Supplier.Code)}, @{nameof(Supplier.IsActive)})";
                 case EditState.Edit:
-                    return $@"update {Table} set name = @{nameof(Supplier.Name)}, is_active = @{nameof(Supplier.IsActive)}
+                    return $@"update {Table} set name = @{nameof(Supplier.Name)},code = @{nameof(Supplier.Code)}, is_active = @{nameof(Supplier.IsActive)}
                             where id = @Id";
                 case EditState.Delete:
                     return $"delete from {Table} where id = @Id";
@@ -24,7 +24,7 @@ namespace Planning.DataLayer
 
         public string GetSelectItemSql()
         {
-            return $@"select id as {nameof(Supplier.Id)}, name as {nameof(Supplier.Name)}, is_active as {nameof(Supplier.IsActive)} from {Table}";
+            return $@"select id as {nameof(Supplier.Id)}, name as {nameof(Supplier.Name)}, code as {nameof(Supplier.Code)}, is_active as {nameof(Supplier.IsActive)} from {Table}";
         }
     }
 }

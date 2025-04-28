@@ -608,7 +608,7 @@ namespace Planning
         {
 
             var frmDelayReasons = new DictDelayReasons();
-            SetFormPrivalage(frmDelayReasons, "DelayReasons");
+            //SetFormPrivalage(frmDelayReasons, "DelayReasons");
             AddFormTab(frmDelayReasons, "Причины задержки");
         }
 
@@ -774,9 +774,11 @@ namespace Planning
 
         private void miDictTimeSlot_Click(object sender, EventArgs e)
         {
+            /*
             var frmTimeSlot = new TimeSlots();
             SetFormPrivalage(frmTimeSlot, "TimeSlot");
             AddFormTab(frmTimeSlot, "Тайм слоты");
+            */
         }
 
         private void miDictDepositor_Click(object sender, EventArgs e)
@@ -794,7 +796,7 @@ namespace Planning
             Depositors frmDepositors = new Depositors();
             
             frmDepositors.WaitHandler = waitCur;
-            SetFormPrivalage(frmDepositors, "Depositor");       
+           // SetFormPrivalage(frmDepositors, "Depositor");       
             AddFormTab(frmDepositors, "Депозиторы");
         }
 
@@ -1116,7 +1118,7 @@ namespace Planning
         {
             var frmUserGroups = new UserGroups();
             
-            SetFormPrivalage(frmUserGroups, "UserGrp");
+           // SetFormPrivalage(frmUserGroups, "UserGrp");
             AddFormTab(frmUserGroups, "Группы пользователей");
         }
 
@@ -1170,7 +1172,7 @@ namespace Planning
         {
             var frmShimentElements = new ShipmentElements();
 
-            SetFormPrivalage(frmShimentElements, "Attr");
+           // SetFormPrivalage(frmShimentElements, "Attr");
             AddFormTab(frmShimentElements, "Элементы отгрузки");
         }
 
@@ -2037,7 +2039,7 @@ namespace Planning
 
 
             var frmSupplier = new Suppliers();
-            SetFormPrivalage(frmSupplier, "Supplier");
+            //SetFormPrivalage(frmSupplier, "Supplier");
             AddFormTab(frmSupplier, "Поставщики");
         }
 
@@ -2097,7 +2099,7 @@ namespace Planning
         private void miDictWarehouse_Click(object sender, EventArgs e)
         {
             var frmWarehouse = new Warehouses();
-            SetFormPrivalage(frmWarehouse, "Warehouse");
+            //SetFormPrivalage(frmWarehouse, "Warehouse");
             AddFormTab(frmWarehouse, "Склады");
         }
 

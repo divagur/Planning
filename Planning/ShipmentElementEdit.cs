@@ -14,13 +14,11 @@ namespace Planning
 
     public partial class ShipmentElementEdit : Form
     {
-        ShipmentElement _shipmentElement;
-        PlanningDbContext _context;
-        public ShipmentElementEdit(ShipmentElement shipmentElement)
+        DataLayer.ShipmentElement _shipmentElement;
+        public ShipmentElementEdit(DataLayer.ShipmentElement shipmentElement)
         {
             InitializeComponent();
             _shipmentElement = shipmentElement;
-            _context = DataService.context;
         }
 
         

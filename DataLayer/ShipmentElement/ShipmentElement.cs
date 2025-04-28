@@ -11,6 +11,7 @@ namespace Planning.DataLayer
     {
         string _fieldName;
         string _fieldDbName;
+        string _fieldTypeName;
         int? _fieldType;
         public string FieldName
         {
@@ -33,6 +34,19 @@ namespace Planning.DataLayer
                 if (_fieldDbName == null || !_fieldDbName.Equals(value))
                 {
                     _fieldDbName = value;
+                    Edit();
+
+                }
+            }
+        }
+        public string FieldTypeName
+        {
+            get => _fieldTypeName;
+            set
+            {
+                if (_fieldTypeName == null || !_fieldTypeName.Equals(value))
+                {
+                    _fieldTypeName = value;
                     Edit();
 
                 }

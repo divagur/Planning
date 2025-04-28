@@ -32,6 +32,7 @@ namespace Planning
             this.tblSuppliers = new System.Windows.Forms.DataGridView();
             this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colIsActive = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.tblSuppliers)).BeginInit();
             this.SuspendLayout();
@@ -44,6 +45,7 @@ namespace Planning
             this.tblSuppliers.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colId,
             this.colName,
+            this.colCode,
             this.colIsActive});
             this.tblSuppliers.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tblSuppliers.Location = new System.Drawing.Point(0, 25);
@@ -55,7 +57,7 @@ namespace Planning
             // colId
             // 
             this.colId.DataPropertyName = "Id";
-            this.colId.HeaderText = "Код";
+            this.colId.HeaderText = "Id";
             this.colId.Name = "colId";
             this.colId.ReadOnly = true;
             this.colId.Visible = false;
@@ -67,6 +69,13 @@ namespace Planning
             this.colName.Name = "colName";
             this.colName.ReadOnly = true;
             this.colName.Width = 400;
+            // 
+            // colCode
+            // 
+            this.colCode.DataPropertyName = "Code";
+            this.colCode.HeaderText = "Код";
+            this.colCode.Name = "colCode";
+            this.colCode.ReadOnly = true;
             // 
             // colIsActive
             // 
@@ -95,6 +104,7 @@ namespace Planning
         private System.Windows.Forms.DataGridView tblSuppliers;
         private System.Windows.Forms.DataGridViewTextBoxColumn colId;
         private System.Windows.Forms.DataGridViewTextBoxColumn colName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colCode;
         private System.Windows.Forms.DataGridViewCheckBoxColumn colIsActive;
     }
 }

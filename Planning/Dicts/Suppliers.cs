@@ -9,51 +9,21 @@ using System.Windows.Forms;
 
 namespace Planning
 {
-    public partial class Suppliers : DictForm
+    public partial class Suppliers : DictFormEx<DataLayer.Supplier, DataLayer.SupplierRepository>
     {
+
         public Suppliers()
         {
             InitializeComponent();
+            GridView = tblSuppliers;
         }
 
-        protected override void Populate()
+        protected override bool CreateEditForm(DataLayer.Supplier item)
         {
-            tblSuppliers.AutoGenerateColumns = false;
-            tblSuppliers.DataSource = _context.Suppliers.ToList();
-
-        }
-        protected override void AddRow()
-        {
-            Supplier supplier = new Supplier();
-            SupplierEdit frmSupplierEdit = new SupplierEdit(supplier);
+            SupplierEdit frmSupplierEdit = new SupplierEdit(item);
             frmSupplierEdit.ShowDialog();
-            if (frmSupplierEdit.DialogResult == DialogResult.Cancel)
-                return;
-            DataService.context.Suppliers.Add(supplier);
-
-            Save();
+            return !(frmSupplierEdit.DialogResult == DialogResult.Cancel);
         }
-
-        protected override void EditRow()
-        {
-            if (tblSuppliers.SelectedCells.Count <= 0) return;
-            Supplier supplier = _context.Suppliers.Find(tblSuppliers.Rows[tblSuppliers.CurrentCell.RowIndex].Cells["colId"].Value);
-            SupplierEdit frmSupplierEdit = new SupplierEdit(supplier);
-            frmSupplierEdit.ShowDialog();
-            if (frmSupplierEdit.DialogResult == DialogResult.Cancel)
-                return;
-
-            Save();
-        }
-
-        protected override void DelRow()
-        {
-            Supplier supplier = _context.Suppliers.Find(tblSuppliers.Rows[tblSuppliers.CurrentCell.RowIndex].Cells["colId"].Value);
-            if (MessageBox.Show("Удалить поставщика?", "Подтверждение", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-            {
-                _context.Suppliers.Remove(supplier);
-                Save();
-            }
-        }
+        
     }
 }

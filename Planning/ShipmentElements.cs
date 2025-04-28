@@ -13,88 +13,25 @@ using System.Windows.Forms;
 namespace Planning
 {
    
-    public partial class ShipmentElements : DictForm
+    public partial class ShipmentElements : DictFormEx<DataLayer.ShipmentElement, DataLayer.ShipmentElementRepository>
     {
+        List<DataLayer.ShipmentElement> _shipmentElements;
+        DataLayer.ShipmentElementRepository _shipmentElementRepository = new DataLayer.ShipmentElementRepository();
         public ShipmentElements()
         {
             InitializeComponent();
+            GridView = tblElements;
         }
 
-        protected override void AddRow()
+        protected override bool CreateEditForm(DataLayer.ShipmentElement item)
         {
-            ShipmentElement shipmentElement = new ShipmentElement();
-            var frmShipmentElementEdit = new ShipmentElementEdit(shipmentElement);
+            var frmShipmentElementEdit = new ShipmentElementEdit(item);
 
             frmShipmentElementEdit.ShowDialog();
-            if (frmShipmentElementEdit.DialogResult == DialogResult.Cancel)
-                return;
-            _context.ShipmentElements.Add(shipmentElement);
-            Save();
+            return !(frmShipmentElementEdit.DialogResult == DialogResult.Cancel);
         }
+        
 
-        protected override void EditRow()
-        {
-            ShipmentElement shipmentElement = _context.ShipmentElements.Find(tblElements.Rows[tblElements.CurrentCell.RowIndex].Cells["colId"].Value);
-            var frmTimeSlotEdit = new ShipmentElementEdit(shipmentElement);
-
-            frmTimeSlotEdit.ShowDialog();
-            if (frmTimeSlotEdit.DialogResult == DialogResult.Cancel)
-                return;
-
-            Save();
-        }
-
-        protected override void DelRow()
-        {
-            if (MessageBox.Show("Удалить запись?", "Подтверждение удаления", MessageBoxButtons.OKCancel) == DialogResult.OK)
-            {
-                ShipmentElement shipmentElement = _context.ShipmentElements.Find(tblElements.Rows[tblElements.CurrentCell.RowIndex].Cells["colId"].Value);
-                _context.ShipmentElements.Remove(shipmentElement);
-                Save();
-            }
-        }
-
-        protected override void Populate()
-        {
-            using (SqlConnection connection = new SqlConnection(DataService.connectionString))
-            {
-                if (connection.State == ConnectionState.Closed)
-                    connection.Open();
-                string sqlText = @"select id,field_name, field_db_name,field_type,field_type_name
-                                    from v_shipment_elements";
-                SqlDataAdapter adapter = new SqlDataAdapter(sqlText, connection);
-
-                DataSet ds = new DataSet();
-                adapter.Fill(ds);
-                tblElements.AutoGenerateColumns = false;
-                tblElements.DataSource = ds.Tables[0];
-            }
-        }
-        /*
-        protected override void Save()
-        {
-            try
-            {
-                _context.SaveChanges();
-            }
-            catch (DbEntityValidationException ex)
-            {
-                string errorText = "";
-                foreach (DbEntityValidationResult validationError in ex.EntityValidationErrors)
-                {
-                    errorText = errorText + "Object: " + validationError.Entry.Entity.ToString() + "\n\r";
-                    foreach (DbValidationError err in validationError.ValidationErrors)
-                    {
-                        errorText = errorText + err.ErrorMessage + "\n\r";
-
-                    }
-                }
-                MessageBox.Show(errorText);
-            }
-
-            ShipmentElementsLoad();
-        }
-        */
        
     }
 

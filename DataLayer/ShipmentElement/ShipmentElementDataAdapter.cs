@@ -32,7 +32,14 @@ namespace Planning.DataLayer
         public string GetSelectItemSql()
         {
             return $@"select id as {nameof(ShipmentElement.Id)}, field_name as {nameof(ShipmentElement.FieldName)},
-                    field_db_name as {nameof(ShipmentElement.FieldDbName)}, field_type as {nameof(ShipmentElement.FieldType)}
+                    field_db_name as {nameof(ShipmentElement.FieldDbName)}, field_type as {nameof(ShipmentElement.FieldType)},
+                    CASE 
+					    WHEN field_type = 1 THEN 'Строка' 
+					    WHEN field_type = 2 THEN 'Число' 
+					    WHEN field_type = 3 THEN 'Дата'
+					    WHEN field_type = 4 THEN 'ДатаВремя'
+					    WHEN field_type = 5 THEN 'Логический' 
+				    END AS {nameof(ShipmentElement.FieldTypeName)}
                     from {Table}";
         }
     }

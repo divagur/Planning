@@ -10,8 +10,8 @@ namespace Planning
 {
     public partial class SupplierEdit : Planning.DictEditForm
     {
-        Supplier _supplier;
-        public SupplierEdit(Supplier supplier)
+        DataLayer.Supplier _supplier;
+        public SupplierEdit(DataLayer.Supplier supplier)
         {
             InitializeComponent();
             _supplier = supplier;
@@ -25,9 +25,14 @@ namespace Planning
                 MessageBox.Show("Невозможно сохранить строку с пустым наименованием", "Ошибка сохранения", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
-
+            if (txtCode.Text == String.Empty)
+            {
+                MessageBox.Show("Невозможно сохранить строку с пустым кодом", "Ошибка сохранения", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
 
             _supplier.Name = txtName.Text;
+            _supplier.Code = txtCode.Text;
             _supplier.IsActive = cbIsActive.Checked;
             return true;
         }
@@ -35,6 +40,7 @@ namespace Planning
         protected override void Populate()
         {
             txtName.Text = _supplier.Name;
+            txtCode.Text = _supplier.Code;
             cbIsActive.Checked = _supplier.IsActive == null?true:(bool)_supplier.IsActive;
         }
     }

@@ -190,6 +190,12 @@
     <Compile Include="Depositor.cs">
       <DependentUpon>DbPlaning.tt</DependentUpon>
     </Compile>
+    <Compile Include="DictFormEx.Designer.cs">
+      <DependentUpon>DictFormEx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DictFormEx.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Dicts\CustomPostEdit.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -588,6 +594,9 @@
     <EmbeddedResource Include="ChooseOrder.resx">
       <DependentUpon>ChooseOrder.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="DictFormEx.resx">
+      <DependentUpon>DictFormEx.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Dicts\CustomPostEdit.resx">
       <DependentUpon>CustomPostEdit.cs</DependentUpon>
     </EmbeddedResource>
@@ -845,6 +854,7 @@
     <None Include="Resources\ezgif.com-gif-maker.gif" />
     <None Include="Resources\color_font.png" />
     <None Include="Resources\disk_4117.png" />
+    <None Include="Resources\btnAddRow.Image.png" />
     <Content Include="Resources\find_6617.png" />
     <None Include="Resources\find_next.png" />
     <None Include="Resources\GzgM.gif" />

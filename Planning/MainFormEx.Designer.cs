@@ -33,9 +33,9 @@ namespace Planning
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainFormEx));
-            BrightIdeasSoftware.HeaderStateStyle headerStateStyle4 = new BrightIdeasSoftware.HeaderStateStyle();
-            BrightIdeasSoftware.HeaderStateStyle headerStateStyle5 = new BrightIdeasSoftware.HeaderStateStyle();
-            BrightIdeasSoftware.HeaderStateStyle headerStateStyle6 = new BrightIdeasSoftware.HeaderStateStyle();
+            BrightIdeasSoftware.HeaderStateStyle headerStateStyle1 = new BrightIdeasSoftware.HeaderStateStyle();
+            BrightIdeasSoftware.HeaderStateStyle headerStateStyle2 = new BrightIdeasSoftware.HeaderStateStyle();
+            BrightIdeasSoftware.HeaderStateStyle headerStateStyle3 = new BrightIdeasSoftware.HeaderStateStyle();
             this.menuMain = new System.Windows.Forms.MenuStrip();
             this.mtiFile = new System.Windows.Forms.ToolStripMenuItem();
             this.miSettings = new System.Windows.Forms.ToolStripMenuItem();
@@ -1065,10 +1065,10 @@ namespace Planning
             // 
             // headerFormatStyle1
             // 
-            this.headerFormatStyle1.Hot = headerStateStyle4;
-            headerStateStyle5.FrameWidth = 2F;
-            this.headerFormatStyle1.Normal = headerStateStyle5;
-            this.headerFormatStyle1.Pressed = headerStateStyle6;
+            this.headerFormatStyle1.Hot = headerStateStyle1;
+            headerStateStyle2.FrameWidth = 2F;
+            this.headerFormatStyle1.Normal = headerStateStyle2;
+            this.headerFormatStyle1.Pressed = headerStateStyle3;
             // 
             // imageListInOut
             // 
@@ -1188,7 +1188,7 @@ namespace Planning
             this.toolStripMenuItemReport,
             this.toolStripMenuItemAdd});
             this.contextMenuMain.Name = "contextMenuMain";
-            this.contextMenuMain.Size = new System.Drawing.Size(181, 114);
+            this.contextMenuMain.Size = new System.Drawing.Size(163, 92);
             // 
             // toolStripMenuItemFile
             // 
@@ -1196,7 +1196,7 @@ namespace Planning
             this.menuItemSettings,
             this.menuItemConnect});
             this.toolStripMenuItemFile.Name = "toolStripMenuItemFile";
-            this.toolStripMenuItemFile.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemFile.Size = new System.Drawing.Size(162, 22);
             this.toolStripMenuItemFile.Text = "Файл";
             // 
             // menuItemSettings
@@ -1227,7 +1227,7 @@ namespace Planning
             this.menuItemDictWarehouse,
             this.menuItemDictCustomPosts});
             this.toolStripMenuItemDict.Name = "toolStripMenuItemDict";
-            this.toolStripMenuItemDict.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemDict.Size = new System.Drawing.Size(162, 22);
             this.toolStripMenuItemDict.Text = "Справочники";
             // 
             // menuItemDictTimeSlot
@@ -1284,24 +1284,28 @@ namespace Planning
             this.menuItemDoctSupplier.Name = "menuItemDoctSupplier";
             this.menuItemDoctSupplier.Size = new System.Drawing.Size(230, 22);
             this.menuItemDoctSupplier.Text = "Поставщики";
+            this.menuItemDoctSupplier.Click += new System.EventHandler(this.menuItemDoctSupplier_Click);
             // 
             // menuItemDictAttributes
             // 
             this.menuItemDictAttributes.Name = "menuItemDictAttributes";
             this.menuItemDictAttributes.Size = new System.Drawing.Size(230, 22);
             this.menuItemDictAttributes.Text = "Аттрибуты";
+            this.menuItemDictAttributes.Click += new System.EventHandler(this.menuItemDictAttributes_Click);
             // 
             // menuItemDictTransportType
             // 
             this.menuItemDictTransportType.Name = "menuItemDictTransportType";
             this.menuItemDictTransportType.Size = new System.Drawing.Size(230, 22);
             this.menuItemDictTransportType.Text = "Типы транспортных средств";
+            this.menuItemDictTransportType.Click += new System.EventHandler(this.menuItemDictTransportType_Click);
             // 
             // menuItemDictTransportView
             // 
             this.menuItemDictTransportView.Name = "menuItemDictTransportView";
             this.menuItemDictTransportView.Size = new System.Drawing.Size(230, 22);
             this.menuItemDictTransportView.Text = "Виды транспорта";
+            this.menuItemDictTransportView.Click += new System.EventHandler(this.menuItemDictTransportView_Click);
             // 
             // menuItemDictWarehouse
             // 
@@ -1324,7 +1328,7 @@ namespace Planning
             this.menuItemReportStatistic,
             this.menuItemReportTC});
             this.toolStripMenuItemReport.Name = "toolStripMenuItemReport";
-            this.toolStripMenuItemReport.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemReport.Size = new System.Drawing.Size(162, 22);
             this.toolStripMenuItemReport.Text = "Отчеты";
             // 
             // menuItemReportPeriod
@@ -1348,7 +1352,7 @@ namespace Planning
             // toolStripMenuItemAdd
             // 
             this.toolStripMenuItemAdd.Name = "toolStripMenuItemAdd";
-            this.toolStripMenuItemAdd.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemAdd.Size = new System.Drawing.Size(162, 22);
             this.toolStripMenuItemAdd.Text = "Дополнительно";
             // 
             // btnColumnVisible

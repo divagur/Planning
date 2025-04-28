@@ -7,6 +7,7 @@ namespace Planning.DataLayer
     public class Supplier: BaseDataItem
     {
         string _name = String.Empty;
+        string _code ;
         bool? _isActive = false;
         public string Name 
             { 
@@ -21,6 +22,20 @@ namespace Planning.DataLayer
                         }
                     } 
             }
+        public string Code
+        {
+            get => _code;
+            set
+            {
+                if (_code == null || !_code.Equals(value))
+                {
+                    _code = value;
+                    Edit();
+
+                }
+            }
+        }
+
         public bool? IsActive
         {
             get => _isActive;

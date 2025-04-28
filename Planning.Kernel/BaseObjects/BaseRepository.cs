@@ -26,6 +26,8 @@ namespace Planning.Kernel
 
         public BaseRepository()
         {
+            if (String.IsNullOrEmpty(ConnectionParams.ServerName) || String.IsNullOrEmpty(ConnectionParams.BaseName))
+                return;
             SqlConnectionStringBuilder sqlConnectionString = new SqlConnectionStringBuilder();
             sqlConnectionString.DataSource = ConnectionParams.ServerName;
             sqlConnectionString.InitialCatalog = ConnectionParams.BaseName;
@@ -116,6 +118,11 @@ namespace Planning.Kernel
                     break;
             }
             return result;
+        }
+
+        public string GetLastError()
+        {
+            return _lastError;
         }
 
         public string ConnectionString { get => _connectionString; }

@@ -59,7 +59,10 @@ namespace Planning
         {
 
         }
-
+        protected string GetError(string ErrorHeader, string ErrorText)
+        {
+            return String.Format("{0}:{1}", ErrorHeader, ErrorText);
+        }
         protected void WaitBegin()
         {
             if (waitHandler != null)

@@ -32,15 +32,17 @@ namespace Planning
             this.txtName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.cbIsActive = new System.Windows.Forms.CheckBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txtCode = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(12, 70);
+            this.btnSave.Location = new System.Drawing.Point(9, 88);
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(93, 70);
+            this.btnClose.Location = new System.Drawing.Point(90, 88);
             // 
             // txtName
             // 
@@ -61,18 +63,36 @@ namespace Planning
             // cbIsActive
             // 
             this.cbIsActive.AutoSize = true;
-            this.cbIsActive.Location = new System.Drawing.Point(15, 47);
+            this.cbIsActive.Location = new System.Drawing.Point(12, 65);
             this.cbIsActive.Name = "cbIsActive";
             this.cbIsActive.Size = new System.Drawing.Size(76, 17);
             this.cbIsActive.TabIndex = 6;
             this.cbIsActive.Text = "Активный";
             this.cbIsActive.UseVisualStyleBackColor = true;
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(12, 35);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(26, 13);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "Код";
+            // 
+            // txtCode
+            // 
+            this.txtCode.Location = new System.Drawing.Point(93, 32);
+            this.txtCode.Name = "txtCode";
+            this.txtCode.Size = new System.Drawing.Size(120, 20);
+            this.txtCode.TabIndex = 5;
+            // 
             // SupplierEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.ClientSize = new System.Drawing.Size(377, 100);
+            this.ClientSize = new System.Drawing.Size(377, 115);
             this.Controls.Add(this.cbIsActive);
+            this.Controls.Add(this.txtCode);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.txtName);
             this.Controls.Add(this.label1);
             this.Name = "SupplierEdit";
@@ -80,6 +100,8 @@ namespace Planning
             this.Controls.SetChildIndex(this.btnClose, 0);
             this.Controls.SetChildIndex(this.label1, 0);
             this.Controls.SetChildIndex(this.txtName, 0);
+            this.Controls.SetChildIndex(this.label2, 0);
+            this.Controls.SetChildIndex(this.txtCode, 0);
             this.Controls.SetChildIndex(this.cbIsActive, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -91,5 +113,7 @@ namespace Planning
         private System.Windows.Forms.TextBox txtName;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox cbIsActive;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox txtCode;
     }
 }

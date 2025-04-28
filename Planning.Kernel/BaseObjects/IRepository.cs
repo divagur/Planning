@@ -10,6 +10,8 @@ namespace Planning.Kernel
         T GetById(int? id);
         bool Save(T Item);
         bool Save(List<T> Items);
+
+        string GetLastError();
     }
     /*
     interface IDataSource<out T> where T : class

@@ -47,16 +47,16 @@
             this.colFieldDbName,
             this.colFieldType});
             this.tblElements.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tblElements.Location = new System.Drawing.Point(0, 0);
+            this.tblElements.Location = new System.Drawing.Point(0, 25);
             this.tblElements.Name = "tblElements";
             this.tblElements.ReadOnly = true;
             this.tblElements.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.tblElements.Size = new System.Drawing.Size(997, 419);
+            this.tblElements.Size = new System.Drawing.Size(997, 394);
             this.tblElements.TabIndex = 4;
             // 
             // colId
             // 
-            this.colId.DataPropertyName = "id";
+            this.colId.DataPropertyName = "Id";
             this.colId.HeaderText = "Id";
             this.colId.Name = "colId";
             this.colId.ReadOnly = true;
@@ -64,7 +64,7 @@
             // 
             // colFieldName
             // 
-            this.colFieldName.DataPropertyName = "field_name";
+            this.colFieldName.DataPropertyName = "FieldName";
             this.colFieldName.HeaderText = "Наименование";
             this.colFieldName.Name = "colFieldName";
             this.colFieldName.ReadOnly = true;
@@ -73,7 +73,7 @@
             // 
             // colFieldDbName
             // 
-            this.colFieldDbName.DataPropertyName = "field_db_name";
+            this.colFieldDbName.DataPropertyName = "FieldDbName";
             this.colFieldDbName.HeaderText = "Поле БД";
             this.colFieldDbName.Name = "colFieldDbName";
             this.colFieldDbName.ReadOnly = true;
@@ -81,7 +81,7 @@
             // 
             // colFieldType
             // 
-            this.colFieldType.DataPropertyName = "field_type_name";
+            this.colFieldType.DataPropertyName = "FieldTypeName";
             this.colFieldType.HeaderText = "Тип данных";
             this.colFieldType.Name = "colFieldType";
             this.colFieldType.ReadOnly = true;

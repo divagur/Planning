@@ -7,16 +7,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Planning.Kernel;
 
 namespace Planning
 {
     public partial class DictEditForm : Form
     {
+        
         public DictEditForm()
         {
             InitializeComponent();
         }
-
+        
 
         protected virtual bool Save()
         {

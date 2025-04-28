@@ -536,18 +536,7 @@ namespace Planning
 
         private void menuItemDictDepositor_Click(object sender, EventArgs e)
         {
-            DictSimple dict = new DictSimple();
-
-            dict.TableName = "depositors";
-            dict.Title = "Справочник: Депозиторы";
-
-            dict.Columns.Add(new DictColumn { Id = "Id", IsPK = true, IsVisible = false, Title = "Код", DataField = "id", DataType = SqlDbType.Int });
-            dict.Columns.Add(new DictColumn { Id = "Name", IsPK = false, IsVisible = true, Title = "Наименование", DataField = "name", Width = 254, DataType = SqlDbType.VarChar, Length = 20 });
-            dict.Columns.Add(new DictColumn { Id = "DB", IsPK = false, IsVisible = true, Title = "База данных", DataField = "lv_base", Width = 128, DataType = SqlDbType.VarChar, Length = 128 });
-            dict.Columns.Add(new DictColumn { Id = "LVId", IsPK = false, IsVisible = true, Title = "Код в LVision", DataField = "lv_id", Width = 80, DataType = SqlDbType.Int });
-
             Depositors frmDepositors = new Depositors();
-
             //SetFormPrivalage(frmDepositors, "Depositor");
             AddFormTab(frmDepositors, "Депозиторы");
         }
@@ -596,6 +585,45 @@ namespace Planning
             var frmDelayReasons = new DictDelayReasons();
             //SetFormPrivalage(frmDelayReasons, "DelayReasons");
             AddFormTab(frmDelayReasons, "Причины задержки");
+        }
+
+        private void menuItemDoctSupplier_Click(object sender, EventArgs e)
+        {
+
+            var frmSupplier = new Suppliers();
+            //SetFormPrivalage(frmSupplier, "Supplier");
+            AddFormTab(frmSupplier, "Поставщики");
+        }
+
+        private void menuItemDictAttributes_Click(object sender, EventArgs e)
+        {
+            var frmShimentElements = new ShipmentElements();
+
+            //SetFormPrivalage(frmShimentElements, "Attr");
+            AddFormTab(frmShimentElements, "Элементы отгрузки");
+        }
+
+        private void menuItemDictTransportType_Click(object sender, EventArgs e)
+        {
+            DictSimple dict = new DictSimple();
+
+            dict.TableName = "transport_type";
+            dict.Title = "Справочник: Тип транспорта";
+
+            dict.Columns.Add(new DictColumn { Id = "Id", IsPK = true, IsVisible = false, Title = "Код", DataField = "id", DataType = SqlDbType.Int });
+            dict.Columns.Add(new DictColumn { Id = "Name", IsPK = false, IsVisible = true, Title = "Наименование", DataField = "name", Width = 254, DataType = SqlDbType.VarChar, Length = 20 });
+            dict.Columns.Add(new DictColumn { Id = "Tonnage", IsPK = false, IsVisible = true, Title = "Тоннаж", DataField = "tonnage", Width = 80, DataType = SqlDbType.Int });
+
+            
+            var frmTransporType = new SimpleDict<DataLayer.TransportType,DataLayer.TransportTypeRepository>(dict);
+            //SetFormPrivalage(frmTransporType, "TransporType");
+            AddFormTab(frmTransporType, "Типы транспорта");
+            
+        }
+
+        private void menuItemDictTransportView_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -36,6 +36,8 @@
             // 
             // tblDelayReasons
             // 
+            this.tblDelayReasons.AllowUserToAddRows = false;
+            this.tblDelayReasons.AllowUserToDeleteRows = false;
             this.tblDelayReasons.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.tblDelayReasons.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colId,
@@ -43,6 +45,7 @@
             this.tblDelayReasons.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tblDelayReasons.Location = new System.Drawing.Point(0, 25);
             this.tblDelayReasons.Name = "tblDelayReasons";
+            this.tblDelayReasons.ReadOnly = true;
             this.tblDelayReasons.Size = new System.Drawing.Size(765, 496);
             this.tblDelayReasons.TabIndex = 5;
             // 
@@ -51,6 +54,7 @@
             this.colId.DataPropertyName = "id";
             this.colId.HeaderText = "ID";
             this.colId.Name = "colId";
+            this.colId.ReadOnly = true;
             this.colId.Visible = false;
             // 
             // colName
@@ -58,6 +62,7 @@
             this.colName.DataPropertyName = "name";
             this.colName.HeaderText = "Наименование";
             this.colName.Name = "colName";
+            this.colName.ReadOnly = true;
             this.colName.Width = 250;
             // 
             // DictDelayReasons

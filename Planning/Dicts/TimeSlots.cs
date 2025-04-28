@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace Planning
 {
-    public partial class TimeSlots : DictForm
+    public partial class TimeSlots : DictFormEx<DataLayer.TimeSlot, DataLayer.TimeSlotRepository>
     {
         List<DataLayer.TimeSlot> _timeSlots = new List<DataLayer.TimeSlot>();
         DataLayer.TimeSlotRepository _timeSlotRepository = new DataLayer.TimeSlotRepository();
@@ -20,76 +20,95 @@ namespace Planning
         public TimeSlots()
         {
             InitializeComponent();
+            GridView = tblTimeSlot;
         }
-
+        /*
         private void UpdateDataSource()
         {
             tblTimeSlot.DataSource = null;
             tblTimeSlot.DataSource = _timeSlots;
             tblTimeSlot.Refresh();
         }
-
-        private DataLayer.TimeSlot GetSelectedObject()
+        */
+        protected override bool CreateEditForm(DataLayer.TimeSlot item)
         {
-           return _timeSlots.Find(t => t.Id == Int32.Parse(tblTimeSlot.Rows[tblTimeSlot.CurrentCell.RowIndex].Cells["colId"].Value.ToString()));
-        }
-        protected override void AddRow()
-        {
-            DataLayer.TimeSlot timeSlot = new DataLayer.TimeSlot();
-            var frmTimeSlotEdit = new TimeSlotEdit(timeSlot);
-
+            TimeSlotEdit frmTimeSlotEdit = new TimeSlotEdit(item);
             frmTimeSlotEdit.ShowDialog();
-            if (frmTimeSlotEdit.DialogResult == DialogResult.Cancel)
-                return;
-
-            _timeSlots.Add(timeSlot);
-            _timeSlotRepository.Save(timeSlot);
-            UpdateDataSource();
+            return !(frmTimeSlotEdit.DialogResult == DialogResult.Cancel);
         }
-
-        protected override void EditRow()
-        {
-            DataLayer.TimeSlot timeSlot = GetSelectedObject();
-            var frmTimeSlotEdit = new TimeSlotEdit(timeSlot);
-
-            frmTimeSlotEdit.ShowDialog();
-            if (frmTimeSlotEdit.DialogResult == DialogResult.Cancel)
-                return;
-
-            _timeSlotRepository.Save(timeSlot);
-            UpdateDataSource();
-        }
-
-        protected override void DelRow()
-        {
-            if (MessageBox.Show("Удалить запись?", "Подтверждение удаления", MessageBoxButtons.OKCancel) == DialogResult.OK)
-            {
-                DataLayer.TimeSlot timeSlot = GetSelectedObject();
-                timeSlot.Delete();
-                _timeSlotRepository.Save(timeSlot);
-                UpdateDataSource();
-            }
-        }
-       
-
         protected override void Populate()
         {
-            tblTimeSlot.AutoGenerateColumns = false;
-            _timeSlots = _timeSlotRepository.GetAll();
-
-            UpdateDataSource();
-
+            base.Populate();
             DataLayer.DepositorRepository depositorRepository = new DataLayer.DepositorRepository();
             List<DataLayer.Depositor> depositors = depositorRepository.GetAll();
-            //tblTimeSlot.DataSource = depositors;
 
             colDepositor.DataSource = depositors;
             colDepositor.DisplayMember = "Name";
             colDepositor.DataPropertyName = "DepositorId";
             colDepositor.ValueMember = "Id";
-
         }
+        /*  
+                private DataLayer.TimeSlot GetSelectedObject()
+                {
+                   return _timeSlots.Find(t => t.Id == Int32.Parse(tblTimeSlot.Rows[tblTimeSlot.CurrentCell.RowIndex].Cells["colId"].Value.ToString()));
+                }
+                protected override void AddRow()
+                {
+                    DataLayer.TimeSlot timeSlot = new DataLayer.TimeSlot();
+                    var frmTimeSlotEdit = new TimeSlotEdit(timeSlot);
+
+                    frmTimeSlotEdit.ShowDialog();
+                    if (frmTimeSlotEdit.DialogResult == DialogResult.Cancel)
+                        return;
+
+                    _timeSlots.Add(timeSlot);
+                    _timeSlotRepository.Save(timeSlot);
+                    UpdateDataSource();
+                }
+
+                protected override void EditRow()
+                {
+                    DataLayer.TimeSlot timeSlot = GetSelectedObject();
+                    var frmTimeSlotEdit = new TimeSlotEdit(timeSlot);
+
+                    frmTimeSlotEdit.ShowDialog();
+                    if (frmTimeSlotEdit.DialogResult == DialogResult.Cancel)
+                        return;
+
+                    _timeSlotRepository.Save(timeSlot);
+                    UpdateDataSource();
+                }
+
+                protected override void DelRow()
+                {
+                    if (MessageBox.Show("Удалить запись?", "Подтверждение удаления", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                    {
+                        DataLayer.TimeSlot timeSlot = GetSelectedObject();
+                        timeSlot.Delete();
+                        _timeSlotRepository.Save(timeSlot);
+                        UpdateDataSource();
+                    }
+                }
 
 
+                protected override void Populate()
+                {
+                    tblTimeSlot.AutoGenerateColumns = false;
+                    _timeSlots = _timeSlotRepository.GetAll();
+
+                    UpdateDataSource();
+
+                    DataLayer.DepositorRepository depositorRepository = new DataLayer.DepositorRepository();
+                    List<DataLayer.Depositor> depositors = depositorRepository.GetAll();
+                    //tblTimeSlot.DataSource = depositors;
+
+                    colDepositor.DataSource = depositors;
+                    colDepositor.DisplayMember = "Name";
+                    colDepositor.DataPropertyName = "DepositorId";
+                    colDepositor.ValueMember = "Id";
+
+                }
+
+                */
     }
 }
