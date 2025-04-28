@@ -142,7 +142,7 @@ namespace Planning
             }
 
             //GetOrderDetailCount();
-
+            
             return sql.DataSet;
                 
 
@@ -181,11 +181,21 @@ namespace Planning
             }
             return result;
         }
-
+        private List<String> GetFilterWarehouseList()
+        {
+            List<String> result = new List<string>();
+            foreach (ToolStripMenuItem item in btnWarehouseFilter.DropDownItems)
+            {
+                if (item.Checked)
+                    result.Add(item.Text);
+            }
+            return result;
+        }
         private void ShipmentsUIFilter()
         {
             List<string> actionFilter = GetFilterActionList();
-            var rows = shipmentsDataTable.AsEnumerable().Where(r => actionFilter.Contains(r.Field<String>("InOut")));
+            List<string> warehouseFilter = GetFilterWarehouseList();
+            var rows = shipmentsDataTable.AsEnumerable().Where(r => actionFilter.Contains(r.Field<String>("InOut")) && warehouseFilter.Contains(r.Field<string>("WarehouseName")));
             if (rows.Count() >0)
             {
                 DataTable dt = rows.CopyToDataTable();
@@ -197,6 +207,32 @@ namespace Planning
                 tblShipments.DataSource = null;
             }
 
+        }
+        private void PopulateWarehouseFilter()
+        {
+            /*
+            List<string> action = DataService.settingsHandle.GetParamStringValue("View\\WarehouseFilter").Split(',').ToList();
+            foreach (ToolStripMenuItem item in btnActionFilter.DropDownItems)
+            {
+                if (!action.Contains(item.Text))
+                    item.Checked = false;
+            }
+            */
+            foreach (var item in DataService.context.Warehouses)
+            {
+                
+                ToolStripMenuItem btnWarehouseItem = (ToolStripMenuItem)btnWarehouseFilter.DropDownItems.Add(item.Name);
+                btnWarehouseItem.CheckOnClick = true;
+                btnWarehouseItem.CheckState = CheckState.Checked;
+
+                btnWarehouseItem.Click += BtnWarehouseItem_Click;
+            } 
+        }
+
+        private void BtnWarehouseItem_Click(object sender, EventArgs e)
+        {
+            ShipmentsUIFilter();
+            //DataService.settingsHandle.SetParamValue("View\\WarehouseFilter", String.Join(",", GetFilterWarehouseList().ToArray()));
         }
 
         private void ShipmentsLoad()
@@ -224,6 +260,7 @@ namespace Planning
             {
                 return;
             }
+
             tbMain.Enabled = true;
             miDicts.Enabled = true;
             
@@ -231,9 +268,12 @@ namespace Planning
             shipmentsDataTable = dataSet.Tables[0].Clone();
             shipmentsDataTable.Load(dataSet.Tables[0].CreateDataReader());
             //shipmentsDataTable.Load(reader);
-            
+            //shipmentsDataTable.Select()
             tblShipments.AutoGenerateColumns = false;
-            tblShipments.DataSource = shipmentsDataTable;// ds.Tables[0];
+            var rows = shipmentsDataTable.Select("WarehouseName = 'Краснодар'");
+            
+             tblShipments.DataSource = shipmentsDataTable;// ds.Tables[0];
+            
             foreach (var column in tblShipments.Columns)
             {
                 if (column is DataGridViewImageColumn)
@@ -244,6 +284,7 @@ namespace Planning
             //this.Cursor = Cursors.Default;
             CalcRowColor();
             GetOrderWight();
+            
             ShipmentsUIFilter();
         }
 
@@ -520,13 +561,8 @@ namespace Planning
                 if (!action.Contains(item.Text))
                     item.Checked = false;
             }
-
+            PopulateWarehouseFilter();
             LoginUser();
-
-
-
-
-
             //DataService dataService = new DataService();
             DataService.Dicts.Add("Причины_задержки", new DictInfo { TableName = "delay_reasons", NameColumn = "name" });
             DataService.Dicts.Add("Типы_операций", new DictInfo { TableName = "opers_type", NameColumn = "name" });
@@ -573,7 +609,7 @@ namespace Planning
 
             }
 
-
+            
 
 
 
@@ -2127,6 +2163,11 @@ namespace Planning
             var frmTransporView = new SimpleDict(dict);
             SetFormPrivalage(frmTransporView, "TransporView");
             AddFormTab(frmTransporView, "Виды транспорта");
+        }
+
+        private void btnActionFilter_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
