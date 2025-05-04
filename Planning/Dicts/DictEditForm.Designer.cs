@@ -60,9 +60,11 @@
             this.ClientSize = new System.Drawing.Size(377, 130);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnSave);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "DictEditForm";
             this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Load += new System.EventHandler(this.DictEditForm_Load);
             this.ResumeLayout(false);
 
