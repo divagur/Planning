@@ -33,6 +33,8 @@ namespace Planning
           Color.FromArgb(220, 220, 220),
           Color.FromArgb(220, 230, 241)
         };
+        ShipmentMainRepository shipmentMainRepository;
+        List<ShipmentMain> _shipmentMainList;
         public MainFormEx()
         {
             InitializeComponent();
@@ -76,11 +78,15 @@ namespace Planning
             ConnectionParams.Pwd = "sysadm";
 
             statusInfo.Text = $"База данных:[{DataService.setting.BaseName}] Пользователь: [{DataService.setting.UserName}]";
-            
+
+            DataService.settingsHandle = new SettingsHandle("Settings.xml", DataService.setting);
+            DataService.settingsHandle.Load();
+
+            shipmentMainRepository = new ShipmentMainRepository();
             SetupColumns();
             SetupButtons();
 
-            //ShipmentsLoad();
+            ShipmentsLoad();
             tblShipments.DrawSubItem += TblShipments_DrawSubItem;
 
 
@@ -143,7 +149,7 @@ namespace Planning
             if (tblShipments.SelectedIndex<0)
                 return;
 
-            ShipmentMain itemObject = (ShipmentMain)tblShipments.GetItem(tblShipments.SelectedIndex).RowObject;
+            ShipmentMain itemObject = GetCurrentRowObject();
             
             ShipmentParam shipmentAddResult = new ShipmentParam();
             if (itemObject.InOut != "перем")
@@ -207,10 +213,10 @@ namespace Planning
         }
         private void ShipmentsLoad()
         {
-            ShipmentMainRepository shipmentMainRepository = new ShipmentMainRepository();
-            List<ShipmentMain> shipmentMains = shipmentMainRepository.GetAll(edCurrDay.Value, null, null, null);
+            //ShipmentMainRepository shipmentMainRepository = new ShipmentMainRepository();
+            _shipmentMainList = shipmentMainRepository.GetAll(edCurrDay.Value, null, null, null);
             tblShipments.ClearObjects();
-            tblShipments.SetObjects(shipmentMains);
+            tblShipments.SetObjects(_shipmentMainList);
             /*
             if (mainFormAccess != null && !mainFormAccess.IsView)
             {
@@ -322,6 +328,12 @@ namespace Planning
             tabForms.TabPages[tabForms.TabPages.Count - 1].Controls.Add(frm);            
             tabForms.SelectedTab = tabForms.TabPages[tabForms.TabPages.Count - 1];
         }
+
+        private DataLayer.ShipmentMain GetCurrentRowObject()
+        {
+            return (ShipmentMain)tblShipments.GetItem(tblShipments.SelectedIndex).RowObject;
+        }
+
         private void Item_Click(object sender, EventArgs e)
         {
             ToolStripMenuItem item = (ToolStripMenuItem)sender;
@@ -515,15 +527,7 @@ namespace Planning
 
         private void menuItemDictGates_Click(object sender, EventArgs e)
         {
-            DictSimple dict = new DictSimple();
-            dict.TableName = "gateways";
-            dict.Title = "Справочник: Ворота";
-
-            dict.Columns.Add(new DictColumn { Id = "Id", IsPK = true, IsVisible = false, Title = "Код", DataField = "id", DataType = SqlDbType.Int });
-            dict.Columns.Add(new DictColumn { Id = "GatewayNum", IsPK = false, IsVisible = true, Title = "Номер ворот", DataField = "name", Width = 254, DataType = SqlDbType.Int });
-
-
-            SimpleDict<DataLayer.Gateway, DataLayer.GatewayRepository> frmGate = new SimpleDict<DataLayer.Gateway, DataLayer.GatewayRepository>(dict);
+            GateForm frmGate = new GateForm();
             //SetFormPrivalage(frmGate, "Gate");
             AddFormTab(frmGate, "Ворота");
             
@@ -564,17 +568,8 @@ namespace Planning
 
         private void menuItemDictTC_Click(object sender, EventArgs e)
         {
-            DictSimple dict = new DictSimple();
 
-            dict.TableName = "transport_company";
-            dict.Title = "Справочник: Транспортные компании";
-
-            dict.Columns.Add(new DictColumn { Id = "Id", IsPK = true, IsVisible = false, Title = "ID", DataField = "id", DataType = SqlDbType.Int });
-            dict.Columns.Add(new DictColumn { Id = "Code", IsPK = false, IsVisible = true, Title = "Код", DataField = "code", Width = 80, DataType = SqlDbType.Int });
-            dict.Columns.Add(new DictColumn { Id = "Name", IsPK = false, IsVisible = true, Title = "Наименование", DataField = "name", Width = 254, DataType = SqlDbType.VarChar, Length = 254 });
-            dict.Columns.Add(new DictColumn { Id = "IsActive", IsPK = false, IsVisible = true, Title = "Активная", DataField = "is_active", Width = 80, DataType = SqlDbType.Bit });
-            
-            SimpleDict<DataLayer.TransportCompany, DataLayer.TransportCompanyRepository> frmTransportCompany = new SimpleDict<DataLayer.TransportCompany, DataLayer.TransportCompanyRepository>(dict);
+            TransportCompanyForm frmTransportCompany = new TransportCompanyForm();
             //SetFormPrivalage(frmTransportCompany, "TC");
             AddFormTab(frmTransportCompany, "Транспортные компании");
         }
@@ -605,17 +600,8 @@ namespace Planning
 
         private void menuItemDictTransportType_Click(object sender, EventArgs e)
         {
-            DictSimple dict = new DictSimple();
 
-            dict.TableName = "transport_type";
-            dict.Title = "Справочник: Тип транспорта";
-
-            dict.Columns.Add(new DictColumn { Id = "Id", IsPK = true, IsVisible = false, Title = "Код", DataField = "id", DataType = SqlDbType.Int });
-            dict.Columns.Add(new DictColumn { Id = "Name", IsPK = false, IsVisible = true, Title = "Наименование", DataField = "name", Width = 254, DataType = SqlDbType.VarChar, Length = 20 });
-            dict.Columns.Add(new DictColumn { Id = "Tonnage", IsPK = false, IsVisible = true, Title = "Тоннаж", DataField = "tonnage", Width = 80, DataType = SqlDbType.Int });
-
-            
-            var frmTransporType = new SimpleDict<DataLayer.TransportType,DataLayer.TransportTypeRepository>(dict);
+            var frmTransporType = new TransportTypeForm();
             //SetFormPrivalage(frmTransporType, "TransporType");
             AddFormTab(frmTransporType, "Типы транспорта");
             
@@ -624,6 +610,47 @@ namespace Planning
         private void menuItemDictTransportView_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnShowLog_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnPrint_Click(object sender, EventArgs e)
+        {
+            this.Cursor = Cursors.AppStarting;
+
+            ShipmentMain shipmentMain = GetCurrentRowObject();
+            if (shipmentMain == null)
+                return;
+
+            SettingReport settingReport = DataService.setting.Reports.Find(r => r.Name == (shipmentMain.ShpIn == false ? "Лист отгрузки" : "Лист прихода"));
+            if (settingReport == null || String.IsNullOrEmpty(settingReport.TemplatePath))
+            {
+                MessageBox.Show("Не задан шаблон печати", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (shipmentMain.ShpIn == false)
+            {
+
+            }
+            else
+            {
+                ReportHandler.PrintShipmentIn(shipmentMain, settingReport.TemplatePath);
+            }
+            this.Cursor = Cursors.Default;
         }
     }
 }

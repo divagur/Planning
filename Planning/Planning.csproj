@@ -190,10 +190,10 @@
     <Compile Include="Depositor.cs">
       <DependentUpon>DbPlaning.tt</DependentUpon>
     </Compile>
-    <Compile Include="DictFormEx.Designer.cs">
+    <Compile Include="Dicts\DictFormEx.Designer.cs">
       <DependentUpon>DictFormEx.cs</DependentUpon>
     </Compile>
-    <Compile Include="DictFormEx.cs">
+    <Compile Include="Dicts\DictFormEx.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Dicts\CustomPostEdit.cs">
@@ -238,6 +238,18 @@
     <Compile Include="Dicts\Dict.Designer.cs">
       <DependentUpon>DictForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dicts\TransportTypeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dicts\TransportTypeForm.Designer.cs">
+      <DependentUpon>TransportTypeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dicts\TransportTypeFormEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dicts\TransportTypeFormEdit.Designer.cs">
+      <DependentUpon>TransportTypeFormEdit.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dicts\WarehouseEdit.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -275,12 +287,25 @@
     <Compile Include="frmOrderDetail.Designer.cs">
       <DependentUpon>frmOrderDetail.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dicts\GateForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dicts\GateForm.Designer.cs">
+      <DependentUpon>GateForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dicts\GateFormEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dicts\GateFormEdit.Designer.cs">
+      <DependentUpon>GateFormEdit.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainFormEx.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainFormEx.Designer.cs">
       <DependentUpon>MainFormEx.cs</DependentUpon>
     </Compile>
+    <Compile Include="ReportHandler.cs" />
     <Compile Include="Reports\frmGetDateTime.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -537,6 +562,18 @@
     <Compile Include="TransportCompany.cs">
       <DependentUpon>DbPlaning.tt</DependentUpon>
     </Compile>
+    <Compile Include="TransportCompanyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TransportCompanyForm.Designer.cs">
+      <DependentUpon>TransportCompanyForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TransportCompanyFormEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TransportCompanyFormEdit.Designer.cs">
+      <DependentUpon>TransportCompanyFormEdit.cs</DependentUpon>
+    </Compile>
     <Compile Include="TransportType.cs">
       <DependentUpon>DbPlaning.tt</DependentUpon>
     </Compile>
@@ -594,7 +631,7 @@
     <EmbeddedResource Include="ChooseOrder.resx">
       <DependentUpon>ChooseOrder.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DictFormEx.resx">
+    <EmbeddedResource Include="Dicts\DictFormEx.resx">
       <DependentUpon>DictFormEx.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dicts\CustomPostEdit.resx">
@@ -618,6 +655,12 @@
     <EmbeddedResource Include="Dicts\DictForm.resx">
       <DependentUpon>DictForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Dicts\TransportTypeForm.resx">
+      <DependentUpon>TransportTypeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dicts\TransportTypeFormEdit.resx">
+      <DependentUpon>TransportTypeFormEdit.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Dicts\WarehouseEdit.resx">
       <DependentUpon>WarehouseEdit.cs</DependentUpon>
     </EmbeddedResource>
@@ -635,6 +678,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmOrderDetail.resx">
       <DependentUpon>frmOrderDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dicts\GateForm.resx">
+      <DependentUpon>GateForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dicts\GateFormEdit.resx">
+      <DependentUpon>GateFormEdit.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainFormEx.resx">
       <DependentUpon>MainFormEx.cs</DependentUpon>
@@ -747,6 +796,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dicts\Suppliers.resx">
       <DependentUpon>Suppliers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TransportCompanyForm.resx">
+      <DependentUpon>TransportCompanyForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TransportCompanyFormEdit.resx">
+      <DependentUpon>TransportCompanyFormEdit.cs</DependentUpon>
     </EmbeddedResource>
     <EntityDeploy Include="DbPlaning.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
