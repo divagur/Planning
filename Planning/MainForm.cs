@@ -191,7 +191,7 @@ namespace Planning
             }
             return result;
         }
-        private void ShipmentsUIFilter()
+        public void ShipmentsUIFilter()
         {
             List<string> actionFilter = GetFilterActionList();
             List<string> warehouseFilter = GetFilterWarehouseList();
@@ -208,7 +208,7 @@ namespace Planning
             }
 
         }
-        private void PopulateWarehouseFilter()
+        public void PopulateWarehouseFilter()
         {
             /*
             List<string> action = DataService.settingsHandle.GetParamStringValue("View\\WarehouseFilter").Split(',').ToList();
@@ -218,12 +218,14 @@ namespace Planning
                     item.Checked = false;
             }
             */
+            List<string> action = DataService.settingsHandle.GetParamStringValue("View\\WarehouseFilter").Split(',').ToList();
+            btnWarehouseFilter.DropDownItems.Clear();
             foreach (var item in DataService.context.Warehouses)
             {
                 
                 ToolStripMenuItem btnWarehouseItem = (ToolStripMenuItem)btnWarehouseFilter.DropDownItems.Add(item.Name);
                 btnWarehouseItem.CheckOnClick = true;
-                btnWarehouseItem.CheckState = CheckState.Checked;
+                btnWarehouseItem.CheckState = action.Contains(item.Name)?CheckState.Checked: CheckState.Unchecked;
 
                 btnWarehouseItem.Click += BtnWarehouseItem_Click;
             } 
@@ -232,7 +234,7 @@ namespace Planning
         private void BtnWarehouseItem_Click(object sender, EventArgs e)
         {
             ShipmentsUIFilter();
-            //DataService.settingsHandle.SetParamValue("View\\WarehouseFilter", String.Join(",", GetFilterWarehouseList().ToArray()));
+            DataService.settingsHandle.SetParamValue("View\\WarehouseFilter", String.Join(",", GetFilterWarehouseList().ToArray()));
         }
 
         private void ShipmentsLoad()
@@ -541,7 +543,7 @@ namespace Planning
             //Попробуем подключиться под текущим пользователем виндовс
             //Если не получится запросим имя пользователя и пароль
             //
-            DataService.setting.IsWnd = false;
+            //DataService.setting.IsWnd = false;
             if (!DataService.TryDBConnect(DataService.setting.ServerName, DataService.setting.BaseName, "", "", DataService.setting.IsWnd, false))
             {
                 DataService.setting.IsWnd = false;
@@ -2137,7 +2139,7 @@ namespace Planning
 
         private void miDictWarehouse_Click(object sender, EventArgs e)
         {
-            var frmWarehouse = new Warehouses();
+            var frmWarehouse = new Warehouses(this);
             SetFormPrivalage(frmWarehouse, "Warehouse");
             AddFormTab(frmWarehouse, "Склады");
         }

@@ -9,12 +9,14 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Planning
-{
-    public partial class Warehouses : DictForm
+{ public partial class Warehouses : DictForm
     {
-        public Warehouses()
+        frmMain _formOwner;
+
+        public Warehouses(frmMain FormOwner)
         {
             InitializeComponent();
+            _formOwner = FormOwner;
         }
 
         protected override void Populate()
@@ -30,7 +32,7 @@ namespace Planning
             if (frmWarehouseEdit.DialogResult == DialogResult.Cancel)
                 return;
             DataService.context.Warehouses.Add(warehouse);
-
+            
             Save();
         }
 
@@ -53,6 +55,13 @@ namespace Planning
                 _context.Warehouses.Remove(warehouse);
                 Save();
             }
+        }
+
+        protected override void Save()
+        {
+            base.Save();
+            _formOwner.PopulateWarehouseFilter();
+            _formOwner.ShipmentsUIFilter();
         }
     }
 

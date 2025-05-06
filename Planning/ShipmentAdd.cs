@@ -203,8 +203,8 @@ namespace Planning
                         //isAddLv = true;
                         _shipment.ShipmentOrders.Add(shipmentOrder);
                     }
-                    if (cmbType.SelectedIndex == 0)
-                    {
+                    //if (cmbType.SelectedIndex == 0)
+                    //{
                         _shipment.TransportViewId = GetTransportViewId(DataService.setting.DefaultTransportViewName);
                         _shipment.WarehouseId = GetWarehouseId(DataService.setting.DefaultWarehouseCode);
 
@@ -213,7 +213,7 @@ namespace Planning
                         shipmentOrderPart.OsLvId = (tblShipmentItem.Rows[i].Cells["colItemOstId"].Value as int?);
                         shipmentOrderPart.IsBinding = true;
                         shipmentOrder.ShipmentOrderParts.Add(shipmentOrderPart);
-                    }
+                    //}
                    
                 }
                 
