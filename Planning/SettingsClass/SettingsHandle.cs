@@ -251,7 +251,8 @@ namespace Planning
             _settings.BaseName = GetParamStringValue("Connection\\BaseName");
             _settings.UserName = GetParamStringValue("Connection\\UserName");
             string hash = GetParamStringValue("Connection\\Password");
-            _settings.Password = Decode(GetParamStringValue("Connection\\Password"));
+            //_settings.Password = Decode(GetParamStringValue("Connection\\Password"));
+            _settings.Password = GetParamStringValue("Connection\\Password");
             _settings.LastLogin = GetParamStringValue("Connection\\LastLogin");
             _settings.ShipmentReport = GetParamStringValue("ReportTemplate\\ShipmentTemplate");
             _settings.ReceiptReport = GetParamStringValue("ReportTemplate\\ReceiptTemplate");

@@ -66,21 +66,24 @@ namespace Planning
             */
 
             Init();
-            
+            /*
             ConnectionParams.ServerName = @"ZDV\MS2019DVG";
             ConnectionParams.BaseName = "Planning";
-            
-            /*
-            ConnectionParams.ServerName = @"DZHURAVLEV";
-            ConnectionParams.BaseName = "Planning_curr";
             */
-            ConnectionParams.UserName ="sysadm";
-            ConnectionParams.Pwd = "sysadm";
+            
+
+
+            Common.settingsHandle = new SettingsHandle("Settings.xml", Common.setting);
+            Common.settingsHandle.Load();
+
+            ConnectionParams.ServerName = Common.setting.ServerName;
+            ConnectionParams.BaseName = Common.setting.BaseName;
+
+            ConnectionParams.UserName = Common.setting.UserName;
+            ConnectionParams.Pwd = Common.setting.Password;
 
             statusInfo.Text = $"База данных:[{DataService.setting.BaseName}] Пользователь: [{DataService.setting.UserName}]";
 
-            DataService.settingsHandle = new SettingsHandle("Settings.xml", DataService.setting);
-            DataService.settingsHandle.Load();
 
             shipmentMainRepository = new ShipmentMainRepository();
             SetupColumns();
@@ -268,10 +271,10 @@ namespace Planning
         private void Init()
         {
 
-            CommonFuctions.settingsHandle = new SettingsHandle("Settings.xml", DataService.setting);
-            CommonFuctions.settingsHandle.Load();
+            Common.settingsHandle = new SettingsHandle("Settings.xml", DataService.setting);
+            Common.settingsHandle.Load();
 
-            hideCols = CommonFuctions.settingsHandle.GetParamStringValue("View\\HideColumns").Split(',').ToList();
+            hideCols = Common.settingsHandle.GetParamStringValue("View\\HideColumns").Split(',').ToList();
 
             PopulateVisibleColumn();
 
@@ -339,7 +342,7 @@ namespace Planning
             ToolStripMenuItem item = (ToolStripMenuItem)sender;
             (item.Tag as OLVColumn).IsVisible = item.CheckState == CheckState.Checked ? true : false;
             tblShipments.RebuildColumns();
-            CommonFuctions.settingsHandle.SetParamValue("View\\HideColumns", GetHideColumns());
+            Common.settingsHandle.SetParamValue("View\\HideColumns", GetHideColumns());
         }
 
         private void tblShipments_SelectedIndexChanged(object sender, EventArgs e)
@@ -644,7 +647,7 @@ namespace Planning
 
             if (shipmentMain.ShpIn == false)
             {
-
+                ReportHandler.PrintShipmentOut(shipmentMain, settingReport.TemplatePath);
             }
             else
             {

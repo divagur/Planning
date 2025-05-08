@@ -34,9 +34,10 @@ namespace Planning
         }
     }
 
-    public class CommonFuctions
+    public class Common
     {
 
+        public static Settings setting = new Settings();
         public static SettingsHandle settingsHandle;
 
         public static void WaitBegin(ref object Param)

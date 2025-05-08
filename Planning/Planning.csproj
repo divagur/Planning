@@ -152,7 +152,7 @@
     <Compile Include="ChooseOrder.Designer.cs">
       <DependentUpon>ChooseOrder.cs</DependentUpon>
     </Compile>
-    <Compile Include="CommonFuctions.cs" />
+    <Compile Include="Common.cs" />
     <Compile Include="Controls\MenuButton.cs">
       <SubType>Component</SubType>
     </Compile>
