@@ -47,7 +47,7 @@ namespace Planning.DataLayer
             parameters.Add("@ShpId", ShpId);
             parameters.Add("@OrdID", OrdId);
             List<ShipmentMain> shipments = new List<ShipmentMain>();
-
+            
             var queryResult = dbConnection.Query<ShipmentMain>(sql, parameters, commandType: CommandType.StoredProcedure);
             if (queryResult != null)
             {

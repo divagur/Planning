@@ -21,16 +21,20 @@ namespace Planning.DataLayer
         {
 
         }
-        /*
-        public ShipmentRepository()
+        public Shipment GetByLvOrderCode(string LvOrderCode)
         {
-            SqlConnectionStringBuilder sqlConnectionString = new SqlConnectionStringBuilder();
-            sqlConnectionString.DataSource = ConnectionParams.ServerName;
-            sqlConnectionString.InitialCatalog = ConnectionParams.BaseName;
-            sqlConnectionString.UserID = ConnectionParams.UserName;
-            sqlConnectionString.Password = ConnectionParams.Pwd;
-            InitConnection(sqlConnectionString.ToString());
+            ShipmentDataAdapter shipmentDataAdapter = new ShipmentDataAdapter();
+            string sql = dataAdapter.GetSelectItemSql() + $@"join shipment_orders so on so.shipment_id = {shipmentDataAdapter.Table}.id
+                    where so.lv_order_code = @lvOrderCode";
+            Shipment item = null;
+            var queryResult = dbConnection.Query<Shipment>(sql, new { lvOrderCode = LvOrderCode});
+
+            if (queryResult != null)
+            {
+                item = queryResult.FirstOrDefault();
+            }
+            return item;
         }
-        */
+       
     }
 }

@@ -337,6 +337,35 @@ namespace Planning
             return (ShipmentMain)tblShipments.GetItem(tblShipments.SelectedIndex).RowObject;
         }
 
+        private bool SearchBy(bool FromBegin,string SearchText)//,  Predicate<int> condition)
+        {
+            int startRow = FromBegin ? 0 : tblShipments.SelectedIndex + 1;
+            tblShipments.SelectedObjects = null;
+            ListViewItem listViewItem = tblShipments.FindItemWithText(SearchText, true, startRow);
+            if (listViewItem !=null)
+            {
+                listViewItem.Selected = true;
+                return true;
+            }
+            
+            /*
+            for (int i = startRow; i <= tblShipments.Rows.Count - 1; i++)
+                if (condition(i))
+                {
+
+                    tblShipments.CurrentRow.Selected = false;
+                    DataGridViewCell cell = tblShipments.Rows[i].Cells["colOrderId"];
+                    tblShipments.CurrentCell = cell;
+                    tblShipments.Rows[i].Selected = true;
+
+                    return true;
+                }
+            */
+            return false;
+            
+
+        }
+
         private void Item_Click(object sender, EventArgs e)
         {
             ToolStripMenuItem item = (ToolStripMenuItem)sender;
@@ -612,12 +641,21 @@ namespace Planning
 
         private void menuItemDictTransportView_Click(object sender, EventArgs e)
         {
-
+            
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-
+           if ( !SearchBy(true, edSearch.Text))
+            {
+                ShipmentRepository shipmentRepository = new ShipmentRepository();
+                DataLayer.Shipment shipment = shipmentRepository.GetByLvOrderCode(edSearch.Text);
+                if(shipment != null)
+                {
+                    edCurrDay.Value = (DateTime)shipment.SDate;
+                    SearchBy(true, edSearch.Text);
+                }
+            }
         }
 
         private void btnShowLog_Click(object sender, EventArgs e)
@@ -654,6 +692,19 @@ namespace Planning
                 ReportHandler.PrintShipmentIn(shipmentMain, settingReport.TemplatePath);
             }
             this.Cursor = Cursors.Default;
+        }
+
+        private void btnSearchNext_Click(object sender, EventArgs e)
+        {
+            SearchBy(false, edSearch.Text);
+        }
+
+        private void edSearch_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {                
+                btnSearch_Click(sender, e);
+            }
         }
     }
 }

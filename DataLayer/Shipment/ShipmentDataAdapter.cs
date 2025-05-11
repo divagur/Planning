@@ -57,7 +57,7 @@ namespace Planning.DataLayer
 
             return $@"
                     select 
-	                    id as {nameof(Shipment.Id)}, lv_id as {nameof(Shipment.LvId)},time_slot_id as {nameof(Shipment.TimeSlotId)},
+	                    {Table}.id as {nameof(Shipment.Id)}, lv_id as {nameof(Shipment.LvId)},time_slot_id as {nameof(Shipment.TimeSlotId)},
                         s_date as {nameof(Shipment.SDate)},s_comment as {nameof(Shipment.SComment)},o_comment as {nameof(Shipment.OComment)},
                         gate_id as {nameof(Shipment.GateId)},sp_condition as {nameof(Shipment.SpCondition)},
                         driver_phone as {nameof(Shipment.DriverPhone)},driver_fio as {nameof(Shipment.DriverFio)},vehicle_number as {nameof(Shipment.VehicleNumber)},

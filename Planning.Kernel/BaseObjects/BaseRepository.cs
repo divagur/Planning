@@ -40,6 +40,7 @@ namespace Planning.Kernel
         {
             dbConnection = new SqlConnection(connectionString);
             dataAdapter = new M();
+            
         }
         //public abstract IBaseDataAdapter<T> GetDataAdapter();
 

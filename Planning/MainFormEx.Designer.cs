@@ -164,6 +164,9 @@ namespace Planning
             this.menuItemReportStatistic = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemReportTC = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemAdd = new System.Windows.Forms.ToolStripMenuItem();
+            this.администрированиеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemDictUserGroups = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemDictUsers = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMain.SuspendLayout();
             this.statusStrip2.SuspendLayout();
             this.tabForms.SuspendLayout();
@@ -200,14 +203,14 @@ namespace Planning
             // miSettings
             // 
             this.miSettings.Name = "miSettings";
-            this.miSettings.Size = new System.Drawing.Size(152, 22);
+            this.miSettings.Size = new System.Drawing.Size(180, 22);
             this.miSettings.Tag = "Settings";
             this.miSettings.Text = "Настройки";
             // 
             // miConnect
             // 
             this.miConnect.Name = "miConnect";
-            this.miConnect.Size = new System.Drawing.Size(152, 22);
+            this.miConnect.Size = new System.Drawing.Size(180, 22);
             this.miConnect.Text = "Подключение";
             // 
             // miDicts
@@ -581,7 +584,7 @@ namespace Planning
             this.colOrderId.AspectName = "OrdLVCode";
             this.colOrderId.Name = "colOrderId";
             this.colOrderId.Text = "Код заказа";
-            this.colOrderId.Width = 100;
+            this.colOrderId.Width = 200;
             // 
             // colOrdPartLVCode
             // 
@@ -897,6 +900,7 @@ namespace Planning
             this.edSearch.Name = "edSearch";
             this.edSearch.Size = new System.Drawing.Size(134, 20);
             this.edSearch.TabIndex = 8;
+            this.edSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.edSearch_KeyDown);
             // 
             // edCurrDay
             // 
@@ -929,6 +933,7 @@ namespace Planning
             this.btnSearchNext.Size = new System.Drawing.Size(30, 20);
             this.btnSearchNext.TabIndex = 0;
             this.btnSearchNext.UseVisualStyleBackColor = true;
+            this.btnSearchNext.Click += new System.EventHandler(this.btnSearchNext_Click);
             // 
             // btnGetCurrentDay
             // 
@@ -1203,9 +1208,10 @@ namespace Planning
             this.toolStripMenuItemFile,
             this.toolStripMenuItemDict,
             this.toolStripMenuItemReport,
-            this.toolStripMenuItemAdd});
+            this.toolStripMenuItemAdd,
+            this.администрированиеToolStripMenuItem});
             this.contextMenuMain.Name = "contextMenuMain";
-            this.contextMenuMain.Size = new System.Drawing.Size(163, 92);
+            this.contextMenuMain.Size = new System.Drawing.Size(190, 136);
             // 
             // toolStripMenuItemFile
             // 
@@ -1213,19 +1219,19 @@ namespace Planning
             this.menuItemSettings,
             this.menuItemConnect});
             this.toolStripMenuItemFile.Name = "toolStripMenuItemFile";
-            this.toolStripMenuItemFile.Size = new System.Drawing.Size(162, 22);
+            this.toolStripMenuItemFile.Size = new System.Drawing.Size(189, 22);
             this.toolStripMenuItemFile.Text = "Файл";
             // 
             // menuItemSettings
             // 
             this.menuItemSettings.Name = "menuItemSettings";
-            this.menuItemSettings.Size = new System.Drawing.Size(152, 22);
+            this.menuItemSettings.Size = new System.Drawing.Size(180, 22);
             this.menuItemSettings.Text = "Настройки";
             // 
             // menuItemConnect
             // 
             this.menuItemConnect.Name = "menuItemConnect";
-            this.menuItemConnect.Size = new System.Drawing.Size(152, 22);
+            this.menuItemConnect.Size = new System.Drawing.Size(180, 22);
             this.menuItemConnect.Text = "Подключение";
             // 
             // toolStripMenuItemDict
@@ -1244,7 +1250,7 @@ namespace Planning
             this.menuItemDictWarehouse,
             this.menuItemDictCustomPosts});
             this.toolStripMenuItemDict.Name = "toolStripMenuItemDict";
-            this.toolStripMenuItemDict.Size = new System.Drawing.Size(162, 22);
+            this.toolStripMenuItemDict.Size = new System.Drawing.Size(189, 22);
             this.toolStripMenuItemDict.Text = "Справочники";
             // 
             // menuItemDictTimeSlot
@@ -1345,7 +1351,7 @@ namespace Planning
             this.menuItemReportStatistic,
             this.menuItemReportTC});
             this.toolStripMenuItemReport.Name = "toolStripMenuItemReport";
-            this.toolStripMenuItemReport.Size = new System.Drawing.Size(162, 22);
+            this.toolStripMenuItemReport.Size = new System.Drawing.Size(189, 22);
             this.toolStripMenuItemReport.Text = "Отчеты";
             // 
             // menuItemReportPeriod
@@ -1369,8 +1375,29 @@ namespace Planning
             // toolStripMenuItemAdd
             // 
             this.toolStripMenuItemAdd.Name = "toolStripMenuItemAdd";
-            this.toolStripMenuItemAdd.Size = new System.Drawing.Size(162, 22);
+            this.toolStripMenuItemAdd.Size = new System.Drawing.Size(189, 22);
             this.toolStripMenuItemAdd.Text = "Дополнительно";
+            // 
+            // администрированиеToolStripMenuItem
+            // 
+            this.администрированиеToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemDictUserGroups,
+            this.menuItemDictUsers});
+            this.администрированиеToolStripMenuItem.Name = "администрированиеToolStripMenuItem";
+            this.администрированиеToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.администрированиеToolStripMenuItem.Text = "Администрирование";
+            // 
+            // menuItemDictUserGroups
+            // 
+            this.menuItemDictUserGroups.Name = "menuItemDictUserGroups";
+            this.menuItemDictUserGroups.Size = new System.Drawing.Size(201, 22);
+            this.menuItemDictUserGroups.Text = "Группы пользователей";
+            // 
+            // menuItemDictUsers
+            // 
+            this.menuItemDictUsers.Name = "menuItemDictUsers";
+            this.menuItemDictUsers.Size = new System.Drawing.Size(201, 22);
+            this.menuItemDictUsers.Text = "Пользователи";
             // 
             // MainFormEx
             // 
@@ -1532,5 +1559,8 @@ namespace Planning
         private System.Windows.Forms.ToolStripMenuItem menuItemReportPeriod;
         private System.Windows.Forms.ToolStripMenuItem menuItemReportStatistic;
         private System.Windows.Forms.ToolStripMenuItem menuItemReportTC;
+        private System.Windows.Forms.ToolStripMenuItem администрированиеToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem menuItemDictUserGroups;
+        private System.Windows.Forms.ToolStripMenuItem menuItemDictUsers;
     }
 }

@@ -319,5 +319,10 @@ namespace Planning
             workerSearch.CancelAsync();
             SetEndActionParam();
         }
+
+        private void picWork_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

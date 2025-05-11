@@ -55,7 +55,7 @@ namespace Planning.DataLayer
             get => _orderType;
             set
             {
-                if (!_orderType.Equals(value))
+                if (_orderType == null || !_orderType.Equals(value))
                 {
                     _orderType = value;
                     Edit();
@@ -68,7 +68,7 @@ namespace Planning.DataLayer
             get => _comment;
             set
             {
-                if (!_comment.Equals(value))
+                if (_comment == null || !_comment.Equals(value))
                 {
                     _comment = value;
                     Edit();
@@ -159,12 +159,12 @@ namespace Planning.DataLayer
             get => _lvOrderCode;
             set
             {
-                //if (!_lvOrderCode.Equals(value))
-                //{
+                if (_lvOrderCode == null ||  !_lvOrderCode.Equals(value))
+                {
                     _lvOrderCode = value;
                     Edit();
 
-                //}
+                }
             }
         }
         public int? ShippingPlacesNumber
