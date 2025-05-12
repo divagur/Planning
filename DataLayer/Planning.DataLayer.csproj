@@ -70,6 +70,9 @@
     <Compile Include="DelayReason\DelayReasonRepository.cs" />
     <Compile Include="DepositorAttribute\DepositorAttributeAdapter.cs" />
     <Compile Include="DepositorAttribute\DepositorAttributeRepository.cs" />
+    <Compile Include="Functions\Function.cs" />
+    <Compile Include="Functions\FunctionDataAdapter.cs" />
+    <Compile Include="Functions\FunctionRepository.cs" />
     <Compile Include="PLAttribute\PLAttribute.cs" />
     <Compile Include="PLAttribute\PLAttributeAdapter.cs" />
     <Compile Include="PLAttribute\PLAttributeRepository.cs" />
