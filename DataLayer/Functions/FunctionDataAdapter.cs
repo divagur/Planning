@@ -15,9 +15,9 @@ namespace Planning.DataLayer
             switch (editState)
             {
                 case EditState.New:
-                    return $@"INSERT INTO {Table} (name) values(@{nameof(Function.Name)})";
+                    return $@"INSERT INTO {Table} (name, code) values(@{nameof(Function.Name)},@{nameof(Function.Code)})";
                 case EditState.Edit:
-                    return $@"update {Table} id = @{nameof(Function.Id)}, name = @{nameof(Function.Name)}
+                    return $@"update {Table}  name = @{nameof(Function.Name)},code = @{nameof(Function.Code)}
                             where id = @Id";
                 case EditState.Delete:
                     return $"delete from {Table} where id = @Id";
@@ -28,8 +28,7 @@ namespace Planning.DataLayer
 
         public string GetSelectItemSql()
         {
-            return $@"select {Table}.id as {nameof(Function.Id)}, name as {nameof(Function.Name)} from {Table}";
+            return $@"select {Table}.id as {nameof(Function.Id)}, name as {nameof(Function.Name)}, code as {nameof(Function.Code)} from {Table}";
         }
-    }
-    }
+    }    
 }

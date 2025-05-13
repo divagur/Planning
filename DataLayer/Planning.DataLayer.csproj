@@ -79,6 +79,12 @@
     <Compile Include="LvAttribute\LvAttribute.cs" />
     <Compile Include="LvAttribute\LvAttributeAdapter.cs" />
     <Compile Include="LvAttribute\LvAttributeRepository.cs" />
+    <Compile Include="UserGroupLnk\UserGroupLnk.cs" />
+    <Compile Include="UserGroupLnk\UserGroupLnkDataAdapter.cs" />
+    <Compile Include="UserGroupLnk\UserGroupLnkRepository.cs" />
+    <Compile Include="UserGroupPrvlg\UserGrpPrvlg.cs" />
+    <Compile Include="UserGroupPrvlg\UserGrpPrvlgDataAdapter.cs" />
+    <Compile Include="UserGroupPrvlg\UserGrpPrvlgRepository.cs" />
     <Compile Include="UsersGroup\UsersGroup.cs" />
     <Compile Include="UsersGroup\UsersGroupDataAdapter.cs" />
     <Compile Include="UsersGroup\UsersGroupRepository.cs" />

@@ -13,7 +13,7 @@ namespace Planning.DataLayer
                 case EditState.New:
                     return $@"INSERT INTO {Table} (name) values(@{nameof(DelayReason.Name)})";                    
                 case EditState.Edit:
-                    return $@"update {Table} id = @{nameof(DelayReason.Id)}, name = @{nameof(DelayReason.Name)}
+                    return $@"update {Table} name = @{nameof(DelayReason.Name)}
                             where id = @Id";                    
                 case EditState.Delete:
                     return $"delete from {Table} where id = @Id";
