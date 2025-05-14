@@ -19,7 +19,7 @@ namespace Planning.DataLayer
                     return $@"INSERT INTO {Table} (field_name,field_db_name,field_type) 
                                 values(@{nameof(ShipmentElement.FieldName)},@{nameof(ShipmentElement.FieldDbName)},@{nameof(ShipmentElement.FieldType)})";
                 case EditState.Edit:
-                    return $@"update {Table} id = @{nameof(ShipmentElement.Id)}, field_name = @{nameof(ShipmentElement.FieldName)},
+                    return $@"update {Table} set id = @{nameof(ShipmentElement.Id)}, field_name = @{nameof(ShipmentElement.FieldName)},
                              field_db_name = @{nameof(ShipmentElement.FieldDbName)}, field_type = @{nameof(ShipmentElement.FieldType)}    
                             where id = @Id";
                 case EditState.Delete:

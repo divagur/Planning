@@ -17,7 +17,7 @@ namespace Planning.DataLayer
                 case EditState.New:
                     return $@"INSERT INTO {Table} (name, code) values(@{nameof(Function.Name)},@{nameof(Function.Code)})";
                 case EditState.Edit:
-                    return $@"update {Table}  name = @{nameof(Function.Name)},code = @{nameof(Function.Code)}
+                    return $@"update {Table} set  name = @{nameof(Function.Name)},code = @{nameof(Function.Code)}
                             where id = @Id";
                 case EditState.Delete:
                     return $"delete from {Table} where id = @Id";

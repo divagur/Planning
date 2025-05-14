@@ -163,6 +163,8 @@
     <Compile Include="DataLayers\LVOrder_Manager.cs" />
     <Compile Include="DataLayers\OrderDetailItem.cs" />
     <Compile Include="DataLayers\OrderDetailItem_Manager.cs" />
+    <Compile Include="DataLayers\UserGrpPrvlgView.cs" />
+    <Compile Include="DataLayers\UserGrpPrvlgViewRepository.cs" />
     <Compile Include="DataLayers\VolumeCalc.cs" />
     <Compile Include="DataLayers\VolumeCalcProduct.cs" />
     <Compile Include="DataLayers\VolumeCalcProduct_Manager.cs" />

@@ -13,7 +13,7 @@ namespace Planning.DataLayer
                 case EditState.New:
                     return $@"INSERT INTO {Table} (name,access) values(@{nameof(UsersGroup.Name)},@{nameof(UsersGroup.Access)})";
                 case EditState.Edit:
-                    return $@"update {Table} id = @{nameof(UsersGroup.Id)}, name = @{nameof(UsersGroup.Name)}, access = @{nameof(UsersGroup.Access)}
+                    return $@"update {Table} set name = @{nameof(UsersGroup.Name)}, access = @{nameof(UsersGroup.Access)}
                             where id = @Id";
                 case EditState.Delete:
                     return $"delete from {Table} where id = @Id";

@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Planning.Kernel;
-namespace Planning.DataLayer
+using Planning.DataLayer;
+namespace Planning
 {
-    public class UserGrpPrvlg:BaseDataItem
+    public class UserGrpPrvlgView
     {
+        int? _Id;
         int? _grpId;
         int? _funcId;
         bool? _isView;
@@ -15,6 +16,18 @@ namespace Planning.DataLayer
         bool? _isEdit;
         bool? _isDelete;
         string _funcName;
+
+        public int? Id
+        {
+            get => _Id;
+            set
+            {
+                if (!_Id.Equals(value))
+                {
+                    _Id = value;
+                }
+            }
+        }
         public int? GrpId
         {
             get => _grpId;
@@ -22,8 +35,7 @@ namespace Planning.DataLayer
             {
                 if (!_grpId.Equals(value))
                 {
-                    _grpId = value;
-                    Edit();
+                    _grpId = value;                    
                 }
             }
         }
@@ -35,7 +47,6 @@ namespace Planning.DataLayer
                 if (!_funcId.Equals(value))
                 {
                     _funcId = value;
-                    Edit();
                 }
             }
         }
@@ -47,7 +58,6 @@ namespace Planning.DataLayer
                 if (!_isView.Equals(value))
                 {
                     _isView = value;
-                    Edit();
                 }
             }
         }
@@ -59,7 +69,6 @@ namespace Planning.DataLayer
                 if (!_isAppend.Equals(value))
                 {
                     _isAppend = value;
-                    Edit();
                 }
             }
         }
@@ -71,7 +80,6 @@ namespace Planning.DataLayer
                 if (!_isEdit.Equals(value))
                 {
                     _isEdit = value;
-                    Edit();
                 }
             }
         }
@@ -83,10 +91,19 @@ namespace Planning.DataLayer
                 if (!_isDelete.Equals(value))
                 {
                     _isDelete = value;
-                    Edit();
                 }
             }
         }
-
+        public string FuncName
+        {
+            get => _funcName;
+            set
+            {
+                if (_funcName == null || !_funcName.Equals(value))
+                {
+                    _funcName = value;
+                }
+            }
+        }
     }
 }

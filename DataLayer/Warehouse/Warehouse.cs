@@ -18,12 +18,12 @@ namespace Planning.DataLayer
             get => _code;
             set
             {
-                //if (!_code.Equals(value))
-                //{
+                if (_code ==null || !_code.Equals(value))
+                {
                     _code = value;
                     Edit();
 
-                //}
+                }
             }
         }
         public string Name
@@ -31,12 +31,12 @@ namespace Planning.DataLayer
             get => _name;
             set
             {
-                //if (!_name.Equals(value))
-                //{
+                if (_name == null || !_name.Equals(value))
+                {
                     _name = value;
                     Edit();
 
-                //}
+                }
             }
         }
 
@@ -45,12 +45,12 @@ namespace Planning.DataLayer
             get => _descr;
             set
             {
-                //if (!_descr.Equals(value))
-                //{
+                if (_descr == null || !_descr.Equals(value))
+                {
                     _descr = value;
                     Edit();
 
-                //}
+                }
             }
         }
 

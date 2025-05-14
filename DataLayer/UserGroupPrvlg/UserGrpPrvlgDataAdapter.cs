@@ -16,7 +16,7 @@ namespace Planning.DataLayer
                                     values(@{nameof(UserGrpPrvlg.GrpId)},@{nameof(UserGrpPrvlg.FuncId)},@{nameof(UserGrpPrvlg.IsView)},
                                             @{nameof(UserGrpPrvlg.IsAppend)}, @{nameof(UserGrpPrvlg.IsEdit)}, @{nameof(UserGrpPrvlg.IsDelete)})";
                 case EditState.Edit:
-                    return $@"update {Table} grp_id = @{nameof(UserGrpPrvlg.GrpId)}, func_id = @{nameof(UserGrpPrvlg.FuncId)}, 
+                    return $@"update {Table} set grp_id = @{nameof(UserGrpPrvlg.GrpId)}, func_id = @{nameof(UserGrpPrvlg.FuncId)}, 
                                                 is_view = @{nameof(UserGrpPrvlg.IsView)}, is_append = @{nameof(UserGrpPrvlg.IsAppend)}, 
                                                 is_edit = @{nameof(UserGrpPrvlg.IsEdit)}, is_delete = @{nameof(UserGrpPrvlg.IsDelete)}
                             where id = @Id";
@@ -29,7 +29,7 @@ namespace Planning.DataLayer
 
         public string GetSelectItemSql()
         {
-            return $@"select id as {nameof(UserGrpPrvlg.Id)}, grp_id as {nameof(UserGrpPrvlg.GrpId)}, func_id as {nameof(UserGrpPrvlg.FuncId)}, 
+            return $@"select {Table}.id as {nameof(UserGrpPrvlg.Id)}, grp_id as {nameof(UserGrpPrvlg.GrpId)}, func_id as {nameof(UserGrpPrvlg.FuncId)}, 
                             is_view as {nameof(UserGrpPrvlg.IsView)}, is_append as {nameof(UserGrpPrvlg.IsAppend)}, 
                             is_edit as {nameof(UserGrpPrvlg.IsEdit)}, is_delete as {nameof(UserGrpPrvlg.IsDelete)} 
                        from {Table}";

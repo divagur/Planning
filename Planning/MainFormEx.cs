@@ -706,5 +706,13 @@ namespace Planning
                 btnSearch_Click(sender, e);
             }
         }
+
+        private void menuItemDictUserGroups_Click(object sender, EventArgs e)
+        {
+            var frmUserGroups = new UserGroups();
+
+            // SetFormPrivalage(frmUserGroups, "UserGrp");
+            AddFormTab(frmUserGroups, "Группы пользователей");
+        }
     }
 }

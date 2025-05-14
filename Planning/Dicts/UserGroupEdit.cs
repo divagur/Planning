@@ -9,111 +9,54 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using Planning.DataLayer;
 namespace Planning
 {
-    public partial class UserGroupEdit : Form
+    public partial class UserGroupEdit : DictEditForm
 
     {
-        private UserGroup _userGroup;
-        private List<UserGrpPrvlg> _grpPrvlg;
-        PlanningDbContext _context;
-        public UserGroupEdit(UserGroup userGroup, List<UserGrpPrvlg> grpPrvlg)
+        DataLayer.UsersGroup _userGroup;      
+        BindingList<UserGrpPrvlgView> _grpPrvlg;
+
+        public UserGroupEdit(DataLayer.UsersGroup userGroup)
         {
             InitializeComponent();
             _userGroup = userGroup;
-            _grpPrvlg = grpPrvlg;
-            _context = DataService.context;
-
-        }
-
-        private void btnClose_Click(object sender, EventArgs e)
-        {
-            DialogResult = DialogResult.Cancel;
-            Close();
-        }
-
-        private void btnSave_Click(object sender, EventArgs e)
-        {
-            Save();
-            DialogResult = DialogResult.OK;
+            tblGrpPrvlg.AutoGenerateColumns = false;
         }
         
-        private void Populate()
+        protected override void Populate()
         {
             edGrpName.Text = _userGroup.Name;
-            using (SqlConnection connection = new SqlConnection(DataService.connectionString))
-            {
-                connection.Open();
-                SqlDataAdapter adapter = new SqlDataAdapter($@"select f.id func_id, f.name func_name,ugp.grp_id, ugp.is_view, ugp.is_append, ugp.is_edit, ugp.is_delete
-                 from
-                    functions f
-                    left
-                    join
-                    user_grp_prvlg ugp
-                    on(f.id = ugp.func_id and ugp.grp_id = {_userGroup.Id})", connection);
-                
-                DataSet ds = new DataSet();
-               
-                adapter.Fill(ds);
-                tblGrpPrvlg.AutoGenerateColumns = false;
-                tblGrpPrvlg.DataSource = ds.Tables[0];
-            }
+            _grpPrvlg = new BindingList<UserGrpPrvlgView>(UserGrpPrvlgViewRepository.GetAll(_userGroup.Id));
+            
+            tblGrpPrvlg.DataSource = _grpPrvlg;
         }
 
-        private void Save()
+
+
+        protected override bool Save()
         {
+            if (edGrpName.Text == String.Empty)
+            {
+                MessageBox.Show("Невозможно сохранить строку с пустым наименованием", "Ошибка сохранения", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
             _userGroup.Name = edGrpName.Text;
-           
-            SaveChild();
-
-        }
-        private bool? RowToBool(object Row)
-        {
-            return Row.ToString() == "" ? false : bool.Parse(Row.ToString());
-        }
-        private bool InsertDataRow(DataRow Row)
-        {
-           
-            UserGrpPrvlg ugp = new UserGrpPrvlg();
-            ugp.GrpId = _userGroup.Id;
-            ugp.FuncId = (string)Row["func_id"];
-            ugp.IsView = RowToBool(Row["is_view"]);
-            ugp.IsAppend = RowToBool(Row["is_append"]);
-            ugp.IsEdit = RowToBool(Row["is_edit"]);
-            ugp.IsDelete = RowToBool(Row["is_delete"]);
-            _grpPrvlg.Add(ugp);
-            //_context.UserGrpPrvlgs.Add(ugp);
+            List<UserGrpPrvlgView> userGrpPrvlgsView = new List<UserGrpPrvlgView>(_grpPrvlg);
+            try
+            {
+                UserGrpPrvlgViewRepository.Save(_userGroup.Id, userGrpPrvlgsView);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при сохранении настроек группы:{ex.Message}");
+                return false;
+            }
+            
             return true;
-
-           
-        } 
-        private void SaveChild()
-        {
-            tblGrpPrvlg.EndEdit();
-            tblGrpPrvlg.BindingContext[tblGrpPrvlg.DataSource].EndCurrentEdit();
-
-            _context.UserGrpPrvlgs.RemoveRange(_context.UserGrpPrvlgs.Where(x => x.GrpId == _userGroup.Id).ToList());
-
-/*
-            SqlHandle sql = new SqlHandle(DataService.connectionString);
-            sql.SqlStatement = "delete from user_grp_prvlg where grp_id =" + _userGroup.Id.ToString();
-            if (!sql.Execute())
-            {
-                MessageBox.Show(sql.LastError, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-           */ 
-            foreach (DataRow row in (tblGrpPrvlg.DataSource as DataTable).Rows)
-            {
-                if (!InsertDataRow(row))
-                    return;
-            }
-
         }
-        private void UserGroupEdit_Load(object sender, EventArgs e)
-        {
-            Populate();
-        }
+        
+       
     }
 }

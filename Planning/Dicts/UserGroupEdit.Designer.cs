@@ -32,8 +32,6 @@
             this.edGrpName = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tblGrpPrvlg = new System.Windows.Forms.DataGridView();
-            this.btnSave = new System.Windows.Forms.Button();
-            this.btnClose = new System.Windows.Forms.Button();
             this.colFuncId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colGrpId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colFuncName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -44,6 +42,14 @@
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tblGrpPrvlg)).BeginInit();
             this.SuspendLayout();
+            // 
+            // btnSave
+            // 
+            this.btnSave.Location = new System.Drawing.Point(235, 332);
+            // 
+            // btnClose
+            // 
+            this.btnClose.Location = new System.Drawing.Point(316, 332);
             // 
             // label1
             // 
@@ -91,43 +97,23 @@
             this.tblGrpPrvlg.Size = new System.Drawing.Size(373, 268);
             this.tblGrpPrvlg.TabIndex = 0;
             // 
-            // btnSave
-            // 
-            this.btnSave.Location = new System.Drawing.Point(235, 335);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(75, 23);
-            this.btnSave.TabIndex = 9;
-            this.btnSave.Text = "Сохранить";
-            this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-            // 
-            // btnClose
-            // 
-            this.btnClose.Location = new System.Drawing.Point(316, 335);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(75, 23);
-            this.btnClose.TabIndex = 10;
-            this.btnClose.Text = "Закрыть";
-            this.btnClose.UseVisualStyleBackColor = true;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
-            // 
             // colFuncId
             // 
-            this.colFuncId.DataPropertyName = "func_id";
+            this.colFuncId.DataPropertyName = "FuncId";
             this.colFuncId.HeaderText = "colFuncId";
             this.colFuncId.Name = "colFuncId";
             this.colFuncId.Visible = false;
             // 
             // colGrpId
             // 
-            this.colGrpId.DataPropertyName = "grp_id";
+            this.colGrpId.DataPropertyName = "GrpId";
             this.colGrpId.HeaderText = "colGrpId";
             this.colGrpId.Name = "colGrpId";
             this.colGrpId.Visible = false;
             // 
             // colFuncName
             // 
-            this.colFuncName.DataPropertyName = "func_name";
+            this.colFuncName.DataPropertyName = "FuncName";
             this.colFuncName.HeaderText = "Функция";
             this.colFuncName.Name = "colFuncName";
             this.colFuncName.ReadOnly = true;
@@ -135,7 +121,7 @@
             // 
             // colIsView
             // 
-            this.colIsView.DataPropertyName = "is_view";
+            this.colIsView.DataPropertyName = "IsView";
             this.colIsView.HeaderText = "П";
             this.colIsView.Name = "colIsView";
             this.colIsView.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -145,7 +131,7 @@
             // 
             // colIsAdd
             // 
-            this.colIsAdd.DataPropertyName = "is_append";
+            this.colIsAdd.DataPropertyName = "IsAppend";
             this.colIsAdd.HeaderText = "Д";
             this.colIsAdd.Name = "colIsAdd";
             this.colIsAdd.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -155,7 +141,7 @@
             // 
             // colIsEdit
             // 
-            this.colIsEdit.DataPropertyName = "is_edit";
+            this.colIsEdit.DataPropertyName = "IsEdit";
             this.colIsEdit.HeaderText = "И";
             this.colIsEdit.Name = "colIsEdit";
             this.colIsEdit.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -165,7 +151,7 @@
             // 
             // colIsDelete
             // 
-            this.colIsDelete.DataPropertyName = "is_delete";
+            this.colIsDelete.DataPropertyName = "IsDelete";
             this.colIsDelete.HeaderText = "У";
             this.colIsDelete.Name = "colIsDelete";
             this.colIsDelete.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -178,14 +164,15 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(401, 365);
-            this.Controls.Add(this.btnSave);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.btnClose);
             this.Controls.Add(this.edGrpName);
             this.Controls.Add(this.label1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "UserGroupEdit";
-            this.Load += new System.EventHandler(this.UserGroupEdit_Load);
+            this.Controls.SetChildIndex(this.label1, 0);
+            this.Controls.SetChildIndex(this.edGrpName, 0);
+            this.Controls.SetChildIndex(this.groupBox1, 0);
+            this.Controls.SetChildIndex(this.btnSave, 0);
+            this.Controls.SetChildIndex(this.btnClose, 0);
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.tblGrpPrvlg)).EndInit();
             this.ResumeLayout(false);
@@ -199,8 +186,6 @@
         private System.Windows.Forms.TextBox edGrpName;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.DataGridView tblGrpPrvlg;
-        private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.DataGridViewTextBoxColumn colFuncId;
         private System.Windows.Forms.DataGridViewTextBoxColumn colGrpId;
         private System.Windows.Forms.DataGridViewTextBoxColumn colFuncName;

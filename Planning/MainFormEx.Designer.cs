@@ -203,14 +203,14 @@ namespace Planning
             // miSettings
             // 
             this.miSettings.Name = "miSettings";
-            this.miSettings.Size = new System.Drawing.Size(180, 22);
+            this.miSettings.Size = new System.Drawing.Size(152, 22);
             this.miSettings.Tag = "Settings";
             this.miSettings.Text = "Настройки";
             // 
             // miConnect
             // 
             this.miConnect.Name = "miConnect";
-            this.miConnect.Size = new System.Drawing.Size(180, 22);
+            this.miConnect.Size = new System.Drawing.Size(152, 22);
             this.miConnect.Text = "Подключение";
             // 
             // miDicts
@@ -1225,13 +1225,13 @@ namespace Planning
             // menuItemSettings
             // 
             this.menuItemSettings.Name = "menuItemSettings";
-            this.menuItemSettings.Size = new System.Drawing.Size(180, 22);
+            this.menuItemSettings.Size = new System.Drawing.Size(152, 22);
             this.menuItemSettings.Text = "Настройки";
             // 
             // menuItemConnect
             // 
             this.menuItemConnect.Name = "menuItemConnect";
-            this.menuItemConnect.Size = new System.Drawing.Size(180, 22);
+            this.menuItemConnect.Size = new System.Drawing.Size(152, 22);
             this.menuItemConnect.Text = "Подключение";
             // 
             // toolStripMenuItemDict
@@ -1392,6 +1392,7 @@ namespace Planning
             this.menuItemDictUserGroups.Name = "menuItemDictUserGroups";
             this.menuItemDictUserGroups.Size = new System.Drawing.Size(201, 22);
             this.menuItemDictUserGroups.Text = "Группы пользователей";
+            this.menuItemDictUserGroups.Click += new System.EventHandler(this.menuItemDictUserGroups_Click);
             // 
             // menuItemDictUsers
             // 
