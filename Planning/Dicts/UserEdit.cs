@@ -6,19 +6,17 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-
+using Planning.DataLayer;
 namespace Planning
 {
-    public partial class UserEditEx : DictEditForm
+    public partial class UserEdit : DictEditForm
     {
-        User _user;
-        PlanningDbContext _context;
+        DataLayer.User _user;
         bool _isNew;
-        public UserEditEx(User user, bool IsNew)
+        public UserEdit(DataLayer.User user, bool IsNew)
         {
             InitializeComponent();
-            _user = user;
-            _context = DataService.context;
+            _user = user;            
             _isNew = IsNew;
             cbRegType.SelectedIndex = 1;
             edLogin.Enabled = IsNew;

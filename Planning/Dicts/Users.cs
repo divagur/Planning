@@ -27,7 +27,7 @@ namespace Planning
         protected override void AddRow()
         {
             User user = new User();
-            var frmUserEdit = new UserEditEx(user, true);
+            var frmUserEdit = new UserEdit(user, true);
 
             frmUserEdit.ShowDialog();
             if (frmUserEdit.DialogResult == DialogResult.Cancel)
@@ -42,7 +42,7 @@ namespace Planning
         {
             if (tblUsers.SelectedCells.Count <= 0) return;
             User user = _context.Users.Find(tblUsers.Rows[tblUsers.CurrentCell.RowIndex].Cells["colId"].Value);
-            var frmUserEdit = new UserEditEx(user,false);
+            var frmUserEdit = new UserEdit(user,false);
             
             frmUserEdit.ShowDialog();
             if (frmUserEdit.DialogResult == DialogResult.Cancel)

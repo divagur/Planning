@@ -1,6 +1,6 @@
 ﻿namespace Planning
 {
-    partial class UserEditEx
+    partial class UserEdit
     {
         /// <summary>
         /// Required designer variable.
