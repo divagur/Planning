@@ -186,7 +186,7 @@
             this.btnDel.ToolTipText = "Удалить из группы";
             this.btnDel.Click += new System.EventHandler(this.btnDel_Click);
             // 
-            // UserEditEx
+            // UserEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.ClientSize = new System.Drawing.Size(361, 359);
@@ -197,8 +197,7 @@
             this.Controls.Add(this.edPassword);
             this.Controls.Add(this.edLogin);
             this.Controls.Add(this.label1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.Name = "UserEditEx";
+            this.Name = "UserEdit";
             this.Controls.SetChildIndex(this.btnClose, 0);
             this.Controls.SetChildIndex(this.btnSave, 0);
             this.Controls.SetChildIndex(this.label1, 0);

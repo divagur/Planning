@@ -205,7 +205,7 @@ namespace Planning
             if (e.RowIndex < 0 || e.ColumnIndex ==1)
                 return;
             string value = (string)tblGroup.Rows[e.RowIndex].Cells["colGrp"].Value;
-            var userGrp = _context.UserGroups.Where(x => x.Name == value).First();
+           // var userGrp = _context.UserGroups.Where(x => x.Name == value).First();
             tblGroup.Rows[e.RowIndex].Cells["colGrpId"].Value = userGrp.Id;
         }
 
