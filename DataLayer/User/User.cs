@@ -15,7 +15,8 @@ namespace Planning.DataLayer
         string _lastName;
         bool? _isReg;
         int? _regType;
-
+        string _domainUserName;
+        bool? _isWinAuth;
         public string Login 
         { get => _login; 
           set
@@ -88,6 +89,31 @@ namespace Planning.DataLayer
                 if (!_isReg.Equals(value))
                 {
                     _isReg = value;
+                    Edit();
+                }
+            }
+        }
+        public string DomainUserName
+        {
+            get => _domainUserName;
+            set
+            {
+                if (_domainUserName == null || !_domainUserName.Equals(value))
+                {
+                    _domainUserName = value;
+                    Edit();
+
+                }
+            }
+        }
+        public bool? IsWinAuth
+        {
+            get => _isWinAuth;
+            set
+            {
+                if (!_isWinAuth.Equals(value))
+                {
+                    _isWinAuth = value;
                     Edit();
                 }
             }

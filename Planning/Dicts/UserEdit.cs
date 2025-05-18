@@ -12,90 +12,31 @@ namespace Planning
     public partial class UserEdit : DictEditForm
     {
         DataLayer.User _user;
-        bool _isNew;
-        public UserEdit(DataLayer.User user, bool IsNew)
+        List<DataLayer.UsersGroup> usersGroups;
+        public UserEdit(DataLayer.User user)
         {
             InitializeComponent();
             _user = user;            
-            _isNew = IsNew;
-            cbRegType.SelectedIndex = 1;
+            /*
             edLogin.Enabled = IsNew;
             edPassword.Enabled = IsNew;
             cbRegType.Enabled = IsNew;
+            */
         }
 
 
         private void RemoveAllGroups()
         {
-           foreach (DataGridViewRow row in tblGroup.Rows)
+            UserGroupLnkRepository userGroupLnkRepository = new UserGroupLnkRepository();
+            List<DataLayer.UserGroupLnk> userGroupLnks = userGroupLnkRepository.GetByUserId(_user.Id);
+
+            foreach (var grp in userGroupLnks)
             {
-                _user.UserGroups.Remove(_context.UserGroups.Find(row.Cells["colGrpId"].Value));
+                grp.Delete();
             }
+            userGroupLnkRepository.Save(userGroupLnks);
         }
-        private bool CreateUser(string Login, string Password, bool IsWindowsUser)
-        {
-            SqlHandle sql = new SqlHandle(DataService.connectionString);
-
-            StringBuilder sqlStatement = new StringBuilder($"CREATE LOGIN { Login } ");
-           
-            if (!IsWindowsUser)
-                sqlStatement.Append($"WITH PASSWORD = '{Password}, CHECK_POLICY = OFF';");
-            sql.SqlStatement = sqlStatement.ToString();
-
-            if (!sql.Execute())
-            {
-                MessageBox.Show(sql.LastError, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-            sqlStatement.Clear();
-            sqlStatement.Append($"CREATE USER {Login} FOR LOGIN {Login};");
-            sql.SqlStatement = sqlStatement.ToString();
-
-            if (!sql.Execute())
-            {
-                MessageBox.Show(sql.LastError, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-
-            sqlStatement.Clear();
-            sqlStatement.Append($" EXEC [sp_addrolemember] 'pl_user', '{Login}';");
-            sql.SqlStatement = sqlStatement.ToString();
-            if (!sql.Execute())
-            {
-                MessageBox.Show(sql.LastError, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-            return true;
-        }
-
-        
-
-        private bool AlterLogin(string Login, string NewPassword)
-        {
-            SqlHandle sql = new SqlHandle(DataService.connectionString);
-
-            sql.SqlStatement = $"ALTER USER {Login} WITH PASSWORD = '{NewPassword}'";
-
-            if (!sql.Execute())
-            {
-                MessageBox.Show(sql.LastError, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-
-            sql.SqlStatement = $"ALTER LOGIN {Login} WITH PASSWORD = '{NewPassword}'";
-
-            if (!sql.Execute())
-            {
-                MessageBox.Show(sql.LastError, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-            return true;
-        }
-        private void AddUserToGroup(DataGridViewRow row)
-        {
-            _user.UserGroups.Add(_context.UserGroups.Find(row.Cells["colGrpId"].Value));
-        }
-
+              
         private bool CanSave()
         {
             if (tblGroup.Rows.Count == 0)
@@ -106,70 +47,74 @@ namespace Planning
             return true;
         }
 
-        private bool AddUserToDepositors()
-        {
-            bool success = true;
-            foreach(Depositor dep in _context.Depositors)
-            {
-                if (dep.LvBase != null)
-                    success = success && DataService.CreateDBUser(dep.LvBase, edLogin.Text, edLogin.Text);
-            }
-            return success;
-        }
         protected override bool Save()
         {
             if (!CanSave())
                 return false;
             
-            if (_isNew)
-            {
-                if (!DataService.CreateLogin(edLogin.Text, edPassword.Text, cbRegType.SelectedIndex == 0 ? true:false))
-                {
-                    return false;
-                }
-                //MessageBox.Show("Создание пользователя");
-                if (!DataService.CreateDBUser(DataService.setting.BaseName, edLogin.Text, edLogin.Text))
-                {
-                    return false;
-                }
-                //MessageBox.Show("Создание пользователя у депозиторов");
-                if (!AddUserToDepositors())
-                {
-                    return false;
-                }
-            }
-            else if (_user.RegType == 1)
-            {
-                if (!AlterLogin(edLogin.Text,edPassword.Text))
-                {
-                    return false;
-                }
-            }
             
-
             _user.Login = edLogin.Text;
-           // _user.Password = DataService.EncryptHash(edPassword.Text);
+            if (!String.IsNullOrEmpty(_user.Password))
+            {
+                _user.Password = Common.CalculateHashGOST(edPassword.Text);
+            }            
+            _user.IsWinAuth = cbIsWindowsAuth.Checked;
+            _user.DomainUserName = edWindowsUserName.Text;
             RemoveAllGroups();
+
+            UserGroupLnkRepository userGroupLnkRepository = new UserGroupLnkRepository();
+
             foreach (DataGridViewRow row in tblGroup.Rows)
             {
-                AddUserToGroup(row);
+                if (row.Cells["colGrpId"].Value !=null)
+                {
+                    UserGroupLnk userGroupLnk = new UserGroupLnk();
+                    userGroupLnk.UserId = _user.Id;
+                    userGroupLnk.GroupId = (int)row.Cells["colGrpId"].Value;
+                    if (! userGroupLnkRepository.Save(userGroupLnk))
+                    {
+                        MessageBox.Show($"Ошибка при сохранении пользователя:{userGroupLnkRepository.LastError}");
+                        return false;
+                    }
+                }
             }
             return true;
+        }
+
+        private void SetFieldEnable()
+        {
+            edLogin.Enabled = !cbIsWindowsAuth.Checked;
+            edPassword.Enabled = !cbIsWindowsAuth.Checked;
+            edWindowsUserName.Enabled = cbIsWindowsAuth.Checked;
         }
 
         protected override void Populate()
         {
             edLogin.Text = _user.Login;
-            foreach(UserGroup grp in _context.UserGroups)
+            cbIsWindowsAuth.Checked = (bool)_user.IsWinAuth;
+            edWindowsUserName.Text = _user.DomainUserName;
+
+            SetFieldEnable();
+
+            UsersGroupRepository usersGroupRepository = new UsersGroupRepository();
+            usersGroups = usersGroupRepository.GetAll();
+
+            foreach (var grp in usersGroups)
             {
                 colGrp.Items.Add(grp.Name);
             }
 
-            foreach(UserGroup grp in _user.UserGroups)
+            UserGroupLnkRepository userGroupLnkRepository = new UserGroupLnkRepository();
+            List<DataLayer.UserGroupLnk> userGroupLnks = userGroupLnkRepository.GetByUserId(_user.Id);
+
+            foreach (var grp in userGroupLnks)
             {
                 int rowIdx = tblGroup.Rows.Add();
-                tblGroup.Rows[rowIdx].Cells["colGrpId"].Value = grp.Id;
-                tblGroup.Rows[rowIdx].Cells["colGrp"].Value = grp.Name;
+                tblGroup.Rows[rowIdx].Cells["colId"].Value = grp.Id;
+                tblGroup.Rows[rowIdx].Cells["colGrpId"].Value = grp.GroupId;
+                tblGroup.Rows[rowIdx].Cells["colUserId"].Value = grp.UserId;
+                var group = usersGroups.FirstOrDefault(g=> g.Id == grp.GroupId);
+                tblGroup.Rows[rowIdx].Cells["colGrp"].Value = group == null?"":group.Name;
             }
             
             
@@ -182,44 +127,29 @@ namespace Planning
 
         private void btnDel_Click(object sender, EventArgs e)
         {
-            foreach(DataGridViewRow row in tblGroup.Rows)
+            foreach (DataGridViewRow row in tblGroup.SelectedRows)
             {
-                if (row.Selected)
+                if (row.Cells["colId"].Value != null)
                 {
-                    //UserGrpPrvlg userGrpPrvlg = _context.UserGrpPrvlgs.First(g=>g.GrpId == Int32.Parse(row.Cells["colGrpId"].Value.ToString()));
-                    UserGroup userGroup =_user.UserGroups.First(g=>g.Id == Int32.Parse(row.Cells["colGrpId"].Value.ToString()));
-                    if (userGroup != null)
-                    {
-                        _user.UserGroups.Remove(userGroup);
-                        tblGroup.Rows.Remove(tblGroup.CurrentRow);
-                    }
-
+                    tblGroup.Rows.Remove(row);
                 }
-                    
             }
-            
+
         }
 
         private void tblGroup_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex < 0 || e.ColumnIndex ==1)
+            if (e.RowIndex < 0 || tblGroup.Columns[e.ColumnIndex].Name != "colGrp")
                 return;
             string value = (string)tblGroup.Rows[e.RowIndex].Cells["colGrp"].Value;
-           // var userGrp = _context.UserGroups.Where(x => x.Name == value).First();
+            var userGrp = usersGroups.Where(x => x.Name == value).First();
             tblGroup.Rows[e.RowIndex].Cells["colGrpId"].Value = userGrp.Id;
         }
 
-        private void cbRegType_SelectedIndexChanged(object sender, EventArgs e)
+
+        private void cbIsWindowsAuth_CheckedChanged(object sender, EventArgs e)
         {
-            switch (cbRegType.SelectedIndex)
-            {
-                case 0:
-                    edPassword.Enabled = false;
-                    break;
-                case 1:
-                    edPassword.Enabled = true;
-                    break;
-            }
+            SetFieldEnable();
         }
     }
 }

@@ -33,9 +33,9 @@ namespace Planning
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainFormEx));
-            BrightIdeasSoftware.HeaderStateStyle headerStateStyle1 = new BrightIdeasSoftware.HeaderStateStyle();
-            BrightIdeasSoftware.HeaderStateStyle headerStateStyle2 = new BrightIdeasSoftware.HeaderStateStyle();
-            BrightIdeasSoftware.HeaderStateStyle headerStateStyle3 = new BrightIdeasSoftware.HeaderStateStyle();
+            BrightIdeasSoftware.HeaderStateStyle headerStateStyle4 = new BrightIdeasSoftware.HeaderStateStyle();
+            BrightIdeasSoftware.HeaderStateStyle headerStateStyle5 = new BrightIdeasSoftware.HeaderStateStyle();
+            BrightIdeasSoftware.HeaderStateStyle headerStateStyle6 = new BrightIdeasSoftware.HeaderStateStyle();
             this.menuMain = new System.Windows.Forms.MenuStrip();
             this.mtiFile = new System.Windows.Forms.ToolStripMenuItem();
             this.miSettings = new System.Windows.Forms.ToolStripMenuItem();
@@ -164,7 +164,7 @@ namespace Planning
             this.menuItemReportStatistic = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemReportTC = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemAdd = new System.Windows.Forms.ToolStripMenuItem();
-            this.администрированиеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemAdmin = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemDictUserGroups = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemDictUsers = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMain.SuspendLayout();
@@ -1087,10 +1087,10 @@ namespace Planning
             // 
             // headerFormatStyle1
             // 
-            this.headerFormatStyle1.Hot = headerStateStyle1;
-            headerStateStyle2.FrameWidth = 2F;
-            this.headerFormatStyle1.Normal = headerStateStyle2;
-            this.headerFormatStyle1.Pressed = headerStateStyle3;
+            this.headerFormatStyle1.Hot = headerStateStyle4;
+            headerStateStyle5.FrameWidth = 2F;
+            this.headerFormatStyle1.Normal = headerStateStyle5;
+            this.headerFormatStyle1.Pressed = headerStateStyle6;
             // 
             // imageListInOut
             // 
@@ -1209,7 +1209,7 @@ namespace Planning
             this.toolStripMenuItemDict,
             this.toolStripMenuItemReport,
             this.toolStripMenuItemAdd,
-            this.администрированиеToolStripMenuItem});
+            this.toolStripMenuItemAdmin});
             this.contextMenuMain.Name = "contextMenuMain";
             this.contextMenuMain.Size = new System.Drawing.Size(190, 136);
             // 
@@ -1306,6 +1306,7 @@ namespace Planning
             // 
             this.menuItemDoctSupplier.Name = "menuItemDoctSupplier";
             this.menuItemDoctSupplier.Size = new System.Drawing.Size(230, 22);
+            this.menuItemDoctSupplier.Tag = "Supplier";
             this.menuItemDoctSupplier.Text = "Поставщики";
             this.menuItemDoctSupplier.Click += new System.EventHandler(this.menuItemDoctSupplier_Click);
             // 
@@ -1313,6 +1314,7 @@ namespace Planning
             // 
             this.menuItemDictAttributes.Name = "menuItemDictAttributes";
             this.menuItemDictAttributes.Size = new System.Drawing.Size(230, 22);
+            this.menuItemDictAttributes.Tag = "Attr";
             this.menuItemDictAttributes.Text = "Аттрибуты";
             this.menuItemDictAttributes.Click += new System.EventHandler(this.menuItemDictAttributes_Click);
             // 
@@ -1320,6 +1322,7 @@ namespace Planning
             // 
             this.menuItemDictTransportType.Name = "menuItemDictTransportType";
             this.menuItemDictTransportType.Size = new System.Drawing.Size(230, 22);
+            this.menuItemDictTransportType.Tag = "TransporType";
             this.menuItemDictTransportType.Text = "Типы транспортных средств";
             this.menuItemDictTransportType.Click += new System.EventHandler(this.menuItemDictTransportType_Click);
             // 
@@ -1327,6 +1330,7 @@ namespace Planning
             // 
             this.menuItemDictTransportView.Name = "menuItemDictTransportView";
             this.menuItemDictTransportView.Size = new System.Drawing.Size(230, 22);
+            this.menuItemDictTransportView.Tag = "TransporView";
             this.menuItemDictTransportView.Text = "Виды транспорта";
             this.menuItemDictTransportView.Click += new System.EventHandler(this.menuItemDictTransportView_Click);
             // 
@@ -1334,6 +1338,7 @@ namespace Planning
             // 
             this.menuItemDictWarehouse.Name = "menuItemDictWarehouse";
             this.menuItemDictWarehouse.Size = new System.Drawing.Size(230, 22);
+            this.menuItemDictWarehouse.Tag = "Warehouse";
             this.menuItemDictWarehouse.Text = "Склады";
             this.menuItemDictWarehouse.Click += new System.EventHandler(this.menuItemDictWarehouse_Click);
             // 
@@ -1341,6 +1346,7 @@ namespace Planning
             // 
             this.menuItemDictCustomPosts.Name = "menuItemDictCustomPosts";
             this.menuItemDictCustomPosts.Size = new System.Drawing.Size(230, 22);
+            this.menuItemDictCustomPosts.Tag = "CustomPost";
             this.menuItemDictCustomPosts.Text = "Таможенные посты";
             this.menuItemDictCustomPosts.Click += new System.EventHandler(this.menuItemDictCustomPosts_Click);
             // 
@@ -1378,19 +1384,20 @@ namespace Planning
             this.toolStripMenuItemAdd.Size = new System.Drawing.Size(189, 22);
             this.toolStripMenuItemAdd.Text = "Дополнительно";
             // 
-            // администрированиеToolStripMenuItem
+            // toolStripMenuItemAdmin
             // 
-            this.администрированиеToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemAdmin.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuItemDictUserGroups,
             this.menuItemDictUsers});
-            this.администрированиеToolStripMenuItem.Name = "администрированиеToolStripMenuItem";
-            this.администрированиеToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
-            this.администрированиеToolStripMenuItem.Text = "Администрирование";
+            this.toolStripMenuItemAdmin.Name = "toolStripMenuItemAdmin";
+            this.toolStripMenuItemAdmin.Size = new System.Drawing.Size(189, 22);
+            this.toolStripMenuItemAdmin.Text = "Администрирование";
             // 
             // menuItemDictUserGroups
             // 
             this.menuItemDictUserGroups.Name = "menuItemDictUserGroups";
             this.menuItemDictUserGroups.Size = new System.Drawing.Size(201, 22);
+            this.menuItemDictUserGroups.Tag = "UserGrp";
             this.menuItemDictUserGroups.Text = "Группы пользователей";
             this.menuItemDictUserGroups.Click += new System.EventHandler(this.menuItemDictUserGroups_Click);
             // 
@@ -1398,7 +1405,9 @@ namespace Planning
             // 
             this.menuItemDictUsers.Name = "menuItemDictUsers";
             this.menuItemDictUsers.Size = new System.Drawing.Size(201, 22);
+            this.menuItemDictUsers.Tag = "Users";
             this.menuItemDictUsers.Text = "Пользователи";
+            this.menuItemDictUsers.Click += new System.EventHandler(this.menuItemDictUsers_Click);
             // 
             // MainFormEx
             // 
@@ -1560,7 +1569,7 @@ namespace Planning
         private System.Windows.Forms.ToolStripMenuItem menuItemReportPeriod;
         private System.Windows.Forms.ToolStripMenuItem menuItemReportStatistic;
         private System.Windows.Forms.ToolStripMenuItem menuItemReportTC;
-        private System.Windows.Forms.ToolStripMenuItem администрированиеToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemAdmin;
         private System.Windows.Forms.ToolStripMenuItem menuItemDictUserGroups;
         private System.Windows.Forms.ToolStripMenuItem menuItemDictUsers;
     }

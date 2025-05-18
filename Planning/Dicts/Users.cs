@@ -9,59 +9,20 @@ using System.Windows.Forms;
 
 namespace Planning
 {
-	public partial class Users : Planning.DictForm
+	public partial class Users :DictFormEx<DataLayer.User, DataLayer.UserRepository>
 	{
 
 		public Users()
 		{
 			InitializeComponent();
-            
+            GridView = tblUsers;
 		}
-
-        protected override void Populate()
+        protected override bool CreateEditForm(DataLayer.User item)
         {
-            tblUsers.AutoGenerateColumns = false;
-            tblUsers.DataSource = _context.Users.ToList();
-        }
-
-        protected override void AddRow()
-        {
-            User user = new User();
-            var frmUserEdit = new UserEdit(user, true);
-
+            var frmUserEdit = new UserEdit(item);
             frmUserEdit.ShowDialog();
-            if (frmUserEdit.DialogResult == DialogResult.Cancel)
-                return;
-            DataService.context.Users.Add(user);
-
-
-            Save();
+            return !(frmUserEdit.DialogResult == DialogResult.Cancel);
         }
-
-        protected override void EditRow()
-        {
-            if (tblUsers.SelectedCells.Count <= 0) return;
-            User user = _context.Users.Find(tblUsers.Rows[tblUsers.CurrentCell.RowIndex].Cells["colId"].Value);
-            var frmUserEdit = new UserEdit(user,false);
-            
-            frmUserEdit.ShowDialog();
-            if (frmUserEdit.DialogResult == DialogResult.Cancel)
-                return;
-
-            Save();
-        }
-
-        protected override void DelRow()
-        {
-            User user = _context.Users.Find(tblUsers.Rows[tblUsers.CurrentCell.RowIndex].Cells["colId"].Value);
-            if (MessageBox.Show("Удалить пользователя?", "Подтверждение", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-            {
-                if (!DataService.DropUser(user.Login))
-                    return;
-
-                _context.Users.Remove(user);
-                Save();
-            }
-        }
+        
     }
 }

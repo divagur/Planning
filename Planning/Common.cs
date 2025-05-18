@@ -7,38 +7,12 @@ using System.Windows.Forms;
 
 namespace Planning
 {
-    interface IWait
-    {
-        void WaitBegin();
-        void WaitEnd();
-
-    }
-
-    public class WaitHandler : IWait
-    {
-        private Form _form;
-
-        public WaitHandler(Form form)
-        {
-            _form = form;
-        }
-
-        public void WaitBegin()
-        {
-            _form.Cursor = Cursors.AppStarting;
-        }
-
-        public void WaitEnd()
-        {
-            _form.Cursor = Cursors.Default;
-        }
-    }
-
-    public class Common
+    public static class Common
     {
 
         public static Settings setting = new Settings();
         public static SettingsHandle settingsHandle;
+        public static DataLayer.User CurrentUser;
 
         public static void WaitBegin(ref object Param)
         {
@@ -52,6 +26,20 @@ namespace Planning
             cur = Cursors.Default;
         }
 
-
+        public static string CalculateHashGOST(string message)
+        {
+            GOST G = new GOST(256);
+            byte[] messageByte = Encoding.UTF8.GetBytes(message);
+            byte[] res = G.GetHash(messageByte);
+            return BitConverter.ToString(res).Replace("-","");
+        }
+        public static string EncryptString(string Str)
+        {
+            return Str;
+        }
+        public static string DecryptString(string Str)
+        {
+            return Str;
+        }
     }
 }

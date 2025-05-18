@@ -12,17 +12,15 @@ using Planning.Kernel;
 
 namespace Planning
 {
-    public partial class DictFormEx<T, R> : Form
+    public partial class DictFormEx<T, R> : Form, IItemPrivilege
         where T : BaseDataItem, new()
         where R : IRepository<T>, new()
-        //where F: DictEditForm, new()
     {
         BindingList<T> _listDataItemBinding;
         List<T> _listDataItem;
         R _repository;
         DataGridView _gridView;
         Form _editForm;
-        //protected IRepository<BaseDataItem> repository;
         private IWait waitHandler;
 
         internal IWait WaitHandler { get => waitHandler; set => waitHandler = value; }

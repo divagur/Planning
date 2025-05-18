@@ -11,68 +11,24 @@ using DataLayer = Planning.DataLayer;
 
 namespace Planning
 {
-    public partial class CustomPosts : DictForm
+    public partial class CustomPosts : DictFormEx<DataLayer.CustomPost, DataLayer.CustomPostRepository>
     {
         List<DataLayer.CustomPost> _customPosts = new List<DataLayer.CustomPost>();
         DataLayer.CustomPostRepository _customPostRepository = new DataLayer.CustomPostRepository();
         public CustomPosts()
         {
             InitializeComponent();
-        }
-        private void UpdateDataSource()
-        {
-            tblCustomPosts.DataSource = null;
-            tblCustomPosts.DataSource = _customPosts;
-            tblCustomPosts.Refresh();
+            GridView = tblCustomPosts;
         }
 
-
-        protected override void Populate()
+        protected override bool CreateEditForm(DataLayer.CustomPost item)
         {
-            tblCustomPosts.AutoGenerateColumns = false;
-            //tblCustomPosts.DataSource = _context.CustomPosts.ToList();
+            CustomPostEdit frmCustomPostEdit = new CustomPostEdit(item);
 
-            
-            _customPosts = _customPostRepository.GetAll();
-            tblCustomPosts.DataSource = _customPosts;
-        }
-        protected override void AddRow()
-        {
-            DataLayer.CustomPost customPost = new DataLayer.CustomPost();
-            CustomPostEdit frmCustomPostEdit = new CustomPostEdit(customPost);
             frmCustomPostEdit.ShowDialog();
-            if (frmCustomPostEdit.DialogResult == DialogResult.Cancel)
-                return;
-            _customPosts.Add(customPost);
-            _customPostRepository.Save(customPost);
-            UpdateDataSource();
-            //DataService.context.CustomPosts.Add(customPost);
+            return !(frmCustomPostEdit.DialogResult == DialogResult.Cancel);
 
-            //Save();
         }
 
-        protected override void EditRow()
-        {
-            if (tblCustomPosts.SelectedCells.Count <= 0) return;
-            DataLayer.CustomPost customPost = _customPosts.Find(cp=>cp.Id==Int32.Parse(tblCustomPosts.Rows[tblCustomPosts.CurrentCell.RowIndex].Cells["colId"].Value.ToString()));
-            CustomPostEdit frmCustomPostEdit = new CustomPostEdit(customPost);
-            frmCustomPostEdit.ShowDialog();
-            if (frmCustomPostEdit.DialogResult == DialogResult.Cancel)
-                return;
-            _customPostRepository.Save(customPost);
-            UpdateDataSource();
-            //Save();
-        }
-        protected override void DelRow()
-        {
-            DataLayer.CustomPost customPost = _customPosts.Find(cp => cp.Id == Int32.Parse(tblCustomPosts.Rows[tblCustomPosts.CurrentCell.RowIndex].Cells["colId"].Value.ToString()));
-            //_context.CustomPosts.Find(tblCustomPosts.Rows[tblCustomPosts.CurrentCell.RowIndex].Cells["colId"].Value);
-            if (MessageBox.Show("Удалить склад?", "Подтверждение", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-            {
-                customPost.Delete();
-                _customPostRepository.Save(customPost);
-                UpdateDataSource();
-            }
-        }
     }
 }

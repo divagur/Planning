@@ -56,12 +56,7 @@ namespace Planning
      
             }
             _deliveryPeriodRepository.Save(_deliveryPeriods);
-            /*
-            foreach (var item in _deliveryPeriods)
-            {
-                _deliveryPeriodRepository.Save(item);
-            }
-            */
+
             return true;
         }
         private void RemoveAllDelivery()
@@ -133,17 +128,6 @@ namespace Planning
         private void btnAddDelivery_Click(object sender, EventArgs e)
         {
             tblDelivery.Rows.Add();
-            
-            /*
-            DataLayer.DeliveryPeriod deliveryPeriod = new DataLayer.DeliveryPeriod();
-            deliveryPeriod.CustPostId = _customPost.Id;
-            deliveryPeriod.DeliveryDay = 1;
-            _deliveryPeriods.Add(deliveryPeriod);
-            */
-            //UpdateDataSourceDeliveryPeriod();
-            //_customPost.DeliveryPeriods.Add(deliveryPeriod);
-            //_context.DeliveryPeriods.Add(deliveryPeriod);
-
         }
 
         private void btnDelDelivery_Click(object sender, EventArgs e)
@@ -153,15 +137,6 @@ namespace Planning
             {
                 if (row.Cells["colId"].Value != null)
                 {
-                    /*
-                    DataLayer.DeliveryPeriod deliveryPeriod = _deliveryPeriods.First(g => g.Id == Int32.Parse(row.Cells["colId"].Value.ToString()));
-                    if (deliveryPeriod != null)
-                    {
-                        deliveryPeriod.Delete();
-                        //_deliveryPeriods.Remove(deliveryPeriod);
-                        
-                    }
-                    */
                     tblDelivery.Rows.Remove(row);
                 }
             } 

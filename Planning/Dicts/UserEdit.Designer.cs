@@ -29,18 +29,21 @@
         private void InitializeComponent()
         {
             this.label4 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.cbRegType = new System.Windows.Forms.ComboBox();
             this.edPassword = new System.Windows.Forms.TextBox();
             this.edLogin = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tblGroup = new System.Windows.Forms.DataGridView();
             this.colGrp = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colGrpId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colUserId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tbUserGrp = new System.Windows.Forms.ToolStrip();
             this.btnAdd = new System.Windows.Forms.ToolStripButton();
             this.btnDel = new System.Windows.Forms.ToolStripButton();
+            this.cbIsWindowsAuth = new System.Windows.Forms.CheckBox();
+            this.edWindowsUserName = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tblGroup)).BeginInit();
             this.tbUserGrp.SuspendLayout();
@@ -61,38 +64,15 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(20, 66);
+            this.label4.Location = new System.Drawing.Point(20, 40);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(45, 13);
             this.label4.TabIndex = 13;
             this.label4.Text = "Пароль";
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(20, 13);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(125, 13);
-            this.label2.TabIndex = 12;
-            this.label2.Text = "Проверка подлинности";
-            this.label2.Visible = false;
-            // 
-            // cbRegType
-            // 
-            this.cbRegType.FormattingEnabled = true;
-            this.cbRegType.Items.AddRange(new object[] {
-            "Windows",
-            "SQL Server"});
-            this.cbRegType.Location = new System.Drawing.Point(154, 10);
-            this.cbRegType.Name = "cbRegType";
-            this.cbRegType.Size = new System.Drawing.Size(189, 21);
-            this.cbRegType.TabIndex = 0;
-            this.cbRegType.Visible = false;
-            this.cbRegType.SelectedIndexChanged += new System.EventHandler(this.cbRegType_SelectedIndexChanged);
-            // 
             // edPassword
             // 
-            this.edPassword.Location = new System.Drawing.Point(74, 63);
+            this.edPassword.Location = new System.Drawing.Point(74, 37);
             this.edPassword.Name = "edPassword";
             this.edPassword.PasswordChar = '*';
             this.edPassword.Size = new System.Drawing.Size(269, 20);
@@ -101,7 +81,7 @@
             // 
             // edLogin
             // 
-            this.edLogin.Location = new System.Drawing.Point(74, 37);
+            this.edLogin.Location = new System.Drawing.Point(74, 11);
             this.edLogin.Name = "edLogin";
             this.edLogin.Size = new System.Drawing.Size(269, 20);
             this.edLogin.TabIndex = 1;
@@ -109,7 +89,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(20, 40);
+            this.label1.Location = new System.Drawing.Point(20, 14);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(38, 13);
             this.label1.TabIndex = 7;
@@ -128,10 +108,13 @@
             // 
             // tblGroup
             // 
+            this.tblGroup.AllowUserToAddRows = false;
             this.tblGroup.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.tblGroup.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colGrp,
-            this.colGrpId});
+            this.colId,
+            this.colGrpId,
+            this.colUserId});
             this.tblGroup.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tblGroup.Location = new System.Drawing.Point(3, 41);
             this.tblGroup.Name = "tblGroup";
@@ -146,12 +129,25 @@
             this.colGrp.Name = "colGrp";
             this.colGrp.Width = 250;
             // 
+            // colId
+            // 
+            this.colId.HeaderText = "Id";
+            this.colId.Name = "colId";
+            this.colId.Visible = false;
+            // 
             // colGrpId
             // 
-            this.colGrpId.DataPropertyName = "Id";
-            this.colGrpId.HeaderText = "Id";
+            this.colGrpId.DataPropertyName = "GroupId";
+            this.colGrpId.HeaderText = "GrpId";
             this.colGrpId.Name = "colGrpId";
             this.colGrpId.Visible = false;
+            // 
+            // colUserId
+            // 
+            this.colUserId.DataPropertyName = "UserId";
+            this.colUserId.HeaderText = "UserId";
+            this.colUserId.Name = "colUserId";
+            this.colUserId.Visible = false;
             // 
             // tbUserGrp
             // 
@@ -167,7 +163,7 @@
             // btnAdd
             // 
             this.btnAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnAdd.Image = global::Planning.Properties.Resources.Add;
+            this.btnAdd.Image = global::Planning.Properties.Resources.icons8_add_16;
             this.btnAdd.ImageTransparentColor = System.Drawing.Color.White;
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(23, 22);
@@ -178,7 +174,7 @@
             // btnDel
             // 
             this.btnDel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnDel.Image = global::Planning.Properties.Resources.Delete;
+            this.btnDel.Image = global::Planning.Properties.Resources.icons8_close_16;
             this.btnDel.ImageTransparentColor = System.Drawing.Color.White;
             this.btnDel.Name = "btnDel";
             this.btnDel.Size = new System.Drawing.Size(23, 22);
@@ -186,14 +182,42 @@
             this.btnDel.ToolTipText = "Удалить из группы";
             this.btnDel.Click += new System.EventHandler(this.btnDel_Click);
             // 
+            // cbIsWindowsAuth
+            // 
+            this.cbIsWindowsAuth.AutoSize = true;
+            this.cbIsWindowsAuth.Location = new System.Drawing.Point(23, 68);
+            this.cbIsWindowsAuth.Name = "cbIsWindowsAuth";
+            this.cbIsWindowsAuth.Size = new System.Drawing.Size(139, 17);
+            this.cbIsWindowsAuth.TabIndex = 16;
+            this.cbIsWindowsAuth.Text = "Авторизация Windows";
+            this.cbIsWindowsAuth.UseVisualStyleBackColor = true;
+            this.cbIsWindowsAuth.CheckedChanged += new System.EventHandler(this.cbIsWindowsAuth_CheckedChanged);
+            // 
+            // edWindowsUserName
+            // 
+            this.edWindowsUserName.Location = new System.Drawing.Point(106, 91);
+            this.edWindowsUserName.Name = "edWindowsUserName";
+            this.edWindowsUserName.Size = new System.Drawing.Size(237, 20);
+            this.edWindowsUserName.TabIndex = 17;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(20, 94);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(80, 13);
+            this.label2.TabIndex = 18;
+            this.label2.Text = "Пользователь";
+            // 
             // UserEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.ClientSize = new System.Drawing.Size(361, 359);
+            this.Controls.Add(this.edWindowsUserName);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.cbIsWindowsAuth);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.cbRegType);
             this.Controls.Add(this.edPassword);
             this.Controls.Add(this.edLogin);
             this.Controls.Add(this.label1);
@@ -203,10 +227,11 @@
             this.Controls.SetChildIndex(this.label1, 0);
             this.Controls.SetChildIndex(this.edLogin, 0);
             this.Controls.SetChildIndex(this.edPassword, 0);
-            this.Controls.SetChildIndex(this.cbRegType, 0);
-            this.Controls.SetChildIndex(this.label2, 0);
             this.Controls.SetChildIndex(this.label4, 0);
             this.Controls.SetChildIndex(this.groupBox1, 0);
+            this.Controls.SetChildIndex(this.cbIsWindowsAuth, 0);
+            this.Controls.SetChildIndex(this.label2, 0);
+            this.Controls.SetChildIndex(this.edWindowsUserName, 0);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tblGroup)).EndInit();
@@ -220,8 +245,6 @@
         #endregion
 
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox cbRegType;
         private System.Windows.Forms.TextBox edPassword;
         private System.Windows.Forms.TextBox edLogin;
         private System.Windows.Forms.Label label1;
@@ -231,6 +254,11 @@
         private System.Windows.Forms.ToolStripButton btnDel;
         private System.Windows.Forms.DataGridView tblGroup;
         private System.Windows.Forms.DataGridViewComboBoxColumn colGrp;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colId;
         private System.Windows.Forms.DataGridViewTextBoxColumn colGrpId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colUserId;
+        private System.Windows.Forms.CheckBox cbIsWindowsAuth;
+        private System.Windows.Forms.TextBox edWindowsUserName;
+        private System.Windows.Forms.Label label2;
     }
 }

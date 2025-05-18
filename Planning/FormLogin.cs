@@ -7,60 +7,33 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using Planning.DataLayer;
+using Planning.Kernel;
 namespace Planning
 {
     public partial class FormLogin : Form
     {
-        Settings _setting;
-        public FormLogin(Settings setting)
+        UserRepository userRepository = new UserRepository();
+
+        public FormLogin()
         {
             InitializeComponent();
-            _setting = setting;
-        }
-
-        private User GetUserByLogin(string login)
-        {
-
-            User user = DataService.context.Users.FirstOrDefault(u=>u.Login == login);
-
             
-            return user;
         }
 
         private void OkClick()
         {
-            /*
-            User user = GetUserByLogin(edUserName.Text);
-            string hash = DataService.EncryptHash(edPassword.Text);
-            bool bSuccess = user!=null && user.Password == DataService.EncryptHash(edPassword.Text);
+            Common.CurrentUser = userRepository.GetByUserName(edUserName.Text);
+            if (Common.CurrentUser == null || Common.CurrentUser.Password != Common.CalculateHashGOST(edPassword.Text))
+            {
+                MessageBox.Show($"Пользователь {Common.setting.LastLogin} не найден или не верно указан пароль");
+                return;
+            }
 
-            if (!bSuccess)
-            {
-                MessageBox.Show("Не правильное имя пользователя или пароль", "Ошибка входа", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            else
-            {
-                _setting.LastLogin = edUserName.Text;
-                DialogResult = DialogResult.OK;
-                Close();
-            }
-            */
-            
-            _setting.UserName = edUserName.Text;
-            _setting.Password = edPassword.Text;
-            //MessageBox.Show($"Подключение к серверу: {DataService.setting.ServerName} базе: {DataService.setting.BaseName} пользователь: {DataService.setting.UserName} ");
-            if (DataService.TryDBConnect(DataService.setting.ServerName, DataService.setting.BaseName, DataService.setting.UserName, DataService.setting.Password,false, false))
-            {
-                //MessageBox.Show("Успешно");
-                DialogResult = DialogResult.OK;
-                Close();
-            }
-            else
-            {
-                MessageBox.Show("Не правильное имя пользователя или пароль", "Ошибка входа", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            
+            Common.setting.LastLogin = edUserName.Text;
+            //Common.setting.Password = Common.CalculateHashGOST(edPassword.Text);
+            DialogResult = DialogResult.OK;
+            Close();
         }
 
         private void btnOk_Click(object sender, EventArgs e)
@@ -76,7 +49,15 @@ namespace Planning
 
         private void FormLogin_Load(object sender, EventArgs e)
         {
-            edUserName.Text = _setting.LastLogin;
+
+            Common.CurrentUser = userRepository.GetByDomainUserName(System.Security.Principal.WindowsIdentity.GetCurrent().Name);
+            if (Common.CurrentUser != null && Common.CurrentUser.IsWinAuth != null && (bool)Common.CurrentUser.IsWinAuth)
+            {
+                DialogResult = DialogResult.OK;
+                Close();
+            }
+
+            edUserName.Text = Common.setting.LastLogin;
         }
 
         private void edUserName_KeyDown(object sender, KeyEventArgs e)

@@ -35,6 +35,8 @@ namespace Planning
         };
         ShipmentMainRepository shipmentMainRepository;
         List<ShipmentMain> _shipmentMainList;
+        List<UserFunctionPrvlg> UserPrvlgs= new List<UserFunctionPrvlg>();
+        UserFunctionPrvlg mainFormPrvlg = new UserFunctionPrvlg();
         public MainFormEx()
         {
             InitializeComponent();
@@ -66,30 +68,17 @@ namespace Planning
             */
 
             Init();
-            /*
-            ConnectionParams.ServerName = @"ZDV\MS2019DVG";
-            ConnectionParams.BaseName = "Planning";
-            */
-            
+            Connect();
+            statusInfo.Text = $"База данных:[{Common.setting.BaseName}] Пользователь: [{Common.setting.LastLogin}]";
 
-
-            Common.settingsHandle = new SettingsHandle("Settings.xml", Common.setting);
-            Common.settingsHandle.Load();
-
-            ConnectionParams.ServerName = Common.setting.ServerName;
-            ConnectionParams.BaseName = Common.setting.BaseName;
-
-            ConnectionParams.UserName = Common.setting.UserName;
-            ConnectionParams.Pwd = Common.setting.Password;
-
-            statusInfo.Text = $"База данных:[{DataService.setting.BaseName}] Пользователь: [{DataService.setting.UserName}]";
-
+            GetUserPrvlg();
+            SetMainFormPrvlg();
 
             shipmentMainRepository = new ShipmentMainRepository();
             SetupColumns();
             SetupButtons();
 
-            ShipmentsLoad();
+            //ShipmentsLoad();
             tblShipments.DrawSubItem += TblShipments_DrawSubItem;
 
 
@@ -278,6 +267,93 @@ namespace Planning
 
             PopulateVisibleColumn();
 
+            Common.settingsHandle = new SettingsHandle("Settings.xml", Common.setting);
+            Common.settingsHandle.Load();
+
+            ConnectionParams.ServerName = Common.setting.ServerName;
+            ConnectionParams.BaseName = Common.setting.BaseName;
+
+            ConnectionParams.UserName = Common.setting.UserName;
+            ConnectionParams.Pwd = Common.DecryptString(Common.setting.Password);
+
+            if (String.IsNullOrEmpty(ConnectionParams.ServerName) || String.IsNullOrEmpty(ConnectionParams.BaseName))
+            {
+                MessageBox.Show("Не указаны параметры подключения к базе данных, проверте настройки подключения");
+            }
+
+        }
+
+        private void CloseAllTabs()
+        {
+            foreach (TabPage pg in tabForms.TabPages)
+            {
+                if (pg.Name != "tabMain")
+                    tabForms.TabPages.Remove(pg);
+            }
+        }
+        private bool LoginUser()
+        {
+            FormLogin frmLogin = new FormLogin();
+            if (frmLogin.ShowDialog() == DialogResult.Cancel)
+            {
+                return false;
+            }
+            CloseAllTabs();
+
+            Common.settingsHandle.SetParamValue("Connection\\UserName", Common.setting.LastLogin);
+            ///DataService.settingsHandle.SetParamValue("Connection\\LastLogin", DataService.setting.LastLogin);
+            //statusInfo.Text = $"База данных:{DataService.setting.BaseName} Пользователь: {DataService.setting.UserName}";
+
+            return true;
+        }
+        private void GetUserPrvlg()
+        {
+            FunctionRepository functionRepository = new FunctionRepository();
+            List<DataLayer.Function> functions = functionRepository.GetAll();
+
+            foreach (var item in functions)
+            {
+                UserFunctionPrvlg userFunctionPrvlg = new UserFunctionPrvlg();
+                userFunctionPrvlg.FunctionId = item.Id;
+                userFunctionPrvlg.FunctionCode = item.Code;
+                userFunctionPrvlg.FunctionName = item.Name;
+                UserPrvlgs.Add(userFunctionPrvlg);
+            }
+
+            UserGroupLnkRepository groupLnkRepository = new UserGroupLnkRepository();
+            List<UserGroupLnk> userGroups = groupLnkRepository.GetByUserId(Common.CurrentUser.Id);
+            if (userGroups == null)
+            {
+                return;
+            }
+
+            UserGrpPrvlgRepository userGrpPrvlgRepository = new UserGrpPrvlgRepository();
+            foreach (var item in userGroups)
+            {
+                List<DataLayer.UserGrpPrvlg> userGrpPrvlg = userGrpPrvlgRepository.GetByGrpId(item.Id);
+                foreach (var function in UserPrvlgs)
+                {
+                    DataLayer.UserGrpPrvlg grpFuncPrvlg = userGrpPrvlg.FirstOrDefault(p => p.FuncId == function.FunctionId);
+                    if (grpFuncPrvlg == null)
+                    {
+                        continue;
+                    }
+
+                    function.IsAppend = function.IsAppend || (bool)grpFuncPrvlg.IsAppend;
+                    function.IsDelete = function.IsDelete || (bool)grpFuncPrvlg.IsDelete;
+                    function.IsEdit = function.IsEdit || (bool)grpFuncPrvlg.IsEdit;
+                    function.IsView = function.IsView || (bool)grpFuncPrvlg.IsView;
+                }
+            }
+
+        }
+        private void Connect()
+        {
+            if (!LoginUser())
+            {
+                this.Close();
+                return;
+            }
         }
         private void PopulateVisibleColumn()
         {
@@ -330,6 +406,68 @@ namespace Planning
             tabForms.TabPages.Add(Name);
             tabForms.TabPages[tabForms.TabPages.Count - 1].Controls.Add(frm);            
             tabForms.SelectedTab = tabForms.TabPages[tabForms.TabPages.Count - 1];
+        }
+        private void SetMainFormPrvlg()
+        {
+
+            mainFormPrvlg = UserPrvlgs.Find(i => i.FunctionCode == "MainForm");
+            if (mainFormPrvlg != null)
+            {
+                btnAdd.Enabled = mainFormPrvlg.IsAppend;
+                btnDelete.Enabled = mainFormPrvlg.IsDelete;
+                btnRefresh.Enabled = mainFormPrvlg.IsView;
+            }
+
+            btnEdit.Image = mainFormPrvlg.IsEdit ? Properties.Resources.Edit : Properties.Resources.EditView;
+
+            bool isShowAdmin = false;
+            foreach (UserFunctionPrvlg item in UserPrvlgs)
+            {
+                ToolStripItem mi = FindMenuItem(menuMain.Items, item.FunctionCode);
+                if (item.FunctionCode == "Attr" || item.FunctionCode == "OperType")
+                {
+                    mi.Visible = false;
+                    continue;
+                }
+                if (item.FunctionCode == "UserGrp" || item.FunctionCode == "Users")
+                {
+                    isShowAdmin = isShowAdmin || item.IsView;
+                }
+                if (mi != null)
+                    mi.Visible = item.IsView;
+
+            }
+            toolStripMenuItemAdmin.Visible = isShowAdmin;
+        }
+
+        private void SetFormPrivalage(IItemPrivilege form, string FunctionId)
+        {
+            UserFunctionPrvlg userFunctionPrvlg = UserPrvlgs.Find(i => i.FunctionCode == FunctionId);
+            if (userFunctionPrvlg != null)
+            {
+                form.SetPrivilege(userFunctionPrvlg.IsAppend, userFunctionPrvlg.IsEdit, userFunctionPrvlg.IsDelete);
+            }
+        }
+
+
+        private ToolStripItem FindMenuItem(ToolStripItemCollection items, string Tag)
+        {
+            foreach (ToolStripMenuItem mi in items)
+            {
+                if ((string)mi.Tag == Tag)
+                {
+                    return mi;
+                }
+                else if (mi.DropDownItems.Count > 0)
+                {
+                    ToolStripItem miResult = FindMenuItem(mi.DropDownItems, Tag);
+                    if (miResult != null)
+                        return miResult;
+                }
+
+            }
+
+            return null;
         }
 
         private DataLayer.ShipmentMain GetCurrentRowObject()
@@ -533,7 +671,7 @@ namespace Planning
         private void menuItemDictWarehouse_Click(object sender, EventArgs e)
         {
             var frmWarehouse = new Warehouses();
-            //SetFormPrivalage(frmWarehouse, "Warehouse");
+            SetFormPrivalage(frmWarehouse, "Warehouse");
             AddFormTab(frmWarehouse, "Склады");
         }
 
@@ -553,14 +691,14 @@ namespace Planning
         private void menuItemDictCustomPosts_Click(object sender, EventArgs e)
         {
             var frmCustomPosts = new CustomPosts();
-            //SetFormPrivalage(frmCustomPosts, "CustomPost");
+            SetFormPrivalage(frmCustomPosts, "CustomPost");
             AddFormTab(frmCustomPosts, "Таможенные посты");
         }
 
         private void menuItemDictGates_Click(object sender, EventArgs e)
         {
             GateForm frmGate = new GateForm();
-            //SetFormPrivalage(frmGate, "Gate");
+            SetFormPrivalage(frmGate, "Gate");
             AddFormTab(frmGate, "Ворота");
             
         }
@@ -573,7 +711,7 @@ namespace Planning
         private void menuItemDictDepositor_Click(object sender, EventArgs e)
         {
             Depositors frmDepositors = new Depositors();
-            //SetFormPrivalage(frmDepositors, "Depositor");
+            SetFormPrivalage(frmDepositors, "Depositor");
             AddFormTab(frmDepositors, "Депозиторы");
         }
 
@@ -594,7 +732,7 @@ namespace Planning
         private void menuItemDictTimeSlot_Click(object sender, EventArgs e)
         {
             var frmTimeSlot = new TimeSlots();
-            //SetFormPrivalage(frmTimeSlot, "TimeSlot");
+            SetFormPrivalage(frmTimeSlot, "TimeSlot");
             AddFormTab(frmTimeSlot, "Тайм слоты");
         }
 
@@ -602,7 +740,7 @@ namespace Planning
         {
 
             TransportCompanyForm frmTransportCompany = new TransportCompanyForm();
-            //SetFormPrivalage(frmTransportCompany, "TC");
+            SetFormPrivalage(frmTransportCompany, "TC");
             AddFormTab(frmTransportCompany, "Транспортные компании");
         }
 
@@ -610,7 +748,7 @@ namespace Planning
         {
 
             var frmDelayReasons = new DictDelayReasons();
-            //SetFormPrivalage(frmDelayReasons, "DelayReasons");
+            SetFormPrivalage(frmDelayReasons, "DelayReasons");
             AddFormTab(frmDelayReasons, "Причины задержки");
         }
 
@@ -618,23 +756,21 @@ namespace Planning
         {
 
             var frmSupplier = new Suppliers();
-            //SetFormPrivalage(frmSupplier, "Supplier");
+            SetFormPrivalage(frmSupplier, "Supplier");
             AddFormTab(frmSupplier, "Поставщики");
         }
 
         private void menuItemDictAttributes_Click(object sender, EventArgs e)
         {
             var frmShimentElements = new ShipmentElements();
-
-            //SetFormPrivalage(frmShimentElements, "Attr");
+            SetFormPrivalage(frmShimentElements, "Attr");
             AddFormTab(frmShimentElements, "Элементы отгрузки");
         }
 
         private void menuItemDictTransportType_Click(object sender, EventArgs e)
         {
-
             var frmTransporType = new TransportTypeForm();
-            //SetFormPrivalage(frmTransporType, "TransporType");
+            SetFormPrivalage(frmTransporType, "TransporType");
             AddFormTab(frmTransporType, "Типы транспорта");
             
         }
@@ -710,9 +846,15 @@ namespace Planning
         private void menuItemDictUserGroups_Click(object sender, EventArgs e)
         {
             var frmUserGroups = new UserGroups();
-
-            // SetFormPrivalage(frmUserGroups, "UserGrp");
+            SetFormPrivalage(frmUserGroups, "UserGrp");
             AddFormTab(frmUserGroups, "Группы пользователей");
+        }
+
+        private void menuItemDictUsers_Click(object sender, EventArgs e)
+        {
+            var frmUsers = new Users();
+            SetFormPrivalage(frmUsers, "Users");
+            AddFormTab(frmUsers, "Пользователи");
         }
     }
 }

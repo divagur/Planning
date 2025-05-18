@@ -424,6 +424,7 @@ namespace Planning
 
         private bool GetLogin()
         {
+            /*
             FormLogin frmLogin = new FormLogin(DataService.setting);
             if (frmLogin.ShowDialog() == DialogResult.Cancel)
             {
@@ -434,7 +435,7 @@ namespace Planning
             DataService.settingsHandle.SetParamValue("Connection\\UserName", DataService.setting.UserName);
             //DataService.settingsHandle.SetParamValue("Connection\\LastLogin", DataService.setting.LastLogin);
             //statusInfo.Text = $"База данных:{DataService.setting.BaseName} Пользователь: {DataService.setting.UserName}";
-
+            */
             return true;
         }
 
@@ -767,9 +768,11 @@ namespace Planning
 
         private void miDictUser_Click(object sender, EventArgs e)
         {
+            /*
             var frmUsers = new Users();
             SetFormPrivalage(frmUsers, "Users");
             AddFormTab(frmUsers, "Пользователи");
+            */
         }
 
         private void miDictTimeSlot_Click(object sender, EventArgs e)
@@ -2106,7 +2109,7 @@ namespace Planning
         private void miCustomPosts_Click(object sender, EventArgs e)
         {
             var frmCustomPosts = new CustomPosts();
-            SetFormPrivalage(frmCustomPosts, "CustomPost");
+            //SetFormPrivalage(frmCustomPosts, "CustomPost");
             AddFormTab(frmCustomPosts, "Таможенные посты");
         }
 

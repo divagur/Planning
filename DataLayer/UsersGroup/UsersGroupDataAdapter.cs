@@ -24,7 +24,7 @@ namespace Planning.DataLayer
 
         public string GetSelectItemSql()
         {
-            return $@"select id as {nameof(UsersGroup.Id)}, name as {nameof(UsersGroup.Name)}, access as {nameof(UsersGroup.Access)} from {Table}";
+            return $@"select {Table}.id as {nameof(UsersGroup.Id)}, name as {nameof(UsersGroup.Name)}, access as {nameof(UsersGroup.Access)} from {Table}";
         }
     }
 }
