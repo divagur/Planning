@@ -30,8 +30,8 @@ namespace Planning.DataLayer
         public string GetSelectItemSql()
         {
             return $@"select {Table}.id as {nameof(UserGrpPrvlg.Id)}, grp_id as {nameof(UserGrpPrvlg.GrpId)}, func_id as {nameof(UserGrpPrvlg.FuncId)}, 
-                            is_view as {nameof(UserGrpPrvlg.IsView)}, is_append as {nameof(UserGrpPrvlg.IsAppend)}, 
-                            is_edit as {nameof(UserGrpPrvlg.IsEdit)}, is_delete as {nameof(UserGrpPrvlg.IsDelete)} 
+                            isnull(is_view,0) as {nameof(UserGrpPrvlg.IsView)}, isnull(is_append,0) as {nameof(UserGrpPrvlg.IsAppend)}, 
+                            isnull(is_edit,0) as {nameof(UserGrpPrvlg.IsEdit)}, isnull(is_delete,0) as {nameof(UserGrpPrvlg.IsDelete)} 
                        from {Table}";
         }
     }

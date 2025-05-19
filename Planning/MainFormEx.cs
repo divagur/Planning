@@ -300,7 +300,7 @@ namespace Planning
             }
             CloseAllTabs();
 
-            Common.settingsHandle.SetParamValue("Connection\\UserName", Common.setting.LastLogin);
+            Common.settingsHandle.SetParamValue("Connection\\LastLogin", Common.setting.LastLogin);
             ///DataService.settingsHandle.SetParamValue("Connection\\LastLogin", DataService.setting.LastLogin);
             //statusInfo.Text = $"База данных:{DataService.setting.BaseName} Пользователь: {DataService.setting.UserName}";
 
@@ -330,7 +330,7 @@ namespace Planning
             UserGrpPrvlgRepository userGrpPrvlgRepository = new UserGrpPrvlgRepository();
             foreach (var item in userGroups)
             {
-                List<DataLayer.UserGrpPrvlg> userGrpPrvlg = userGrpPrvlgRepository.GetByGrpId(item.Id);
+                List<DataLayer.UserGrpPrvlg> userGrpPrvlg = userGrpPrvlgRepository.GetByGrpId(item.GroupId);
                 foreach (var function in UserPrvlgs)
                 {
                     DataLayer.UserGrpPrvlg grpFuncPrvlg = userGrpPrvlg.FirstOrDefault(p => p.FuncId == function.FunctionId);

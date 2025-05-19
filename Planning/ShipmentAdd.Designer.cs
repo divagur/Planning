@@ -481,6 +481,7 @@
             this.cmbDepositor.Size = new System.Drawing.Size(202, 21);
             this.cmbDepositor.TabIndex = 3;
             this.cmbDepositor.SelectedIndexChanged += new System.EventHandler(this.cmbDepositor_SelectedIndexChanged);
+            this.cmbDepositor.Format += new System.Windows.Forms.ListControlConvertEventHandler(this.cmbDepositor_Format);
             // 
             // label3
             // 

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using Dapper;
+using Planning.DataLayer;
 
 namespace Planning
 {
@@ -17,7 +18,7 @@ namespace Planning
         DataSet ds;
         SqlDataAdapter adapter;
         SqlCommandBuilder commandBuilder;
-        PlanningDbContext _context;
+       // PlanningDbContext _context;
         Shipment _shipment;
         Movement _movement;
         ShipmentParam _shipmentAddResult;
@@ -34,22 +35,26 @@ namespace Planning
         public ShipmentAdd(ShipmentParam shipmentAddResult)
         {
             InitializeComponent();
-            _context = DataService.context;
+            //_context = DataService.context;
             //_shipment = shipment;
             _shipmentAddResult = shipmentAddResult;
         }
         private void PopulateList()
         {
+            DepositorRepository depositorRepository = new DepositorRepository();
+            List<DataLayer.Depositor> depositors = depositorRepository.GetAll();
+
             cmbDepositor.Items.Clear();
-            foreach (var d in _context.Depositors.ToList())
-                cmbDepositor.Items.Add(d.Name);
+            foreach (var d in depositors)
+                cmbDepositor.Items.Add(d);
 
             cmbDepositor.SelectedIndex = 0;
+            /*
             int? depositorId = DataService.GetDictIdByName("Депозиторы", cmbDepositor.Text);
             cmbTimeSlot.Items.Clear();
             foreach (var ts in _context.TimeSlots.Where(x=>x.DepositorId ==depositorId).OrderBy(x=>x.SlotTime).ToList())
                 cmbTimeSlot.Items.Add(ts.SlotTime.ToString());
-
+            */
         }
 
 
@@ -171,6 +176,8 @@ namespace Planning
                 return;
             }
             */
+
+            /*
             if (cmbType.SelectedIndex < 2)
             {
                 _shipmentAddResult.IsShipment = true;
@@ -238,21 +245,25 @@ namespace Planning
                 _context.Movements.Add(_movement);
             }
             _context.SaveChanges();
-
+            */
         }
 
         private int? GetWarehouseId(string WarehouseCode)
         {
-
+            return null;
+            /*
             Warehouse warehouse = _context.Warehouses.FirstOrDefault(w => w.Code == WarehouseCode);
-
             return warehouse == null ? null : (int?)warehouse.Id;
+            */
         }
 
         private int? GetTransportViewId(string TransportViewName)
         {            
+            return null;
+            /*
             TransportView transportView = _context.TransportViews.FirstOrDefault(tv=>tv.Name == TransportViewName);
             return transportView == null? null:(int?)transportView.Id;
+            */
         }
 
         private void btnOk_Click(object sender, EventArgs e)
@@ -414,6 +425,11 @@ namespace Planning
         private void ShipmentAdd_FormClosed(object sender, FormClosedEventArgs e)
         {
             //DialogResult = DialogResult.Cancel;
+        }
+
+        private void cmbDepositor_Format(object sender, ListControlConvertEventArgs e)
+        {
+            e.Value = ((DataLayer.Depositor)e.ListItem).Name;
         }
     }
 }
