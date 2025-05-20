@@ -15,7 +15,11 @@ namespace Planning.DataLayer
         {
 
         }
+        public TransportViewRepository()
+            : base()
+        {
 
+        }
         public TransportView GetByNameOrCreate(string Name)
         {
             string sql = dataAdapter.GetSelectItemSql() + " where name = @viewName";

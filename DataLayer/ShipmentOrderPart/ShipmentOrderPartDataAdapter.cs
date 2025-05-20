@@ -20,8 +20,7 @@ namespace Planning.DataLayer
                                     values(
                                             @{nameof(ShipmentOrderPart.ShOrderId)},@{nameof(ShipmentOrderPart.OsLvId)},@{nameof(ShipmentOrderPart.OsLvCode)},
                                             @{nameof(ShipmentOrderPart.IsBinding)}, @{nameof(ShipmentOrderPart.ManualLoad)},@{nameof(ShipmentOrderPart.ManualUnload)},
-                                            @{nameof(ShipmentOrderPart.PalletAmount)},@{nameof(ShipmentOrderPart.ShippingPlacesNumber)},@{nameof(ShipmentOrderPart.OrderPartWeight)},
-                                            @{nameof(ShipmentOrder.IsEdm)})";
+                                            @{nameof(ShipmentOrderPart.PalletAmount)},@{nameof(ShipmentOrderPart.ShippingPlacesNumber)},@{nameof(ShipmentOrderPart.OrderPartWeight)})";
                 case EditState.Edit:
                     return $@"update {Table} set sh_order_id = @{nameof(ShipmentOrderPart.ShOrderId)}, os_lvid = @{nameof(ShipmentOrderPart.OsLvId)}, 
                             os_lvcode = @{ nameof(ShipmentOrderPart.OsLvCode)}, is_binding = @{ nameof(ShipmentOrderPart.IsBinding)}, 

@@ -24,5 +24,15 @@ namespace Planning.DataLayer
         {
 
         }
+
+        public List<TimeSlot> GetByDepositorId(int? DepositorId)
+        {
+            List<TimeSlot> timeSlots;
+            string sql = dataAdapter.GetSelectItemSql() + " where depositor_id = @depositorId";
+            
+            var queryResult = dbConnection.Query<TimeSlot>(sql, new { depositorId = DepositorId });
+            timeSlots = queryResult.ToList();
+            return timeSlots;
+        }
     }
 }

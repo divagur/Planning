@@ -78,7 +78,7 @@ namespace Planning
             SetupColumns();
             SetupButtons();
 
-            //ShipmentsLoad();
+            ShipmentsLoad();
             tblShipments.DrawSubItem += TblShipments_DrawSubItem;
 
 
@@ -160,13 +160,13 @@ namespace Planning
             }
 
             ShipmentEdit(shipmentAddResult);
-           // ShipmentsLoad();
+            //ShipmentsLoad();
         }
         private void ShipmentEdit(ShipmentParam shipmentAddResult)
         {
-            shipmen_edit frmShipmentEdit;
-            frmShipmentEdit = shipmentAddResult.IsShipment == true ? new shipmen_edit((Planning.DataLayer.Shipment)shipmentAddResult.Result) : 
-                new shipmen_edit((Planning.DataLayer.Movement)shipmentAddResult.Result);
+            ShipmenEdit frmShipmentEdit;
+            frmShipmentEdit = shipmentAddResult.IsShipment == true ? new ShipmenEdit((Planning.DataLayer.Shipment)shipmentAddResult.Result) : 
+                new ShipmenEdit((Planning.DataLayer.Movement)shipmentAddResult.Result);
             /*
             if (shipmentAddResult.IsShipment)
                 frmShipmentEdit = new shipmen_edit((Shipment)shipmentAddResult.Result);
@@ -551,11 +551,19 @@ namespace Planning
         private void btnAdd_Click(object sender, EventArgs e)
         {
 
-            //tblShipments.AllColumns[4].IsVisible = false;
-            List < OLVColumn > cols= tblShipments.AllColumns;
-            bool v = colDate.IsVisible;
-            List<OLVColumn> columns = tblShipments.GetFilteredColumns(tblShipments.View);
-            //tblShipments.RebuildColumns();
+            ShipmentParam shipmentAddResult = new ShipmentParam();
+            ShipmentAdd frmShipmentAdd = new ShipmentAdd(shipmentAddResult);
+            DialogResult result = frmShipmentAdd.ShowDialog();
+            if (result == DialogResult.OK || result == DialogResult.Retry)
+            {
+
+
+                if (result == DialogResult.Retry)
+                {
+                    ShipmentEdit(shipmentAddResult);
+                }
+                ShipmentsLoad();
+            }
 
         }
 

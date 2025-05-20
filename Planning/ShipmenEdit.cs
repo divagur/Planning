@@ -14,7 +14,7 @@ using Planning.DataLayer;
 
 namespace Planning
 {
-    public partial class shipmen_edit : Form
+    public partial class ShipmenEdit : Form
     {
 
         const int WM_PARENTNOTIFY = 0x210;
@@ -418,7 +418,7 @@ namespace Planning
                 return true;
             }
         }
-        public shipmen_edit(Planning.DataLayer.Shipment shipment, bool isNew = false)
+        public ShipmenEdit(Planning.DataLayer.Shipment shipment, bool isNew = false)
         {
             
             InitializeComponent();
@@ -453,7 +453,7 @@ namespace Planning
             }
         }
 
-        public shipmen_edit(Planning.DataLayer.Movement movement, bool isNew = false)
+        public ShipmenEdit(Planning.DataLayer.Movement movement, bool isNew = false)
         {
             InitializeComponent();
             _context = DataService.context;

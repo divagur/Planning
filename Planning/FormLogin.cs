@@ -24,7 +24,7 @@ namespace Planning
         private void OkClick()
         {
             Common.CurrentUser = userRepository.GetByUserName(edUserName.Text);
-            if (Common.CurrentUser == null || Common.CurrentUser.Password != Common.CalculateHashGOST(edPassword.Text))
+            if (Common.CurrentUser == null || (Common.CurrentUser.Password !=null && Common.CurrentUser.Password != Common.CalculateHashGOST(edPassword.Text)))
             {
                 MessageBox.Show($"Пользователь {Common.setting.LastLogin} не найден или не верно указан пароль");
                 return;

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Planning.DataLayer
 {
-    public class MovementRepository : BaseRepository<Shipment, ShipmentDataAdapter>
+    public class MovementRepository : BaseRepository<Movement, MovementDataAdapter>
     {
         public MovementRepository(string ConnectionString)
             : base(ConnectionString)

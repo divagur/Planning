@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using Planning.DataLayer;
 namespace Planning
 {
     public partial class CustomPostEdit : DictEditForm
@@ -40,6 +40,8 @@ namespace Planning
             _customPost.Name = txtName.Text;
             _customPost.Descr = txtDescr.Text;
 
+            CustomPostRepository customPostRepository = new CustomPostRepository();
+            customPostRepository.Save(_customPost);
             RemoveAllDelivery();
             List<DataLayer.DeliveryPeriod> _deliveryPeriods = new List<DataLayer.DeliveryPeriod>();
             foreach (DataGridViewRow row in tblDelivery.Rows)

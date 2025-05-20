@@ -39,37 +39,6 @@ namespace Planning
             pLAttributeList = pLAttributeRepository.GetAll(_depositor.Id);
             UpdateTblAttrDataSource();
 
-            /*
-            using (SqlConnection connection = new SqlConnection(DataService.connectionString))
-            {
-                if (connection.State == ConnectionState.Closed)
-                    connection.Open();
-
-                string sqlText = "sp_PLAttrList";
-
-                SqlCommand command = new SqlCommand(sqlText, connection);
-                command.CommandType = CommandType.StoredProcedure;
-
-                command.Parameters.Add(new SqlParameter { ParameterName = "@DepId", Value = _depositor.Id });
-
-                var reader = command.ExecuteReader();
-
-                if (reader.HasRows)
-                {
-                    tblAttrShipment.Rows.Clear();
-                    while (reader.Read())
-                    {
-                        int Row = tblAttrShipment.Rows.Add();
-                        tblAttrShipment.Rows[Row].Cells["Id"].Value = reader.GetInt32(0);
-                        tblAttrShipment.Rows[Row].Cells["LVAttrName"].Value = reader.GetString(2);
-                        tblAttrShipment.Rows[Row].Cells["PLField"].Value = reader.GetString(4);
-                        tblAttrShipment.Rows[Row].Cells["LvType"].Value = reader.GetString(6);
-
-                    }
-                }
-
-            }
-            */
         }
 
         private DataLayer.DepositorAttribute GetSelectedObject()
@@ -123,22 +92,6 @@ namespace Planning
             depositorAttributeRepository.Save(attr);
             PopulateAttr();
 
-            /*
-            if (isNew)
-            {
-                _context.LvAttrs.Add(attr);
-                rowIdx = tblAttrShipment.Rows.Add();
-            }
-            else
-            {
-                rowIdx = tblAttrShipment.CurrentRow.Index;
-            }
-
-            tblAttrShipment.Rows[rowIdx].Cells["Id"].Value = attr.Id;
-            tblAttrShipment.Rows[rowIdx].Cells["LVAttrName"].Value = attrName[0];
-            tblAttrShipment.Rows[rowIdx].Cells["PLField"].Value = attrName[1];
-            tblAttrShipment.Rows[rowIdx].Cells["LvType"].Value = attrName[2];
-            */
         }
 
         private void tblAttr_CellEndEdit(object sender, DataGridViewCellEventArgs e)

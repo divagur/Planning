@@ -30,7 +30,7 @@ namespace Planning.DataLayer
                             manual_load = @{ nameof(ShipmentOrder.ManualLoad)}, manual_unload = @{ nameof(ShipmentOrder.ManualUnload)}, pallet_amount = @{ nameof(ShipmentOrder.PalletAmount)}, 
                             binding_id = @{ nameof(ShipmentOrder.BindingId)}, lv_order_id = @{ nameof(ShipmentOrder.LvOrderId)}, lv_order_code = @{ nameof(ShipmentOrder.LvOrderCode)}, 
                             shipping_places_number = @{nameof(ShipmentOrder.ShippingPlacesNumber)}, order_weight = @{ nameof(ShipmentOrder.OrderWeight)}, 
-                            is_edm = @{ nameof(ShipmentOrder.IsEdm)}
+                            is_edm = @{nameof(ShipmentOrder.IsEdm)}
                         where id = @Id";
                 case EditState.Delete:
                     return $"delete from {Table} where id = @Id";
@@ -49,7 +49,7 @@ namespace Planning.DataLayer
                             manual_load as { nameof(ShipmentOrder.ManualLoad)}, manual_unload as { nameof(ShipmentOrder.ManualUnload)}, pallet_amount as { nameof(ShipmentOrder.PalletAmount)}, 
                             binding_id as { nameof(ShipmentOrder.BindingId)}, lv_order_id as { nameof(ShipmentOrder.LvOrderId)}, lv_order_code as { nameof(ShipmentOrder.LvOrderCode)}, 
                             shipping_places_number as { nameof(ShipmentOrder.ShippingPlacesNumber)}, order_weight as { nameof(ShipmentOrder.OrderWeight)}, 
-                            is_edm as { nameof(ShipmentOrder.IsEdm)}
+                            is_edm as {nameof(ShipmentOrder.IsEdm)}
 
             from 
 	                    {Table}
