@@ -156,7 +156,9 @@ namespace Planning
                 _shipment.TimeSlotId = GetSelectedTimeSlotId();
                 _shipment.IsAddLv = false;
                 //bool isAddLv = false;
-                
+                _shipment.TransportViewId = GetTransportViewId(DataService.setting.DefaultTransportViewName);
+                _shipment.WarehouseId = GetWarehouseId(DataService.setting.DefaultWarehouseCode);
+
                 ShipmentRepository shipmentRepository = new ShipmentRepository();
                 ShipmentOrderRepository shipmentOrderRepository = new ShipmentOrderRepository();
                 ShipmentOrderPartRepository shipmentOrderPartRepository = new ShipmentOrderPartRepository();
@@ -206,8 +208,7 @@ namespace Planning
                     }
                     if (cmbType.SelectedIndex == 0)
                     {
-                        _shipment.TransportViewId = GetTransportViewId(DataService.setting.DefaultTransportViewName);
-                        _shipment.WarehouseId = GetWarehouseId(DataService.setting.DefaultWarehouseCode);
+
                         List<DataLayer.ShipmentOrderPart> shipmentOrderParts = new List<DataLayer.ShipmentOrderPart>();
 
                         DataLayer.ShipmentOrderPart shipmentOrderPart = new DataLayer.ShipmentOrderPart();

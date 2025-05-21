@@ -22,12 +22,12 @@ namespace Planning.DataLayer
 
         }        
 
-        public List<ShipmentOrderPart> GetShipmentOrderParts(List<int?> ShipmentIds)
+        public List<ShipmentOrderPart> GetShipmentOrderParts(int? ShipmentOrderId)
         {
             List<ShipmentOrderPart> result;
-            string sql = dataAdapter.GetSelectItemSql() + " where sh_order_id in (@shipmentIds)";
-            string shipmentIds = String.Join(",", ShipmentIds.Select(i => i.ToString()).ToArray());
-            var queryResult = dbConnection.Query<ShipmentOrderPart>(sql, new { shipmentIds = shipmentIds });
+            string sql = dataAdapter.GetSelectItemSql() + " where sh_order_id = (@shipmentOrderId)";
+            //string shipmentIds = String.Join(",", ShipmentIds.Select(i => i.ToString()).ToArray());
+            var queryResult = dbConnection.Query<ShipmentOrderPart>(sql, new { shipmentOrderId = ShipmentOrderId });
             result = queryResult.ToList();
             return result;
         }

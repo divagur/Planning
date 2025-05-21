@@ -220,6 +220,7 @@
             this.cmbTransportCompany.Name = "cmbTransportCompany";
             this.cmbTransportCompany.Size = new System.Drawing.Size(341, 21);
             this.cmbTransportCompany.TabIndex = 1;
+            this.cmbTransportCompany.Format += new System.Windows.Forms.ListControlConvertEventHandler(this.cmbTransportCompany_Format);
             // 
             // edShipmentComment
             // 
@@ -239,6 +240,7 @@
             this.cmbDelayReasons.Name = "cmbDelayReasons";
             this.cmbDelayReasons.Size = new System.Drawing.Size(332, 21);
             this.cmbDelayReasons.TabIndex = 3;
+            this.cmbDelayReasons.Format += new System.Windows.Forms.ListControlConvertEventHandler(this.cmbDelayReasons_Format);
             // 
             // edDelayComment
             // 
@@ -302,6 +304,7 @@
             this.cmbTransportType.Name = "cmbTransportType";
             this.cmbTransportType.Size = new System.Drawing.Size(191, 21);
             this.cmbTransportType.TabIndex = 31;
+            this.cmbTransportType.Format += new System.Windows.Forms.ListControlConvertEventHandler(this.cmbTransportType_Format);
             // 
             // label21
             // 
@@ -424,6 +427,7 @@
             this.cmbGate.Name = "cmbGate";
             this.cmbGate.Size = new System.Drawing.Size(121, 21);
             this.cmbGate.TabIndex = 18;
+            this.cmbGate.Format += new System.Windows.Forms.ListControlConvertEventHandler(this.cmbGate_Format);
             // 
             // label19
             // 
@@ -1344,6 +1348,7 @@
             this.cmbTransportView.Name = "cmbTransportView";
             this.cmbTransportView.Size = new System.Drawing.Size(265, 21);
             this.cmbTransportView.TabIndex = 1;
+            this.cmbTransportView.Format += new System.Windows.Forms.ListControlConvertEventHandler(this.cmbTransportView_Format);
             // 
             // cmbWarehouse
             // 
@@ -1352,6 +1357,7 @@
             this.cmbWarehouse.Name = "cmbWarehouse";
             this.cmbWarehouse.Size = new System.Drawing.Size(202, 21);
             this.cmbWarehouse.TabIndex = 1;
+            this.cmbWarehouse.Format += new System.Windows.Forms.ListControlConvertEventHandler(this.cmbWarehouse_Format);
             // 
             // btnSDate
             // 
@@ -1370,6 +1376,7 @@
             this.cmbSupplier.Name = "cmbSupplier";
             this.cmbSupplier.Size = new System.Drawing.Size(341, 21);
             this.cmbSupplier.TabIndex = 39;
+            this.cmbSupplier.Format += new System.Windows.Forms.ListControlConvertEventHandler(this.cmbSupplier_Format);
             // 
             // label22
             // 

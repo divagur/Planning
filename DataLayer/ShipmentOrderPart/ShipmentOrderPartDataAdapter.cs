@@ -42,7 +42,7 @@ namespace Planning.DataLayer
                             id as { nameof(ShipmentOrderPart.Id)}, sh_order_id as {nameof(ShipmentOrderPart.ShOrderId)}, os_lvid as { nameof(ShipmentOrderPart.OsLvId)}, 
                             os_lvcode as { nameof(ShipmentOrderPart.OsLvCode)}, is_binding as { nameof(ShipmentOrderPart.IsBinding)}, 
                             manual_load as { nameof(ShipmentOrderPart.ManualLoad)}, manual_unload as { nameof(ShipmentOrderPart.ManualUnload)}, pallet_amount as { nameof(ShipmentOrderPart.PalletAmount)},                             
-                            shipping_places_number as { nameof(ShipmentOrderPart.ShippingPlacesNumber)}, order_weight as { nameof(ShipmentOrderPart.OrderPartWeight)}
+                            shipping_places_number as { nameof(ShipmentOrderPart.ShippingPlacesNumber)}, order_part_weight as { nameof(ShipmentOrderPart.OrderPartWeight)}
             from 
 	                    {Table}
                     ";

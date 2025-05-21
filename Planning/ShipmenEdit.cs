@@ -11,6 +11,7 @@ using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Threading;
 using Planning.DataLayer;
+using Planning.Kernel;
 
 namespace Planning
 {
@@ -24,7 +25,7 @@ namespace Planning
         Planning.DataLayer.Movement _movement;
         List<Planning.DataLayer.ShipmentOrder> _shipmentOrders;
         List<Planning.DataLayer.ShipmentOrderPart> _shipmentOrderParts;
-        PlanningDbContext _context;
+        //PlanningDbContext _context;
         DataSet ds;
         SqlDataAdapter adapter;
         bool getCalendarTime;
@@ -32,7 +33,7 @@ namespace Planning
         bool _isNew;
         string _title;
         StringBuilder sbLog = new StringBuilder();
-        List<ShipmentOrderPart> shipmentOrderParts = new List<ShipmentOrderPart>();
+        List<DataLayer.ShipmentOrderPart> shipmentOrderParts = new List<DataLayer.ShipmentOrderPart>();
         int itemId;
         frmShipmentHistory frmShipmentLog = null;
 
@@ -122,15 +123,6 @@ namespace Planning
         public void LockField(List<string> filterExclusion,bool IsLock)
         {
             LockFieldInner(this.Controls, filterExclusion, IsLock);
-            /*
-            for (int i = 0; i < this.Controls.Count; i++)
-            {
-                if (!((this.Controls[i] is Label) || (this.Controls[i] is GroupBox)))
-                    if (!(filterExclusion != null ? filterExclusion.Contains(this.Controls[i].Name) : false))
-                        this.Controls[i].Enabled = IsLock;
-            
-             
-            }*/
         }
 
         public void AddLogItem(string Text)
@@ -148,7 +140,8 @@ namespace Planning
             Text = AddTilte != ""?_title + " ["+AddTilte+"]":_title;
         }
 
-        private void PopulateComboBoxField(ComboBox comboBox, List<string> items)
+        private void PopulateComboBoxField<T>(ComboBox comboBox, List<T> items)
+            where T:BaseDataItem
         {
             comboBox.Items.Clear();
             comboBox.Items.AddRange(items.ToArray());
@@ -157,15 +150,23 @@ namespace Planning
         public void Populate()
         {
 
+            DelayReasonRepository delayReasonRepository = new DelayReasonRepository();
+            GatewayRepository gatewayRepository = new GatewayRepository();
+            TimeSlotRepository timeSlotRepository = new TimeSlotRepository();
+            TransportCompanyRepository transportCompanyRepository = new TransportCompanyRepository();
+            TransportTypeRepository transportTypeRepository = new TransportTypeRepository();
+            SupplierRepository supplierRepository = new SupplierRepository();
+            WarehouseRepository warehouseRepository = new WarehouseRepository();
+            TransportViewRepository transportViewRepository = new TransportViewRepository();
 
-            PopulateComboBoxField(cmbDelayReasons, _context.DelayReasons.Select(l=>l.Name).ToList());
-            PopulateComboBoxField(cmbGate, _context.Gateways.Select(l => l.Name.ToString()).ToList());
-            PopulateComboBoxField(cmbTimeSlot, _context.TimeSlots.OrderBy(t => t.SlotTime).Select(l => l.SlotTime.ToString()).ToList());
-            PopulateComboBoxField(cmbTransportCompany, _context.TransportCompanies.Where(t => t.IsActive == true).Select(l => l.Name).ToList());
-            PopulateComboBoxField(cmbTransportType, _context.TransportTypes.Select(l => l.Name).ToList());
-            PopulateComboBoxField(cmbSupplier, _context.Suppliers.Where(t => t.IsActive == true).Select(l => l.Name).ToList());
-            PopulateComboBoxField(cmbWarehouse, _context.Warehouses.Select(l => l.Name).ToList());
-            PopulateComboBoxField(cmbTransportView, _context.TransportViews.Select(l => l.Name).ToList());
+            PopulateComboBoxField(cmbDelayReasons, delayReasonRepository.GetAll());
+            PopulateComboBoxField(cmbGate, gatewayRepository.GetAll());
+            PopulateComboBoxField(cmbTimeSlot, timeSlotRepository.GetAll().OrderBy(t=>t.SlotTime).ToList());
+            PopulateComboBoxField(cmbTransportCompany, transportCompanyRepository.GetAll().Where(t=>t.IsActive == true).ToList());
+            PopulateComboBoxField(cmbTransportType, transportTypeRepository.GetAll());
+            PopulateComboBoxField(cmbSupplier, supplierRepository.GetAll().Where(s => s.IsActive == true).ToList());
+            PopulateComboBoxField(cmbWarehouse, warehouseRepository.GetAll());
+            PopulateComboBoxField(cmbTransportView, transportViewRepository.GetAll());
 
             if (IsShipment)
             {
@@ -173,7 +174,7 @@ namespace Planning
 
                 edSDate.Text = _shipment.SDate == null ? DateTime.Now.ToShortDateString() : _shipment.SDate.Value.ToShortDateString();
                 edShipmentComment.Text = _shipment.SComment;
-                cmbDelayReasons.Text = DataService.GetDictNameById("Причины_задержки", _shipment.DelayReasonsId);
+                cmbDelayReasons.SelectedItem = delayReasonRepository.GetById(_shipment.DelayReasonsId); //DataService.GetDictNameById("Причины_задержки", _shipment.DelayReasonsId);
                 edDelayComment.Text = _shipment.DelayComment;
                 cbIsCourier.Checked = _shipment.IsCourier == null ? false : (bool)_shipment.IsCourier;
                 cbSpecCondition.Checked = _shipment.SpCondition == null ? false:(bool)_shipment.SpCondition;
@@ -190,25 +191,29 @@ namespace Planning
                 edAttorneyNumber.Text = _shipment.AttorneyNumber;
                 edAttorneyDate.Text = _shipment.AttorneyDate.ToString();
                 edAttorneyIssued.Text = _shipment.AttorneyIssued;
-                cmbGate.Text = DataService.GetDictNameById("Ворота", _shipment.GateId);
+                cmbGate.SelectedItem = gatewayRepository.GetById(_shipment.GateId); //DataService.GetDictNameById("Ворота", _shipment.GateId);
                 cmbTimeSlot.Text = _shipment.TimeSlot == null ? "" : _shipment.TimeSlot.SlotTime.ToString();
                 //DataService.GetDictValueById("ТаймСлоты","slot_time", _shipment.TimeSlotId);
                 //cbIsCourier.Checked = (bool)_shipment.IsCourier;
 
-                cmbTransportCompany.Text = DataService.GetDictNameById("ТК", _shipment.TransportCompanyId);
-                cmbTransportType.Text = DataService.GetDictNameById("Типы_транспорта", _shipment.TransportTypeId);
-                cmbSupplier.Text = DataService.GetDictNameById("Поставщики", _shipment.SupplierId);
-                cmbWarehouse.Text = DataService.GetDictNameById("Склады", _shipment.WarehouseId);
-                cmbTransportView.Text = DataService.GetDictNameById("Виды_транспорта", _shipment.TransportViewId);
+                cmbTransportCompany.SelectedItem = transportCompanyRepository.GetById(_shipment.TransportCompanyId);//DataService.GetDictNameById("ТК", _shipment.TransportCompanyId);
+                cmbTransportType.SelectedItem = transportTypeRepository.GetById(_shipment.TransportTypeId);//DataService.GetDictNameById("Типы_транспорта", _shipment.TransportTypeId);
+                cmbSupplier.SelectedItem = supplierRepository.GetById(_shipment.SupplierId);//DataService.GetDictNameById("Поставщики", _shipment.SupplierId);
+                cmbWarehouse.SelectedItem = warehouseRepository.GetById(_shipment.WarehouseId);//DataService.GetDictNameById("Склады", _shipment.WarehouseId);
+                cmbTransportView.SelectedItem = transportViewRepository.GetById(_shipment.TransportViewId);//DataService.GetDictNameById("Виды_транспорта", _shipment.TransportViewId);
 
                 ShipmentOrderRepository shipmentOrderRepository = new ShipmentOrderRepository();
-                _shipmentOrders = shipmentOrderRepository.GetAll();
+                _shipmentOrders = shipmentOrderRepository.GetShipmentOrders(_shipment.Id);
 
                 tblShipmentOrders.AutoGenerateColumns = false;
                 tblShipmentOrders.DataSource = _shipmentOrders;
 
                 ShipmentOrderPartRepository shipmentOrderPartRepository = new ShipmentOrderPartRepository();
-                _shipmentOrderParts = shipmentOrderPartRepository.GetShipmentOrderParts(_shipmentOrders.Select(o=>o.Id).ToList());
+                foreach (var order in _shipmentOrders)
+                {
+                    _shipmentOrderParts.AddRange(shipmentOrderPartRepository.GetShipmentOrderParts(order.Id));
+                }
+               
                 tblOrderParts.AutoGenerateColumns = false;
                 tblOrderParts.DataSource = null;
                 tblOrderParts.DataSource = _shipmentOrderParts;
@@ -423,7 +428,6 @@ namespace Planning
             
             InitializeComponent();
 
-            _context = DataService.context;
             _shipment = shipment;
             IsShipment = true;
             itemId = (int)shipment.Id;
@@ -456,7 +460,6 @@ namespace Planning
         public ShipmenEdit(Planning.DataLayer.Movement movement, bool isNew = false)
         {
             InitializeComponent();
-            _context = DataService.context;
             _movement = movement;
             IsShipment = false;
             itemId = (int)movement.Id;
@@ -731,14 +734,14 @@ namespace Planning
 
         private void btnBindLV_Click(object sender, EventArgs e)
         {
-            _context.SaveChanges();
+            //_context.SaveChanges();
             if (BindOrderToLV())
             {
                
                 bool isAllBindings = true;
                
                 var listOrdId = _shipmentOrders.Select(o => (int?)o.Id).ToList();
-                var ordParts = _context.ShipmentOrderParts.Where(s => listOrdId.Contains(s.ShOrderId)).ToList();
+                //var ordParts = _context.ShipmentOrderParts.Where(s => listOrdId.Contains(s.ShOrderId)).ToList();
                 /*foreach (var item in _context.ShipmentOrderParts.Where(s=> _shipment.ShipmentOrders.Select(o=>o.Id).ToList().Contains((int)s.ShOrderId)))
                 {
                     _context.Entry(item).Reload();
@@ -863,7 +866,7 @@ namespace Planning
             ShipmentAdd frmShipmentAdd = new ShipmentAdd(shipmentAddResult);
             if (frmShipmentAdd.ShowDialog() == DialogResult.OK)
             {
-                _context.SaveChanges();
+                //_context.SaveChanges();
                 PopulateMovementItem();
             }
 
@@ -991,7 +994,7 @@ namespace Planning
         {
             if (tblShipmentOrders.CurrentCell == null)
                 return;
-            ShipmentOrder shipmentOrder = _context.ShipmentOrders.Find(tblShipmentOrders.Rows[tblShipmentOrders.CurrentCell.RowIndex].Cells["colId"].Value);
+            ShipmentOrder shipmentOrder = null;//_context.ShipmentOrders.Find(tblShipmentOrders.Rows[tblShipmentOrders.CurrentCell.RowIndex].Cells["colId"].Value);
 
             if (tblOrderParts.CurrentCell == null)
                 return;
@@ -1055,6 +1058,42 @@ namespace Planning
             {
                 AddHistory(itemId);
             }
+        }
+
+        private void cmbSupplier_Format(object sender, ListControlConvertEventArgs e)
+        {
+            e.Value = ((DataLayer.Supplier)e.ListItem).Name;
+        }
+
+        private void cmbTransportCompany_Format(object sender, ListControlConvertEventArgs e)
+        {
+            e.Value = ((DataLayer.TransportCompany)e.ListItem).Name;
+        }
+
+        private void cmbWarehouse_Format(object sender, ListControlConvertEventArgs e)
+        {
+            e.Value = ((DataLayer.Warehouse)e.ListItem).Name;
+        }
+
+        private void cmbTransportView_Format(object sender, ListControlConvertEventArgs e)
+        {
+            e.Value = ((DataLayer.TransportView)e.ListItem).Name;
+        }
+
+        private void cmbDelayReasons_Format(object sender, ListControlConvertEventArgs e)
+        {
+            e.Value = ((DataLayer.DelayReason)e.ListItem).Name;
+        }
+
+        private void cmbTransportType_Format(object sender, ListControlConvertEventArgs e)
+        {
+            e.Value = ((DataLayer.TransportType)e.ListItem).Name;
+
+        }
+
+        private void cmbGate_Format(object sender, ListControlConvertEventArgs e)
+        {
+            e.Value = ((DataLayer.Gateway)e.ListItem).Name;
         }
     }
 

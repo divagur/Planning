@@ -57,7 +57,7 @@ namespace Planning
             {
                 //Planning.DataLayer.ShipmentOrder shipmentOrder = _shipmentOrders.First(o => o.LvOrderId == _LVOrderId);
                 ShipmentOrderPartRepository shipmentOrderPartRepository = new ShipmentOrderPartRepository();
-                _shipmentOrderParts = shipmentOrderPartRepository.GetShipmentOrderParts(new List<int?>() {_shipmentOrder.Id});
+                //_shipmentOrderParts = shipmentOrderPartRepository.GetShipmentOrderParts(new List<int?>() {_shipmentOrder.Id});
 
                 var listExclusionID = _shipmentOrderParts.Where(p => p.ShOrderId == _shipmentOrder.Id).Select(p => p.OsLvId).ToList();
                     //shipmentOrder.ShipmentOrderParts.Select(p => (int?)p.OsLvId).ToList();
