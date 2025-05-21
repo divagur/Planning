@@ -182,6 +182,8 @@ namespace Planning
                 _shipment.TimeSlotId = DataService.GetDictIdByCondition("ТаймСлоты", $"depositor_id = {_shipment.DepositorId} and slot_time = '{cmbTimeSlot.Text}'");
                 _shipment.IsAddLv = false;
                 //bool isAddLv = false;
+                _shipment.TransportViewId = GetTransportViewId(DataService.setting.DefaultTransportViewName);
+                _shipment.WarehouseId = GetWarehouseId(DataService.setting.DefaultWarehouseCode);
 
                 for (int i = 0; i < tblShipmentItem.RowCount; i++)
                 {
@@ -205,8 +207,7 @@ namespace Planning
                     }
                     //if (cmbType.SelectedIndex == 0)
                     //{
-                        _shipment.TransportViewId = GetTransportViewId(DataService.setting.DefaultTransportViewName);
-                        _shipment.WarehouseId = GetWarehouseId(DataService.setting.DefaultWarehouseCode);
+
 
                         ShipmentOrderPart shipmentOrderPart = new ShipmentOrderPart();
                         shipmentOrderPart.OsLvCode = tblShipmentItem.Rows[i].Cells["colItemOstCode"].Value.ToString();
