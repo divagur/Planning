@@ -153,6 +153,12 @@
       <DependentUpon>ChooseOrder.cs</DependentUpon>
     </Compile>
     <Compile Include="Common.cs" />
+    <Compile Include="Controls\ButtonEdit.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ButtonEdit.Designer.cs">
+      <DependentUpon>ButtonEdit.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\MenuButton.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -631,6 +637,9 @@
     </Compile>
     <EmbeddedResource Include="ChooseOrder.resx">
       <DependentUpon>ChooseOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ButtonEdit.resx">
+      <DependentUpon>ButtonEdit.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dicts\DictFormEx.resx">
       <DependentUpon>DictFormEx.cs</DependentUpon>

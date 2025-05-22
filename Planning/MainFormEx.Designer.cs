@@ -33,9 +33,9 @@ namespace Planning
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainFormEx));
-            BrightIdeasSoftware.HeaderStateStyle headerStateStyle4 = new BrightIdeasSoftware.HeaderStateStyle();
-            BrightIdeasSoftware.HeaderStateStyle headerStateStyle5 = new BrightIdeasSoftware.HeaderStateStyle();
-            BrightIdeasSoftware.HeaderStateStyle headerStateStyle6 = new BrightIdeasSoftware.HeaderStateStyle();
+            BrightIdeasSoftware.HeaderStateStyle headerStateStyle1 = new BrightIdeasSoftware.HeaderStateStyle();
+            BrightIdeasSoftware.HeaderStateStyle headerStateStyle2 = new BrightIdeasSoftware.HeaderStateStyle();
+            BrightIdeasSoftware.HeaderStateStyle headerStateStyle3 = new BrightIdeasSoftware.HeaderStateStyle();
             this.menuMain = new System.Windows.Forms.MenuStrip();
             this.mtiFile = new System.Windows.Forms.ToolStripMenuItem();
             this.miSettings = new System.Windows.Forms.ToolStripMenuItem();
@@ -1087,10 +1087,10 @@ namespace Planning
             // 
             // headerFormatStyle1
             // 
-            this.headerFormatStyle1.Hot = headerStateStyle4;
-            headerStateStyle5.FrameWidth = 2F;
-            this.headerFormatStyle1.Normal = headerStateStyle5;
-            this.headerFormatStyle1.Pressed = headerStateStyle6;
+            this.headerFormatStyle1.Hot = headerStateStyle1;
+            headerStateStyle2.FrameWidth = 2F;
+            this.headerFormatStyle1.Normal = headerStateStyle2;
+            this.headerFormatStyle1.Pressed = headerStateStyle3;
             // 
             // imageListInOut
             // 
@@ -1100,6 +1100,9 @@ namespace Planning
             this.imageListInOut.Images.SetKeyName(1, "In");
             this.imageListInOut.Images.SetKeyName(2, "Out");
             this.imageListInOut.Images.SetKeyName(3, "Move");
+            this.imageListInOut.Images.SetKeyName(4, "OutEx");
+            this.imageListInOut.Images.SetKeyName(5, "icons8-shipment-16 (2).png");
+            this.imageListInOut.Images.SetKeyName(6, "icons8-shipment-16 (3).png");
             // 
             // imageListMain16
             // 
@@ -1211,7 +1214,7 @@ namespace Planning
             this.toolStripMenuItemAdd,
             this.toolStripMenuItemAdmin});
             this.contextMenuMain.Name = "contextMenuMain";
-            this.contextMenuMain.Size = new System.Drawing.Size(190, 136);
+            this.contextMenuMain.Size = new System.Drawing.Size(190, 114);
             // 
             // toolStripMenuItemFile
             // 
