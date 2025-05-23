@@ -29,37 +29,37 @@ namespace Planning.Controls
         /// </summary>
         private void InitializeComponent()
         {
-            this.CompoentTB = new System.Windows.Forms.TextBox();
-            this.CompoentLB = new System.Windows.Forms.Label();
+            this.ComponentTB = new System.Windows.Forms.TextBox();
+            this.ComponentLB = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // CompoentTB
+            // ComponentTB
             // 
-            this.CompoentTB.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.CompoentTB.Location = new System.Drawing.Point(0, 0);
-            this.CompoentTB.Name = "CompoentTB";
-            this.CompoentTB.Size = new System.Drawing.Size(391, 20);
-            this.CompoentTB.TabIndex = 0;
+            this.ComponentTB.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ComponentTB.Location = new System.Drawing.Point(0, 0);
+            this.ComponentTB.Name = "ComponentTB";
+            this.ComponentTB.Size = new System.Drawing.Size(391, 20);
+            this.ComponentTB.TabIndex = 0;
             // 
-            // CompoentLB
+            // ComponentLB
             // 
-            this.CompoentLB.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.CompoentLB.AutoSize = true;
-            this.CompoentLB.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.CompoentLB.Location = new System.Drawing.Point(373, 2);
-            this.CompoentLB.MaximumSize = new System.Drawing.Size(0, 20);
-            this.CompoentLB.MinimumSize = new System.Drawing.Size(0, 16);
-            this.CompoentLB.Name = "CompoentLB";
-            this.CompoentLB.Size = new System.Drawing.Size(18, 16);
-            this.CompoentLB.TabIndex = 1;
-            this.CompoentLB.Text = "...";
+            this.ComponentLB.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.ComponentLB.AutoSize = true;
+            this.ComponentLB.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ComponentLB.Location = new System.Drawing.Point(373, 2);
+            this.ComponentLB.MaximumSize = new System.Drawing.Size(0, 20);
+            this.ComponentLB.MinimumSize = new System.Drawing.Size(0, 16);
+            this.ComponentLB.Name = "ComponentLB";
+            this.ComponentLB.Size = new System.Drawing.Size(18, 16);
+            this.ComponentLB.TabIndex = 1;
+            this.ComponentLB.Text = "...";
             // 
             // ButtonEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.CompoentLB);
-            this.Controls.Add(this.CompoentTB);
+            this.Controls.Add(this.ComponentLB);
+            this.Controls.Add(this.ComponentTB);
             this.Name = "ButtonEdit";
             this.Size = new System.Drawing.Size(391, 20);
             this.ResumeLayout(false);
@@ -69,7 +69,7 @@ namespace Planning.Controls
 
         #endregion
 
-        private System.Windows.Forms.TextBox CompoentTB;
-        private System.Windows.Forms.Label CompoentLB;
+        private System.Windows.Forms.TextBox ComponentTB;
+        private System.Windows.Forms.Label ComponentLB;
     }
 }

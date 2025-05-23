@@ -208,37 +208,23 @@ namespace Planning
                 tblShipmentOrders.AutoGenerateColumns = false;
                 tblShipmentOrders.DataSource = _shipmentOrders;
 
-                ShipmentOrderPartRepository shipmentOrderPartRepository = new ShipmentOrderPartRepository();
-                foreach (var order in _shipmentOrders)
+                if (_shipmentOrders.Count > 0)
                 {
-                    _shipmentOrderParts.AddRange(shipmentOrderPartRepository.GetShipmentOrderParts(order.Id));
+                    PopulateOrderPart();
                 }
-               
-                tblOrderParts.AutoGenerateColumns = false;
-                tblOrderParts.DataSource = null;
-                tblOrderParts.DataSource = _shipmentOrderParts;
-                /*
-                if (_shipment.ShipmentOrders.Count > 0)
-                {
-
-
-                    BindOrderPart(_shipment.ShipmentOrders.ToList()[0].Id);
-
-               }
-                */
+                
                 DateTime specTime;
                 if (DateTime.TryParse(_shipment.SpecialTime.ToString(), out specTime))
                     dtSpecialTime.Value = specTime;
 
                 dtSpecialCond.Visible = cbSpecCondition.Checked;
-                //PopulateOrders();
 
             }
             else
             {
                 edSDate.Text = _movement.MDate==null?DateTime.Now.ToShortDateString(): _movement.MDate.ToShortDateString();
                 edShipmentComment.Text = _movement.Comment;
-                cmbDelayReasons.Text = DataService.GetDictNameById("Причины_задержки", _movement.DelayReasonsId);
+                cmbDelayReasons.SelectedItem = delayReasonRepository.GetById(_shipment.DelayReasonsId);//DataService.GetDictNameById("Причины_задержки", _movement.DelayReasonsId);
                 edDelayComment.Text = _movement.DelayComment;
                 edDriverFIO.Text = _movement.Performer;
                 cmbTimeSlot.Text = _movement.TimeSlot == null ? "" : _movement.TimeSlot.SlotTime.ToString();
@@ -521,7 +507,7 @@ namespace Planning
                 //_context.ShipmentOrders.Add(shipmentOrder);
                 _shipmentOrders.Add(shipmentOrder);
                 tblShipmentOrders.DataSource = _shipmentOrders;
-                BindOrderPart((int)shipmentOrder.Id);
+                PopulateOrderPart();
             }
             //row["shipment_id"] =_shipment.id;
         }
@@ -778,7 +764,7 @@ namespace Planning
                
                 tblShipmentOrders.DataSource = _shipmentOrders;
                 if (tblShipmentOrders.SelectedCells != null)
-                    BindOrderPart((int)tblShipmentOrders.Rows[tblShipmentOrders.SelectedCells[0].RowIndex].Cells["colId"].Value);
+                    PopulateOrderPart();
                 if (isAllBindings)
                     MessageBox.Show(IsShpIn()? "Все заказы привязаны к отгрузке":"Все расходные партии привязаны к отгрузке");
                 //_shipment.IsAddLv = isAllBindings;
@@ -833,29 +819,13 @@ namespace Planning
         private void PopulateMovementItem()
         {
             tblMovementItem.AutoGenerateColumns = false;
-            SqlHandle sqlHandle1 = new SqlHandle(DataService.connectionString);
-            sqlHandle1.SqlStatement = "SP_PL_GetMovementItems";
-            sqlHandle1.Connect();
-            sqlHandle1.TypeCommand = CommandType.StoredProcedure;
-            sqlHandle1.IsResultSet = true;
-            SqlHandle sqlHandle2 = sqlHandle1;
-            SqlParameter sqlParameter = new SqlParameter();
-            sqlParameter.ParameterName = "@MovementID";
-            sqlParameter.Value = (object)this._movement.Id;
-            sqlHandle2.AddCommandParametr(sqlParameter);
-            if (!sqlHandle1.Execute())
-            {
-                int num = (int)MessageBox.Show(sqlHandle1.LastError, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Hand);
-            }
-            else
-            {
-                /*
-                DataSet dataSet = new DataSet();
-                dataSet.Tables.Add();
-                dataSet.Tables[0].Load((IDataReader)sqlHandle1.Reader);
-                */
-                this.tblMovementItem.DataSource = sqlHandle1.DataSet.Tables[0];
-            }
+
+            LvMovementItemRepository lvMovementItemRepository = new LvMovementItemRepository();
+            List<LvMovementItem> lvMovementItems  = lvMovementItemRepository.GetAll();
+
+            tblMovementItem.DataSource = lvMovementItems;
+
+            
         }
 
         private void tbtnMoveItemEdit_Click(object sender, EventArgs e)
@@ -872,22 +842,16 @@ namespace Planning
 
         }
 
-        private void BindOrderPart(int OrderId)
+        private void PopulateOrderPart()
         {
-            /*
-            ShipmentOrder shipmentOrder = _context.ShipmentOrders.Find(OrderId);
-            if (shipmentOrder == null)
-                return;
-            */
-            if (_shipmentOrders == null || _shipmentOrders.Count == 0)
-                return;
-            /*
-            shipmentOrderParts.Clear();
+            ShipmentOrderPartRepository shipmentOrderPartRepository = new ShipmentOrderPartRepository();
+            _shipmentOrderParts.Clear();
 
-            foreach (var item in _shipmentOrders)
+            foreach (var order in _shipmentOrders)
             {
-                shipmentOrderParts.AddRange(item.ShipmentOrderParts);
-            }*/
+                _shipmentOrderParts.AddRange(shipmentOrderPartRepository.GetShipmentOrderParts(order.Id));
+            }
+
             tblOrderParts.AutoGenerateColumns = false;
             tblOrderParts.DataSource = null;
             tblOrderParts.DataSource = _shipmentOrderParts;
@@ -925,7 +889,7 @@ namespace Planning
             {
 
                 _shipmentOrderParts.Add(shipmentOrderPart);
-                BindOrderPart((int)shipmentOrder.Id);
+                PopulateOrderPart();
             }
         }
 
@@ -1009,7 +973,7 @@ namespace Planning
             {
                 ShipmentOrderPart shipmentOrderPart = shipmentOrder.ShipmentOrderParts.ToList().Find(o=>o.Id == int.Parse(tblOrderParts.Rows[tblOrderParts.CurrentCell.RowIndex].Cells["colPartsId"].Value.ToString()));
                 shipmentOrder.ShipmentOrderParts.Remove(shipmentOrderPart);
-                BindOrderPart(0);
+                PopulateOrderPart();
                 //tblOrderParts.DataSource = shipmentOrder.ShipmentOrderParts.ToList();
             }
         }
