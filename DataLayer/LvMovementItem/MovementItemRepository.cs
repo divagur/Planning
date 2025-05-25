@@ -23,6 +23,7 @@ namespace Planning.DataLayer
 
         }
 
+           
         public List<LvMovementItem> GetAll(int? MovementId)
         {
             string sql = dataAdapter.GetSelectItemSql();
@@ -30,7 +31,6 @@ namespace Planning.DataLayer
 
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("@MovementID", MovementId);
-
             List<LvMovementItem> movementItems = new List<LvMovementItem>();
 
             var queryResult = dbConnection.Query<LvMovementItem>(sql, parameters, commandType: CommandType.StoredProcedure);
