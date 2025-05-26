@@ -25,6 +25,8 @@ namespace Planning
         Planning.DataLayer.Movement _movement;
         List<Planning.DataLayer.ShipmentOrder> _shipmentOrders;
         List<Planning.DataLayer.ShipmentOrderPart> _shipmentOrderParts;
+        ShipmentOrderRepository shipmentOrderRepository = new ShipmentOrderRepository();
+        ShipmentOrderPartRepository shipmentOrderPartRepository = new ShipmentOrderPartRepository();
         //PlanningDbContext _context;
         DataSet ds;
         SqlDataAdapter adapter;
@@ -206,7 +208,6 @@ namespace Planning
                 cmbWarehouse.SelectedItem = warehouseRepository.GetById(_shipment.WarehouseId);//DataService.GetDictNameById("Склады", _shipment.WarehouseId);
                 cmbTransportView.SelectedItem = transportViewRepository.GetById(_shipment.TransportViewId);//DataService.GetDictNameById("Виды_транспорта", _shipment.TransportViewId);
 
-                ShipmentOrderRepository shipmentOrderRepository = new ShipmentOrderRepository();
                 _shipmentOrders = shipmentOrderRepository.GetShipmentOrders(_shipment.Id);
 
                 tblShipmentOrders.AutoGenerateColumns = false;
@@ -286,7 +287,7 @@ namespace Planning
         private List<string> GetUnattachedOrderShipment(int? LVOrdId)
         {
             List<string> result = new List<string>();
-            Dictionary<string, object> procParam = new Dictionary<string, object>();
+            SqlProcParam procParam = new SqlProcParam();
             procParam.Add("@DepID", _shipment.DepositorId);
             procParam.Add("@OrdID", LVOrdId);
 
@@ -623,7 +624,7 @@ namespace Planning
         {
 
                 
-            if (DataService.AddShipmentToLV((int)_shipment.Id))
+            if (Common.AddShipmentToLV(_shipment.Id))
             {
                 _shipment.IsAddLv = true;
                 MessageBox.Show("Отгрузка создана в Lvision");
@@ -633,6 +634,22 @@ namespace Planning
 
         private bool BindOrderToLV()
         {
+
+            SqlProcExecutor sqlProcExecutor = new SqlProcExecutor();
+
+            SqlProcParam sqlProcParams = new SqlProcParam();
+            sqlProcParams.Add("@ShpID", _shipment.Id);
+            try
+            {
+                sqlProcExecutor.ProcExecute("SP_PL_BindAllOrders", sqlProcParams);
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка при связывании заказов: " + ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+/*
             using (SqlConnection connection = new SqlConnection(DataService.connectionString))
             {
                 if (connection.State == ConnectionState.Closed)
@@ -655,33 +672,48 @@ namespace Planning
                 }
 
             }
+*/
             return true;
         }
 
         private void btnBindLV_Click(object sender, EventArgs e)
         {
-            //_context.SaveChanges();
+            if (!shipmentOrderPartRepository.Save(_shipmentOrderParts))
+            {
+                MessageBox.Show("Ошибка при сохранении расходных партий: " + shipmentOrderPartRepository.LastError, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }    
+            if (!shipmentOrderRepository.Save(_shipmentOrders))
+            {
+                MessageBox.Show("Ошибка при сохранении заказов: " + shipmentOrderRepository.LastError, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             if (BindOrderToLV())
             {
                
                 bool isAllBindings = true;
                
-                var listOrdId = _shipmentOrders.Select(o => (int?)o.Id).ToList();
+                //var listOrdId = _shipmentOrders.Select(o => (int?)o.Id).ToList();
                 //var ordParts = _context.ShipmentOrderParts.Where(s => listOrdId.Contains(s.ShOrderId)).ToList();
-                /*foreach (var item in _context.ShipmentOrderParts.Where(s=> _shipment.ShipmentOrders.Select(o=>o.Id).ToList().Contains((int)s.ShOrderId)))
+                _shipmentOrders = shipmentOrderRepository.GetAll();
+                tblShipmentOrders.DataSource = _shipmentOrders;
+                PopulateOrderPart();
+                foreach (var part in _shipmentOrderParts)
                 {
-                    _context.Entry(item).Reload();
+                    if (part.IsBinding == null || part.IsBinding == false)
+                    {
+                        var shipmentOrder = _shipmentOrders.Find(o => o.Id == part.ShOrderId);
+                        MessageBox.Show($"Расходная партия [{part.OsLvId}] заказа [{shipmentOrder.OrderId}] не найдена в Lvision]");
+                        isAllBindings = false;
+                    }
                 }
-                */
-                /*
+
                 foreach (var shipmentOrder in _shipmentOrders)
                 {
-                    _context.Entry(shipmentOrder).Reload();
-
-                    foreach (var part in shipmentOrder.ShipmentOrderParts)
+                    List<DataLayer.ShipmentOrderPart> shipmentOrderPartsTemp = shipmentOrderPartRepository.GetShipmentOrderParts(shipmentOrder.Id);
+                    foreach (var part in shipmentOrderPartsTemp)
                     {
-                        _context.Entry(part).Reload();
-
                         if (part.IsBinding == null || part.IsBinding == false)
                         {
                             MessageBox.Show($"Расходная партия [{part.OsLvId}] заказа [{shipmentOrder.OrderId}] не найдена в Lvision]");
@@ -690,7 +722,7 @@ namespace Planning
                     }
 
                 }
-                */
+                /*
                 foreach (var part in _shipmentOrderParts)
                 {
                     if (part.IsBinding == null || part.IsBinding == false)
@@ -700,50 +732,19 @@ namespace Planning
                         isAllBindings = false;
                     }
                 }
+           
                
                
-                tblShipmentOrders.DataSource = _shipmentOrders;
                 if (tblShipmentOrders.SelectedCells != null)
                     PopulateOrderPart();
+    */
                 if (isAllBindings)
                     MessageBox.Show(IsShpIn()? "Все заказы привязаны к отгрузке":"Все расходные партии привязаны к отгрузке");
-                //_shipment.IsAddLv = isAllBindings;
-            }
-        }
-
-        private bool IsAllOrderBindToLv()
-        {
-            //bool isAllBindings = false;
-            int orderNoBindCount = _shipmentOrders.Count(o => o.IsBinding == null || o.IsBinding == false);
-
-            int orderPartNoBindCount = _shipmentOrderParts.Count(o => o.IsBinding == null || o.IsBinding == false);
-            
-
-            bool isAllOrderBind = _shipmentOrders.Count() > 0;
-            bool isAllOrderPartBind = true;
-            foreach (var shipmentOrder in _shipmentOrders)
-            {                
-                isAllOrderBind = isAllOrderBind && shipmentOrder.IsBinding == true;
-
-                foreach (var part in _shipmentOrderParts.Where(p=>p.ShOrderId == shipmentOrder.Id))
-                {
-                    isAllOrderPartBind = isAllOrderPartBind && part.IsBinding == true;
-
-                }
 
             }
-            return isAllOrderBind && isAllOrderPartBind;
         }
 
-        private void label14_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void edTrailerNumber_TextChanged(object sender, EventArgs e)
-        {
-
-        }
+   
 
        
         private void PopulateMovementItem()
@@ -774,7 +775,6 @@ namespace Planning
 
         private void PopulateOrderPart()
         {
-            ShipmentOrderPartRepository shipmentOrderPartRepository = new ShipmentOrderPartRepository();
             _shipmentOrderParts.Clear();
 
             foreach (var order in _shipmentOrders)

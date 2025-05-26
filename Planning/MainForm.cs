@@ -661,7 +661,7 @@ namespace Planning
                 DataService.AddShipmentToLV(shipment.Id);
             }
 
-            DataService.AddShipmentToLV(shipment.Id);
+            //DataService.AddShipmentToLV(shipment.Id);
         }
 
         private void ShipmentRowEdit()

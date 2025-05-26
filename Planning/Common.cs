@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Planning.DataLayer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -41,5 +42,24 @@ namespace Planning
         {
             return Str;
         }
+        public static bool AddShipmentToLV(int? ShipmentId)
+        {
+            SqlProcExecutor sqlProcExecutor = new SqlProcExecutor();
+            SqlProcParam sqlProcParams = new SqlProcParam();
+            sqlProcParams.Add("@ShID", ShipmentId);
+
+            try
+            {
+                sqlProcExecutor.ProcExecute("SP_PL_CreateShipmentInLV", sqlProcParams);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка при создании отгрузки: " + ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            return true;
+        }
+
     }
 }

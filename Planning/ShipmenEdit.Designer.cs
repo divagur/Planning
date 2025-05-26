@@ -501,7 +501,6 @@
             this.edTrailerNumber.Name = "edTrailerNumber";
             this.edTrailerNumber.Size = new System.Drawing.Size(100, 20);
             this.edTrailerNumber.TabIndex = 12;
-            this.edTrailerNumber.TextChanged += new System.EventHandler(this.edTrailerNumber_TextChanged);
             // 
             // label14
             // 
@@ -511,7 +510,6 @@
             this.label14.Size = new System.Drawing.Size(66, 13);
             this.label14.TabIndex = 16;
             this.label14.Text = " № прицепа";
-            this.label14.Click += new System.EventHandler(this.label14_Click);
             // 
             // edVehicleNumber
             // 
