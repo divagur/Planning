@@ -146,7 +146,11 @@ namespace Planning
             comboBox.Items.Clear();
             comboBox.Items.AddRange(items.ToArray());
         }
-
+        private int? GetComboBoxSelectedId(ComboBox comboBox)
+            //where T:BaseDataItem
+        {
+            return comboBox.SelectedItem != null ? ((BaseDataItem)comboBox.SelectedItem).Id : null;
+        }
         public void Populate()
         {
 
@@ -241,18 +245,7 @@ namespace Planning
             }
 
         }
-        private bool IsValidOrderParts()
-        {
-            foreach (var order in _shipmentOrders)
-            {
-                if (_shipmentOrderParts.Where(p=>p.ShOrderId == order.Id).Count() == 0)
-                {
-                    MessageBox.Show($"У заказа {order.LvOrderCode} нет ни одной раходной партии", "Ошибка при сохранении", MessageBoxButtons.OK,MessageBoxIcon.Error);
-                    return false;
-                }
-            }
-            return true;
-        }
+        
         private bool IsValidDate(TextBox dateControl)
         {
             DateTime date;
@@ -293,7 +286,22 @@ namespace Planning
         private List<string> GetUnattachedOrderShipment(int? LVOrdId)
         {
             List<string> result = new List<string>();
+            Dictionary<string, object> procParam = new Dictionary<string, object>();
+            procParam.Add("@DepID", _shipment.DepositorId);
+            procParam.Add("@OrdID", LVOrdId);
 
+            SqlProcExecutor sqlProcExecutor = new SqlProcExecutor();
+            try
+            {
+                result = sqlProcExecutor.ProcExecute<string>("SP_PL_GetUnattachedOrderShipment", procParam);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+            
+            /*
             SqlHandle sql = new SqlHandle(DataService.connectionString);
             sql.SqlStatement = "SP_PL_GetUnattachedOrderShipment";
             sql.Connect();
@@ -322,7 +330,7 @@ namespace Planning
 
                 }
             }
-
+            */
             return result;
         }
 
@@ -362,8 +370,8 @@ namespace Planning
 
                 _shipment.SDate = GetNullableDate(edSDate);
                 _shipment.SComment = edShipmentComment.Text;
-                _shipment.DelayReasonsId = DataService.GetDictIdByName("Причины_задержки", cmbDelayReasons.Text);//Convert.ToInt32(IsNull(cmbDelayReasons.Text, "0"));
-                _shipment.TimeSlotId = cbSpecCondition.Checked?(int?)null:DataService.GetDictIdByCondition("ТаймСлоты", $"slot_time='{cmbTimeSlot.Text}'");
+                _shipment.DelayReasonsId = GetComboBoxSelectedId(cmbDelayReasons); //DataService.GetDictIdByName("Причины_задержки", cmbDelayReasons.Text);//Convert.ToInt32(IsNull(cmbDelayReasons.Text, "0"));
+                _shipment.TimeSlotId = cbSpecCondition.Checked ? (int?)null : GetComboBoxSelectedId(cmbTimeSlot);//DataService.GetDictIdByCondition("ТаймСлоты", $"slot_time='{cmbTimeSlot.Text}'");
                 _shipment.SpecialTime = cbSpecCondition.Checked ? TimeSpan.Parse(dtSpecialCond.Value.ToShortTimeString()):(TimeSpan?)null;
                 _shipment.DelayComment = edDelayComment.Text;
                 _shipment.IsCourier = cbIsCourier.Checked;
@@ -380,12 +388,12 @@ namespace Planning
                 _shipment.AttorneyNumber = edAttorneyNumber.Text;
                 _shipment.AttorneyDate = GetNullableDate(edAttorneyDate);
                 _shipment.AttorneyIssued = edAttorneyIssued.Text;
-                _shipment.GateId = DataService.GetDictIdByName("Ворота", cmbGate.Text);
-                _shipment.TransportCompanyId = DataService.GetDictIdByName("ТК", cmbTransportCompany.Text);
-                _shipment.TransportTypeId = DataService.GetDictIdByName("Типы_транспорта", cmbTransportType.Text);
-                _shipment.SupplierId = DataService.GetDictIdByName("Поставщики", cmbSupplier.Text);
-                _shipment.WarehouseId = DataService.GetDictIdByName("Склады", cmbWarehouse.Text);
-                _shipment.TransportViewId= DataService.GetDictIdByName("Виды_транспорта", cmbTransportView.Text);
+                _shipment.GateId = GetComboBoxSelectedId(cmbGate); //DataService.GetDictIdByName("Ворота", cmbGate.Text);
+                _shipment.TransportCompanyId = GetComboBoxSelectedId(cmbTransportCompany); //DataService.GetDictIdByName("ТК", cmbTransportCompany.Text);
+                _shipment.TransportTypeId = GetComboBoxSelectedId(cmbTransportType); //DataService.GetDictIdByName("Типы_транспорта", cmbTransportType.Text);
+                _shipment.SupplierId = GetComboBoxSelectedId(cmbSupplier); //DataService.GetDictIdByName("Поставщики", cmbSupplier.Text);
+                _shipment.WarehouseId = GetComboBoxSelectedId(cmbWarehouse); //DataService.GetDictIdByName("Склады", cmbWarehouse.Text);
+                _shipment.TransportViewId= GetComboBoxSelectedId(cmbTransportView); //DataService.GetDictIdByName("Виды_транспорта", cmbTransportView.Text);
                 _shipment.SpCondition = cbSpecCondition.Checked;
                 //_shipment.IsAddLv = IsAllOrderBindToLv();
                 // _shipment.TimeSlotId =Convert.ToInt32(IsNull(cmbTimeSlot.Text,null));
@@ -401,9 +409,9 @@ namespace Planning
                 _movement.MDate = GetDate(edSDate);
                 _movement.Comment = edShipmentComment.Text;
                 _movement.DelayComment = edDelayComment.Text;
-                _movement.DelayReasonsId = DataService.GetDictIdByName("Причины_задержки", cmbDelayReasons.Text);
+                _movement.DelayReasonsId = GetComboBoxSelectedId(cmbDelayReasons); //DataService.GetDictIdByName("Причины_задержки", cmbDelayReasons.Text);
                 _movement.Performer = edDriverFIO.Text;
-                _movement.TimeSlotId = cbSpecCondition.Checked ? (int?)null : DataService.GetDictIdByCondition("ТаймСлоты", $"slot_time='{cmbTimeSlot.Text}'");
+                _movement.TimeSlotId = cbSpecCondition.Checked ? (int?)null : GetComboBoxSelectedId(cmbTimeSlot); //DataService.GetDictIdByCondition("ТаймСлоты", $"slot_time='{cmbTimeSlot.Text}'");
                 _movement.SpecialTime = cbSpecCondition.Checked ? TimeSpan.Parse(dtSpecialCond.Value.ToShortTimeString()) : (TimeSpan?)null;
                 _movement.SpCondition = cbSpecCondition.Checked;
                 return true;
@@ -494,6 +502,11 @@ namespace Planning
                 
         }
 
+
+        private DataLayer.ShipmentOrder GetSelectedShipmentOrder()
+        {
+            return _shipmentOrders.Find(o => o.Id == Int32.Parse(tblShipmentOrders.Rows[tblShipmentOrders.CurrentCell.RowIndex].Cells["colId"].Value.ToString()));
+        }
         private void tbtnAdd_Click(object sender, EventArgs e)
         {
 
@@ -503,8 +516,6 @@ namespace Planning
             shipmentOrder.IsBinding = false;
             if (frmShipmentOrderEdit.ShowDialog() == DialogResult.OK)
             {
-
-                //_context.ShipmentOrders.Add(shipmentOrder);
                 _shipmentOrders.Add(shipmentOrder);
                 tblShipmentOrders.DataSource = _shipmentOrders;
                 PopulateOrderPart();
@@ -516,8 +527,7 @@ namespace Planning
         {
             if (tblShipmentOrders.CurrentCell == null)
                 return;
-            //ShipmentOrder shipmentOrder = _context.ShipmentOrders.Find(tblShipmentOrders.Rows[tblShipmentOrders.CurrentCell.RowIndex].Cells["colId"].Value);
-            Planning.DataLayer.ShipmentOrder shipmentOrder = _shipmentOrders.Find(o => o.Id == Int32.Parse(tblShipmentOrders.Rows[tblShipmentOrders.CurrentCell.RowIndex].Cells["colId"].Value.ToString()));
+            DataLayer.ShipmentOrder shipmentOrder = GetSelectedShipmentOrder();
             var frmShipmentOrderEdit = new ShipmentOrderEdit(_shipment, shipmentOrder, _shipmentOrderParts);
             
             frmShipmentOrderEdit.ShowDialog();
@@ -533,76 +543,11 @@ namespace Planning
 
             if (MessageBox.Show("Удалить заказ?", "Подверждение", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
-                //ShipmentOrder shipmentOrder = _context.ShipmentOrders.Find(tblShipmentOrders.Rows[tblShipmentOrders.CurrentCell.RowIndex].Cells["colId"].Value);
-                Planning.DataLayer.ShipmentOrder shipmentOrder = _shipmentOrders.Find(o => o.Id == Int32.Parse(tblShipmentOrders.Rows[tblShipmentOrders.CurrentCell.RowIndex].Cells["colId"].Value.ToString()));
+                DataLayer.ShipmentOrder shipmentOrder = GetSelectedShipmentOrder();
                 shipmentOrder.Delete();
-                //_context.ShipmentOrders.Remove(shipmentOrder);
                 tblShipmentOrders.DataSource = _shipmentOrders;
             }
-        }
-
-        public void SaveOrders()
-        {
-            using (SqlConnection connection = new SqlConnection(DataService.connectionString))
-            {
-                adapter.InsertCommand = new SqlCommand();
-                adapter.UpdateCommand = new SqlCommand();
-                adapter.DeleteCommand = new SqlCommand();
-                connection.Open();
-
-              
-                adapter.InsertCommand.Parameters.Add(new SqlParameter("@OrderId", SqlDbType.VarChar, 32 , "order_id"));
-                adapter.InsertCommand.Parameters.Add(new SqlParameter("@ShipmentId", SqlDbType.Int, 0, "shipment_id"));
-                adapter.InsertCommand.Parameters.Add(new SqlParameter("@OrderType", SqlDbType.VarChar, 64, "order_type"));
-                adapter.InsertCommand.Parameters.Add(new SqlParameter("@Comment", SqlDbType.VarChar, 500, "comment"));
-                adapter.InsertCommand.Parameters.Add(new SqlParameter("@ManualLoad", SqlDbType.Int, 0, "manual_load"));
-                adapter.InsertCommand.Parameters.Add(new SqlParameter("@ManualUnload", SqlDbType.Int, 0, "manual_unload"));
-                adapter.InsertCommand.Parameters.Add(new SqlParameter("@PalletAmount", SqlDbType.Int, 0, "pallet_amount"));
-                adapter.InsertCommand.Parameters.Add(new SqlParameter("@BindingId", SqlDbType.Int, 0, "binding_id"));
-
-
-
-                adapter.UpdateCommand.Parameters.Add(new SqlParameter("@Id", SqlDbType.Int, 0, "id"));
-                adapter.UpdateCommand.Parameters.Add(new SqlParameter("@OrderId1", SqlDbType.VarChar, 32, "order_id"));
-                adapter.UpdateCommand.Parameters.Add(new SqlParameter("@ShipmentId", SqlDbType.Int, 0, "shipment_id"));
-                adapter.UpdateCommand.Parameters.Add(new SqlParameter("@OrderType", SqlDbType.VarChar, 64, "order_type"));
-                adapter.UpdateCommand.Parameters.Add(new SqlParameter("@Comment", SqlDbType.VarChar, 500, "comment"));
-                adapter.UpdateCommand.Parameters.Add(new SqlParameter("@ManualLoad", SqlDbType.Int, 0, "manual_load"));
-                adapter.UpdateCommand.Parameters.Add(new SqlParameter("@ManualUnload", SqlDbType.Int, 0, "manual_unload"));
-                adapter.UpdateCommand.Parameters.Add(new SqlParameter("@PalletAmount", SqlDbType.Int, 0, "pallet_amount"));
-                adapter.UpdateCommand.Parameters.Add(new SqlParameter("@BindingId", SqlDbType.Int, 0, "binding_id"));
-
-
-                
-                adapter.DeleteCommand.Parameters.Add(new SqlParameter("@Id", SqlDbType.Int, 0, "id"));
-
-                adapter.InsertCommand.Connection = connection;
-                adapter.UpdateCommand.Connection = connection;
-                adapter.DeleteCommand.Connection = connection;
-
-
-                adapter.InsertCommand.CommandText = @"Insert into shipment_orders(order_id,shipment_id,order_type,comment,manual_load,manual_unload,pallet_amount,binding_id) 
-                                                        values(@OrderId,@ShipmentId,@OrderType,@Comment,@ManualLoad,@ManualUnload,@PalletAmount,@BindingId)";
-                adapter.UpdateCommand.CommandText = @"update shipment_orders set order_id = @OrderId1,order_type = @OrderType, comment = @Comment, manual_load = @ManualLoad,
-                                                          manual_unload = @ManualUnload, pallet_amount = @PalletAmount where id = 1";
-
-
-                adapter.DeleteCommand.CommandText= "delete from shipment_orders where id = @Id";
-                adapter.Update(ds);
-                
-                try
-                {
-                    adapter.Update(ds);
-                }
-                catch (System.Data.SqlClient.SqlException ex)
-                {
-                    MessageBox.Show(ex.Message+" " +ex.InnerException.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                
-            }
-        }
-
-       
+        }    
 
         private void cbSpecCondition_CheckedChanged(object sender, EventArgs e)
         {
@@ -656,7 +601,7 @@ namespace Planning
             SelectDate();
         }
 
-        private void shipmen_edit_Load(object sender, EventArgs e)
+        private void ShipmenEdit_Load(object sender, EventArgs e)
         {
             btnSubmissionTime.Tag = edSubmissionTime;
             btnAttorneyDate.Tag = edAttorneyDate;
@@ -672,11 +617,6 @@ namespace Planning
             }
             TabOrderView();
             AddHistory((int)_shipment.Id);
-        }
-
-        private void monthCalendarSpecial_DateSelected(object sender, DateRangeEventArgs e)
-        {
-            
         }
 
         private void btnAddToLV_Click(object sender, EventArgs e)
@@ -805,17 +745,7 @@ namespace Planning
 
         }
 
-        private void ReloadShipment()
-        {
-            //_context.Entry(_shipment).Reload();
-            //foreach (var order in _shipment.ShipmentOrders)
-            //{
-            //    _context.Entry(order).Reload();
-
-
-            //}
-        }
-
+       
         private void PopulateMovementItem()
         {
             tblMovementItem.AutoGenerateColumns = false;

@@ -87,7 +87,7 @@
     <Compile Include="LvAttribute\LvAttribute.cs" />
     <Compile Include="LvAttribute\LvAttributeAdapter.cs" />
     <Compile Include="LvAttribute\LvAttributeRepository.cs" />
-    <Compile Include="SqlExecuter\SqlExecutor.cs" />
+    <Compile Include="SqlExecuter\SqlProcExecutor.cs" />
     <Compile Include="UserGroupLnk\UserGroupLnk.cs" />
     <Compile Include="UserGroupLnk\UserGroupLnkDataAdapter.cs" />
     <Compile Include="UserGroupLnk\UserGroupLnkRepository.cs" />

@@ -931,7 +931,6 @@
             this.monthCalendarSpecial.MaxSelectionCount = 1;
             this.monthCalendarSpecial.Name = "monthCalendarSpecial";
             this.monthCalendarSpecial.TabIndex = 0;
-            this.monthCalendarSpecial.DateSelected += new System.Windows.Forms.DateRangeEventHandler(this.monthCalendarSpecial_DateSelected);
             // 
             // edSDate
             // 
@@ -1442,7 +1441,7 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Редактирование погрузки";
-            this.Load += new System.EventHandler(this.shipmen_edit_Load);
+            this.Load += new System.EventHandler(this.ShipmenEdit_Load);
             this.gbTransport.ResumeLayout(false);
             this.gbTransport.PerformLayout();
             this.gbOrders.ResumeLayout(false);
