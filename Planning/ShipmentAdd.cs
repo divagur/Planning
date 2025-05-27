@@ -234,7 +234,7 @@ namespace Planning
             else if (cmbType.SelectedIndex ==2)
             {
                 _shipmentAddResult.IsShipment = false;
-                _movement = new DataLayer.Movement();
+                _movement = _shipmentAddResult.Result!=null?(DataLayer.Movement)_shipmentAddResult.Result: new DataLayer.Movement();
                 _movement.MDate = dtSDate.Value;
                 _movement.TimeSlotId = GetSelectedTimeSlotId();
 

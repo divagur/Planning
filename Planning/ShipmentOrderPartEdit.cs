@@ -12,10 +12,10 @@ namespace Planning
 {
     public partial class ShipmentOrderPartEdit : Form
     {
-       Planning.DataLayer.ShipmentOrderPart _shipmentOrderPart;
-       Planning.DataLayer.ShipmentOrder _shipmentOrder;
-       Planning.DataLayer.Shipment _shipment;
-        public ShipmentOrderPartEdit(Planning.DataLayer.Shipment shipment, Planning.DataLayer.ShipmentOrder shipmentOrder, Planning.DataLayer.ShipmentOrderPart shipmentOrderPart)
+       DataLayer.ShipmentOrderPart _shipmentOrderPart;
+       DataLayer.ShipmentOrder _shipmentOrder;
+       DataLayer.Shipment _shipment;
+        public ShipmentOrderPartEdit(DataLayer.Shipment shipment, DataLayer.ShipmentOrder shipmentOrder, DataLayer.ShipmentOrderPart shipmentOrderPart)
         {
             InitializeComponent();
             _shipmentOrderPart = shipmentOrderPart;

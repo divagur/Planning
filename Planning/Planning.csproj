@@ -904,6 +904,8 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Planing.cs</LastGenOutput>
     </Content>
+    <None Include="Resources\ShpMove.png" />
+    <None Include="Resources\ShpOut.png" />
     <None Include="Resources\TabCloseRed.png" />
     <None Include="Resources\TabClose.png" />
     <None Include="Resources\TabClose.bmp" />
@@ -940,6 +942,13 @@
     <None Include="Resources\icons8-close-16.png" />
     <None Include="Resources\icons8-edit-32.png" />
     <None Include="Resources\icons8-edit-32 %281%29.png" />
+    <None Include="Resources\icons8-shipment-16 %283%29.png" />
+    <None Include="Resources\icons8-shipment-16 %281%29.png" />
+    <None Include="Resources\icons8-shipment-16 %282%29.png" />
+    <None Include="Resources\icons8-enter-20 %282%29.png" />
+    <None Include="Resources\icons8-enter-20.png" />
+    <None Include="Resources\icons8-enter-20 %283%29.png" />
+    <None Include="Resources\icons8-enter-20 %281%29.png" />
     <Content Include="Resources\printer.png" />
     <None Include="Resources\arrow_refresh_8563.png" />
     <Content Include="PlanningLogo.ico" />

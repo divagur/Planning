@@ -383,6 +383,16 @@ namespace Planning.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap ShpInEx {
+            get {
+                object obj = ResourceManager.GetObject("ShpInEx", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap ShpMove {
             get {
                 object obj = ResourceManager.GetObject("ShpMove", resourceCulture);
@@ -393,9 +403,29 @@ namespace Planning.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap ShpMoveEx {
+            get {
+                object obj = ResourceManager.GetObject("ShpMoveEx", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap ShpOut {
             get {
                 object obj = ResourceManager.GetObject("ShpOut", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap ShpOutEx {
+            get {
+                object obj = ResourceManager.GetObject("ShpOutEx", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
