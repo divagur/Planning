@@ -744,9 +744,7 @@ namespace Planning
             }
         }
 
-   
 
-       
         private void PopulateMovementItem()
         {
             tblMovementItem.AutoGenerateColumns = false;
