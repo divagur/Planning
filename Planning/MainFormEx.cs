@@ -207,8 +207,7 @@ namespace Planning
         {
             //ShipmentMainRepository shipmentMainRepository = new ShipmentMainRepository();
             _shipmentMainList = shipmentMainRepository.GetAll(edCurrDay.Value, null, null, null);
-            tblShipments.ClearObjects();
-            tblShipments.SetObjects(_shipmentMainList);
+            UpdateDataSource();
             /*
             if (mainFormAccess != null && !mainFormAccess.IsView)
             {
@@ -256,6 +255,11 @@ namespace Planning
             GetOrderWight();
             ShipmentsUIFilter();
             */
+        }
+        private void UpdateDataSource()
+        {
+            tblShipments.ClearObjects();
+            tblShipments.SetObjects(_shipmentMainList);
         }
         private void Init()
         {
@@ -809,7 +813,48 @@ namespace Planning
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
+            ShipmentMain shipmentMain = GetCurrentRowObject();
+            if (MessageBox.Show("Удалить запись?", "Подверждение", MessageBoxButtons.OKCancel) != DialogResult.OK)
+                return;
+            if (shipmentMain.InOut != "перем")
+            {
+                ShipmentRepository shipmentRepository = new ShipmentRepository();
+                DataLayer.Shipment shipment = shipmentRepository.GetById(shipmentMain.ShpId);
+                shipment?.Delete();
+                try
+                {
+                    if (shipmentRepository.Save(shipment))
+                    {
+                        _shipmentMainList.Remove(shipmentMain);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Ошибка при удалении строки: {ex.Message}");
 
+                }
+            }
+            else
+            {
+                MovementRepository movementRepository = new MovementRepository();
+
+                DataLayer.Movement movement = movementRepository.GetById(shipmentMain.ShpId);
+                movement?.Delete();
+                try
+                {
+                    if (movementRepository.Save(movement))
+                    {
+                        _shipmentMainList.Remove(shipmentMain);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Ошибка при удалении строки: {ex.Message}");
+                } 
+
+
+            }
+            UpdateDataSource();
         }
 
         private void btnPrint_Click(object sender, EventArgs e)

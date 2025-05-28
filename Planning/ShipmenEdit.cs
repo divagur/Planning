@@ -212,7 +212,7 @@ namespace Planning
 
                 tblShipmentOrders.AutoGenerateColumns = false;
                 tblShipmentOrders.DataSource = _shipmentOrders;
-
+                _shipmentOrderParts = new List<DataLayer.ShipmentOrderPart>();
                 if (_shipmentOrders.Count > 0)
                 {
                     PopulateOrderPart();
