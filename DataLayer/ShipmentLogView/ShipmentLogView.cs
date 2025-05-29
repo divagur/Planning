@@ -7,20 +7,21 @@ using Planning.Kernel;
 
 namespace Planning.DataLayer
 {
-    public class ShipmentLog:BaseDataItem
+    public class ShipmentLogView:BaseDataItem
     {
-        string _dml_type;
-        string _dml_type_name;
-        DateTime? _dml_date;
-        string _dml_user_name;
-        string _dml_comp_name; 
-        int? _shipment_id;
-        int? _lvId;
-        int? _timeSlotId;
-        DateTime? _sDate;
+
+        int? _dmlId;
+        string _dmlType;
+        string _dmlTypeName;
+        DateTime? _dmlDate;
+        string _dmlUserName;
+        string _dmlCompName;
+        int? _shipmentId;
+        TimeSpan? _slotTime;
+	    DateTime? _sDate;
         string _sComment;
         string _oComment;
-        int? _gateId;
+        string _gateName;
         bool? _spCondition;
         string _driverPhone;
         string _driverFio;
@@ -30,34 +31,38 @@ namespace Planning.DataLayer
         DateTime? _attorneyDate;
         DateTime? _submissionTime;
         DateTime? _startTime;
-        int? _delayReasonsId;
+        DateTime? _endTime;
+        DateTime? _leaveTime;
+        string _delayReasonName;
         string _delayComment;
         int? _depositorId;
         bool? _isCourier;
         string _forwarderFio;
         string _stampNumber;
         string _attorneyIssued;
-        bool? _shIn;
-        TimeSpan? _specialTime;
-        DateTime? _endTime;
-        DateTime? _leaveTime;
+        bool? _sIn;
         bool? _isAddLv;
-        int? _transportCompanyId;
-        int? _transportTypeId;
-        int? _supplierId;
-        int? _customPostId;
-        int? _warehouseId;
-        int? _transportViewId;
-        TimeSlot _timeSlot;
-
+        string _transportCompanyName;
+        string _transportTypeName;
+        string _supplierName;
+        string _customPostName;
+        string _warehouseName;
+        string _transportViewName;
+        string _depositorName;
+        int? _depLvId;
+        string _depLvDb;
+        int? _fontColor;
+        int? _backgroundColor;
+        int? _logNum;
+        string _inOut;
         public string DmlType
         {
-            get => _dml_type;
+            get => _dmlType;
             set
             {
-                if (_dml_type == null || !_dml_type.Equals(value))
+                if (_dmlType == null || !_dmlType.Equals(value))
                 {
-                    _dml_type = value;
+                    _dmlType = value;
                     Edit();
 
                 }
@@ -65,12 +70,12 @@ namespace Planning.DataLayer
         }
         public string DmlTypeName
         {
-            get => _dml_type_name;
+            get => _dmlTypeName;
             set
             {
-                if (_dml_type_name == null || !_dml_type_name.Equals(value))
+                if (_dmlTypeName == null || !_dmlTypeName.Equals(value))
                 {
-                    _dml_type_name = value;
+                    _dmlTypeName = value;
                     Edit();
 
                 }
@@ -78,12 +83,12 @@ namespace Planning.DataLayer
         }
         public DateTime? DmlDate
         {
-            get => _dml_date;
+            get => _dmlDate;
             set
             {
-                if (!_dml_date.Equals(value))
+                if (!_dmlDate.Equals(value))
                 {
-                    _dml_date = value;
+                    _dmlDate = value;
                     Edit();
 
                 }
@@ -91,12 +96,12 @@ namespace Planning.DataLayer
         }
         public string DmlUserName
         {
-            get => _dml_user_name;
+            get => _dmlUserName;
             set
             {
-                if (_dml_user_name == null || !_dml_user_name.Equals(value))
+                if (_dmlUserName == null || !_dmlUserName.Equals(value))
                 {
-                    _dml_user_name = value;
+                    _dmlUserName = value;
                     Edit();
 
                 }
@@ -104,12 +109,12 @@ namespace Planning.DataLayer
         }
         public string DmlCompName
         {
-            get => _dml_comp_name;
+            get => _dmlCompName;
             set
             {
-                if (_dml_comp_name == null || !_dml_comp_name.Equals(value))
+                if (_dmlCompName == null || !_dmlCompName.Equals(value))
                 {
-                    _dml_comp_name = value;
+                    _dmlCompName = value;
                     Edit();
 
                 }
@@ -117,38 +122,25 @@ namespace Planning.DataLayer
         }
         public int? ShipmentId
         {
-            get => _shipment_id;
+            get => _shipmentId;
             set
             {
-                if (!_shipment_id.Equals(value))
+                if (!_shipmentId.Equals(value))
                 {
-                    _shipment_id = value;
+                    _shipmentId = value;
                     Edit();
 
                 }
             }
         }
-        public int? LvId
+        public TimeSpan? SlotTime
         {
-            get => _lvId;
+            get => _slotTime;
             set
             {
-                if (!_lvId.Equals(value))
+                if (!_slotTime.Equals(value))
                 {
-                    _lvId = value;
-                    Edit();
-
-                }
-            }
-        }
-        public int? TimeSlotId
-        {
-            get => _timeSlotId;
-            set
-            {
-                if (!_timeSlotId.Equals(value))
-                {
-                    _timeSlotId = value;
+                    _slotTime = value;
                     Edit();
 
                 }
@@ -193,14 +185,14 @@ namespace Planning.DataLayer
                 }
             }
         }
-        public int? GateId
+        public string GateName
         {
-            get => _gateId;
+            get => _gateName;
             set
             {
-                if (!_gateId.Equals(value))
+                if (_gateName ==null || !_gateName.Equals(value))
                 {
-                    _gateId = value;
+                    _gateName = value;
                     Edit();
 
                 }
@@ -324,19 +316,6 @@ namespace Planning.DataLayer
                 }
             }
         }
-        public int? DelayReasonsId
-        {
-            get => _delayReasonsId;
-            set
-            {
-                if (!_delayReasonsId.Equals(value))
-                {
-                    _delayReasonsId = value;
-                    Edit();
-
-                }
-            }
-        }
         public string DelayComment
         {
             get => _delayComment;
@@ -371,6 +350,19 @@ namespace Planning.DataLayer
                 if (!_isCourier.Equals(value))
                 {
                     _isCourier = value;
+                    Edit();
+
+                }
+            }
+        }
+        public bool? ShIn
+        {
+            get => _sIn;
+            set
+            {
+                if (!_sIn.Equals(value))
+                {
+                    _sIn = value;
                     Edit();
 
                 }
@@ -415,27 +407,14 @@ namespace Planning.DataLayer
                 }
             }
         }
-        public bool? ShIn
+        public string InOut
         {
-            get => _shIn;
+            get => _inOut;
             set
             {
-                if (!_shIn.Equals(value))
+                if (_inOut == null ||!_inOut.Equals(value))
                 {
-                    _shIn = value;
-                    Edit();
-
-                }
-            }
-        }
-        public TimeSpan? SpecialTime
-        {
-            get => _specialTime;
-            set
-            {
-                if (!_specialTime.Equals(value))
-                {
-                    _specialTime = value;
+                    _inOut = value;
                     Edit();
 
                 }
@@ -480,95 +459,121 @@ namespace Planning.DataLayer
                 }
             }
         }
-        public int? TransportCompanyId
+        public string DelayReasonName
         {
-            get => _transportCompanyId;
+            get => _delayReasonName;
             set
             {
-                if (!_transportCompanyId.Equals(value))
+                if (_delayReasonName == null || !_delayReasonName.Equals(value))
                 {
-                    _transportCompanyId = value;
+                    _delayReasonName = value;
                     Edit();
 
                 }
             }
         }
-        public int? TransportTypeId
+        public string TransportCompanyName
         {
-            get => _transportTypeId;
+            get => _transportCompanyName;
             set
             {
-                if (!_transportTypeId.Equals(value))
+                if (_transportCompanyName == null || !_transportCompanyName.Equals(value))
                 {
-                    _transportTypeId = value;
+                    _transportCompanyName = value;
                     Edit();
 
                 }
             }
         }
-        public int? SupplierId
+        public string TransportTypeName
         {
-            get => _supplierId;
+            get => _transportTypeName;
             set
             {
-                if (!_supplierId.Equals(value))
+                if (_transportTypeName == null || !_transportTypeName.Equals(value))
                 {
-                    _supplierId = value;
+                    _transportTypeName = value;
                     Edit();
 
                 }
             }
         }
-        public int? CustomPostId
+        public string DepositorName
         {
-            get => _customPostId;
+            get => _depositorName;
             set
             {
-                if (!_customPostId.Equals(value))
+                if (_depositorName == null || !_depositorName.Equals(value))
                 {
-                    _customPostId = value;
+                    _depositorName = value;
                     Edit();
 
                 }
             }
         }
-        public int? WarehouseId
+        public string SupplierName
         {
-            get => _warehouseId;
+            get => _supplierName;
             set
             {
-                if (!_warehouseId.Equals(value))
+                if (_supplierName == null || !_supplierName.Equals(value))
                 {
-                    _warehouseId = value;
+                    _supplierName = value;
                     Edit();
 
                 }
             }
         }
-        public int? TransportViewId
+        public string CustomPostName
         {
-            get => _transportViewId;
+            get => _customPostName;
             set
             {
-                if (!_transportViewId.Equals(value))
+                if (_customPostName == null || !_customPostName.Equals(value))
                 {
-                    _transportViewId = value;
+                    _customPostName = value;
                     Edit();
 
                 }
             }
         }
-
-        public TimeSlot TimeSlot
+        public string WarehouseName
         {
-            get
+            get => _warehouseName;
+            set
             {
-                if (_timeSlot == null)
+                if (_warehouseName == null || !_warehouseName.Equals(value))
                 {
-                    TimeSlotRepository timeSlotRepository = new TimeSlotRepository();
-                    _timeSlot = timeSlotRepository.GetById(_timeSlotId);
+                    _warehouseName = value;
+                    Edit();
+
                 }
-                return _timeSlot;
+            }
+        }
+        public string TransportViewName
+        {
+            get => _transportViewName;
+            set
+            {
+                if (_transportViewName == null || !_transportViewName.Equals(value))
+                {
+                    _transportViewName = value;
+                    Edit();
+
+                }
+            }
+        }
+        public string DepLvDB
+        {
+            get => _depLvDb;
+            set
+            {
+                if (_depLvDb == null || !_depLvDb.Equals(value))
+                {
+                    _depLvDb = value;
+                    Edit();
+
+                }
             }
         }
     }
