@@ -190,6 +190,7 @@ namespace Planning
             this.menuMain.Size = new System.Drawing.Size(944, 24);
             this.menuMain.TabIndex = 1;
             this.menuMain.Text = "menuStrip1";
+            this.menuMain.Visible = false;
             // 
             // mtiFile
             // 
@@ -1096,13 +1097,12 @@ namespace Planning
             // 
             this.imageListInOut.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListInOut.ImageStream")));
             this.imageListInOut.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageListInOut.Images.SetKeyName(0, "icons8-enter-16.png");
-            this.imageListInOut.Images.SetKeyName(1, "In");
-            this.imageListInOut.Images.SetKeyName(2, "Out");
-            this.imageListInOut.Images.SetKeyName(3, "Move");
-            this.imageListInOut.Images.SetKeyName(4, "OutEx");
-            this.imageListInOut.Images.SetKeyName(5, "icons8-shipment-16 (2).png");
-            this.imageListInOut.Images.SetKeyName(6, "icons8-shipment-16 (3).png");
+            this.imageListInOut.Images.SetKeyName(0, "InEx");
+            this.imageListInOut.Images.SetKeyName(1, "OutEx");
+            this.imageListInOut.Images.SetKeyName(2, "MoveEx");
+            this.imageListInOut.Images.SetKeyName(3, "Out");
+            this.imageListInOut.Images.SetKeyName(4, "Move");
+            this.imageListInOut.Images.SetKeyName(5, "In");
             // 
             // imageListMain16
             // 

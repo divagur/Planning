@@ -212,7 +212,7 @@ namespace Planning
 
                 tblShipmentOrders.AutoGenerateColumns = false;
                 tblShipmentOrders.DataSource = _shipmentOrders;
-
+                _shipmentOrderParts = new List<DataLayer.ShipmentOrderPart>();
                 if (_shipmentOrders.Count > 0)
                 {
                     PopulateOrderPart();
@@ -770,7 +770,13 @@ namespace Planning
             }
 
         }
-
+        private void UpdateOrderPartDataSource()
+        {
+            tblOrderParts.AutoGenerateColumns = false;
+            tblOrderParts.DataSource = null;
+            tblOrderParts.DataSource = _shipmentOrderParts;
+            tblOrderParts.Refresh();
+        }
         private void PopulateOrderPart()
         {
             _shipmentOrderParts.Clear();
@@ -780,10 +786,7 @@ namespace Planning
                 _shipmentOrderParts.AddRange(shipmentOrderPartRepository.GetShipmentOrderParts(order.Id));
             }
 
-            tblOrderParts.AutoGenerateColumns = false;
-            tblOrderParts.DataSource = null;
-            tblOrderParts.DataSource = _shipmentOrderParts;
-            tblOrderParts.Refresh();
+            UpdateOrderPartDataSource();
         }
 
         private void tblShipmentOrders_RowEnter(object sender, DataGridViewCellEventArgs e)
@@ -793,7 +796,6 @@ namespace Planning
             isSelectAction = true;
             SelectOrderPart((int)tblShipmentOrders.Rows[e.RowIndex].Cells["colId"].Value);
             isSelectAction = false;
-            //BindOrderPart((int)tblShipmentOrders.Rows[e.RowIndex].Cells["colId"].Value);
         }
 
         private void tbtnAddOrderPart_Click(object sender, EventArgs e)
@@ -804,11 +806,11 @@ namespace Planning
             string ordId = tblShipmentOrders.Rows[tblShipmentOrders.CurrentCell.RowIndex].Cells["colId"].Value.ToString();
             if (String.IsNullOrEmpty(ordId) || ordId == "0")
                 return;
-            int ordIdInt = Int32.Parse(ordId);
-            Planning.DataLayer.ShipmentOrder shipmentOrder = _shipmentOrders.FirstOrDefault(o=> o.Id == ordIdInt);
+
+            DataLayer.ShipmentOrder shipmentOrder = _shipmentOrders.FirstOrDefault(o=> o.Id == Int32.Parse(ordId));
 
 
-            Planning.DataLayer.ShipmentOrderPart shipmentOrderPart = new Planning.DataLayer.ShipmentOrderPart();
+            DataLayer.ShipmentOrderPart shipmentOrderPart = new DataLayer.ShipmentOrderPart();
             shipmentOrderPart.ShOrderId = shipmentOrder.Id;
             var frmShipmentOrderPart = new ShipmentOrderPartEdit(_shipment, shipmentOrder, shipmentOrderPart);
            
@@ -817,7 +819,8 @@ namespace Planning
             {
 
                 _shipmentOrderParts.Add(shipmentOrderPart);
-                PopulateOrderPart();
+                UpdateOrderPartDataSource();
+                //PopulateOrderPart();
             }
         }
 
@@ -837,7 +840,7 @@ namespace Planning
             }
 
             //
-            Planning.DataLayer.ShipmentOrderPart shipmentOrderPart = _shipmentOrderParts.Find(o => o.Id == int.Parse(tblOrderParts.Rows[tblOrderParts.CurrentCell.RowIndex].Cells["colPartsId"].Value.ToString())); 
+            DataLayer.ShipmentOrderPart shipmentOrderPart = _shipmentOrderParts.Find(o => o.Id == int.Parse(tblOrderParts.Rows[tblOrderParts.CurrentCell.RowIndex].Cells["colPartsId"].Value.ToString())); 
 
             var frmShipmentOrderPart = new ShipmentOrderPartEdit(_shipment,shipmentOrder, shipmentOrderPart);
             frmShipmentOrderPart.ShowDialog();
@@ -886,7 +889,7 @@ namespace Planning
         {
             if (tblShipmentOrders.CurrentCell == null)
                 return;
-            ShipmentOrder shipmentOrder = null;//_context.ShipmentOrders.Find(tblShipmentOrders.Rows[tblShipmentOrders.CurrentCell.RowIndex].Cells["colId"].Value);
+            DataLayer.ShipmentOrder shipmentOrder = _shipmentOrders.Find(o => o.Id == int.Parse(tblShipmentOrders.Rows[tblShipmentOrders.SelectedRows[0].Index].Cells["colId"].Value.ToString()));//_context.ShipmentOrders.Find(tblShipmentOrders.Rows[tblShipmentOrders.CurrentCell.RowIndex].Cells["colId"].Value);
 
             if (tblOrderParts.CurrentCell == null)
                 return;
@@ -899,10 +902,11 @@ namespace Planning
 
             if (MessageBox.Show("Удалить расходную партию?", "Подверждение", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
-                ShipmentOrderPart shipmentOrderPart = shipmentOrder.ShipmentOrderParts.ToList().Find(o=>o.Id == int.Parse(tblOrderParts.Rows[tblOrderParts.CurrentCell.RowIndex].Cells["colPartsId"].Value.ToString()));
-                shipmentOrder.ShipmentOrderParts.Remove(shipmentOrderPart);
-                PopulateOrderPart();
-                //tblOrderParts.DataSource = shipmentOrder.ShipmentOrderParts.ToList();
+                DataLayer.ShipmentOrderPart shipmentOrderPart = _shipmentOrderParts.Find(o=>o.Id == int.Parse(tblOrderParts.Rows[tblOrderParts.CurrentCell.RowIndex].Cells["colPartsId"].Value.ToString()));
+                shipmentOrderPart.Delete();
+                _shipmentOrderParts.Remove(shipmentOrderPart);
+                //PopulateOrderPart();
+                UpdateOrderPartDataSource();
             }
         }
 

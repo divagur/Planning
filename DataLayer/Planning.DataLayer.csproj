@@ -87,6 +87,9 @@
     <Compile Include="LvAttribute\LvAttribute.cs" />
     <Compile Include="LvAttribute\LvAttributeAdapter.cs" />
     <Compile Include="LvAttribute\LvAttributeRepository.cs" />
+    <Compile Include="ShipmentLogView\ShipmentLogView.cs" />
+    <Compile Include="ShipmentLogView\ShipmentLogViewDataAdapter.cs" />
+    <Compile Include="ShipmentLogView\ShipmentLogViewRepository.cs" />
     <Compile Include="SqlExecuter\SqlProcExecutor.cs" />
     <Compile Include="SqlExecuter\SqlProcParam.cs" />
     <Compile Include="UserGroupLnk\UserGroupLnk.cs" />
