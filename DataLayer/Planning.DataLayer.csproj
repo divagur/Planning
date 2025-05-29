@@ -79,6 +79,9 @@
     <Compile Include="LvSelectOrder\LvSelectOrder.cs" />
     <Compile Include="LvSelectOrder\LvSelectOrderAdapter.cs" />
     <Compile Include="LvSelectOrder\LvSelectOrderRepository.cs" />
+    <Compile Include="MovementItemLog\MovementItemLog.cs" />
+    <Compile Include="MovementItemLog\MovementItemLogDataAdapter.cs" />
+    <Compile Include="MovementItemLog\MovementItemLogRepository.cs" />
     <Compile Include="MovementItem\MovementItemDataAdapter.cs" />
     <Compile Include="MovementItem\MovementItemRepository.cs" />
     <Compile Include="PLAttribute\PLAttribute.cs" />
@@ -90,6 +93,9 @@
     <Compile Include="ShipmentLogView\ShipmentLogView.cs" />
     <Compile Include="ShipmentLogView\ShipmentLogViewDataAdapter.cs" />
     <Compile Include="ShipmentLogView\ShipmentLogViewRepository.cs" />
+    <Compile Include="ShipmentOrderLog\ShipmentOrderLog.cs" />
+    <Compile Include="ShipmentOrderLog\ShipmentOrderLogDataAdapter.cs" />
+    <Compile Include="ShipmentOrderLog\ShipmentOrderLogRepository.cs" />
     <Compile Include="SqlExecuter\SqlProcExecutor.cs" />
     <Compile Include="SqlExecuter\SqlProcParam.cs" />
     <Compile Include="UserGroupLnk\UserGroupLnk.cs" />

@@ -206,7 +206,16 @@ namespace Planning
         private void ShipmentsLoad()
         {
             //ShipmentMainRepository shipmentMainRepository = new ShipmentMainRepository();
-            _shipmentMainList = shipmentMainRepository.GetAll(edCurrDay.Value, null, null, null);
+            try
+            {
+                _shipmentMainList = shipmentMainRepository.GetAll(edCurrDay.Value, null, null, null);
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+            }
+            
             UpdateDataSource();
             /*
             if (mainFormAccess != null && !mainFormAccess.IsView)
@@ -808,7 +817,9 @@ namespace Planning
 
         private void btnShowLog_Click(object sender, EventArgs e)
         {
-
+            frmShipmentHistory frmShipment_History = new frmShipmentHistory(-1, false);
+            AddFormTab(frmShipment_History, "История изменений");
+            frmShipment_History.Populate();
         }
 
         private void btnDelete_Click(object sender, EventArgs e)

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
+using System.Data.Odbc;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -47,13 +49,29 @@ namespace Planning.DataLayer
             parameters.Add("@ShpId", ShpId);
             parameters.Add("@OrdID", OrdId);
             List<ShipmentMain> shipments = new List<ShipmentMain>();
-            
-            var queryResult = dbConnection.Query<ShipmentMain>(sql, parameters, commandType: CommandType.StoredProcedure);
-            if (queryResult != null)
+            var transaction = dbConnection.BeginTransaction();
+            try
             {
-                shipments = queryResult.ToList();
+                
+                var queryResult = dbConnection.Query<ShipmentMain>(sql, parameters, commandType: CommandType.StoredProcedure);
+                if (queryResult != null)
+                {
+                    shipments = queryResult.ToList();
 
+
+                }
             }
+            catch (Exception ex )
+            {
+
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                transaction.Commit();
+            }
+            
+
             return shipments;
         }
     }

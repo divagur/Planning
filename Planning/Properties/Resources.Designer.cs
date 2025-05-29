@@ -19,7 +19,7 @@ namespace Planning.Properties {
     // с помощью такого средства, как ResGen или Visual Studio.
     // Чтобы добавить или удалить член, измените файл .ResX и снова запустите ResGen
     // с параметром /str или перестройте свой проект VS.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -326,6 +326,16 @@ namespace Planning.Properties {
         public static System.Drawing.Bitmap icons8_minimize_window_32__1_ {
             get {
                 object obj = ResourceManager.GetObject("icons8-minimize-window-32 (1)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap icons8_minimize_window_32__2_ {
+            get {
+                object obj = ResourceManager.GetObject("icons8-minimize-window-32 (2)", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
+using Planning.DataLayer;
 
 namespace Planning
 {
@@ -53,7 +54,13 @@ namespace Planning
                 cmbShpType.SelectedIndex = 0;
             }
             else
-                    cmbUser.Items.AddRange(_context.Users.Select(i=>i.Login).ToArray());
+            {
+                UserRepository userRepository = new UserRepository();
+                List<DataLayer.User> users = userRepository.GetAll();
+
+                cmbUser.Items.AddRange(users.ToArray());
+            }
+                    
             tblShipmentItemLog.AutoGenerateColumns = false;
         }
 
@@ -82,7 +89,9 @@ namespace Planning
 
             string UserId= cmbUser.Text; 
             int ShpType = cmbShpType.SelectedIndex-1;
-
+            DateTime DateFrom = dtBegin.Value;
+            DateTime DateTill = dtEnd.Value;
+            /*
             SqlHandle sql = new SqlHandle(DataService.connectionString);
 
             #region ДатыОтгрузки
@@ -130,14 +139,14 @@ namespace Planning
                 MessageBox.Show(sql.LastError, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            /*
-            DataSet ds = new DataSet();
-            ds.Tables.Add();
-            ds.Tables[0].Load(sql.Reader);
             */
+
+            ShipmentLogViewRepository shipmentLogViewRepository = new ShipmentLogViewRepository();
+            List<ShipmentLogView> shipmentLogViews = shipmentLogViewRepository.GetByParams(_shipmentId, DateFrom, DateTill, ShpType, UserId);
+
             tblShipmentLog.AutoGenerateColumns = false;
-            tblShipmentLog.DataSource = sql.DataSet.Tables[0];
-            sql.Disconnect();
+            tblShipmentLog.DataSource = shipmentLogViews;
+            
             CalcRowColor();
 
             tblShipmentItemLog.AutoGenerateColumns = false;
@@ -501,6 +510,11 @@ namespace Planning
                 else if (tblMovementItemLog.Rows[e.RowIndex].Cells["colMvmntDmlTypeId"].Value.ToString() == "D")
                     e.Value = "Удаление";
             }
+        }
+
+        private void cmbUser_Format(object sender, ListControlConvertEventArgs e)
+        {
+            e.Value = ((DataLayer.User)e.ListItem).Login;
         }
     }
 }

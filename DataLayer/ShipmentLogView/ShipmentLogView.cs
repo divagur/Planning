@@ -576,5 +576,58 @@ namespace Planning.DataLayer
                 }
             }
         }
+
+        public int? FontColor
+        {
+            get => _fontColor;
+            set
+            {
+                if (!_fontColor.Equals(value))
+                {
+                    _fontColor = value;
+                    Edit();
+
+                }
+            }
+        }
+        public int? BackgroundColor
+        {
+            get => _backgroundColor;
+            set
+            {
+                if (!_backgroundColor.Equals(value))
+                {
+                    _backgroundColor = value;
+                    Edit();
+
+                }
+            }
+        }
+        public int? LogNum
+        {
+            get => _logNum;
+            set
+            {
+                if (!_logNum.Equals(value))
+                {
+                    _logNum = value;
+                    Edit();
+
+                }
+            }
+        }
+        public int? DepLvId
+        {
+            get => _depLvId;
+            set
+            {
+                if (!_depLvId.Equals(value))
+                {
+                    _depLvId = value;
+                    Edit();
+
+                }
+            }
+        }
     }
 }
