@@ -25,6 +25,16 @@ namespace Planning
         Planning.DataLayer.Movement _movement;
         List<Planning.DataLayer.ShipmentOrder> _shipmentOrders;
         List<Planning.DataLayer.ShipmentOrderPart> _shipmentOrderParts;
+
+        List<DataLayer.DelayReason> delayReasons;
+        List<DataLayer.Gateway> gateways;
+        List<DataLayer.TimeSlot> timeSlots;
+        List<DataLayer.TransportCompany> transportCompanies;
+        List<DataLayer.TransportType> transportTypes;
+        List<DataLayer.Supplier> suppliers;
+        List<DataLayer.Warehouse> warehouses;
+        List<DataLayer.TransportView> transportViews;
+
         ShipmentOrderRepository shipmentOrderRepository = new ShipmentOrderRepository();
         ShipmentOrderPartRepository shipmentOrderPartRepository = new ShipmentOrderPartRepository();
         //PlanningDbContext _context;
@@ -165,14 +175,24 @@ namespace Planning
             WarehouseRepository warehouseRepository = new WarehouseRepository();
             TransportViewRepository transportViewRepository = new TransportViewRepository();
 
-            PopulateComboBoxField(cmbDelayReasons, delayReasonRepository.GetAll());
-            PopulateComboBoxField(cmbGate, gatewayRepository.GetAll());
-            PopulateComboBoxField(cmbTimeSlot, timeSlotRepository.GetAll().OrderBy(t=>t.SlotTime).ToList());
-            PopulateComboBoxField(cmbTransportCompany, transportCompanyRepository.GetAll().Where(t=>t.IsActive == true).ToList());
-            PopulateComboBoxField(cmbTransportType, transportTypeRepository.GetAll());
-            PopulateComboBoxField(cmbSupplier, supplierRepository.GetAll().Where(s => s.IsActive == true).ToList());
-            PopulateComboBoxField(cmbWarehouse, warehouseRepository.GetAll());
-            PopulateComboBoxField(cmbTransportView, transportViewRepository.GetAll());
+
+            List<DataLayer.DelayReason> delayReasons = delayReasonRepository.GetAll();
+            List<DataLayer.Gateway> gateways = gatewayRepository.GetAll();
+            List<DataLayer.TimeSlot> timeSlots = timeSlotRepository.GetAll().OrderBy(t => t.SlotTime).ToList();
+            List<DataLayer.TransportCompany> transportCompanies = transportCompanyRepository.GetAll().Where(t => t.IsActive == true).ToList();
+            List<DataLayer.TransportType> transportTypes = transportTypeRepository.GetAll();
+            List<DataLayer.Supplier> suppliers = supplierRepository.GetAll().Where(s => s.IsActive == true).ToList();
+            List<DataLayer.Warehouse> warehouses = warehouseRepository.GetAll();
+            List<DataLayer.TransportView> transportViews = transportViewRepository.GetAll();
+
+            PopulateComboBoxField(cmbDelayReasons, delayReasons);
+            PopulateComboBoxField(cmbGate, gateways);
+            PopulateComboBoxField(cmbTimeSlot, timeSlots);
+            PopulateComboBoxField(cmbTransportCompany, transportCompanies);
+            PopulateComboBoxField(cmbTransportType, transportTypes);
+            PopulateComboBoxField(cmbSupplier, suppliers);
+            PopulateComboBoxField(cmbWarehouse, warehouses);
+            PopulateComboBoxField(cmbTransportView, transportViews);
 
             if (IsShipment)
             {
@@ -201,10 +221,11 @@ namespace Planning
                 cmbTimeSlot.Text = _shipment.TimeSlot == null ? "" : _shipment.TimeSlot.SlotTime.ToString();
                 //DataService.GetDictValueById("ТаймСлоты","slot_time", _shipment.TimeSlotId);
                 //cbIsCourier.Checked = (bool)_shipment.IsCourier;
-
+                var supl = supplierRepository.GetById(_shipment.SupplierId);
                 cmbTransportCompany.SelectedItem = transportCompanyRepository.GetById(_shipment.TransportCompanyId);//DataService.GetDictNameById("ТК", _shipment.TransportCompanyId);
                 cmbTransportType.SelectedItem = transportTypeRepository.GetById(_shipment.TransportTypeId);//DataService.GetDictNameById("Типы_транспорта", _shipment.TransportTypeId);
-                cmbSupplier.SelectedItem = supplierRepository.GetById(_shipment.SupplierId);//DataService.GetDictNameById("Поставщики", _shipment.SupplierId);
+                cmbSupplier.SelectedItem = suppliers.Find(s => s.Id == supplierRepository.GetById(_shipment.SupplierId)?.Id);
+                    //supplierRepository.GetById(_shipment.SupplierId);//DataService.GetDictNameById("Поставщики", _shipment.SupplierId);
                 cmbWarehouse.SelectedItem = warehouseRepository.GetById(_shipment.WarehouseId);//DataService.GetDictNameById("Склады", _shipment.WarehouseId);
                 cmbTransportView.SelectedItem = transportViewRepository.GetById(_shipment.TransportViewId);//DataService.GetDictNameById("Виды_транспорта", _shipment.TransportViewId);
 

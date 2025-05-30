@@ -383,9 +383,9 @@ namespace Planning
             // 
             this.statusStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusInfo});
-            this.statusStrip2.Location = new System.Drawing.Point(0, 438);
+            this.statusStrip2.Location = new System.Drawing.Point(0, 709);
             this.statusStrip2.Name = "statusStrip2";
-            this.statusStrip2.Size = new System.Drawing.Size(944, 22);
+            this.statusStrip2.Size = new System.Drawing.Size(1290, 22);
             this.statusStrip2.TabIndex = 3;
             this.statusStrip2.Text = "statusStrip2";
             // 
@@ -403,7 +403,7 @@ namespace Planning
             this.tabForms.Location = new System.Drawing.Point(0, 44);
             this.tabForms.Name = "tabForms";
             this.tabForms.SelectedIndex = 0;
-            this.tabForms.Size = new System.Drawing.Size(944, 394);
+            this.tabForms.Size = new System.Drawing.Size(1290, 665);
             this.tabForms.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabForms.TabIndex = 4;
             this.tabForms.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.tabForms_DrawItem);
@@ -416,7 +416,7 @@ namespace Planning
             this.tabMain.Location = new System.Drawing.Point(4, 22);
             this.tabMain.Name = "tabMain";
             this.tabMain.Padding = new System.Windows.Forms.Padding(3);
-            this.tabMain.Size = new System.Drawing.Size(936, 368);
+            this.tabMain.Size = new System.Drawing.Size(1282, 639);
             this.tabMain.TabIndex = 0;
             this.tabMain.Text = "Операции";
             this.tabMain.UseVisualStyleBackColor = true;
@@ -525,7 +525,7 @@ namespace Planning
             this.tblShipments.SelectColumnsOnRightClick = false;
             this.tblShipments.SelectColumnsOnRightClickBehaviour = BrightIdeasSoftware.ObjectListView.ColumnSelectBehaviour.None;
             this.tblShipments.ShowGroups = false;
-            this.tblShipments.Size = new System.Drawing.Size(930, 306);
+            this.tblShipments.Size = new System.Drawing.Size(1276, 577);
             this.tblShipments.TabIndex = 1;
             this.tblShipments.UseAlternatingBackColors = true;
             this.tblShipments.UseCompatibleStateImageBehavior = false;
@@ -892,7 +892,7 @@ namespace Planning
             this.panelMain.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelMain.Location = new System.Drawing.Point(3, 3);
             this.panelMain.Name = "panelMain";
-            this.panelMain.Size = new System.Drawing.Size(930, 56);
+            this.panelMain.Size = new System.Drawing.Size(1276, 56);
             this.panelMain.TabIndex = 5;
             // 
             // edSearch
@@ -1141,7 +1141,7 @@ namespace Planning
             this.panelFormHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelFormHeader.Location = new System.Drawing.Point(0, 0);
             this.panelFormHeader.Name = "panelFormHeader";
-            this.panelFormHeader.Size = new System.Drawing.Size(944, 44);
+            this.panelFormHeader.Size = new System.Drawing.Size(1290, 44);
             this.panelFormHeader.TabIndex = 6;
             this.panelFormHeader.Paint += new System.Windows.Forms.PaintEventHandler(this.panelFormHeader_Paint);
             this.panelFormHeader.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.panelFormHeader_MouseDoubleClick);
@@ -1169,7 +1169,7 @@ namespace Planning
             this.btnMinimizeWindow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnMinimizeWindow.Image = global::Planning.Properties.Resources.icons8_minimize_window_32__2_;
             this.btnMinimizeWindow.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.btnMinimizeWindow.Location = new System.Drawing.Point(827, 0);
+            this.btnMinimizeWindow.Location = new System.Drawing.Point(1173, 0);
             this.btnMinimizeWindow.Margin = new System.Windows.Forms.Padding(1, 3, 1, 3);
             this.btnMinimizeWindow.Name = "btnMinimizeWindow";
             this.btnMinimizeWindow.Size = new System.Drawing.Size(43, 44);
@@ -1183,7 +1183,7 @@ namespace Planning
             this.btnMaximizeWindow.FlatAppearance.BorderSize = 0;
             this.btnMaximizeWindow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnMaximizeWindow.Image = global::Planning.Properties.Resources.icons8_maximize_window_32;
-            this.btnMaximizeWindow.Location = new System.Drawing.Point(870, 0);
+            this.btnMaximizeWindow.Location = new System.Drawing.Point(1216, 0);
             this.btnMaximizeWindow.Margin = new System.Windows.Forms.Padding(1, 3, 1, 3);
             this.btnMaximizeWindow.Name = "btnMaximizeWindow";
             this.btnMaximizeWindow.Size = new System.Drawing.Size(37, 44);
@@ -1197,7 +1197,7 @@ namespace Planning
             this.btnCloseWindow.FlatAppearance.BorderSize = 0;
             this.btnCloseWindow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCloseWindow.Image = global::Planning.Properties.Resources.icons8_close_window_32;
-            this.btnCloseWindow.Location = new System.Drawing.Point(907, 0);
+            this.btnCloseWindow.Location = new System.Drawing.Point(1253, 0);
             this.btnCloseWindow.Margin = new System.Windows.Forms.Padding(1, 3, 3, 3);
             this.btnCloseWindow.Name = "btnCloseWindow";
             this.btnCloseWindow.Size = new System.Drawing.Size(37, 44);
@@ -1416,7 +1416,7 @@ namespace Planning
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(944, 460);
+            this.ClientSize = new System.Drawing.Size(1290, 731);
             this.Controls.Add(this.tabForms);
             this.Controls.Add(this.statusStrip2);
             this.Controls.Add(this.menuMain);

@@ -28,7 +28,9 @@ namespace Planning
         //private int currColorItemIdx = 0;
         int _shipmentId = -1;
         bool _isShipment;
-        PlanningDbContext _context = DataService.context;
+        //PlanningDbContext _context = DataService.context;
+        MovementItemLogRepository movementItemLogRepository = new MovementItemLogRepository();
+        ShipmentOrderLogRepository shipmentOrderLogRepository = new ShipmentOrderLogRepository(); 
 
         public frmShipmentHistory()
         {
@@ -320,28 +322,7 @@ namespace Planning
 
         private void tblShipmentLog_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            /* if (e.RowIndex < 0)
-                 return;
-             int shpId = Int32.Parse(tblShipmentLog.Rows[e.RowIndex].Cells["colShpId"].Value.ToString());
-             List<ShipmentOrdersLog> listShipmentOrdersLog = _context.ShipmentOrdersLog.Where(i => i.ShipmentId == shpId).OrderBy(o=>o.OrderId).ThenBy(o=>o.DmlDate).ToList();
-
-
-             if (tblShipmentLog.Rows[e.RowIndex].Cells["colShpIn"].Value == null || tblShipmentLog.Rows[e.RowIndex].Cells["colShpIn"].Value.ToString() == "")
-             {
-                 tblShipmentItemLog.Visible = false;
-                 tblMovementItemLog.Visible = true;
-                 tblShipmentItemLog.DataSource = listShipmentOrdersLog;
-             }
-             else
-             {
-                 tblShipmentItemLog.Visible = true;
-                 tblMovementItemLog.Visible = false;
-                 tblShipmentItemLog.DataSource = listShipmentOrdersLog;
-             }
-
-             CalcRowColorItem();
-            */
-            ShowShipmentLogDetail();
+           ShowShipmentLogDetail();
         }
 
         private void CalcRowColorItem()
@@ -458,7 +439,11 @@ namespace Planning
                 tblShipmentItemLog.Visible = false;
                 tblMovementItemLog.Visible = true;
                 //tblMovementItemLog.BringToFront();
-                List<MovementItemLog> listShipmentOrdersLog = _context.MovementItemLog.Where(i => i.MovementId == shpId).OrderBy(o => o.MovementItemId).ThenBy(o => o.DmlDate).ToList();
+
+
+
+                List<DataLayer.MovementItemLog> listShipmentOrdersLog = movementItemLogRepository.GetByMovementId(shpId).OrderBy(o => o.MovementItemId).ThenBy(o => o.DmlDate).ToList();
+                //_context.MovementItemLog.Where(i => i.MovementId == shpId).OrderBy(o => o.MovementItemId).ThenBy(o => o.DmlDate).ToList();
                 tblShipmentItemLog.DataSource = listShipmentOrdersLog;
             }
             else
@@ -466,7 +451,8 @@ namespace Planning
                 tblShipmentItemLog.Visible = true;
                 //tblShipmentItemLog.BringToFront();
                 tblMovementItemLog.Visible = false;
-                List<ShipmentOrdersLog> listShipmentOrdersLog = _context.ShipmentOrdersLog.Where(i => i.ShipmentId == shpId).OrderBy(o => o.OrderId).ThenBy(o => o.DmlDate).ToList();
+                List<DataLayer.ShipmentOrderLog> listShipmentOrdersLog = shipmentOrderLogRepository.GetShipmentOrders(shpId).OrderBy(o => o.ShipmentOrderId).ThenBy(o => o.DmlDate).ToList();
+                //_context.ShipmentOrdersLog.Where(i => i.ShipmentId == shpId).OrderBy(o => o.OrderId).ThenBy(o => o.DmlDate).ToList();
                 tblShipmentItemLog.DataSource = listShipmentOrdersLog;
             }
             /*tblShipmentLog.Focus();

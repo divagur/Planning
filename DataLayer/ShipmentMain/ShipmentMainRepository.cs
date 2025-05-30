@@ -49,7 +49,7 @@ namespace Planning.DataLayer
             parameters.Add("@ShpId", ShpId);
             parameters.Add("@OrdID", OrdId);
             List<ShipmentMain> shipments = new List<ShipmentMain>();
-            var transaction = dbConnection.BeginTransaction();
+            //var transaction = dbConnection.BeginTransaction();
             try
             {
                 
@@ -66,11 +66,12 @@ namespace Planning.DataLayer
 
                 throw new Exception(ex.Message);
             }
+            /*
             finally
             {
                 transaction.Commit();
             }
-            
+            */
 
             return shipments;
         }

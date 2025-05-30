@@ -91,19 +91,6 @@
             this.cbIsCourier = new System.Windows.Forms.CheckBox();
             this.gbOrders = new System.Windows.Forms.GroupBox();
             this.tblShipmentOrders = new System.Windows.Forms.DataGridView();
-            this.colOrderId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colOstCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colOrderType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colOrderComment = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colIsEDM = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.colManualLoad = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colManualUnload = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPalletCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colBinding = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colBindingId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colOstId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colShipmentId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.tbtnAdd = new System.Windows.Forms.ToolStripButton();
             this.tbtnEdit = new System.Windows.Forms.ToolStripButton();
@@ -133,15 +120,6 @@
             this.pnShipment = new System.Windows.Forms.Panel();
             this.gbOrderParts = new System.Windows.Forms.GroupBox();
             this.tblOrderParts = new System.Windows.Forms.DataGridView();
-            this.colPartsCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPartsOrderCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPartsManualLoad = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPartsManualUnload = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPartsPalletAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPartsIsBinding = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.colPartsId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPartsBindingId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPartsOstId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStrip3 = new System.Windows.Forms.ToolStrip();
             this.tbtnAddOrderPart = new System.Windows.Forms.ToolStripButton();
             this.tbtnEditOrderPart = new System.Windows.Forms.ToolStripButton();
@@ -158,6 +136,28 @@
             this.tabHistory = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.colOrderId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colOstCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colOrderType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colOrderComment = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colIsEDM = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.colManualLoad = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colManualUnload = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPalletCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colBinding = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colBindingId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colOstId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colShipmentId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPartsCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPartsOrderCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPartsManualLoad = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPartsManualUnload = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPartsPalletAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPartsIsBinding = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.colPartsId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPartsBindingId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPartsOstId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gbTransport.SuspendLayout();
             this.gbOrders.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tblShipmentOrders)).BeginInit();
@@ -722,110 +722,6 @@
             this.tblShipmentOrders.TabIndex = 1;
             this.tblShipmentOrders.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.tblShipmentOrders_RowEnter);
             // 
-            // colOrderId
-            // 
-            this.colOrderId.DataPropertyName = "lv_order_code";
-            this.colOrderId.HeaderText = "Код заказа";
-            this.colOrderId.Name = "colOrderId";
-            this.colOrderId.ReadOnly = true;
-            this.colOrderId.Width = 120;
-            // 
-            // colOstCode
-            // 
-            this.colOstCode.HeaderText = "Код расходной партии";
-            this.colOstCode.Name = "colOstCode";
-            this.colOstCode.ReadOnly = true;
-            this.colOstCode.Visible = false;
-            // 
-            // colOrderType
-            // 
-            this.colOrderType.DataPropertyName = "OrderType";
-            this.colOrderType.HeaderText = "Тип заказа";
-            this.colOrderType.Name = "colOrderType";
-            this.colOrderType.ReadOnly = true;
-            // 
-            // colOrderComment
-            // 
-            this.colOrderComment.DataPropertyName = "Comment";
-            this.colOrderComment.HeaderText = "Комментарий по заказу";
-            this.colOrderComment.Name = "colOrderComment";
-            this.colOrderComment.ReadOnly = true;
-            this.colOrderComment.Width = 300;
-            // 
-            // colIsEDM
-            // 
-            this.colIsEDM.DataPropertyName = "IsEdm";
-            this.colIsEDM.HeaderText = "ЭДО";
-            this.colIsEDM.Name = "colIsEDM";
-            this.colIsEDM.ReadOnly = true;
-            this.colIsEDM.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colIsEDM.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // colManualLoad
-            // 
-            this.colManualLoad.DataPropertyName = "ManualLoad";
-            this.colManualLoad.HeaderText = "Ручная загрузка коробов";
-            this.colManualLoad.Name = "colManualLoad";
-            this.colManualLoad.ReadOnly = true;
-            this.colManualLoad.Visible = false;
-            // 
-            // colManualUnload
-            // 
-            this.colManualUnload.DataPropertyName = "ManualUnload";
-            this.colManualUnload.HeaderText = "Ручная разрузка коробов";
-            this.colManualUnload.Name = "colManualUnload";
-            this.colManualUnload.ReadOnly = true;
-            this.colManualUnload.Visible = false;
-            // 
-            // colPalletCount
-            // 
-            this.colPalletCount.DataPropertyName = "PalletAmount";
-            this.colPalletCount.HeaderText = "Кол-во паллет";
-            this.colPalletCount.Name = "colPalletCount";
-            this.colPalletCount.ReadOnly = true;
-            this.colPalletCount.Visible = false;
-            // 
-            // colBinding
-            // 
-            this.colBinding.DataPropertyName = "IsBinding";
-            this.colBinding.HeaderText = "Привязка";
-            this.colBinding.Name = "colBinding";
-            this.colBinding.ReadOnly = true;
-            this.colBinding.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colBinding.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.colBinding.Visible = false;
-            // 
-            // colId
-            // 
-            this.colId.DataPropertyName = "id";
-            this.colId.HeaderText = "colId";
-            this.colId.Name = "colId";
-            this.colId.ReadOnly = true;
-            this.colId.Visible = false;
-            // 
-            // colBindingId
-            // 
-            this.colBindingId.DataPropertyName = "binding_id";
-            this.colBindingId.HeaderText = "colBindingId";
-            this.colBindingId.Name = "colBindingId";
-            this.colBindingId.ReadOnly = true;
-            this.colBindingId.Visible = false;
-            // 
-            // colOstId
-            // 
-            this.colOstId.HeaderText = "OstId";
-            this.colOstId.Name = "colOstId";
-            this.colOstId.ReadOnly = true;
-            this.colOstId.Visible = false;
-            // 
-            // colShipmentId
-            // 
-            this.colShipmentId.DataPropertyName = "shipment_id";
-            this.colShipmentId.HeaderText = "colShipmentId";
-            this.colShipmentId.Name = "colShipmentId";
-            this.colShipmentId.ReadOnly = true;
-            this.colShipmentId.Visible = false;
-            // 
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -841,7 +737,7 @@
             // tbtnAdd
             // 
             this.tbtnAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tbtnAdd.Image = global::Planning.Properties.Resources.Add;
+            this.tbtnAdd.Image = global::Planning.Properties.Resources.icons8_add_16;
             this.tbtnAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tbtnAdd.Name = "tbtnAdd";
             this.tbtnAdd.Size = new System.Drawing.Size(23, 22);
@@ -863,7 +759,7 @@
             // tbtnDel
             // 
             this.tbtnDel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tbtnDel.Image = global::Planning.Properties.Resources.Delete;
+            this.tbtnDel.Image = global::Planning.Properties.Resources.icons8_close_16;
             this.tbtnDel.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tbtnDel.Name = "tbtnDel";
             this.tbtnDel.Size = new System.Drawing.Size(23, 22);
@@ -1178,76 +1074,6 @@
             this.tblOrderParts.TabIndex = 1;
             this.tblOrderParts.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.tblOrderParts_RowEnter);
             // 
-            // colPartsCode
-            // 
-            this.colPartsCode.DataPropertyName = "OsLvCode";
-            this.colPartsCode.HeaderText = "Код расходной партии";
-            this.colPartsCode.Name = "colPartsCode";
-            this.colPartsCode.ReadOnly = true;
-            // 
-            // colPartsOrderCode
-            // 
-            this.colPartsOrderCode.DataPropertyName = "ShOrderId";
-            this.colPartsOrderCode.HeaderText = "Код заказа";
-            this.colPartsOrderCode.Name = "colPartsOrderCode";
-            this.colPartsOrderCode.ReadOnly = true;
-            this.colPartsOrderCode.Visible = false;
-            this.colPartsOrderCode.Width = 120;
-            // 
-            // colPartsManualLoad
-            // 
-            this.colPartsManualLoad.DataPropertyName = "ManualLoad";
-            this.colPartsManualLoad.HeaderText = "Ручная загрузка коробов";
-            this.colPartsManualLoad.Name = "colPartsManualLoad";
-            this.colPartsManualLoad.ReadOnly = true;
-            // 
-            // colPartsManualUnload
-            // 
-            this.colPartsManualUnload.DataPropertyName = "ManualUnload";
-            this.colPartsManualUnload.HeaderText = "Ручная разрузка коробов";
-            this.colPartsManualUnload.Name = "colPartsManualUnload";
-            this.colPartsManualUnload.ReadOnly = true;
-            // 
-            // colPartsPalletAmount
-            // 
-            this.colPartsPalletAmount.DataPropertyName = "PalletAmount";
-            this.colPartsPalletAmount.HeaderText = "Кол-во паллет";
-            this.colPartsPalletAmount.Name = "colPartsPalletAmount";
-            this.colPartsPalletAmount.ReadOnly = true;
-            // 
-            // colPartsIsBinding
-            // 
-            this.colPartsIsBinding.DataPropertyName = "IsBinding";
-            this.colPartsIsBinding.HeaderText = "Привязка";
-            this.colPartsIsBinding.Name = "colPartsIsBinding";
-            this.colPartsIsBinding.ReadOnly = true;
-            this.colPartsIsBinding.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colPartsIsBinding.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // colPartsId
-            // 
-            this.colPartsId.DataPropertyName = "Id";
-            this.colPartsId.HeaderText = "colId";
-            this.colPartsId.Name = "colPartsId";
-            this.colPartsId.ReadOnly = true;
-            this.colPartsId.Visible = false;
-            // 
-            // colPartsBindingId
-            // 
-            this.colPartsBindingId.DataPropertyName = "binding_id";
-            this.colPartsBindingId.HeaderText = "colBindingId";
-            this.colPartsBindingId.Name = "colPartsBindingId";
-            this.colPartsBindingId.ReadOnly = true;
-            this.colPartsBindingId.Visible = false;
-            // 
-            // colPartsOstId
-            // 
-            this.colPartsOstId.DataPropertyName = "OsLvId";
-            this.colPartsOstId.HeaderText = "OstId";
-            this.colPartsOstId.Name = "colPartsOstId";
-            this.colPartsOstId.ReadOnly = true;
-            this.colPartsOstId.Visible = false;
-            // 
             // toolStrip3
             // 
             this.toolStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -1263,7 +1089,7 @@
             // tbtnAddOrderPart
             // 
             this.tbtnAddOrderPart.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tbtnAddOrderPart.Image = global::Planning.Properties.Resources.Add;
+            this.tbtnAddOrderPart.Image = global::Planning.Properties.Resources.icons8_add_16;
             this.tbtnAddOrderPart.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tbtnAddOrderPart.Name = "tbtnAddOrderPart";
             this.tbtnAddOrderPart.Size = new System.Drawing.Size(23, 22);
@@ -1274,7 +1100,7 @@
             // tbtnEditOrderPart
             // 
             this.tbtnEditOrderPart.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tbtnEditOrderPart.Image = global::Planning.Properties.Resources.Edit;
+            this.tbtnEditOrderPart.Image = global::Planning.Properties.Resources.icons8_edit_16;
             this.tbtnEditOrderPart.ImageTransparentColor = System.Drawing.Color.White;
             this.tbtnEditOrderPart.Name = "tbtnEditOrderPart";
             this.tbtnEditOrderPart.Size = new System.Drawing.Size(23, 22);
@@ -1285,7 +1111,7 @@
             // tbtnDelOrderPart
             // 
             this.tbtnDelOrderPart.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tbtnDelOrderPart.Image = global::Planning.Properties.Resources.Delete;
+            this.tbtnDelOrderPart.Image = global::Planning.Properties.Resources.icons8_close_16;
             this.tbtnDelOrderPart.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tbtnDelOrderPart.Name = "tbtnDelOrderPart";
             this.tbtnDelOrderPart.Size = new System.Drawing.Size(23, 22);
@@ -1425,6 +1251,180 @@
             this.panel2.TabIndex = 40;
             this.panel2.DoubleClick += new System.EventHandler(this.panel2_Click);
             // 
+            // colOrderId
+            // 
+            this.colOrderId.DataPropertyName = "LvOrderCode";
+            this.colOrderId.HeaderText = "Код заказа";
+            this.colOrderId.Name = "colOrderId";
+            this.colOrderId.ReadOnly = true;
+            this.colOrderId.Width = 120;
+            // 
+            // colOstCode
+            // 
+            this.colOstCode.HeaderText = "Код расходной партии";
+            this.colOstCode.Name = "colOstCode";
+            this.colOstCode.ReadOnly = true;
+            this.colOstCode.Visible = false;
+            // 
+            // colOrderType
+            // 
+            this.colOrderType.DataPropertyName = "OrderType";
+            this.colOrderType.HeaderText = "Тип заказа";
+            this.colOrderType.Name = "colOrderType";
+            this.colOrderType.ReadOnly = true;
+            // 
+            // colOrderComment
+            // 
+            this.colOrderComment.DataPropertyName = "Comment";
+            this.colOrderComment.HeaderText = "Комментарий по заказу";
+            this.colOrderComment.Name = "colOrderComment";
+            this.colOrderComment.ReadOnly = true;
+            this.colOrderComment.Width = 300;
+            // 
+            // colIsEDM
+            // 
+            this.colIsEDM.DataPropertyName = "IsEdm";
+            this.colIsEDM.HeaderText = "ЭДО";
+            this.colIsEDM.Name = "colIsEDM";
+            this.colIsEDM.ReadOnly = true;
+            this.colIsEDM.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colIsEDM.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // colManualLoad
+            // 
+            this.colManualLoad.DataPropertyName = "ManualLoad";
+            this.colManualLoad.HeaderText = "Ручная загрузка коробов";
+            this.colManualLoad.Name = "colManualLoad";
+            this.colManualLoad.ReadOnly = true;
+            this.colManualLoad.Visible = false;
+            // 
+            // colManualUnload
+            // 
+            this.colManualUnload.DataPropertyName = "ManualUnload";
+            this.colManualUnload.HeaderText = "Ручная разрузка коробов";
+            this.colManualUnload.Name = "colManualUnload";
+            this.colManualUnload.ReadOnly = true;
+            this.colManualUnload.Visible = false;
+            // 
+            // colPalletCount
+            // 
+            this.colPalletCount.DataPropertyName = "PalletAmount";
+            this.colPalletCount.HeaderText = "Кол-во паллет";
+            this.colPalletCount.Name = "colPalletCount";
+            this.colPalletCount.ReadOnly = true;
+            this.colPalletCount.Visible = false;
+            // 
+            // colBinding
+            // 
+            this.colBinding.DataPropertyName = "IsBinding";
+            this.colBinding.HeaderText = "Привязка";
+            this.colBinding.Name = "colBinding";
+            this.colBinding.ReadOnly = true;
+            this.colBinding.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colBinding.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.colBinding.Visible = false;
+            // 
+            // colId
+            // 
+            this.colId.DataPropertyName = "Id";
+            this.colId.HeaderText = "colId";
+            this.colId.Name = "colId";
+            this.colId.ReadOnly = true;
+            this.colId.Visible = false;
+            // 
+            // colBindingId
+            // 
+            this.colBindingId.DataPropertyName = "BindingId";
+            this.colBindingId.HeaderText = "colBindingId";
+            this.colBindingId.Name = "colBindingId";
+            this.colBindingId.ReadOnly = true;
+            this.colBindingId.Visible = false;
+            // 
+            // colOstId
+            // 
+            this.colOstId.HeaderText = "OstId";
+            this.colOstId.Name = "colOstId";
+            this.colOstId.ReadOnly = true;
+            this.colOstId.Visible = false;
+            // 
+            // colShipmentId
+            // 
+            this.colShipmentId.DataPropertyName = "ShipmentId";
+            this.colShipmentId.HeaderText = "colShipmentId";
+            this.colShipmentId.Name = "colShipmentId";
+            this.colShipmentId.ReadOnly = true;
+            this.colShipmentId.Visible = false;
+            // 
+            // colPartsCode
+            // 
+            this.colPartsCode.DataPropertyName = "OsLvCode";
+            this.colPartsCode.HeaderText = "Код расходной партии";
+            this.colPartsCode.Name = "colPartsCode";
+            this.colPartsCode.ReadOnly = true;
+            // 
+            // colPartsOrderCode
+            // 
+            this.colPartsOrderCode.DataPropertyName = "ShOrderId";
+            this.colPartsOrderCode.HeaderText = "Код заказа";
+            this.colPartsOrderCode.Name = "colPartsOrderCode";
+            this.colPartsOrderCode.ReadOnly = true;
+            this.colPartsOrderCode.Visible = false;
+            this.colPartsOrderCode.Width = 120;
+            // 
+            // colPartsManualLoad
+            // 
+            this.colPartsManualLoad.DataPropertyName = "ManualLoad";
+            this.colPartsManualLoad.HeaderText = "Ручная загрузка коробов";
+            this.colPartsManualLoad.Name = "colPartsManualLoad";
+            this.colPartsManualLoad.ReadOnly = true;
+            // 
+            // colPartsManualUnload
+            // 
+            this.colPartsManualUnload.DataPropertyName = "ManualUnload";
+            this.colPartsManualUnload.HeaderText = "Ручная разрузка коробов";
+            this.colPartsManualUnload.Name = "colPartsManualUnload";
+            this.colPartsManualUnload.ReadOnly = true;
+            // 
+            // colPartsPalletAmount
+            // 
+            this.colPartsPalletAmount.DataPropertyName = "PalletAmount";
+            this.colPartsPalletAmount.HeaderText = "Кол-во паллет";
+            this.colPartsPalletAmount.Name = "colPartsPalletAmount";
+            this.colPartsPalletAmount.ReadOnly = true;
+            // 
+            // colPartsIsBinding
+            // 
+            this.colPartsIsBinding.DataPropertyName = "IsBinding";
+            this.colPartsIsBinding.HeaderText = "Привязка";
+            this.colPartsIsBinding.Name = "colPartsIsBinding";
+            this.colPartsIsBinding.ReadOnly = true;
+            this.colPartsIsBinding.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colPartsIsBinding.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // colPartsId
+            // 
+            this.colPartsId.DataPropertyName = "Id";
+            this.colPartsId.HeaderText = "colId";
+            this.colPartsId.Name = "colPartsId";
+            this.colPartsId.ReadOnly = true;
+            this.colPartsId.Visible = false;
+            // 
+            // colPartsBindingId
+            // 
+            this.colPartsBindingId.DataPropertyName = "BindingId";
+            this.colPartsBindingId.HeaderText = "colBindingId";
+            this.colPartsBindingId.Name = "colPartsBindingId";
+            this.colPartsBindingId.ReadOnly = true;
+            this.colPartsBindingId.Visible = false;
+            // 
+            // colPartsOstId
+            // 
+            this.colPartsOstId.DataPropertyName = "OsLvId";
+            this.colPartsOstId.HeaderText = "OstId";
+            this.colPartsOstId.Name = "colPartsOstId";
+            this.colPartsOstId.ReadOnly = true;
+            this.colPartsOstId.Visible = false;
+            // 
             // ShipmenEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1563,15 +1563,12 @@
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.ComboBox cmbSupplier;
         private System.Windows.Forms.Panel pnShipment;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colPartsCode;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colPartsOrderCode;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colPartsManualLoad;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colPartsManualUnload;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colPartsPalletAmount;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn colPartsIsBinding;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colPartsId;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colPartsBindingId;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colPartsOstId;
+        private System.Windows.Forms.Panel pnDocTables;
+        private System.Windows.Forms.Panel pnDocHeader;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.ComboBox cmbTransportView;
+        private System.Windows.Forms.ComboBox cmbWarehouse;
         private System.Windows.Forms.DataGridViewTextBoxColumn colOrderId;
         private System.Windows.Forms.DataGridViewTextBoxColumn colOstCode;
         private System.Windows.Forms.DataGridViewTextBoxColumn colOrderType;
@@ -1585,11 +1582,14 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colBindingId;
         private System.Windows.Forms.DataGridViewTextBoxColumn colOstId;
         private System.Windows.Forms.DataGridViewTextBoxColumn colShipmentId;
-        private System.Windows.Forms.Panel pnDocTables;
-        private System.Windows.Forms.Panel pnDocHeader;
-        private System.Windows.Forms.Label label24;
-        private System.Windows.Forms.Label label23;
-        private System.Windows.Forms.ComboBox cmbTransportView;
-        private System.Windows.Forms.ComboBox cmbWarehouse;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPartsCode;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPartsOrderCode;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPartsManualLoad;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPartsManualUnload;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPartsPalletAmount;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn colPartsIsBinding;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPartsId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPartsBindingId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPartsOstId;
     }
 }

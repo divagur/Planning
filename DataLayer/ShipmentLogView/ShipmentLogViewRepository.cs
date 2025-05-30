@@ -9,6 +9,7 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Security.Cryptography;
+using System.Data.Common;
 
 namespace Planning.DataLayer
 {
@@ -52,9 +53,10 @@ namespace Planning.DataLayer
             parameters.Add("@Till", Till);
             parameters.Add("@In", shpType);            
             parameters.Add("@UserId", UserId);
-            var transaction = dbConnection.BeginTransaction();
+            
+            //var transaction = dbConnection.BeginTransaction();
             var queryResult = dbConnection.Query<ShipmentLogView>(sql, parameters, commandType: CommandType.StoredProcedure);
-            transaction.Commit();
+            //transaction.Commit();
             if (queryResult != null)
             {
                 result = queryResult.ToList();
