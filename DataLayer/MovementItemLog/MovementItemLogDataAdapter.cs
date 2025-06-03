@@ -33,7 +33,7 @@ namespace Planning.DataLayer
         {
             return $@"
                     select 
-	                    {Table}.dml_id as {nameof(MovementItemLog.Id)},dml_date as {nameof(MovementItemLog.DmlDate)}, dml_user_name as {nameof(MovementItemLog.DmlUserName)}, 
+	                    {Table}.dml_id as {nameof(MovementItemLog.Id)},dml_type as {nameof(MovementItemLog.DmlType)},dml_date as {nameof(MovementItemLog.DmlDate)}, dml_user_name as {nameof(MovementItemLog.DmlUserName)}, 
                         dml_comp_name as {nameof(MovementItemLog.DmlCompName)},
                         movement_item_id as {nameof(MovementItemLog.MovementItemId)}, 
                         movement_id as {nameof(MovementItemLog.MovementId)},depositor_id as {nameof(MovementItemLog.DepositorId)},

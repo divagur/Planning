@@ -135,7 +135,25 @@ namespace Planning
 
             ToolTip btnColumnVisibleToolTip = new ToolTip();
             btnColumnVisibleToolTip.SetToolTip(btnColumnVisible, "Видимость колонок");
+
+            ToolTip btnSerachToolTip= new ToolTip();
+            btnSerachToolTip.SetToolTip(btnSearch, "Найти по коду заказа");
+
+            ToolTip btnSerachNextToolTip = new ToolTip();
+            btnSerachNextToolTip.SetToolTip(btnSearchNext, "Найти далее");
+
+
+            ToolTip btnGetLastDayToolTip = new ToolTip();
+            btnGetLastDayToolTip.SetToolTip(btnGetLastDay, "Предыдущий день");
+
+            ToolTip btnGetCurrentDayToolTip = new ToolTip();
+            btnGetCurrentDayToolTip.SetToolTip(btnGetCurrentDay, "Текущий день");
+
+            ToolTip btnGetNextDayToolTip = new ToolTip();
+            btnGetNextDayToolTip.SetToolTip(btnGetNextDay, "Следующий день");
         }
+
+
         private void ShipmentRowEdit()
         {
             if (tblShipments.SelectedIndex<0)
@@ -165,8 +183,8 @@ namespace Planning
         private void ShipmentEdit(ShipmentParam shipmentAddResult)
         {
             ShipmenEdit frmShipmentEdit;
-            frmShipmentEdit = shipmentAddResult.IsShipment == true ? new ShipmenEdit((Planning.DataLayer.Shipment)shipmentAddResult.Result) : 
-                new ShipmenEdit((Planning.DataLayer.Movement)shipmentAddResult.Result);
+            frmShipmentEdit = shipmentAddResult.IsShipment == true ? new ShipmenEdit((DataLayer.Shipment)shipmentAddResult.Result) : 
+                new ShipmenEdit((DataLayer.Movement)shipmentAddResult.Result);
             /*
             if (shipmentAddResult.IsShipment)
                 frmShipmentEdit = new shipmen_edit((Shipment)shipmentAddResult.Result);
@@ -182,14 +200,16 @@ namespace Planning
 
             if (frmShipmentEdit.ShowDialog() == DialogResult.OK)
             {
-                DataService.context.SaveChanges();
+                //DataService.context.SaveChanges();
                 if (shipmentAddResult.IsShipment)
                 {
-                    Shipment shipment = (Shipment)shipmentAddResult.Result;
+                    DataLayer.Shipment shipment = (DataLayer.Shipment)shipmentAddResult.Result;
+
+                    ShipmentRepository shipmentRepository = new ShipmentRepository();
 
                     if (shipment.ShIn == true)
                     {
-                        DataService.ForceMergeLVAttribute(shipment.Id);
+                        Common.ForceMergeLVAttribute(shipment.Id);
 
                     }
                     /*
@@ -199,8 +219,8 @@ namespace Planning
                     }
                     */
                 }
-
-                tblShipments.Refresh();
+                UpdateDataSource();
+               // tblShipments.Refresh();
             }
         }
         private void ShipmentsLoad()
@@ -267,13 +287,15 @@ namespace Planning
         }
         private void UpdateDataSource()
         {
+            tblShipments.BeginUpdate();
             tblShipments.ClearObjects();
             tblShipments.SetObjects(_shipmentMainList);
+            tblShipments.EndUpdate();
         }
         private void Init()
         {
 
-            Common.settingsHandle = new SettingsHandle("Settings.xml", DataService.setting);
+            Common.settingsHandle = new SettingsHandle("Settings.xml", Common.setting);
             Common.settingsHandle.Load();
 
             hideCols = Common.settingsHandle.GetParamStringValue("View\\HideColumns").Split(',').ToList();
@@ -407,8 +429,10 @@ namespace Planning
 
         private void MaximideWindows()
         {
+            tblShipments.BeginUpdate();
             MaximizedBounds = Screen.FromHandle(this.Handle).WorkingArea;
             WindowState = WindowState == FormWindowState.Maximized ? FormWindowState.Normal : FormWindowState.Maximized;
+            tblShipments.EndUpdate();
         }
         private void AddFormTab(Form frm, String Name)
         {
@@ -919,6 +943,26 @@ namespace Planning
             var frmUsers = new Users();
             SetFormPrivalage(frmUsers, "Users");
             AddFormTab(frmUsers, "Пользователи");
+        }
+
+        private void tblShipments_DoubleClick(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void menuItemConnect_Click(object sender, EventArgs e)
+        {
+            Connect();
+        }
+
+        private void menuItemSettings_Click(object sender, EventArgs e)
+        {
+            SettingsWizard frmSettingsWizard = new SettingsWizard(DataService.setting);
+            if (frmSettingsWizard.ShowDialog() == DialogResult.OK)
+            {
+                Common.settingsHandle.Save();
+                return;
+            }
         }
     }
 }

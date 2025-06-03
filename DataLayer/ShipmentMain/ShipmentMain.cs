@@ -36,7 +36,9 @@ namespace Planning.DataLayer
 		public string ShpDriverFio { get; set; }
 		public string TransportCompanyName { get; set; }
 		public string TransportTypeName { get; set; }
-		public string ShpVehicleNumber { get; set; }
+        public string TransportViewName { get; set; }
+        public string WarehouseName { get; set; }
+        public string ShpVehicleNumber { get; set; }
 		public string ShpTrailerNumber { get; set; }
 		public string ShpAttorneyNumber { get; set; }
 		public DateTime? ShpAttorneyDate { get; set; }

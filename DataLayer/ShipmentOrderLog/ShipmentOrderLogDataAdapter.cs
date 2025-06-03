@@ -45,7 +45,7 @@ namespace Planning.DataLayer
 
             return $@"
                     select 
-                            dml_id as { nameof(ShipmentOrderLog.Id)},dml_date as {nameof(ShipmentOrderLog.DmlDate)}, dml_user_name as {nameof(ShipmentOrderLog.DmlUserName)}, 
+                            dml_id as { nameof(ShipmentOrderLog.Id)},dml_type as {nameof(ShipmentOrderLog.DmlType)}, dml_date as {nameof(ShipmentOrderLog.DmlDate)}, dml_user_name as {nameof(ShipmentOrderLog.DmlUserName)}, 
                             dml_comp_name as {nameof(ShipmentOrderLog.DmlCompName)}, shipment_order_id as {nameof(ShipmentOrderLog.ShipmentOrderId)},
                             order_id as { nameof(ShipmentOrderLog.OrderId)}, shipment_id as { nameof(ShipmentOrderLog.ShipmentId)}, 
                             order_type as { nameof(ShipmentOrderLog.OrderType)}, comment as { nameof(ShipmentOrderLog.Comment)}, is_binding as { nameof(ShipmentOrderLog.IsBinding)}, 

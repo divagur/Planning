@@ -21,10 +21,10 @@ namespace Planning
         const int WM_PARENTNOTIFY = 0x210;
         const int WM_LBUTTONDOWN = 0x201;
 
-        Planning.DataLayer.Shipment _shipment;
-        Planning.DataLayer.Movement _movement;
-        List<Planning.DataLayer.ShipmentOrder> _shipmentOrders;
-        List<Planning.DataLayer.ShipmentOrderPart> _shipmentOrderParts;
+        DataLayer.Shipment _shipment;
+        DataLayer.Movement _movement;
+        List<DataLayer.ShipmentOrder> _shipmentOrders;
+        List<DataLayer.ShipmentOrderPart> _shipmentOrderParts;
 
         List<DataLayer.DelayReason> delayReasons;
         List<DataLayer.Gateway> gateways;
@@ -35,8 +35,9 @@ namespace Planning
         List<DataLayer.Warehouse> warehouses;
         List<DataLayer.TransportView> transportViews;
 
-        ShipmentOrderRepository shipmentOrderRepository = new ShipmentOrderRepository();
-        ShipmentOrderPartRepository shipmentOrderPartRepository = new ShipmentOrderPartRepository();
+        ShipmentOrderRepository shipmentOrderRepository;
+        ShipmentOrderPartRepository shipmentOrderPartRepository;
+        MovementItemRepository movementItemRepository;
         //PlanningDbContext _context;
         DataSet ds;
         SqlDataAdapter adapter;
@@ -199,8 +200,7 @@ namespace Planning
 
 
                 edSDate.Text = _shipment.SDate == null ? DateTime.Now.ToShortDateString() : _shipment.SDate.Value.ToShortDateString();
-                edShipmentComment.Text = _shipment.SComment;
-                cmbDelayReasons.SelectedItem = delayReasonRepository.GetById(_shipment.DelayReasonsId); //DataService.GetDictNameById("Причины_задержки", _shipment.DelayReasonsId);
+                edShipmentComment.Text = _shipment.SComment;                
                 edDelayComment.Text = _shipment.DelayComment;
                 cbIsCourier.Checked = _shipment.IsCourier == null ? false : (bool)_shipment.IsCourier;
                 cbSpecCondition.Checked = _shipment.SpCondition == null ? false:(bool)_shipment.SpCondition;
@@ -217,17 +217,16 @@ namespace Planning
                 edAttorneyNumber.Text = _shipment.AttorneyNumber;
                 edAttorneyDate.Text = _shipment.AttorneyDate.ToString();
                 edAttorneyIssued.Text = _shipment.AttorneyIssued;
-                cmbGate.SelectedItem = gatewayRepository.GetById(_shipment.GateId); //DataService.GetDictNameById("Ворота", _shipment.GateId);
                 cmbTimeSlot.Text = _shipment.TimeSlot == null ? "" : _shipment.TimeSlot.SlotTime.ToString();
                 //DataService.GetDictValueById("ТаймСлоты","slot_time", _shipment.TimeSlotId);
-                //cbIsCourier.Checked = (bool)_shipment.IsCourier;
-                var supl = supplierRepository.GetById(_shipment.SupplierId);
-                cmbTransportCompany.SelectedItem = transportCompanyRepository.GetById(_shipment.TransportCompanyId);//DataService.GetDictNameById("ТК", _shipment.TransportCompanyId);
-                cmbTransportType.SelectedItem = transportTypeRepository.GetById(_shipment.TransportTypeId);//DataService.GetDictNameById("Типы_транспорта", _shipment.TransportTypeId);
+                //cbIsCourier.Checked = (bool)_shipment.IsCourier;                
+                cmbDelayReasons.SelectedItem = delayReasons.Find(dr=>dr.Id == delayReasonRepository.GetById(_shipment.DelayReasonsId)?.Id);
+                cmbGate.SelectedItem = gateways.Find(g => g.Id == gatewayRepository.GetById(_shipment.GateId)?.Id);
+                cmbTransportCompany.SelectedItem = transportCompanies.Find(tc => tc.Id == transportCompanyRepository.GetById(_shipment.TransportCompanyId)?.Id);
+                cmbTransportType.SelectedItem = transportTypes.Find(tt=>tt.Id == transportTypeRepository.GetById(_shipment.TransportTypeId)?.Id);
                 cmbSupplier.SelectedItem = suppliers.Find(s => s.Id == supplierRepository.GetById(_shipment.SupplierId)?.Id);
-                    //supplierRepository.GetById(_shipment.SupplierId);//DataService.GetDictNameById("Поставщики", _shipment.SupplierId);
-                cmbWarehouse.SelectedItem = warehouseRepository.GetById(_shipment.WarehouseId);//DataService.GetDictNameById("Склады", _shipment.WarehouseId);
-                cmbTransportView.SelectedItem = transportViewRepository.GetById(_shipment.TransportViewId);//DataService.GetDictNameById("Виды_транспорта", _shipment.TransportViewId);
+                cmbWarehouse.SelectedItem = warehouses.Find(w => w.Id == warehouseRepository.GetById(_shipment.WarehouseId)?.Id);
+                cmbTransportView.SelectedItem = transportViews.Find(tv=>tv.Id == transportViewRepository.GetById(_shipment.TransportViewId)?.Id);
 
                 _shipmentOrders = shipmentOrderRepository.GetShipmentOrders(_shipment.Id);
 
@@ -392,7 +391,7 @@ namespace Planning
 
                 _shipment.SDate = GetNullableDate(edSDate);
                 _shipment.SComment = edShipmentComment.Text;
-                _shipment.DelayReasonsId = GetComboBoxSelectedId(cmbDelayReasons); //DataService.GetDictIdByName("Причины_задержки", cmbDelayReasons.Text);//Convert.ToInt32(IsNull(cmbDelayReasons.Text, "0"));
+                _shipment.DelayReasonsId = GetComboBoxSelectedId(cmbDelayReasons);
                 _shipment.TimeSlotId = cbSpecCondition.Checked ? (int?)null : GetComboBoxSelectedId(cmbTimeSlot);//DataService.GetDictIdByCondition("ТаймСлоты", $"slot_time='{cmbTimeSlot.Text}'");
                 _shipment.SpecialTime = cbSpecCondition.Checked ? TimeSpan.Parse(dtSpecialCond.Value.ToShortTimeString()):(TimeSpan?)null;
                 _shipment.DelayComment = edDelayComment.Text;
@@ -410,12 +409,12 @@ namespace Planning
                 _shipment.AttorneyNumber = edAttorneyNumber.Text;
                 _shipment.AttorneyDate = GetNullableDate(edAttorneyDate);
                 _shipment.AttorneyIssued = edAttorneyIssued.Text;
-                _shipment.GateId = GetComboBoxSelectedId(cmbGate); //DataService.GetDictIdByName("Ворота", cmbGate.Text);
-                _shipment.TransportCompanyId = GetComboBoxSelectedId(cmbTransportCompany); //DataService.GetDictIdByName("ТК", cmbTransportCompany.Text);
-                _shipment.TransportTypeId = GetComboBoxSelectedId(cmbTransportType); //DataService.GetDictIdByName("Типы_транспорта", cmbTransportType.Text);
-                _shipment.SupplierId = GetComboBoxSelectedId(cmbSupplier); //DataService.GetDictIdByName("Поставщики", cmbSupplier.Text);
-                _shipment.WarehouseId = GetComboBoxSelectedId(cmbWarehouse); //DataService.GetDictIdByName("Склады", cmbWarehouse.Text);
-                _shipment.TransportViewId= GetComboBoxSelectedId(cmbTransportView); //DataService.GetDictIdByName("Виды_транспорта", cmbTransportView.Text);
+                _shipment.GateId = GetComboBoxSelectedId(cmbGate); 
+                _shipment.TransportCompanyId = GetComboBoxSelectedId(cmbTransportCompany);
+                _shipment.TransportTypeId = GetComboBoxSelectedId(cmbTransportType); 
+                _shipment.SupplierId = GetComboBoxSelectedId(cmbSupplier); 
+                _shipment.WarehouseId = GetComboBoxSelectedId(cmbWarehouse);
+                _shipment.TransportViewId= GetComboBoxSelectedId(cmbTransportView);
                 _shipment.SpCondition = cbSpecCondition.Checked;
                 //_shipment.IsAddLv = IsAllOrderBindToLv();
                 // _shipment.TimeSlotId =Convert.ToInt32(IsNull(cmbTimeSlot.Text,null));
@@ -431,7 +430,7 @@ namespace Planning
                 _movement.MDate = GetDate(edSDate);
                 _movement.Comment = edShipmentComment.Text;
                 _movement.DelayComment = edDelayComment.Text;
-                _movement.DelayReasonsId = GetComboBoxSelectedId(cmbDelayReasons); //DataService.GetDictIdByName("Причины_задержки", cmbDelayReasons.Text);
+                _movement.DelayReasonsId = GetComboBoxSelectedId(cmbDelayReasons);
                 _movement.Performer = edDriverFIO.Text;
                 _movement.TimeSlotId = cbSpecCondition.Checked ? (int?)null : GetComboBoxSelectedId(cmbTimeSlot); //DataService.GetDictIdByCondition("ТаймСлоты", $"slot_time='{cmbTimeSlot.Text}'");
                 _movement.SpecialTime = cbSpecCondition.Checked ? TimeSpan.Parse(dtSpecialCond.Value.ToShortTimeString()) : (TimeSpan?)null;
@@ -439,7 +438,7 @@ namespace Planning
                 return true;
             }
         }
-        public ShipmenEdit(Planning.DataLayer.Shipment shipment, bool isNew = false)
+        public ShipmenEdit(DataLayer.Shipment shipment, bool isNew = false)
         {
             
             InitializeComponent();
@@ -453,7 +452,9 @@ namespace Planning
              _title = _shipment.ShIn == false? "Редактирование отгрузки": "Редактирование поставки";
             if (!_isNew)
                 _title = _title +" ["+ _shipment.Id.ToString()+"]";
-            SetTilte(""); 
+            SetTilte("");
+            shipmentOrderRepository = new ShipmentOrderRepository();
+            shipmentOrderPartRepository = new ShipmentOrderPartRepository();
             //TabOrderView();
             //AddHistory(shipment.Id);
 
@@ -488,6 +489,7 @@ namespace Planning
             if (!_isNew)
                 Text = Text + " [" + _movement.Id.ToString() + "]";
             //AddHistory(movement.Id);
+            movementItemRepository = new MovementItemRepository();
             tbObject.TabPages.Remove(tabOrders);
         }
 
@@ -519,6 +521,36 @@ namespace Planning
         {
             if (CopyToShipment())
             {
+                if (IsShipment)
+                {
+                    ShipmentRepository shipmentRepository = new ShipmentRepository();
+                    if (!SaveShipmentItems())
+                    {
+                        return;
+                    }
+                    try
+                    {
+                        shipmentRepository.Save(_shipment);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Ошибка при сохранении:{ex.Message}");
+                    }
+          
+
+                }
+                else
+                {
+                    MovementRepository movementRepository = new MovementRepository();   
+                    try
+                    {
+                        movementRepository.Save(_movement);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Ошибка при сохранении:{ex.Message}");
+                    }
+                }
                 DialogResult = DialogResult.OK;
             }
                 
@@ -697,16 +729,25 @@ namespace Planning
             return true;
         }
 
-        private void btnBindLV_Click(object sender, EventArgs e)
+        private bool SaveShipmentItems()
         {
             if (!shipmentOrderPartRepository.Save(_shipmentOrderParts))
             {
                 MessageBox.Show("Ошибка при сохранении расходных партий: " + shipmentOrderPartRepository.LastError, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }    
+                return false;
+            }
             if (!shipmentOrderRepository.Save(_shipmentOrders))
             {
                 MessageBox.Show("Ошибка при сохранении заказов: " + shipmentOrderRepository.LastError, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            return true;
+        }
+
+        private void btnBindLV_Click(object sender, EventArgs e)
+        {
+            if (!SaveShipmentItems())
+            {
                 return;
             }
 

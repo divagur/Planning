@@ -110,7 +110,7 @@ namespace Planning.Kernel
 
         public bool Save(List<T> Items)
         {
-            bool result = false;
+            bool result = true;
 
             foreach (var item in Items)
             {

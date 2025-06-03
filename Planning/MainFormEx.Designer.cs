@@ -33,9 +33,9 @@ namespace Planning
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainFormEx));
-            BrightIdeasSoftware.HeaderStateStyle headerStateStyle1 = new BrightIdeasSoftware.HeaderStateStyle();
-            BrightIdeasSoftware.HeaderStateStyle headerStateStyle2 = new BrightIdeasSoftware.HeaderStateStyle();
-            BrightIdeasSoftware.HeaderStateStyle headerStateStyle3 = new BrightIdeasSoftware.HeaderStateStyle();
+            BrightIdeasSoftware.HeaderStateStyle headerStateStyle4 = new BrightIdeasSoftware.HeaderStateStyle();
+            BrightIdeasSoftware.HeaderStateStyle headerStateStyle5 = new BrightIdeasSoftware.HeaderStateStyle();
+            BrightIdeasSoftware.HeaderStateStyle headerStateStyle6 = new BrightIdeasSoftware.HeaderStateStyle();
             this.menuMain = new System.Windows.Forms.MenuStrip();
             this.mtiFile = new System.Windows.Forms.ToolStripMenuItem();
             this.miSettings = new System.Windows.Forms.ToolStripMenuItem();
@@ -138,6 +138,7 @@ namespace Planning
             this.imageListMain16 = new System.Windows.Forms.ImageList(this.components);
             this.imageListMain32 = new System.Windows.Forms.ImageList(this.components);
             this.panelFormHeader = new System.Windows.Forms.Panel();
+            this.lbMainFormCaption = new System.Windows.Forms.Label();
             this.btnMainMenu = new System.Windows.Forms.Button();
             this.btnMinimizeWindow = new System.Windows.Forms.Button();
             this.btnMaximizeWindow = new System.Windows.Forms.Button();
@@ -531,7 +532,7 @@ namespace Planning
             this.tblShipments.UseCompatibleStateImageBehavior = false;
             this.tblShipments.View = System.Windows.Forms.View.Details;
             this.tblShipments.FormatRow += new System.EventHandler<BrightIdeasSoftware.FormatRowEventArgs>(this.tblShipments_FormatRow);
-            this.tblShipments.SelectedIndexChanged += new System.EventHandler(this.tblShipments_SelectedIndexChanged);
+            this.tblShipments.DoubleClick += new System.EventHandler(this.tblShipments_DoubleClick);
             // 
             // colOrderDetail
             // 
@@ -1088,10 +1089,10 @@ namespace Planning
             // 
             // headerFormatStyle1
             // 
-            this.headerFormatStyle1.Hot = headerStateStyle1;
-            headerStateStyle2.FrameWidth = 2F;
-            this.headerFormatStyle1.Normal = headerStateStyle2;
-            this.headerFormatStyle1.Pressed = headerStateStyle3;
+            this.headerFormatStyle1.Hot = headerStateStyle4;
+            headerStateStyle5.FrameWidth = 2F;
+            this.headerFormatStyle1.Normal = headerStateStyle5;
+            this.headerFormatStyle1.Pressed = headerStateStyle6;
             // 
             // imageListInOut
             // 
@@ -1134,6 +1135,7 @@ namespace Planning
             // 
             // panelFormHeader
             // 
+            this.panelFormHeader.Controls.Add(this.lbMainFormCaption);
             this.panelFormHeader.Controls.Add(this.btnMainMenu);
             this.panelFormHeader.Controls.Add(this.btnMinimizeWindow);
             this.panelFormHeader.Controls.Add(this.btnMaximizeWindow);
@@ -1143,9 +1145,22 @@ namespace Planning
             this.panelFormHeader.Name = "panelFormHeader";
             this.panelFormHeader.Size = new System.Drawing.Size(1290, 44);
             this.panelFormHeader.TabIndex = 6;
-            this.panelFormHeader.Paint += new System.Windows.Forms.PaintEventHandler(this.panelFormHeader_Paint);
             this.panelFormHeader.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.panelFormHeader_MouseDoubleClick);
             this.panelFormHeader.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panelFormHeader_MouseMove);
+            // 
+            // lbMainFormCaption
+            // 
+            this.lbMainFormCaption.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lbMainFormCaption.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lbMainFormCaption.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.lbMainFormCaption.Location = new System.Drawing.Point(37, 0);
+            this.lbMainFormCaption.Name = "lbMainFormCaption";
+            this.lbMainFormCaption.Size = new System.Drawing.Size(1136, 44);
+            this.lbMainFormCaption.TabIndex = 1;
+            this.lbMainFormCaption.Text = "Planning";
+            this.lbMainFormCaption.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lbMainFormCaption.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.panelFormHeader_MouseDoubleClick);
+            this.lbMainFormCaption.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panelFormHeader_MouseMove);
             // 
             // btnMainMenu
             // 
@@ -1230,12 +1245,14 @@ namespace Planning
             this.menuItemSettings.Name = "menuItemSettings";
             this.menuItemSettings.Size = new System.Drawing.Size(152, 22);
             this.menuItemSettings.Text = "Настройки";
+            this.menuItemSettings.Click += new System.EventHandler(this.menuItemSettings_Click);
             // 
             // menuItemConnect
             // 
             this.menuItemConnect.Name = "menuItemConnect";
             this.menuItemConnect.Size = new System.Drawing.Size(152, 22);
             this.menuItemConnect.Text = "Подключение";
+            this.menuItemConnect.Click += new System.EventHandler(this.menuItemConnect_Click);
             // 
             // toolStripMenuItemDict
             // 
@@ -1575,5 +1592,6 @@ namespace Planning
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemAdmin;
         private System.Windows.Forms.ToolStripMenuItem menuItemDictUserGroups;
         private System.Windows.Forms.ToolStripMenuItem menuItemDictUsers;
+        private System.Windows.Forms.Label lbMainFormCaption;
     }
 }

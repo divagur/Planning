@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.33529.622
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Planning", "Planning\Planning.csproj", "{653F12CE-5F2E-4830-AE17-8CE02435DFB3}"
 EndProject
@@ -20,6 +20,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlanningServiceTest", "PlanningServiceTest\PlanningServiceTest.csproj", "{DB030014-4597-4E2B-B4C0-FDE9FABA300E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Planning.Kernel", "Planning.Kernel\Planning.Kernel.csproj", "{CC99E480-56A0-42FB-81BA-685B07B198FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlanningAdminSettings", "PlanningAdminSettings\PlanningAdminSettings.csproj", "{5212BB32-EDC9-45C8-BA12-BF68CB5121BE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{CC99E480-56A0-42FB-81BA-685B07B198FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC99E480-56A0-42FB-81BA-685B07B198FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CC99E480-56A0-42FB-81BA-685B07B198FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5212BB32-EDC9-45C8-BA12-BF68CB5121BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5212BB32-EDC9-45C8-BA12-BF68CB5121BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5212BB32-EDC9-45C8-BA12-BF68CB5121BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5212BB32-EDC9-45C8-BA12-BF68CB5121BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -564,7 +564,7 @@ namespace Planning
             }
             return true;
         }
-        public static bool ForceMergeLVAttribute(int ShpId)
+        public static bool ForceMergeLVAttribute(int? ShpId)
         {
             SqlHandle sql = new SqlHandle(DataService.connectionString);
             sql.Connect();

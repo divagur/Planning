@@ -349,12 +349,17 @@ namespace Planning
         {
             if (tblShipmentItemLog.Columns["colDmlTypeName"].Index == e.ColumnIndex)
             {
-                if (tblShipmentItemLog.Rows[e.RowIndex].Cells["colShpItemDmlType"].Value.ToString() == "I")
-                    e.Value = "Создание";
-                else if (tblShipmentItemLog.Rows[e.RowIndex].Cells["colShpItemDmlType"].Value.ToString() == "U")
-                    e.Value = "Изменение";
-                else if (tblShipmentItemLog.Rows[e.RowIndex].Cells["colShpItemDmlType"].Value.ToString() == "D")
-                    e.Value = "Удаление";
+                
+                switch (tblShipmentItemLog.Rows[e.RowIndex].Cells["colShpItemDmlType"].Value?.ToString())
+                {
+                    case "I": e.Value = "Создание";break;
+                    case "U": e.Value = "Изменение";break;
+                    case "D": e.Value = "Удаление";break;
+                    default:
+                        e.Value = "";break;
+                }
+
+
             }
                 
         }

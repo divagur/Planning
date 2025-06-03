@@ -1,6 +1,8 @@
 ﻿using Planning.DataLayer;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -59,6 +61,42 @@ namespace Planning
             }
 
             return true;
+        }
+
+        public static bool ForceMergeLVAttribute(int? ShpId)
+        {
+            SqlProcExecutor sqlProcExecutor = new SqlProcExecutor();
+            SqlProcParam sqlProcParams = new SqlProcParam();
+            sqlProcParams.Add("@ShpID", ShpId);
+            try
+            {
+                sqlProcExecutor.ProcExecute("SP_PL_ForceMergeLVAttribute", sqlProcParams);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка при создании отгрузки: " + ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            return true;
+            /*
+            SqlHandle sql = new SqlHandle(DataService.connectionString);
+            sql.Connect();
+            sql.TypeCommand = CommandType.StoredProcedure;
+            sql.SqlStatement = "SP_PL_ForceMergeLVAttribute";
+
+            sql.AddCommandParametr(new SqlParameter { ParameterName = "@ShpID", Value = ShpId });
+
+
+            bool success = sql.Execute();
+
+            if (!success)
+            {
+                MessageBox.Show(sql.LastError, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            sql.Disconnect();
+            return success;
+            */
         }
 
     }

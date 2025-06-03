@@ -50,31 +50,6 @@ namespace Planning
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.tblShipmentLog = new System.Windows.Forms.DataGridView();
-            this.tblShipmentItemLog = new System.Windows.Forms.DataGridView();
-            this.colShpItemDmlDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDmlTypeName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colShpItemDmlCompName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colShpItemUserName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colShpItemOrderId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colShpItemOrderType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colShpItemComment = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colShpItemManualLoad = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colShpItemManualUnload = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colShpItemPalletAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colShpItemIsBinding = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.colShpItemDmlType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colItemBackgroundColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.tbPrint = new System.Windows.Forms.ToolStripButton();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.tblMovementItemLog = new System.Windows.Forms.DataGridView();
-            this.colMvmItemDmlDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colMvmItemDmlTypeName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colMvmItemDmlCompName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colMvmItemDmlUser = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colMvmItemId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colMvmntDmlTypeId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDmlDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDmlType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDmlCompName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -108,6 +83,31 @@ namespace Planning
             this.colDmlTypeId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.BackgroundColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colShpIn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tblShipmentItemLog = new System.Windows.Forms.DataGridView();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.tbPrint = new System.Windows.Forms.ToolStripButton();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.tblMovementItemLog = new System.Windows.Forms.DataGridView();
+            this.colMvmItemDmlDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMvmItemDmlTypeName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMvmItemDmlCompName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMvmItemDmlUser = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMvmItemId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMvmntDmlTypeId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colShpItemDmlDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDmlTypeName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colShpItemDmlCompName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colShpItemUserName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colShpItemOrderId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colShpItemOrderType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colShpItemComment = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colShpItemManualLoad = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colShpItemManualUnload = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colShpItemPalletAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colShpItemIsBinding = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.colShpItemDmlType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colItemBackgroundColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pnFilter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tblShipmentLog)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tblShipmentItemLog)).BeginInit();
@@ -297,289 +297,6 @@ namespace Planning
             this.tblShipmentLog.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.tblShipmentLog_CellPainting);
             this.tblShipmentLog.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.tblShipmentLog_RowPrePaint);
             this.tblShipmentLog.SelectionChanged += new System.EventHandler(this.tblShipmentLog_SelectionChanged);
-            // 
-            // tblShipmentItemLog
-            // 
-            this.tblShipmentItemLog.AllowUserToAddRows = false;
-            this.tblShipmentItemLog.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.tblShipmentItemLog.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
-            this.tblShipmentItemLog.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.tblShipmentItemLog.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colShpItemDmlDate,
-            this.colDmlTypeName,
-            this.colShpItemDmlCompName,
-            this.colShpItemUserName,
-            this.colShpItemOrderId,
-            this.colShpItemOrderType,
-            this.colShpItemComment,
-            this.colShpItemManualLoad,
-            this.colShpItemManualUnload,
-            this.colShpItemPalletAmount,
-            this.colShpItemIsBinding,
-            this.colShpItemDmlType,
-            this.colItemBackgroundColor});
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.tblShipmentItemLog.DefaultCellStyle = dataGridViewCellStyle5;
-            this.tblShipmentItemLog.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tblShipmentItemLog.Location = new System.Drawing.Point(0, 0);
-            this.tblShipmentItemLog.Name = "tblShipmentItemLog";
-            this.tblShipmentItemLog.ReadOnly = true;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.tblShipmentItemLog.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
-            this.tblShipmentItemLog.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.tblShipmentItemLog.Size = new System.Drawing.Size(1401, 247);
-            this.tblShipmentItemLog.TabIndex = 0;
-            this.tblShipmentItemLog.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.tblShipmentItemLog_CellFormatting);
-            this.tblShipmentItemLog.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.tblShipmentItemLog_CellPainting);
-            this.tblShipmentItemLog.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.tblShipmentItemLog_RowPrePaint);
-            // 
-            // colShpItemDmlDate
-            // 
-            this.colShpItemDmlDate.DataPropertyName = "DmlDate";
-            this.colShpItemDmlDate.HeaderText = "Дата изменения";
-            this.colShpItemDmlDate.Name = "colShpItemDmlDate";
-            this.colShpItemDmlDate.ReadOnly = true;
-            // 
-            // colDmlTypeName
-            // 
-            this.colDmlTypeName.HeaderText = "Тип изменения";
-            this.colDmlTypeName.Name = "colDmlTypeName";
-            this.colDmlTypeName.ReadOnly = true;
-            // 
-            // colShpItemDmlCompName
-            // 
-            this.colShpItemDmlCompName.DataPropertyName = "DmlCompName";
-            this.colShpItemDmlCompName.HeaderText = "Имя компьютера";
-            this.colShpItemDmlCompName.Name = "colShpItemDmlCompName";
-            this.colShpItemDmlCompName.ReadOnly = true;
-            // 
-            // colShpItemUserName
-            // 
-            this.colShpItemUserName.DataPropertyName = "DmlUserName";
-            this.colShpItemUserName.HeaderText = "Имя пользователя";
-            this.colShpItemUserName.Name = "colShpItemUserName";
-            this.colShpItemUserName.ReadOnly = true;
-            this.colShpItemUserName.Width = 150;
-            // 
-            // colShpItemOrderId
-            // 
-            this.colShpItemOrderId.DataPropertyName = "OrderId";
-            this.colShpItemOrderId.HeaderText = "Код заказа";
-            this.colShpItemOrderId.Name = "colShpItemOrderId";
-            this.colShpItemOrderId.ReadOnly = true;
-            // 
-            // colShpItemOrderType
-            // 
-            this.colShpItemOrderType.DataPropertyName = "OrderType";
-            this.colShpItemOrderType.HeaderText = "Тип заказа";
-            this.colShpItemOrderType.Name = "colShpItemOrderType";
-            this.colShpItemOrderType.ReadOnly = true;
-            // 
-            // colShpItemComment
-            // 
-            this.colShpItemComment.DataPropertyName = "Comment";
-            this.colShpItemComment.HeaderText = "Комментарий по заказу";
-            this.colShpItemComment.Name = "colShpItemComment";
-            this.colShpItemComment.ReadOnly = true;
-            // 
-            // colShpItemManualLoad
-            // 
-            this.colShpItemManualLoad.DataPropertyName = "ManualLoad";
-            this.colShpItemManualLoad.HeaderText = "Ручная загрузка коробов";
-            this.colShpItemManualLoad.Name = "colShpItemManualLoad";
-            this.colShpItemManualLoad.ReadOnly = true;
-            // 
-            // colShpItemManualUnload
-            // 
-            this.colShpItemManualUnload.DataPropertyName = "ManualUnload";
-            this.colShpItemManualUnload.HeaderText = "Ручная разгрузка коробов";
-            this.colShpItemManualUnload.Name = "colShpItemManualUnload";
-            this.colShpItemManualUnload.ReadOnly = true;
-            // 
-            // colShpItemPalletAmount
-            // 
-            this.colShpItemPalletAmount.DataPropertyName = "PalletAmount";
-            this.colShpItemPalletAmount.HeaderText = "Кол-во паллет";
-            this.colShpItemPalletAmount.Name = "colShpItemPalletAmount";
-            this.colShpItemPalletAmount.ReadOnly = true;
-            // 
-            // colShpItemIsBinding
-            // 
-            this.colShpItemIsBinding.DataPropertyName = "IsBinding";
-            this.colShpItemIsBinding.HeaderText = "Привязка";
-            this.colShpItemIsBinding.Name = "colShpItemIsBinding";
-            this.colShpItemIsBinding.ReadOnly = true;
-            // 
-            // colShpItemDmlType
-            // 
-            this.colShpItemDmlType.DataPropertyName = "DmlType";
-            this.colShpItemDmlType.HeaderText = "Тип изменения";
-            this.colShpItemDmlType.Name = "colShpItemDmlType";
-            this.colShpItemDmlType.ReadOnly = true;
-            this.colShpItemDmlType.Visible = false;
-            // 
-            // colItemBackgroundColor
-            // 
-            this.colItemBackgroundColor.HeaderText = "colItemBackgroundColor";
-            this.colItemBackgroundColor.Name = "colItemBackgroundColor";
-            this.colItemBackgroundColor.ReadOnly = true;
-            this.colItemBackgroundColor.Visible = false;
-            // 
-            // toolStrip1
-            // 
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tbPrint});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1401, 25);
-            this.toolStrip1.TabIndex = 2;
-            this.toolStrip1.Text = "toolStrip1";
-            // 
-            // tbPrint
-            // 
-            this.tbPrint.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tbPrint.Image = ((System.Drawing.Image)(resources.GetObject("tbPrint.Image")));
-            this.tbPrint.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tbPrint.Name = "tbPrint";
-            this.tbPrint.Size = new System.Drawing.Size(23, 22);
-            this.tbPrint.Text = "Печать";
-            this.tbPrint.Click += new System.EventHandler(this.tbPrint_Click);
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.splitContainer1);
-            this.panel1.Controls.Add(this.pnFilter);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 25);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1401, 566);
-            this.panel1.TabIndex = 3;
-            // 
-            // splitContainer1
-            // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 47);
-            this.splitContainer1.Name = "splitContainer1";
-            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.tblShipmentLog);
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.tblShipmentItemLog);
-            this.splitContainer1.Panel2.Controls.Add(this.tblMovementItemLog);
-            this.splitContainer1.Size = new System.Drawing.Size(1401, 519);
-            this.splitContainer1.SplitterDistance = 268;
-            this.splitContainer1.TabIndex = 1;
-            // 
-            // tblMovementItemLog
-            // 
-            this.tblMovementItemLog.AllowUserToAddRows = false;
-            this.tblMovementItemLog.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.tblMovementItemLog.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
-            this.tblMovementItemLog.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.tblMovementItemLog.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colMvmItemDmlDate,
-            this.colMvmItemDmlTypeName,
-            this.colMvmItemDmlCompName,
-            this.colMvmItemDmlUser,
-            this.colMvmItemId,
-            this.colMvmntDmlTypeId});
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.tblMovementItemLog.DefaultCellStyle = dataGridViewCellStyle8;
-            this.tblMovementItemLog.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tblMovementItemLog.Location = new System.Drawing.Point(0, 0);
-            this.tblMovementItemLog.Name = "tblMovementItemLog";
-            this.tblMovementItemLog.ReadOnly = true;
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.tblMovementItemLog.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
-            this.tblMovementItemLog.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.tblMovementItemLog.Size = new System.Drawing.Size(1401, 247);
-            this.tblMovementItemLog.TabIndex = 1;
-            this.tblMovementItemLog.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.tblMovementItemLog_CellFormatting);
-            // 
-            // colMvmItemDmlDate
-            // 
-            this.colMvmItemDmlDate.DataPropertyName = "DmlDate";
-            this.colMvmItemDmlDate.HeaderText = "Дата изменения";
-            this.colMvmItemDmlDate.Name = "colMvmItemDmlDate";
-            this.colMvmItemDmlDate.ReadOnly = true;
-            // 
-            // colMvmItemDmlTypeName
-            // 
-            this.colMvmItemDmlTypeName.HeaderText = "Тип изменения";
-            this.colMvmItemDmlTypeName.Name = "colMvmItemDmlTypeName";
-            this.colMvmItemDmlTypeName.ReadOnly = true;
-            // 
-            // colMvmItemDmlCompName
-            // 
-            this.colMvmItemDmlCompName.DataPropertyName = "DmlCompName";
-            this.colMvmItemDmlCompName.HeaderText = "Имя компьютера";
-            this.colMvmItemDmlCompName.Name = "colMvmItemDmlCompName";
-            this.colMvmItemDmlCompName.ReadOnly = true;
-            // 
-            // colMvmItemDmlUser
-            // 
-            this.colMvmItemDmlUser.DataPropertyName = "DmlUserName";
-            this.colMvmItemDmlUser.HeaderText = "Имя пользователя";
-            this.colMvmItemDmlUser.Name = "colMvmItemDmlUser";
-            this.colMvmItemDmlUser.ReadOnly = true;
-            this.colMvmItemDmlUser.Width = 150;
-            // 
-            // colMvmItemId
-            // 
-            this.colMvmItemId.DataPropertyName = "TklLVID";
-            this.colMvmItemId.HeaderText = "Код перемещения";
-            this.colMvmItemId.Name = "colMvmItemId";
-            this.colMvmItemId.ReadOnly = true;
-            // 
-            // colMvmntDmlTypeId
-            // 
-            this.colMvmntDmlTypeId.DataPropertyName = "DmlType";
-            this.colMvmntDmlTypeId.HeaderText = "colMvmntDmlTypeId";
-            this.colMvmntDmlTypeId.Name = "colMvmntDmlTypeId";
-            this.colMvmntDmlTypeId.ReadOnly = true;
-            this.colMvmntDmlTypeId.Visible = false;
             // 
             // colDmlDate
             // 
@@ -828,6 +545,288 @@ namespace Planning
             this.colShpIn.ReadOnly = true;
             this.colShpIn.Visible = false;
             // 
+            // tblShipmentItemLog
+            // 
+            this.tblShipmentItemLog.AllowUserToAddRows = false;
+            this.tblShipmentItemLog.AllowUserToDeleteRows = false;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.tblShipmentItemLog.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            this.tblShipmentItemLog.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.tblShipmentItemLog.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colShpItemDmlDate,
+            this.colDmlTypeName,
+            this.colShpItemDmlCompName,
+            this.colShpItemUserName,
+            this.colShpItemOrderId,
+            this.colShpItemOrderType,
+            this.colShpItemComment,
+            this.colShpItemManualLoad,
+            this.colShpItemManualUnload,
+            this.colShpItemPalletAmount,
+            this.colShpItemIsBinding,
+            this.colShpItemDmlType,
+            this.colItemBackgroundColor});
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.tblShipmentItemLog.DefaultCellStyle = dataGridViewCellStyle5;
+            this.tblShipmentItemLog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tblShipmentItemLog.Location = new System.Drawing.Point(0, 0);
+            this.tblShipmentItemLog.Name = "tblShipmentItemLog";
+            this.tblShipmentItemLog.ReadOnly = true;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.tblShipmentItemLog.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            this.tblShipmentItemLog.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.tblShipmentItemLog.Size = new System.Drawing.Size(1401, 247);
+            this.tblShipmentItemLog.TabIndex = 0;
+            this.tblShipmentItemLog.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.tblShipmentItemLog_CellFormatting);
+            this.tblShipmentItemLog.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.tblShipmentItemLog_CellPainting);
+            this.tblShipmentItemLog.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.tblShipmentItemLog_RowPrePaint);
+            // 
+            // toolStrip1
+            // 
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tbPrint});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(1401, 25);
+            this.toolStrip1.TabIndex = 2;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // tbPrint
+            // 
+            this.tbPrint.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbPrint.Image = ((System.Drawing.Image)(resources.GetObject("tbPrint.Image")));
+            this.tbPrint.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbPrint.Name = "tbPrint";
+            this.tbPrint.Size = new System.Drawing.Size(23, 22);
+            this.tbPrint.Text = "Печать";
+            this.tbPrint.Click += new System.EventHandler(this.tbPrint_Click);
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.splitContainer1);
+            this.panel1.Controls.Add(this.pnFilter);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(0, 25);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1401, 566);
+            this.panel1.TabIndex = 3;
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 47);
+            this.splitContainer1.Name = "splitContainer1";
+            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.tblShipmentLog);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.tblShipmentItemLog);
+            this.splitContainer1.Panel2.Controls.Add(this.tblMovementItemLog);
+            this.splitContainer1.Size = new System.Drawing.Size(1401, 519);
+            this.splitContainer1.SplitterDistance = 268;
+            this.splitContainer1.TabIndex = 1;
+            // 
+            // tblMovementItemLog
+            // 
+            this.tblMovementItemLog.AllowUserToAddRows = false;
+            this.tblMovementItemLog.AllowUserToDeleteRows = false;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.tblMovementItemLog.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            this.tblMovementItemLog.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.tblMovementItemLog.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colMvmItemDmlDate,
+            this.colMvmItemDmlTypeName,
+            this.colMvmItemDmlCompName,
+            this.colMvmItemDmlUser,
+            this.colMvmItemId,
+            this.colMvmntDmlTypeId});
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.tblMovementItemLog.DefaultCellStyle = dataGridViewCellStyle8;
+            this.tblMovementItemLog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tblMovementItemLog.Location = new System.Drawing.Point(0, 0);
+            this.tblMovementItemLog.Name = "tblMovementItemLog";
+            this.tblMovementItemLog.ReadOnly = true;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.tblMovementItemLog.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            this.tblMovementItemLog.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.tblMovementItemLog.Size = new System.Drawing.Size(1401, 247);
+            this.tblMovementItemLog.TabIndex = 1;
+            this.tblMovementItemLog.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.tblMovementItemLog_CellFormatting);
+            // 
+            // colMvmItemDmlDate
+            // 
+            this.colMvmItemDmlDate.DataPropertyName = "DmlDate";
+            this.colMvmItemDmlDate.HeaderText = "Дата изменения";
+            this.colMvmItemDmlDate.Name = "colMvmItemDmlDate";
+            this.colMvmItemDmlDate.ReadOnly = true;
+            // 
+            // colMvmItemDmlTypeName
+            // 
+            this.colMvmItemDmlTypeName.HeaderText = "Тип изменения";
+            this.colMvmItemDmlTypeName.Name = "colMvmItemDmlTypeName";
+            this.colMvmItemDmlTypeName.ReadOnly = true;
+            // 
+            // colMvmItemDmlCompName
+            // 
+            this.colMvmItemDmlCompName.DataPropertyName = "DmlCompName";
+            this.colMvmItemDmlCompName.HeaderText = "Имя компьютера";
+            this.colMvmItemDmlCompName.Name = "colMvmItemDmlCompName";
+            this.colMvmItemDmlCompName.ReadOnly = true;
+            // 
+            // colMvmItemDmlUser
+            // 
+            this.colMvmItemDmlUser.DataPropertyName = "DmlUserName";
+            this.colMvmItemDmlUser.HeaderText = "Имя пользователя";
+            this.colMvmItemDmlUser.Name = "colMvmItemDmlUser";
+            this.colMvmItemDmlUser.ReadOnly = true;
+            this.colMvmItemDmlUser.Width = 150;
+            // 
+            // colMvmItemId
+            // 
+            this.colMvmItemId.DataPropertyName = "TklLVID";
+            this.colMvmItemId.HeaderText = "Код перемещения";
+            this.colMvmItemId.Name = "colMvmItemId";
+            this.colMvmItemId.ReadOnly = true;
+            // 
+            // colMvmntDmlTypeId
+            // 
+            this.colMvmntDmlTypeId.DataPropertyName = "DmlType";
+            this.colMvmntDmlTypeId.HeaderText = "colMvmntDmlTypeId";
+            this.colMvmntDmlTypeId.Name = "colMvmntDmlTypeId";
+            this.colMvmntDmlTypeId.ReadOnly = true;
+            this.colMvmntDmlTypeId.Visible = false;
+            // 
+            // colShpItemDmlDate
+            // 
+            this.colShpItemDmlDate.DataPropertyName = "DmlDate";
+            this.colShpItemDmlDate.HeaderText = "Дата изменения";
+            this.colShpItemDmlDate.Name = "colShpItemDmlDate";
+            this.colShpItemDmlDate.ReadOnly = true;
+            // 
+            // colDmlTypeName
+            // 
+            this.colDmlTypeName.HeaderText = "Тип изменения";
+            this.colDmlTypeName.Name = "colDmlTypeName";
+            this.colDmlTypeName.ReadOnly = true;
+            // 
+            // colShpItemDmlCompName
+            // 
+            this.colShpItemDmlCompName.DataPropertyName = "DmlCompName";
+            this.colShpItemDmlCompName.HeaderText = "Имя компьютера";
+            this.colShpItemDmlCompName.Name = "colShpItemDmlCompName";
+            this.colShpItemDmlCompName.ReadOnly = true;
+            // 
+            // colShpItemUserName
+            // 
+            this.colShpItemUserName.DataPropertyName = "DmlUserName";
+            this.colShpItemUserName.HeaderText = "Имя пользователя";
+            this.colShpItemUserName.Name = "colShpItemUserName";
+            this.colShpItemUserName.ReadOnly = true;
+            this.colShpItemUserName.Width = 150;
+            // 
+            // colShpItemOrderId
+            // 
+            this.colShpItemOrderId.DataPropertyName = "OrderId";
+            this.colShpItemOrderId.HeaderText = "Код заказа";
+            this.colShpItemOrderId.Name = "colShpItemOrderId";
+            this.colShpItemOrderId.ReadOnly = true;
+            // 
+            // colShpItemOrderType
+            // 
+            this.colShpItemOrderType.DataPropertyName = "OrderType";
+            this.colShpItemOrderType.HeaderText = "Тип заказа";
+            this.colShpItemOrderType.Name = "colShpItemOrderType";
+            this.colShpItemOrderType.ReadOnly = true;
+            // 
+            // colShpItemComment
+            // 
+            this.colShpItemComment.DataPropertyName = "Comment";
+            this.colShpItemComment.HeaderText = "Комментарий по заказу";
+            this.colShpItemComment.Name = "colShpItemComment";
+            this.colShpItemComment.ReadOnly = true;
+            // 
+            // colShpItemManualLoad
+            // 
+            this.colShpItemManualLoad.DataPropertyName = "ManualLoad";
+            this.colShpItemManualLoad.HeaderText = "Ручная загрузка коробов";
+            this.colShpItemManualLoad.Name = "colShpItemManualLoad";
+            this.colShpItemManualLoad.ReadOnly = true;
+            // 
+            // colShpItemManualUnload
+            // 
+            this.colShpItemManualUnload.DataPropertyName = "ManualUnload";
+            this.colShpItemManualUnload.HeaderText = "Ручная разгрузка коробов";
+            this.colShpItemManualUnload.Name = "colShpItemManualUnload";
+            this.colShpItemManualUnload.ReadOnly = true;
+            // 
+            // colShpItemPalletAmount
+            // 
+            this.colShpItemPalletAmount.DataPropertyName = "PalletAmount";
+            this.colShpItemPalletAmount.HeaderText = "Кол-во паллет";
+            this.colShpItemPalletAmount.Name = "colShpItemPalletAmount";
+            this.colShpItemPalletAmount.ReadOnly = true;
+            // 
+            // colShpItemIsBinding
+            // 
+            this.colShpItemIsBinding.DataPropertyName = "IsBinding";
+            this.colShpItemIsBinding.HeaderText = "Привязка";
+            this.colShpItemIsBinding.Name = "colShpItemIsBinding";
+            this.colShpItemIsBinding.ReadOnly = true;
+            // 
+            // colShpItemDmlType
+            // 
+            this.colShpItemDmlType.DataPropertyName = "DmlType";
+            this.colShpItemDmlType.HeaderText = "Тип изменения";
+            this.colShpItemDmlType.Name = "colShpItemDmlType";
+            this.colShpItemDmlType.ReadOnly = true;
+            // 
+            // colItemBackgroundColor
+            // 
+            this.colItemBackgroundColor.HeaderText = "colItemBackgroundColor";
+            this.colItemBackgroundColor.Name = "colItemBackgroundColor";
+            this.colItemBackgroundColor.ReadOnly = true;
+            this.colItemBackgroundColor.Visible = false;
+            // 
             // frmShipmentHistory
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -872,19 +871,6 @@ namespace Planning
         private System.Windows.Forms.ToolStripButton tbPrint;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colShpItemDmlDate;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colDmlTypeName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colShpItemDmlCompName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colShpItemUserName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colShpItemOrderId;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colShpItemOrderType;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colShpItemComment;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colShpItemManualLoad;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colShpItemManualUnload;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colShpItemPalletAmount;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn colShpItemIsBinding;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colShpItemDmlType;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colItemBackgroundColor;
         private System.Windows.Forms.DataGridView tblMovementItemLog;
         private System.Windows.Forms.DataGridViewTextBoxColumn colMvmItemDmlDate;
         private System.Windows.Forms.DataGridViewTextBoxColumn colMvmItemDmlTypeName;
@@ -925,5 +911,18 @@ namespace Planning
         private System.Windows.Forms.DataGridViewTextBoxColumn colDmlTypeId;
         private System.Windows.Forms.DataGridViewTextBoxColumn BackgroundColor;
         private System.Windows.Forms.DataGridViewTextBoxColumn colShpIn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colShpItemDmlDate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDmlTypeName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colShpItemDmlCompName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colShpItemUserName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colShpItemOrderId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colShpItemOrderType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colShpItemComment;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colShpItemManualLoad;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colShpItemManualUnload;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colShpItemPalletAmount;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn colShpItemIsBinding;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colShpItemDmlType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colItemBackgroundColor;
     }
 }
