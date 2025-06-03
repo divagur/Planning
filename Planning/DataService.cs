@@ -82,7 +82,7 @@ namespace Planning
         public static Dictionary<string, DictInfo> Dicts = new Dictionary<string, DictInfo>();
         public static Settings setting = new Settings();
 
-        public static SettingsHandle settingsHandle;
+        public static PlanningSettingsHandle settingsHandle;
 
         //public static SqlConnectionStringBuilder connectionString = new SqlConnectionStringBuilder();
 

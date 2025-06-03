@@ -7,14 +7,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using Planning.Kernel;
 namespace Planning
 {
     public static class Common
     {
 
         public static Settings setting = new Settings();
-        public static SettingsHandle settingsHandle;
+        public static PlanningSettingsHandle settingsHandle;
+
+        public static PlanningConfig PlanningConfig = new PlanningConfig();
+        
         public static DataLayer.User CurrentUser;
 
         public static void WaitBegin(ref object Param)

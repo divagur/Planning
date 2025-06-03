@@ -51,7 +51,11 @@
     <Compile Include="BaseObjects\IDataAdaper.cs" />
     <Compile Include="BaseObjects\DBUtilites.cs" />
     <Compile Include="BaseObjects\IRepository.cs" />
+    <Compile Include="Settings\PlanningConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings\PlanningConfigHandle.cs" />
+    <Compile Include="Settings\SettingsHandle.cs" />
+    <Compile Include="StringCryptor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

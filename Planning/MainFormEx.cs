@@ -295,26 +295,29 @@ namespace Planning
         private void Init()
         {
 
-            Common.settingsHandle = new SettingsHandle("Settings.xml", Common.setting);
+            PlanningConfigHandle planningConfigHandle = new PlanningConfigHandle("PlanningConfig.xml", Common.PlanningConfig);
+            planningConfigHandle.Load();
+
+
+            Common.settingsHandle = new PlanningSettingsHandle("Settings.xml", Common.setting);
             Common.settingsHandle.Load();
 
-            hideCols = Common.settingsHandle.GetParamStringValue("View\\HideColumns").Split(',').ToList();
-
-            PopulateVisibleColumn();
-
-            Common.settingsHandle = new SettingsHandle("Settings.xml", Common.setting);
-            Common.settingsHandle.Load();
-
-            ConnectionParams.ServerName = Common.setting.ServerName;
-            ConnectionParams.BaseName = Common.setting.BaseName;
-
-            ConnectionParams.UserName = Common.setting.UserName;
-            ConnectionParams.Pwd = Common.DecryptString(Common.setting.Password);
+            ConnectionParams.ServerName = Common.PlanningConfig.ServerName;
+            ConnectionParams.BaseName = Common.PlanningConfig.BaseName;
+            ConnectionParams.UserName = Common.PlanningConfig.UserName;
+            ConnectionParams.Pwd = Common.PlanningConfig.Password;
 
             if (String.IsNullOrEmpty(ConnectionParams.ServerName) || String.IsNullOrEmpty(ConnectionParams.BaseName))
             {
                 MessageBox.Show("Не указаны параметры подключения к базе данных, проверте настройки подключения");
             }
+
+            hideCols = Common.settingsHandle.GetParamStringValue("View\\HideColumns").Split(',').ToList();
+
+            PopulateVisibleColumn();
+
+
+
 
         }
 

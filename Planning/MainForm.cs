@@ -476,7 +476,7 @@ namespace Planning
         {
             cbPaint.Checked = isPaint;
             IsFormLoad = true;
-            DataService.settingsHandle = new SettingsHandle("Settings.xml", DataService.setting);
+            DataService.settingsHandle = new PlanningSettingsHandle("Settings.xml", DataService.setting);
             DataService.settingsHandle.Load();
 
 
