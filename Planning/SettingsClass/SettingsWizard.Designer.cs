@@ -29,10 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Соединение");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Отчеты", 1, 1);
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Окно текущих задач", 2, 2);
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Рассчет объема", 3, 3);
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Отчеты", 1, 1);
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Окно текущих задач", 2, 2);
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Рассчет объема", 3, 3);
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsWizard));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -143,31 +142,25 @@
             this.tvStep.LineColor = System.Drawing.Color.White;
             this.tvStep.Location = new System.Drawing.Point(0, 0);
             this.tvStep.Name = "tvStep";
-            treeNode1.Checked = true;
-            treeNode1.ImageIndex = 0;
-            treeNode1.Name = "NodeConnection";
+            treeNode1.ImageIndex = 1;
+            treeNode1.Name = "NodeReport";
+            treeNode1.SelectedImageIndex = 1;
             treeNode1.Tag = "0";
-            treeNode1.Text = "Соединение";
-            treeNode2.ImageIndex = 1;
-            treeNode2.Name = "NodeReport";
-            treeNode2.SelectedImageIndex = 1;
+            treeNode1.Text = "Отчеты";
+            treeNode2.ImageIndex = 2;
+            treeNode2.Name = "NodeCurrentTask";
+            treeNode2.SelectedImageIndex = 2;
             treeNode2.Tag = "1";
-            treeNode2.Text = "Отчеты";
-            treeNode3.ImageIndex = 2;
-            treeNode3.Name = "NodeCurrentTask";
-            treeNode3.SelectedImageIndex = 2;
+            treeNode2.Text = "Окно текущих задач";
+            treeNode3.ImageIndex = 3;
+            treeNode3.Name = "NodeVolumeCalc";
+            treeNode3.SelectedImageIndex = 3;
             treeNode3.Tag = "2";
-            treeNode3.Text = "Окно текущих задач";
-            treeNode4.ImageIndex = 3;
-            treeNode4.Name = "NodeVolumeCalc";
-            treeNode4.SelectedImageIndex = 3;
-            treeNode4.Tag = "3";
-            treeNode4.Text = "Рассчет объема";
+            treeNode3.Text = "Рассчет объема";
             this.tvStep.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
             treeNode1,
             treeNode2,
-            treeNode3,
-            treeNode4});
+            treeNode3});
             this.tvStep.SelectedImageIndex = 0;
             this.tvStep.ShowRootLines = false;
             this.tvStep.Size = new System.Drawing.Size(248, 519);
@@ -185,10 +178,10 @@
             // 
             // pnRight
             // 
-            this.pnRight.Controls.Add(this.pnCurrentStep);
             this.pnRight.Controls.Add(this.pnReport);
-            this.pnRight.Controls.Add(this.pnConnect);
+            this.pnRight.Controls.Add(this.pnCurrentStep);
             this.pnRight.Controls.Add(this.pnVolumeCalcStep);
+            this.pnRight.Controls.Add(this.pnConnect);
             this.pnRight.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnRight.Location = new System.Drawing.Point(0, 0);
             this.pnRight.Name = "pnRight";
@@ -573,6 +566,7 @@
             this.pnConnect.Name = "pnConnect";
             this.pnConnect.Size = new System.Drawing.Size(375, 127);
             this.pnConnect.TabIndex = 1;
+            this.pnConnect.Visible = false;
             // 
             // edPassword
             // 

@@ -24,7 +24,7 @@ namespace Planning
         public SettingsWizard(Settings settings)
         {
             InitializeComponent();
-            steps.Add(pnConnect);
+            //steps.Add(pnConnect);
             steps.Add(pnReport);
             steps.Add(pnCurrentStep);
             steps.Add(pnVolumeCalcStep);

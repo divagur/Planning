@@ -15,6 +15,10 @@ using Planning.Kernel;
 using System.Drawing.Drawing2D;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Data.SqlClient;
+using System.Text.RegularExpressions;
+using SpreadsheetLight;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace Planning
 {
@@ -22,11 +26,16 @@ namespace Planning
     {
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HT_CAPTION = 0x2;
+        const int REPORT_PERIOD = 101;
+        const int REPORT_STATISTIC = 102;
+        const int REPORT_TC = 103;
 
+        
         [DllImport("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
         [DllImport("user32.dll")]
         public static extern bool ReleaseCapture();
+        string CR = Environment.NewLine;
         List<string> hideCols;
         private List<Color> rowColors = new List<Color>()
         {
@@ -967,5 +976,561 @@ namespace Planning
                 return;
             }
         }
+
+        private void menuItemReportPeriod_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
+        #region Reports
+
+        private SettingReport GetReportSetting(string reportName)
+        {
+            return DataService.setting.Reports.Find(r => r.Name == reportName);
+
+        }
+        private void ShowReport(int ReportId, ReportParams reportParams)
+        {
+            switch (ReportId)
+            {
+                case REPORT_PERIOD:
+                    ShowReportPeriod(reportParams);
+                    break;
+                case REPORT_STATISTIC:
+                    ShowReportStatistic(reportParams);
+                    break;
+                case REPORT_TC:
+                    ShowReportTC(reportParams);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void ShowReportTC(ReportParams reportParams)
+        {
+            SettingReport settingReport = GetReportSetting("Отчет по ТС");
+            if (settingReport == null)
+            {
+                MessageBox.Show("Не задан шаблон", "Ошибка при формировании отчета", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            ExcelPrint excel;
+            Excel.Range range;
+            try
+            {
+
+                excel = new ExcelPrint(settingReport.TemplatePath);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка при формировании отчета", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            miRepTC.Enabled = false;
+            frmProgressBar wait = new frmProgressBar(0, 100);
+            wait.TopLevel = true;
+            wait.TopMost = true;
+            wait.Show();
+            wait.SetText("Формирование отчета: получение данных....");
+
+
+            SqlHandle sql = new SqlHandle(DataService.connectionString);
+            sql.SqlStatement = "SP_PL_ReportTC";
+            sql.Connect();
+            sql.TypeCommand = CommandType.StoredProcedure;
+            sql.IsResultSet = true;
+
+            DateTime beginDate;
+            DateTime endDate;
+
+            DateTime? beginDateN = null;
+            DateTime? endDateN = null;
+
+
+            if (DateTime.TryParse(reportParams["PeriodBegin"], out beginDate))
+                beginDateN = (DateTime?)beginDate;
+
+            if (DateTime.TryParse(reportParams["PeriodEnd"], out endDate))
+                endDateN = (DateTime?)endDate;
+
+
+            sql.AddCommandParametr(new SqlParameter { ParameterName = "@From", Value = beginDateN });
+            sql.AddCommandParametr(new SqlParameter { ParameterName = "@Till", Value = endDateN });
+            bool success = sql.Execute();
+
+            if (!success)
+            {
+                MessageBox.Show(sql.LastError, "Ошибка при выборке данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            if (!sql.HasRows())
+            {
+                MessageBox.Show("Нет данных для формирования отчета", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            excel.SetValue(1, 1, 2, "Данные по ТС за период с " + reportParams["PeriodBegin"] + " по " + reportParams["PeriodEnd"] + ". Опоздание (часы, минуты), с учетом допуска +20 мин");
+            wait.SetRange(0, sql.DataSet.Tables[0].Rows.Count);
+            wait.SetPosition(1);
+            wait.SetText("Формирование отчета: вывод данных....");
+
+
+
+
+            int rowIdx = 0;
+            Char separator = System.Globalization.CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator[0];
+            string[,] printRow = new string[1, sql.DataSet.Tables[0].Columns.Count];
+            foreach (DataRow r in sql.DataSet.Tables[0].Rows)
+            {
+
+                for (int colIdx = 0; colIdx < sql.DataSet.Tables[0].Columns.Count; colIdx++)
+                {
+                    string value = r[colIdx].ToString();
+                    if (colIdx == 8)
+                    {
+
+                        value = value == "" ? "" : Decimal.Parse(r[colIdx].ToString().Replace(',', separator)).ToString().Replace(separator, ',');
+                    }
+
+                    printRow[0, colIdx] = value;
+                }
+                excel.SetRowValues(1, rowIdx + 5, sql.DataSet.Tables[0].Columns.Count, printRow);
+                rowIdx++;
+                wait.SetPosition(rowIdx);
+            }
+
+
+            range = excel.SelectCells(1, 1, 5, sql.DataSet.Tables[0].Columns.Count, rowIdx + 4);
+            range.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
+            range.Borders.Item[Excel.XlBordersIndex.xlEdgeLeft].Weight = Excel.XlBorderWeight.xlMedium;
+            range.Borders.Item[Excel.XlBordersIndex.xlEdgeTop].Weight = Excel.XlBorderWeight.xlMedium;
+            range.Borders.Item[Excel.XlBordersIndex.xlEdgeRight].Weight = Excel.XlBorderWeight.xlMedium;
+            range.Borders.Item[Excel.XlBordersIndex.xlEdgeBottom].Weight = Excel.XlBorderWeight.xlMedium;
+            excel.Visible = true;
+            wait.Close();
+            miRepTC.Enabled = true;
+        }
+
+        private void ShowReportStatistic(ReportParams reportParams)
+        {
+            SettingReport settingReport = GetReportSetting("Статистика за период");
+            if (settingReport == null)
+            {
+                MessageBox.Show("Не задан шаблон", "Ошибка при формировании отчета", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+
+            ExcelPrint excel;
+            Excel.Range range;
+            try
+            {
+
+                excel = new ExcelPrint(settingReport.TemplatePath);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка при формировании отчета", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+
+
+            miRepStatistic.Enabled = false;
+            frmProgressBar wait = new frmProgressBar(0, 100);
+            wait.TopLevel = true;
+            wait.TopMost = true;
+            wait.Show();
+            wait.SetText("Формирование отчета: получение данных....");
+
+            string year = reportParams["Year"];
+            string monthBegin = reportParams["MonthBegin"];
+            string monthEnd = reportParams["MonthEnd"];
+            string admCoef = reportParams["AdmCoeff"];
+
+            string dateBegin = String.Format("01.{0}.{1}", monthBegin, year);
+            string dateEnd = String.Format("{0}.{1}.{2}", DateTime.DaysInMonth(Int32.Parse(year), Int32.Parse(monthEnd)), monthEnd, year);
+
+            SqlHandle sql = new SqlHandle(DataService.connectionString);
+            sql.SqlStatement =
+                string.Format(@"select m.m_name,'' div_kpi,
+                    (
+			            select count(so1.id) so_count 
+			            from shipments s1			
+				            join shipment_orders so1 on s1.id = so1.shipment_id
+			            where 
+				            s1.submission_time is not null
+				            and YEAR(s_date) = t.s_year
+				            and MONTH(s_date) =t.s_month		
+		            ) s_count, 
+                    count(distinct t.s_id) tc_count, 
+		            sum(in_before_plan) in_before_plan,
+		            sum(in_after_plan) in_after_plan,
+		            sum(in_plan) in_plan,
+		            sum(out_before_plan) out_before_plan,
+		            sum(out_after_plan) out_after_plan,
+		            sum(out_plan) out_plan
+                from
+	                (select 1 m_id, 'Январь' m_name
+	                union
+	                select 2, 'Февраль'
+	                union
+	                select 3, 'Март'
+	                union
+	                select 4, 'Апрель'
+	                union
+	                select 5, 'Май'
+	                union
+	                select 6, 'Июнь'
+	                union
+	                select 7, 'Июль'
+	                union
+	                select 8, 'Август'
+	                union
+	                select 9, 'Сентябрь'
+	                union
+	                select 10, 'Октябрь'
+	                union
+	                select 11, 'Ноябрь'
+	                union
+	                select 12, 'Декабрь'
+                )m
+                left join
+                (
+                    select YEAR(s_date) s_year, MONTH(s_date) s_month,  s.s_date,s.id s_id,
+
+                    case when s_in = 1 and s.submission_time < dateadd(minute,-{0},convert(datetime,convert(varchar,s_date,103)+ ' '+cast(ts.slot_time as varchar),104)) then 1 else 0 end in_before_plan,
+                    case when s_in = 1 and s.submission_time > dateadd(minute,{0},convert(datetime,convert(varchar,s_date,103)+ ' '+cast(ts.slot_time as varchar),104)) then 1 else 0 end in_after_plan,
+                    case when s_in = 1 and dateadd(minute,-{0},convert(datetime,convert(varchar,s_date,103)+ ' '+cast( ts.slot_time as varchar),104))
+				                    <=s.submission_time and s.submission_time <=dateadd(minute,{0},convert(datetime,convert(varchar,s_date,103)+ ' '+cast( ts.slot_time as varchar),104)) then 1 else 0 end in_plan,
+
+                    case when s_in = 0 and s.submission_time < dateadd(minute,-{0},convert(datetime,convert(varchar,s_date,103)+ ' '+cast( ts.slot_time as varchar),104)) then 1 else 0 end out_before_plan,
+                    case when s_in = 0 and s.submission_time > dateadd(minute,{0},convert(datetime,convert(varchar,s_date,103)+ ' '+cast( ts.slot_time as varchar),104)) then 1 else 0 end out_after_plan,
+                    case when s_in = 0 and dateadd(minute,-{0},convert(datetime,convert(varchar,s_date,103)+ ' '+cast( ts.slot_time as varchar),104))
+				                    <=s.submission_time and s.submission_time <=dateadd(minute,{0},convert(datetime,convert(varchar,s_date,103)+ ' '+cast( ts.slot_time as varchar),104)) then 1 else 0 end out_plan
+
+                    from shipments s
+	                    join time_slot ts on s.time_slot_id = ts.id
+                    where 
+                        s.submission_time is not null
+	                    and s_date >= convert(datetime,'{1}', 104)
+	                    and s_date <=convert(datetime,'{2}', 104)
+                ) t on t.s_month = m.m_id
+                group by t.s_year,m.m_id, m.m_name,t.s_month
+                order by m.m_id", admCoef, dateBegin, dateEnd);
+            sql.Connect();
+            sql.TypeCommand = CommandType.Text;
+            sql.IsResultSet = true;
+
+            bool success = sql.Execute();
+
+            if (!success)
+            {
+                MessageBox.Show(sql.LastError, "Ошибка при выборке данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+
+            excel.SetValue(1, 1, 2, "Статистика за " + year + " год ");
+            wait.SetRange(0, sql.DataSet.Tables[0].Rows.Count);
+            wait.SetPosition(1);
+            wait.SetText("Формирование отчета: вывод данных....");
+            int rowIdx = 0;
+            string[,] printRow = new string[1, sql.DataSet.Tables[0].Columns.Count];
+            foreach (DataRow r in sql.DataSet.Tables[0].Rows)
+            {
+
+                for (int colIdx = 0; colIdx < sql.DataSet.Tables[0].Columns.Count; colIdx++)
+                {
+                    printRow[0, colIdx] = r[colIdx].ToString();
+                }
+                excel.SetRowValues(1, rowIdx + 5, sql.DataSet.Tables[0].Columns.Count, printRow);
+                rowIdx++;
+                wait.SetPosition(rowIdx);
+            }
+
+            range = excel.SelectCells(1, 1, 5, sql.DataSet.Tables[0].Columns.Count, rowIdx + 4);
+            range.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
+            range.Borders.Item[Excel.XlBordersIndex.xlEdgeLeft].Weight = Excel.XlBorderWeight.xlMedium;
+            range.Borders.Item[Excel.XlBordersIndex.xlEdgeTop].Weight = Excel.XlBorderWeight.xlMedium;
+            range.Borders.Item[Excel.XlBordersIndex.xlEdgeRight].Weight = Excel.XlBorderWeight.xlMedium;
+            range.Borders.Item[Excel.XlBordersIndex.xlEdgeBottom].Weight = Excel.XlBorderWeight.xlMedium;
+            excel.Visible = true;
+            wait.Close();
+            miRepStatistic.Enabled = true;
+        }
+
+
+        private void ShowReportPeriod(ReportParams reportParams)
+        {
+            //bwProgress.RunWorkerAsync(reportParams);
+
+
+
+
+
+            List<string> columnOrder = new List<string> {"ShpId","OrdId","ShpDate","SlotTime","InOut","OrdLVCode","OrdLVType",
+                "KlientName","OrderStatus","PrcReady","ShpComment","OrdComment","GateName","ShpSpecialCond","ShpDriverPhone",
+                "ShpDriverFio","TransportCompanyName","TransportTypeName","ShpVehicleNumber","ShpTrailerNumber","ShpAttorneyNumber",
+                "ShpAttorneyDate","ShpSubmissionTime","ShpStartTime", "ShpEndTimePlan","ShpEndTimeFact","CALC:CONCAT(ShpDate,SlotTime)",
+                "CALC:DIFFTIME(ShpSubmissionTime,ShpStartTime)","CALC:DIFFTIME({26},ShpStartTime)","CALC:DIFFTIME({26},ShpSubmissionTime)",
+                "ShpDelayReasonName", "ShpDelayComment",  "ShpStampNumber","ShpSupplierName" };
+            //"DepCode",
+            int[] colNumber = new int[columnOrder.Count];
+
+            SettingReport settingReport = GetReportSetting("Отгрузки за период");
+            if (settingReport == null)
+            {
+                MessageBox.Show("Не задан шаблон", "Ошибка при формировании отчета", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            ExcelPrint excel;
+            try
+            {
+
+                excel = new ExcelPrint(settingReport.TemplatePath);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка при формировании отчета", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            miRepPeriod.Enabled = false;
+            frmProgressBar wait = new frmProgressBar(0, 100);
+            wait.TopLevel = true;
+            wait.TopMost = true;
+            wait.Show();
+            wait.SetText("Формирование отчета: получение данных....");
+
+            SLDocument report = new SLDocument(settingReport.TemplatePath);
+
+            Excel.Range range;
+            int ShpType = int.Parse(reportParams["ShpType"]) - 1;
+
+            //DataSet dataSet = GetShipment(DateTime.Parse(reportParams["PeriodBegin"]), DateTime.Parse(reportParams["PeriodEnd"]), null, null, ShpType);
+            List<ShipmentMain> _shipmentMainPeriod = new List<ShipmentMain>();
+            try
+            {
+               _shipmentMainPeriod = shipmentMainRepository.GetAll(DateTime.Parse(reportParams["PeriodBegin"]), DateTime.Parse(reportParams["PeriodEnd"]), null, null, ShpType);
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+            }
+
+            //DataSet dataSet = new DataSet();
+            
+
+
+
+            report.SetCellValue(2, 6, "Данные за период с " + reportParams["PeriodBegin"] + " по " + reportParams["PeriodEnd"]);
+            //excel.SetValue(1, 6, 2, "Данные за период с " + reportParams["PeriodBegin"] + " по " + reportParams["PeriodEnd"]);
+
+
+            wait.SetRange(0, _shipmentMainPeriod.Count);
+            wait.SetPosition(1);
+            wait.SetText("Формирование отчета: вывод данных....");
+
+            //Получим индексы колонок в резалсете
+            /*
+             List<string> columnOrder = new List<string> {"ShpId","OrdId","ShpDate","SlotTime","InOut","OrdLVCode","OrdLVType",
+                "KlientName","OrderStatus","PrcReady","ShpComment","OrdComment","GateName","ShpSpecialCond","ShpDriverPhone",
+                "ShpDriverFio","TransportCompanyName","TransportTypeName","ShpVehicleNumber","ShpTrailerNumber","ShpAttorneyNumber",
+                "ShpAttorneyDate","ShpSubmissionTime","ShpStartTime", "ShpEndTimePlan","ShpEndTimeFact","CALC:CONCAT(ShpDate,SlotTime)",
+                "CALC:DIFFTIME(ShpSubmissionTime,ShpStartTime)","CALC:DIFFTIME({26},ShpStartTime)","CALC:DIFFTIME({26},ShpSubmissionTime)",
+                "ShpDelayReasonName", "ShpDelayComment",  "ShpStampNumber","ShpSupplierName" };
+             */
+            int rowIdx = 0;
+            foreach (var item in _shipmentMainPeriod)
+            {
+                report.SetCellValue(rowIdx + 5, 1, (int)item.ShpId);
+                report.SetCellValue(rowIdx + 5, 2, (int)item.OrdId);
+                report.SetCellValue(rowIdx + 5, 3, (DateTime)item.ShpDate);
+                report.SetCellValue(rowIdx + 5, 4, item.SlotTime.ToString());
+                report.SetCellValue(rowIdx + 5, 5, item.InOut);
+                report.SetCellValue(rowIdx + 5, 6, item.OrdLVCode);
+                report.SetCellValue(rowIdx + 5, 7, item.OrdLVType);
+                report.SetCellValue(rowIdx + 5, 8, item.KlientName);
+                report.SetCellValue(rowIdx + 5, 9, item.OrderStatus);
+                report.SetCellValue(rowIdx + 5, 10, item.PrcReady);
+                report.SetCellValue(rowIdx + 5, 11, item.ShpComment);
+                report.SetCellValue(rowIdx + 5, 12, item.OrdComment);
+                report.SetCellValue(rowIdx + 5, 13, item.GateName);
+                report.SetCellValue(rowIdx + 5, 14, (bool)item.ShpSpecialCond);
+                report.SetCellValue(rowIdx + 5, 15, item.ShpDriverPhone);
+                report.SetCellValue(rowIdx + 5, 16, item.ShpDriverFio);
+                report.SetCellValue(rowIdx + 5, 17, item.TransportCompanyName);
+                report.SetCellValue(rowIdx + 5, 18, item.TransportTypeName);
+                report.SetCellValue(rowIdx + 5, 19, item.ShpVehicleNumber);
+                report.SetCellValue(rowIdx + 5, 20, item.ShpTrailerNumber);
+                report.SetCellValue(rowIdx + 5, 21, item.ShpAttorneyNumber);
+                report.SetCellValue(rowIdx + 5, 22, (DateTime)item.ShpAttorneyDate);
+                report.SetCellValue(rowIdx + 5, 23, (DateTime)item.ShpSubmissionTime);
+                report.SetCellValue(rowIdx + 5, 24, (DateTime)item.ShpStartTime);
+                report.SetCellValue(rowIdx + 5, 25, (DateTime)item.ShpEndTimePlan);
+                report.SetCellValue(rowIdx + 5, 26, (DateTime)item.ShpEndTimeFact);
+                DateTime planDateTime = ((DateTime)item.ShpDate).Add((TimeSpan)item.SlotTime);
+                report.SetCellValue(rowIdx + 5, 27, planDateTime.ToString());
+                TimeSpan diff;
+                if (item.ShpDate != null && item.SlotTime !=null)
+                {
+                    DateTime SlotTime = DateTime.Parse(item.SlotTime.ToString());
+                    diff = (DateTime)item.ShpDate - SlotTime;
+                    report.SetCellValue(rowIdx + 5, 28, diff.ToString());
+                }
+                if (item.ShpSubmissionTime !=null && item.ShpStartTime !=null)
+                {
+                    TimeSpan diffTime = (DateTime)item.ShpSubmissionTime - (DateTime)item.ShpStartTime;
+                    report.SetCellValue(rowIdx + 5, 29, diffTime.ToString());
+                }
+                
+                report.SetCellValue(rowIdx + 5, 30, item.OrdLVCode);
+                report.SetCellValue(rowIdx + 5, 31, item.OrdLVCode);
+                report.SetCellValue(rowIdx + 5, 32, item.OrdLVCode);
+                report.SetCellValue(rowIdx + 5, 33, item.OrdLVCode);
+                report.SetCellValue(rowIdx + 5, 34, item.OrdLVCode);
+
+                string cellValue;
+                for (int colIdx = 0; colIdx < columnOrder.Count; colIdx++)
+                {
+                    cellValue = "";
+                    if (!columnOrder[colIdx].StartsWith("CALC"))
+                    {
+
+                        cellValue = [columnOrder[colIdx]].ToString();
+                    }
+                    else
+                    {
+                        cellValue = CalculateColumnValue(r, printRow, columnOrder[colIdx].Substring(5));
+                    }
+                    if (columnOrder[colIdx] == "ShpDate")
+                    {
+                        //columnOrder[colIdx]
+                        cellValue = r[columnOrder[colIdx]].ToString().Substring(0, 10);
+                    }
+                    printRow[0, colIdx] = cellValue;
+
+                    //excel.SetValue(1, colIdx + 1, rowIdx, cellValue);
+                    // 
+
+                }
+            }
+
+
+            string[,] printRow = new string[1, columnOrder.Count];
+            foreach (DataRow r in dataSet.Tables[0].Rows)
+            {
+                string cellValue;
+
+                for (int colIdx = 0; colIdx < columnOrder.Count; colIdx++)
+                {
+                    cellValue = "";
+                    if (!columnOrder[colIdx].StartsWith("CALC"))
+                    {
+
+                        cellValue = r[columnOrder[colIdx]].ToString();
+                    }
+                    else
+                    {
+                        cellValue = CalculateColumnValue(r, printRow, columnOrder[colIdx].Substring(5));
+                    }
+                    if (columnOrder[colIdx] == "ShpDate")
+                    {
+                        //columnOrder[colIdx]
+                        cellValue = r[columnOrder[colIdx]].ToString().Substring(0, 10);
+                    }
+                    printRow[0, colIdx] = cellValue;
+
+                    //excel.SetValue(1, colIdx + 1, rowIdx, cellValue);
+                    // 
+
+                }
+                //excel.SetValues(1, 1, rowIdx + 5, columnOrder.Count, rowIdx + 5, printRow);
+                excel.SetRowValues(1, rowIdx + 5, columnOrder.Count, printRow);
+                rowIdx++;
+                wait.SetPosition(rowIdx);
+            }
+
+            range = excel.SelectCells(1, 1, 5, columnOrder.Count, rowIdx + 4);
+            range.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
+            range.Borders.Item[Excel.XlBordersIndex.xlEdgeLeft].Weight = Excel.XlBorderWeight.xlMedium;
+            range.Borders.Item[Excel.XlBordersIndex.xlEdgeTop].Weight = Excel.XlBorderWeight.xlMedium;
+            range.Borders.Item[Excel.XlBordersIndex.xlEdgeRight].Weight = Excel.XlBorderWeight.xlMedium;
+            range.Borders.Item[Excel.XlBordersIndex.xlEdgeBottom].Weight = Excel.XlBorderWeight.xlMedium;
+            excel.Visible = true;
+            wait.Close();
+            miRepPeriod.Enabled = true;
+        }
+
+        private string CalculateColumnValue(DataRow context, string[,] currentPrintRow, string Expr)
+        {
+            string result = "";
+
+            var m = Regex.Match(Expr, @"^\s*(\w+)\s*\((.*)\)");
+            string[] param = null;
+            if (m.Groups.Count > 2)
+            {
+                if (m.Groups[2].Value.IndexOf(',') > 0)
+                    param = m.Groups[2].Value.Split(new char[] { ',' });
+                else
+                    param = new string[] { m.Groups[2].Value };
+
+            }
+
+            for (int i = 0; i < param.Length; i++)
+            {
+                if (param[i].StartsWith("[") && param[i].EndsWith("]"))
+                    param[i] = param[i].Trim(new char[] { '[', ']' });
+                else
+                {
+
+                    if (param[i].StartsWith("{") && param[i].EndsWith("}"))
+                    {
+                        param[i] = currentPrintRow[0, Int32.Parse(param[i].Trim('{', '}'))];
+                    }
+                    if (context.Table.Columns.Contains(param[i]))
+                    {
+                        if (param[i] == "ShpDate")
+                            param[i] = context[param[i]].ToString().Substring(0, 10);
+                        else
+                            param[i] = context[param[i]].ToString();
+                    }
+
+                }
+            }
+
+            switch (m.Groups[1].Value)
+            {
+                case "CONCAT":
+                    result = String.Join(" ", param);
+                    break;
+                case "DIFFTIME":
+                    DateTime dateTime1;
+                    DateTime dateTime2;
+                    if (!DateTime.TryParse(param[0], out dateTime1))
+                        return "";
+                    if (!DateTime.TryParse(param[1], out dateTime2))
+                        return "";
+                    TimeSpan diff = dateTime1 - dateTime2;
+                    return diff.ToString(@"hh\:mm\:ss");
+                default:
+                    break;
+            }
+
+
+            foreach (Group item in m.Groups)
+            {
+                Console.WriteLine(item.Value);
+            }
+
+            return result;
+        }
+
+        #endregion
     }
 }
