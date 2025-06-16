@@ -856,14 +856,14 @@
             this.mciPrint,
             this.mciOrderDetail});
             this.mnuContext.Name = "mnuContext";
-            this.mnuContext.Size = new System.Drawing.Size(145, 48);
+            this.mnuContext.Size = new System.Drawing.Size(181, 70);
             this.mnuContext.Opening += new System.ComponentModel.CancelEventHandler(this.mnuContext_Opening);
             // 
             // mciPrint
             // 
             this.mciPrint.Image = global::Planning.Properties.Resources.printer;
             this.mciPrint.Name = "mciPrint";
-            this.mciPrint.Size = new System.Drawing.Size(144, 22);
+            this.mciPrint.Size = new System.Drawing.Size(180, 22);
             this.mciPrint.Text = "Печать";
             this.mciPrint.Click += new System.EventHandler(this.mciPrint_Click);
             // 
@@ -871,7 +871,7 @@
             // 
             this.mciOrderDetail.Image = global::Planning.Properties.Resources.view_detailed_2595;
             this.mciOrderDetail.Name = "mciOrderDetail";
-            this.mciOrderDetail.Size = new System.Drawing.Size(144, 22);
+            this.mciOrderDetail.Size = new System.Drawing.Size(180, 22);
             this.mciOrderDetail.Text = "Детализация";
             this.mciOrderDetail.Click += new System.EventHandler(this.mciOrderDetail_Click);
             // 
