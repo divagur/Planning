@@ -12,10 +12,6 @@ namespace Planning
 {
     public partial class TimeSlotEdit : Form
     {
-        /*
-        TimeSlot _timeSlot;
-        PlanningDbContext _context;
-        */
 
         DataLayer.TimeSlot _timeSlot;
         

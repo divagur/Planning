@@ -28,7 +28,6 @@ namespace Planning
         //private int currColorItemIdx = 0;
         int _shipmentId = -1;
         bool _isShipment;
-        //PlanningDbContext _context = DataService.context;
         MovementItemLogRepository movementItemLogRepository = new MovementItemLogRepository();
         ShipmentOrderLogRepository shipmentOrderLogRepository = new ShipmentOrderLogRepository(); 
 
@@ -93,55 +92,7 @@ namespace Planning
             int ShpType = cmbShpType.SelectedIndex-1;
             DateTime DateFrom = dtBegin.Value;
             DateTime DateTill = dtEnd.Value;
-            /*
-            SqlHandle sql = new SqlHandle(DataService.connectionString);
-
-            #region ДатыОтгрузки
-            if (_shipmentId>=0)
-            {
-                sql.Connect();
-                string table_name = !_isShipment ? "movement_log" : "shipments_log";
-                string field_name= !_isShipment ? "movement_id" : "shipment_id";
-                sql.TypeCommand = CommandType.Text;
-                sql.IsResultSet = true;
-                sql.SqlStatement = $@"select min(dml_date) min_dml_date, max(dml_date) max_dml_date
-                from {table_name}
-                where {field_name} = " + _shipmentId;
-                bool Success = sql.Execute() && sql.HasRows() && sql.Read();
-                if (Success)
-                {                   
-                    dtBegin.Value = sql.IsNull(0) ? DateTime.Now: sql.GetDateTimeValue(0, true);  
-                    dtEnd.Value = sql.IsNull(1) ? DateTime.Now:sql.GetDateTimeValue(1, true);
-                }
-                sql.Disconnect();
-
-            }
-
-            #endregion
-
-            DateTime DateFrom = dtBegin.Value;
-            DateTime DateTill = dtEnd.Value;
-
-            sql.SqlStatement = "SP_PL_GetShipmentLog";
-            sql.Connect();
-            sql.TypeCommand = CommandType.StoredProcedure;
-            sql.IsResultSet = true;
-            object shpType = null;
-            if (ShpType >= 0)
-                shpType = ShpType;
-            sql.AddCommandParametr(new SqlParameter { ParameterName = "@ShpId", Value = _shipmentId });
-            sql.AddCommandParametr(new SqlParameter { ParameterName = "@From", Value = DateFrom });
-            sql.AddCommandParametr(new SqlParameter { ParameterName = "@Till", Value = DateTill });
-            sql.AddCommandParametr(new SqlParameter { ParameterName = "@In", Value = shpType });
-            sql.AddCommandParametr(new SqlParameter { ParameterName = "@UserId", Value = UserId });
-            bool success = sql.Execute();
-
-            if (!success)
-            {
-                MessageBox.Show(sql.LastError, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            */
+            
 
             ShipmentLogViewRepository shipmentLogViewRepository = new ShipmentLogViewRepository();
             List<ShipmentLogView> shipmentLogViews = shipmentLogViewRepository.GetByParams(_shipmentId, DateFrom, DateTill, ShpType, UserId);
@@ -448,7 +399,6 @@ namespace Planning
 
 
                 List<DataLayer.MovementItemLog> listShipmentOrdersLog = movementItemLogRepository.GetByMovementId(shpId).OrderBy(o => o.MovementItemId).ThenBy(o => o.DmlDate).ToList();
-                //_context.MovementItemLog.Where(i => i.MovementId == shpId).OrderBy(o => o.MovementItemId).ThenBy(o => o.DmlDate).ToList();
                 tblShipmentItemLog.DataSource = listShipmentOrdersLog;
             }
             else
@@ -457,7 +407,6 @@ namespace Planning
                 //tblShipmentItemLog.BringToFront();
                 tblMovementItemLog.Visible = false;
                 List<DataLayer.ShipmentOrderLog> listShipmentOrdersLog = shipmentOrderLogRepository.GetShipmentOrders(shpId).OrderBy(o => o.ShipmentOrderId).ThenBy(o => o.DmlDate).ToList();
-                //_context.ShipmentOrdersLog.Where(i => i.ShipmentId == shpId).OrderBy(o => o.OrderId).ThenBy(o => o.DmlDate).ToList();
                 tblShipmentItemLog.DataSource = listShipmentOrdersLog;
             }
             /*tblShipmentLog.Focus();

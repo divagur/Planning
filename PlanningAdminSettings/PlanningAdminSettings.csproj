@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>PlanningLogo.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -80,10 +83,17 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DataLayer\Planning.DataLayer.csproj">
+      <Project>{99e207b1-780d-49b7-b6e3-b5567ef4796f}</Project>
+      <Name>Planning.DataLayer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Planning.Kernel\Planning.Kernel.csproj">
       <Project>{cc99e480-56a0-42fb-81ba-685b07b198fc}</Project>
       <Name>Planning.Kernel</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="PlanningLogo.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

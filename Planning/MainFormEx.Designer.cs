@@ -115,6 +115,9 @@ namespace Planning
             this.colOrdLvId = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvRowNumberRange = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.panelMain = new System.Windows.Forms.Panel();
+            this.edInterval = new System.Windows.Forms.NumericUpDown();
+            this.cbPaint = new System.Windows.Forms.CheckBox();
+            this.cbUpdate = new System.Windows.Forms.CheckBox();
             this.edSearch = new System.Windows.Forms.TextBox();
             this.edCurrDay = new System.Windows.Forms.DateTimePicker();
             this.btnGetNextDay = new System.Windows.Forms.Button();
@@ -127,7 +130,15 @@ namespace Planning
             this.btnRefresh = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnEdit = new System.Windows.Forms.Button();
+            this.btnSearchEx = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
+            this.btnActionFilter = new Planning.Controls.MenuButton();
+            this.contextMenuActionType = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItemFilterIn = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemFilterOut = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemFilterMove = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnWarehouseFilter = new Planning.Controls.MenuButton();
+            this.contextMenuWarehouse = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.btnColumnVisible = new Planning.Controls.MenuButton();
             this.contextMenuColumns = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
@@ -140,9 +151,6 @@ namespace Planning
             this.panelFormHeader = new System.Windows.Forms.Panel();
             this.lbMainFormCaption = new System.Windows.Forms.Label();
             this.btnMainMenu = new System.Windows.Forms.Button();
-            this.btnMinimizeWindow = new System.Windows.Forms.Button();
-            this.btnMaximizeWindow = new System.Windows.Forms.Button();
-            this.btnCloseWindow = new System.Windows.Forms.Button();
             this.contextMenuMain = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItemFile = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemSettings = new System.Windows.Forms.ToolStripMenuItem();
@@ -165,15 +173,23 @@ namespace Planning
             this.menuItemReportStatistic = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemReportTC = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemAdd = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemCalcOrderVolume = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemCurrentTask = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemAdmin = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemDictUserGroups = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemDictUsers = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnMinimizeWindow = new System.Windows.Forms.Button();
+            this.btnMaximizeWindow = new System.Windows.Forms.Button();
+            this.btnCloseWindow = new System.Windows.Forms.Button();
+            this.tmUpdate = new System.Windows.Forms.Timer(this.components);
             this.menuMain.SuspendLayout();
             this.statusStrip2.SuspendLayout();
             this.tabForms.SuspendLayout();
             this.tabMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tblShipments)).BeginInit();
             this.panelMain.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.edInterval)).BeginInit();
+            this.contextMenuActionType.SuspendLayout();
             this.contextMenuColumns.SuspendLayout();
             this.panelFormHeader.SuspendLayout();
             this.contextMenuMain.SuspendLayout();
@@ -470,7 +486,7 @@ namespace Planning
             this.tblShipments.AllColumns.Add(this.colWarehouseName);
             this.tblShipments.AllColumns.Add(this.colOrdLvId);
             this.tblShipments.AllColumns.Add(this.olvRowNumberRange);
-            this.tblShipments.AlternateRowBackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.tblShipments.AlternateRowBackColor = System.Drawing.SystemColors.Window;
             this.tblShipments.CellEditUseWholeCell = false;
             this.tblShipments.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.colOrderDetail,
@@ -529,8 +545,10 @@ namespace Planning
             this.tblShipments.Size = new System.Drawing.Size(1276, 577);
             this.tblShipments.TabIndex = 1;
             this.tblShipments.UseAlternatingBackColors = true;
+            this.tblShipments.UseCellFormatEvents = true;
             this.tblShipments.UseCompatibleStateImageBehavior = false;
             this.tblShipments.View = System.Windows.Forms.View.Details;
+            this.tblShipments.ButtonClick += new System.EventHandler<BrightIdeasSoftware.CellClickEventArgs>(this.tblShipments_ButtonClick);
             this.tblShipments.FormatRow += new System.EventHandler<BrightIdeasSoftware.FormatRowEventArgs>(this.tblShipments_FormatRow);
             this.tblShipments.DoubleClick += new System.EventHandler(this.tblShipments_DoubleClick);
             // 
@@ -876,6 +894,9 @@ namespace Planning
             // 
             // panelMain
             // 
+            this.panelMain.Controls.Add(this.edInterval);
+            this.panelMain.Controls.Add(this.cbPaint);
+            this.panelMain.Controls.Add(this.cbUpdate);
             this.panelMain.Controls.Add(this.edSearch);
             this.panelMain.Controls.Add(this.edCurrDay);
             this.panelMain.Controls.Add(this.btnGetNextDay);
@@ -888,7 +909,10 @@ namespace Planning
             this.panelMain.Controls.Add(this.btnRefresh);
             this.panelMain.Controls.Add(this.btnDelete);
             this.panelMain.Controls.Add(this.btnEdit);
+            this.panelMain.Controls.Add(this.btnSearchEx);
             this.panelMain.Controls.Add(this.btnAdd);
+            this.panelMain.Controls.Add(this.btnActionFilter);
+            this.panelMain.Controls.Add(this.btnWarehouseFilter);
             this.panelMain.Controls.Add(this.btnColumnVisible);
             this.panelMain.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelMain.Location = new System.Drawing.Point(3, 3);
@@ -896,9 +920,49 @@ namespace Planning
             this.panelMain.Size = new System.Drawing.Size(1276, 56);
             this.panelMain.TabIndex = 5;
             // 
+            // edInterval
+            // 
+            this.edInterval.Location = new System.Drawing.Point(814, 9);
+            this.edInterval.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.edInterval.Name = "edInterval";
+            this.edInterval.Size = new System.Drawing.Size(45, 20);
+            this.edInterval.TabIndex = 11;
+            this.edInterval.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.edInterval.ValueChanged += new System.EventHandler(this.edInterval_ValueChanged);
+            // 
+            // cbPaint
+            // 
+            this.cbPaint.AutoSize = true;
+            this.cbPaint.Location = new System.Drawing.Point(865, 35);
+            this.cbPaint.Name = "cbPaint";
+            this.cbPaint.Size = new System.Drawing.Size(81, 17);
+            this.cbPaint.TabIndex = 10;
+            this.cbPaint.Text = "Отрисовка";
+            this.cbPaint.UseVisualStyleBackColor = true;
+            this.cbPaint.CheckedChanged += new System.EventHandler(this.cbPaint_CheckedChanged);
+            // 
+            // cbUpdate
+            // 
+            this.cbUpdate.AutoSize = true;
+            this.cbUpdate.Location = new System.Drawing.Point(865, 11);
+            this.cbUpdate.Name = "cbUpdate";
+            this.cbUpdate.Size = new System.Drawing.Size(110, 17);
+            this.cbUpdate.TabIndex = 9;
+            this.cbUpdate.Text = "Автообновление";
+            this.cbUpdate.UseVisualStyleBackColor = true;
+            this.cbUpdate.CheckedChanged += new System.EventHandler(this.cbUpdate_CheckedChanged);
+            // 
             // edSearch
             // 
-            this.edSearch.Location = new System.Drawing.Point(386, 5);
+            this.edSearch.Location = new System.Drawing.Point(553, 9);
             this.edSearch.Name = "edSearch";
             this.edSearch.Size = new System.Drawing.Size(134, 20);
             this.edSearch.TabIndex = 8;
@@ -907,7 +971,7 @@ namespace Planning
             // edCurrDay
             // 
             this.edCurrDay.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.edCurrDay.Location = new System.Drawing.Point(539, 5);
+            this.edCurrDay.Location = new System.Drawing.Point(706, 9);
             this.edCurrDay.Name = "edCurrDay";
             this.edCurrDay.Size = new System.Drawing.Size(102, 20);
             this.edCurrDay.TabIndex = 7;
@@ -918,7 +982,7 @@ namespace Planning
             this.btnGetNextDay.FlatAppearance.BorderSize = 0;
             this.btnGetNextDay.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnGetNextDay.Image = ((System.Drawing.Image)(resources.GetObject("btnGetNextDay.Image")));
-            this.btnGetNextDay.Location = new System.Drawing.Point(611, 26);
+            this.btnGetNextDay.Location = new System.Drawing.Point(778, 30);
             this.btnGetNextDay.Name = "btnGetNextDay";
             this.btnGetNextDay.Size = new System.Drawing.Size(30, 20);
             this.btnGetNextDay.TabIndex = 0;
@@ -930,7 +994,7 @@ namespace Planning
             this.btnSearchNext.FlatAppearance.BorderSize = 0;
             this.btnSearchNext.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSearchNext.Image = ((System.Drawing.Image)(resources.GetObject("btnSearchNext.Image")));
-            this.btnSearchNext.Location = new System.Drawing.Point(422, 26);
+            this.btnSearchNext.Location = new System.Drawing.Point(589, 30);
             this.btnSearchNext.Name = "btnSearchNext";
             this.btnSearchNext.Size = new System.Drawing.Size(30, 20);
             this.btnSearchNext.TabIndex = 0;
@@ -942,7 +1006,7 @@ namespace Planning
             this.btnGetCurrentDay.FlatAppearance.BorderSize = 0;
             this.btnGetCurrentDay.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnGetCurrentDay.Image = ((System.Drawing.Image)(resources.GetObject("btnGetCurrentDay.Image")));
-            this.btnGetCurrentDay.Location = new System.Drawing.Point(575, 26);
+            this.btnGetCurrentDay.Location = new System.Drawing.Point(742, 30);
             this.btnGetCurrentDay.Name = "btnGetCurrentDay";
             this.btnGetCurrentDay.Size = new System.Drawing.Size(30, 20);
             this.btnGetCurrentDay.TabIndex = 0;
@@ -954,7 +1018,7 @@ namespace Planning
             this.btnSearch.FlatAppearance.BorderSize = 0;
             this.btnSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSearch.Image = ((System.Drawing.Image)(resources.GetObject("btnSearch.Image")));
-            this.btnSearch.Location = new System.Drawing.Point(386, 26);
+            this.btnSearch.Location = new System.Drawing.Point(553, 30);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(30, 20);
             this.btnSearch.TabIndex = 0;
@@ -966,7 +1030,7 @@ namespace Planning
             this.btnGetLastDay.FlatAppearance.BorderSize = 0;
             this.btnGetLastDay.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnGetLastDay.Image = ((System.Drawing.Image)(resources.GetObject("btnGetLastDay.Image")));
-            this.btnGetLastDay.Location = new System.Drawing.Point(539, 26);
+            this.btnGetLastDay.Location = new System.Drawing.Point(706, 30);
             this.btnGetLastDay.Name = "btnGetLastDay";
             this.btnGetLastDay.Size = new System.Drawing.Size(30, 20);
             this.btnGetLastDay.TabIndex = 0;
@@ -1033,6 +1097,18 @@ namespace Planning
             this.btnEdit.UseVisualStyleBackColor = true;
             this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
             // 
+            // btnSearchEx
+            // 
+            this.btnSearchEx.FlatAppearance.BorderSize = 0;
+            this.btnSearchEx.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSearchEx.Image = ((System.Drawing.Image)(resources.GetObject("btnSearchEx.Image")));
+            this.btnSearchEx.Location = new System.Drawing.Point(498, 5);
+            this.btnSearchEx.Name = "btnSearchEx";
+            this.btnSearchEx.Size = new System.Drawing.Size(49, 49);
+            this.btnSearchEx.TabIndex = 0;
+            this.btnSearchEx.UseVisualStyleBackColor = true;
+            this.btnSearchEx.Click += new System.EventHandler(this.btnSearchEx_Click);
+            // 
             // btnAdd
             // 
             this.btnAdd.FlatAppearance.BorderSize = 0;
@@ -1044,6 +1120,77 @@ namespace Planning
             this.btnAdd.TabIndex = 0;
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            // 
+            // btnActionFilter
+            // 
+            this.btnActionFilter.FlatAppearance.BorderSize = 0;
+            this.btnActionFilter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnActionFilter.Image = ((System.Drawing.Image)(resources.GetObject("btnActionFilter.Image")));
+            this.btnActionFilter.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnActionFilter.Location = new System.Drawing.Point(386, 4);
+            this.btnActionFilter.Menu = this.contextMenuActionType;
+            this.btnActionFilter.Name = "btnActionFilter";
+            this.btnActionFilter.Size = new System.Drawing.Size(50, 49);
+            this.btnActionFilter.TabIndex = 0;
+            this.btnActionFilter.UseVisualStyleBackColor = true;
+            // 
+            // contextMenuActionType
+            // 
+            this.contextMenuActionType.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemFilterIn,
+            this.toolStripMenuItemFilterOut,
+            this.toolStripMenuItemFilterMove});
+            this.contextMenuActionType.Name = "contextMenuActionType";
+            this.contextMenuActionType.Size = new System.Drawing.Size(110, 70);
+            // 
+            // toolStripMenuItemFilterIn
+            // 
+            this.toolStripMenuItemFilterIn.Checked = true;
+            this.toolStripMenuItemFilterIn.CheckOnClick = true;
+            this.toolStripMenuItemFilterIn.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.toolStripMenuItemFilterIn.Name = "toolStripMenuItemFilterIn";
+            this.toolStripMenuItemFilterIn.Size = new System.Drawing.Size(109, 22);
+            this.toolStripMenuItemFilterIn.Text = "вход";
+            this.toolStripMenuItemFilterIn.Click += new System.EventHandler(this.toolStripMenuItemFilterIn_Click);
+            // 
+            // toolStripMenuItemFilterOut
+            // 
+            this.toolStripMenuItemFilterOut.Checked = true;
+            this.toolStripMenuItemFilterOut.CheckOnClick = true;
+            this.toolStripMenuItemFilterOut.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.toolStripMenuItemFilterOut.Name = "toolStripMenuItemFilterOut";
+            this.toolStripMenuItemFilterOut.Size = new System.Drawing.Size(109, 22);
+            this.toolStripMenuItemFilterOut.Text = "выход";
+            this.toolStripMenuItemFilterOut.Click += new System.EventHandler(this.toolStripMenuItemFilterIn_Click);
+            // 
+            // toolStripMenuItemFilterMove
+            // 
+            this.toolStripMenuItemFilterMove.Checked = true;
+            this.toolStripMenuItemFilterMove.CheckOnClick = true;
+            this.toolStripMenuItemFilterMove.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.toolStripMenuItemFilterMove.Name = "toolStripMenuItemFilterMove";
+            this.toolStripMenuItemFilterMove.Size = new System.Drawing.Size(109, 22);
+            this.toolStripMenuItemFilterMove.Text = "перем";
+            this.toolStripMenuItemFilterMove.Click += new System.EventHandler(this.toolStripMenuItemFilterIn_Click);
+            // 
+            // btnWarehouseFilter
+            // 
+            this.btnWarehouseFilter.ContextMenuStrip = this.contextMenuWarehouse;
+            this.btnWarehouseFilter.FlatAppearance.BorderSize = 0;
+            this.btnWarehouseFilter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnWarehouseFilter.Image = ((System.Drawing.Image)(resources.GetObject("btnWarehouseFilter.Image")));
+            this.btnWarehouseFilter.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnWarehouseFilter.Location = new System.Drawing.Point(442, 4);
+            this.btnWarehouseFilter.Menu = this.contextMenuWarehouse;
+            this.btnWarehouseFilter.Name = "btnWarehouseFilter";
+            this.btnWarehouseFilter.Size = new System.Drawing.Size(50, 49);
+            this.btnWarehouseFilter.TabIndex = 0;
+            this.btnWarehouseFilter.UseVisualStyleBackColor = true;
+            // 
+            // contextMenuWarehouse
+            // 
+            this.contextMenuWarehouse.Name = "contextMenuWarehouse";
+            this.contextMenuWarehouse.Size = new System.Drawing.Size(61, 4);
             // 
             // btnColumnVisible
             // 
@@ -1176,50 +1323,6 @@ namespace Planning
             this.btnMainMenu.TabIndex = 0;
             this.btnMainMenu.UseVisualStyleBackColor = true;
             this.btnMainMenu.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnMainMenu_MouseDown);
-            // 
-            // btnMinimizeWindow
-            // 
-            this.btnMinimizeWindow.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnMinimizeWindow.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.btnMinimizeWindow.FlatAppearance.BorderSize = 0;
-            this.btnMinimizeWindow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnMinimizeWindow.Image = global::Planning.Properties.Resources.icons8_minimize_window_32__2_;
-            this.btnMinimizeWindow.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.btnMinimizeWindow.Location = new System.Drawing.Point(1173, 0);
-            this.btnMinimizeWindow.Margin = new System.Windows.Forms.Padding(1, 3, 1, 3);
-            this.btnMinimizeWindow.Name = "btnMinimizeWindow";
-            this.btnMinimizeWindow.Size = new System.Drawing.Size(43, 44);
-            this.btnMinimizeWindow.TabIndex = 0;
-            this.btnMinimizeWindow.UseVisualStyleBackColor = true;
-            this.btnMinimizeWindow.Click += new System.EventHandler(this.btnMinimizeWindow_Click);
-            // 
-            // btnMaximizeWindow
-            // 
-            this.btnMaximizeWindow.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnMaximizeWindow.FlatAppearance.BorderSize = 0;
-            this.btnMaximizeWindow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnMaximizeWindow.Image = global::Planning.Properties.Resources.icons8_maximize_window_32;
-            this.btnMaximizeWindow.Location = new System.Drawing.Point(1216, 0);
-            this.btnMaximizeWindow.Margin = new System.Windows.Forms.Padding(1, 3, 1, 3);
-            this.btnMaximizeWindow.Name = "btnMaximizeWindow";
-            this.btnMaximizeWindow.Size = new System.Drawing.Size(37, 44);
-            this.btnMaximizeWindow.TabIndex = 0;
-            this.btnMaximizeWindow.UseVisualStyleBackColor = true;
-            this.btnMaximizeWindow.Click += new System.EventHandler(this.btnMaximizeWindow_Click);
-            // 
-            // btnCloseWindow
-            // 
-            this.btnCloseWindow.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnCloseWindow.FlatAppearance.BorderSize = 0;
-            this.btnCloseWindow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCloseWindow.Image = global::Planning.Properties.Resources.icons8_close_window_32;
-            this.btnCloseWindow.Location = new System.Drawing.Point(1253, 0);
-            this.btnCloseWindow.Margin = new System.Windows.Forms.Padding(1, 3, 3, 3);
-            this.btnCloseWindow.Name = "btnCloseWindow";
-            this.btnCloseWindow.Size = new System.Drawing.Size(37, 44);
-            this.btnCloseWindow.TabIndex = 0;
-            this.btnCloseWindow.UseVisualStyleBackColor = true;
-            this.btnCloseWindow.Click += new System.EventHandler(this.btnCloseWindow_Click);
             // 
             // contextMenuMain
             // 
@@ -1393,18 +1496,38 @@ namespace Planning
             this.menuItemReportStatistic.Name = "menuItemReportStatistic";
             this.menuItemReportStatistic.Size = new System.Drawing.Size(192, 22);
             this.menuItemReportStatistic.Text = "Статистика за период";
+            this.menuItemReportStatistic.Click += new System.EventHandler(this.menuItemReportStatistic_Click);
             // 
             // menuItemReportTC
             // 
             this.menuItemReportTC.Name = "menuItemReportTC";
             this.menuItemReportTC.Size = new System.Drawing.Size(192, 22);
             this.menuItemReportTC.Text = "Отчёт по ТС";
+            this.menuItemReportTC.Click += new System.EventHandler(this.menuItemReportTC_Click);
             // 
             // toolStripMenuItemAdd
             // 
+            this.toolStripMenuItemAdd.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemCalcOrderVolume,
+            this.menuItemCurrentTask});
             this.toolStripMenuItemAdd.Name = "toolStripMenuItemAdd";
             this.toolStripMenuItemAdd.Size = new System.Drawing.Size(189, 22);
             this.toolStripMenuItemAdd.Text = "Дополнительно";
+            this.toolStripMenuItemAdd.Visible = false;
+            // 
+            // menuItemCalcOrderVolume
+            // 
+            this.menuItemCalcOrderVolume.Name = "menuItemCalcOrderVolume";
+            this.menuItemCalcOrderVolume.Size = new System.Drawing.Size(248, 22);
+            this.menuItemCalcOrderVolume.Text = "Расчет объема заказа";
+            this.menuItemCalcOrderVolume.Click += new System.EventHandler(this.menuItemCalcOrderVolume_Click);
+            // 
+            // menuItemCurrentTask
+            // 
+            this.menuItemCurrentTask.Name = "menuItemCurrentTask";
+            this.menuItemCurrentTask.Size = new System.Drawing.Size(248, 22);
+            this.menuItemCurrentTask.Text = "Текущие операционные задачи";
+            this.menuItemCurrentTask.Click += new System.EventHandler(this.menuItemCurrentTask_Click);
             // 
             // toolStripMenuItemAdmin
             // 
@@ -1431,6 +1554,54 @@ namespace Planning
             this.menuItemDictUsers.Text = "Пользователи";
             this.menuItemDictUsers.Click += new System.EventHandler(this.menuItemDictUsers_Click);
             // 
+            // btnMinimizeWindow
+            // 
+            this.btnMinimizeWindow.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnMinimizeWindow.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnMinimizeWindow.FlatAppearance.BorderSize = 0;
+            this.btnMinimizeWindow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnMinimizeWindow.Image = global::Planning.Properties.Resources.icons8_minimize_window_32__2_;
+            this.btnMinimizeWindow.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.btnMinimizeWindow.Location = new System.Drawing.Point(1173, 0);
+            this.btnMinimizeWindow.Margin = new System.Windows.Forms.Padding(1, 3, 1, 3);
+            this.btnMinimizeWindow.Name = "btnMinimizeWindow";
+            this.btnMinimizeWindow.Size = new System.Drawing.Size(43, 44);
+            this.btnMinimizeWindow.TabIndex = 0;
+            this.btnMinimizeWindow.UseVisualStyleBackColor = true;
+            this.btnMinimizeWindow.Click += new System.EventHandler(this.btnMinimizeWindow_Click);
+            // 
+            // btnMaximizeWindow
+            // 
+            this.btnMaximizeWindow.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnMaximizeWindow.FlatAppearance.BorderSize = 0;
+            this.btnMaximizeWindow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnMaximizeWindow.Image = global::Planning.Properties.Resources.icons8_maximize_window_32;
+            this.btnMaximizeWindow.Location = new System.Drawing.Point(1216, 0);
+            this.btnMaximizeWindow.Margin = new System.Windows.Forms.Padding(1, 3, 1, 3);
+            this.btnMaximizeWindow.Name = "btnMaximizeWindow";
+            this.btnMaximizeWindow.Size = new System.Drawing.Size(37, 44);
+            this.btnMaximizeWindow.TabIndex = 0;
+            this.btnMaximizeWindow.UseVisualStyleBackColor = true;
+            this.btnMaximizeWindow.Click += new System.EventHandler(this.btnMaximizeWindow_Click);
+            // 
+            // btnCloseWindow
+            // 
+            this.btnCloseWindow.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnCloseWindow.FlatAppearance.BorderSize = 0;
+            this.btnCloseWindow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCloseWindow.Image = global::Planning.Properties.Resources.icons8_close_window_32;
+            this.btnCloseWindow.Location = new System.Drawing.Point(1253, 0);
+            this.btnCloseWindow.Margin = new System.Windows.Forms.Padding(1, 3, 3, 3);
+            this.btnCloseWindow.Name = "btnCloseWindow";
+            this.btnCloseWindow.Size = new System.Drawing.Size(37, 44);
+            this.btnCloseWindow.TabIndex = 0;
+            this.btnCloseWindow.UseVisualStyleBackColor = true;
+            this.btnCloseWindow.Click += new System.EventHandler(this.btnCloseWindow_Click);
+            // 
+            // tmUpdate
+            // 
+            this.tmUpdate.Tick += new System.EventHandler(this.tmUpdate_Tick);
+            // 
             // MainFormEx
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1443,6 +1614,7 @@ namespace Planning
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainFormEx";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.MainFormEx_Load);
             this.menuMain.ResumeLayout(false);
             this.menuMain.PerformLayout();
@@ -1453,6 +1625,8 @@ namespace Planning
             ((System.ComponentModel.ISupportInitialize)(this.tblShipments)).EndInit();
             this.panelMain.ResumeLayout(false);
             this.panelMain.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.edInterval)).EndInit();
+            this.contextMenuActionType.ResumeLayout(false);
             this.contextMenuColumns.ResumeLayout(false);
             this.panelFormHeader.ResumeLayout(false);
             this.contextMenuMain.ResumeLayout(false);
@@ -1595,5 +1769,19 @@ namespace Planning
         private System.Windows.Forms.ToolStripMenuItem menuItemDictUserGroups;
         private System.Windows.Forms.ToolStripMenuItem menuItemDictUsers;
         private System.Windows.Forms.Label lbMainFormCaption;
+        private MenuButton btnActionFilter;
+        private MenuButton btnWarehouseFilter;
+        private System.Windows.Forms.ContextMenuStrip contextMenuActionType;
+        private System.Windows.Forms.ContextMenuStrip contextMenuWarehouse;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemFilterIn;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemFilterOut;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemFilterMove;
+        private System.Windows.Forms.CheckBox cbPaint;
+        private System.Windows.Forms.CheckBox cbUpdate;
+        private System.Windows.Forms.Timer tmUpdate;
+        private System.Windows.Forms.NumericUpDown edInterval;
+        private System.Windows.Forms.ToolStripMenuItem menuItemCalcOrderVolume;
+        private System.Windows.Forms.ToolStripMenuItem menuItemCurrentTask;
+        private System.Windows.Forms.Button btnSearchEx;
     }
 }

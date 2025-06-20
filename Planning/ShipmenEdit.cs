@@ -38,7 +38,6 @@ namespace Planning
         ShipmentOrderRepository shipmentOrderRepository;
         ShipmentOrderPartRepository shipmentOrderPartRepository;
         MovementItemRepository movementItemRepository;
-        //PlanningDbContext _context;
         DataSet ds;
         SqlDataAdapter adapter;
         bool getCalendarTime;
@@ -218,7 +217,6 @@ namespace Planning
                 edAttorneyDate.Text = _shipment.AttorneyDate.ToString();
                 edAttorneyIssued.Text = _shipment.AttorneyIssued;
                 cmbTimeSlot.Text = _shipment.TimeSlot == null ? "" : _shipment.TimeSlot.SlotTime.ToString();
-                //DataService.GetDictValueById("ТаймСлоты","slot_time", _shipment.TimeSlotId);
                 //cbIsCourier.Checked = (bool)_shipment.IsCourier;                
                 cmbDelayReasons.SelectedItem = delayReasons.Find(dr=>dr.Id == delayReasonRepository.GetById(_shipment.DelayReasonsId)?.Id);
                 cmbGate.SelectedItem = gateways.Find(g => g.Id == gatewayRepository.GetById(_shipment.GateId)?.Id);
@@ -249,7 +247,7 @@ namespace Planning
             {
                 edSDate.Text = _movement.MDate==null?DateTime.Now.ToShortDateString(): _movement.MDate.ToShortDateString();
                 edShipmentComment.Text = _movement.Comment;
-                cmbDelayReasons.SelectedItem = delayReasonRepository.GetById(_shipment.DelayReasonsId);//DataService.GetDictNameById("Причины_задержки", _movement.DelayReasonsId);
+                cmbDelayReasons.SelectedItem = delayReasonRepository.GetById(_shipment.DelayReasonsId);
                 edDelayComment.Text = _movement.DelayComment;
                 edDriverFIO.Text = _movement.Performer;
                 cmbTimeSlot.Text = _movement.TimeSlot == null ? "" : _movement.TimeSlot.SlotTime.ToString();
@@ -322,36 +320,7 @@ namespace Planning
                 return null;
             }
             
-            /*
-            SqlHandle sql = new SqlHandle(DataService.connectionString);
-            sql.SqlStatement = "SP_PL_GetUnattachedOrderShipment";
-            sql.Connect();
-            sql.TypeCommand = CommandType.StoredProcedure;
-            sql.IsResultSet = true;
-            sql.AddCommandParametr(new SqlParameter { ParameterName = "@DepID", Value = _shipment.DepositorId });
-            sql.AddCommandParametr(new SqlParameter { ParameterName = "@OrdID", Value = LVOrdId });
-
-            try
-            {
-                sql.Execute();
-            }
-            catch (Exception)
-            {
-                MessageBox.Show(sql.LastError, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return null;
-            }
-
-            if (sql.HasRows())
-            {
-
-                while (sql.Read())
-                {
-                    string lvOstCode = sql.GetStringValue(2);
-                    result.Add(lvOstCode);
-
-                }
-            }
-            */
+          
             return result;
         }
 
@@ -392,7 +361,7 @@ namespace Planning
                 _shipment.SDate = GetNullableDate(edSDate);
                 _shipment.SComment = edShipmentComment.Text;
                 _shipment.DelayReasonsId = GetComboBoxSelectedId(cmbDelayReasons);
-                _shipment.TimeSlotId = cbSpecCondition.Checked ? (int?)null : GetComboBoxSelectedId(cmbTimeSlot);//DataService.GetDictIdByCondition("ТаймСлоты", $"slot_time='{cmbTimeSlot.Text}'");
+                _shipment.TimeSlotId = cbSpecCondition.Checked ? (int?)null : GetComboBoxSelectedId(cmbTimeSlot);
                 _shipment.SpecialTime = cbSpecCondition.Checked ? TimeSpan.Parse(dtSpecialCond.Value.ToShortTimeString()):(TimeSpan?)null;
                 _shipment.DelayComment = edDelayComment.Text;
                 _shipment.IsCourier = cbIsCourier.Checked;
@@ -432,7 +401,7 @@ namespace Planning
                 _movement.DelayComment = edDelayComment.Text;
                 _movement.DelayReasonsId = GetComboBoxSelectedId(cmbDelayReasons);
                 _movement.Performer = edDriverFIO.Text;
-                _movement.TimeSlotId = cbSpecCondition.Checked ? (int?)null : GetComboBoxSelectedId(cmbTimeSlot); //DataService.GetDictIdByCondition("ТаймСлоты", $"slot_time='{cmbTimeSlot.Text}'");
+                _movement.TimeSlotId = cbSpecCondition.Checked ? (int?)null : GetComboBoxSelectedId(cmbTimeSlot); 
                 _movement.SpecialTime = cbSpecCondition.Checked ? TimeSpan.Parse(dtSpecialCond.Value.ToShortTimeString()) : (TimeSpan?)null;
                 _movement.SpCondition = cbSpecCondition.Checked;
                 return true;
@@ -564,7 +533,7 @@ namespace Planning
         private void tbtnAdd_Click(object sender, EventArgs e)
         {
 
-            Planning.DataLayer.ShipmentOrder shipmentOrder = new Planning.DataLayer.ShipmentOrder();
+            ShipmentOrder shipmentOrder = new ShipmentOrder();
             var frmShipmentOrderEdit = new ShipmentOrderEdit(_shipment, shipmentOrder, _shipmentOrderParts);
             shipmentOrder.ShipmentId = _shipment.Id;
             shipmentOrder.IsBinding = false;
@@ -702,30 +671,7 @@ namespace Planning
                 MessageBox.Show("Ошибка при связывании заказов: " + ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
-/*
-            using (SqlConnection connection = new SqlConnection(DataService.connectionString))
-            {
-                if (connection.State == ConnectionState.Closed)
-                    connection.Open();
 
-                string sqlText = "SP_PL_BindAllOrders";
-
-                SqlCommand command = new SqlCommand(sqlText, connection);
-                command.CommandType = CommandType.StoredProcedure;
-
-                command.Parameters.Add(new SqlParameter { ParameterName = "@ShpID", Value = _shipment.Id });
-                try
-                {
-                    command.ExecuteScalar();
-                }
-                catch (SqlException ex)
-                {
-                    MessageBox.Show("Ошибка при связывании заказов: " + ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return false;
-                }
-
-            }
-*/
             return true;
         }
 
@@ -757,7 +703,6 @@ namespace Planning
                 bool isAllBindings = true;
                
                 //var listOrdId = _shipmentOrders.Select(o => (int?)o.Id).ToList();
-                //var ordParts = _context.ShipmentOrderParts.Where(s => listOrdId.Contains(s.ShOrderId)).ToList();
                 _shipmentOrders = shipmentOrderRepository.GetAll();
                 tblShipmentOrders.DataSource = _shipmentOrders;
                 PopulateOrderPart();
@@ -827,7 +772,6 @@ namespace Planning
             ShipmentAdd frmShipmentAdd = new ShipmentAdd(shipmentAddResult);
             if (frmShipmentAdd.ShowDialog() == DialogResult.OK)
             {
-                //_context.SaveChanges();
                 PopulateMovementItem();
             }
 
@@ -951,7 +895,7 @@ namespace Planning
         {
             if (tblShipmentOrders.CurrentCell == null)
                 return;
-            DataLayer.ShipmentOrder shipmentOrder = _shipmentOrders.Find(o => o.Id == int.Parse(tblShipmentOrders.Rows[tblShipmentOrders.SelectedRows[0].Index].Cells["colId"].Value.ToString()));//_context.ShipmentOrders.Find(tblShipmentOrders.Rows[tblShipmentOrders.CurrentCell.RowIndex].Cells["colId"].Value);
+            DataLayer.ShipmentOrder shipmentOrder = _shipmentOrders.Find(o => o.Id == int.Parse(tblShipmentOrders.Rows[tblShipmentOrders.SelectedRows[0].Index].Cells["colId"].Value.ToString()));
 
             if (tblOrderParts.CurrentCell == null)
                 return;

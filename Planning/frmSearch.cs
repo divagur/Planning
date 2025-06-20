@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Planning.DataLayer;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,6 +17,7 @@ namespace Planning
     {
         List<SearchItem> searchItems = new List<SearchItem>();
         BindingList<SearchItem> bindingListSearchItems;
+        List<ShipmentMain> _shipmentMainList;
         BindingSource sourceSearchItems;
         DataTable ds = new DataTable();
         BackgroundWorker workerSearch;
@@ -134,21 +136,77 @@ namespace Planning
             return sb.ToString();
         }
 
+        public void GetShipment(DateTime DateFrom, DateTime? DateTill, string ShpId, string OrdId, int ShpType = -1, string AddCond = null)
+        {
+            ShipmentMainRepository shipmentMainRepository = new ShipmentMainRepository();
+            try
+            {
+                _shipmentMainList = shipmentMainRepository.GetAll(DateFrom, DateTill, ShpId, OrdId, ShpType, AddCond);
+            }
+            catch (Exception ex)
+            {
 
+                MessageBox.Show(ex.Message);
+            }
+
+            /*
+                        SqlProcExecutor sqlProcExecutor = new SqlProcExecutor();
+                        SqlProcParam sqlProcParams = new SqlProcParam();
+
+                        object shpType = null;
+                        if (ShpType >= 0)
+                            shpType = ShpType;
+
+                        sqlProcParams.Add("@From", DateFrom);
+                        sqlProcParams.Add("@Till", DateTill);
+                        sqlProcParams.Add("@In", shpType);
+                        sqlProcParams.Add("@ShpId", ShpId);
+                        sqlProcParams.Add("@OrdID", OrdId);
+                        sqlProcParams.Add("@AddCond", AddCond);
+
+                        try
+                        {
+                            sqlProcExecutor.ProcExecute("SP_PL_MainQueryP", sqlProcParams);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Ошибка при создании отгрузки: " + ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return false;
+                        }
+
+
+                        SqlHandle sql = new SqlHandle(DataService.connectionString);
+                        sql.SqlStatement = "SP_PL_MainQueryP";
+                        sql.Connect();
+                        sql.TypeCommand = CommandType.StoredProcedure;
+                        sql.IsResultSet = true;
+                        object shpType = null;
+                        if (ShpType >= 0)
+                            shpType = ShpType;
+                        sql.AddCommandParametr(new SqlParameter { ParameterName = "@From", Value = DateFrom });
+                        sql.AddCommandParametr(new SqlParameter { ParameterName = "@Till", Value = DateTill });
+                        sql.AddCommandParametr(new SqlParameter { ParameterName = "@In", Value = shpType });
+                        sql.AddCommandParametr(new SqlParameter { ParameterName = "@ShpId", Value = ShpId });
+                        sql.AddCommandParametr(new SqlParameter { ParameterName = "@OrdID", Value = OrdId });
+                        sql.AddCommandParametr(new SqlParameter { ParameterName = "@AddCond", Value = AddCond });
+
+                        bool success = sql.Execute();
+
+                        if (!success)
+                        {
+                            MessageBox.Show(sql.LastError, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return null;
+                        }
+                        sql.Disconnect();
+                        return sql.DataSet;
+                        */
+
+        }
         void bw_DoWork(object sender, DoWorkEventArgs e)
         {
 
             string sqlAddConditioin = AssemblySqlCondition();
-            DataSet dataSet = DataService.GetShipment(dtBegin.Value, dtEnd.Value, null, null, -1, sqlAddConditioin == "" ? null : sqlAddConditioin);
-
-
-
-
-            if (dataSet == null)
-                return;
-
-            ds = dataSet.Tables[0].Clone();
-            ds.Load(dataSet.Tables[0].CreateDataReader());
+            GetShipment(dtBegin.Value, dtEnd.Value, null, null, -1, sqlAddConditioin == "" ? null : sqlAddConditioin);
 
         }
         private void bw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -156,7 +214,7 @@ namespace Planning
             if (!e.Cancelled)
             {
                 tblShipments.AutoGenerateColumns = false;
-                tblShipments.DataSource = ds;
+                tblShipments.DataSource = _shipmentMainList;
             }
 
             SetEndActionParam();

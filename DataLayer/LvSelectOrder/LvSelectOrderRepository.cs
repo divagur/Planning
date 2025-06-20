@@ -23,7 +23,7 @@ namespace Planning.DataLayer
 
         }
 
-        public List<LvSelectOrder> GetAll(int? Split, int? In, int? DepId)
+        public List<LvSelectOrder> GetAll(int? Split, int? In, int? DepId, int? OrderId, int IsAll)
         {
             string sql = dataAdapter.GetSelectItemSql();
 
@@ -32,6 +32,8 @@ namespace Planning.DataLayer
             parameters.Add("@Split", Split);
             parameters.Add("@In", In);
             parameters.Add("@DepId", DepId);
+            parameters.Add("@LVID", OrderId);
+            parameters.Add("@IsAll", IsAll);
 
             List<LvSelectOrder> shipments = new List<LvSelectOrder>();
 

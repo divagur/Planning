@@ -23,6 +23,9 @@ namespace Planning.Kernel
             _planningConfig.BaseName = GetParamStringValue("Connection\\BaseName");
             _planningConfig.UserName = GetParamStringValue("Connection\\UserName");
             _planningConfig.Password = _stringCryptor.Decode(GetParamStringValue("Connection\\Password"));
+
+            _planningConfig.DefaultWarehouseCode = GetParamStringValue("DefaultWarehouseCode");
+            _planningConfig.DefaultTransportViewName = GetParamStringValue("DefaultTransportViewCode");
         }
 
         public override void Save()
@@ -31,6 +34,8 @@ namespace Planning.Kernel
             SetParamValue("Connection\\UserName", _planningConfig.UserName);
             SetParamValue("Connection\\BaseName", _planningConfig.BaseName);
             SetParamValue("Connection\\Password", _stringCryptor.Encode(_planningConfig.Password));
+            SetParamValue("DefaultWarehouseCode", _planningConfig.DefaultWarehouseCode);
+            SetParamValue("DefaultTransportViewCode", _planningConfig.DefaultTransportViewName);
         }
     }
 }

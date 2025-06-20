@@ -67,21 +67,6 @@
     <Reference Include="DocumentFormat.OpenXml, Version=2.11.3.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
       <HintPath>..\packages\DocumentFormat.OpenXml.2.11.3\lib\net46\DocumentFormat.OpenXml.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
-    <Reference Include="FastReport, Version=2021.3.4.0, Culture=neutral, PublicKeyToken=5ceb240df42bf6e8, processorArchitecture=MSIL">
-      <HintPath>..\packages\FastReport.OpenSource.2021.3.4\lib\net40\FastReport.dll</HintPath>
-    </Reference>
-    <Reference Include="FastReport.Compat, Version=2021.2.3.0, Culture=neutral, PublicKeyToken=406e1f4c3c8ef97e, processorArchitecture=MSIL">
-      <HintPath>..\packages\FastReport.Compat.2021.2.3\lib\net40\FastReport.Compat.dll</HintPath>
-    </Reference>
-    <Reference Include="FastReport.Data.MsSql, Version=2021.3.0.0, Culture=neutral, PublicKeyToken=b33a9a06fcc00c4c, processorArchitecture=MSIL">
-      <HintPath>..\packages\FastReport.OpenSource.Data.MsSql.2021.3.0\lib\net452\FastReport.Data.MsSql.dll</HintPath>
-    </Reference>
     <Reference Include="ListViewPrinter, Version=2.7.1.31255, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ObjectListView.2.7.1.5\lib\ListViewPrinter.dll</HintPath>
     </Reference>
@@ -162,42 +147,11 @@
     <Compile Include="Controls\MenuButton.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="CustomPost.cs">
-      <DependentUpon>DbPlaning.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataLayers\LVOrder.cs" />
-    <Compile Include="DataLayers\LVOrder_Manager.cs" />
-    <Compile Include="DataLayers\OrderDetailItem.cs" />
-    <Compile Include="DataLayers\OrderDetailItem_Manager.cs" />
     <Compile Include="DataLayers\UserGrpPrvlgView.cs" />
     <Compile Include="DataLayers\UserGrpPrvlgViewRepository.cs" />
     <Compile Include="DataLayers\VolumeCalc.cs" />
     <Compile Include="DataLayers\VolumeCalcProduct.cs" />
     <Compile Include="DataLayers\VolumeCalcProduct_Manager.cs" />
-    <Compile Include="DbPlaning.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DbPlaning.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DbPlaning.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DbPlaning.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DbPlaning.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DbPlaning.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="DelayReason.cs">
-      <DependentUpon>DbPlaning.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DeliveryPeriod.cs">
-      <DependentUpon>DbPlaning.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Depositor.cs">
-      <DependentUpon>DbPlaning.tt</DependentUpon>
-    </Compile>
     <Compile Include="Dicts\DictFormEx.Designer.cs">
       <DependentUpon>DictFormEx.cs</DependentUpon>
     </Compile>
@@ -307,7 +261,6 @@
     <Compile Include="Dicts\GateFormEdit.Designer.cs">
       <DependentUpon>GateFormEdit.cs</DependentUpon>
     </Compile>
-    <Compile Include="GOST.cs" />
     <Compile Include="IItemPrivilege.cs" />
     <Compile Include="IWait.cs" />
     <Compile Include="MainFormEx.cs">
@@ -353,41 +306,11 @@
     <Compile Include="frmVolumeCalc.Designer.cs">
       <DependentUpon>frmVolumeCalc.cs</DependentUpon>
     </Compile>
-    <Compile Include="Function.cs">
-      <DependentUpon>DbPlaning.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Gateway.cs">
-      <DependentUpon>DbPlaning.tt</DependentUpon>
-    </Compile>
-    <Compile Include="LvAttr.cs">
-      <DependentUpon>DbPlaning.tt</DependentUpon>
-    </Compile>
     <Compile Include="LvAttrEdit.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="LvAttrEdit.Designer.cs">
       <DependentUpon>LvAttrEdit.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DataLayers\LVOrderIdComparer.cs" />
-    <Compile Include="Movement.cs">
-      <DependentUpon>DbPlaning.tt</DependentUpon>
-    </Compile>
-    <Compile Include="MovementItem.cs">
-      <DependentUpon>DbPlaning.tt</DependentUpon>
-    </Compile>
-    <Compile Include="MovementItemLog.cs">
-      <DependentUpon>DbPlaning.tt</DependentUpon>
-    </Compile>
-    <Compile Include="MovementLog.cs">
-      <DependentUpon>DbPlaning.tt</DependentUpon>
-    </Compile>
-    <Compile Include="OperType.cs">
-      <DependentUpon>DbPlaning.tt</DependentUpon>
-    </Compile>
-    <Compile Include="PlanningDataSet1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>PlanningDataSet1.xsd</DependentUpon>
     </Compile>
     <Compile Include="Reports\ReportBase.cs">
       <SubType>Form</SubType>
@@ -417,6 +340,7 @@
     </Compile>
     <Compile Include="SearchItem.cs" />
     <Compile Include="SettingsClass\CurrTaskColumn.cs" />
+    <Compile Include="SettingsClass\DictColumn.cs" />
     <Compile Include="SettingsClass\ReportSettingEdit.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -440,9 +364,6 @@
     </Compile>
     <Compile Include="SettingsClass\VolumeCalcConstant.cs" />
     <Compile Include="SettingsClass\VolumeCalcParams.cs" />
-    <Compile Include="Shipment.cs">
-      <DependentUpon>DbPlaning.tt</DependentUpon>
-    </Compile>
     <Compile Include="ShipmentAdd.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -451,9 +372,6 @@
     </Compile>
     <Compile Include="ShipmentAddResult.cs" />
     <Compile Include="ShipmentColumn.cs" />
-    <Compile Include="ShipmentElement.cs">
-      <DependentUpon>DbPlaning.tt</DependentUpon>
-    </Compile>
     <Compile Include="ShipmentElementEdit.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -472,17 +390,11 @@
     <Compile Include="ShipmentHistory.Designer.cs">
       <DependentUpon>ShipmentHistory.cs</DependentUpon>
     </Compile>
-    <Compile Include="ShipmentOrder.cs">
-      <DependentUpon>DbPlaning.tt</DependentUpon>
-    </Compile>
     <Compile Include="ShipmentOrderEdit.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ShipmentOrderEdit.Designer.cs">
       <DependentUpon>ShipmentOrderEdit.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ShipmentOrderPart.cs">
-      <DependentUpon>DbPlaning.tt</DependentUpon>
     </Compile>
     <Compile Include="ShipmentOrderPartEdit.cs">
       <SubType>Form</SubType>
@@ -490,17 +402,8 @@
     <Compile Include="ShipmentOrderPartEdit.Designer.cs">
       <DependentUpon>ShipmentOrderPartEdit.cs</DependentUpon>
     </Compile>
-    <Compile Include="ShipmentOrdersLog.cs">
-      <DependentUpon>DbPlaning.tt</DependentUpon>
-    </Compile>
     <Compile Include="ShipmentParam.cs" />
-    <Compile Include="ShipmentsLog.cs">
-      <DependentUpon>DbPlaning.tt</DependentUpon>
-    </Compile>
     <Compile Include="SqlHandle.cs" />
-    <Compile Include="Supplier.cs">
-      <DependentUpon>DbPlaning.tt</DependentUpon>
-    </Compile>
     <Compile Include="Dicts\SupplierEdit.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -513,9 +416,6 @@
     <Compile Include="Dicts\Suppliers.Designer.cs">
       <DependentUpon>Suppliers.cs</DependentUpon>
     </Compile>
-    <Compile Include="TimeSlot.cs">
-      <DependentUpon>DbPlaning.tt</DependentUpon>
-    </Compile>
     <Compile Include="Dicts\TimeSlots.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -527,34 +427,6 @@
     </Compile>
     <Compile Include="FormEdit.Designer.cs">
       <DependentUpon>FormEdit.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Planing.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Planing.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Planing.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Planing.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Dicts\SimpleDict.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Dicts\SimpleDict.Designer.cs">
-      <DependentUpon>SimpleDict.cs</DependentUpon>
-    </Compile>
-    <Compile Include="PlanningDataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>PlanningDataSet.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="DataService.cs" />
-    <Compile Include="MainForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -570,9 +442,6 @@
     <Compile Include="Dicts\TimeSlotEdit.Designer.cs">
       <DependentUpon>TimeSlotEdit.cs</DependentUpon>
     </Compile>
-    <Compile Include="TransportCompany.cs">
-      <DependentUpon>DbPlaning.tt</DependentUpon>
-    </Compile>
     <Compile Include="TransportCompanyForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -585,15 +454,6 @@
     <Compile Include="TransportCompanyFormEdit.Designer.cs">
       <DependentUpon>TransportCompanyFormEdit.cs</DependentUpon>
     </Compile>
-    <Compile Include="TransportType.cs">
-      <DependentUpon>DbPlaning.tt</DependentUpon>
-    </Compile>
-    <Compile Include="TransportView.cs">
-      <DependentUpon>DbPlaning.tt</DependentUpon>
-    </Compile>
-    <Compile Include="User.cs">
-      <DependentUpon>DbPlaning.tt</DependentUpon>
-    </Compile>
     <Compile Include="Dicts\UserEdit.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -601,9 +461,6 @@
       <DependentUpon>UserEdit.cs</DependentUpon>
     </Compile>
     <Compile Include="UserFunctionPrvlg.cs" />
-    <Compile Include="UserGroup.cs">
-      <DependentUpon>DbPlaning.tt</DependentUpon>
-    </Compile>
     <Compile Include="Dicts\UserGroupEdit.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -616,15 +473,6 @@
     <Compile Include="Dicts\UserGroups.Designer.cs">
       <DependentUpon>UserGroups.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dicts\UserGrpEdit.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Dicts\UserGrpEdit.Designer.cs">
-      <DependentUpon>UserGrpEdit.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UserGrpPrvlg.cs">
-      <DependentUpon>DbPlaning.tt</DependentUpon>
-    </Compile>
     <Compile Include="Dicts\Users.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -632,9 +480,6 @@
       <DependentUpon>Users.cs</DependentUpon>
     </Compile>
     <Compile Include="WaitHandler.cs" />
-    <Compile Include="Warehouse.cs">
-      <DependentUpon>DbPlaning.tt</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="ChooseOrder.resx">
       <DependentUpon>ChooseOrder.cs</DependentUpon>
     </EmbeddedResource>
@@ -764,12 +609,6 @@
     <EmbeddedResource Include="FormEdit.resx">
       <DependentUpon>FormEdit.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dicts\SimpleDict.resx">
-      <DependentUpon>SimpleDict.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -810,36 +649,7 @@
     <EmbeddedResource Include="Dicts\UserEdit.resx">
       <DependentUpon>UserEdit.cs</DependentUpon>
     </EmbeddedResource>
-    <EntityDeploy Include="DbPlaning.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>DbPlaning.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="DbPlaning.edmx.diagram">
-      <DependentUpon>DbPlaning.edmx</DependentUpon>
-    </None>
     <None Include="packages.config" />
-    <None Include="PlanningDataSet.xsc">
-      <DependentUpon>PlanningDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="PlanningDataSet.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>PlanningDataSet.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="PlanningDataSet.xss">
-      <DependentUpon>PlanningDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="PlanningDataSet1.xsc">
-      <DependentUpon>PlanningDataSet1.xsd</DependentUpon>
-    </None>
-    <None Include="PlanningDataSet1.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>PlanningDataSet1.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="PlanningDataSet1.xss">
-      <DependentUpon>PlanningDataSet1.xsd</DependentUpon>
-    </None>
     <None Include="Properties\DataSources\Shipment.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -884,26 +694,8 @@
     <None Include="Resources\Edit.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DbPlaning.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DbPlaning.edmx</DependentUpon>
-      <LastGenOutput>DbPlaning.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="DbPlaning.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DbPlaning.edmx</DependentUpon>
-      <LastGenOutput>DbPlaning.cs</LastGenOutput>
-    </Content>
     <Content Include="iop_cryptocurrency_logo_icon_131430.ico" />
     <Content Include="MDIWindowManager.xml" />
-    <Content Include="Planing.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Planing.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Planing.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Planing.cs</LastGenOutput>
-    </Content>
     <None Include="Resources\ShpMove.png" />
     <None Include="Resources\ShpOut.png" />
     <None Include="Resources\TabCloseRed.png" />

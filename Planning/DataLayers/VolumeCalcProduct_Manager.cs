@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Planning.Kernel;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -11,7 +12,7 @@ namespace Planning.DataLayer
 {
     class VolumeCalcProduct_Manager
     {
-        private static List<VolumeCalcProduct> GetProducts(int? DepositorLVId, List<int> listOrdersId, List<string> listVendorCodes, int Mode)
+        private static List<VolumeCalcProduct> GetProducts(int? DepositorLVId, List<int?> listOrdersId, List<string> listVendorCodes, int Mode)
         {
             List<VolumeCalcProduct> listProduct = new List<VolumeCalcProduct>();
 
@@ -29,11 +30,11 @@ namespace Planning.DataLayer
                 Codes.Rows.Add(item);
             }
 
-            
 
 
+            string connectionString = Common.BuildConnectionString(ConnectionParams.ServerName, ConnectionParams.BaseName, ConnectionParams.UserName, ConnectionParams.Pwd);
 
-            SqlHandle sql = new SqlHandle(DataService.connectionString);
+            SqlHandle sql = new SqlHandle(connectionString);
             sql.SqlStatement = "SP_PL_GetProductList";
             sql.Connect();
             sql.TypeCommand = CommandType.StoredProcedure;
@@ -97,9 +98,9 @@ namespace Planning.DataLayer
             sql.Disconnect();
             return listProduct;
         }
-        public static List<VolumeCalcProduct> GetList(int? DepositorLVId, List<LVOrder> LVOrders)
+        public static List<VolumeCalcProduct> GetList(int? DepositorLVId, List<LvSelectOrder> LVOrders)
         {
-            return GetProducts(DepositorLVId, LVOrders.Select(i => i.LVID).ToList(), new List<string>(), 0);
+            return GetProducts(DepositorLVId, LVOrders.Select(i => i.Id).ToList(), new List<string>(), 0);
             /*
             List<VolumeCalcProduct> listProduct = new List<VolumeCalcProduct>();
 
@@ -162,7 +163,7 @@ namespace Planning.DataLayer
 
         public static List<VolumeCalcProduct> GetList(int? DepositorLVId, List<string> listVendorCodes)
         {
-            return GetProducts(DepositorLVId, new List<int>(), listVendorCodes, 1);
+            return GetProducts(DepositorLVId, new List<int?>(), listVendorCodes, 1);
         }
 
     }

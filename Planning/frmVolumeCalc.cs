@@ -16,7 +16,7 @@ namespace Planning
 {
     public partial class frmVolumeCalc : Form
     {
-        List<LVOrder> LVOrders = new List<LVOrder>();
+        List<LvSelectOrder> LVOrders = new List<LvSelectOrder>();
         BindingList<VolumeCalcProduct> bindingListProduct;
         Settings _settings;
         BindingSource sourceProduct;
@@ -34,7 +34,7 @@ namespace Planning
         {
             cmbConstantTemplate.Items.Clear();
 
-            foreach (var item in DataService.setting.VolumeCalcTemplate)
+            foreach (var item in Common.setting.VolumeCalcTemplate)
             {
                 cmbConstantTemplate.Items.Add(item.Name);
             }
@@ -352,7 +352,7 @@ namespace Planning
             if (cmbConstantTemplate.Text == "")
                 return;
             
-            VolumeCalcConstant item = DataService.setting.VolumeCalcTemplate.Find(i => i.Name == cmbConstantTemplate.Text);
+            VolumeCalcConstant item = Common.setting.VolumeCalcTemplate.Find(i => i.Name == cmbConstantTemplate.Text);
             if (item !=null)
             {
                 txtPalletWeight.Text = item.PalletWeight.ToString();
@@ -372,12 +372,12 @@ namespace Planning
             }
                 
 
-            VolumeCalcConstant item = DataService.setting.VolumeCalcTemplate.Find(i => i.Name == cmbConstantTemplate.Text);
+            VolumeCalcConstant item = Common.setting.VolumeCalcTemplate.Find(i => i.Name == cmbConstantTemplate.Text);
             if (item ==null)
             {
                 item = new VolumeCalcConstant();
                 item.Name = cmbConstantTemplate.Text;
-                DataService.setting.VolumeCalcTemplate.Add(item);
+                Common.setting.VolumeCalcTemplate.Add(item);
 
             }
 
@@ -387,7 +387,7 @@ namespace Planning
             item.PalletVolume = decimal.Parse(txtPalletVolume.Text.Replace(".", CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator));
             item.PalleteDimensions = decimal.Parse(txtPalletDimension.Text.Replace(".", CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator));
 
-            DataService.settingsHandle.SetParamList<VolumeCalcConstant>("VolumeCalcTemplates", "Template", DataService.setting.VolumeCalcTemplate);
+            Common.settingsHandle.SetParamList<VolumeCalcConstant>("VolumeCalcTemplates", "Template", Common.setting.VolumeCalcTemplate);
 
             LoadTemplate();
 

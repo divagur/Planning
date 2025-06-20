@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,29 +9,27 @@ namespace Planning.Kernel
 {
     public class StringCryptor
     {
-        public string Decode(string Data)
+
+        private string RC2Cript(string data, bool IsCrypt)
         {
-            string result = Data;
-            string decode = string.Empty;
+            if (String.IsNullOrEmpty(data)) return "";
+            byte[] s1 = (IsCrypt) ? System.Text.UTF8Encoding.UTF8.GetBytes(data) : Convert.FromBase64String(data);
+            SymmetricAlgorithm cripto = new RC2CryptoServiceProvider();
+            cripto.Key = new byte[] { 0x10, 0x24, 0x76, 0x45, 0x84, 0x64, 0x25, 0x34 };
+            cripto.IV = new byte[] { 0x14, 0x24, 0x76, 0x48, 0x84, 0x64, 0x25, 0x34 };
+            s1 = ((ICryptoTransform)((IsCrypt) ? cripto.CreateEncryptor() : cripto.CreateDecryptor())).TransformFinalBlock(s1, 0, s1.Length);
+            return (IsCrypt) ? Convert.ToBase64String(s1) : System.Text.UTF8Encoding.UTF8.GetString(s1).Trim();
+        }
 
-            UTF8Encoding encoder = new UTF8Encoding();
-            Decoder utf8Decode = encoder.GetDecoder();
-            byte[] todecode_byte = Convert.FromBase64String(Data);
-            int charCount = utf8Decode.GetCharCount(todecode_byte, 0, todecode_byte.Length);
-            char[] decoded_char = new char[charCount];
-            utf8Decode.GetChars(todecode_byte, 0, todecode_byte.Length, decoded_char, 0);
-            result = new String(decoded_char);
-
-            return result;
+        public string Decode(string Data)
+        {          
+            
+            return RC2Cript(Data, false);
         }
 
         public string Encode(string Data) 
         {
-            string result = Data;
-
-            byte[] encData_byte = Encoding.UTF8.GetBytes(Data);
-            result = Convert.ToBase64String(encData_byte);
-            return result; 
+            return RC2Cript(Data, true); ; 
         }
     }
 }

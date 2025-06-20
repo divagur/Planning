@@ -17,12 +17,14 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Data.SqlClient;
 using System.Text.RegularExpressions;
-//using Excel = Microsoft.Office.Interop.Excel;
-//using Microsoft.Office.Interop.Excel;
+using Excel = Microsoft.Office.Interop.Excel;
+using Microsoft.Office.Interop.Excel;
 using DataTable = System.Data.DataTable;
 using Rectangle = System.Drawing.Rectangle;
 using Font = System.Drawing.Font;
+using Point = System.Drawing.Point;
 using SpreadsheetLight;
+
 
 namespace Planning
 {
@@ -50,6 +52,8 @@ namespace Planning
         List<ShipmentMain> _shipmentMainList;
         List<UserFunctionPrvlg> UserPrvlgs= new List<UserFunctionPrvlg>();
         UserFunctionPrvlg mainFormPrvlg = new UserFunctionPrvlg();
+        private bool isPaint = true;
+
         public MainFormEx()
         {
             InitializeComponent();
@@ -58,31 +62,10 @@ namespace Planning
         private void MainFormEx_Load(object sender, EventArgs e)
         {
             
-            //.Width = Screen.PrimaryScreen.WorkingArea.Width;
-            /*
-            DataService.settingsHandle = new SettingsHandle("Settings.xml", DataService.setting);
-            DataService.settingsHandle.Load();
-            //Если нет сервера или базы, то выдадим окно настройки
-            if (DataService.setting.BaseName == "" || DataService.setting.ServerName == "")
-            {
-                DataService.setting = new Settings();
-
-                SettingsWizard frmSettingsWizard = new SettingsWizard(DataService.setting);
-
-
-
-                if (frmSettingsWizard.ShowDialog() == DialogResult.OK)
-                {
-                    DataService.settingsHandle.Save();
-                }
-                else
-                    this.Close();
-            }
-            */
 
             Init();
             Connect();
-            statusInfo.Text = $"База данных:[{Common.setting.BaseName}] Пользователь: [{Common.setting.LastLogin}]";
+            statusInfo.Text = $"База данных:[{Common.PlanningConfig.BaseName}] Пользователь: [{Common.setting.LastLogin}]";
 
             GetUserPrvlg();
             SetMainFormPrvlg();
@@ -90,10 +73,10 @@ namespace Planning
             shipmentMainRepository = new ShipmentMainRepository();
             SetupColumns();
             SetupButtons();
-
+            PopulateWarehouseFilter();
             ShipmentsLoad();
             tblShipments.DrawSubItem += TblShipments_DrawSubItem;
-
+            cbPaint.Checked = isPaint;
 
 
         }
@@ -149,7 +132,13 @@ namespace Planning
             ToolTip btnColumnVisibleToolTip = new ToolTip();
             btnColumnVisibleToolTip.SetToolTip(btnColumnVisible, "Видимость колонок");
 
-            ToolTip btnSerachToolTip= new ToolTip();
+            ToolTip btnActionFilterToolTip = new ToolTip();
+            btnActionFilterToolTip.SetToolTip(btnActionFilter, "Отображаемые действия");
+
+            ToolTip btnWarehouseFilterToolTip = new ToolTip();
+            btnWarehouseFilterToolTip.SetToolTip(btnWarehouseFilter, "Фильтр по складам");
+
+            ToolTip btnSerachToolTip = new ToolTip();
             btnSerachToolTip.SetToolTip(btnSearch, "Найти по коду заказа");
 
             ToolTip btnSerachNextToolTip = new ToolTip();
@@ -213,7 +202,6 @@ namespace Planning
 
             if (frmShipmentEdit.ShowDialog() == DialogResult.OK)
             {
-                //DataService.context.SaveChanges();
                 if (shipmentAddResult.IsShipment)
                 {
                     DataLayer.Shipment shipment = (DataLayer.Shipment)shipmentAddResult.Result;
@@ -232,8 +220,26 @@ namespace Planning
                     }
                     */
                 }
-                UpdateDataSource();
+                UpdateDataSource(_shipmentMainList);
                // tblShipments.Refresh();
+            }
+        }
+        private void GetOrderWight()
+        {
+
+            SqlProcExecutor sqlProcExecutor = new SqlProcExecutor();
+            SqlProcParam sqlProcParams = new SqlProcParam();
+            sqlProcParams.Add("@ShpID", null);
+            sqlProcParams.Add("@OrdID", null);
+            sqlProcParams.Add("@DepId", null);
+            try
+            {
+                sqlProcExecutor.ProcExecute("SP_PL_GetOrderWight", sqlProcParams);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка при создании отгрузки: " + ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
         }
         private void ShipmentsLoad()
@@ -249,7 +255,10 @@ namespace Planning
                 MessageBox.Show(ex.Message);
             }
             
-            UpdateDataSource();
+            UpdateDataSource(_shipmentMainList);
+            GetOrderWight();
+            ShipmentsUIFilter();
+            CalcRowColor();
             /*
             if (mainFormAccess != null && !mainFormAccess.IsView)
             {
@@ -298,11 +307,43 @@ namespace Planning
             ShipmentsUIFilter();
             */
         }
-        private void UpdateDataSource()
+        private void CalcRowColor()
+        {
+            int? cellShpId;
+            int? cellLastShpId = 0;
+            int currColorIdx = 0;
+            
+            for (int i = 0; i < tblShipments.GetItemCount(); i++)
+            {               
+                ShipmentMain shipmentMain = (ShipmentMain)tblShipments.GetItem(i).RowObject;
+                cellShpId = shipmentMain.ShpId;
+                if (cellLastShpId != cellShpId)
+                {
+                    cellLastShpId = cellShpId;
+                    currColorIdx = currColorIdx == 0 ? 1 : 0;
+                }
+                shipmentMain.RowNumberRange = currColorIdx;
+            }
+
+            tblShipments.BuildList();
+            /*
+            foreach (ShipmentMain item in _shipmentMainList)
+            {
+                cellShpId = item.ShpId;
+                if (cellLastShpId != cellShpId)
+                {
+                    cellLastShpId = cellShpId;
+                    currColorIdx = currColorIdx == 0 ? 1 : 0;
+                }
+                item.RowNumberRange = currColorIdx;
+            }
+            */
+        }
+        private void UpdateDataSource(List<ShipmentMain> listDataSource)
         {
             tblShipments.BeginUpdate();
             tblShipments.ClearObjects();
-            tblShipments.SetObjects(_shipmentMainList);
+            tblShipments.SetObjects(listDataSource);
             tblShipments.EndUpdate();
         }
         private void Init()
@@ -314,6 +355,8 @@ namespace Planning
 
             Common.settingsHandle = new PlanningSettingsHandle("Settings.xml", Common.setting);
             Common.settingsHandle.Load();
+
+
 
             ConnectionParams.ServerName = Common.PlanningConfig.ServerName;
             ConnectionParams.BaseName = Common.PlanningConfig.BaseName;
@@ -352,15 +395,13 @@ namespace Planning
             CloseAllTabs();
 
             Common.settingsHandle.SetParamValue("Connection\\LastLogin", Common.setting.LastLogin);
-            ///DataService.settingsHandle.SetParamValue("Connection\\LastLogin", DataService.setting.LastLogin);
-            //statusInfo.Text = $"База данных:{DataService.setting.BaseName} Пользователь: {DataService.setting.UserName}";
 
             return true;
         }
         private void GetUserPrvlg()
         {
             FunctionRepository functionRepository = new FunctionRepository();
-            List<DataLayer.Function> functions = functionRepository.GetAll();
+            List<Function> functions = functionRepository.GetAll();
 
             foreach (var item in functions)
             {
@@ -381,7 +422,7 @@ namespace Planning
             UserGrpPrvlgRepository userGrpPrvlgRepository = new UserGrpPrvlgRepository();
             foreach (var item in userGroups)
             {
-                List<DataLayer.UserGrpPrvlg> userGrpPrvlg = userGrpPrvlgRepository.GetByGrpId(item.GroupId);
+                List<UserGrpPrvlg> userGrpPrvlg = userGrpPrvlgRepository.GetByGrpId(item.GroupId);
                 foreach (var function in UserPrvlgs)
                 {
                     DataLayer.UserGrpPrvlg grpFuncPrvlg = userGrpPrvlg.FirstOrDefault(p => p.FuncId == function.FunctionId);
@@ -400,11 +441,15 @@ namespace Planning
         }
         private void Connect()
         {
+
+            
             if (!LoginUser())
             {
+                Environment.Exit(0);
                 this.Close();
                 return;
             }
+            
         }
         private void PopulateVisibleColumn()
         {
@@ -501,7 +546,103 @@ namespace Planning
                 form.SetPrivilege(userFunctionPrvlg.IsAppend, userFunctionPrvlg.IsEdit, userFunctionPrvlg.IsDelete);
             }
         }
+        public void ShipmentsUIFilter()
+        {
+            List<string> actionFilter = GetFilterActionList();
+            List<string> warehouseFilter = GetFilterWarehouseList();
 
+            tblShipments.UseFiltering = true;
+            tblShipments.ModelFilter = new ModelFilter(delegate (object x) {
+                return actionFilter.Contains(((ShipmentMain)x).InOut) && warehouseFilter.Contains(((ShipmentMain)x).WarehouseName);
+                //
+            }
+            );
+            CalcRowColor();
+            /*
+            List<ShipmentMain> listDataSource = _shipmentMainList.Where(r => actionFilter.Contains(r.InOut) && warehouseFilter.Contains(r.WarehouseName)).ToList();
+            UpdateDataSource(listDataSource);
+            
+            if (rows.Count() > 0)
+            {
+                DataTable dt = rows.CopyToDataTable();
+                tblShipments.DataSource = dt;
+                CalcRowColor();
+            }
+            else
+            {
+                tblShipments.DataSource = null;
+            }
+            */
+        }
+        public void PopulateWarehouseFilter()
+        {
+            WarehouseRepository warehouseRepository = new WarehouseRepository();
+            List<DataLayer.Warehouse> warehouses = warehouseRepository.GetAll();
+
+            List<string> action = Common.settingsHandle.GetParamStringValue("View\\WarehouseFilter").Split(',').ToList();
+            contextMenuWarehouse.Items.Clear();
+            foreach (var item in warehouses)
+            {                
+                ToolStripMenuItem btnWarehouseItem = (ToolStripMenuItem)contextMenuWarehouse.Items.Add(item.Name);
+                btnWarehouseItem.CheckOnClick = true;
+                btnWarehouseItem.CheckState = action.Contains(item.Name) ? CheckState.Checked : CheckState.Unchecked;
+
+                btnWarehouseItem.Click += BtnWarehouseItem_Click;
+            }
+        }
+        private List<String> GetFilterActionList()
+        {
+            List<String> result = new List<string>();
+            foreach (ToolStripMenuItem item in contextMenuActionType.Items)
+            {
+                if (item.Checked)
+                    result.Add(item.Text);
+            }
+            return result;
+        }
+        private List<String> GetFilterWarehouseList()
+        {
+            List<String> result = new List<string>();
+            foreach (ToolStripMenuItem item in contextMenuWarehouse.Items)
+            {
+                if (item.Checked)
+                    result.Add(item.Text);
+            }
+            return result;
+        }
+
+        private void ShowOrderDetail(ShipmentMain shipmentMain)
+        {
+            if (shipmentMain == null)
+            {
+                return;
+            }
+            //ShipmentMain shipmentMain = GetCurrentRowObject();
+            if (shipmentMain.InOut == "перем")
+            {
+                return; 
+            }
+
+            int inOut = shipmentMain.InOut == "вход" ? 1 : 0;
+
+            DepositorRepository depositorRepository = new DepositorRepository();
+            DataLayer.Depositor depositor = depositorRepository.GetByName(shipmentMain.DepCode);
+            if (depositor == null)
+            {
+                return ;
+            }
+
+
+            frmOrderDetail frmOrderDetail = new frmOrderDetail(shipmentMain.OrdLVCode, shipmentMain.OrdLVID, inOut, depositor.Id);
+            frmOrderDetail.ShowDialog();
+
+        }
+
+        private void BtnWarehouseItem_Click(object sender, EventArgs e)
+        {
+            ShipmentsUIFilter();
+            Common.settingsHandle.SetParamValue("View\\WarehouseFilter", String.Join(",", GetFilterWarehouseList().ToArray()));
+        }
 
         private ToolStripItem FindMenuItem(ToolStripItemCollection items, string Tag)
         {
@@ -577,8 +718,29 @@ namespace Planning
 
         private void tblShipments_FormatRow(object sender, FormatRowEventArgs e)
         {
+            if (!isPaint)
+            {
+                return;
+            }
             ShipmentMain item = (ShipmentMain)e.Item.RowObject;
-            e.Item.BackColor = item.RowNumberRange == null?Color.White: rowColors[(int)item.RowNumberRange % 2];
+            if ( item.RowNumberRange != null)
+            {
+                e.Item.BackColor = rowColors[(int)item.RowNumberRange];
+            }
+            bool isDone = false;
+            if (!String.IsNullOrEmpty(item.OrderStatus))
+            {
+
+                isDone = item.OrderStatus.Contains("Выполнен");
+            }
+            if (isDone)
+            {
+                e.Item.ForeColor = Color.DarkGray;
+            }
+            else if (item.IsAddLv != true)
+            {
+                e.Item.ForeColor = Color.Blue;
+            }
         }
 
         private void btnGetCurrentDay_Click(object sender, EventArgs e)
@@ -778,13 +940,14 @@ namespace Planning
 
         private void menuItemDictOpersType_Click(object sender, EventArgs e)
         {
+            /*
             DictSimple dict = new DictSimple();
             dict.TableName = "opers_type";
             dict.Title = "Справочник: Типы операций";
 
             dict.Columns.Add(new DictColumn { Id = "Id", IsPK = true, IsVisible = false, Title = "Код", DataField = "id", DataType = SqlDbType.Int });
             dict.Columns.Add(new DictColumn { Id = "name", IsPK = false, IsVisible = true, Title = "Наименование", DataField = "name", Width = 254, DataType = SqlDbType.NVarChar, Length = 20 });
-
+            */
             //SimpleDict<DataLayer.OperTy, DataLayer.GatewayRepository> frmOperType = new SimpleDict(dict);
             //SetFormPrivalage(frmOperType, "OperType");
             //AddFormTab(frmOperType, "Типы операций");
@@ -905,7 +1068,7 @@ namespace Planning
 
 
             }
-            UpdateDataSource();
+            UpdateDataSource(_shipmentMainList);
         }
 
         private void btnPrint_Click(object sender, EventArgs e)
@@ -963,7 +1126,7 @@ namespace Planning
 
         private void tblShipments_DoubleClick(object sender, EventArgs e)
         {
-            
+            ShipmentRowEdit();
         }
 
         private void menuItemConnect_Click(object sender, EventArgs e)
@@ -1023,7 +1186,7 @@ namespace Planning
 
         private void ShowReportTC(ReportParams reportParams)
         {
-            /*
+            
             SettingReport settingReport = GetReportSetting("Отчет по ТС");
             if (settingReport == null)
             {
@@ -1052,7 +1215,7 @@ namespace Planning
             wait.SetText("Формирование отчета: получение данных....");
 
 
-            SqlHandle sql = new SqlHandle(DataService.connectionString);
+            SqlHandle sql = new SqlHandle(Common.BuildConnectionString(ConnectionParams.ServerName, ConnectionParams.BaseName, ConnectionParams.UserName, ConnectionParams.Pwd));
             sql.SqlStatement = "SP_PL_ReportTC";
             sql.Connect();
             sql.TypeCommand = CommandType.StoredProcedure;
@@ -1126,12 +1289,12 @@ namespace Planning
             excel.Visible = true;
             wait.Close();
             miRepTC.Enabled = true;
-            */
+            
         }
 
         private void ShowReportStatistic(ReportParams reportParams)
         {
-            /*
+            
             SettingReport settingReport = GetReportSetting("Статистика за период");
             if (settingReport == null)
             {
@@ -1170,7 +1333,7 @@ namespace Planning
             string dateBegin = String.Format("01.{0}.{1}", monthBegin, year);
             string dateEnd = String.Format("{0}.{1}.{2}", DateTime.DaysInMonth(Int32.Parse(year), Int32.Parse(monthEnd)), monthEnd, year);
 
-            SqlHandle sql = new SqlHandle(DataService.connectionString);
+            SqlHandle sql = new SqlHandle(Common.BuildConnectionString(ConnectionParams.ServerName, ConnectionParams.BaseName, ConnectionParams.UserName, ConnectionParams.Pwd));
             sql.SqlStatement =
                 string.Format(@"select m.m_name,'' div_kpi,
                     (
@@ -1276,9 +1439,9 @@ namespace Planning
             excel.Visible = true;
             wait.Close();
             miRepStatistic.Enabled = true;
-            */
+            
         }
-        /*
+        
         private void ShowReportPeriod(ReportParams reportParams)
         {
             //bwProgress.RunWorkerAsync(reportParams);
@@ -1325,7 +1488,37 @@ namespace Planning
             Excel.Range range;
             int ShpType = int.Parse(reportParams["ShpType"]) - 1;
 
-            DataSet dataSet = GetShipment(DateTime.Parse(reportParams["PeriodBegin"]), DateTime.Parse(reportParams["PeriodEnd"]), null, null, ShpType);
+
+
+            //DataSet dataSet = GetShipment(DateTime.Parse(reportParams["PeriodBegin"]), DateTime.Parse(reportParams["PeriodEnd"]), null, null, ShpType);
+
+
+            SqlHandle sql = new SqlHandle(Common.BuildConnectionString(ConnectionParams.ServerName, ConnectionParams.BaseName, ConnectionParams.UserName, ConnectionParams.Pwd));
+            sql.SqlStatement = "SP_PL_MainQueryP";
+            sql.Connect();
+            sql.TypeCommand = CommandType.StoredProcedure;
+            sql.IsResultSet = true;
+            object shpType = null;
+            if (ShpType >= 0)
+                shpType = ShpType;
+            sql.AddCommandParametr(new SqlParameter { ParameterName = "@From", Value = DateTime.Parse(reportParams["PeriodBegin"]) });
+            sql.AddCommandParametr(new SqlParameter { ParameterName = "@Till", Value = DateTime.Parse(reportParams["PeriodEnd"]) });
+            sql.AddCommandParametr(new SqlParameter { ParameterName = "@In", Value = shpType });
+            sql.AddCommandParametr(new SqlParameter { ParameterName = "@ShpId", Value = null });
+            sql.AddCommandParametr(new SqlParameter { ParameterName = "@OrdID", Value = null });
+
+            bool success = sql.Execute();
+
+            if (!success)
+            {
+                MessageBox.Show(sql.LastError, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            //GetOrderDetailCount();
+
+            DataSet dataSet = sql.DataSet;
+
 
             //SqlDataReader dataRows = GetShipment(edCurrDay.Value, null, null, null);
 
@@ -1385,9 +1578,9 @@ namespace Planning
             wait.Close();
             miRepPeriod.Enabled = true;
         }
-        */
         
-        private void ShowReportPeriod(ReportParams reportParams)
+        
+        /*private void ShowReportPeriod(ReportParams reportParams)
         {
             //bwProgress.RunWorkerAsync(reportParams);
 
@@ -1461,14 +1654,14 @@ namespace Planning
             wait.SetText("Формирование отчета: вывод данных....");
 
             //Получим индексы колонок в резалсете
-            /*
-             List<string> columnOrder = new List<string> {"ShpId","OrdId","ShpDate","SlotTime","InOut","OrdLVCode","OrdLVType",
-                "KlientName","OrderStatus","PrcReady","ShpComment","OrdComment","GateName","ShpSpecialCond","ShpDriverPhone",
-                "ShpDriverFio","TransportCompanyName","TransportTypeName","ShpVehicleNumber","ShpTrailerNumber","ShpAttorneyNumber",
-                "ShpAttorneyDate","ShpSubmissionTime","ShpStartTime", "ShpEndTimePlan","ShpEndTimeFact","CALC:CONCAT(ShpDate,SlotTime)",
-                "CALC:DIFFTIME(ShpSubmissionTime,ShpStartTime)","CALC:DIFFTIME({26},ShpStartTime)","CALC:DIFFTIME({26},ShpSubmissionTime)",
-                "ShpDelayReasonName", "ShpDelayComment",  "ShpStampNumber","ShpSupplierName" };
-            */
+            
+             //List<string> columnOrder = new List<string> {"ShpId","OrdId","ShpDate","SlotTime","InOut","OrdLVCode","OrdLVType",
+             //   "KlientName","OrderStatus","PrcReady","ShpComment","OrdComment","GateName","ShpSpecialCond","ShpDriverPhone",
+             //   "ShpDriverFio","TransportCompanyName","TransportTypeName","ShpVehicleNumber","ShpTrailerNumber","ShpAttorneyNumber",
+             //   "ShpAttorneyDate","ShpSubmissionTime","ShpStartTime", "ShpEndTimePlan","ShpEndTimeFact","CALC:CONCAT(ShpDate,SlotTime)",
+             //   "CALC:DIFFTIME(ShpSubmissionTime,ShpStartTime)","CALC:DIFFTIME({26},ShpStartTime)","CALC:DIFFTIME({26},ShpSubmissionTime)",
+             //   "ShpDelayReasonName", "ShpDelayComment",  "ShpStampNumber","ShpSupplierName" };
+            
             int rowIdx = 0;
             foreach (var item in _shipmentMainPeriod)
             {
@@ -1500,15 +1693,15 @@ namespace Planning
                 report.SetCellValue(rowIdx + 5, 26, (DateTime)item.ShpEndTimeFact);
                 DateTime planDateTime = ((DateTime)item.ShpDate).Add((TimeSpan)item.SlotTime);
                 report.SetCellValue(rowIdx + 5, 27, planDateTime.ToString());
-                /*
-                TimeSpan diff;
-                if (item.ShpDate != null && item.SlotTime !=null)
-                {
-                    DateTime SlotTime = DateTime.Parse(item.SlotTime.ToString());
-                    diff = (DateTime)item.ShpDate - SlotTime;
-                    report.SetCellValue(rowIdx + 5, 28, diff.ToString());
-                }
-                */
+                
+                //TimeSpan diff;
+                //if (item.ShpDate != null && item.SlotTime !=null)
+                //{
+                //    DateTime SlotTime = DateTime.Parse(item.SlotTime.ToString());
+                //    diff = (DateTime)item.ShpDate - SlotTime;
+                //    report.SetCellValue(rowIdx + 5, 28, diff.ToString());
+                //}
+                
                 if (item.ShpSubmissionTime !=null && item.ShpStartTime !=null)
                 {
                     TimeSpan diffTime = (DateTime)item.ShpSubmissionTime - (DateTime)item.ShpStartTime;
@@ -1530,78 +1723,53 @@ namespace Planning
                 report.SetCellValue(rowIdx + 5, 33, item.ShpStampNumber);
                 report.SetCellValue(rowIdx + 5, 34, item.ShpSupplierName);
 
-                /*
-                string cellValue;
-                for (int colIdx = 0; colIdx < columnOrder.Count; colIdx++)
-                {
-                    cellValue = "";
-                    if (!columnOrder[colIdx].StartsWith("CALC"))
-                    {
 
-                        cellValue = [columnOrder[colIdx]].ToString();
-                    }
-                    else
-                    {
-                        cellValue = CalculateColumnValue(r, printRow, columnOrder[colIdx].Substring(5));
-                    }
-                    if (columnOrder[colIdx] == "ShpDate")
-                    {
-                        //columnOrder[colIdx]
-                        cellValue = r[columnOrder[colIdx]].ToString().Substring(0, 10);
-                    }
-                    //printRow[0, colIdx] = cellValue;
-
-                    //excel.SetValue(1, colIdx + 1, rowIdx, cellValue);
-                    // 
-
-                }
-                */
             }
 
-            /*
-            string[,] printRow = new string[1, columnOrder.Count];
-            foreach (DataRow r in dataSet.Tables[0].Rows)
-            {
-                string cellValue;
+            
+            //string[,] printRow = new string[1, columnOrder.Count];
+            //foreach (DataRow r in dataSet.Tables[0].Rows)
+            //{
+            //    string cellValue;
 
-                for (int colIdx = 0; colIdx < columnOrder.Count; colIdx++)
-                {
-                    cellValue = "";
-                    if (!columnOrder[colIdx].StartsWith("CALC"))
-                    {
+            //    for (int colIdx = 0; colIdx < columnOrder.Count; colIdx++)
+            //    {
+            //        cellValue = "";
+            //        if (!columnOrder[colIdx].StartsWith("CALC"))
+            //        {
 
-                        cellValue = r[columnOrder[colIdx]].ToString();
-                    }
-                    else
-                    {
-                        cellValue = CalculateColumnValue(r, printRow, columnOrder[colIdx].Substring(5));
-                    }
-                    if (columnOrder[colIdx] == "ShpDate")
-                    {                        
-                        cellValue = r[columnOrder[colIdx]].ToString().Substring(0, 10);
-                    }
-                    printRow[0, colIdx] = cellValue;
+            //            cellValue = r[columnOrder[colIdx]].ToString();
+            //        }
+            //        else
+            //        {
+            //            cellValue = CalculateColumnValue(r, printRow, columnOrder[colIdx].Substring(5));
+            //        }
+            //        if (columnOrder[colIdx] == "ShpDate")
+            //        {                        
+            //            cellValue = r[columnOrder[colIdx]].ToString().Substring(0, 10);
+            //        }
+            //        printRow[0, colIdx] = cellValue;
 
-                }
+            //    }
                 
-                excel.SetRowValues(1, rowIdx + 5, columnOrder.Count, printRow);
-                rowIdx++;
-                wait.SetPosition(rowIdx);
-            }
+            //    excel.SetRowValues(1, rowIdx + 5, columnOrder.Count, printRow);
+            //    rowIdx++;
+            //    wait.SetPosition(rowIdx);
+            //}
 
-            range = excel.SelectCells(1, 1, 5, columnOrder.Count, rowIdx + 4);
-            range.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
-            range.Borders.Item[Excel.XlBordersIndex.xlEdgeLeft].Weight = Excel.XlBorderWeight.xlMedium;
-            range.Borders.Item[Excel.XlBordersIndex.xlEdgeTop].Weight = Excel.XlBorderWeight.xlMedium;
-            range.Borders.Item[Excel.XlBordersIndex.xlEdgeRight].Weight = Excel.XlBorderWeight.xlMedium;
-            range.Borders.Item[Excel.XlBordersIndex.xlEdgeBottom].Weight = Excel.XlBorderWeight.xlMedium;
-            */
+            //range = excel.SelectCells(1, 1, 5, columnOrder.Count, rowIdx + 4);
+            //range.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
+            //range.Borders.Item[Excel.XlBordersIndex.xlEdgeLeft].Weight = Excel.XlBorderWeight.xlMedium;
+            //range.Borders.Item[Excel.XlBordersIndex.xlEdgeTop].Weight = Excel.XlBorderWeight.xlMedium;
+            //range.Borders.Item[Excel.XlBordersIndex.xlEdgeRight].Weight = Excel.XlBorderWeight.xlMedium;
+            //range.Borders.Item[Excel.XlBordersIndex.xlEdgeBottom].Weight = Excel.XlBorderWeight.xlMedium;
+            
             //excel.Visible = true;
             report.SaveAs(System.IO.Path.GetTempPath()+"1.xlsx");
             wait.Close();
             miRepPeriod.Enabled = true;
         }
-        
+        */
         private string CalculateColumnValue(DataRow context, string[,] currentPrintRow, string Expr)
         {
             string result = "";
@@ -1667,5 +1835,77 @@ namespace Planning
         }
 
         #endregion
+
+        private void menuItemReportStatistic_Click(object sender, EventArgs e)
+        {
+            ReportParams reportParams = new ReportParams();
+            RepStatistic repStatistic = new RepStatistic(reportParams);
+            if (repStatistic.ShowDialog() == DialogResult.OK)
+            {
+                ShowReport(REPORT_STATISTIC, reportParams);
+            }
+        }
+
+        private void menuItemReportTC_Click(object sender, EventArgs e)
+        {
+            ReportParams reportParams = new ReportParams();
+            RepTC repTC = new RepTC(reportParams);
+            if (repTC.ShowDialog() == DialogResult.OK)
+            {
+                ShowReport(REPORT_TC, reportParams);
+            }
+        }
+
+        private void toolStripMenuItemFilterIn_Click(object sender, EventArgs e)
+        {
+            ShipmentsUIFilter();
+            Common.settingsHandle.SetParamValue("View\\ActionFilter", String.Join(",", GetFilterActionList().ToArray()));
+        }
+
+        private void tblShipments_ButtonClick(object sender, CellClickEventArgs e)
+        {
+            
+            ShowOrderDetail((ShipmentMain)e.Item.RowObject);
+        }
+
+        private void cbPaint_CheckedChanged(object sender, EventArgs e)
+        {
+            isPaint = cbPaint.Checked;
+            tblShipments.BuildList();
+        }
+
+        private void tmUpdate_Tick(object sender, EventArgs e)
+        {
+            ShipmentsLoad();
+        }
+
+        private void cbUpdate_CheckedChanged(object sender, EventArgs e)
+        {
+            tmUpdate.Interval = (int)edInterval.Value * 1000;
+            tmUpdate.Enabled = cbUpdate.Checked;
+        }
+
+        private void edInterval_ValueChanged(object sender, EventArgs e)
+        {
+            tmUpdate.Interval = (int)edInterval.Value;
+        }
+
+        private void menuItemCalcOrderVolume_Click(object sender, EventArgs e)
+        {
+            frmVolumeCalc frmVolumeCalc = new frmVolumeCalc(Common.setting);
+            AddFormTab(frmVolumeCalc, "Расчет объема заказа");
+        }
+
+        private void menuItemCurrentTask_Click(object sender, EventArgs e)
+        {
+            frmCurrentTask frmCurrentTask = new frmCurrentTask();
+            frmCurrentTask.ShowDialog();
+        }
+
+        private void btnSearchEx_Click(object sender, EventArgs e)
+        {
+            frmSearch frmSearch = new frmSearch(edCurrDay.Value);
+            AddFormTab(frmSearch, "Расширенный поиск");
+        }
     }
 }

@@ -76,6 +76,9 @@
     <Compile Include="LvMovementItem\MovementItem.cs" />
     <Compile Include="LvMovementItem\MovementItemAdapter.cs" />
     <Compile Include="LvMovementItem\MovementItemRepository.cs" />
+    <Compile Include="LvOrderDetailItem\LvOrderDetailItem.cs" />
+    <Compile Include="LvOrderDetailItem\LvOrderDetailItemAdapter.cs" />
+    <Compile Include="LvOrderDetailItem\LvOrderDetailItemRepository.cs" />
     <Compile Include="LvSelectOrder\LvSelectOrder.cs" />
     <Compile Include="LvSelectOrder\LvSelectOrderAdapter.cs" />
     <Compile Include="LvSelectOrder\LvSelectOrderRepository.cs" />

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -15,9 +14,9 @@ namespace Planning
     {
         ShipmentAddResult _selectedResult;
 
-        List<Planning.DataLayer.ShipmentOrder> _shipmentOrders;
-        Planning.DataLayer.ShipmentOrder _shipmentOrder;
-        List<Planning.DataLayer.ShipmentOrderPart> _shipmentOrderParts;
+        List<ShipmentOrder> _shipmentOrders;
+        ShipmentOrder _shipmentOrder;
+        List<ShipmentOrderPart> _shipmentOrderParts;
 
         //Planning.DataLayer.Shipment _shipment;
         bool _isOrderParts;
@@ -25,8 +24,12 @@ namespace Planning
         int? _depositorId;
         int? _shipmentId;
         bool? _isShIn;
-        LVOrder_Manager Order_Manager = new LVOrder_Manager();
-        List<LVOrder> listOrders;
+
+        LvSelectOrderRepository LvSelectOrderRepository = new LvSelectOrderRepository();
+        List<LvSelectOrder> listOrders;
+
+        //LVOrder_Manager Order_Manager = new LVOrder_Manager();
+        //List<LVOrder> listOrders;
         //public ChooseOrder(ShipmentAddResult selectedResult, Planning.DataLayer.Shipment shipment, bool isOrderParts = false, int? LVOrderId = null)
         public ChooseOrder(ShipmentAddResult selectedResult,int? ShipmentId, int? DepositorId, bool? IsShIn, Planning.DataLayer.ShipmentOrder shipmentOrder,
                     bool isOrderParts = false, int? LVOrderId = null)
@@ -48,11 +51,12 @@ namespace Planning
             return _isShIn == null || _isShIn == true;
         }
 
-        private List<LVOrder> GetOrderList()
+        private List<LvSelectOrder> GetOrderList()
         {
-            List<LVOrder> result = new List<LVOrder>();            
-            listOrders = Order_Manager.GetList(_depositorId, IsShpIn()?1:0, 0, _LVOrderId);
-            
+            List<LvSelectOrder> result = new List<LvSelectOrder>();
+            // listOrders = Order_Manager.GetList(_depositorId, IsShpIn()?1:0, 0, _LVOrderId);
+           
+            listOrders = LvSelectOrderRepository.GetAll(0, IsShpIn() ? 1 : 0, _depositorId,  _LVOrderId,0);
             if (_isOrderParts)
             {
                 //Planning.DataLayer.ShipmentOrder shipmentOrder = _shipmentOrders.First(o => o.LvOrderId == _LVOrderId);
@@ -68,10 +72,10 @@ namespace Planning
 
                 ShipmentOrderRepository shipmentOrderRepository = new ShipmentOrderRepository();
 
-                List<Planning.DataLayer.ShipmentOrder> shipmentOrders = shipmentOrderRepository.GetShipmentOrders(_shipmentId);
+                List<ShipmentOrder> shipmentOrders = shipmentOrderRepository.GetShipmentOrders(_shipmentId);
 
                 var listExclusionID = shipmentOrders.Select(o => o.LvOrderId).ToList();
-                result = listOrders.Where(o => !listExclusionID.Contains(o.LVID)).ToList();
+                result = listOrders.Where(o => !listExclusionID.Contains(o.Id)).ToList();
             }
 
             return result;
@@ -84,8 +88,9 @@ namespace Planning
             
             if (!_isOrderParts)
             {
-                LVOrderIdComparer lVOrderIdComparer = new LVOrderIdComparer();
-                listOrders = listOrders.Distinct(lVOrderIdComparer).ToList();
+                //LVOrderIdComparer lVOrderIdComparer = new LVOrderIdComparer();
+                //listOrders = listOrders.Distinct(lVOrderIdComparer).ToList();
+                listOrders = listOrders.Distinct().ToList();
             }
             tblOrders.AutoGenerateColumns = false;
             tblOrders.DataSource = listOrders;
@@ -103,7 +108,7 @@ namespace Planning
         {
             if (tblOrders.CurrentCell !=null)
             {
-                _selectedResult.Result = listOrders.Find(o => o.LVID == Int32.Parse(tblOrders.Rows[tblOrders.CurrentCell.RowIndex].Cells["colLVOrderId"].Value.ToString()));
+                _selectedResult.Result = listOrders.Find(o => o.Id == Int32.Parse(tblOrders.Rows[tblOrders.CurrentCell.RowIndex].Cells["colLVOrderId"].Value.ToString()));
             }
             DialogResult = DialogResult.OK;
         }

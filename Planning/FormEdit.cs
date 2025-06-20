@@ -7,14 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.Entity;
+
 
 namespace Planning
 {
     public partial class FormEdit : Form
     {
         protected byte _formState;
-        protected DbSet _row;
 
         public FormEdit()
         {

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Data.Entity.Validation;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -14,7 +13,6 @@ namespace Planning
 {
     public partial class DictForm : Form
     {
-        protected PlanningDbContext _context;
         protected List<BaseDataItem> _dataSource;
         //protected IRepository<BaseDataItem> repository;
         private IWait waitHandler;
@@ -24,8 +22,6 @@ namespace Planning
         public DictForm()
         {
             InitializeComponent();
-            DataService.InitContext();
-            _context = DataService.context;
         }
 
         public void SetPrivilege(bool IsAppend, bool IsEdit, bool IsDelete)
@@ -77,30 +73,7 @@ namespace Planning
 
         protected virtual void Save()
         {
-            try
-            {
-                Cursor = Cursors.AppStarting;
-               // _context.SaveChanges();
-
-            }
-            catch (DbEntityValidationException ex)
-            {
-                string errorText = "";
-                foreach (DbEntityValidationResult validationError in ex.EntityValidationErrors)
-                {
-                    errorText = errorText + "Object: " + validationError.Entry.Entity.ToString() + "\n\r";
-                    foreach (DbValidationError err in validationError.ValidationErrors)
-                    {
-                        errorText = errorText + err.ErrorMessage + "\n\r";
-
-                    }
-                }
-                MessageBox.Show(errorText);
-            }
-            finally
-            {
-                Cursor = Cursors.Default;
-            }
+           
             Populate();
         }
 

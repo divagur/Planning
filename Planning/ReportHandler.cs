@@ -65,7 +65,6 @@ namespace Planning
             //Количество паллет
             int? pallentsCount = shipmentOrders[0].PalletAmount;
             
-            //DataService.SQLGetIntValue("select pallet_amount from shipment_orders where id = " + (int)printRows[0]["OrdID"]);
             excel.SetValue(1, 2, 14, pallentsCount);
             //Убыл: дата, время
             excel.SetValue(1, 2, 15, shipmentMain.ShpEndTimeFact);

@@ -132,6 +132,16 @@
   <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="toolStripButtonExportExcel.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACxSURBVDhPYxg8wGTG7f+aDTvBeMO+o3C8cN3W/00TpoHZ
+        cUuu/DeZcfOM7rSHglBtCIDLAJBmNSMLJANu/zeedvMYVBsCkGIACEO1IQBIULt5L9iAeduOwA2AeWEt
+        kO2/4Bp+A0jBUG0IgE0RPgzVhgAgwZ9//v0nBEBqcBoAAq/evf9//+kLrBgkBwK0NeDLt+//33/6jBWD
+        5ECAdgYUbn/2v2LXc7wYpAarAQMEGBgA0brB4LHCef4AAAAASUVORK5CYII=
+</value>
+  </data>
   <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>122, 17</value>
   </metadata>

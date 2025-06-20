@@ -30,7 +30,12 @@ namespace Planning
         private void InitializeComponent()
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmOrderDetail));
             this.tblOrderDetail = new System.Windows.Forms.DataGridView();
+            this.colID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPrimaryCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colShortDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colQuantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButtonExportExcel = new System.Windows.Forms.ToolStripButton();
             this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
@@ -38,10 +43,6 @@ namespace Planning
             this.btnOk = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripLabelRowCount = new System.Windows.Forms.ToolStripStatusLabel();
-            this.colID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPrimaryCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colShortDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colQuantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.tblOrderDetail)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -66,6 +67,43 @@ namespace Planning
             this.tblOrderDetail.Size = new System.Drawing.Size(745, 370);
             this.tblOrderDetail.TabIndex = 0;
             // 
+            // colID
+            // 
+            this.colID.DataPropertyName = "ID";
+            this.colID.HeaderText = "ID";
+            this.colID.Name = "colID";
+            this.colID.ReadOnly = true;
+            this.colID.Visible = false;
+            // 
+            // colPrimaryCode
+            // 
+            this.colPrimaryCode.DataPropertyName = "PrimaryCode";
+            this.colPrimaryCode.FillWeight = 150F;
+            this.colPrimaryCode.HeaderText = "Код артикула";
+            this.colPrimaryCode.Name = "colPrimaryCode";
+            this.colPrimaryCode.ReadOnly = true;
+            this.colPrimaryCode.Width = 150;
+            // 
+            // colShortDescription
+            // 
+            this.colShortDescription.DataPropertyName = "ShortDescription";
+            this.colShortDescription.FillWeight = 300F;
+            this.colShortDescription.HeaderText = "Описание";
+            this.colShortDescription.Name = "colShortDescription";
+            this.colShortDescription.ReadOnly = true;
+            this.colShortDescription.Width = 450;
+            // 
+            // colQuantity
+            // 
+            this.colQuantity.DataPropertyName = "Quantity";
+            dataGridViewCellStyle1.Format = "N0";
+            dataGridViewCellStyle1.NullValue = null;
+            this.colQuantity.DefaultCellStyle = dataGridViewCellStyle1;
+            this.colQuantity.FillWeight = 80F;
+            this.colQuantity.HeaderText = "Количество";
+            this.colQuantity.Name = "colQuantity";
+            this.colQuantity.ReadOnly = true;
+            // 
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -79,7 +117,7 @@ namespace Planning
             // toolStripButtonExportExcel
             // 
             this.toolStripButtonExportExcel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonExportExcel.Image = global::Planning.Properties.Resources.disk_4117;
+            this.toolStripButtonExportExcel.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonExportExcel.Image")));
             this.toolStripButtonExportExcel.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonExportExcel.Name = "toolStripButtonExportExcel";
             this.toolStripButtonExportExcel.Size = new System.Drawing.Size(23, 22);
@@ -125,43 +163,6 @@ namespace Planning
             // 
             this.toolStripLabelRowCount.Name = "toolStripLabelRowCount";
             this.toolStripLabelRowCount.Size = new System.Drawing.Size(0, 17);
-            // 
-            // colID
-            // 
-            this.colID.DataPropertyName = "ID";
-            this.colID.HeaderText = "ID";
-            this.colID.Name = "colID";
-            this.colID.ReadOnly = true;
-            this.colID.Visible = false;
-            // 
-            // colPrimaryCode
-            // 
-            this.colPrimaryCode.DataPropertyName = "PrimaryCode";
-            this.colPrimaryCode.FillWeight = 150F;
-            this.colPrimaryCode.HeaderText = "Код артикула";
-            this.colPrimaryCode.Name = "colPrimaryCode";
-            this.colPrimaryCode.ReadOnly = true;
-            this.colPrimaryCode.Width = 150;
-            // 
-            // colShortDescription
-            // 
-            this.colShortDescription.DataPropertyName = "ShortDescription";
-            this.colShortDescription.FillWeight = 300F;
-            this.colShortDescription.HeaderText = "Описание";
-            this.colShortDescription.Name = "colShortDescription";
-            this.colShortDescription.ReadOnly = true;
-            this.colShortDescription.Width = 450;
-            // 
-            // colQuantity
-            // 
-            this.colQuantity.DataPropertyName = "Quantity";
-            dataGridViewCellStyle1.Format = "N0";
-            dataGridViewCellStyle1.NullValue = null;
-            this.colQuantity.DefaultCellStyle = dataGridViewCellStyle1;
-            this.colQuantity.FillWeight = 80F;
-            this.colQuantity.HeaderText = "Количество";
-            this.colQuantity.Name = "colQuantity";
-            this.colQuantity.ReadOnly = true;
             // 
             // frmOrderDetail
             // 

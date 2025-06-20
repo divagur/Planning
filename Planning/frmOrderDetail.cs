@@ -14,7 +14,7 @@ namespace Planning
     public partial class frmOrderDetail : Form
     {
         string _ordCode;
-        public frmOrderDetail(string OrdCode, int OrdId, int inOut, int DepId)
+        public frmOrderDetail(string OrdCode, int? OrdId, int inOut, int? DepId)
         {
             InitializeComponent();
             tblOrderDetail.AutoGenerateColumns = false;
@@ -23,10 +23,13 @@ namespace Planning
             Text = $"Детализация заказа {OrdCode}";
         }
 
-        private void Populate(int ordId, int inOut, int depId)
+        private void Populate(int? ordId, int inOut, int? depId)
         {
-            OrderDetailItem_Manager orderDetailItem_Manager = new OrderDetailItem_Manager();
-            List<OrderDetailItem> orderDetailItems = orderDetailItem_Manager.GetOrderDetailItems(depId, inOut, ordId);
+            LvOrderDetailItemRepository lvOrderDetailItemRepository = new LvOrderDetailItemRepository();
+            List<LvOrderDetailItem> orderDetailItems = lvOrderDetailItemRepository.GetOrderDetailItems(depId, inOut, ordId);
+
+            //OrderDetailItem_Manager orderDetailItem_Manager = new OrderDetailItem_Manager();
+            //List<OrderDetailItem> orderDetailItems = orderDetailItem_Manager.GetOrderDetailItems(depId, inOut, ordId);
             tblOrderDetail.DataSource = orderDetailItems;
 
             toolStripLabelRowCount.Text = String.Format("Всего кол-во строк - {0}, единиц товара - {1:f0}", orderDetailItems.Count, orderDetailItems.Sum(i => i.Quantity));
@@ -53,14 +56,14 @@ namespace Planning
                 sl.SetColumnWidth(1,19);
                 sl.SetColumnWidth(2,65);
                 sl.SetColumnWidth(3,11);
-                List<OrderDetailItem> data = (List<OrderDetailItem>)tblOrderDetail.DataSource;
+                List<LvOrderDetailItem> data = (List<LvOrderDetailItem>)tblOrderDetail.DataSource;
                 int i = 3;
                 foreach (var item in data)
                 {
                     
                     sl.SetCellValue(i,1, item.PrimaryCode);
                     sl.SetCellValue(i,2, item.ShortDescription);
-                    sl.SetCellValue(i,3, item.Quantity);
+                    sl.SetCellValue(i,3, (decimal)item.Quantity);
                     i++;
                 }
 

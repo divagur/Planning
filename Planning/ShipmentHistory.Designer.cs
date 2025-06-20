@@ -84,17 +84,6 @@ namespace Planning
             this.BackgroundColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colShpIn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tblShipmentItemLog = new System.Windows.Forms.DataGridView();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.tbPrint = new System.Windows.Forms.ToolStripButton();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.tblMovementItemLog = new System.Windows.Forms.DataGridView();
-            this.colMvmItemDmlDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colMvmItemDmlTypeName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colMvmItemDmlCompName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colMvmItemDmlUser = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colMvmItemId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colMvmntDmlTypeId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colShpItemDmlDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDmlTypeName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colShpItemDmlCompName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -108,6 +97,17 @@ namespace Planning
             this.colShpItemIsBinding = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.colShpItemDmlType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colItemBackgroundColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.tbPrint = new System.Windows.Forms.ToolStripButton();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.tblMovementItemLog = new System.Windows.Forms.DataGridView();
+            this.colMvmItemDmlDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMvmItemDmlTypeName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMvmItemDmlCompName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMvmItemDmlUser = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMvmItemId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMvmntDmlTypeId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pnFilter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tblShipmentLog)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tblShipmentItemLog)).BeginInit();
@@ -599,6 +599,97 @@ namespace Planning
             this.tblShipmentItemLog.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.tblShipmentItemLog_CellPainting);
             this.tblShipmentItemLog.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.tblShipmentItemLog_RowPrePaint);
             // 
+            // colShpItemDmlDate
+            // 
+            this.colShpItemDmlDate.DataPropertyName = "DmlDate";
+            this.colShpItemDmlDate.HeaderText = "Дата изменения";
+            this.colShpItemDmlDate.Name = "colShpItemDmlDate";
+            this.colShpItemDmlDate.ReadOnly = true;
+            // 
+            // colDmlTypeName
+            // 
+            this.colDmlTypeName.HeaderText = "Тип изменения";
+            this.colDmlTypeName.Name = "colDmlTypeName";
+            this.colDmlTypeName.ReadOnly = true;
+            // 
+            // colShpItemDmlCompName
+            // 
+            this.colShpItemDmlCompName.DataPropertyName = "DmlCompName";
+            this.colShpItemDmlCompName.HeaderText = "Имя компьютера";
+            this.colShpItemDmlCompName.Name = "colShpItemDmlCompName";
+            this.colShpItemDmlCompName.ReadOnly = true;
+            // 
+            // colShpItemUserName
+            // 
+            this.colShpItemUserName.DataPropertyName = "DmlUserName";
+            this.colShpItemUserName.HeaderText = "Имя пользователя";
+            this.colShpItemUserName.Name = "colShpItemUserName";
+            this.colShpItemUserName.ReadOnly = true;
+            this.colShpItemUserName.Width = 150;
+            // 
+            // colShpItemOrderId
+            // 
+            this.colShpItemOrderId.DataPropertyName = "OrderId";
+            this.colShpItemOrderId.HeaderText = "Код заказа";
+            this.colShpItemOrderId.Name = "colShpItemOrderId";
+            this.colShpItemOrderId.ReadOnly = true;
+            // 
+            // colShpItemOrderType
+            // 
+            this.colShpItemOrderType.DataPropertyName = "OrderType";
+            this.colShpItemOrderType.HeaderText = "Тип заказа";
+            this.colShpItemOrderType.Name = "colShpItemOrderType";
+            this.colShpItemOrderType.ReadOnly = true;
+            // 
+            // colShpItemComment
+            // 
+            this.colShpItemComment.DataPropertyName = "Comment";
+            this.colShpItemComment.HeaderText = "Комментарий по заказу";
+            this.colShpItemComment.Name = "colShpItemComment";
+            this.colShpItemComment.ReadOnly = true;
+            // 
+            // colShpItemManualLoad
+            // 
+            this.colShpItemManualLoad.DataPropertyName = "ManualLoad";
+            this.colShpItemManualLoad.HeaderText = "Ручная загрузка коробов";
+            this.colShpItemManualLoad.Name = "colShpItemManualLoad";
+            this.colShpItemManualLoad.ReadOnly = true;
+            // 
+            // colShpItemManualUnload
+            // 
+            this.colShpItemManualUnload.DataPropertyName = "ManualUnload";
+            this.colShpItemManualUnload.HeaderText = "Ручная разгрузка коробов";
+            this.colShpItemManualUnload.Name = "colShpItemManualUnload";
+            this.colShpItemManualUnload.ReadOnly = true;
+            // 
+            // colShpItemPalletAmount
+            // 
+            this.colShpItemPalletAmount.DataPropertyName = "PalletAmount";
+            this.colShpItemPalletAmount.HeaderText = "Кол-во паллет";
+            this.colShpItemPalletAmount.Name = "colShpItemPalletAmount";
+            this.colShpItemPalletAmount.ReadOnly = true;
+            // 
+            // colShpItemIsBinding
+            // 
+            this.colShpItemIsBinding.DataPropertyName = "IsBinding";
+            this.colShpItemIsBinding.HeaderText = "Привязка";
+            this.colShpItemIsBinding.Name = "colShpItemIsBinding";
+            this.colShpItemIsBinding.ReadOnly = true;
+            // 
+            // colShpItemDmlType
+            // 
+            this.colShpItemDmlType.DataPropertyName = "DmlType";
+            this.colShpItemDmlType.HeaderText = "Тип изменения";
+            this.colShpItemDmlType.Name = "colShpItemDmlType";
+            this.colShpItemDmlType.ReadOnly = true;
+            // 
+            // colItemBackgroundColor
+            // 
+            this.colItemBackgroundColor.HeaderText = "colItemBackgroundColor";
+            this.colItemBackgroundColor.Name = "colItemBackgroundColor";
+            this.colItemBackgroundColor.ReadOnly = true;
+            this.colItemBackgroundColor.Visible = false;
+            // 
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -735,97 +826,6 @@ namespace Planning
             this.colMvmntDmlTypeId.Name = "colMvmntDmlTypeId";
             this.colMvmntDmlTypeId.ReadOnly = true;
             this.colMvmntDmlTypeId.Visible = false;
-            // 
-            // colShpItemDmlDate
-            // 
-            this.colShpItemDmlDate.DataPropertyName = "DmlDate";
-            this.colShpItemDmlDate.HeaderText = "Дата изменения";
-            this.colShpItemDmlDate.Name = "colShpItemDmlDate";
-            this.colShpItemDmlDate.ReadOnly = true;
-            // 
-            // colDmlTypeName
-            // 
-            this.colDmlTypeName.HeaderText = "Тип изменения";
-            this.colDmlTypeName.Name = "colDmlTypeName";
-            this.colDmlTypeName.ReadOnly = true;
-            // 
-            // colShpItemDmlCompName
-            // 
-            this.colShpItemDmlCompName.DataPropertyName = "DmlCompName";
-            this.colShpItemDmlCompName.HeaderText = "Имя компьютера";
-            this.colShpItemDmlCompName.Name = "colShpItemDmlCompName";
-            this.colShpItemDmlCompName.ReadOnly = true;
-            // 
-            // colShpItemUserName
-            // 
-            this.colShpItemUserName.DataPropertyName = "DmlUserName";
-            this.colShpItemUserName.HeaderText = "Имя пользователя";
-            this.colShpItemUserName.Name = "colShpItemUserName";
-            this.colShpItemUserName.ReadOnly = true;
-            this.colShpItemUserName.Width = 150;
-            // 
-            // colShpItemOrderId
-            // 
-            this.colShpItemOrderId.DataPropertyName = "OrderId";
-            this.colShpItemOrderId.HeaderText = "Код заказа";
-            this.colShpItemOrderId.Name = "colShpItemOrderId";
-            this.colShpItemOrderId.ReadOnly = true;
-            // 
-            // colShpItemOrderType
-            // 
-            this.colShpItemOrderType.DataPropertyName = "OrderType";
-            this.colShpItemOrderType.HeaderText = "Тип заказа";
-            this.colShpItemOrderType.Name = "colShpItemOrderType";
-            this.colShpItemOrderType.ReadOnly = true;
-            // 
-            // colShpItemComment
-            // 
-            this.colShpItemComment.DataPropertyName = "Comment";
-            this.colShpItemComment.HeaderText = "Комментарий по заказу";
-            this.colShpItemComment.Name = "colShpItemComment";
-            this.colShpItemComment.ReadOnly = true;
-            // 
-            // colShpItemManualLoad
-            // 
-            this.colShpItemManualLoad.DataPropertyName = "ManualLoad";
-            this.colShpItemManualLoad.HeaderText = "Ручная загрузка коробов";
-            this.colShpItemManualLoad.Name = "colShpItemManualLoad";
-            this.colShpItemManualLoad.ReadOnly = true;
-            // 
-            // colShpItemManualUnload
-            // 
-            this.colShpItemManualUnload.DataPropertyName = "ManualUnload";
-            this.colShpItemManualUnload.HeaderText = "Ручная разгрузка коробов";
-            this.colShpItemManualUnload.Name = "colShpItemManualUnload";
-            this.colShpItemManualUnload.ReadOnly = true;
-            // 
-            // colShpItemPalletAmount
-            // 
-            this.colShpItemPalletAmount.DataPropertyName = "PalletAmount";
-            this.colShpItemPalletAmount.HeaderText = "Кол-во паллет";
-            this.colShpItemPalletAmount.Name = "colShpItemPalletAmount";
-            this.colShpItemPalletAmount.ReadOnly = true;
-            // 
-            // colShpItemIsBinding
-            // 
-            this.colShpItemIsBinding.DataPropertyName = "IsBinding";
-            this.colShpItemIsBinding.HeaderText = "Привязка";
-            this.colShpItemIsBinding.Name = "colShpItemIsBinding";
-            this.colShpItemIsBinding.ReadOnly = true;
-            // 
-            // colShpItemDmlType
-            // 
-            this.colShpItemDmlType.DataPropertyName = "DmlType";
-            this.colShpItemDmlType.HeaderText = "Тип изменения";
-            this.colShpItemDmlType.Name = "colShpItemDmlType";
-            this.colShpItemDmlType.ReadOnly = true;
-            // 
-            // colItemBackgroundColor
-            // 
-            this.colItemBackgroundColor.HeaderText = "colItemBackgroundColor";
-            this.colItemBackgroundColor.Name = "colItemBackgroundColor";
-            this.colItemBackgroundColor.ReadOnly = true;
-            this.colItemBackgroundColor.Visible = false;
             // 
             // frmShipmentHistory
             // 

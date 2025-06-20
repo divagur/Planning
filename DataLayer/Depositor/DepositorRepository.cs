@@ -24,5 +24,18 @@ namespace Planning.DataLayer
         {
 
         }
+
+        public Depositor GetByName(string name)
+        {
+            string sql = dataAdapter.GetSelectItemSql() + " where name = @Name";
+            Depositor item = null;
+            var queryResult = dbConnection.Query<Depositor>(sql, new { Name = name });
+
+            if (queryResult != null)
+            {
+                item = queryResult.FirstOrDefault();
+            }
+            return item;
+        }
     }
 }

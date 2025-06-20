@@ -81,25 +81,18 @@ namespace Planning
                 return false;
             }
             return true;
-            /*
-            SqlHandle sql = new SqlHandle(DataService.connectionString);
-            sql.Connect();
-            sql.TypeCommand = CommandType.StoredProcedure;
-            sql.SqlStatement = "SP_PL_ForceMergeLVAttribute";
+        }
+        public static string BuildConnectionString(string Server, string DB, string Login, string Pswd)
+        {
+            SqlConnectionStringBuilder connectionString = new SqlConnectionStringBuilder();
 
-            sql.AddCommandParametr(new SqlParameter { ParameterName = "@ShpID", Value = ShpId });
+            connectionString.DataSource = Server;
+            connectionString.InitialCatalog = DB;
+            connectionString.IntegratedSecurity = false;
+            connectionString.UserID = Login;
+            connectionString.Password = Pswd;
 
-
-            bool success = sql.Execute();
-
-            if (!success)
-            {
-                MessageBox.Show(sql.LastError, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-            sql.Disconnect();
-            return success;
-            */
+            return connectionString.ToString();
         }
 
     }

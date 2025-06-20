@@ -35,7 +35,7 @@ namespace Planning.DataLayer
             InitConnection(sqlConnectionString.ToString());
         }
         */
-        public List<ShipmentMain> GetAll(DateTime DateFrom, DateTime? DateTill, string ShpId, string OrdId, int ShpType = -1)
+        public List<ShipmentMain> GetAll(DateTime DateFrom, DateTime? DateTill, string ShpId, string OrdId, int ShpType = -1, string AddCond = null)
         {
             string sql = dataAdapter.GetSelectItemSql();
             object shpType = null;
@@ -48,6 +48,7 @@ namespace Planning.DataLayer
             parameters.Add("@In", shpType);
             parameters.Add("@ShpId", ShpId);
             parameters.Add("@OrdID", OrdId);
+            parameters.Add("@AddCond", AddCond);
             List<ShipmentMain> shipments = new List<ShipmentMain>();
             //var transaction = dbConnection.BeginTransaction();
             try

@@ -122,5 +122,16 @@ namespace Planning.DataLayer
                 }
             }
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is LvSelectOrder selectOrder) return Id == selectOrder.Id;
+            return false;
+        }
+        
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
+        }
     }
 }

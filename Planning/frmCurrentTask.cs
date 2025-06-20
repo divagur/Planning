@@ -35,6 +35,7 @@ namespace Planning
 
         private DataSet GetCurrentTask(DateTime DateFrom, DateTime? DateTill)
         {
+            /*
             SqlHandle sql = new SqlHandle(DataService.connectionString);
             sql.SqlStatement = "SP_PL_CurrentTaskQuery";
             sql.Connect();
@@ -53,7 +54,8 @@ namespace Planning
                 return null;
             }
             return sql.DataSet;
-
+            */
+            return null;
 
         }
         private void LoadTask()
@@ -133,7 +135,7 @@ namespace Planning
 
 
             tblTaks.AutoGenerateColumns = false;
-            foreach (var item in DataService.setting.CurrentTaskColumns)
+            foreach (var item in Common.setting.CurrentTaskColumns)
             {
                 if (tblTaks.Columns.Contains(item.Id))
                 {
@@ -143,14 +145,14 @@ namespace Planning
                 }
 
             }
-            Font tblFont = new Font(tblTaks.DefaultCellStyle.Font.FontFamily, (float)DataService.setting.TaskViewFonSize);
+            Font tblFont = new Font(tblTaks.DefaultCellStyle.Font.FontFamily, (float)Common.setting.TaskViewFonSize);
             tblTaks.DefaultCellStyle.Font = tblFont;
             tblTaks.ColumnHeadersDefaultCellStyle.Font = tblFont;
 
 
             LoadTask();
 
-            timerUpdateTask.Interval = Convert.ToInt32(DataService.setting.TaskUpdateInterval * 1000);
+            timerUpdateTask.Interval = Convert.ToInt32(Common.setting.TaskUpdateInterval * 1000);
             timerUpdateTask.Start();
             
 

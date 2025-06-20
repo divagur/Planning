@@ -31,16 +31,11 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TimeSlots));
             this.tblTimeSlot = new System.Windows.Forms.DataGridView();
-            this.depositorsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.planningDataSet1 = new Planning.PlanningDataSet1();
-            this.depositorsTableAdapter = new Planning.PlanningDataSet1TableAdapters.depositorsTableAdapter();
             this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDepositor = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.colTimeSlot = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.depId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.tblTimeSlot)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.depositorsBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.planningDataSet1)).BeginInit();
             this.SuspendLayout();
             // 
             // tblTimeSlot
@@ -60,20 +55,6 @@
             this.tblTimeSlot.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.tblTimeSlot.Size = new System.Drawing.Size(829, 444);
             this.tblTimeSlot.TabIndex = 2;
-            // 
-            // depositorsBindingSource
-            // 
-            this.depositorsBindingSource.DataMember = "depositors";
-            this.depositorsBindingSource.DataSource = this.planningDataSet1;
-            // 
-            // planningDataSet1
-            // 
-            this.planningDataSet1.DataSetName = "PlanningDataSet1";
-            this.planningDataSet1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // depositorsTableAdapter
-            // 
-            this.depositorsTableAdapter.ClearBeforeFill = true;
             // 
             // colId
             // 
@@ -118,8 +99,6 @@
             this.Text = "Тайм слоты";
             this.Controls.SetChildIndex(this.tblTimeSlot, 0);
             ((System.ComponentModel.ISupportInitialize)(this.tblTimeSlot)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.depositorsBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.planningDataSet1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -127,9 +106,6 @@
 
         #endregion
         private System.Windows.Forms.DataGridView tblTimeSlot;
-        private PlanningDataSet1 planningDataSet1;
-        private System.Windows.Forms.BindingSource depositorsBindingSource;
-        private PlanningDataSet1TableAdapters.depositorsTableAdapter depositorsTableAdapter;
         private System.Windows.Forms.DataGridViewTextBoxColumn colId;
         private System.Windows.Forms.DataGridViewComboBoxColumn colDepositor;
         private System.Windows.Forms.DataGridViewTextBoxColumn colTimeSlot;

@@ -66,8 +66,8 @@ namespace Planning
             SetParamValue("VolumeCalcParams\\ImportColName", _settings.volumeCalcParams.ImportColName);
             SetParamValue("VolumeCalcParams\\ImportColAmount", _settings.volumeCalcParams.ImportColAmount);
             SetParamValue("ShowOrderDetailColumn", _settings.ShowDetailOrderColumn);
-            SetParamValue("DefaultWarehouseCode", _settings.DefaultWarehouseCode);
-            SetParamValue("DefaultTransportViewCode", _settings.DefaultTransportViewName);
+            //SetParamValue("DefaultWarehouseCode", _settings.DefaultWarehouseCode);
+            //SetParamValue("DefaultTransportViewCode", _settings.DefaultTransportViewName);
         }
 
         public override void Load()
@@ -101,8 +101,8 @@ namespace Planning
             _settings.volumeCalcParams.ImportColName = GetParamIntValue("VolumeCalcParams\\ImportColName", 2);
             _settings.volumeCalcParams.ImportColAmount = GetParamIntValue("VolumeCalcParams\\ImportColAmount", 3);
             _settings.ShowDetailOrderColumn = GetParamBoolValue("ShowOrderDetailColumn", true);
-            _settings.DefaultWarehouseCode = GetParamStringValue("DefaultWarehouseCode");
-            _settings.DefaultTransportViewName = GetParamStringValue("DefaultTransportViewCode");
+            //_settings.DefaultWarehouseCode = GetParamStringValue("DefaultWarehouseCode");
+            //_settings.DefaultTransportViewName = GetParamStringValue("DefaultTransportViewCode");
         }
 
     }

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.tabControlSettings = new System.Windows.Forms.TabControl();
             this.tabPageConnection = new System.Windows.Forms.TabPage();
             this.edPassword = new System.Windows.Forms.TextBox();
@@ -38,16 +39,28 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.tabPageCommon = new System.Windows.Forms.TabPage();
+            this.edTransportViewDefault = new System.Windows.Forms.TextBox();
+            this.edWarehouseDefault = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnClose = new System.Windows.Forms.Button();
             this.btnApply = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
+            this.edAdminLogin = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.edAdminPwd = new System.Windows.Forms.TextBox();
             this.tabControlSettings.SuspendLayout();
             this.tabPageConnection.SuspendLayout();
+            this.tabPageCommon.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControlSettings
             // 
             this.tabControlSettings.Controls.Add(this.tabPageConnection);
+            this.tabControlSettings.Controls.Add(this.tabPageCommon);
             this.tabControlSettings.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControlSettings.Location = new System.Drawing.Point(0, 0);
             this.tabControlSettings.Name = "tabControlSettings";
@@ -57,6 +70,10 @@
             // 
             // tabPageConnection
             // 
+            this.tabPageConnection.Controls.Add(this.edAdminPwd);
+            this.tabPageConnection.Controls.Add(this.label8);
+            this.tabPageConnection.Controls.Add(this.edAdminLogin);
+            this.tabPageConnection.Controls.Add(this.label7);
             this.tabPageConnection.Controls.Add(this.edPassword);
             this.tabPageConnection.Controls.Add(this.edUser);
             this.tabPageConnection.Controls.Add(this.edBase);
@@ -138,14 +155,71 @@
             this.label1.TabIndex = 21;
             this.label1.Text = "Сервер";
             // 
+            // tabPageCommon
+            // 
+            this.tabPageCommon.Controls.Add(this.edTransportViewDefault);
+            this.tabPageCommon.Controls.Add(this.edWarehouseDefault);
+            this.tabPageCommon.Controls.Add(this.label6);
+            this.tabPageCommon.Controls.Add(this.label5);
+            this.tabPageCommon.Location = new System.Drawing.Point(4, 22);
+            this.tabPageCommon.Name = "tabPageCommon";
+            this.tabPageCommon.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageCommon.Size = new System.Drawing.Size(504, 240);
+            this.tabPageCommon.TabIndex = 1;
+            this.tabPageCommon.Text = "Общие";
+            this.tabPageCommon.UseVisualStyleBackColor = true;
+            // 
+            // edTransportViewDefault
+            // 
+            this.edTransportViewDefault.Location = new System.Drawing.Point(202, 44);
+            this.edTransportViewDefault.Name = "edTransportViewDefault";
+            this.edTransportViewDefault.Size = new System.Drawing.Size(100, 20);
+            this.edTransportViewDefault.TabIndex = 1;
+            // 
+            // edWarehouseDefault
+            // 
+            this.edWarehouseDefault.Location = new System.Drawing.Point(153, 14);
+            this.edWarehouseDefault.Name = "edWarehouseDefault";
+            this.edWarehouseDefault.Size = new System.Drawing.Size(100, 20);
+            this.edWarehouseDefault.TabIndex = 1;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(8, 47);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(188, 13);
+            this.label6.TabIndex = 0;
+            this.label6.Text = "Код вида транспорта по умолчанию";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(8, 17);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(139, 13);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "Код склада по умолчанию";
+            // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btnClose);
             this.panel1.Controls.Add(this.btnApply);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 266);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(512, 38);
             this.panel1.TabIndex = 1;
+            // 
+            // btnClose
+            // 
+            this.btnClose.Location = new System.Drawing.Point(88, 6);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(75, 23);
+            this.btnClose.TabIndex = 0;
+            this.btnClose.Text = "Закрыть";
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // btnApply
             // 
@@ -157,6 +231,43 @@
             this.btnApply.UseVisualStyleBackColor = true;
             this.btnApply.Click += new System.EventHandler(this.btnApply_Click);
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(6, 153);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(125, 13);
+            this.label7.TabIndex = 28;
+            this.label7.Text = "Логин администратора";
+            this.label7.Visible = false;
+            // 
+            // edAdminLogin
+            // 
+            this.edAdminLogin.Location = new System.Drawing.Point(137, 150);
+            this.edAdminLogin.Name = "edAdminLogin";
+            this.edAdminLogin.Size = new System.Drawing.Size(175, 20);
+            this.edAdminLogin.TabIndex = 29;
+            this.edAdminLogin.Visible = false;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(6, 179);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(132, 13);
+            this.label8.TabIndex = 28;
+            this.label8.Text = "Пароль администратора";
+            this.label8.Visible = false;
+            // 
+            // edAdminPwd
+            // 
+            this.edAdminPwd.Location = new System.Drawing.Point(137, 176);
+            this.edAdminPwd.Name = "edAdminPwd";
+            this.edAdminPwd.PasswordChar = '*';
+            this.edAdminPwd.Size = new System.Drawing.Size(175, 20);
+            this.edAdminPwd.TabIndex = 29;
+            this.edAdminPwd.Visible = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -165,12 +276,16 @@
             this.Controls.Add(this.tabControlSettings);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Настрока";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.tabControlSettings.ResumeLayout(false);
             this.tabPageConnection.ResumeLayout(false);
             this.tabPageConnection.PerformLayout();
+            this.tabPageCommon.ResumeLayout(false);
+            this.tabPageCommon.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -190,6 +305,16 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnApply;
+        private System.Windows.Forms.TabPage tabPageCommon;
+        private System.Windows.Forms.TextBox edTransportViewDefault;
+        private System.Windows.Forms.TextBox edWarehouseDefault;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button btnClose;
+        private System.Windows.Forms.TextBox edAdminLogin;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox edAdminPwd;
+        private System.Windows.Forms.Label label8;
     }
 }
 

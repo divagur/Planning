@@ -16,13 +16,10 @@ namespace Planning
        
         DataLayer.DeliveryPeriodRepository _deliveryPeriodRepository = new DataLayer.DeliveryPeriodRepository();
         List<DataLayer.Warehouse> _warehouses;
-
-        //PlanningDbContext _context;
         public CustomPostEdit(DataLayer.CustomPost customPost)
         {
             InitializeComponent();
             _customPost = customPost;
-            //_context = DataService.context;
         }
         protected override bool Save()
         {
@@ -53,7 +50,6 @@ namespace Planning
                     deliveryPeriod.WarehouseId = (int)row.Cells["colWarehouseId"].Value;
                     deliveryPeriod.DeliveryDay = Int32.Parse(row.Cells["colDeliveryDay"].Value.ToString());
                     _deliveryPeriods.Add(deliveryPeriod);
-                    //_context.DeliveryPeriods.Add(deliveryPeriod);
                 }
      
             }

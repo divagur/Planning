@@ -74,7 +74,7 @@ namespace Planning
             int? Type = cmbType.SelectedIndex < 2 ? (int?)cmbType.SelectedIndex : null;
 
             LvSelectOrderRepository lvSelectOrderRepository = new LvSelectOrderRepository();
-            List<LvSelectOrder> lvSelectOrders = lvSelectOrderRepository.GetAll(0, Type, DepositorLVId);
+            List<LvSelectOrder> lvSelectOrders = lvSelectOrderRepository.GetAll(0, Type, DepositorLVId, null,0);
             tblOrders.Rows.Clear();
             foreach (var item in lvSelectOrders)
             {
@@ -156,8 +156,8 @@ namespace Planning
                 _shipment.TimeSlotId = GetSelectedTimeSlotId();
                 _shipment.IsAddLv = false;
                 //bool isAddLv = false;
-                _shipment.TransportViewId = GetTransportViewId(DataService.setting.DefaultTransportViewName);
-                _shipment.WarehouseId = GetWarehouseId(DataService.setting.DefaultWarehouseCode);
+                _shipment.TransportViewId = GetTransportViewId(Common.PlanningConfig.DefaultTransportViewName);
+                _shipment.WarehouseId = GetWarehouseId(Common.PlanningConfig.DefaultWarehouseCode);
 
                 ShipmentRepository shipmentRepository = new ShipmentRepository();
                 ShipmentOrderRepository shipmentOrderRepository = new ShipmentOrderRepository();
@@ -229,7 +229,6 @@ namespace Planning
                 }
                 
                 _shipmentAddResult.Result = _shipment;
-               // _context.Shipments.Add(_shipment);
             }
             else if (cmbType.SelectedIndex ==2)
             {
@@ -269,10 +268,7 @@ namespace Planning
 
                 }
                 _shipmentAddResult.Result = _movement;
-                //_context.Movements.Add(_movement);
-            }
-           // _context.SaveChanges();
-            
+            }       
         }
 
         private int? GetWarehouseId(string WarehouseCode)

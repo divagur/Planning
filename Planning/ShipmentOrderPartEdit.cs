@@ -75,7 +75,7 @@ namespace Planning
                 _shipment.DepositorId, _shipment.ShIn, _shipmentOrder, true, _shipmentOrder.LvOrderId);
             if (frmChooseOrder.ShowDialog() == DialogResult.OK && selectResult.Result != null)
             {
-                var order = (LVOrder)selectResult.Result;
+                var order = (LvSelectOrder)selectResult.Result;
                 edOrderPartId.Text = order.OstCode;
                 _shipmentOrderPart.OsLvId = order.OstID;
                 _shipmentOrderPart.IsBinding = true;

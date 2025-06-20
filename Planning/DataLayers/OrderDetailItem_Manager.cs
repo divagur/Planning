@@ -11,7 +11,7 @@ namespace Planning
 {
     public class OrderDetailItem_Manager
     {
-        public List<OrderDetailItem> GetOrderDetailItems(int? DepositorLVId, int InOutType, int ordId, bool isAll = false)
+        public List<OrderDetailItem> GetOrderDetailItems(int? DepositorLVId, int InOutType, int? ordId, bool isAll = false)
         {
             List<OrderDetailItem> listOrderDetailItems = new List<OrderDetailItem>();
 

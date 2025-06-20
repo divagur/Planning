@@ -44,5 +44,18 @@ namespace Planning.DataLayer
             }
             return result;
         }
+        
+        public User GetSystemUser()
+        {
+            User result = null;
+            string sql = dataAdapter.GetSelectItemSql() + $" where is_system_user = 1";
+            var queryResult = dbConnection.Query<User>(sql);
+            if (queryResult != null)
+            {
+                result = queryResult.FirstOrDefault();
+            }
+            return result;
+        }
+        
     }
 }

@@ -8,43 +8,51 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Planning.DataLayer;
 
 namespace Planning
 {
     public partial class frmSelectOrders : Form
     {
-        LVOrder_Manager Order_Manager = new LVOrder_Manager();
-        PlanningDbContext _context;
-        List<LVOrder> _listSelectedOrders;
-        List<LVOrder> _listOrders;
-        BindingList<LVOrder> bindingListSelectOrder;
+        LvSelectOrderRepository LvSelectOrderRepository = new LvSelectOrderRepository();
+        List<LvSelectOrder> _listSelectedOrders;
+        List<LvSelectOrder> _listOrders;
+        BindingList<LvSelectOrder> bindingListSelectOrder;
         BindingSource sourceSelected;
 
-        BindingList<LVOrder> bindingListOrder;
+        BindingList<LvSelectOrder> bindingListOrder;
         BindingSource sourceOrder;
-        public frmSelectOrders(List<LVOrder> listSelectedOrders)
+        public frmSelectOrders(List<LvSelectOrder> listSelectedOrders)
         {
             InitializeComponent();
             _listSelectedOrders = listSelectedOrders;
-            _context = DataService.context;
         }
 
         private void frmSelectOrders_Load(object sender, EventArgs e)
         {
+            DepositorRepository depositorRepository = new DepositorRepository();
+            List<Depositor> depositors = depositorRepository.GetAll();
+
             cmbDepositor.Items.Clear();
-            foreach (var d in _context.Depositors.ToList())
-                cmbDepositor.Items.Add(d.Name);
+            foreach (var d in depositors)
+            {
+                cmbDepositor.Items.Add(d);
+            }
+            cmbDepositor.SelectedIndex = 0;
 
 
             if (cmbDepositor.Items.Count>0)
             {
                 cmbDepositor.SelectedIndex = 0;
             }
-
-            Populate(cmbDepositor.Text);
+            int? depositorId = GetSelectedDepositorId();
+            Populate(depositorId);
 
         }
-
+        private int? GetSelectedDepositorId()
+        {
+            return cmbDepositor.SelectedItem != null ? ((Depositor)cmbDepositor.SelectedItem).Id : null;
+        }
         private void btnFind_Click(object sender, EventArgs e)
         {
             SearchBy(true, r => tblOrders.Rows[r].Cells["colId"] != null && tblOrders.Rows[r].Cells["colId"].Value.ToString() == txtOrderId.Text);
@@ -83,13 +91,13 @@ namespace Planning
         }
 
 
-        private void MoveRow(DataGridView SourceTable, List<LVOrder> listSource, List<LVOrder> listTarged, string ColIdName)
+        private void MoveRow(DataGridView SourceTable, List<LvSelectOrder> listSource, List<LvSelectOrder> listTarged, string ColIdName)
         {
 
             for (int i = 0; i < SourceTable.SelectedRows.Count; i++)
             {
 
-                LVOrder order = listSource.Find(r => r.LVCode == (string)SourceTable.SelectedRows[i].Cells[0].Value);
+                LvSelectOrder order = listSource.Find(r => r.LVCode == (string)SourceTable.SelectedRows[i].Cells[0].Value);
                 listTarged.Add(order);
 
                 listSource.Remove(order);
@@ -120,19 +128,21 @@ namespace Planning
 
         private void cmbDepositor_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Populate(cmbDepositor.Text);
+            int? depositorId = GetSelectedDepositorId();
+            Populate(depositorId);
         }
 
-        private void Populate(string DepName)
+        private void Populate(int? DepositorId)
         {
-            int? DepositorLVId = DataService.GetDictIdByName("Депозиторы", DepName);
-            _listOrders = Order_Manager.GetList(DepositorLVId, 0);
+           
+            _listOrders = LvSelectOrderRepository.GetAll(0,DepositorId,0,null,0 );
+
 
             if (_listSelectedOrders != null && _listSelectedOrders.Count > 0)
             {
-                List<int> orderId = _listSelectedOrders.Select(i => i.LVID).ToList();
+                List<int?> orderId = _listSelectedOrders.Select(i => i.Id).ToList();
 
-                _listOrders = _listOrders.Where(i => !orderId.Contains(i.LVID)).ToList();
+                _listOrders = _listOrders.Where(i => !orderId.Contains(i.Id)).ToList();
             }
 
 
@@ -140,10 +150,10 @@ namespace Planning
             tblOrders.AutoGenerateColumns = false;
 
 
-            bindingListOrder = new BindingList<LVOrder>(_listOrders);
+            bindingListOrder = new BindingList<LvSelectOrder>(_listOrders);
             sourceOrder = new BindingSource(bindingListOrder, null);
 
-            bindingListSelectOrder = new BindingList<LVOrder>(_listSelectedOrders);
+            bindingListSelectOrder = new BindingList<LvSelectOrder>(_listSelectedOrders);
             sourceSelected = new BindingSource(bindingListSelectOrder, null);
 
 

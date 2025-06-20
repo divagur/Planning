@@ -13,11 +13,11 @@ namespace Planning
 {
     public partial class ShipmentOrderEdit : Form
     {
-        Planning.DataLayer.ShipmentOrder _shipmentOrder;
-        List<Planning.DataLayer.ShipmentOrderPart> _shipmentOrderParts;
-        Planning.DataLayer.Shipment _shipment;
-        public ShipmentOrderEdit(Planning.DataLayer.Shipment shipment, Planning.DataLayer.ShipmentOrder shipmentOrder,
-            List<Planning.DataLayer.ShipmentOrderPart> shipmentOrderParts)
+        ShipmentOrder _shipmentOrder;
+        List<ShipmentOrderPart> _shipmentOrderParts;
+        Shipment _shipment;
+        public ShipmentOrderEdit(Shipment shipment, ShipmentOrder shipmentOrder,
+            List<ShipmentOrderPart> shipmentOrderParts)
         {
             InitializeComponent();
             _shipmentOrder = shipmentOrder;
@@ -109,20 +109,20 @@ namespace Planning
             ChooseOrder frmChooseOrder = new ChooseOrder(selectResult, _shipment.Id, _shipment.DepositorId,_shipment.ShIn,_shipmentOrder);
             if (frmChooseOrder.ShowDialog() == DialogResult.OK && selectResult.Result != null)
             {
-                var order = (LVOrder)selectResult.Result;
+                var order = (LvSelectOrder)selectResult.Result;
 
                 txtOrderId.Text = order.LVCode;
-                cbIsEDM.Checked = (bool)order.IsEdm;
-                _shipmentOrder.LvOrderId = order.LVID;
+                cbIsEDM.Checked = (bool)order.IsEDM;
+                _shipmentOrder.LvOrderId = order.Id;
                 int? DepositorLVId = _shipment.DepositorId;
                 _shipmentOrder.IsBinding = true;
-                LVOrder_Manager Order_Manager = new LVOrder_Manager();
-
-                var OrderParts = Order_Manager.GetList(DepositorLVId, 0, 0, order.LVID);
+                LvSelectOrderRepository lvSelectOrderRepository = new LvSelectOrderRepository();
+                List<LvSelectOrder> OrderParts = lvSelectOrderRepository.GetAll(0,0,DepositorLVId, order.Id,0);
+                
                 if (OrderParts.Count() == 1)
                 {
-                    LVOrder lVOrder = OrderParts.FirstOrDefault();
-                    Planning.DataLayer.ShipmentOrderPart orderPart = new Planning.DataLayer.ShipmentOrderPart();                    
+                    LvSelectOrder lVOrder = OrderParts.FirstOrDefault();
+                    ShipmentOrderPart orderPart = new ShipmentOrderPart();                    
                     orderPart.OsLvId = lVOrder.OstID;
                     orderPart.OsLvCode = lVOrder.OstCode;
                     orderPart.ShOrderId = _shipmentOrder.Id;
