@@ -153,6 +153,9 @@ namespace Planning
 
             ToolTip btnGetNextDayToolTip = new ToolTip();
             btnGetNextDayToolTip.SetToolTip(btnGetNextDay, "Следующий день");
+
+            ToolTip btnSearchExToolTip = new ToolTip();
+            btnSearchExToolTip.SetToolTip(btnSearchEx, "Поиск по параметрам");
         }
 
 
