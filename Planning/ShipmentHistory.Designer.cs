@@ -50,31 +50,6 @@ namespace Planning
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.tblShipmentLog = new System.Windows.Forms.DataGridView();
-            this.tblShipmentItemLog = new System.Windows.Forms.DataGridView();
-            this.colShpItemDmlDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDmlTypeName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colShpItemDmlCompName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colShpItemUserName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colShpItemOrderId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colShpItemOrderType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colShpItemComment = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colShpItemManualLoad = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colShpItemManualUnload = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colShpItemPalletAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colShpItemIsBinding = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.colShpItemDmlType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colItemBackgroundColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.tbPrint = new System.Windows.Forms.ToolStripButton();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.tblMovementItemLog = new System.Windows.Forms.DataGridView();
-            this.colMvmItemDmlDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colMvmItemDmlTypeName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colMvmItemDmlCompName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colMvmItemDmlUser = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colMvmItemId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colMvmntDmlTypeId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDmlDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDmlType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDmlCompName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -104,6 +79,31 @@ namespace Planning
             this.colDmlTypeId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.BackgroundColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colShpIn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tblShipmentItemLog = new System.Windows.Forms.DataGridView();
+            this.colShpItemDmlDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDmlTypeName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colShpItemDmlCompName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colShpItemUserName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colShpItemOrderId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colShpItemOrderType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colShpItemComment = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colShpItemManualLoad = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colShpItemManualUnload = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colShpItemPalletAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colShpItemIsBinding = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.colShpItemDmlType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colItemBackgroundColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.tbPrint = new System.Windows.Forms.ToolStripButton();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.tblMovementItemLog = new System.Windows.Forms.DataGridView();
+            this.colMvmItemDmlDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMvmItemDmlTypeName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMvmItemDmlCompName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMvmItemDmlUser = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMvmItemId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMvmntDmlTypeId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pnFilter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tblShipmentLog)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tblShipmentItemLog)).BeginInit();
@@ -164,6 +164,7 @@ namespace Planning
             this.cmbShpType.Name = "cmbShpType";
             this.cmbShpType.Size = new System.Drawing.Size(153, 21);
             this.cmbShpType.TabIndex = 4;
+            this.cmbShpType.SelectedIndexChanged += new System.EventHandler(this.cmbShpType_SelectedIndexChanged);
             // 
             // lbUser
             // 
@@ -288,6 +289,224 @@ namespace Planning
             this.tblShipmentLog.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.tblShipmentLog_CellPainting);
             this.tblShipmentLog.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.tblShipmentLog_RowPrePaint);
             this.tblShipmentLog.SelectionChanged += new System.EventHandler(this.tblShipmentLog_SelectionChanged);
+            // 
+            // colDmlDate
+            // 
+            this.colDmlDate.DataPropertyName = "dml_date";
+            this.colDmlDate.HeaderText = "Дата изменения";
+            this.colDmlDate.Name = "colDmlDate";
+            this.colDmlDate.ReadOnly = true;
+            this.colDmlDate.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colDmlDate.Width = 120;
+            // 
+            // colDmlType
+            // 
+            this.colDmlType.DataPropertyName = "dml_type_name";
+            this.colDmlType.HeaderText = "Тип изменения";
+            this.colDmlType.Name = "colDmlType";
+            this.colDmlType.ReadOnly = true;
+            this.colDmlType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // colDmlCompName
+            // 
+            this.colDmlCompName.DataPropertyName = "dml_comp_name";
+            this.colDmlCompName.HeaderText = "Имя компьютера";
+            this.colDmlCompName.Name = "colDmlCompName";
+            this.colDmlCompName.ReadOnly = true;
+            this.colDmlCompName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // colDmlUserName
+            // 
+            this.colDmlUserName.DataPropertyName = "dml_user_name";
+            this.colDmlUserName.HeaderText = "Имя пользователя";
+            this.colDmlUserName.Name = "colDmlUserName";
+            this.colDmlUserName.ReadOnly = true;
+            this.colDmlUserName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // colShpId
+            // 
+            this.colShpId.DataPropertyName = "shipment_id";
+            this.colShpId.HeaderText = "ID. погр";
+            this.colShpId.Name = "colShpId";
+            this.colShpId.ReadOnly = true;
+            this.colShpId.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // colShpDate
+            // 
+            this.colShpDate.DataPropertyName = "s_date";
+            this.colShpDate.HeaderText = "Дата";
+            this.colShpDate.Name = "colShpDate";
+            this.colShpDate.ReadOnly = true;
+            this.colShpDate.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colShpDate.Width = 120;
+            // 
+            // colShpSlotType
+            // 
+            this.colShpSlotType.DataPropertyName = "SlotTime";
+            this.colShpSlotType.HeaderText = "Время";
+            this.colShpSlotType.Name = "colShpSlotType";
+            this.colShpSlotType.ReadOnly = true;
+            this.colShpSlotType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colShpSlotType.Width = 120;
+            // 
+            // colShpType
+            // 
+            this.colShpType.DataPropertyName = "InOut";
+            this.colShpType.HeaderText = "Напр.";
+            this.colShpType.Name = "colShpType";
+            this.colShpType.ReadOnly = true;
+            this.colShpType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // colShpComment
+            // 
+            this.colShpComment.DataPropertyName = "s_comment";
+            this.colShpComment.HeaderText = "Комментарий к отгрузке";
+            this.colShpComment.Name = "colShpComment";
+            this.colShpComment.ReadOnly = true;
+            // 
+            // colGateName
+            // 
+            this.colGateName.DataPropertyName = "gate_name";
+            this.colGateName.HeaderText = "Ворота";
+            this.colGateName.Name = "colGateName";
+            this.colGateName.ReadOnly = true;
+            // 
+            // colShpSpCondition
+            // 
+            this.colShpSpCondition.DataPropertyName = "sp_condition";
+            this.colShpSpCondition.HeaderText = "Спец. условия";
+            this.colShpSpCondition.Name = "colShpSpCondition";
+            this.colShpSpCondition.ReadOnly = true;
+            this.colShpSpCondition.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colShpSpCondition.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // colShpDriverPhone
+            // 
+            this.colShpDriverPhone.DataPropertyName = "driver_phone";
+            this.colShpDriverPhone.HeaderText = "Телефон водителя";
+            this.colShpDriverPhone.Name = "colShpDriverPhone";
+            this.colShpDriverPhone.ReadOnly = true;
+            // 
+            // colShpDriverFIO
+            // 
+            this.colShpDriverFIO.DataPropertyName = "driver_fio";
+            this.colShpDriverFIO.HeaderText = "ФИО водителя";
+            this.colShpDriverFIO.Name = "colShpDriverFIO";
+            this.colShpDriverFIO.ReadOnly = true;
+            // 
+            // colShpTransportCompanyName
+            // 
+            this.colShpTransportCompanyName.DataPropertyName = "transport_company_name";
+            this.colShpTransportCompanyName.HeaderText = "Транспортная компания";
+            this.colShpTransportCompanyName.Name = "colShpTransportCompanyName";
+            this.colShpTransportCompanyName.ReadOnly = true;
+            // 
+            // colShpTransportTypeName
+            // 
+            this.colShpTransportTypeName.DataPropertyName = "transport_type_name";
+            this.colShpTransportTypeName.HeaderText = "Марка ТС";
+            this.colShpTransportTypeName.Name = "colShpTransportTypeName";
+            this.colShpTransportTypeName.ReadOnly = true;
+            // 
+            // colShpVehicleNumber
+            // 
+            this.colShpVehicleNumber.DataPropertyName = "vehicle_number";
+            this.colShpVehicleNumber.HeaderText = "Номер ТС";
+            this.colShpVehicleNumber.Name = "colShpVehicleNumber";
+            this.colShpVehicleNumber.ReadOnly = true;
+            // 
+            // colShpTrailerNumber
+            // 
+            this.colShpTrailerNumber.DataPropertyName = "trailer_number";
+            this.colShpTrailerNumber.HeaderText = "Номер прицепа";
+            this.colShpTrailerNumber.Name = "colShpTrailerNumber";
+            this.colShpTrailerNumber.ReadOnly = true;
+            // 
+            // colStumpNumber
+            // 
+            this.colStumpNumber.DataPropertyName = "stamp_number";
+            this.colStumpNumber.HeaderText = "Номер пломбы";
+            this.colStumpNumber.Name = "colStumpNumber";
+            this.colStumpNumber.ReadOnly = true;
+            // 
+            // colShpAttorneyNumber
+            // 
+            this.colShpAttorneyNumber.DataPropertyName = "attorney_number";
+            this.colShpAttorneyNumber.HeaderText = "Номер доверенности";
+            this.colShpAttorneyNumber.Name = "colShpAttorneyNumber";
+            this.colShpAttorneyNumber.ReadOnly = true;
+            // 
+            // colShpAttorneyDate
+            // 
+            this.colShpAttorneyDate.DataPropertyName = "attorney_date";
+            this.colShpAttorneyDate.HeaderText = "Дата доверенности";
+            this.colShpAttorneyDate.Name = "colShpAttorneyDate";
+            this.colShpAttorneyDate.ReadOnly = true;
+            // 
+            // colShpSubmissionTime
+            // 
+            this.colShpSubmissionTime.DataPropertyName = "submission_time";
+            this.colShpSubmissionTime.HeaderText = "Время подачи документов";
+            this.colShpSubmissionTime.Name = "colShpSubmissionTime";
+            this.colShpSubmissionTime.ReadOnly = true;
+            // 
+            // colShpStartTime
+            // 
+            this.colShpStartTime.DataPropertyName = "start_time";
+            this.colShpStartTime.HeaderText = "Время начала";
+            this.colShpStartTime.Name = "colShpStartTime";
+            this.colShpStartTime.ReadOnly = true;
+            // 
+            // colShpEndTime
+            // 
+            this.colShpEndTime.DataPropertyName = "end_time";
+            this.colShpEndTime.HeaderText = "Время окончания";
+            this.colShpEndTime.Name = "colShpEndTime";
+            this.colShpEndTime.ReadOnly = true;
+            // 
+            // colShpLeaveTime
+            // 
+            this.colShpLeaveTime.DataPropertyName = "leave_time";
+            this.colShpLeaveTime.HeaderText = "Убытие по факту";
+            this.colShpLeaveTime.Name = "colShpLeaveTime";
+            this.colShpLeaveTime.ReadOnly = true;
+            // 
+            // colShpDelayReasonName
+            // 
+            this.colShpDelayReasonName.DataPropertyName = "delay_reason_name";
+            this.colShpDelayReasonName.HeaderText = "Причина опоздания";
+            this.colShpDelayReasonName.Name = "colShpDelayReasonName";
+            this.colShpDelayReasonName.ReadOnly = true;
+            // 
+            // colShpDelayComment
+            // 
+            this.colShpDelayComment.DataPropertyName = "delay_comment";
+            this.colShpDelayComment.HeaderText = "Комметарий по опозданию";
+            this.colShpDelayComment.Name = "colShpDelayComment";
+            this.colShpDelayComment.ReadOnly = true;
+            // 
+            // colDmlTypeId
+            // 
+            this.colDmlTypeId.DataPropertyName = "dml_type";
+            this.colDmlTypeId.HeaderText = "colDmlTypeId";
+            this.colDmlTypeId.Name = "colDmlTypeId";
+            this.colDmlTypeId.ReadOnly = true;
+            this.colDmlTypeId.Visible = false;
+            // 
+            // BackgroundColor
+            // 
+            this.BackgroundColor.DataPropertyName = "BackgroundColor";
+            this.BackgroundColor.HeaderText = "BackgroundColor";
+            this.BackgroundColor.Name = "BackgroundColor";
+            this.BackgroundColor.ReadOnly = true;
+            this.BackgroundColor.Visible = false;
+            // 
+            // colShpIn
+            // 
+            this.colShpIn.DataPropertyName = "s_in";
+            this.colShpIn.HeaderText = "colShpIn";
+            this.colShpIn.Name = "colShpIn";
+            this.colShpIn.ReadOnly = true;
             // 
             // tblShipmentItemLog
             // 
@@ -571,224 +790,6 @@ namespace Planning
             this.colMvmntDmlTypeId.Name = "colMvmntDmlTypeId";
             this.colMvmntDmlTypeId.ReadOnly = true;
             this.colMvmntDmlTypeId.Visible = false;
-            // 
-            // colDmlDate
-            // 
-            this.colDmlDate.DataPropertyName = "dml_date";
-            this.colDmlDate.HeaderText = "Дата изменения";
-            this.colDmlDate.Name = "colDmlDate";
-            this.colDmlDate.ReadOnly = true;
-            this.colDmlDate.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.colDmlDate.Width = 120;
-            // 
-            // colDmlType
-            // 
-            this.colDmlType.DataPropertyName = "dml_type_name";
-            this.colDmlType.HeaderText = "Тип изменения";
-            this.colDmlType.Name = "colDmlType";
-            this.colDmlType.ReadOnly = true;
-            this.colDmlType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // colDmlCompName
-            // 
-            this.colDmlCompName.DataPropertyName = "dml_comp_name";
-            this.colDmlCompName.HeaderText = "Имя компьютера";
-            this.colDmlCompName.Name = "colDmlCompName";
-            this.colDmlCompName.ReadOnly = true;
-            this.colDmlCompName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // colDmlUserName
-            // 
-            this.colDmlUserName.DataPropertyName = "dml_user_name";
-            this.colDmlUserName.HeaderText = "Имя пользователя";
-            this.colDmlUserName.Name = "colDmlUserName";
-            this.colDmlUserName.ReadOnly = true;
-            this.colDmlUserName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // colShpId
-            // 
-            this.colShpId.DataPropertyName = "shipment_id";
-            this.colShpId.HeaderText = "ID. погр";
-            this.colShpId.Name = "colShpId";
-            this.colShpId.ReadOnly = true;
-            this.colShpId.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // colShpDate
-            // 
-            this.colShpDate.DataPropertyName = "s_date";
-            this.colShpDate.HeaderText = "Дата";
-            this.colShpDate.Name = "colShpDate";
-            this.colShpDate.ReadOnly = true;
-            this.colShpDate.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.colShpDate.Width = 120;
-            // 
-            // colShpSlotType
-            // 
-            this.colShpSlotType.DataPropertyName = "SlotTime";
-            this.colShpSlotType.HeaderText = "Время";
-            this.colShpSlotType.Name = "colShpSlotType";
-            this.colShpSlotType.ReadOnly = true;
-            this.colShpSlotType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.colShpSlotType.Width = 120;
-            // 
-            // colShpType
-            // 
-            this.colShpType.DataPropertyName = "InOut";
-            this.colShpType.HeaderText = "Напр.";
-            this.colShpType.Name = "colShpType";
-            this.colShpType.ReadOnly = true;
-            this.colShpType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // colShpComment
-            // 
-            this.colShpComment.DataPropertyName = "s_comment";
-            this.colShpComment.HeaderText = "Комментарий к отгрузке";
-            this.colShpComment.Name = "colShpComment";
-            this.colShpComment.ReadOnly = true;
-            // 
-            // colGateName
-            // 
-            this.colGateName.DataPropertyName = "gate_name";
-            this.colGateName.HeaderText = "Ворота";
-            this.colGateName.Name = "colGateName";
-            this.colGateName.ReadOnly = true;
-            // 
-            // colShpSpCondition
-            // 
-            this.colShpSpCondition.DataPropertyName = "sp_condition";
-            this.colShpSpCondition.HeaderText = "Спец. условия";
-            this.colShpSpCondition.Name = "colShpSpCondition";
-            this.colShpSpCondition.ReadOnly = true;
-            this.colShpSpCondition.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colShpSpCondition.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // colShpDriverPhone
-            // 
-            this.colShpDriverPhone.DataPropertyName = "driver_phone";
-            this.colShpDriverPhone.HeaderText = "Телефон водителя";
-            this.colShpDriverPhone.Name = "colShpDriverPhone";
-            this.colShpDriverPhone.ReadOnly = true;
-            // 
-            // colShpDriverFIO
-            // 
-            this.colShpDriverFIO.DataPropertyName = "driver_fio";
-            this.colShpDriverFIO.HeaderText = "ФИО водителя";
-            this.colShpDriverFIO.Name = "colShpDriverFIO";
-            this.colShpDriverFIO.ReadOnly = true;
-            // 
-            // colShpTransportCompanyName
-            // 
-            this.colShpTransportCompanyName.DataPropertyName = "transport_company_name";
-            this.colShpTransportCompanyName.HeaderText = "Транспортная компания";
-            this.colShpTransportCompanyName.Name = "colShpTransportCompanyName";
-            this.colShpTransportCompanyName.ReadOnly = true;
-            // 
-            // colShpTransportTypeName
-            // 
-            this.colShpTransportTypeName.DataPropertyName = "transport_type_name";
-            this.colShpTransportTypeName.HeaderText = "Марка ТС";
-            this.colShpTransportTypeName.Name = "colShpTransportTypeName";
-            this.colShpTransportTypeName.ReadOnly = true;
-            // 
-            // colShpVehicleNumber
-            // 
-            this.colShpVehicleNumber.DataPropertyName = "vehicle_number";
-            this.colShpVehicleNumber.HeaderText = "Номер ТС";
-            this.colShpVehicleNumber.Name = "colShpVehicleNumber";
-            this.colShpVehicleNumber.ReadOnly = true;
-            // 
-            // colShpTrailerNumber
-            // 
-            this.colShpTrailerNumber.DataPropertyName = "trailer_number";
-            this.colShpTrailerNumber.HeaderText = "Номер прицепа";
-            this.colShpTrailerNumber.Name = "colShpTrailerNumber";
-            this.colShpTrailerNumber.ReadOnly = true;
-            // 
-            // colStumpNumber
-            // 
-            this.colStumpNumber.DataPropertyName = "stamp_number";
-            this.colStumpNumber.HeaderText = "Номер пломбы";
-            this.colStumpNumber.Name = "colStumpNumber";
-            this.colStumpNumber.ReadOnly = true;
-            // 
-            // colShpAttorneyNumber
-            // 
-            this.colShpAttorneyNumber.DataPropertyName = "attorney_number";
-            this.colShpAttorneyNumber.HeaderText = "Номер доверенности";
-            this.colShpAttorneyNumber.Name = "colShpAttorneyNumber";
-            this.colShpAttorneyNumber.ReadOnly = true;
-            // 
-            // colShpAttorneyDate
-            // 
-            this.colShpAttorneyDate.DataPropertyName = "attorney_date";
-            this.colShpAttorneyDate.HeaderText = "Дата доверенности";
-            this.colShpAttorneyDate.Name = "colShpAttorneyDate";
-            this.colShpAttorneyDate.ReadOnly = true;
-            // 
-            // colShpSubmissionTime
-            // 
-            this.colShpSubmissionTime.DataPropertyName = "submission_time";
-            this.colShpSubmissionTime.HeaderText = "Время подачи документов";
-            this.colShpSubmissionTime.Name = "colShpSubmissionTime";
-            this.colShpSubmissionTime.ReadOnly = true;
-            // 
-            // colShpStartTime
-            // 
-            this.colShpStartTime.DataPropertyName = "start_time";
-            this.colShpStartTime.HeaderText = "Время начала";
-            this.colShpStartTime.Name = "colShpStartTime";
-            this.colShpStartTime.ReadOnly = true;
-            // 
-            // colShpEndTime
-            // 
-            this.colShpEndTime.DataPropertyName = "end_time";
-            this.colShpEndTime.HeaderText = "Время окончания";
-            this.colShpEndTime.Name = "colShpEndTime";
-            this.colShpEndTime.ReadOnly = true;
-            // 
-            // colShpLeaveTime
-            // 
-            this.colShpLeaveTime.DataPropertyName = "leave_time";
-            this.colShpLeaveTime.HeaderText = "Убытие по факту";
-            this.colShpLeaveTime.Name = "colShpLeaveTime";
-            this.colShpLeaveTime.ReadOnly = true;
-            // 
-            // colShpDelayReasonName
-            // 
-            this.colShpDelayReasonName.DataPropertyName = "delay_reason_name";
-            this.colShpDelayReasonName.HeaderText = "Причина опоздания";
-            this.colShpDelayReasonName.Name = "colShpDelayReasonName";
-            this.colShpDelayReasonName.ReadOnly = true;
-            // 
-            // colShpDelayComment
-            // 
-            this.colShpDelayComment.DataPropertyName = "delay_comment";
-            this.colShpDelayComment.HeaderText = "Комметарий по опозданию";
-            this.colShpDelayComment.Name = "colShpDelayComment";
-            this.colShpDelayComment.ReadOnly = true;
-            // 
-            // colDmlTypeId
-            // 
-            this.colDmlTypeId.DataPropertyName = "dml_type";
-            this.colDmlTypeId.HeaderText = "colDmlTypeId";
-            this.colDmlTypeId.Name = "colDmlTypeId";
-            this.colDmlTypeId.ReadOnly = true;
-            this.colDmlTypeId.Visible = false;
-            // 
-            // BackgroundColor
-            // 
-            this.BackgroundColor.DataPropertyName = "BackgroundColor";
-            this.BackgroundColor.HeaderText = "BackgroundColor";
-            this.BackgroundColor.Name = "BackgroundColor";
-            this.BackgroundColor.ReadOnly = true;
-            this.BackgroundColor.Visible = false;
-            // 
-            // colShpIn
-            // 
-            this.colShpIn.DataPropertyName = "s_in";
-            this.colShpIn.HeaderText = "colShpIn";
-            this.colShpIn.Name = "colShpIn";
-            this.colShpIn.ReadOnly = true;
             // 
             // frmShipmentHistory
             // 

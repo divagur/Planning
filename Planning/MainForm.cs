@@ -2052,6 +2052,7 @@ namespace Planning
         {
             if (IsFormLoad)
                 return;
+            
             var col = shipmentColumns.Find(c => c.Id == e.Column.Name);
             if (col == null)
             {

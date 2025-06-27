@@ -64,7 +64,8 @@ namespace Planning
             int currColorIdx = 0;
             for (int i = 0; i < tblShipmentLog.Rows.Count; i++)
             {
-                cellShpId = (int)(tblShipmentLog).Rows[i].Cells["colShpId"].Value;
+                object cellValue = (tblShipmentLog).Rows[i].Cells["colShpId"].Value;
+                cellShpId = cellValue == null?0:(int)cellValue;
                 if (cellLastShpId != cellShpId)
                 {
                     cellLastShpId = cellShpId;
@@ -501,6 +502,11 @@ namespace Planning
                 else if (tblMovementItemLog.Rows[e.RowIndex].Cells["colMvmntDmlTypeId"].Value.ToString() == "D")
                     e.Value = "Удаление";
             }
+        }
+
+        private void cmbShpType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
