@@ -24,6 +24,7 @@ using Rectangle = System.Drawing.Rectangle;
 using Font = System.Drawing.Font;
 using Point = System.Drawing.Point;
 using SpreadsheetLight;
+using DocumentFormat.OpenXml.Packaging;
 
 
 namespace Planning
@@ -43,6 +44,7 @@ namespace Planning
         public static extern bool ReleaseCapture();
         string CR = Environment.NewLine;
         List<string> hideCols;
+        List<ShipmentColumn> shipmentColumns = new List<ShipmentColumn>();
         private List<Color> rowColors = new List<Color>()
         {
           Color.FromArgb(220, 220, 220),
@@ -52,7 +54,8 @@ namespace Planning
         List<ShipmentMain> _shipmentMainList;
         List<UserFunctionPrvlg> UserPrvlgs= new List<UserFunctionPrvlg>();
         UserFunctionPrvlg mainFormPrvlg = new UserFunctionPrvlg();
-        private bool isPaint = true;
+        bool isPaint = true;
+        bool IsFormLoad = false;
 
         public MainFormEx()
         {
@@ -61,8 +64,8 @@ namespace Planning
 
         private void MainFormEx_Load(object sender, EventArgs e)
         {
-            
 
+            IsFormLoad = true;
             Init();
             Connect();
             statusInfo.Text = $"База данных:[{Common.PlanningConfig.BaseName}] Пользователь: [{Common.setting.LastLogin}]";
@@ -75,9 +78,10 @@ namespace Planning
             SetupButtons();
             PopulateWarehouseFilter();
             ShipmentsLoad();
+            SetColumnsParam();
             tblShipments.DrawSubItem += TblShipments_DrawSubItem;
             cbPaint.Checked = isPaint;
-
+            IsFormLoad = false;
 
         }
 
@@ -89,6 +93,37 @@ namespace Planning
             e.DrawText();
         }
 
+        private void SetColumnsParam()
+        {
+            shipmentColumns = Common.settingsHandle.GetParamList<ShipmentColumn>("View\\ShipmentColumns");
+            if (shipmentColumns.Count == 0)
+            {
+                foreach (ColumnHeader col in tblShipments.Columns)
+                {
+                    
+                    shipmentColumns.Add(new ShipmentColumn() { Id = col.Name, Order = col.DisplayIndex });
+                }
+            }
+
+            foreach (ColumnHeader col in tblShipments.Columns)
+            {
+                var shpCol = shipmentColumns.FirstOrDefault(c => c.Id == col.Name);
+                if (col.Name == "colOrderDetail")
+                {
+                    col.DisplayIndex = 0;
+                }
+                else if (col.Name == "col")
+                {
+                    col.DisplayIndex = 1;
+                }
+
+                else if (shpCol != null)
+                {
+                    col.DisplayIndex = shpCol.Order;
+                }
+            }
+
+        }
         private void SetupColumns()
         {
 
@@ -1909,6 +1944,27 @@ namespace Planning
         {
             frmSearch frmSearch = new frmSearch(edCurrDay.Value);
             AddFormTab(frmSearch, "Расширенный поиск");
+        }
+
+        private void lbMainFormCaption_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tblShipments_ColumnReordered(object sender, ColumnReorderedEventArgs e)
+        {
+            if (IsFormLoad)
+                return;
+            ColumnHeader column = tblShipments.Columns[e.OldDisplayIndex];
+            var col = shipmentColumns.Find(c => c.Id == column.Name);
+            if (col == null)
+            {
+                col = new ShipmentColumn() { Id = column.Name, Visible = true };
+                shipmentColumns.Add(col);
+            }
+            
+            col.Order = e.NewDisplayIndex;
+            Common.settingsHandle.SetParamList<ShipmentColumn>("View\\ShipmentColumns", "ShipmentColumns", shipmentColumns);
         }
     }
 }

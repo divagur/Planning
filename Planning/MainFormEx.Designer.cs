@@ -33,9 +33,9 @@ namespace Planning
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainFormEx));
-            BrightIdeasSoftware.HeaderStateStyle headerStateStyle4 = new BrightIdeasSoftware.HeaderStateStyle();
-            BrightIdeasSoftware.HeaderStateStyle headerStateStyle5 = new BrightIdeasSoftware.HeaderStateStyle();
-            BrightIdeasSoftware.HeaderStateStyle headerStateStyle6 = new BrightIdeasSoftware.HeaderStateStyle();
+            BrightIdeasSoftware.HeaderStateStyle headerStateStyle1 = new BrightIdeasSoftware.HeaderStateStyle();
+            BrightIdeasSoftware.HeaderStateStyle headerStateStyle2 = new BrightIdeasSoftware.HeaderStateStyle();
+            BrightIdeasSoftware.HeaderStateStyle headerStateStyle3 = new BrightIdeasSoftware.HeaderStateStyle();
             this.menuMain = new System.Windows.Forms.MenuStrip();
             this.mtiFile = new System.Windows.Forms.ToolStripMenuItem();
             this.miSettings = new System.Windows.Forms.ToolStripMenuItem();
@@ -551,6 +551,7 @@ namespace Planning
             this.tblShipments.View = System.Windows.Forms.View.Details;
             this.tblShipments.ButtonClick += new System.EventHandler<BrightIdeasSoftware.CellClickEventArgs>(this.tblShipments_ButtonClick);
             this.tblShipments.FormatRow += new System.EventHandler<BrightIdeasSoftware.FormatRowEventArgs>(this.tblShipments_FormatRow);
+            this.tblShipments.ColumnReordered += new System.Windows.Forms.ColumnReorderedEventHandler(this.tblShipments_ColumnReordered);
             this.tblShipments.DoubleClick += new System.EventHandler(this.tblShipments_DoubleClick);
             // 
             // colOrderDetail
@@ -1237,10 +1238,10 @@ namespace Planning
             // 
             // headerFormatStyle1
             // 
-            this.headerFormatStyle1.Hot = headerStateStyle4;
-            headerStateStyle5.FrameWidth = 2F;
-            this.headerFormatStyle1.Normal = headerStateStyle5;
-            this.headerFormatStyle1.Pressed = headerStateStyle6;
+            this.headerFormatStyle1.Hot = headerStateStyle1;
+            headerStateStyle2.FrameWidth = 2F;
+            this.headerFormatStyle1.Normal = headerStateStyle2;
+            this.headerFormatStyle1.Pressed = headerStateStyle3;
             // 
             // imageListInOut
             // 
@@ -1307,6 +1308,7 @@ namespace Planning
             this.lbMainFormCaption.TabIndex = 1;
             this.lbMainFormCaption.Text = "Planning";
             this.lbMainFormCaption.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lbMainFormCaption.Click += new System.EventHandler(this.lbMainFormCaption_Click);
             this.lbMainFormCaption.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.panelFormHeader_MouseDoubleClick);
             this.lbMainFormCaption.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panelFormHeader_MouseMove);
             // 
