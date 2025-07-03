@@ -261,6 +261,9 @@
     <Compile Include="Dicts\GateFormEdit.Designer.cs">
       <DependentUpon>GateFormEdit.cs</DependentUpon>
     </Compile>
+    <Compile Include="GridRender.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="IItemPrivilege.cs" />
     <Compile Include="IWait.cs" />
     <Compile Include="MainFormEx.cs">

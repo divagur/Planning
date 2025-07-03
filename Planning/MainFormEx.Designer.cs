@@ -182,6 +182,8 @@ namespace Planning
             this.btnMaximizeWindow = new System.Windows.Forms.Button();
             this.btnCloseWindow = new System.Windows.Forms.Button();
             this.tmUpdate = new System.Windows.Forms.Timer(this.components);
+            this.simpleItemStyle1 = new BrightIdeasSoftware.SimpleItemStyle();
+            this.baseRenderer1 = new BrightIdeasSoftware.BaseRenderer();
             this.menuMain.SuspendLayout();
             this.statusStrip2.SuspendLayout();
             this.tabForms.SuspendLayout();
@@ -487,7 +489,7 @@ namespace Planning
             this.tblShipments.AllColumns.Add(this.colOrdLvId);
             this.tblShipments.AllColumns.Add(this.olvRowNumberRange);
             this.tblShipments.AllowColumnReorder = true;
-            this.tblShipments.AlternateRowBackColor = System.Drawing.SystemColors.Window;
+            this.tblShipments.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tblShipments.CellEditUseWholeCell = false;
             this.tblShipments.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.colOrderDetail,
@@ -1786,5 +1788,7 @@ namespace Planning
         private System.Windows.Forms.ToolStripMenuItem menuItemCalcOrderVolume;
         private System.Windows.Forms.ToolStripMenuItem menuItemCurrentTask;
         private System.Windows.Forms.Button btnSearchEx;
+        private BrightIdeasSoftware.SimpleItemStyle simpleItemStyle1;
+        private BrightIdeasSoftware.BaseRenderer baseRenderer1;
     }
 }

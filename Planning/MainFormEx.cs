@@ -80,6 +80,7 @@ namespace Planning
             ShipmentsLoad();
             SetColumnsParam();
             tblShipments.DrawSubItem += TblShipments_DrawSubItem;
+            
             cbPaint.Checked = isPaint;
             IsFormLoad = false;
 
@@ -88,7 +89,7 @@ namespace Planning
         private void TblShipments_DrawSubItem(object sender, DrawListViewSubItemEventArgs e)
         {
             e.DrawDefault = false;
-            Pen p = new Pen(Color.Gray);
+            Pen p = new Pen(Color.Red);
             e.Graphics.DrawRectangle(p, e.Bounds);
             e.DrawText();
         }
@@ -140,6 +141,8 @@ namespace Planning
                 "Out", Resources.ShpOut,
                 "Move", Resources.ShpMove
             });
+
+            this.colDate.Renderer = new GridRender();
 
         }
         private void SetupButtons()
@@ -1965,6 +1968,11 @@ namespace Planning
             
             col.Order = e.NewDisplayIndex;
             Common.settingsHandle.SetParamList<ShipmentColumn>("View\\ShipmentColumns", "ShipmentColumns", shipmentColumns);
+        }
+
+        private void tblShipments_FormatCell(object sender, FormatCellEventArgs e)
+        {
+            
         }
     }
 }
