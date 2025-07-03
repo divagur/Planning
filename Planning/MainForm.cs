@@ -1358,8 +1358,23 @@ namespace Planning
                 range.Font.Bold = false;
                 range.VerticalAlignment = Excel.XlVAlign.xlVAlignTop;
                 range.WrapText = true;
-                excel.SetValue(1, 2, commentRow, printRows[0]["ShpComment"]);
 
+                StringBuilder comment = new StringBuilder();
+                foreach (var order in shipment.ShipmentOrders)
+                {
+                    if (!String.IsNullOrEmpty(order.Comment))
+                    {
+                        comment.AppendLine($"{order.lv_order_code}:{order.Comment}");
+                    }
+                    
+                }
+                //printRows[0]["ShpComment"]
+                string commentLine = comment.ToString();
+                if (!String.IsNullOrEmpty(commentLine))
+                {
+                    excel.SetValue(1, 2, commentRow, commentLine);
+                    excel.SetCellFontStyle(1, 2, commentRow, 2, commentRow, true, false, false);
+                }
                 range = excel.SelectCells(1, 1, 17 + printRows.Count() + 2, 6, 17 + printRows.Count() + 6);
                 range.Borders.Item[Excel.XlBordersIndex.xlEdgeLeft].Weight = Excel.XlBorderWeight.xlMedium;
                 range.Borders.Item[Excel.XlBordersIndex.xlEdgeTop].Weight = Excel.XlBorderWeight.xlMedium;

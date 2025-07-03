@@ -108,10 +108,12 @@ namespace Planning
                 var order = (LVOrder)selectResult.Result;
 
                 txtOrderId.Text = order.LVCode;
+                txtOrderComment.Text = order.WarehouseComment;
                 cbIsEDM.Checked = (bool)order.IsEdm;
                 _shipmentOrder.LVOrderId = order.LVID;
                 int? DepositorLVId = _shipment.DepositorId;
                 _shipmentOrder.IsBinding = true;
+                _shipment.SComment = _shipment.SComment.Trim() + Environment.NewLine + order.OperatorComment;// 
                 LVOrder_Manager Order_Manager = new LVOrder_Manager();
 
                 var OrderParts = Order_Manager.GetList(DepositorLVId, 0, 0, order.LVID);

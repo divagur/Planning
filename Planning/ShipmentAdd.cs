@@ -94,6 +94,8 @@ namespace Planning
 
                     tblOrders.Rows[Row].Cells[6].Value = sqlRow[6];
                     tblOrders.Rows[Row].Cells[7].Value = sqlRow[8];
+                    tblOrders.Rows[Row].Cells[8].Value = sqlRow[9];
+                    tblOrders.Rows[Row].Cells[9].Value = sqlRow[10];
                 } 
 
             }
@@ -184,7 +186,7 @@ namespace Planning
                 //bool isAddLv = false;
                 _shipment.TransportViewId = GetTransportViewId(DataService.setting.DefaultTransportViewName);
                 _shipment.WarehouseId = GetWarehouseId(DataService.setting.DefaultWarehouseCode);
-
+                StringBuilder shipmentComment = new StringBuilder();
                 for (int i = 0; i < tblShipmentItem.RowCount; i++)
                 {
 
@@ -193,6 +195,7 @@ namespace Planning
                     var lvOrderId = int.Parse(tblShipmentItem.Rows[i].Cells["colLVOrdId"].Value.ToString());
                     
                     ShipmentOrder shipmentOrder = _shipment.ShipmentOrders.FirstOrDefault(o => o.LVOrderId == lvOrderId);
+                    
                     if (shipmentOrder == null)
                     {
                         shipmentOrder = new ShipmentOrder();
@@ -202,6 +205,8 @@ namespace Planning
                         shipmentOrder.IsEdm = !String.IsNullOrEmpty(tblShipmentItem.Rows[i].Cells["colItemIsEDM"].Value.ToString()) ?
                                 (bool?)tblShipmentItem.Rows[i].Cells["colItemIsEDM"].Value : null;
                         shipmentOrder.IsBinding = true;
+                        shipmentOrder.Comment = (string)tblShipmentItem.Rows[i].Cells["colItemWarehouseComment"].Value;
+                        shipmentComment.AppendLine((string)tblShipmentItem.Rows[i].Cells["colItemOperatorComment"].Value);
                         //isAddLv = true;
                         _shipment.ShipmentOrders.Add(shipmentOrder);
                     }
@@ -217,7 +222,7 @@ namespace Planning
                     //}
                    
                 }
-                
+                _shipment.SComment = shipmentComment.ToString();
                 _shipmentAddResult.Result = _shipment;
                 _context.Shipments.Add(_shipment);
             }

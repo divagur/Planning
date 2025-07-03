@@ -510,6 +510,7 @@ namespace Planning
                 BindOrderPart(shipmentOrder.Id);
             }
             //row["shipment_id"] =_shipment.id;
+            edShipmentComment.Text = _shipment.SComment;
         }
 
         private void tbtnEdit_Click(object sender, EventArgs e)

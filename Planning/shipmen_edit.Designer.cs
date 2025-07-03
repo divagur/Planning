@@ -191,9 +191,9 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(7, 116);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(141, 13);
+            this.label2.Size = new System.Drawing.Size(160, 13);
             this.label2.TabIndex = 1;
-            this.label2.Text = "Комментарий по погрузке";
+            this.label2.Text = "Комментарий для операторов";
             // 
             // label3
             // 
@@ -223,11 +223,11 @@
             // 
             // edShipmentComment
             // 
-            this.edShipmentComment.Location = new System.Drawing.Point(150, 116);
+            this.edShipmentComment.Location = new System.Drawing.Point(173, 116);
             this.edShipmentComment.MaxLength = 500;
             this.edShipmentComment.Multiline = true;
             this.edShipmentComment.Name = "edShipmentComment";
-            this.edShipmentComment.Size = new System.Drawing.Size(634, 61);
+            this.edShipmentComment.Size = new System.Drawing.Size(611, 61);
             this.edShipmentComment.TabIndex = 2;
             // 
             // cmbDelayReasons
@@ -745,7 +745,7 @@
             // colOrderComment
             // 
             this.colOrderComment.DataPropertyName = "Comment";
-            this.colOrderComment.HeaderText = "Комментарий по заказу";
+            this.colOrderComment.HeaderText = "Комментарий для склада";
             this.colOrderComment.Name = "colOrderComment";
             this.colOrderComment.ReadOnly = true;
             this.colOrderComment.Width = 300;
@@ -1331,7 +1331,7 @@
             // label23
             // 
             this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(5, 92);
+            this.label23.Location = new System.Drawing.Point(7, 92);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(38, 13);
             this.label23.TabIndex = 40;
@@ -1568,6 +1568,12 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colPartsId;
         private System.Windows.Forms.DataGridViewTextBoxColumn colPartsBindingId;
         private System.Windows.Forms.DataGridViewTextBoxColumn colPartsOstId;
+        private System.Windows.Forms.Panel pnDocTables;
+        private System.Windows.Forms.Panel pnDocHeader;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.ComboBox cmbTransportView;
+        private System.Windows.Forms.ComboBox cmbWarehouse;
         private System.Windows.Forms.DataGridViewTextBoxColumn colOrderId;
         private System.Windows.Forms.DataGridViewTextBoxColumn colOstCode;
         private System.Windows.Forms.DataGridViewTextBoxColumn colOrderType;
@@ -1581,11 +1587,5 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colBindingId;
         private System.Windows.Forms.DataGridViewTextBoxColumn colOstId;
         private System.Windows.Forms.DataGridViewTextBoxColumn colShipmentId;
-        private System.Windows.Forms.Panel pnDocTables;
-        private System.Windows.Forms.Panel pnDocHeader;
-        private System.Windows.Forms.Label label24;
-        private System.Windows.Forms.Label label23;
-        private System.Windows.Forms.ComboBox cmbTransportView;
-        private System.Windows.Forms.ComboBox cmbWarehouse;
     }
 }

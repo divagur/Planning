@@ -53,7 +53,8 @@ namespace Planning
                     object objOstCode = row[7].ToString();
                     order.IsEdm = row[8].ToString() == "Null" || string.IsNullOrEmpty(row[8].ToString()) ? false:(bool?)(bool.Parse(row[8].ToString()));
                     order.OstCode = objOstCode == null ? "" : (string)objOstCode;
-                    
+                    order.OperatorComment = row[9].ToString();
+                    order.WarehouseComment = row[10].ToString();
                     listLVOrder.Add(order);
                 }
                 /*
