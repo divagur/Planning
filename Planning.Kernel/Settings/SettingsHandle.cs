@@ -163,6 +163,18 @@ namespace Planning.Kernel
                     if (itemPropIdx < 0)
                         continue;
                     elemTypeProps[itemPropIdx].SetValue(listItem, Convert.ChangeType(nodeItemProp.InnerText, elemTypeProps[itemPropIdx].PropertyType));
+                    /*
+                    //string itemPropValue = nodeItemProp.InnerText.Replace(',','.');
+                    if (elemTypeProps[itemPropIdx].PropertyType is decimal)
+                    {
+                        //itemPropValue = itemPropValue.Replace(',', '.');
+                        elemTypeProps[itemPropIdx].SetValue(listItem, decimal.Parse(nodeItemProp.InnerText));
+                    }
+                    else
+                    {
+                        
+                    }
+                    */
                 }
 
                 list.Add(listItem);

@@ -33,13 +33,21 @@ namespace Planning.DataLayer
 
 
             List<PLAttribute> plAttrs = new List<PLAttribute>();
-
-            var queryResult = dbConnection.Query<PLAttribute>(sql, parameters, commandType: CommandType.StoredProcedure);
-            if (queryResult != null)
+            try
             {
-                plAttrs = queryResult.ToList();
+                var queryResult = dbConnection.Query<PLAttribute>(sql, parameters, commandType: CommandType.StoredProcedure);
+                if (queryResult != null)
+                {
+                    plAttrs = queryResult.ToList();
 
+                }
             }
+            catch (Exception ex)
+            {
+                LastError = ex.Message;
+                throw new Exception(ex.Message);
+            }
+
             return plAttrs;
         }
     }

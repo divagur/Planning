@@ -9,12 +9,49 @@ using Planning.Kernel;
 
 namespace Planning.DataLayer
 {
-    [Table("depositors")]
     public class Depositor: BaseDataItem
     {
-        
-        public string Name { get; set; }
-        public string LvBase { get; set; }
-        public Nullable<int> LvId { get; set; }
+        string _name;
+        string _lvBase;
+        int? _lvId;
+        public string Name
+        {
+            get => _name;
+            set
+            {
+                if (_name == null || !_name.Equals(value))
+                {
+                    _name = value;
+                    Edit();
+
+                }
+            }
+        }
+        public string LvBase
+        {
+            get => _lvBase;
+            set
+            {
+                if (_lvBase == null || !_lvBase.Equals(value))
+                {
+                    _lvBase = value;
+                    Edit();
+
+                }
+            }
+        }
+        public int? LvId
+        {
+            get => _lvId;
+            set
+            {
+                if (!_lvId.Equals(value))
+                {
+                    _lvId = value;
+                    Edit();
+
+                }
+            }
+        }
     }
 }

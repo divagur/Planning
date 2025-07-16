@@ -47,6 +47,8 @@
             this.colLVOrdId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colItemOstId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colItemIsEDM = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colItemOperatorComment = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colItemWarehouseComment = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel6 = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
             this.cmbTimeSlot = new System.Windows.Forms.ComboBox();
@@ -58,14 +60,6 @@
             this.btnFromShipment = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.tblOrders = new System.Windows.Forms.DataGridView();
-            this.panel5 = new System.Windows.Forms.Panel();
-            this.btnFind = new System.Windows.Forms.Button();
-            this.txtOrderId = new System.Windows.Forms.TextBox();
-            this.cmbType = new System.Windows.Forms.ComboBox();
-            this.cmbDepositor = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
             this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colOstCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colState = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -74,6 +68,16 @@
             this.colLVOrderId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colOstId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colIsEDM = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colOperatorComment = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colWarehouseComment = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.btnFind = new System.Windows.Forms.Button();
+            this.txtOrderId = new System.Windows.Forms.TextBox();
+            this.cmbType = new System.Windows.Forms.ComboBox();
+            this.cmbDepositor = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.pnlToolBar.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel4.SuspendLayout();
@@ -161,7 +165,9 @@
             this.colItemKlient,
             this.colLVOrdId,
             this.colItemOstId,
-            this.colItemIsEDM});
+            this.colItemIsEDM,
+            this.colItemOperatorComment,
+            this.colItemWarehouseComment});
             this.tblShipmentItem.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tblShipmentItem.Location = new System.Drawing.Point(0, 117);
             this.tblShipmentItem.Name = "tblShipmentItem";
@@ -224,6 +230,18 @@
             this.colItemIsEDM.Name = "colItemIsEDM";
             this.colItemIsEDM.ReadOnly = true;
             // 
+            // colItemOperatorComment
+            // 
+            this.colItemOperatorComment.HeaderText = "Комментарий для оператора";
+            this.colItemOperatorComment.Name = "colItemOperatorComment";
+            this.colItemOperatorComment.ReadOnly = true;
+            // 
+            // colItemWarehouseComment
+            // 
+            this.colItemWarehouseComment.HeaderText = "Комментарий для склада";
+            this.colItemWarehouseComment.Name = "colItemWarehouseComment";
+            this.colItemWarehouseComment.ReadOnly = true;
+            // 
             // panel6
             // 
             this.panel6.Controls.Add(this.label5);
@@ -253,6 +271,7 @@
             this.cmbTimeSlot.Size = new System.Drawing.Size(153, 21);
             this.cmbTimeSlot.TabIndex = 2;
             this.cmbTimeSlot.SelectedIndexChanged += new System.EventHandler(this.cmbTimeSlot_SelectedIndexChanged);
+            this.cmbTimeSlot.Format += new System.Windows.Forms.ListControlConvertEventHandler(this.cmbTimeSlot_Format);
             // 
             // dtSDate
             // 
@@ -343,7 +362,9 @@
             this.colKlient,
             this.colLVOrderId,
             this.colOstId,
-            this.colIsEDM});
+            this.colIsEDM,
+            this.colOperatorComment,
+            this.colWarehouseComment});
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -370,6 +391,77 @@
             this.tblOrders.TabIndex = 1;
             this.tblOrders.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tblOrders_CellContentClick);
             this.tblOrders.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tblOrders_CellDoubleClick);
+            // 
+            // colId
+            // 
+            this.colId.DataPropertyName = "LVCode";
+            this.colId.HeaderText = "Код";
+            this.colId.Name = "colId";
+            this.colId.ReadOnly = true;
+            // 
+            // colOstCode
+            // 
+            this.colOstCode.DataPropertyName = "OstCode";
+            this.colOstCode.HeaderText = "Расходная партия";
+            this.colOstCode.Name = "colOstCode";
+            this.colOstCode.ReadOnly = true;
+            // 
+            // colState
+            // 
+            this.colState.DataPropertyName = "LVStatus";
+            this.colState.HeaderText = "Статус";
+            this.colState.Name = "colState";
+            this.colState.ReadOnly = true;
+            // 
+            // colDate
+            // 
+            this.colDate.DataPropertyName = "ExpDate";
+            this.colDate.HeaderText = "Ожид. дата";
+            this.colDate.Name = "colDate";
+            this.colDate.ReadOnly = true;
+            // 
+            // colKlient
+            // 
+            this.colKlient.DataPropertyName = "Company";
+            this.colKlient.HeaderText = "Клиент";
+            this.colKlient.Name = "colKlient";
+            this.colKlient.ReadOnly = true;
+            this.colKlient.Width = 200;
+            // 
+            // colLVOrderId
+            // 
+            this.colLVOrderId.DataPropertyName = "LVID";
+            this.colLVOrderId.HeaderText = "LVOrderId";
+            this.colLVOrderId.Name = "colLVOrderId";
+            this.colLVOrderId.ReadOnly = true;
+            this.colLVOrderId.Visible = false;
+            // 
+            // colOstId
+            // 
+            this.colOstId.DataPropertyName = "OstID";
+            this.colOstId.HeaderText = "colOstId";
+            this.colOstId.Name = "colOstId";
+            this.colOstId.ReadOnly = true;
+            this.colOstId.Visible = false;
+            // 
+            // colIsEDM
+            // 
+            this.colIsEDM.DataPropertyName = "IsEDM";
+            this.colIsEDM.HeaderText = "ЭДО";
+            this.colIsEDM.Name = "colIsEDM";
+            this.colIsEDM.ReadOnly = true;
+            // 
+            // colOperatorComment
+            // 
+            this.colOperatorComment.HeaderText = "Комментарий для операторов";
+            this.colOperatorComment.Name = "colOperatorComment";
+            this.colOperatorComment.ReadOnly = true;
+            // 
+            // colWarehouseComment
+            // 
+            this.colWarehouseComment.HeaderText = "Комментарий для склада";
+            this.colWarehouseComment.Name = "colWarehouseComment";
+            this.colWarehouseComment.ReadOnly = true;
             // 
             // panel5
             // 
@@ -454,65 +546,6 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Депозитор";
             // 
-            // colId
-            // 
-            this.colId.DataPropertyName = "LVCode";
-            this.colId.HeaderText = "Код";
-            this.colId.Name = "colId";
-            this.colId.ReadOnly = true;
-            // 
-            // colOstCode
-            // 
-            this.colOstCode.DataPropertyName = "OstCode";
-            this.colOstCode.HeaderText = "Расходная партия";
-            this.colOstCode.Name = "colOstCode";
-            this.colOstCode.ReadOnly = true;
-            // 
-            // colState
-            // 
-            this.colState.DataPropertyName = "LVStatus";
-            this.colState.HeaderText = "Статус";
-            this.colState.Name = "colState";
-            this.colState.ReadOnly = true;
-            // 
-            // colDate
-            // 
-            this.colDate.DataPropertyName = "ExpDate";
-            this.colDate.HeaderText = "Ожид. дата";
-            this.colDate.Name = "colDate";
-            this.colDate.ReadOnly = true;
-            // 
-            // colKlient
-            // 
-            this.colKlient.DataPropertyName = "Company";
-            this.colKlient.HeaderText = "Клиент";
-            this.colKlient.Name = "colKlient";
-            this.colKlient.ReadOnly = true;
-            this.colKlient.Width = 200;
-            // 
-            // colLVOrderId
-            // 
-            this.colLVOrderId.DataPropertyName = "LVID";
-            this.colLVOrderId.HeaderText = "LVOrderId";
-            this.colLVOrderId.Name = "colLVOrderId";
-            this.colLVOrderId.ReadOnly = true;
-            this.colLVOrderId.Visible = false;
-            // 
-            // colOstId
-            // 
-            this.colOstId.DataPropertyName = "OstID";
-            this.colOstId.HeaderText = "colOstId";
-            this.colOstId.Name = "colOstId";
-            this.colOstId.ReadOnly = true;
-            this.colOstId.Visible = false;
-            // 
-            // colIsEDM
-            // 
-            this.colIsEDM.DataPropertyName = "IsEDM";
-            this.colIsEDM.HeaderText = "ЭДО";
-            this.colIsEDM.Name = "colIsEDM";
-            this.colIsEDM.ReadOnly = true;
-            // 
             // ShipmentAdd
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -578,6 +611,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colLVOrdId;
         private System.Windows.Forms.DataGridViewTextBoxColumn colItemOstId;
         private System.Windows.Forms.DataGridViewTextBoxColumn colItemIsEDM;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colItemOperatorComment;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colItemWarehouseComment;
         private System.Windows.Forms.DataGridViewTextBoxColumn colId;
         private System.Windows.Forms.DataGridViewTextBoxColumn colOstCode;
         private System.Windows.Forms.DataGridViewTextBoxColumn colState;
@@ -586,5 +621,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colLVOrderId;
         private System.Windows.Forms.DataGridViewTextBoxColumn colOstId;
         private System.Windows.Forms.DataGridViewTextBoxColumn colIsEDM;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colOperatorComment;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colWarehouseComment;
     }
 }

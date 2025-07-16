@@ -17,6 +17,8 @@ namespace Planning.DataLayer
         int? _ostID;
         string _ostCode;
         bool? _isEDM;
+        string _operatorComment;
+        string _warehouseComment;
 
         public string LVCode
         {
@@ -122,7 +124,32 @@ namespace Planning.DataLayer
                 }
             }
         }
+        public string OperatorComment
+        {
+            get => _operatorComment;
+            set
+            {
+                if (_operatorComment == null || !_operatorComment.Equals(value))
+                {
+                    _operatorComment = value;
+                    Edit();
 
+                }
+            }
+        }
+        public string WarehouseComment
+        {
+            get => _warehouseComment;
+            set
+            {
+                if (_warehouseComment == null || !_warehouseComment.Equals(value))
+                {
+                    _warehouseComment = value;
+                    Edit();
+
+                }
+            }
+        }
         public override bool Equals(object obj)
         {
             if (obj is LvSelectOrder selectOrder) return Id == selectOrder.Id;

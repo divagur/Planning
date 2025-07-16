@@ -31,12 +31,20 @@ namespace Planning
         }
         void PopulateAttr()
         {
-
-            
             depositorAttributes = depositorAttributeRepository.GetAll();
+            try
+            {
+                DataLayer.PLAttributeRepository pLAttributeRepository = new DataLayer.PLAttributeRepository();
+                pLAttributeList = pLAttributeRepository.GetAll(_depositor.Id);
+            }
+            catch (Exception ex)
+            {
 
-            DataLayer.PLAttributeRepository pLAttributeRepository = new DataLayer.PLAttributeRepository();
-            pLAttributeList = pLAttributeRepository.GetAll(_depositor.Id);
+                MessageBox.Show($"Ошибка при получении атрибутов:{ex.Message}");
+            }
+           
+
+   
             UpdateTblAttrDataSource();
 
         }

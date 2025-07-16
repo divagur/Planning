@@ -17,9 +17,11 @@ namespace Planning.DataLayer
             switch (editState)
             {
                 case EditState.New:
-                    return $@"INSERT INTO {Table} (name) values(@{nameof(DelayReason.Name)})";                    
+                    return $@"INSERT INTO {Table} (name,lv_base, lv_id) values(@{nameof(Depositor.Name)},
+                                                        @{nameof(Depositor.LvBase)}, @{nameof(Depositor.LvId)})";                    
                 case EditState.Edit:
-                    return $@"update {Table} set name = @{nameof(DelayReason.Name)} where id = @Id";
+                    return $@"update {Table} set name = @{nameof(Depositor.Name)}, lv_base = @{nameof(Depositor.LvBase)}, 
+                                                    lv_id = @{nameof(Depositor.LvId)} where id = @Id";
                 case EditState.Delete:
                     return $"delete from {Table} where id = @Id";
             }

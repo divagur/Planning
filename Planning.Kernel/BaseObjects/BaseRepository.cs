@@ -128,7 +128,11 @@ namespace Planning.Kernel
 
         public string ConnectionString { get => _connectionString; }
 
-        public string LastError { get => _lastError; }
+        public string LastError 
+        { 
+            get => _lastError; 
+            protected set => _lastError = value;
+        }
 
     }
 }

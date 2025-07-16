@@ -175,7 +175,7 @@ namespace Planning
                 }
 
 
-                List<DataLayer.ShipmentOrder> shipmentOrders = new List<DataLayer.ShipmentOrder>();
+                List<ShipmentOrder> shipmentOrders = new List<DataLayer.ShipmentOrder>();
 
                 for (int i = 0; i < tblShipmentItem.RowCount; i++)
                 {
@@ -184,7 +184,7 @@ namespace Planning
 
                     var lvOrderId = int.Parse(tblShipmentItem.Rows[i].Cells["colLVOrdId"].Value.ToString());
                     
-                    DataLayer.ShipmentOrder shipmentOrder = shipmentOrders.FirstOrDefault(o => o.LvOrderId == lvOrderId);
+                    ShipmentOrder shipmentOrder = shipmentOrders.FirstOrDefault(o => o.LvOrderId == lvOrderId);
                     if (shipmentOrder == null)
                     {
                         shipmentOrder = new DataLayer.ShipmentOrder();
@@ -209,9 +209,9 @@ namespace Planning
                     if (cmbType.SelectedIndex == 0)
                     {
 
-                        List<DataLayer.ShipmentOrderPart> shipmentOrderParts = new List<DataLayer.ShipmentOrderPart>();
+                        List<ShipmentOrderPart> shipmentOrderParts = new List<ShipmentOrderPart>();
 
-                        DataLayer.ShipmentOrderPart shipmentOrderPart = new DataLayer.ShipmentOrderPart();
+                        ShipmentOrderPart shipmentOrderPart = new ShipmentOrderPart();
                         shipmentOrderPart.ShOrderId = shipmentOrder.Id;
                         shipmentOrderPart.OsLvCode = tblShipmentItem.Rows[i].Cells["colItemOstCode"].Value.ToString();
                         shipmentOrderPart.OsLvId = (tblShipmentItem.Rows[i].Cells["colItemOstId"].Value as int?);
@@ -254,7 +254,7 @@ namespace Planning
 
                 for (int i = 0; i < tblShipmentItem.RowCount; i++)
                 {
-                    DataLayer.MovementItem movementItem = new DataLayer.MovementItem();
+                    MovementItem movementItem = new DataLayer.MovementItem();
                     movementItem.MovementId = _movement.Id;
                     movementItem.DepositorId = GetSelectedDepositorId();
                     movementItem.TklLVID = int.Parse(tblShipmentItem.Rows[i].Cells["colLVOrdId"].Value.ToString());
@@ -275,7 +275,7 @@ namespace Planning
         {
 
             WarehouseRepository warehouseRepository = new WarehouseRepository();
-            DataLayer.Warehouse warehouse = warehouseRepository.GetByCode(WarehouseCode);
+            Warehouse warehouse = warehouseRepository.GetByCode(WarehouseCode);
             return warehouse == null ? null : (int?)warehouse.Id;
             
         }
@@ -284,7 +284,7 @@ namespace Planning
         {
 
             TransportViewRepository transportViewRepository = new TransportViewRepository();
-            DataLayer.TransportView transportView = transportViewRepository.GetByNameOrCreate(TransportViewName);
+            TransportView transportView = transportViewRepository.GetByNameOrCreate(TransportViewName);
             return transportView == null? null:(int?)transportView.Id;
             
         }
@@ -439,7 +439,12 @@ namespace Planning
 
         private void cmbDepositor_Format(object sender, ListControlConvertEventArgs e)
         {
-            e.Value = ((DataLayer.Depositor)e.ListItem).Name;
+            e.Value = ((Depositor)e.ListItem).Name;
+        }
+
+        private void cmbTimeSlot_Format(object sender, ListControlConvertEventArgs e)
+        {
+            e.Value = ((TimeSlot)e.ListItem).SlotTime.ToString();
         }
     }
 }

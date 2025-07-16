@@ -27,6 +27,7 @@ using SpreadsheetLight;
 using DocumentFormat.OpenXml.Packaging;
 
 
+
 namespace Planning
 {
     public partial class MainFormEx : Form
@@ -37,7 +38,10 @@ namespace Planning
         const int REPORT_STATISTIC = 102;
         const int REPORT_TC = 103;
 
-        
+        bool isWindowMaximized = false;
+        Point offset;
+        Size _normalWindowSize;
+        Point _normalWindowLocation = Point.Empty;
         [DllImport("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
         [DllImport("user32.dll")]
@@ -56,6 +60,7 @@ namespace Planning
         UserFunctionPrvlg mainFormPrvlg = new UserFunctionPrvlg();
         bool isPaint = true;
         bool IsFormLoad = false;
+        CellBorderDecoration standardDecoration = new CellBorderDecoration();
 
         public MainFormEx()
         {
@@ -79,7 +84,7 @@ namespace Planning
             PopulateWarehouseFilter();
             ShipmentsLoad();
             SetColumnsParam();
-            tblShipments.DrawSubItem += TblShipments_DrawSubItem;
+           // tblShipments.DrawSubItem += TblShipments_DrawSubItem;
             
             cbPaint.Checked = isPaint;
             IsFormLoad = false;
@@ -118,7 +123,7 @@ namespace Planning
                     col.DisplayIndex = 1;
                 }
 
-                else if (shpCol != null)
+                else if (shpCol != null && shpCol.Order< col.DisplayIndex)
                 {
                     col.DisplayIndex = shpCol.Order;
                 }
@@ -127,6 +132,11 @@ namespace Planning
         }
         private void SetupColumns()
         {
+            standardDecoration.BorderPen = new Pen(Color.FromArgb(130,130,130));
+           // standardDecoration.BorderPen = new Pen(Color.FromArgb(91, 94, 199));
+            standardDecoration.FillBrush = null;
+            standardDecoration.BoundsPadding = Size.Empty;
+            standardDecoration.CornerRounding = 0;
 
             colDirection.AspectGetter = delegate (object row) {
                 if (((ShipmentMain)row).InOut == "вход")
@@ -532,8 +542,28 @@ namespace Planning
         private void MaximideWindows()
         {
             tblShipments.BeginUpdate();
-            MaximizedBounds = Screen.FromHandle(this.Handle).WorkingArea;
-            WindowState = WindowState == FormWindowState.Maximized ? FormWindowState.Normal : FormWindowState.Maximized;
+            //MaximizedBounds = Screen.FromHandle(this.Handle).WorkingArea;
+            //WindowState = WindowState == FormWindowState.Maximized ? FormWindowState.Normal : FormWindowState.Maximized;
+            if (isWindowMaximized)
+            {
+                this.Location = _normalWindowLocation;
+                this.Size = _normalWindowSize;
+                //toolTip1.SetToolTip(_MaxButton, "Maximize");
+                //_MaxButton.CFormState = MinMaxButton.CustomFormState.Normal;
+                isWindowMaximized = false;
+            }
+            else
+            {
+                _normalWindowSize = this.Size;
+                _normalWindowLocation = this.Location;
+
+                Rectangle rect = Screen.PrimaryScreen.WorkingArea;
+                this.Location = new Point(0, 0);
+                this.Size = new System.Drawing.Size(rect.Width, rect.Height);
+                //toolTip1.SetToolTip(_MaxButton, "Restore Down");
+                //_MaxButton.CFormState = MinMaxButton.CustomFormState.Maximize;
+                isWindowMaximized = true;
+            }
             tblShipments.EndUpdate();
         }
         private void AddFormTab(Form frm, String Name)
@@ -894,6 +924,7 @@ namespace Planning
         private void btnMaximizeWindow_Click(object sender, EventArgs e)
         {
             MaximideWindows();
+            
         }
 
         private void btnCloseWindow_Click(object sender, EventArgs e)
@@ -1972,7 +2003,10 @@ namespace Planning
 
         private void tblShipments_FormatCell(object sender, FormatCellEventArgs e)
         {
-            
+           // if (e.Column.IsVisible)
+            {
+                e.SubItem.Decoration = standardDecoration;
+            }
         }
     }
 }
