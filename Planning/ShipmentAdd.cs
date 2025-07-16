@@ -165,6 +165,12 @@ namespace Planning
               
             TableSource.Rows.Remove(TableSource.CurrentRow);
         }
+
+        private string GetStringValueFromObject(object Value)
+        {
+            return !String.IsNullOrEmpty(Value.ToString())?(string)Value : null;
+        }
+
         private void Save()
         {
             /*
@@ -205,8 +211,8 @@ namespace Planning
                         shipmentOrder.IsEdm = !String.IsNullOrEmpty(tblShipmentItem.Rows[i].Cells["colItemIsEDM"].Value.ToString()) ?
                                 (bool?)tblShipmentItem.Rows[i].Cells["colItemIsEDM"].Value : null;
                         shipmentOrder.IsBinding = true;
-                        shipmentOrder.Comment = (string)tblShipmentItem.Rows[i].Cells["colItemWarehouseComment"].Value;
-                        shipmentComment.AppendLine((string)tblShipmentItem.Rows[i].Cells["colItemOperatorComment"].Value);
+                        shipmentOrder.Comment = GetStringValueFromObject(tblShipmentItem.Rows[i].Cells["colItemWarehouseComment"].Value);
+                        shipmentComment.AppendLine(GetStringValueFromObject(tblShipmentItem.Rows[i].Cells["colItemOperatorComment"].Value));
                         //isAddLv = true;
                         _shipment.ShipmentOrders.Add(shipmentOrder);
                     }
