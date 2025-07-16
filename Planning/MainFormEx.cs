@@ -2008,5 +2008,10 @@ namespace Planning
                 e.SubItem.Decoration = standardDecoration;
             }
         }
+
+        private void tblShipments_AfterSorting(object sender, AfterSortingEventArgs e)
+        {
+            CalcRowColor();
+        }
     }
 }
