@@ -60,6 +60,7 @@ namespace Planning
         UserFunctionPrvlg mainFormPrvlg = new UserFunctionPrvlg();
         bool isPaint = true;
         bool IsFormLoad = false;
+        bool IsBuilded = false;
         CellBorderDecoration standardDecoration = new CellBorderDecoration();
 
         public MainFormEx()
@@ -392,10 +393,12 @@ namespace Planning
         }
         private void UpdateDataSource(List<ShipmentMain> listDataSource)
         {
+            IsBuilded = true;
             tblShipments.BeginUpdate();
             tblShipments.ClearObjects();
             tblShipments.SetObjects(listDataSource);
             tblShipments.EndUpdate();
+            IsBuilded = false;
         }
         private void Init()
         {
@@ -747,7 +750,14 @@ namespace Planning
             ListViewItem listViewItem = tblShipments.FindItemWithText(SearchText, true, startRow);
             if (listViewItem !=null)
             {
+                
                 listViewItem.Selected = true;
+                tblShipments.SelectObject(listViewItem,true);
+                tblShipments.SelectedObject = listViewItem;
+                tblShipments.SelectedObjects.Add(listViewItem);
+                tblShipments.Invalidate();
+                tblShipments.Refresh();
+                
                 return true;
             }
             
@@ -1073,7 +1083,9 @@ namespace Planning
 
         private void menuItemDictTransportView_Click(object sender, EventArgs e)
         {
-            
+            var frmTransportView = new TransportViewForm();
+            SetFormPrivalage(frmTransportView, "TransportView");
+            AddFormTab(frmTransportView, "Виды транспорта");
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
@@ -2011,7 +2023,19 @@ namespace Planning
 
         private void tblShipments_AfterSorting(object sender, AfterSortingEventArgs e)
         {
-            CalcRowColor();
+
+        }
+
+        private void tblShipments_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            if (!IsBuilded)
+                CalcRowColor();
+        }
+
+        private void mciOrderDetail_Click(object sender, EventArgs e)
+        {
+            ShipmentMain shipmentMain = GetCurrentRowObject();
+            ShowOrderDetail(shipmentMain);
         }
     }
 }

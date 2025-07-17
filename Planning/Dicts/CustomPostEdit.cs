@@ -12,11 +12,11 @@ namespace Planning
 {
     public partial class CustomPostEdit : DictEditForm
     {
-        DataLayer.CustomPost _customPost;
+        CustomPost _customPost;
        
-        DataLayer.DeliveryPeriodRepository _deliveryPeriodRepository = new DataLayer.DeliveryPeriodRepository();
-        List<DataLayer.Warehouse> _warehouses;
-        public CustomPostEdit(DataLayer.CustomPost customPost)
+        DeliveryPeriodRepository _deliveryPeriodRepository = new DeliveryPeriodRepository();
+        List<Warehouse> _warehouses;
+        public CustomPostEdit(CustomPost customPost)
         {
             InitializeComponent();
             _customPost = customPost;
@@ -40,12 +40,12 @@ namespace Planning
             CustomPostRepository customPostRepository = new CustomPostRepository();
             customPostRepository.Save(_customPost);
             RemoveAllDelivery();
-            List<DataLayer.DeliveryPeriod> _deliveryPeriods = new List<DataLayer.DeliveryPeriod>();
+            List<DeliveryPeriod> _deliveryPeriods = new List<DeliveryPeriod>();
             foreach (DataGridViewRow row in tblDelivery.Rows)
             {
                 if (row.Cells["colWarehouseId"].Value != null)
                 {
-                    DataLayer.DeliveryPeriod deliveryPeriod = new DataLayer.DeliveryPeriod();
+                    DeliveryPeriod deliveryPeriod = new DeliveryPeriod();
                     deliveryPeriod.CustPostId = _customPost.Id;// (int)row.Cells["colCustomPostId"].Value;
                     deliveryPeriod.WarehouseId = (int)row.Cells["colWarehouseId"].Value;
                     deliveryPeriod.DeliveryDay = Int32.Parse(row.Cells["colDeliveryDay"].Value.ToString());
@@ -60,7 +60,7 @@ namespace Planning
         private void RemoveAllDelivery()
         {
             
-            List<DataLayer.DeliveryPeriod> _deliveryPeriods = new List<DataLayer.DeliveryPeriod>();
+            List<DeliveryPeriod> _deliveryPeriods = new List<DeliveryPeriod>();
             _deliveryPeriods = _deliveryPeriodRepository.GetByCustomPostCode(_customPost.Code);
 
             foreach (var item in _deliveryPeriods)
@@ -80,7 +80,7 @@ namespace Planning
             tblDelivery.AutoGenerateColumns = false;
             
 
-            DataLayer.WarehouseRepository warehouseRepository = new DataLayer.WarehouseRepository();
+            WarehouseRepository warehouseRepository = new WarehouseRepository();
             _warehouses = warehouseRepository.GetAll();
             
             /*

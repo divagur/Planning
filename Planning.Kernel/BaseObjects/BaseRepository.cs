@@ -88,7 +88,8 @@ namespace Planning.Kernel
                         var ids = dbConnection.Query<int>(sql, Item);
                         Item.Id = ids.First();
                         count = ids.Count();
-
+                        if (count > 0)
+                            Item.Edit();
 
                         break;
                     case EditState.Edit:

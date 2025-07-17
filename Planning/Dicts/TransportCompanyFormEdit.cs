@@ -23,7 +23,7 @@ namespace Planning
         {
             txtCode.Text = _transportCompany.Code.ToString();
             txtName.Text = _transportCompany.Name;
-            cbIsActive.Checked = (bool)_transportCompany.IsActive;
+            cbIsActive.Checked = _transportCompany.IsActive == null?false:(bool)_transportCompany.IsActive;
         }
 
         protected override bool Save()

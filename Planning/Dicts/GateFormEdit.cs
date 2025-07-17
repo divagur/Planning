@@ -17,11 +17,13 @@ namespace Planning
         {
             InitializeComponent();
             _gateway = gateway;
+             
         }
 
         protected override void Populate()
         {
             txtGateNumber.Text = _gateway.Name;
+            txtGateNumber.Focus();
         }
 
         protected override bool Save()

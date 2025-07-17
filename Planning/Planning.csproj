@@ -200,17 +200,41 @@
     <Compile Include="Dicts\Dict.Designer.cs">
       <DependentUpon>DictForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dicts\TransportCompanyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dicts\TransportCompanyForm.Designer.cs">
+      <DependentUpon>TransportCompanyForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dicts\TransportCompanyFormEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dicts\TransportCompanyFormEdit.Designer.cs">
+      <DependentUpon>TransportCompanyFormEdit.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dicts\TransportTypeForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Dicts\TransportTypeForm.Designer.cs">
       <DependentUpon>TransportTypeForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dicts\TransportViewFormEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dicts\TransportViewFormEdit.Designer.cs">
+      <DependentUpon>TransportViewFormEdit.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dicts\TransportTypeFormEdit.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Dicts\TransportTypeFormEdit.Designer.cs">
       <DependentUpon>TransportTypeFormEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dicts\TransportViewForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dicts\TransportViewForm.Designer.cs">
+      <DependentUpon>TransportViewForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Dicts\WarehouseEdit.cs">
       <SubType>Form</SubType>
@@ -445,18 +469,6 @@
     <Compile Include="Dicts\TimeSlotEdit.Designer.cs">
       <DependentUpon>TimeSlotEdit.cs</DependentUpon>
     </Compile>
-    <Compile Include="TransportCompanyForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="TransportCompanyForm.Designer.cs">
-      <DependentUpon>TransportCompanyForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="TransportCompanyFormEdit.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="TransportCompanyFormEdit.Designer.cs">
-      <DependentUpon>TransportCompanyFormEdit.cs</DependentUpon>
-    </Compile>
     <Compile Include="Dicts\UserEdit.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -513,11 +525,23 @@
     <EmbeddedResource Include="Dicts\DictForm.resx">
       <DependentUpon>DictForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Dicts\TransportCompanyForm.resx">
+      <DependentUpon>TransportCompanyForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dicts\TransportCompanyFormEdit.resx">
+      <DependentUpon>TransportCompanyFormEdit.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Dicts\TransportTypeForm.resx">
       <DependentUpon>TransportTypeForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Dicts\TransportViewFormEdit.resx">
+      <DependentUpon>TransportViewFormEdit.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Dicts\TransportTypeFormEdit.resx">
       <DependentUpon>TransportTypeFormEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dicts\TransportViewForm.resx">
+      <DependentUpon>TransportViewForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dicts\WarehouseEdit.resx">
       <DependentUpon>WarehouseEdit.cs</DependentUpon>
@@ -642,12 +666,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dicts\Suppliers.resx">
       <DependentUpon>Suppliers.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TransportCompanyForm.resx">
-      <DependentUpon>TransportCompanyForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TransportCompanyFormEdit.resx">
-      <DependentUpon>TransportCompanyFormEdit.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dicts\UserEdit.resx">
       <DependentUpon>UserEdit.cs</DependentUpon>

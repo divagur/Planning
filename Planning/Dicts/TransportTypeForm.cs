@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace Planning
 {
-    public partial class TransportTypeForm : DictFormEx<DataLayer.TransportType, DataLayer.TransportTypeRepository>
+    public partial class TransportTypeForm : DictFormEx<TransportType, TransportTypeRepository>
     {
         public TransportTypeForm()
         {

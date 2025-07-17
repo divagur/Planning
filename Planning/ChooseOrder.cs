@@ -31,7 +31,7 @@ namespace Planning
         //LVOrder_Manager Order_Manager = new LVOrder_Manager();
         //List<LVOrder> listOrders;
         //public ChooseOrder(ShipmentAddResult selectedResult, Planning.DataLayer.Shipment shipment, bool isOrderParts = false, int? LVOrderId = null)
-        public ChooseOrder(ShipmentAddResult selectedResult,int? ShipmentId, int? DepositorId, bool? IsShIn, Planning.DataLayer.ShipmentOrder shipmentOrder,
+        public ChooseOrder(ShipmentAddResult selectedResult,int? ShipmentId, int? DepositorId, bool? IsShIn, ShipmentOrder shipmentOrder,
                     bool isOrderParts = false, int? LVOrderId = null)
         {
             InitializeComponent();
@@ -61,7 +61,7 @@ namespace Planning
             {
                 //Planning.DataLayer.ShipmentOrder shipmentOrder = _shipmentOrders.First(o => o.LvOrderId == _LVOrderId);
                 ShipmentOrderPartRepository shipmentOrderPartRepository = new ShipmentOrderPartRepository();
-                //_shipmentOrderParts = shipmentOrderPartRepository.GetShipmentOrderParts(new List<int?>() {_shipmentOrder.Id});
+                _shipmentOrderParts = shipmentOrderPartRepository.GetShipmentOrderParts(_shipmentOrder.Id);
 
                 var listExclusionID = _shipmentOrderParts.Where(p => p.ShOrderId == _shipmentOrder.Id).Select(p => p.OsLvId).ToList();
                     //shipmentOrder.ShipmentOrderParts.Select(p => (int?)p.OsLvId).ToList();

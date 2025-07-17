@@ -19,7 +19,7 @@ namespace Planning.Kernel
         {
             State = EditState.Delete;
         }
-        protected void Edit()
+        public void Edit()
         {
             if(Id >0 && State != EditState.Delete)
             {

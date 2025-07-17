@@ -32,10 +32,10 @@ namespace Planning
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainFormEx));
             BrightIdeasSoftware.HeaderStateStyle headerStateStyle1 = new BrightIdeasSoftware.HeaderStateStyle();
             BrightIdeasSoftware.HeaderStateStyle headerStateStyle2 = new BrightIdeasSoftware.HeaderStateStyle();
             BrightIdeasSoftware.HeaderStateStyle headerStateStyle3 = new BrightIdeasSoftware.HeaderStateStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainFormEx));
             this.menuMain = new System.Windows.Forms.MenuStrip();
             this.mtiFile = new System.Windows.Forms.ToolStripMenuItem();
             this.miSettings = new System.Windows.Forms.ToolStripMenuItem();
@@ -184,6 +184,9 @@ namespace Planning
             this.tmUpdate = new System.Windows.Forms.Timer(this.components);
             this.simpleItemStyle1 = new BrightIdeasSoftware.SimpleItemStyle();
             this.baseRenderer1 = new BrightIdeasSoftware.BaseRenderer();
+            this.mnuContext = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.mciPrint = new System.Windows.Forms.ToolStripMenuItem();
+            this.mciOrderDetail = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMain.SuspendLayout();
             this.statusStrip2.SuspendLayout();
             this.tabForms.SuspendLayout();
@@ -195,6 +198,7 @@ namespace Planning
             this.contextMenuColumns.SuspendLayout();
             this.panelFormHeader.SuspendLayout();
             this.contextMenuMain.SuspendLayout();
+            this.mnuContext.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuMain
@@ -531,6 +535,7 @@ namespace Planning
             this.colIsEdm,
             this.colTransportView,
             this.colWarehouseName});
+            this.tblShipments.ContextMenuStrip = this.mnuContext;
             this.tblShipments.Cursor = System.Windows.Forms.Cursors.Default;
             this.tblShipments.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tblShipments.FullRowSelect = true;
@@ -553,6 +558,7 @@ namespace Planning
             this.tblShipments.ButtonClick += new System.EventHandler<BrightIdeasSoftware.CellClickEventArgs>(this.tblShipments_ButtonClick);
             this.tblShipments.FormatCell += new System.EventHandler<BrightIdeasSoftware.FormatCellEventArgs>(this.tblShipments_FormatCell);
             this.tblShipments.FormatRow += new System.EventHandler<BrightIdeasSoftware.FormatRowEventArgs>(this.tblShipments_FormatRow);
+            this.tblShipments.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.tblShipments_ColumnClick);
             this.tblShipments.ColumnReordered += new System.Windows.Forms.ColumnReorderedEventHandler(this.tblShipments_ColumnReordered);
             this.tblShipments.DoubleClick += new System.EventHandler(this.tblShipments_DoubleClick);
             // 
@@ -1611,6 +1617,30 @@ namespace Planning
             // 
             this.tmUpdate.Tick += new System.EventHandler(this.tmUpdate_Tick);
             // 
+            // mnuContext
+            // 
+            this.mnuContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mciPrint,
+            this.mciOrderDetail});
+            this.mnuContext.Name = "mnuContext";
+            this.mnuContext.Size = new System.Drawing.Size(145, 48);
+            // 
+            // mciPrint
+            // 
+            this.mciPrint.Image = ((System.Drawing.Image)(resources.GetObject("mciPrint.Image")));
+            this.mciPrint.Name = "mciPrint";
+            this.mciPrint.Size = new System.Drawing.Size(144, 22);
+            this.mciPrint.Text = "Печать";
+            this.mciPrint.Click += new System.EventHandler(this.btnPrint_Click);
+            // 
+            // mciOrderDetail
+            // 
+            this.mciOrderDetail.Image = ((System.Drawing.Image)(resources.GetObject("mciOrderDetail.Image")));
+            this.mciOrderDetail.Name = "mciOrderDetail";
+            this.mciOrderDetail.Size = new System.Drawing.Size(144, 22);
+            this.mciOrderDetail.Text = "Детализация";
+            this.mciOrderDetail.Click += new System.EventHandler(this.mciOrderDetail_Click);
+            // 
             // MainFormEx
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1639,6 +1669,7 @@ namespace Planning
             this.contextMenuColumns.ResumeLayout(false);
             this.panelFormHeader.ResumeLayout(false);
             this.contextMenuMain.ResumeLayout(false);
+            this.mnuContext.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1794,5 +1825,8 @@ namespace Planning
         private System.Windows.Forms.Button btnSearchEx;
         private BrightIdeasSoftware.SimpleItemStyle simpleItemStyle1;
         private BrightIdeasSoftware.BaseRenderer baseRenderer1;
+        private System.Windows.Forms.ContextMenuStrip mnuContext;
+        private System.Windows.Forms.ToolStripMenuItem mciPrint;
+        private System.Windows.Forms.ToolStripMenuItem mciOrderDetail;
     }
 }
