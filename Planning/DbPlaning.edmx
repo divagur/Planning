@@ -826,8 +826,8 @@
           <Property Name="SpCondition" Type="Boolean" />
           <Property Name="DriverPhone" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="DriverFio" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
-          <Property Name="VehicleNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="TrailerNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="VehicleNumber" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="TrailerNumber" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
           <Property Name="AttorneyNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="AttorneyDate" Type="DateTime" Precision="0" />
           <Property Name="SubmissionTime" Type="DateTime" Precision="3" />

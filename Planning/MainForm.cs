@@ -17,6 +17,7 @@ using DataTable = System.Data.DataTable;
 using Rectangle = System.Drawing.Rectangle;
 using Font = System.Drawing.Font;
 using System.Text.RegularExpressions;
+using System.Data.Entity.Validation;
 //using System.Windows;
 
 namespace Planning
@@ -751,7 +752,16 @@ namespace Planning
             
             if (frmShipmentEdit.ShowDialog() == DialogResult.OK)
             {
-                DataService.context.SaveChanges();
+                try
+                {
+                    DataService.context.SaveChanges();
+                }
+                catch (DbEntityValidationException ex)
+                {
+
+                    MessageBox.Show(ex.Message);
+                }
+               
                 if (shipmentAddResult.IsShipment)
                 {
                     Shipment shipment = (Shipment)shipmentAddResult.Result;
