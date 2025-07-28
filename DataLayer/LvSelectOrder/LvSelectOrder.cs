@@ -8,7 +8,7 @@ namespace Planning.DataLayer
 {
     public class LvSelectOrder: BaseDataItem
     {
-        //int? _lVID;
+        int? _lVID;
         string _lVCode;
         string _lVStatus;
         DateTime? _expDate;
@@ -20,6 +20,19 @@ namespace Planning.DataLayer
         string _operatorComment;
         string _warehouseComment;
 
+        public int? LVID
+        {
+            get => _lVID;
+            set
+            {
+                if (!_lVID.Equals(value))
+                {
+                    _lVID = value;
+                    Edit();
+
+                }
+            }
+        }
         public string LVCode
         {
             get => _lVCode;

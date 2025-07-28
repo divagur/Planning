@@ -220,7 +220,6 @@ namespace Planning
             this.colLVOrderId.HeaderText = "LVOrderId";
             this.colLVOrderId.Name = "colLVOrderId";
             this.colLVOrderId.ReadOnly = true;
-            this.colLVOrderId.Visible = false;
             // 
             // colOstId
             // 

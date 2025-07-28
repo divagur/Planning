@@ -112,12 +112,12 @@ namespace Planning
                 var order = (LvSelectOrder)selectResult.Result;
 
                 txtOrderId.Text = order.LVCode;
-                cbIsEDM.Checked = (bool)order.IsEDM;
-                _shipmentOrder.LvOrderId = order.Id;
+                cbIsEDM.Checked = order.IsEDM ==null?false: (bool)order.IsEDM;
+                _shipmentOrder.LvOrderId = order.LVID;
                 int? DepositorLVId = _shipment.DepositorId;
                 _shipmentOrder.IsBinding = true;
                 LvSelectOrderRepository lvSelectOrderRepository = new LvSelectOrderRepository();
-                List<LvSelectOrder> OrderParts = lvSelectOrderRepository.GetAll(0,0,DepositorLVId, order.Id,0);
+                List<LvSelectOrder> OrderParts = lvSelectOrderRepository.GetAll(0,0,DepositorLVId, order.LVID,0);
                 
                 if (OrderParts.Count() == 1)
                 {

@@ -237,8 +237,8 @@ namespace Planning
         private void ShipmentEdit(ShipmentParam shipmentAddResult)
         {
             ShipmenEdit frmShipmentEdit;
-            frmShipmentEdit = shipmentAddResult.IsShipment == true ? new ShipmenEdit((DataLayer.Shipment)shipmentAddResult.Result) : 
-                new ShipmenEdit((DataLayer.Movement)shipmentAddResult.Result);
+            frmShipmentEdit = shipmentAddResult.IsShipment == true ? new ShipmenEdit((Shipment)shipmentAddResult.Result) : 
+                new ShipmenEdit((Movement)shipmentAddResult.Result);
             /*
             if (shipmentAddResult.IsShipment)
                 frmShipmentEdit = new shipmen_edit((Shipment)shipmentAddResult.Result);
@@ -256,7 +256,7 @@ namespace Planning
             {
                 if (shipmentAddResult.IsShipment)
                 {
-                    DataLayer.Shipment shipment = (DataLayer.Shipment)shipmentAddResult.Result;
+                    Shipment shipment = (Shipment)shipmentAddResult.Result;
 
                     ShipmentRepository shipmentRepository = new ShipmentRepository();
 
@@ -738,7 +738,7 @@ namespace Planning
             return null;
         }
 
-        private DataLayer.ShipmentMain GetCurrentRowObject()
+        private ShipmentMain GetCurrentRowObject()
         {
             return (ShipmentMain)tblShipments.GetItem(tblShipments.SelectedIndex).RowObject;
         }
@@ -747,20 +747,35 @@ namespace Planning
         {
             int startRow = FromBegin ? 0 : tblShipments.SelectedIndex + 1;
             tblShipments.SelectedObjects = null;
-            ListViewItem listViewItem = tblShipments.FindItemWithText(SearchText, true, startRow);
-            if (listViewItem !=null)
+            //var item = tblShipments.Objects.FirstOrDefault(o => ((ShipmentMain)o).OrdLVCode == SearchText);
+            ShipmentMain findRow = _shipmentMainList.FirstOrDefault(o => o.OrdLVCode == SearchText);
+            if (findRow != null) 
+            {
+                //tblShipments.EnsureModelVisible(findRow);
+
+                //tblShipments.SelectObject(findRow, true);
+                var item = tblShipments.SelectedItem;
+                tblShipments.SelectedObject = findRow;
+                tblShipments.Invalidate();
+                tblShipments.Refresh();
+            }
+
+             ListViewItem listViewItem = tblShipments.FindItemWithText(SearchText, true, startRow);
+            
+             /*if (listViewItem !=null)
             {
                 
                 listViewItem.Selected = true;
                 tblShipments.SelectObject(listViewItem,true);
+                tblShipments.FocusedItem = listViewItem;
                 tblShipments.SelectedObject = listViewItem;
                 tblShipments.SelectedObjects.Add(listViewItem);
                 tblShipments.Invalidate();
                 tblShipments.Refresh();
                 
                 return true;
-            }
-            
+            }*/
+
             /*
             for (int i = startRow; i <= tblShipments.Rows.Count - 1; i++)
                 if (condition(i))
@@ -1093,7 +1108,7 @@ namespace Planning
            if ( !SearchBy(true, edSearch.Text))
             {
                 ShipmentRepository shipmentRepository = new ShipmentRepository();
-                DataLayer.Shipment shipment = shipmentRepository.GetByLvOrderCode(edSearch.Text);
+                Shipment shipment = shipmentRepository.GetByLvOrderCode(edSearch.Text);
                 if(shipment != null)
                 {
                     edCurrDay.Value = (DateTime)shipment.SDate;

@@ -21,19 +21,19 @@ namespace Planning
         const int WM_PARENTNOTIFY = 0x210;
         const int WM_LBUTTONDOWN = 0x201;
 
-        DataLayer.Shipment _shipment;
-        DataLayer.Movement _movement;
-        List<DataLayer.ShipmentOrder> _shipmentOrders;
-        List<DataLayer.ShipmentOrderPart> _shipmentOrderParts;
+        Shipment _shipment;
+        Movement _movement;
+        List<ShipmentOrder> _shipmentOrders;
+        List<ShipmentOrderPart> _shipmentOrderParts;
 
-        List<DataLayer.DelayReason> delayReasons;
-        List<DataLayer.Gateway> gateways;
-        List<DataLayer.TimeSlot> timeSlots;
-        List<DataLayer.TransportCompany> transportCompanies;
-        List<DataLayer.TransportType> transportTypes;
-        List<DataLayer.Supplier> suppliers;
-        List<DataLayer.Warehouse> warehouses;
-        List<DataLayer.TransportView> transportViews;
+        List<DelayReason> delayReasons;
+        List<Gateway> gateways;
+        List<TimeSlot> timeSlots;
+        List<TransportCompany> transportCompanies;
+        List<TransportType> transportTypes;
+        List<Supplier> suppliers;
+        List<Warehouse> warehouses;
+        List<TransportView> transportViews;
 
         ShipmentOrderRepository shipmentOrderRepository;
         ShipmentOrderPartRepository shipmentOrderPartRepository;
@@ -45,9 +45,10 @@ namespace Planning
         bool _isNew;
         string _title;
         StringBuilder sbLog = new StringBuilder();
-        List<DataLayer.ShipmentOrderPart> shipmentOrderParts = new List<DataLayer.ShipmentOrderPart>();
+        List<ShipmentOrderPart> shipmentOrderParts = new List<ShipmentOrderPart>();
         int itemId;
         frmShipmentHistory frmShipmentLog = null;
+        Dictionary<int?,int?> newOrderId = new Dictionary<int?, int?>();
 
         protected override void WndProc(ref Message m)
         {
@@ -176,14 +177,14 @@ namespace Planning
             TransportViewRepository transportViewRepository = new TransportViewRepository();
 
 
-            List<DataLayer.DelayReason> delayReasons = delayReasonRepository.GetAll();
-            List<DataLayer.Gateway> gateways = gatewayRepository.GetAll();
-            List<DataLayer.TimeSlot> timeSlots = timeSlotRepository.GetAll().OrderBy(t => t.SlotTime).ToList();
-            List<DataLayer.TransportCompany> transportCompanies = transportCompanyRepository.GetAll().Where(t => t.IsActive == true).ToList();
-            List<DataLayer.TransportType> transportTypes = transportTypeRepository.GetAll();
-            List<DataLayer.Supplier> suppliers = supplierRepository.GetAll().Where(s => s.IsActive == true).ToList();
-            List<DataLayer.Warehouse> warehouses = warehouseRepository.GetAll();
-            List<DataLayer.TransportView> transportViews = transportViewRepository.GetAll();
+            List<DelayReason> delayReasons = delayReasonRepository.GetAll();
+            List<Gateway> gateways = gatewayRepository.GetAll();
+            List<TimeSlot> timeSlots = timeSlotRepository.GetAll().OrderBy(t => t.SlotTime).ToList();
+            List<TransportCompany> transportCompanies = transportCompanyRepository.GetAll().Where(t => t.IsActive == true).ToList();
+            List<TransportType> transportTypes = transportTypeRepository.GetAll();
+            List<Supplier> suppliers = supplierRepository.GetAll().Where(s => s.IsActive == true).ToList();
+            List<Warehouse> warehouses = warehouseRepository.GetAll();
+            List<TransportView> transportViews = transportViewRepository.GetAll();
 
             PopulateComboBoxField(cmbDelayReasons, delayReasons);
             PopulateComboBoxField(cmbGate, gateways);
@@ -532,17 +533,23 @@ namespace Planning
         }
         private void tbtnAdd_Click(object sender, EventArgs e)
         {
-
+            
             ShipmentOrder shipmentOrder = new ShipmentOrder();
+            newOrderId.Add(-(newOrderId.Count() + 1), 0);
+            shipmentOrder.Id = newOrderId.Last().Key;
+
             var frmShipmentOrderEdit = new ShipmentOrderEdit(_shipment, shipmentOrder, _shipmentOrderParts);
             shipmentOrder.ShipmentId = _shipment.Id;
             shipmentOrder.IsBinding = false;
             if (frmShipmentOrderEdit.ShowDialog() == DialogResult.OK)
             {
+
                 _shipmentOrders.Add(shipmentOrder);
                 tblShipmentOrders.DataSource = _shipmentOrders;
-                PopulateOrderPart();
+                //PopulateOrderPart();
             }
+            UpdateOrderDataSource();
+            UpdateOrderPartDataSource();
             //row["shipment_id"] =_shipment.id;
         }
 
@@ -556,6 +563,7 @@ namespace Planning
             frmShipmentOrderEdit.ShowDialog();
             if (frmShipmentOrderEdit.DialogResult == DialogResult.Cancel)
                 return;
+            UpdateOrderDataSource();
             tblShipmentOrders.Refresh();
         }
 
@@ -566,10 +574,12 @@ namespace Planning
 
             if (MessageBox.Show("Удалить заказ?", "Подверждение", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
-                DataLayer.ShipmentOrder shipmentOrder = GetSelectedShipmentOrder();
+                ShipmentOrder shipmentOrder = GetSelectedShipmentOrder();
                 shipmentOrder.Delete();
                 tblShipmentOrders.DataSource = _shipmentOrders;
             }
+            UpdateOrderDataSource();
+            UpdateOrderPartDataSource();
         }    
 
         private void cbSpecCondition_CheckedChanged(object sender, EventArgs e)
@@ -677,6 +687,41 @@ namespace Planning
 
         private bool SaveShipmentItems()
         {
+            int? orderId = 0;
+            foreach (var order in _shipmentOrders)
+            {
+                int? addOrderId = order.Id;
+                bool saveIdtoDict = false;
+                if (order.Id < 0)
+                {
+                    if (newOrderId.TryGetValue(order.Id, out orderId))
+                    {
+                        addOrderId = order.Id;
+                        saveIdtoDict = true;
+                    }
+                }
+                if (!shipmentOrderRepository.Save(order))
+                {
+                    MessageBox.Show("Ошибка при сохранении заказов: " + shipmentOrderRepository.LastError, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+                if (saveIdtoDict)
+                {
+                    newOrderId[addOrderId] = order.Id;
+                }
+
+                foreach (var orderPart in _shipmentOrderParts.Where(op=>op.ShOrderId == addOrderId))
+                {
+                    orderPart.ShOrderId = order.Id;
+                    if (!shipmentOrderPartRepository.Save(orderPart))
+                    {
+                        MessageBox.Show("Ошибка при сохранении расходных партий: " + shipmentOrderPartRepository.LastError, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return false;
+                    }
+                }
+            }
+
+            /*
             if (!shipmentOrderPartRepository.Save(_shipmentOrderParts))
             {
                 MessageBox.Show("Ошибка при сохранении расходных партий: " + shipmentOrderPartRepository.LastError, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -686,7 +731,8 @@ namespace Planning
             {
                 MessageBox.Show("Ошибка при сохранении заказов: " + shipmentOrderRepository.LastError, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
-            }
+            }*/
+
             return true;
         }
 
@@ -776,6 +822,14 @@ namespace Planning
             }
 
         }
+
+        private void UpdateOrderDataSource()
+        {
+            tblShipmentOrders.AutoGenerateColumns = false;
+            tblShipmentOrders.DataSource = null;
+            tblShipmentOrders.DataSource = _shipmentOrders;
+            tblShipmentOrders.Refresh();
+        }
         private void UpdateOrderPartDataSource()
         {
             tblOrderParts.AutoGenerateColumns = false;
@@ -813,10 +867,10 @@ namespace Planning
             if (String.IsNullOrEmpty(ordId) || ordId == "0")
                 return;
 
-            DataLayer.ShipmentOrder shipmentOrder = _shipmentOrders.FirstOrDefault(o=> o.Id == Int32.Parse(ordId));
+            ShipmentOrder shipmentOrder = _shipmentOrders.FirstOrDefault(o=> o.Id == Int32.Parse(ordId));
 
 
-            DataLayer.ShipmentOrderPart shipmentOrderPart = new DataLayer.ShipmentOrderPart();
+            ShipmentOrderPart shipmentOrderPart = new ShipmentOrderPart();
             shipmentOrderPart.ShOrderId = shipmentOrder.Id;
             var frmShipmentOrderPart = new ShipmentOrderPartEdit(_shipment, shipmentOrder, shipmentOrderPart);
            
@@ -895,7 +949,7 @@ namespace Planning
         {
             if (tblShipmentOrders.CurrentCell == null)
                 return;
-            DataLayer.ShipmentOrder shipmentOrder = _shipmentOrders.Find(o => o.Id == int.Parse(tblShipmentOrders.Rows[tblShipmentOrders.SelectedRows[0].Index].Cells["colId"].Value.ToString()));
+            ShipmentOrder shipmentOrder = _shipmentOrders.Find(o => o.Id == int.Parse(tblShipmentOrders.Rows[tblShipmentOrders.SelectedRows[0].Index].Cells["colId"].Value.ToString()));
 
             if (tblOrderParts.CurrentCell == null)
                 return;
@@ -908,7 +962,7 @@ namespace Planning
 
             if (MessageBox.Show("Удалить расходную партию?", "Подверждение", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
-                DataLayer.ShipmentOrderPart shipmentOrderPart = _shipmentOrderParts.Find(o=>o.Id == int.Parse(tblOrderParts.Rows[tblOrderParts.CurrentCell.RowIndex].Cells["colPartsId"].Value.ToString()));
+                ShipmentOrderPart shipmentOrderPart = _shipmentOrderParts.Find(o=>o.Id == int.Parse(tblOrderParts.Rows[tblOrderParts.CurrentCell.RowIndex].Cells["colPartsId"].Value.ToString()));
                 shipmentOrderPart.Delete();
                 _shipmentOrderParts.Remove(shipmentOrderPart);
                 //PopulateOrderPart();

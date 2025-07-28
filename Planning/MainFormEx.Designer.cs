@@ -32,10 +32,10 @@ namespace Planning
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainFormEx));
             BrightIdeasSoftware.HeaderStateStyle headerStateStyle1 = new BrightIdeasSoftware.HeaderStateStyle();
             BrightIdeasSoftware.HeaderStateStyle headerStateStyle2 = new BrightIdeasSoftware.HeaderStateStyle();
             BrightIdeasSoftware.HeaderStateStyle headerStateStyle3 = new BrightIdeasSoftware.HeaderStateStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainFormEx));
             this.menuMain = new System.Windows.Forms.MenuStrip();
             this.mtiFile = new System.Windows.Forms.ToolStripMenuItem();
             this.miSettings = new System.Windows.Forms.ToolStripMenuItem();
@@ -114,6 +114,9 @@ namespace Planning
             this.colWarehouseName = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.colOrdLvId = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvRowNumberRange = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.mnuContext = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.mciPrint = new System.Windows.Forms.ToolStripMenuItem();
+            this.mciOrderDetail = new System.Windows.Forms.ToolStripMenuItem();
             this.panelMain = new System.Windows.Forms.Panel();
             this.edInterval = new System.Windows.Forms.NumericUpDown();
             this.cbPaint = new System.Windows.Forms.CheckBox();
@@ -184,21 +187,18 @@ namespace Planning
             this.tmUpdate = new System.Windows.Forms.Timer(this.components);
             this.simpleItemStyle1 = new BrightIdeasSoftware.SimpleItemStyle();
             this.baseRenderer1 = new BrightIdeasSoftware.BaseRenderer();
-            this.mnuContext = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.mciPrint = new System.Windows.Forms.ToolStripMenuItem();
-            this.mciOrderDetail = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMain.SuspendLayout();
             this.statusStrip2.SuspendLayout();
             this.tabForms.SuspendLayout();
             this.tabMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tblShipments)).BeginInit();
+            this.mnuContext.SuspendLayout();
             this.panelMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.edInterval)).BeginInit();
             this.contextMenuActionType.SuspendLayout();
             this.contextMenuColumns.SuspendLayout();
             this.panelFormHeader.SuspendLayout();
             this.contextMenuMain.SuspendLayout();
-            this.mnuContext.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuMain
@@ -547,6 +547,7 @@ namespace Planning
             this.tblShipments.RowHeight = 25;
             this.tblShipments.SelectColumnsOnRightClick = false;
             this.tblShipments.SelectColumnsOnRightClickBehaviour = BrightIdeasSoftware.ObjectListView.ColumnSelectBehaviour.None;
+            this.tblShipments.SelectedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.tblShipments.ShowGroups = false;
             this.tblShipments.Size = new System.Drawing.Size(1342, 577);
             this.tblShipments.TabIndex = 1;
@@ -906,6 +907,30 @@ namespace Planning
             this.olvRowNumberRange.DisplayIndex = 41;
             this.olvRowNumberRange.IsVisible = false;
             this.olvRowNumberRange.Name = "olvRowNumberRange";
+            // 
+            // mnuContext
+            // 
+            this.mnuContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mciPrint,
+            this.mciOrderDetail});
+            this.mnuContext.Name = "mnuContext";
+            this.mnuContext.Size = new System.Drawing.Size(145, 48);
+            // 
+            // mciPrint
+            // 
+            this.mciPrint.Image = ((System.Drawing.Image)(resources.GetObject("mciPrint.Image")));
+            this.mciPrint.Name = "mciPrint";
+            this.mciPrint.Size = new System.Drawing.Size(144, 22);
+            this.mciPrint.Text = "Печать";
+            this.mciPrint.Click += new System.EventHandler(this.btnPrint_Click);
+            // 
+            // mciOrderDetail
+            // 
+            this.mciOrderDetail.Image = ((System.Drawing.Image)(resources.GetObject("mciOrderDetail.Image")));
+            this.mciOrderDetail.Name = "mciOrderDetail";
+            this.mciOrderDetail.Size = new System.Drawing.Size(144, 22);
+            this.mciOrderDetail.Text = "Детализация";
+            this.mciOrderDetail.Click += new System.EventHandler(this.mciOrderDetail_Click);
             // 
             // panelMain
             // 
@@ -1617,30 +1642,6 @@ namespace Planning
             // 
             this.tmUpdate.Tick += new System.EventHandler(this.tmUpdate_Tick);
             // 
-            // mnuContext
-            // 
-            this.mnuContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mciPrint,
-            this.mciOrderDetail});
-            this.mnuContext.Name = "mnuContext";
-            this.mnuContext.Size = new System.Drawing.Size(145, 48);
-            // 
-            // mciPrint
-            // 
-            this.mciPrint.Image = ((System.Drawing.Image)(resources.GetObject("mciPrint.Image")));
-            this.mciPrint.Name = "mciPrint";
-            this.mciPrint.Size = new System.Drawing.Size(144, 22);
-            this.mciPrint.Text = "Печать";
-            this.mciPrint.Click += new System.EventHandler(this.btnPrint_Click);
-            // 
-            // mciOrderDetail
-            // 
-            this.mciOrderDetail.Image = ((System.Drawing.Image)(resources.GetObject("mciOrderDetail.Image")));
-            this.mciOrderDetail.Name = "mciOrderDetail";
-            this.mciOrderDetail.Size = new System.Drawing.Size(144, 22);
-            this.mciOrderDetail.Text = "Детализация";
-            this.mciOrderDetail.Click += new System.EventHandler(this.mciOrderDetail_Click);
-            // 
             // MainFormEx
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1662,6 +1663,7 @@ namespace Planning
             this.tabForms.ResumeLayout(false);
             this.tabMain.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.tblShipments)).EndInit();
+            this.mnuContext.ResumeLayout(false);
             this.panelMain.ResumeLayout(false);
             this.panelMain.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.edInterval)).EndInit();
@@ -1669,7 +1671,6 @@ namespace Planning
             this.contextMenuColumns.ResumeLayout(false);
             this.panelFormHeader.ResumeLayout(false);
             this.contextMenuMain.ResumeLayout(false);
-            this.mnuContext.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

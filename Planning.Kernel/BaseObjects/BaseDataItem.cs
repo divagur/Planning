@@ -21,7 +21,7 @@ namespace Planning.Kernel
         }
         public void Edit()
         {
-            if(Id >0 && State != EditState.Delete)
+            if(Id>0 && State != EditState.Delete)
             {
                 State = EditState.Edit;
             }

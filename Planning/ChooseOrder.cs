@@ -108,7 +108,8 @@ namespace Planning
         {
             if (tblOrders.CurrentCell !=null)
             {
-                _selectedResult.Result = listOrders.Find(o => o.Id == Int32.Parse(tblOrders.Rows[tblOrders.CurrentCell.RowIndex].Cells["colLVOrderId"].Value.ToString()));
+                if (tblOrders.Rows[tblOrders.CurrentCell.RowIndex].Cells["colLVOrderId"].Value != null)
+                    _selectedResult.Result = listOrders.Find(o => o.LVID == Int32.Parse(tblOrders.Rows[tblOrders.CurrentCell.RowIndex].Cells["colLVOrderId"].Value.ToString()));
             }
             DialogResult = DialogResult.OK;
         }

@@ -79,12 +79,12 @@ namespace Planning
             foreach (var item in lvSelectOrders)
             {
                 int Row = tblOrders.Rows.Add();
-                tblOrders.Rows[Row].Cells["colId"].Value = item.Id;
+                tblOrders.Rows[Row].Cells["colId"].Value = item.LVCode;
                 tblOrders.Rows[Row].Cells["colOstCode"].Value = item.OstCode;
                 tblOrders.Rows[Row].Cells["colState"].Value = item.LVStatus;
                 tblOrders.Rows[Row].Cells["colDate"].Value = item.ExpDate == null ? "" : item.ExpDate.ToString().Substring(0, 10);
                 tblOrders.Rows[Row].Cells["colKlient"].Value = item.Company;
-                tblOrders.Rows[Row].Cells["colLVOrderId"].Value = item.Id;
+                tblOrders.Rows[Row].Cells["colLVOrderId"].Value = item.LVID;
                 tblOrders.Rows[Row].Cells["colOstId"].Value = item.OstID;
                 tblOrders.Rows[Row].Cells["colIsEDM"].Value = item.IsEDM;
             }
