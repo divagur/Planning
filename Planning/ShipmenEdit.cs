@@ -764,7 +764,7 @@ namespace Planning
 
                 foreach (var shipmentOrder in _shipmentOrders)
                 {
-                    List<DataLayer.ShipmentOrderPart> shipmentOrderPartsTemp = shipmentOrderPartRepository.GetShipmentOrderParts(shipmentOrder.Id);
+                    List<ShipmentOrderPart> shipmentOrderPartsTemp = shipmentOrderPartRepository.GetShipmentOrderParts(shipmentOrder.Id);
                     foreach (var part in shipmentOrderPartsTemp)
                     {
                         if (part.IsBinding == null || part.IsBinding == false)

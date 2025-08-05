@@ -92,7 +92,7 @@ namespace Planning
 
             ExcelPrint excel = new ExcelPrint(TemplatePath);
             //Код отгрузки
-            excel.SetValue(1, 5, 2, "*PL" + shipmentMain.ShpId + " *");
+            excel.SetValue(1, 5, 2, "*PL" + shipmentMain.ShpId + "*");
             excel.SetValue(1, 5, 3, "PL" + shipmentMain.ShpId);
             //Прибыл по плану
             excel.SetValue(1, 3, 6, shipmentMain.ShpDate.ToString().Substring(0, 10) + " " + shipmentMain.SlotTime);

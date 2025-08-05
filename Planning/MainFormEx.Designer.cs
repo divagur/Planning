@@ -33,9 +33,9 @@ namespace Planning
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainFormEx));
-            BrightIdeasSoftware.HeaderStateStyle headerStateStyle1 = new BrightIdeasSoftware.HeaderStateStyle();
-            BrightIdeasSoftware.HeaderStateStyle headerStateStyle2 = new BrightIdeasSoftware.HeaderStateStyle();
-            BrightIdeasSoftware.HeaderStateStyle headerStateStyle3 = new BrightIdeasSoftware.HeaderStateStyle();
+            BrightIdeasSoftware.HeaderStateStyle headerStateStyle7 = new BrightIdeasSoftware.HeaderStateStyle();
+            BrightIdeasSoftware.HeaderStateStyle headerStateStyle8 = new BrightIdeasSoftware.HeaderStateStyle();
+            BrightIdeasSoftware.HeaderStateStyle headerStateStyle9 = new BrightIdeasSoftware.HeaderStateStyle();
             this.menuMain = new System.Windows.Forms.MenuStrip();
             this.mtiFile = new System.Windows.Forms.ToolStripMenuItem();
             this.miSettings = new System.Windows.Forms.ToolStripMenuItem();
@@ -187,6 +187,7 @@ namespace Planning
             this.tmUpdate = new System.Windows.Forms.Timer(this.components);
             this.simpleItemStyle1 = new BrightIdeasSoftware.SimpleItemStyle();
             this.baseRenderer1 = new BrightIdeasSoftware.BaseRenderer();
+            this.flagRenderer1 = new BrightIdeasSoftware.FlagRenderer();
             this.menuMain.SuspendLayout();
             this.statusStrip2.SuspendLayout();
             this.tabForms.SuspendLayout();
@@ -710,6 +711,7 @@ namespace Planning
             this.colSpecCond.CheckBoxes = true;
             this.colSpecCond.IsEditable = false;
             this.colSpecCond.Name = "colSpecCond";
+            this.colSpecCond.Renderer = this.flagRenderer1;
             this.colSpecCond.Text = "Спец. Условия";
             this.colSpecCond.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -1276,10 +1278,10 @@ namespace Planning
             // 
             // headerFormatStyle1
             // 
-            this.headerFormatStyle1.Hot = headerStateStyle1;
-            headerStateStyle2.FrameWidth = 2F;
-            this.headerFormatStyle1.Normal = headerStateStyle2;
-            this.headerFormatStyle1.Pressed = headerStateStyle3;
+            this.headerFormatStyle1.Hot = headerStateStyle7;
+            headerStateStyle8.FrameWidth = 2F;
+            this.headerFormatStyle1.Normal = headerStateStyle8;
+            this.headerFormatStyle1.Pressed = headerStateStyle9;
             // 
             // imageListInOut
             // 
@@ -1642,6 +1644,10 @@ namespace Planning
             // 
             this.tmUpdate.Tick += new System.EventHandler(this.tmUpdate_Tick);
             // 
+            // flagRenderer1
+            // 
+            this.flagRenderer1.ImageList = this.imageListInOut;
+            // 
             // MainFormEx
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1829,5 +1835,6 @@ namespace Planning
         private System.Windows.Forms.ContextMenuStrip mnuContext;
         private System.Windows.Forms.ToolStripMenuItem mciPrint;
         private System.Windows.Forms.ToolStripMenuItem mciOrderDetail;
+        private BrightIdeasSoftware.FlagRenderer flagRenderer1;
     }
 }

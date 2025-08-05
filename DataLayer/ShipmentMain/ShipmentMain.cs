@@ -22,7 +22,7 @@ namespace Planning.DataLayer
 		public string OrdPartLVCode { get; set; }
 		public int? ShpDepLVID { get; set; }
 		public string DepCode { get; set; }
-		public bool? ShpSpecialCond { get; set; }
+		public bool? ShpSpecialCond { get; set; } = false;
 		public bool? ShpIsCourier { get; set; } = false;
 		public int? ShpGateID { get; set; }
 		public string GateName { get; set; }

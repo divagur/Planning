@@ -154,7 +154,7 @@ namespace Planning
             });
 
             this.colDate.Renderer = new GridRender();
-
+            barRenderer1.Aspect
         }
         private void SetupButtons()
         {
@@ -559,9 +559,11 @@ namespace Planning
             {
                 _normalWindowSize = this.Size;
                 _normalWindowLocation = this.Location;
+                Screen[] screens = Screen.AllScreens;
+                Screen screen = Screen.FromControl(this);
+                Rectangle rect = screen.WorkingArea;
+                this.Location = new Point(screen.Bounds.X, screen.Bounds.Y);
 
-                Rectangle rect = Screen.PrimaryScreen.WorkingArea;
-                this.Location = new Point(0, 0);
                 this.Size = new System.Drawing.Size(rect.Width, rect.Height);
                 //toolTip1.SetToolTip(_MaxButton, "Restore Down");
                 //_MaxButton.CFormState = MinMaxButton.CustomFormState.Maximize;

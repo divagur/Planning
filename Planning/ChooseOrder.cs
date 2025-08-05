@@ -56,7 +56,7 @@ namespace Planning
             List<LvSelectOrder> result = new List<LvSelectOrder>();
             // listOrders = Order_Manager.GetList(_depositorId, IsShpIn()?1:0, 0, _LVOrderId);
            
-            listOrders = LvSelectOrderRepository.GetAll(0, IsShpIn() ? 1 : 0, _depositorId,  _LVOrderId,0);
+            listOrders = LvSelectOrderRepository.GetAll(0, IsShpIn() ? 1 : 0, _depositorId,  _LVOrderId,1);
             if (_isOrderParts)
             {
                 //Planning.DataLayer.ShipmentOrder shipmentOrder = _shipmentOrders.First(o => o.LvOrderId == _LVOrderId);

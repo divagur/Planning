@@ -17,8 +17,8 @@ namespace Planning
     {
         
 
-        DataLayer.Shipment _shipment;
-        DataLayer.Movement _movement;
+        Shipment _shipment;
+        Movement _movement;
         ShipmentParam _shipmentAddResult;
 
         private void LockChangeType(bool Lock)
@@ -49,7 +49,7 @@ namespace Planning
         private void PopulateList()
         {
             DepositorRepository depositorRepository = new DepositorRepository();
-            List<DataLayer.Depositor> depositors = depositorRepository.GetAll();
+            List<Depositor> depositors = depositorRepository.GetAll();
 
             cmbDepositor.Items.Clear();
             foreach (var d in depositors)
@@ -60,9 +60,9 @@ namespace Planning
             int? depositorId = GetSelectedDepositorId();
 
             TimeSlotRepository timeSlotRepository = new TimeSlotRepository();
-            List<DataLayer.TimeSlot> timeSlots = timeSlotRepository.GetByDepositorId(depositorId);
+            List<TimeSlot> timeSlots = timeSlotRepository.GetByDepositorId(depositorId);
             cmbTimeSlot.Items.Clear();
-            foreach (var ts in timeSlots)
+            foreach (var ts in timeSlots.OrderBy(t=>t.SlotTime))
             {
                 cmbTimeSlot.Items.Add(ts);
             }
