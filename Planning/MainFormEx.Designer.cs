@@ -33,9 +33,9 @@ namespace Planning
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainFormEx));
-            BrightIdeasSoftware.HeaderStateStyle headerStateStyle7 = new BrightIdeasSoftware.HeaderStateStyle();
-            BrightIdeasSoftware.HeaderStateStyle headerStateStyle8 = new BrightIdeasSoftware.HeaderStateStyle();
-            BrightIdeasSoftware.HeaderStateStyle headerStateStyle9 = new BrightIdeasSoftware.HeaderStateStyle();
+            BrightIdeasSoftware.HeaderStateStyle headerStateStyle1 = new BrightIdeasSoftware.HeaderStateStyle();
+            BrightIdeasSoftware.HeaderStateStyle headerStateStyle2 = new BrightIdeasSoftware.HeaderStateStyle();
+            BrightIdeasSoftware.HeaderStateStyle headerStateStyle3 = new BrightIdeasSoftware.HeaderStateStyle();
             this.menuMain = new System.Windows.Forms.MenuStrip();
             this.mtiFile = new System.Windows.Forms.ToolStripMenuItem();
             this.miSettings = new System.Windows.Forms.ToolStripMenuItem();
@@ -87,6 +87,8 @@ namespace Planning
             this.colOrderComment = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.colGate = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.colSpecCond = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.flagRenderer1 = new BrightIdeasSoftware.FlagRenderer();
+            this.imageListInOut = new System.Windows.Forms.ImageList(this.components);
             this.colDriverPhone = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.colDriverName = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.colTransComp = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
@@ -148,7 +150,6 @@ namespace Planning
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
             this.headerFormatStyle1 = new BrightIdeasSoftware.HeaderFormatStyle();
-            this.imageListInOut = new System.Windows.Forms.ImageList(this.components);
             this.imageListMain16 = new System.Windows.Forms.ImageList(this.components);
             this.imageListMain32 = new System.Windows.Forms.ImageList(this.components);
             this.panelFormHeader = new System.Windows.Forms.Panel();
@@ -187,7 +188,6 @@ namespace Planning
             this.tmUpdate = new System.Windows.Forms.Timer(this.components);
             this.simpleItemStyle1 = new BrightIdeasSoftware.SimpleItemStyle();
             this.baseRenderer1 = new BrightIdeasSoftware.BaseRenderer();
-            this.flagRenderer1 = new BrightIdeasSoftware.FlagRenderer();
             this.menuMain.SuspendLayout();
             this.statusStrip2.SuspendLayout();
             this.tabForms.SuspendLayout();
@@ -656,7 +656,6 @@ namespace Planning
             // 
             this.colDoneShare.AspectName = "DoneShare";
             this.colDoneShare.Name = "colDoneShare";
-            this.colDoneShare.Renderer = this.barRenderer1;
             this.colDoneShare.Text = "Собран (в %)";
             this.colDoneShare.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.colDoneShare.Width = 92;
@@ -714,6 +713,21 @@ namespace Planning
             this.colSpecCond.Renderer = this.flagRenderer1;
             this.colSpecCond.Text = "Спец. Условия";
             this.colSpecCond.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // flagRenderer1
+            // 
+            this.flagRenderer1.ImageList = this.imageListInOut;
+            // 
+            // imageListInOut
+            // 
+            this.imageListInOut.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListInOut.ImageStream")));
+            this.imageListInOut.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageListInOut.Images.SetKeyName(0, "InEx");
+            this.imageListInOut.Images.SetKeyName(1, "OutEx");
+            this.imageListInOut.Images.SetKeyName(2, "MoveEx");
+            this.imageListInOut.Images.SetKeyName(3, "Out");
+            this.imageListInOut.Images.SetKeyName(4, "Move");
+            this.imageListInOut.Images.SetKeyName(5, "In");
             // 
             // colDriverPhone
             // 
@@ -1278,21 +1292,10 @@ namespace Planning
             // 
             // headerFormatStyle1
             // 
-            this.headerFormatStyle1.Hot = headerStateStyle7;
-            headerStateStyle8.FrameWidth = 2F;
-            this.headerFormatStyle1.Normal = headerStateStyle8;
-            this.headerFormatStyle1.Pressed = headerStateStyle9;
-            // 
-            // imageListInOut
-            // 
-            this.imageListInOut.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListInOut.ImageStream")));
-            this.imageListInOut.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageListInOut.Images.SetKeyName(0, "InEx");
-            this.imageListInOut.Images.SetKeyName(1, "OutEx");
-            this.imageListInOut.Images.SetKeyName(2, "MoveEx");
-            this.imageListInOut.Images.SetKeyName(3, "Out");
-            this.imageListInOut.Images.SetKeyName(4, "Move");
-            this.imageListInOut.Images.SetKeyName(5, "In");
+            this.headerFormatStyle1.Hot = headerStateStyle1;
+            headerStateStyle2.FrameWidth = 2F;
+            this.headerFormatStyle1.Normal = headerStateStyle2;
+            this.headerFormatStyle1.Pressed = headerStateStyle3;
             // 
             // imageListMain16
             // 
@@ -1643,10 +1646,6 @@ namespace Planning
             // tmUpdate
             // 
             this.tmUpdate.Tick += new System.EventHandler(this.tmUpdate_Tick);
-            // 
-            // flagRenderer1
-            // 
-            this.flagRenderer1.ImageList = this.imageListInOut;
             // 
             // MainFormEx
             // 

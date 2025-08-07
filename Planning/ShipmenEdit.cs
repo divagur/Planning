@@ -749,7 +749,7 @@ namespace Planning
                 bool isAllBindings = true;
                
                 //var listOrdId = _shipmentOrders.Select(o => (int?)o.Id).ToList();
-                _shipmentOrders = shipmentOrderRepository.GetAll();
+                _shipmentOrders = shipmentOrderRepository.GetShipmentOrders(_shipment.Id);
                 tblShipmentOrders.DataSource = _shipmentOrders;
                 PopulateOrderPart();
                 foreach (var part in _shipmentOrderParts)
@@ -1038,18 +1038,23 @@ namespace Planning
 
         private void cmbDelayReasons_Format(object sender, ListControlConvertEventArgs e)
         {
-            e.Value = ((DataLayer.DelayReason)e.ListItem).Name;
+            e.Value = ((DelayReason)e.ListItem).Name;
         }
 
         private void cmbTransportType_Format(object sender, ListControlConvertEventArgs e)
         {
-            e.Value = ((DataLayer.TransportType)e.ListItem).Name;
+            e.Value = ((TransportType)e.ListItem).Name;
 
         }
 
         private void cmbGate_Format(object sender, ListControlConvertEventArgs e)
         {
-            e.Value = ((DataLayer.Gateway)e.ListItem).Name;
+            e.Value = ((Gateway)e.ListItem).Name;
+        }
+
+        private void cmbTimeSlot_Format(object sender, ListControlConvertEventArgs e)
+        {
+            e.Value = ((TimeSlot)e.ListItem).SlotTime.ToString();
         }
     }
 

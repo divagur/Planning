@@ -628,6 +628,7 @@
             this.cmbTimeSlot.Name = "cmbTimeSlot";
             this.cmbTimeSlot.Size = new System.Drawing.Size(121, 21);
             this.cmbTimeSlot.TabIndex = 29;
+            this.cmbTimeSlot.Format += new System.Windows.Forms.ListControlConvertEventHandler(this.cmbTimeSlot_Format);
             // 
             // btnOK
             // 

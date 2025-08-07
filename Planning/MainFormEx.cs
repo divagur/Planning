@@ -152,9 +152,17 @@ namespace Planning
                 "Out", Resources.ShpOut,
                 "Move", Resources.ShpMove
             });
+            BarRendererEx barRendererEx = new BarRendererEx();
+            barRendererEx.MaximumValue = 1D;
+
+            Color progressBarColor = Color.FromArgb(53,162,62);
+            //barRendererEx.BackgroundColor = Color.Green;
+            barRendererEx.UseStandardBar = false;
+            barRendererEx.GradientStartColor = progressBarColor;
+            barRendererEx.GradientEndColor = progressBarColor;
 
             this.colDate.Renderer = new GridRender();
-            barRenderer1.Aspect
+            colDoneShare.Renderer = barRendererEx;
         }
         private void SetupButtons()
         {

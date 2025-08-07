@@ -7,9 +7,9 @@ using Planning.DataLayer;
 namespace Planning
 {
 
-    public class LVOrderIdComparer : IEqualityComparer<LVOrder>
+    public class LVOrderIdComparer : IEqualityComparer<LvSelectOrder>
     {
-        public bool Equals(LVOrder x, LVOrder y)
+        public bool Equals(LvSelectOrder x, LvSelectOrder y)
         {
             if (object.ReferenceEquals(x, y))
             {
@@ -23,7 +23,7 @@ namespace Planning
 
             return x.LVID == y.LVID;
         }
-        public int GetHashCode(LVOrder obj)
+        public int GetHashCode(LvSelectOrder obj)
         {
             if (obj == null)
             {

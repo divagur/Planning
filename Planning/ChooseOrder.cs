@@ -56,7 +56,7 @@ namespace Planning
             List<LvSelectOrder> result = new List<LvSelectOrder>();
             // listOrders = Order_Manager.GetList(_depositorId, IsShpIn()?1:0, 0, _LVOrderId);
            
-            listOrders = LvSelectOrderRepository.GetAll(0, IsShpIn() ? 1 : 0, _depositorId,  _LVOrderId,1);
+            listOrders = LvSelectOrderRepository.GetAll(0, IsShpIn() ? 1 : 0, _depositorId,  _LVOrderId,0);
             if (_isOrderParts)
             {
                 //Planning.DataLayer.ShipmentOrder shipmentOrder = _shipmentOrders.First(o => o.LvOrderId == _LVOrderId);
@@ -75,7 +75,7 @@ namespace Planning
                 List<ShipmentOrder> shipmentOrders = shipmentOrderRepository.GetShipmentOrders(_shipmentId);
 
                 var listExclusionID = shipmentOrders.Select(o => o.LvOrderId).ToList();
-                result = listOrders.Where(o => !listExclusionID.Contains(o.Id)).ToList();
+                result = listOrders.Where(o => !listExclusionID.Contains(o.LVID)).ToList();
             }
 
             return result;
@@ -88,9 +88,9 @@ namespace Planning
             
             if (!_isOrderParts)
             {
-                //LVOrderIdComparer lVOrderIdComparer = new LVOrderIdComparer();
+                LVOrderIdComparer lVOrderIdComparer = new LVOrderIdComparer();
                 //listOrders = listOrders.Distinct(lVOrderIdComparer).ToList();
-                listOrders = listOrders.Distinct().ToList();
+                listOrders = listOrders.Distinct(lVOrderIdComparer).ToList();
             }
             tblOrders.AutoGenerateColumns = false;
             tblOrders.DataSource = listOrders;

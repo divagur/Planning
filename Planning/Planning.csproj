@@ -131,6 +131,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdvancedCursor.cs" />
+    <Compile Include="BarRenderEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ChooseOrder.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -147,6 +150,7 @@
     <Compile Include="Controls\MenuButton.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="DataLayers\LVOrderIdComparer.cs" />
     <Compile Include="DataLayers\UserGrpPrvlgView.cs" />
     <Compile Include="DataLayers\UserGrpPrvlgViewRepository.cs" />
     <Compile Include="DataLayers\VolumeCalc.cs" />
