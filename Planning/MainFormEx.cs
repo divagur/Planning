@@ -161,7 +161,7 @@ namespace Planning
             barRendererEx.GradientStartColor = progressBarColor;
             barRendererEx.GradientEndColor = progressBarColor;
 
-            this.colDate.Renderer = new GridRender();
+            //this.colDate.Renderer = new GridRender();
             colDoneShare.Renderer = barRendererEx;
         }
         private void SetupButtons()
@@ -2043,6 +2043,10 @@ namespace Planning
            // if (e.Column.IsVisible)
             {
                 e.SubItem.Decoration = standardDecoration;
+            }
+            if (e.Column.Name == "colDate")
+            {
+                e.SubItem.Text =((DateTime)e.CellValue).ToShortDateString();
             }
         }
 
