@@ -240,7 +240,7 @@ namespace Planning
             }
 
             ShipmentEdit(shipmentAddResult);
-            //ShipmentsLoad();
+            ShipmentsLoad();
         }
         private void ShipmentEdit(ShipmentParam shipmentAddResult)
         {
@@ -281,7 +281,7 @@ namespace Planning
                     */
                 }
                 UpdateDataSource(_shipmentMainList);
-               // tblShipments.Refresh();
+                tblShipments.Refresh();
             }
         }
         private void GetOrderWight()
@@ -761,10 +761,11 @@ namespace Planning
             ShipmentMain findRow = _shipmentMainList.FirstOrDefault(o => o.OrdLVCode == SearchText);
             if (findRow != null) 
             {
-                //tblShipments.EnsureModelVisible(findRow);
+                tblShipments.EnsureModelVisible(findRow);
 
                 //tblShipments.SelectObject(findRow, true);
                 var item = tblShipments.SelectedItem;
+         
                 tblShipments.SelectedObject = findRow;
                 tblShipments.Invalidate();
                 tblShipments.Refresh();
