@@ -33,9 +33,9 @@ namespace Planning
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainFormEx));
-            BrightIdeasSoftware.HeaderStateStyle headerStateStyle1 = new BrightIdeasSoftware.HeaderStateStyle();
-            BrightIdeasSoftware.HeaderStateStyle headerStateStyle2 = new BrightIdeasSoftware.HeaderStateStyle();
-            BrightIdeasSoftware.HeaderStateStyle headerStateStyle3 = new BrightIdeasSoftware.HeaderStateStyle();
+            BrightIdeasSoftware.HeaderStateStyle headerStateStyle4 = new BrightIdeasSoftware.HeaderStateStyle();
+            BrightIdeasSoftware.HeaderStateStyle headerStateStyle5 = new BrightIdeasSoftware.HeaderStateStyle();
+            BrightIdeasSoftware.HeaderStateStyle headerStateStyle6 = new BrightIdeasSoftware.HeaderStateStyle();
             this.menuMain = new System.Windows.Forms.MenuStrip();
             this.mtiFile = new System.Windows.Forms.ToolStripMenuItem();
             this.miSettings = new System.Windows.Forms.ToolStripMenuItem();
@@ -80,7 +80,6 @@ namespace Planning
             this.colKlientName = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.colStatus = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.colDoneShare = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.barRenderer1 = new BrightIdeasSoftware.BarRenderer();
             this.colCopmletePct = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.PrcValue = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.colComment = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
@@ -149,6 +148,7 @@ namespace Planning
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
+            this.barRenderer1 = new BrightIdeasSoftware.BarRenderer();
             this.headerFormatStyle1 = new BrightIdeasSoftware.HeaderFormatStyle();
             this.imageListMain16 = new System.Windows.Forms.ImageList(this.components);
             this.imageListMain32 = new System.Windows.Forms.ImageList(this.components);
@@ -660,10 +660,6 @@ namespace Planning
             this.colDoneShare.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.colDoneShare.Width = 92;
             // 
-            // barRenderer1
-            // 
-            this.barRenderer1.MaximumValue = 1D;
-            // 
             // colCopmletePct
             // 
             this.colCopmletePct.AspectName = "PrcReady";
@@ -978,7 +974,7 @@ namespace Planning
             // 
             // edInterval
             // 
-            this.edInterval.Location = new System.Drawing.Point(814, 9);
+            this.edInterval.Location = new System.Drawing.Point(759, 8);
             this.edInterval.Minimum = new decimal(new int[] {
             10,
             0,
@@ -997,7 +993,7 @@ namespace Planning
             // cbPaint
             // 
             this.cbPaint.AutoSize = true;
-            this.cbPaint.Location = new System.Drawing.Point(865, 35);
+            this.cbPaint.Location = new System.Drawing.Point(810, 35);
             this.cbPaint.Name = "cbPaint";
             this.cbPaint.Size = new System.Drawing.Size(81, 17);
             this.cbPaint.TabIndex = 10;
@@ -1008,7 +1004,7 @@ namespace Planning
             // cbUpdate
             // 
             this.cbUpdate.AutoSize = true;
-            this.cbUpdate.Location = new System.Drawing.Point(865, 11);
+            this.cbUpdate.Location = new System.Drawing.Point(810, 10);
             this.cbUpdate.Name = "cbUpdate";
             this.cbUpdate.Size = new System.Drawing.Size(110, 17);
             this.cbUpdate.TabIndex = 9;
@@ -1018,7 +1014,7 @@ namespace Planning
             // 
             // edSearch
             // 
-            this.edSearch.Location = new System.Drawing.Point(553, 9);
+            this.edSearch.Location = new System.Drawing.Point(498, 8);
             this.edSearch.Name = "edSearch";
             this.edSearch.Size = new System.Drawing.Size(134, 20);
             this.edSearch.TabIndex = 8;
@@ -1027,7 +1023,7 @@ namespace Planning
             // edCurrDay
             // 
             this.edCurrDay.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.edCurrDay.Location = new System.Drawing.Point(706, 9);
+            this.edCurrDay.Location = new System.Drawing.Point(651, 8);
             this.edCurrDay.Name = "edCurrDay";
             this.edCurrDay.Size = new System.Drawing.Size(102, 20);
             this.edCurrDay.TabIndex = 7;
@@ -1098,7 +1094,7 @@ namespace Planning
             this.btnPrint.FlatAppearance.BorderSize = 0;
             this.btnPrint.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnPrint.Image = ((System.Drawing.Image)(resources.GetObject("btnPrint.Image")));
-            this.btnPrint.Location = new System.Drawing.Point(275, 5);
+            this.btnPrint.Location = new System.Drawing.Point(220, 4);
             this.btnPrint.Name = "btnPrint";
             this.btnPrint.Size = new System.Drawing.Size(49, 49);
             this.btnPrint.TabIndex = 0;
@@ -1110,7 +1106,7 @@ namespace Planning
             this.btnShowLog.FlatAppearance.BorderSize = 0;
             this.btnShowLog.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnShowLog.Image = ((System.Drawing.Image)(resources.GetObject("btnShowLog.Image")));
-            this.btnShowLog.Location = new System.Drawing.Point(220, 3);
+            this.btnShowLog.Location = new System.Drawing.Point(926, 4);
             this.btnShowLog.Name = "btnShowLog";
             this.btnShowLog.Size = new System.Drawing.Size(49, 49);
             this.btnShowLog.TabIndex = 0;
@@ -1158,7 +1154,7 @@ namespace Planning
             this.btnSearchEx.FlatAppearance.BorderSize = 0;
             this.btnSearchEx.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSearchEx.Image = ((System.Drawing.Image)(resources.GetObject("btnSearchEx.Image")));
-            this.btnSearchEx.Location = new System.Drawing.Point(498, 5);
+            this.btnSearchEx.Location = new System.Drawing.Point(443, 4);
             this.btnSearchEx.Name = "btnSearchEx";
             this.btnSearchEx.Size = new System.Drawing.Size(49, 49);
             this.btnSearchEx.TabIndex = 0;
@@ -1183,7 +1179,7 @@ namespace Planning
             this.btnActionFilter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnActionFilter.Image = ((System.Drawing.Image)(resources.GetObject("btnActionFilter.Image")));
             this.btnActionFilter.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnActionFilter.Location = new System.Drawing.Point(386, 4);
+            this.btnActionFilter.Location = new System.Drawing.Point(331, 3);
             this.btnActionFilter.Menu = this.contextMenuActionType;
             this.btnActionFilter.Name = "btnActionFilter";
             this.btnActionFilter.Size = new System.Drawing.Size(50, 49);
@@ -1236,7 +1232,7 @@ namespace Planning
             this.btnWarehouseFilter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnWarehouseFilter.Image = ((System.Drawing.Image)(resources.GetObject("btnWarehouseFilter.Image")));
             this.btnWarehouseFilter.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnWarehouseFilter.Location = new System.Drawing.Point(442, 4);
+            this.btnWarehouseFilter.Location = new System.Drawing.Point(387, 3);
             this.btnWarehouseFilter.Menu = this.contextMenuWarehouse;
             this.btnWarehouseFilter.Name = "btnWarehouseFilter";
             this.btnWarehouseFilter.Size = new System.Drawing.Size(50, 49);
@@ -1254,7 +1250,7 @@ namespace Planning
             this.btnColumnVisible.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnColumnVisible.Image = ((System.Drawing.Image)(resources.GetObject("btnColumnVisible.Image")));
             this.btnColumnVisible.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnColumnVisible.Location = new System.Drawing.Point(330, 4);
+            this.btnColumnVisible.Location = new System.Drawing.Point(275, 3);
             this.btnColumnVisible.Menu = this.contextMenuColumns;
             this.btnColumnVisible.Name = "btnColumnVisible";
             this.btnColumnVisible.Size = new System.Drawing.Size(50, 49);
@@ -1290,12 +1286,16 @@ namespace Planning
             this.toolStripMenuItem4.Size = new System.Drawing.Size(80, 22);
             this.toolStripMenuItem4.Text = "3";
             // 
+            // barRenderer1
+            // 
+            this.barRenderer1.MaximumValue = 1D;
+            // 
             // headerFormatStyle1
             // 
-            this.headerFormatStyle1.Hot = headerStateStyle1;
-            headerStateStyle2.FrameWidth = 2F;
-            this.headerFormatStyle1.Normal = headerStateStyle2;
-            this.headerFormatStyle1.Pressed = headerStateStyle3;
+            this.headerFormatStyle1.Hot = headerStateStyle4;
+            headerStateStyle5.FrameWidth = 2F;
+            this.headerFormatStyle1.Normal = headerStateStyle5;
+            this.headerFormatStyle1.Pressed = headerStateStyle6;
             // 
             // imageListMain16
             // 

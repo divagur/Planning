@@ -215,12 +215,14 @@ namespace Planning
             {
                 tblShipments.AutoGenerateColumns = false;
                 tblShipments.DataSource = _shipmentMainList;
+                tbCancelSearch.Visible = true;
             }
 
             SetEndActionParam();
         }
         private void Search()
         {
+            
             workerSearch = new BackgroundWorker();
             workerSearch.WorkerSupportsCancellation = true;
             workerSearch.DoWork += bw_DoWork;
@@ -331,7 +333,7 @@ namespace Planning
             {
                 for (int colIdx = 0; colIdx < visibleColumns.Count; colIdx++)
                 {
-                    string cellValue = (tblShipments[visibleColumns[colIdx].Index, rowIdx].Value).ToString();
+                    string cellValue = tblShipments[visibleColumns[colIdx].Index, rowIdx].Value != null?(tblShipments[visibleColumns[colIdx].Index, rowIdx].Value).ToString():"";
                     
                     if (tblShipments.Columns[visibleColumns[colIdx].Index].DataPropertyName == "ShpDate")
                     {

@@ -645,6 +645,7 @@ namespace Planning
             this.tbCancelSearch.Size = new System.Drawing.Size(23, 22);
             this.tbCancelSearch.Text = "toolStripButton1";
             this.tbCancelSearch.ToolTipText = "Остановить поиск";
+            this.tbCancelSearch.Visible = false;
             this.tbCancelSearch.Click += new System.EventHandler(this.tbCancelSearch_Click);
             // 
             // frmSearch
