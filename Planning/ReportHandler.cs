@@ -144,13 +144,13 @@ namespace Planning
             range.Borders.Item[Excel.XlBordersIndex.xlEdgeRight].Weight = Excel.XlBorderWeight.xlMedium;
             range.Borders.Item[Excel.XlBordersIndex.xlEdgeBottom].Weight = Excel.XlBorderWeight.xlMedium;
 
-            excel.Merge(1, 1, 17 + rowCount + 2, 1, 17 + rowCount + 3);
+            excel.Merge(1, 1, 17 + rowCount + 2, 1, 17 + rowCount + 4);
             range = excel.SelectCells(1, 1, 17 + rowCount + 2, 2, 17 + rowCount + 2);
             range.Font.Bold = true;
             range.HorizontalAlignment = Excel.XlHAlign.xlHAlignLeft;
             range.VerticalAlignment = Excel.XlVAlign.xlVAlignTop;
             range.WrapText = true;
-            excel.SetValue(1, 1, 17 + rowCount + 2, "Комментарии к отгрузке:");
+            excel.SetValue(1, 1, 17 + rowCount + 2, "Комментарии для операторов:");
 
 
             int commentRow = 17 + rowCount + 2;
