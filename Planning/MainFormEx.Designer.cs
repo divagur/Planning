@@ -33,9 +33,9 @@ namespace Planning
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainFormEx));
-            BrightIdeasSoftware.HeaderStateStyle headerStateStyle4 = new BrightIdeasSoftware.HeaderStateStyle();
-            BrightIdeasSoftware.HeaderStateStyle headerStateStyle5 = new BrightIdeasSoftware.HeaderStateStyle();
-            BrightIdeasSoftware.HeaderStateStyle headerStateStyle6 = new BrightIdeasSoftware.HeaderStateStyle();
+            BrightIdeasSoftware.HeaderStateStyle headerStateStyle1 = new BrightIdeasSoftware.HeaderStateStyle();
+            BrightIdeasSoftware.HeaderStateStyle headerStateStyle2 = new BrightIdeasSoftware.HeaderStateStyle();
+            BrightIdeasSoftware.HeaderStateStyle headerStateStyle3 = new BrightIdeasSoftware.HeaderStateStyle();
             this.menuMain = new System.Windows.Forms.MenuStrip();
             this.mtiFile = new System.Windows.Forms.ToolStripMenuItem();
             this.miSettings = new System.Windows.Forms.ToolStripMenuItem();
@@ -549,6 +549,7 @@ namespace Planning
             this.tblShipments.SelectColumnsOnRightClick = false;
             this.tblShipments.SelectColumnsOnRightClickBehaviour = BrightIdeasSoftware.ObjectListView.ColumnSelectBehaviour.None;
             this.tblShipments.SelectedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.tblShipments.SelectedForeColor = System.Drawing.Color.Red;
             this.tblShipments.ShowGroups = false;
             this.tblShipments.Size = new System.Drawing.Size(1342, 577);
             this.tblShipments.TabIndex = 1;
@@ -1292,10 +1293,10 @@ namespace Planning
             // 
             // headerFormatStyle1
             // 
-            this.headerFormatStyle1.Hot = headerStateStyle4;
-            headerStateStyle5.FrameWidth = 2F;
-            this.headerFormatStyle1.Normal = headerStateStyle5;
-            this.headerFormatStyle1.Pressed = headerStateStyle6;
+            this.headerFormatStyle1.Hot = headerStateStyle1;
+            headerStateStyle2.FrameWidth = 2F;
+            this.headerFormatStyle1.Normal = headerStateStyle2;
+            this.headerFormatStyle1.Pressed = headerStateStyle3;
             // 
             // imageListMain16
             // 

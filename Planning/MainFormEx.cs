@@ -772,35 +772,41 @@ namespace Planning
             }
 
              ListViewItem listViewItem = tblShipments.FindItemWithText(SearchText, true, startRow);
-            
-             /*if (listViewItem !=null)
+            if (listViewItem != null)
             {
-                
-                listViewItem.Selected = true;
-                tblShipments.SelectObject(listViewItem,true);
-                tblShipments.FocusedItem = listViewItem;
-                tblShipments.SelectedObject = listViewItem;
-                tblShipments.SelectedObjects.Add(listViewItem);
-                tblShipments.Invalidate();
-                tblShipments.Refresh();
-                
-                return true;
-            }*/
+                Font selectFont = new Font(listViewItem.Font.FontFamily, listViewItem.Font.Size,FontStyle.Bold);
+               
+                listViewItem.ForeColor = Color.Red;
+                listViewItem.Font = selectFont;
+            }
+                /*if (listViewItem !=null)
+               {
 
-            /*
-            for (int i = startRow; i <= tblShipments.Rows.Count - 1; i++)
-                if (condition(i))
-                {
+                   listViewItem.Selected = true;
+                   tblShipments.SelectObject(listViewItem,true);
+                   tblShipments.FocusedItem = listViewItem;
+                   tblShipments.SelectedObject = listViewItem;
+                   tblShipments.SelectedObjects.Add(listViewItem);
+                   tblShipments.Invalidate();
+                   tblShipments.Refresh();
 
-                    tblShipments.CurrentRow.Selected = false;
-                    DataGridViewCell cell = tblShipments.Rows[i].Cells["colOrderId"];
-                    tblShipments.CurrentCell = cell;
-                    tblShipments.Rows[i].Selected = true;
+                   return true;
+               }*/
 
-                    return true;
-                }
-            */
-            return false;
+                /*
+                for (int i = startRow; i <= tblShipments.Rows.Count - 1; i++)
+                    if (condition(i))
+                    {
+
+                        tblShipments.CurrentRow.Selected = false;
+                        DataGridViewCell cell = tblShipments.Rows[i].Cells["colOrderId"];
+                        tblShipments.CurrentCell = cell;
+                        tblShipments.Rows[i].Selected = true;
+
+                        return true;
+                    }
+                */
+                return false;
             
 
         }

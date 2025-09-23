@@ -49,6 +49,8 @@ namespace Planning
             this.colIsEDM = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.colLVOrderId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colOstId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colOperatorComment = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colWarehouseComment = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.tblOrders)).BeginInit();
             this.panel5.SuspendLayout();
             this.pnlToolBar.SuspendLayout();
@@ -75,7 +77,9 @@ namespace Planning
             this.colKlient,
             this.colIsEDM,
             this.colLVOrderId,
-            this.colOstId});
+            this.colOstId,
+            this.colOperatorComment,
+            this.colWarehouseComment});
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -228,6 +232,20 @@ namespace Planning
             this.colOstId.ReadOnly = true;
             this.colOstId.Visible = false;
             // 
+            // colOperatorComment
+            // 
+            this.colOperatorComment.DataPropertyName = "OperatorComment";
+            this.colOperatorComment.HeaderText = "Комментарий для операторов";
+            this.colOperatorComment.Name = "colOperatorComment";
+            this.colOperatorComment.ReadOnly = true;
+            // 
+            // colWarehouseComment
+            // 
+            this.colWarehouseComment.DataPropertyName = "WarehouseComment";
+            this.colWarehouseComment.HeaderText = "Комментарий для склада";
+            this.colWarehouseComment.Name = "colWarehouseComment";
+            this.colWarehouseComment.ReadOnly = true;
+            // 
             // ChooseOrder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -265,5 +283,7 @@ namespace Planning
         private System.Windows.Forms.DataGridViewCheckBoxColumn colIsEDM;
         private System.Windows.Forms.DataGridViewTextBoxColumn colLVOrderId;
         private System.Windows.Forms.DataGridViewTextBoxColumn colOstId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colOperatorComment;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colWarehouseComment;
     }
 }

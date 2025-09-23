@@ -87,6 +87,8 @@ namespace Planning
                 tblOrders.Rows[Row].Cells["colLVOrderId"].Value = item.LVID;
                 tblOrders.Rows[Row].Cells["colOstId"].Value = item.OstID;
                 tblOrders.Rows[Row].Cells["colIsEDM"].Value = item.IsEDM;
+                tblOrders.Rows[Row].Cells["colOperatorComment"].Value = item.OperatorComment;
+                tblOrders.Rows[Row].Cells["colWarehouseComment"].Value = item.WarehouseComment;
             }
  
         }
@@ -108,6 +110,12 @@ namespace Planning
               
             TableSource.Rows.Remove(TableSource.CurrentRow);
         }
+
+        private string GetStringValueFromObject(object Value)
+        {
+            return !String.IsNullOrEmpty(Value.ToString()) ? (string)Value : null;
+        }
+
 
         private void ClearShipment()
         {
@@ -158,7 +166,7 @@ namespace Planning
                 //bool isAddLv = false;
                 _shipment.TransportViewId = GetTransportViewId(Common.PlanningConfig.DefaultTransportViewName);
                 _shipment.WarehouseId = GetWarehouseId(Common.PlanningConfig.DefaultWarehouseCode);
-
+                StringBuilder shipmentComment = new StringBuilder();
                 ShipmentRepository shipmentRepository = new ShipmentRepository();
                 ShipmentOrderRepository shipmentOrderRepository = new ShipmentOrderRepository();
                 ShipmentOrderPartRepository shipmentOrderPartRepository = new ShipmentOrderPartRepository();
@@ -195,6 +203,8 @@ namespace Planning
                         shipmentOrder.IsEdm =tblShipmentItem.Rows[i].Cells["colItemIsEDM"].Value !=null ?
                                 (bool?)tblShipmentItem.Rows[i].Cells["colItemIsEDM"].Value : null;
                         shipmentOrder.IsBinding = true;
+                        shipmentOrder.Comment = GetStringValueFromObject(tblShipmentItem.Rows[i].Cells["colItemWarehouseComment"].Value);
+                        shipmentComment.AppendLine(GetStringValueFromObject(tblShipmentItem.Rows[i].Cells["colItemOperatorComment"].Value));
                         //isAddLv = true;
 
                         if (!shipmentOrderRepository.Save(shipmentOrder))
@@ -203,7 +213,7 @@ namespace Planning
                             return;
                         }
 
-
+                        _shipment.SComment = shipmentComment.ToString();
                         shipmentOrders.Add(shipmentOrder);
                     }
                     if (cmbType.SelectedIndex == 0)
