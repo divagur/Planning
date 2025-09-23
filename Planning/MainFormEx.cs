@@ -1150,6 +1150,10 @@ namespace Planning
             {
                 ShipmentRepository shipmentRepository = new ShipmentRepository();
                 DataLayer.Shipment shipment = shipmentRepository.GetById(shipmentMain.ShpId);
+                if (shipment == null)
+                {
+                    return;
+                }
                 shipment?.Delete();
                 try
                 {

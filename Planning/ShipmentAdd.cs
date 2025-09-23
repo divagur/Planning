@@ -239,6 +239,7 @@ namespace Planning
                 }
                 
                 _shipmentAddResult.Result = _shipment;
+                shipmentRepository.Save(_shipment);
             }
             else if (cmbType.SelectedIndex ==2)
             {
