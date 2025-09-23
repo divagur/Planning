@@ -113,7 +113,7 @@ namespace Planning
 
         private string GetStringValueFromObject(object Value)
         {
-            return !String.IsNullOrEmpty(Value.ToString()) ? (string)Value : null;
+            return Value ==null || !String.IsNullOrEmpty(Value.ToString()) ? (string)Value : null;
         }
 
 
