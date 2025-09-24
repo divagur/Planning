@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Dapper;
 using DapperExtensions;
 using DapperExtensions.Predicate;
-using PlanningTasks.DataLayer;
+
 namespace PlanningTest
 {
     class Program

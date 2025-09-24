@@ -36,9 +36,6 @@
     <ApplicationIcon>PlanningTaskLogo.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Planning.Common">
-      <HintPath>..\Planning.Common\bin\Debug\Planning.Common.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -76,8 +73,10 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RuleRowColor.cs" />
+    <Compile Include="SettingsHandle.cs" />
     <Compile Include="Settings\Config.cs" />
     <Compile Include="Settings\CurrentTaskColumn.cs" />
+    <Compile Include="SqlHandle.cs" />
     <EmbeddedResource Include="FormLogin.resx">
       <DependentUpon>FormLogin.cs</DependentUpon>
     </EmbeddedResource>
