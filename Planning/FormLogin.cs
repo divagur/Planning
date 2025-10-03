@@ -14,22 +14,23 @@ namespace Planning
     public partial class FormLogin : Form
     {
         UserRepository userRepository = new UserRepository();
-
-        public FormLogin()
+        bool _isReconnect = false;
+        public FormLogin(bool isReconnect)
         {
             InitializeComponent();
-            
+            _isReconnect = isReconnect; 
         }
 
         private void OkClick()
         {
-            Common.CurrentUser = userRepository.GetByUserName(edUserName.Text);
-            if (Common.CurrentUser == null || (Common.CurrentUser.Password !=null && Common.CurrentUser.Password != Common.CalculateHashGOST(edPassword.Text)))
+            User user = userRepository.GetByUserName(edUserName.Text);
+            if (user == null || (user.Password !=null && user.Password != Common.CalculateHashGOST(edPassword.Text)))
             {
                 MessageBox.Show($"Пользователь {Common.setting.LastLogin} не найден или не верно указан пароль");
                 return;
             }
 
+            Common.CurrentUser = user;
             Common.setting.LastLogin = edUserName.Text;
             //Common.setting.Password = Common.CalculateHashGOST(edPassword.Text);
             DialogResult = DialogResult.OK;
@@ -49,13 +50,16 @@ namespace Planning
 
         private void FormLogin_Load(object sender, EventArgs e)
         {
-
-            Common.CurrentUser = userRepository.GetByDomainUserName(System.Security.Principal.WindowsIdentity.GetCurrent().Name);
-            if (Common.CurrentUser != null && Common.CurrentUser.IsWinAuth != null && (bool)Common.CurrentUser.IsWinAuth)
+            if (!_isReconnect)
             {
-                DialogResult = DialogResult.OK;
-                Close();
+                Common.CurrentUser = userRepository.GetByDomainUserName(System.Security.Principal.WindowsIdentity.GetCurrent().Name);
+                if (Common.CurrentUser != null && Common.CurrentUser.IsWinAuth != null && (bool)Common.CurrentUser.IsWinAuth)
+                {
+                    DialogResult = DialogResult.OK;
+                    Close();
+                }
             }
+
 
             edUserName.Text = Common.setting.LastLogin;
         }

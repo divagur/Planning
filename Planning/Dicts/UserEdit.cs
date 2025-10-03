@@ -91,7 +91,7 @@ namespace Planning
         protected override void Populate()
         {
             edLogin.Text = _user.Login;
-            cbIsWindowsAuth.Checked = (bool)_user.IsWinAuth;
+            cbIsWindowsAuth.Checked =_user.IsWinAuth == null?false:(bool)_user.IsWinAuth;
             edWindowsUserName.Text = _user.DomainUserName;
 
             SetFieldEnable();

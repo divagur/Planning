@@ -339,7 +339,11 @@ namespace Planning
                     {
                         cellValue = cellValue.Substring(0, 10);
                     }
-
+                    else if (tblShipments.Columns[visibleColumns[colIdx].Index].DataPropertyName == "OrderWeight")
+                    {
+                       
+                        cellValue = cellValue == "" ? "" : Math.Round(Decimal.Parse(cellValue), 2).ToString();
+                    }
                     printRow[0, colIdx] = cellValue;
                 }
 
@@ -350,7 +354,7 @@ namespace Planning
             }
 
             
-            range = excel.SelectCells(1, 1, 1, visibleColumns.Count, resultRowCount);
+            range = excel.SelectCells(1, 1, 1, visibleColumns.Count, resultRowCount+1);
             range.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
             range.Borders.Item[Excel.XlBordersIndex.xlEdgeLeft].Weight = Excel.XlBorderWeight.xlMedium;
             range.Borders.Item[Excel.XlBordersIndex.xlEdgeTop].Weight = Excel.XlBorderWeight.xlMedium;

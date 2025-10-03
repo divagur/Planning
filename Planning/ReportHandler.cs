@@ -9,6 +9,7 @@ using Microsoft.Office.Interop.Excel;
 using System.Windows.Forms;
 using System.Data;
 using System.Drawing;
+using Planning.DataLayer;
 
 namespace Planning
 {
@@ -75,7 +76,7 @@ namespace Planning
             excel.Visible = true;
             
         }
-        public static void PrintShipmentOut(DataLayer.ShipmentMain shipmentMain, string TemplatePath)
+        public static void PrintShipmentOut(DataLayer.ShipmentMain shipmentMain, List<ShipmentMain> shipmentOrders, string TemplatePath)
         {
             Excel.Range range;
 
@@ -83,7 +84,7 @@ namespace Planning
             DataLayer.Shipment shipment = shipmentRepository.GetById(shipmentMain.ShpId);
 
             DataLayer.ShipmentOrderRepository shipmentOrderRepository = new DataLayer.ShipmentOrderRepository();
-            List<DataLayer.ShipmentOrder> shipmentOrders = shipmentOrderRepository.GetShipmentOrders(shipmentMain.ShpId);
+            //List<DataLayer.ShipmentOrder> shipmentOrders = shipmentOrderRepository.GetShipmentOrders(shipmentMain.ShpId);
             if (shipment == null)
             {
                 return;
@@ -120,8 +121,8 @@ namespace Planning
             int i = 0;
             foreach (var item in shipmentOrders)
             {
-                excel.SetValue(1, 1, 17 + i + 1, item.LvOrderCode);
-                excel.SetValue(1, 2, 17 + i++ + 1, shipmentMain.KlientName);
+                excel.SetValue(1, 1, 17 + i + 1, item.OrdLVCode);
+                excel.SetValue(1, 2, 17 + i++ + 1, item.KlientName);
             }
 
             int rowCount = shipmentOrders.Count();
@@ -166,12 +167,33 @@ namespace Planning
                 commentRow += 2;
             }
 
+
+            
+
             range = excel.SelectCells(1, 2, commentRow, 6, commentRow + 2);
             range.Merge();
             range.Font.Bold = false;
             range.VerticalAlignment = Excel.XlVAlign.xlVAlignTop;
             range.WrapText = true;
-            excel.SetValue(1, 2, commentRow, shipmentMain.ShpComment);
+
+            StringBuilder comment = new StringBuilder();
+            foreach (var order in shipmentOrders)
+            {
+                if (!String.IsNullOrEmpty(order.OrdComment))
+                {
+                    comment.AppendLine($"{order.OrdLVCode}:{order.OrdComment}");
+                }
+
+            }
+            //printRows[0]["ShpComment"]
+            string commentLine = comment.ToString();
+            if (!String.IsNullOrEmpty(commentLine))
+            {
+                excel.SetValue(1, 2, commentRow, commentLine);
+                excel.SetCellFontStyle(1, 2, commentRow, 2, commentRow, true, false, false);
+            }
+
+            //excel.SetValue(1, 2, commentRow, shipmentMain.ShpComment);
 
             range = excel.SelectCells(1, 1, 17 + rowCount + 2, 6, 17 + rowCount + 6);
             range.Borders.Item[Excel.XlBordersIndex.xlEdgeLeft].Weight = Excel.XlBorderWeight.xlMedium;

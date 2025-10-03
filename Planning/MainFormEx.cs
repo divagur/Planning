@@ -74,10 +74,10 @@ namespace Planning
             IsFormLoad = true;
             Init();
             Connect();
-            statusInfo.Text = $"База данных:[{Common.PlanningConfig.BaseName}] Пользователь: [{Common.setting.LastLogin}]";
+            
 
-            GetUserPrvlg();
-            SetMainFormPrvlg();
+            //GetUserPrvlg();
+           // SetMainFormPrvlg();
 
             shipmentMainRepository = new ShipmentMainRepository();
             SetupColumns();
@@ -124,10 +124,14 @@ namespace Planning
                     col.DisplayIndex = 1;
                 }
 
-                else if (shpCol != null && shpCol.Order< col.DisplayIndex)
+                else if (shpCol != null)
                 {
-                    col.DisplayIndex = shpCol.Order;
+                    if (shpCol.Order < col.DisplayIndex)
+                        col.DisplayIndex = shpCol.Order;
+                    if (shpCol.Width > 0)
+                        col.Width = shpCol.Width;
                 }
+                
             }
 
         }
@@ -155,11 +159,12 @@ namespace Planning
             BarRendererEx barRendererEx = new BarRendererEx();
             barRendererEx.MaximumValue = 1D;
 
-            Color progressBarColor = Color.FromArgb(53,162,62);
+            Color progressBarColor = Color.LightGreen; //Color.FromArgb(53,162,62);
             //barRendererEx.BackgroundColor = Color.Green;
             barRendererEx.UseStandardBar = false;
             barRendererEx.GradientStartColor = progressBarColor;
             barRendererEx.GradientEndColor = progressBarColor;
+            barRendererEx.TextBrush = new SolidBrush(Color.Black);
 
             //this.colDate.Renderer = new GridRender();
             colDoneShare.Renderer = barRendererEx;
@@ -273,16 +278,26 @@ namespace Planning
                         Common.ForceMergeLVAttribute(shipment.Id);
 
                     }
-                    /*
+                    
                     if (shipment.IsAddLv == true)
                     {
                         AddShToLV(shipment);
+                        //Common.AddShipmentToLV(shipment.Id);
                     }
-                    */
+                    
                 }
                 UpdateDataSource(_shipmentMainList);
                 tblShipments.Refresh();
             }
+        }
+        void AddShToLV(Shipment shipment)
+        {
+            if (shipment.ShIn == false)
+            {
+                Common.AddShipmentToLV(shipment.Id);
+            }
+
+            //DataService.AddShipmentToLV(shipment.Id);
         }
         private void GetOrderWight()
         {
@@ -447,9 +462,9 @@ namespace Planning
                     tabForms.TabPages.Remove(pg);
             }
         }
-        private bool LoginUser()
+        private bool LoginUser(bool isReconnect)
         {
-            FormLogin frmLogin = new FormLogin();
+            FormLogin frmLogin = new FormLogin(isReconnect);
             if (frmLogin.ShowDialog() == DialogResult.Cancel)
             {
                 return false;
@@ -501,17 +516,22 @@ namespace Planning
             }
 
         }
-        private void Connect()
+        private void Connect(bool isReconnect = false)
         {
 
             
-            if (!LoginUser())
+            if (!LoginUser(isReconnect) && !isReconnect)
             {
                 Environment.Exit(0);
                 this.Close();
                 return;
             }
-            
+            if (Common.CurrentUser != null)
+            {
+                GetUserPrvlg();
+                SetMainFormPrvlg();
+                statusInfo.Text = $"База данных:[{Common.PlanningConfig.BaseName}] Пользователь: [{Common.CurrentUser.Login}]";
+            }
         }
         private void PopulateVisibleColumn()
         {
@@ -535,6 +555,7 @@ namespace Planning
 
 
             }
+            tblShipments.RebuildColumns();
         }
         private string GetHideColumns()
         {
@@ -752,7 +773,15 @@ namespace Planning
         {
             return (ShipmentMain)tblShipments.GetItem(tblShipments.SelectedIndex).RowObject;
         }
+        private List<ShipmentMain> GetShipmentRows(int? ShpId)
+        {
+            List<ShipmentMain> result = new List<ShipmentMain>();
 
+
+
+            result = ((List<ShipmentMain>)tblShipments.Objects).Where(o => o.ShpId == ShpId).ToList();
+            return result;
+        }
         private bool SearchBy(bool FromBegin,string SearchText)//,  Predicate<int> condition)
         {
             int startRow = FromBegin ? 0 : tblShipments.SelectedIndex + 1;
@@ -1196,9 +1225,12 @@ namespace Planning
             this.Cursor = Cursors.AppStarting;
 
             ShipmentMain shipmentMain = GetCurrentRowObject();
+
+            
+
             if (shipmentMain == null)
                 return;
-
+            List<ShipmentMain> shipmentOrders =  GetShipmentRows(shipmentMain.ShpId);
             SettingReport settingReport = Common.setting.Reports.Find(r => r.Name == (shipmentMain.ShpIn == false ? "Лист отгрузки" : "Лист прихода"));
             if (settingReport == null || String.IsNullOrEmpty(settingReport.TemplatePath))
             {
@@ -1208,7 +1240,7 @@ namespace Planning
 
             if (shipmentMain.ShpIn == false)
             {
-                ReportHandler.PrintShipmentOut(shipmentMain, settingReport.TemplatePath);
+                ReportHandler.PrintShipmentOut(shipmentMain, shipmentOrders, settingReport.TemplatePath);
             }
             else
             {
@@ -1251,7 +1283,7 @@ namespace Planning
 
         private void menuItemConnect_Click(object sender, EventArgs e)
         {
-            Connect();
+            Connect(true);
         }
 
         private void menuItemSettings_Click(object sender, EventArgs e)
@@ -2038,7 +2070,8 @@ namespace Planning
             if (IsFormLoad)
                 return;
             ColumnHeader column = tblShipments.Columns[e.OldDisplayIndex];
-            var col = shipmentColumns.Find(c => c.Id == column.Name);
+            ColumnHeader column1 = tblShipments.Columns[e.NewDisplayIndex];
+            var col = shipmentColumns.Find(c => c.Id == e.Header.Name);
             if (col == null)
             {
                 col = new ShipmentColumn() { Id = column.Name, Visible = true };
@@ -2059,6 +2092,12 @@ namespace Planning
             {
                 e.SubItem.Text =((DateTime)e.CellValue).ToShortDateString();
             }
+            else if (e.Column.Name == "colOrderWeight")
+            {
+                decimal? weight = (decimal?)e.CellValue;
+                e.SubItem.Text = weight == null? "":Math.Round(weight.Value, 2).ToString();
+            }
+
         }
 
         private void tblShipments_AfterSorting(object sender, AfterSortingEventArgs e)
@@ -2076,6 +2115,22 @@ namespace Planning
         {
             ShipmentMain shipmentMain = GetCurrentRowObject();
             ShowOrderDetail(shipmentMain);
+        }
+
+        private void tblShipments_ColumnWidthChanged(object sender, ColumnWidthChangedEventArgs e)
+        {
+            if (IsFormLoad || Common.settingsHandle ==null || shipmentColumns == null)
+                return;
+            ColumnHeader column = tblShipments.Columns[e.ColumnIndex];
+            var col = shipmentColumns.Find(c => c.Id == column.Name);
+            if (col == null)
+            {
+                col = new ShipmentColumn() { Id = column.Name, Visible = true };
+                shipmentColumns.Add(col);
+            }
+
+            col.Width = column.Width;
+            Common.settingsHandle.SetParamList<ShipmentColumn>("View\\ShipmentColumns", "ShipmentColumns", shipmentColumns);
         }
     }
 }

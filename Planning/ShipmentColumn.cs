@@ -13,5 +13,6 @@ namespace Planning
         public int Order { get; set; }
 
         public bool Visible { get; set; }
+        public int Width { get; set; }
     }
 }

@@ -398,7 +398,8 @@ namespace Planning
                 case HorizontalAlignment.Left: fmt.Alignment = StringAlignment.Near; break;
                 case HorizontalAlignment.Right: fmt.Alignment = StringAlignment.Far; break;
             }
-            g.DrawString((Math.Round(num, 2) * 100).ToString() + "%", this.Font, this.TextBrush, r, fmt);
+            SolidBrush innerBrush = new SolidBrush(Color.Black);
+            g.DrawString((Math.Round(num * 100, 2) ).ToString() + "%", this.Font, this.TextBrush, r, fmt);
         }
 
         protected override Rectangle HandleGetEditRectangle(Graphics g, Rectangle cellBounds, OLVListItem item, int subItemIndex, Size preferredSize)

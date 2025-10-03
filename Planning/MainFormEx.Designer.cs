@@ -548,8 +548,8 @@ namespace Planning
             this.tblShipments.RowHeight = 25;
             this.tblShipments.SelectColumnsOnRightClick = false;
             this.tblShipments.SelectColumnsOnRightClickBehaviour = BrightIdeasSoftware.ObjectListView.ColumnSelectBehaviour.None;
-            this.tblShipments.SelectedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
-            this.tblShipments.SelectedForeColor = System.Drawing.Color.Red;
+            this.tblShipments.SelectedBackColor = System.Drawing.SystemColors.Highlight;
+            this.tblShipments.SelectedForeColor = System.Drawing.Color.White;
             this.tblShipments.ShowGroups = false;
             this.tblShipments.Size = new System.Drawing.Size(1342, 577);
             this.tblShipments.TabIndex = 1;
@@ -563,6 +563,7 @@ namespace Planning
             this.tblShipments.FormatRow += new System.EventHandler<BrightIdeasSoftware.FormatRowEventArgs>(this.tblShipments_FormatRow);
             this.tblShipments.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.tblShipments_ColumnClick);
             this.tblShipments.ColumnReordered += new System.Windows.Forms.ColumnReorderedEventHandler(this.tblShipments_ColumnReordered);
+            this.tblShipments.ColumnWidthChanged += new System.Windows.Forms.ColumnWidthChangedEventHandler(this.tblShipments_ColumnWidthChanged);
             this.tblShipments.DoubleClick += new System.EventHandler(this.tblShipments_DoubleClick);
             // 
             // colOrderDetail
@@ -1035,7 +1036,7 @@ namespace Planning
             this.btnGetNextDay.FlatAppearance.BorderSize = 0;
             this.btnGetNextDay.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnGetNextDay.Image = ((System.Drawing.Image)(resources.GetObject("btnGetNextDay.Image")));
-            this.btnGetNextDay.Location = new System.Drawing.Point(778, 30);
+            this.btnGetNextDay.Location = new System.Drawing.Point(723, 30);
             this.btnGetNextDay.Name = "btnGetNextDay";
             this.btnGetNextDay.Size = new System.Drawing.Size(30, 20);
             this.btnGetNextDay.TabIndex = 0;
@@ -1047,7 +1048,7 @@ namespace Planning
             this.btnSearchNext.FlatAppearance.BorderSize = 0;
             this.btnSearchNext.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSearchNext.Image = ((System.Drawing.Image)(resources.GetObject("btnSearchNext.Image")));
-            this.btnSearchNext.Location = new System.Drawing.Point(589, 30);
+            this.btnSearchNext.Location = new System.Drawing.Point(602, 30);
             this.btnSearchNext.Name = "btnSearchNext";
             this.btnSearchNext.Size = new System.Drawing.Size(30, 20);
             this.btnSearchNext.TabIndex = 0;
@@ -1059,7 +1060,7 @@ namespace Planning
             this.btnGetCurrentDay.FlatAppearance.BorderSize = 0;
             this.btnGetCurrentDay.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnGetCurrentDay.Image = ((System.Drawing.Image)(resources.GetObject("btnGetCurrentDay.Image")));
-            this.btnGetCurrentDay.Location = new System.Drawing.Point(742, 30);
+            this.btnGetCurrentDay.Location = new System.Drawing.Point(687, 30);
             this.btnGetCurrentDay.Name = "btnGetCurrentDay";
             this.btnGetCurrentDay.Size = new System.Drawing.Size(30, 20);
             this.btnGetCurrentDay.TabIndex = 0;
@@ -1071,7 +1072,7 @@ namespace Planning
             this.btnSearch.FlatAppearance.BorderSize = 0;
             this.btnSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSearch.Image = ((System.Drawing.Image)(resources.GetObject("btnSearch.Image")));
-            this.btnSearch.Location = new System.Drawing.Point(553, 30);
+            this.btnSearch.Location = new System.Drawing.Point(566, 30);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(30, 20);
             this.btnSearch.TabIndex = 0;
@@ -1083,7 +1084,7 @@ namespace Planning
             this.btnGetLastDay.FlatAppearance.BorderSize = 0;
             this.btnGetLastDay.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnGetLastDay.Image = ((System.Drawing.Image)(resources.GetObject("btnGetLastDay.Image")));
-            this.btnGetLastDay.Location = new System.Drawing.Point(706, 30);
+            this.btnGetLastDay.Location = new System.Drawing.Point(651, 30);
             this.btnGetLastDay.Name = "btnGetLastDay";
             this.btnGetLastDay.Size = new System.Drawing.Size(30, 20);
             this.btnGetLastDay.TabIndex = 0;
