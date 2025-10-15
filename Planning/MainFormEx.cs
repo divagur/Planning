@@ -85,11 +85,17 @@ namespace Planning
             PopulateWarehouseFilter();
             ShipmentsLoad();
             SetColumnsParam();
-           // tblShipments.DrawSubItem += TblShipments_DrawSubItem;
+            //tblShipments.DrawSubItem += TblShipments_DrawSubItem;
+            //tblShipments.DrawItem += TblShipments_DrawItem;
             
             cbPaint.Checked = isPaint;
             IsFormLoad = false;
 
+        }
+
+        private void TblShipments_DrawItem(object sender, DrawListViewItemEventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         private void TblShipments_DrawSubItem(object sender, DrawListViewSubItemEventArgs e)
@@ -796,6 +802,7 @@ namespace Planning
                 var item = tblShipments.SelectedItem;
          
                 tblShipments.SelectedObject = findRow;
+                tblShipments.Focus();
                 tblShipments.Invalidate();
                 tblShipments.Refresh();
             }
