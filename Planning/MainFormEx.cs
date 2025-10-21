@@ -62,7 +62,7 @@ namespace Planning
         bool IsFormLoad = false;
         bool IsBuilded = false;
         CellBorderDecoration standardDecoration = new CellBorderDecoration();
-
+        string pathConfig = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\Planning\";
         public MainFormEx()
         {
             InitializeComponent();
@@ -120,6 +120,7 @@ namespace Planning
 
             foreach (ColumnHeader col in tblShipments.Columns)
             {
+                if (col.DisplayIndex < 0) continue;
                 var shpCol = shipmentColumns.FirstOrDefault(c => c.Id == col.Name);
                 if (col.Name == "colOrderDetail")
                 {
@@ -132,7 +133,7 @@ namespace Planning
 
                 else if (shpCol != null)
                 {
-                    if (shpCol.Order < col.DisplayIndex)
+                    if (shpCol.Order < tblShipments.Columns.Count)
                         col.DisplayIndex = shpCol.Order;
                     if (shpCol.Width > 0)
                         col.Width = shpCol.Width;
@@ -435,8 +436,12 @@ namespace Planning
             PlanningConfigHandle planningConfigHandle = new PlanningConfigHandle("PlanningConfig.xml", Common.PlanningConfig);
             planningConfigHandle.Load();
 
-
-            Common.settingsHandle = new PlanningSettingsHandle("Settings.xml", Common.setting);
+            if (!Directory.Exists(pathConfig))
+            {
+                Directory.CreateDirectory(pathConfig);
+            }
+            //"Settings.xml"
+            Common.settingsHandle = new PlanningSettingsHandle(Path.Combine(pathConfig, "Settings.xml"), Common.setting);
             Common.settingsHandle.Load();
 
 
@@ -2076,6 +2081,7 @@ namespace Planning
         {
             if (IsFormLoad)
                 return;
+            ColumnHeader columnHeader = e.Header;
             ColumnHeader column = tblShipments.Columns[e.OldDisplayIndex];
             ColumnHeader column1 = tblShipments.Columns[e.NewDisplayIndex];
             var col = shipmentColumns.Find(c => c.Id == e.Header.Name);
@@ -2086,7 +2092,8 @@ namespace Planning
             }
             
             col.Order = e.NewDisplayIndex;
-            Common.settingsHandle.SetParamList<ShipmentColumn>("View\\ShipmentColumns", "ShipmentColumns", shipmentColumns);
+           
+           Common.settingsHandle.SetParamList<ShipmentColumn>("View\\ShipmentColumns", "ShipmentColumns", shipmentColumns);
         }
 
         private void tblShipments_FormatCell(object sender, FormatCellEventArgs e)
