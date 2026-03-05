@@ -176,6 +176,7 @@ namespace Planning
             this.menuItemReportPeriod = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemReportStatistic = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemReportTC = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemReportPeriodV2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemAdd = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemCalcOrderVolume = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemCurrentTask = new System.Windows.Forms.ToolStripMenuItem();
@@ -211,7 +212,7 @@ namespace Planning
             this.miAdditional});
             this.menuMain.Location = new System.Drawing.Point(0, 44);
             this.menuMain.Name = "menuMain";
-            this.menuMain.Size = new System.Drawing.Size(1290, 24);
+            this.menuMain.Size = new System.Drawing.Size(1356, 24);
             this.menuMain.TabIndex = 1;
             this.menuMain.Text = "menuStrip1";
             this.menuMain.Visible = false;
@@ -1381,6 +1382,7 @@ namespace Planning
             this.toolStripMenuItemAdmin});
             this.contextMenuMain.Name = "contextMenuMain";
             this.contextMenuMain.Size = new System.Drawing.Size(190, 114);
+            this.contextMenuMain.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuMain_Opening);
             // 
             // toolStripMenuItemFile
             // 
@@ -1526,7 +1528,8 @@ namespace Planning
             this.toolStripMenuItemReport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuItemReportPeriod,
             this.menuItemReportStatistic,
-            this.menuItemReportTC});
+            this.menuItemReportTC,
+            this.menuItemReportPeriodV2});
             this.toolStripMenuItemReport.Name = "toolStripMenuItemReport";
             this.toolStripMenuItemReport.Size = new System.Drawing.Size(189, 22);
             this.toolStripMenuItemReport.Text = "Отчеты";
@@ -1534,23 +1537,30 @@ namespace Planning
             // menuItemReportPeriod
             // 
             this.menuItemReportPeriod.Name = "menuItemReportPeriod";
-            this.menuItemReportPeriod.Size = new System.Drawing.Size(192, 22);
+            this.menuItemReportPeriod.Size = new System.Drawing.Size(196, 22);
             this.menuItemReportPeriod.Text = "Отгрузки за период";
             this.menuItemReportPeriod.Click += new System.EventHandler(this.menuItemReportPeriod_Click);
             // 
             // menuItemReportStatistic
             // 
             this.menuItemReportStatistic.Name = "menuItemReportStatistic";
-            this.menuItemReportStatistic.Size = new System.Drawing.Size(192, 22);
+            this.menuItemReportStatistic.Size = new System.Drawing.Size(196, 22);
             this.menuItemReportStatistic.Text = "Статистика за период";
             this.menuItemReportStatistic.Click += new System.EventHandler(this.menuItemReportStatistic_Click);
             // 
             // menuItemReportTC
             // 
             this.menuItemReportTC.Name = "menuItemReportTC";
-            this.menuItemReportTC.Size = new System.Drawing.Size(192, 22);
+            this.menuItemReportTC.Size = new System.Drawing.Size(196, 22);
             this.menuItemReportTC.Text = "Отчёт по ТС";
             this.menuItemReportTC.Click += new System.EventHandler(this.menuItemReportTC_Click);
+            // 
+            // menuItemReportPeriodV2
+            // 
+            this.menuItemReportPeriodV2.Name = "menuItemReportPeriodV2";
+            this.menuItemReportPeriodV2.Size = new System.Drawing.Size(196, 22);
+            this.menuItemReportPeriodV2.Text = "Отгрузки за период v2";
+            this.menuItemReportPeriodV2.Click += new System.EventHandler(this.menuItemReportPeriodV2_Click);
             // 
             // toolStripMenuItemAdd
             // 
@@ -1837,5 +1847,6 @@ namespace Planning
         private System.Windows.Forms.ToolStripMenuItem mciPrint;
         private System.Windows.Forms.ToolStripMenuItem mciOrderDetail;
         private BrightIdeasSoftware.FlagRenderer flagRenderer1;
+        private System.Windows.Forms.ToolStripMenuItem menuItemReportPeriodV2;
     }
 }

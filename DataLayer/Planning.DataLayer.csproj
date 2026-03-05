@@ -90,6 +90,9 @@
     <Compile Include="PLAttribute\PLAttribute.cs" />
     <Compile Include="PLAttribute\PLAttributeAdapter.cs" />
     <Compile Include="PLAttribute\PLAttributeRepository.cs" />
+    <Compile Include="PLQuery\PLQuery.cs" />
+    <Compile Include="PLQuery\PLQueryAdapter.cs" />
+    <Compile Include="PLQuery\PLQueryRepository.cs" />
     <Compile Include="LvAttribute\LvAttribute.cs" />
     <Compile Include="LvAttribute\LvAttributeAdapter.cs" />
     <Compile Include="LvAttribute\LvAttributeRepository.cs" />

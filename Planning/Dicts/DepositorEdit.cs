@@ -8,20 +8,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Planning.DataLayer;
 
 namespace Planning
 {
     public partial class DepositorEdit : Form
     {
-        DataLayer.Depositor _depositor;
-        List<DataLayer.PLAttribute> pLAttributeList;
-        List<DataLayer.DepositorAttribute> depositorAttributes;
-        DataLayer.DepositorAttributeRepository depositorAttributeRepository;
-        public DepositorEdit(DataLayer.Depositor depositor)
+        Depositor _depositor;
+        List<PLAttribute> pLAttributeList;
+        List<DepositorAttribute> depositorAttributes;
+        DepositorAttributeRepository depositorAttributeRepository;
+        public DepositorEdit(Depositor depositor)
         {
             InitializeComponent();
             _depositor = depositor;
-            depositorAttributeRepository = new DataLayer.DepositorAttributeRepository();
+            depositorAttributeRepository = new DepositorAttributeRepository();
         }
         void UpdateTblAttrDataSource()
         {
@@ -34,7 +35,7 @@ namespace Planning
             depositorAttributes = depositorAttributeRepository.GetAll();
             try
             {
-                DataLayer.PLAttributeRepository pLAttributeRepository = new DataLayer.PLAttributeRepository();
+                PLAttributeRepository pLAttributeRepository = new PLAttributeRepository();
                 pLAttributeList = pLAttributeRepository.GetAll(_depositor.Id);
             }
             catch (Exception ex)

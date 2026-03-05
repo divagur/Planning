@@ -95,5 +95,13 @@ namespace Planning
             return connectionString.ToString();
         }
 
+        public static void ShowInformation(string Text, string Caption)
+        {
+            MessageBox.Show(Text, Caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        public static void ShowError(string Text, string Caption)
+        {
+            MessageBox.Show(Text, Caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
     }
 }

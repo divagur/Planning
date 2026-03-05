@@ -37,6 +37,7 @@ namespace Planning
         const int REPORT_PERIOD = 101;
         const int REPORT_STATISTIC = 102;
         const int REPORT_TC = 103;
+        const int REPORT_PERIOD_V2 = 104;
 
         bool isWindowMaximized = false;
         Point offset;
@@ -341,6 +342,8 @@ namespace Planning
             GetOrderWight();
             ShipmentsUIFilter();
             CalcRowColor();
+
+
             /*
             if (mainFormAccess != null && !mainFormAccess.IsView)
             {
@@ -1343,6 +1346,9 @@ namespace Planning
                 case REPORT_TC:
                     ShowReportTC(reportParams);
                     break;
+                case REPORT_PERIOD_V2:
+                    ShowReportPeriodV2(reportParams);
+                    break;
                 default:
                     break;
             }
@@ -1742,14 +1748,9 @@ namespace Planning
             wait.Close();
             miRepPeriod.Enabled = true;
         }
-        
-        
-        /*private void ShowReportPeriod(ReportParams reportParams)
+
+        private void ShowReportPeriodV2(ReportParams reportParams)
         {
-            //bwProgress.RunWorkerAsync(reportParams);
-
-
-
 
 
             List<string> columnOrder = new List<string> {"ShpId","OrdId","ShpDate","SlotTime","InOut","OrdLVCode","OrdLVType",
@@ -1759,12 +1760,100 @@ namespace Planning
                 "CALC:DIFFTIME(ShpSubmissionTime,ShpStartTime)","CALC:DIFFTIME({26},ShpStartTime)","CALC:DIFFTIME({26},ShpSubmissionTime)",
                 "ShpDelayReasonName", "ShpDelayComment",  "ShpStampNumber","ShpSupplierName" };
             //"DepCode",
+
+            DepositorRepository depositorRepository = new DepositorRepository();
+            Depositor depositor = depositorRepository.GetById(1);
+            if (depositor == null || String.IsNullOrEmpty(depositor.LvBase))
+            {
+                Common.ShowInformation("Не найдена база данных депозитора", "Предупреждение");
+                return;
+            }
+            #region Запросы
+            string queryOut = String.Format(@"select vs.shp_id, so.id, so.lv_order_id, vs.s_date, vs.time_slot_id,
+				vs.slot_time,
+				vs.s_in, N'выход' InOut, so.lv_order_code,sop.os_lvcode, vs.dep_lv_id, vs.dep_name, vs.sp_condition, vs.is_courier,
+				vs.gate_id, vs.gate_name,cmp_ShortName,
+				cast(ord_StatusID as nvarchar(11)) + N' - ' + isnull(msg_Greek, N'') OrdStatusText,
+				(
+					case when ActPcs <> 0 then cast(cast(round(cast(ActPcs as numeric(10, 2)) / ExpPcs * 100, 2) as numeric(10, 2)) as varchar(7)) + N'%' end
+				) Done,
+				(case when ActPcs <> 0 then cast(ActPcs as numeric(10, 2)) / ExpPcs end) DoneShare,
+				vs.s_comment, so.comment,
+				vs.driver_phone,vs.driver_fio,vs.tc_name tc, vs.transport_type_name tt_name,
+				vs.vehicle_number, vs.trailer_number,
+				vs.attorney_number, vs.attorney_date,
+				vs.submission_time, 
+				vs.start_time, vs.end_time, vs.leave_time,
+				vs.delay_reason_name, vs.delay_comment,
+				vs.forwarder_fio,ort_Code + N' - ' + ort_Description OrdLVType,
+				vs.stamp_number,
+				vs.is_add_lv,
+				sop.shipping_places_number,
+				sop.order_part_weight
+				
+		from 
+			v_shipments vs with(nolock)
+			left join shipment_orders so on (vs.shp_id = so.shipment_id) 
+			left join shipment_order_parts sop on sop.sh_order_id = so.id
+			left join {0}.dbo.LV_Order with(nolock) on ord_ID = so.lv_order_id
+			outer apply
+		(
+		 select
+			  sum(
+					cast(
+							case 
+								when oia_PickListQty = 0 then isnull(osi_Quantity * ExpPcs.iuc_Conversion, osi_Quantity)
+								else isnull(oia_PickListQty * ActPcs.iuc_Conversion, oia_PickListQty) 
+							end
+						/ Box.iuc_Conversion as int)
+				) ExpBox,
+			  sum(cast((
+			   case when oia_PickListQty = 0 then isnull(osi_Quantity * ExpPcs.iuc_Conversion, osi_Quantity)
+			   else isnull(oia_PickListQty * ActPcs.iuc_Conversion, oia_PickListQty) end
+			  % Pal.iuc_Conversion) / Box.iuc_Conversion as int)) ExpBoxMix,
+			  ceiling(sum(
+			   case when oia_PickListQty = 0 then isnull(osi_Quantity * ExpPcs.iuc_Conversion, osi_Quantity)
+			   else isnull(oia_PickListQty * ActPcs.iuc_Conversion, oia_PickListQty) end
+			  / Pal.iuc_Conversion)) ExpPal,
+			  sum(cast(floor(
+			   case when oia_PickListQty = 0 then isnull(osi_Quantity * ExpPcs.iuc_Conversion, osi_Quantity)
+			   else isnull(oia_PickListQty * ActPcs.iuc_Conversion, oia_PickListQty) end
+			  / Pal.iuc_Conversion) as int)) ExpPalMon,
+			  sum(cast(
+			   case when oia_PickListQty = 0 then isnull(osi_Quantity * ExpPcs.iuc_Conversion, osi_Quantity)
+			   else isnull(oia_PickListQty * ActPcs.iuc_Conversion, oia_PickListQty) end
+			  as int)) ExpPcs,
+			  sum(cast(isnull(oia_PickedQty * ActPcs.iuc_Conversion, oia_PickedQty) as int)) ActPcs,
+			  count(distinct ori_ID) NumOfLines,
+			  sum(cast(isnull(oia_PackedQty * ActPcs.iuc_Conversion, oia_PackedQty) as int)) PackedPcs
+		 from 
+				{0}.dbo.LV_OrderItem with(nolock)
+				join {0}.dbo.LV_OrderShipItem with(nolock) on osi_OrderItemID = ori_ID and osi_StatusID <> 11 /*calcelled*/
+				join {0}.dbo.LV_ItemUnit ExpIU with(nolock) on ExpIU.itu_ID = ori_ItemUnitID
+				join {0}.dbo.LV_OrderShipItemAnalysis with(nolock) on oia_OrderShipItemID = osi_ID
+				join {0}.dbo.LV_ItemUnitConversion ExpPcs with(nolock) on ExpPcs.iuc_ProductID = ori_ProductID and ExpPcs.iuc_ConvertedUnitID = ExpIU.itu_UnitID and ExpPcs.iuc_ReferenceUnitID = 5
+				join {0}.dbo.LV_ItemUnitConversion Box with(nolock) on Box.iuc_ProductID = ori_ProductID and Box.iuc_ConvertedUnitID = 6 and Box.iuc_ReferenceUnitID = 5
+				join {0}.dbo.LV_ItemUnitConversion Pal with(nolock) on Pal.iuc_ProductID = ori_ProductID and Pal.iuc_ConvertedUnitID = 24 and Pal.iuc_ReferenceUnitID = 5
+				join {0}.dbo.LV_ItemUnit ActIU with(nolock) on ActIU.itu_ID = oia_ItemUnitID
+				join {0}.dbo.LV_ItemUnitConversion ActPcs with(nolock) on ActPcs.iuc_ProductID = ori_ProductID and ActPcs.iuc_ConvertedUnitID = ActIU.itu_UnitID and ActPcs.iuc_ReferenceUnitID = 5
+		 where ori_OrderID = lv_order_id
+	) a1 
+	left join {0}.dbo.LV_Customer with(nolock) on cus_ID = ord_CustomerID
+	left join {0}.dbo.LV_Company with (nolock) on cmp_ID = cus_CompanyID
+	left join {0}.dbo.LV_OrderType with (nolock) on ort_ID = ord_TypeID
+	left join {0}.dbo.LV_ProgressStatus with(nolock) on pst_ID = ord_StatusID
+	left join {0}.dbo.LV_Messages with(nolock) on msg_code = pst_MessageCode and  msg_languageID = 4
+	where 
+		vs.s_in = 0
+		and vs.s_date between {1} and {2}", depositor.LvBase, DateTime.Parse(reportParams["PeriodBegin"]), DateTime.Parse(reportParams["PeriodEnd"]));
+            #endregion
+
             int[] colNumber = new int[columnOrder.Count];
 
             SettingReport settingReport = GetReportSetting("Отгрузки за период");
             if (settingReport == null)
-            {
-                MessageBox.Show("Не задан шаблон", "Ошибка при формировании отчета", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            {               
+                Common.ShowError("Не задан шаблон", "Ошибка при формировании отчета");
                 return;
             }
 
@@ -1786,154 +1875,97 @@ namespace Planning
             wait.TopMost = true;
             wait.Show();
             wait.SetText("Формирование отчета: получение данных....");
-            
-            SLDocument report = new SLDocument(settingReport.TemplatePath);
 
-            //Excel.Range range;
+            Excel.Range range;
             int ShpType = int.Parse(reportParams["ShpType"]) - 1;
 
+
+
             //DataSet dataSet = GetShipment(DateTime.Parse(reportParams["PeriodBegin"]), DateTime.Parse(reportParams["PeriodEnd"]), null, null, ShpType);
-            List<ShipmentMain> _shipmentMainPeriod = new List<ShipmentMain>();
-            try
+
+
+            SqlHandle sql = new SqlHandle(Common.BuildConnectionString(ConnectionParams.ServerName, ConnectionParams.BaseName, ConnectionParams.UserName, ConnectionParams.Pwd));
+            sql.SqlStatement = queryOut;
+            sql.Connect();
+            //sql.TypeCommand = CommandType.StoredProcedure;
+            sql.IsResultSet = true;
+            object shpType = null;
+            if (ShpType >= 0)
+                shpType = ShpType;
+
+
+            bool success = sql.Execute();
+
+            if (!success)
             {
-               _shipmentMainPeriod = shipmentMainRepository.GetAll(DateTime.Parse(reportParams["PeriodBegin"]), DateTime.Parse(reportParams["PeriodEnd"]), null, null, ShpType);
-            }
-            catch (Exception ex)
-            {
-
-                MessageBox.Show(ex.Message);
+                Common.ShowError(sql.LastError, "Ошибка");
+                return;
             }
 
-            //DataSet dataSet = new DataSet();
-            
+            //GetOrderDetailCount();
+
+            DataSet dataSet = sql.DataSet;
 
 
-
-            report.SetCellValue(2, 6, "Данные за период с " + reportParams["PeriodBegin"] + " по " + reportParams["PeriodEnd"]);
-            //excel.SetValue(1, 6, 2, "Данные за период с " + reportParams["PeriodBegin"] + " по " + reportParams["PeriodEnd"]);
+            //SqlDataReader dataRows = GetShipment(edCurrDay.Value, null, null, null);
 
 
-            wait.SetRange(0, _shipmentMainPeriod.Count);
+            excel.SetValue(1, 6, 2, "Данные за период с " + reportParams["PeriodBegin"] + " по " + reportParams["PeriodEnd"]);
+
+
+            wait.SetRange(0, dataSet.Tables[0].Rows.Count);
             wait.SetPosition(1);
             wait.SetText("Формирование отчета: вывод данных....");
 
             //Получим индексы колонок в резалсете
-            
-             //List<string> columnOrder = new List<string> {"ShpId","OrdId","ShpDate","SlotTime","InOut","OrdLVCode","OrdLVType",
-             //   "KlientName","OrderStatus","PrcReady","ShpComment","OrdComment","GateName","ShpSpecialCond","ShpDriverPhone",
-             //   "ShpDriverFio","TransportCompanyName","TransportTypeName","ShpVehicleNumber","ShpTrailerNumber","ShpAttorneyNumber",
-             //   "ShpAttorneyDate","ShpSubmissionTime","ShpStartTime", "ShpEndTimePlan","ShpEndTimeFact","CALC:CONCAT(ShpDate,SlotTime)",
-             //   "CALC:DIFFTIME(ShpSubmissionTime,ShpStartTime)","CALC:DIFFTIME({26},ShpStartTime)","CALC:DIFFTIME({26},ShpSubmissionTime)",
-             //   "ShpDelayReasonName", "ShpDelayComment",  "ShpStampNumber","ShpSupplierName" };
-            
+
             int rowIdx = 0;
-            foreach (var item in _shipmentMainPeriod)
+
+            string[,] printRow = new string[1, columnOrder.Count];
+            foreach (DataRow r in dataSet.Tables[0].Rows)
             {
-                report.SetCellValue(rowIdx + 5, 1, (int)item.ShpId);
-                report.SetCellValue(rowIdx + 5, 2, (int)item.OrdId);
-                report.SetCellValue(rowIdx + 5, 3, (DateTime)item.ShpDate);
-                report.SetCellValue(rowIdx + 5, 4, item.SlotTime.ToString());
-                report.SetCellValue(rowIdx + 5, 5, item.InOut);
-                report.SetCellValue(rowIdx + 5, 6, item.OrdLVCode);
-                report.SetCellValue(rowIdx + 5, 7, item.OrdLVType);
-                report.SetCellValue(rowIdx + 5, 8, item.KlientName);
-                report.SetCellValue(rowIdx + 5, 9, item.OrderStatus);
-                report.SetCellValue(rowIdx + 5, 10, item.PrcReady);
-                report.SetCellValue(rowIdx + 5, 11, item.ShpComment);
-                report.SetCellValue(rowIdx + 5, 12, item.OrdComment);
-                report.SetCellValue(rowIdx + 5, 13, item.GateName);
-                report.SetCellValue(rowIdx + 5, 14, (bool)item.ShpSpecialCond);
-                report.SetCellValue(rowIdx + 5, 15, item.ShpDriverPhone);
-                report.SetCellValue(rowIdx + 5, 16, item.ShpDriverFio);
-                report.SetCellValue(rowIdx + 5, 17, item.TransportCompanyName);
-                report.SetCellValue(rowIdx + 5, 18, item.TransportTypeName);
-                report.SetCellValue(rowIdx + 5, 19, item.ShpVehicleNumber);
-                report.SetCellValue(rowIdx + 5, 20, item.ShpTrailerNumber);
-                report.SetCellValue(rowIdx + 5, 21, item.ShpAttorneyNumber);
-                report.SetCellValue(rowIdx + 5, 22, (DateTime)item.ShpAttorneyDate);
-                report.SetCellValue(rowIdx + 5, 23, (DateTime)item.ShpSubmissionTime);
-                report.SetCellValue(rowIdx + 5, 24, (DateTime)item.ShpStartTime);
-                report.SetCellValue(rowIdx + 5, 25, (DateTime)item.ShpEndTimePlan);
-                report.SetCellValue(rowIdx + 5, 26, (DateTime)item.ShpEndTimeFact);
-                DateTime planDateTime = ((DateTime)item.ShpDate).Add((TimeSpan)item.SlotTime);
-                report.SetCellValue(rowIdx + 5, 27, planDateTime.ToString());
-                
-                //TimeSpan diff;
-                //if (item.ShpDate != null && item.SlotTime !=null)
-                //{
-                //    DateTime SlotTime = DateTime.Parse(item.SlotTime.ToString());
-                //    diff = (DateTime)item.ShpDate - SlotTime;
-                //    report.SetCellValue(rowIdx + 5, 28, diff.ToString());
-                //}
-                
-                if (item.ShpSubmissionTime !=null && item.ShpStartTime !=null)
-                {
-                    TimeSpan diffTime = (DateTime)item.ShpSubmissionTime - (DateTime)item.ShpStartTime;
-                    report.SetCellValue(rowIdx + 5, 27, diffTime.ToString(@"hh\:mm\:ss"));
-                }
-                if (item.ShpStartTime != null)
-                {
-                    TimeSpan diffTime = (DateTime)planDateTime - (DateTime)item.ShpStartTime;
-                    report.SetCellValue(rowIdx + 5, 28, diffTime.ToString(@"hh\:mm\:ss"));
-                }
-                if (item.ShpSubmissionTime != null)
-                {
-                    TimeSpan diffTime = (DateTime)planDateTime - (DateTime)item.ShpSubmissionTime;
-                    report.SetCellValue(rowIdx + 5, 29, diffTime.ToString(@"hh\:mm\:ss"));
-                }
-                report.SetCellValue(rowIdx + 5, 30, item.OrdLVCode);
-                report.SetCellValue(rowIdx + 5, 31, item.ShpDelayReasonName);
-                report.SetCellValue(rowIdx + 5, 32, item.ShpDelayComment);
-                report.SetCellValue(rowIdx + 5, 33, item.ShpStampNumber);
-                report.SetCellValue(rowIdx + 5, 34, item.ShpSupplierName);
+                string cellValue;
 
+                for (int colIdx = 0; colIdx < columnOrder.Count; colIdx++)
+                {
+                    cellValue = "";
+                    if (!columnOrder[colIdx].StartsWith("CALC"))
+                    {
 
+                        cellValue = r[columnOrder[colIdx]].ToString();
+                    }
+                    else
+                    {
+                        cellValue = CalculateColumnValue(r, printRow, columnOrder[colIdx].Substring(5));
+                    }
+                    if (columnOrder[colIdx] == "ShpDate")
+                    {
+                        //columnOrder[colIdx]
+                        cellValue = r[columnOrder[colIdx]].ToString().Substring(0, 10);
+                    }
+                    printRow[0, colIdx] = cellValue;
+
+                    //excel.SetValue(1, colIdx + 1, rowIdx, cellValue);
+                    // 
+
+                }
+                //excel.SetValues(1, 1, rowIdx + 5, columnOrder.Count, rowIdx + 5, printRow);
+                excel.SetRowValues(1, rowIdx + 5, columnOrder.Count, printRow);
+                rowIdx++;
+                wait.SetPosition(rowIdx);
             }
 
-            
-            //string[,] printRow = new string[1, columnOrder.Count];
-            //foreach (DataRow r in dataSet.Tables[0].Rows)
-            //{
-            //    string cellValue;
-
-            //    for (int colIdx = 0; colIdx < columnOrder.Count; colIdx++)
-            //    {
-            //        cellValue = "";
-            //        if (!columnOrder[colIdx].StartsWith("CALC"))
-            //        {
-
-            //            cellValue = r[columnOrder[colIdx]].ToString();
-            //        }
-            //        else
-            //        {
-            //            cellValue = CalculateColumnValue(r, printRow, columnOrder[colIdx].Substring(5));
-            //        }
-            //        if (columnOrder[colIdx] == "ShpDate")
-            //        {                        
-            //            cellValue = r[columnOrder[colIdx]].ToString().Substring(0, 10);
-            //        }
-            //        printRow[0, colIdx] = cellValue;
-
-            //    }
-                
-            //    excel.SetRowValues(1, rowIdx + 5, columnOrder.Count, printRow);
-            //    rowIdx++;
-            //    wait.SetPosition(rowIdx);
-            //}
-
-            //range = excel.SelectCells(1, 1, 5, columnOrder.Count, rowIdx + 4);
-            //range.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
-            //range.Borders.Item[Excel.XlBordersIndex.xlEdgeLeft].Weight = Excel.XlBorderWeight.xlMedium;
-            //range.Borders.Item[Excel.XlBordersIndex.xlEdgeTop].Weight = Excel.XlBorderWeight.xlMedium;
-            //range.Borders.Item[Excel.XlBordersIndex.xlEdgeRight].Weight = Excel.XlBorderWeight.xlMedium;
-            //range.Borders.Item[Excel.XlBordersIndex.xlEdgeBottom].Weight = Excel.XlBorderWeight.xlMedium;
-            
-            //excel.Visible = true;
-            report.SaveAs(System.IO.Path.GetTempPath()+"1.xlsx");
+            range = excel.SelectCells(1, 1, 5, columnOrder.Count, rowIdx + 4);
+            range.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
+            range.Borders.Item[Excel.XlBordersIndex.xlEdgeLeft].Weight = Excel.XlBorderWeight.xlMedium;
+            range.Borders.Item[Excel.XlBordersIndex.xlEdgeTop].Weight = Excel.XlBorderWeight.xlMedium;
+            range.Borders.Item[Excel.XlBordersIndex.xlEdgeRight].Weight = Excel.XlBorderWeight.xlMedium;
+            range.Borders.Item[Excel.XlBordersIndex.xlEdgeBottom].Weight = Excel.XlBorderWeight.xlMedium;
+            excel.Visible = true;
             wait.Close();
             miRepPeriod.Enabled = true;
         }
-        */
+
         private string CalculateColumnValue(DataRow context, string[,] currentPrintRow, string Expr)
         {
             string result = "";
@@ -2145,6 +2177,25 @@ namespace Planning
 
             col.Width = column.Width;
             Common.settingsHandle.SetParamList<ShipmentColumn>("View\\ShipmentColumns", "ShipmentColumns", shipmentColumns);
+        }
+
+        private void menuItemReportPeriodV2_Click(object sender, EventArgs e)
+        {
+            ReportParams reportParams = new ReportParams();
+            RepPeriod repPeriod = new RepPeriod(reportParams);
+
+
+
+            if (repPeriod.ShowDialog() == DialogResult.OK)
+            {
+
+                ShowReport(REPORT_PERIOD_V2, reportParams);
+            }
+        }
+
+        private void contextMenuMain_Opening(object sender, CancelEventArgs e)
+        {
+
         }
     }
 }

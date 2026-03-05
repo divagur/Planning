@@ -710,6 +710,8 @@ namespace Planning
                     newOrderId[addOrderId] = order.Id;
                 }
 
+                _shipmentOrderParts.RemoveAll(o=>o.ShOrderId == order.Id);
+
                 foreach (var orderPart in _shipmentOrderParts.Where(op=>op.ShOrderId == addOrderId))
                 {
                     orderPart.ShOrderId = order.Id;
