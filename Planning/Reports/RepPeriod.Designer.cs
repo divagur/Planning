@@ -185,10 +185,10 @@ namespace Planning
             this.cbType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbType.FormattingEnabled = true;
             this.cbType.Items.AddRange(new object[] {
-            "Все",
             "Выход",
             "Вход",
-            "Перемещение"});
+            "Перемещение",
+            "Все"});
             this.cbType.Location = new System.Drawing.Point(94, 73);
             this.cbType.Name = "cbType";
             this.cbType.Size = new System.Drawing.Size(155, 21);

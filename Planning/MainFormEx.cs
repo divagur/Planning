@@ -1768,28 +1768,37 @@ namespace Planning
                 Common.ShowInformation("Не найдена база данных депозитора", "Предупреждение");
                 return;
             }
+            List<String> queryOut = new List<string>();
+
+            /*
+             
+                Все - 0
+                Выход - 1
+                Вход - 2
+                Перемещение - 3
+             */
             #region Запросы
-            string queryOut = String.Format(@"select vs.shp_id, so.id, so.lv_order_id, vs.s_date, vs.time_slot_id,
-				vs.slot_time,
-				vs.s_in, N'выход' InOut, so.lv_order_code,sop.os_lvcode, vs.dep_lv_id, vs.dep_name, vs.sp_condition, vs.is_courier,
-				vs.gate_id, vs.gate_name,cmp_ShortName,
-				cast(ord_StatusID as nvarchar(11)) + N' - ' + isnull(msg_Greek, N'') OrdStatusText,
+
+            queryOut.Add(String.Format(@"select vs.shp_id ShpId, so.id OrdId, so.lv_order_id, vs.s_date ShpDate, 
+				vs.slot_time SlotTime,
+				vs.s_in, N'выход' InOut, so.lv_order_code OrdLVCode, vs.sp_condition ShpSpecialCond,
+				vs.gate_name GateName,cmp_ShortName KlientName,
+				cast(ord_StatusID as nvarchar(11)) + N' - ' + isnull(msg_Greek, N'') OrderStatus,
 				(
 					case when ActPcs <> 0 then cast(cast(round(cast(ActPcs as numeric(10, 2)) / ExpPcs * 100, 2) as numeric(10, 2)) as varchar(7)) + N'%' end
-				) Done,
+				) PrcReady,
 				(case when ActPcs <> 0 then cast(ActPcs as numeric(10, 2)) / ExpPcs end) DoneShare,
-				vs.s_comment, so.comment,
-				vs.driver_phone,vs.driver_fio,vs.tc_name tc, vs.transport_type_name tt_name,
-				vs.vehicle_number, vs.trailer_number,
-				vs.attorney_number, vs.attorney_date,
-				vs.submission_time, 
-				vs.start_time, vs.end_time, vs.leave_time,
-				vs.delay_reason_name, vs.delay_comment,
+				vs.s_comment ShpComment, so.comment OrdComment,
+				vs.driver_phone ShpDriverPhone,vs.driver_fio ShpDriverFio,vs.tc_name TransportCompanyName, 
+                vs.transport_type_name TransportTypeName,
+				vs.vehicle_number ShpVehicleNumber, vs.trailer_number ShpTrailerNumber,
+				vs.attorney_number ShpAttorneyNumber, vs.attorney_date ShpAttorneyDate,
+				vs.submission_time ShpSubmissionTime, 
+				vs.start_time ShpStartTime, vs.end_time ShpEndTimePlan, vs.leave_time ShpEndTimeFact,
+				vs.delay_reason_name ShpDelayReasonName, vs.delay_comment ShpDelayComment,
 				vs.forwarder_fio,ort_Code + N' - ' + ort_Description OrdLVType,
-				vs.stamp_number,
-				vs.is_add_lv,
-				sop.shipping_places_number,
-				sop.order_part_weight
+				vs.stamp_number ShpStampNumber,			
+				vs.supplier_name ShpSupplierName
 				
 		from 
 			v_shipments vs with(nolock)
@@ -1837,15 +1846,107 @@ namespace Planning
 				join {0}.dbo.LV_ItemUnit ActIU with(nolock) on ActIU.itu_ID = oia_ItemUnitID
 				join {0}.dbo.LV_ItemUnitConversion ActPcs with(nolock) on ActPcs.iuc_ProductID = ori_ProductID and ActPcs.iuc_ConvertedUnitID = ActIU.itu_UnitID and ActPcs.iuc_ReferenceUnitID = 5
 		 where ori_OrderID = lv_order_id
-	) a1 
-	left join {0}.dbo.LV_Customer with(nolock) on cus_ID = ord_CustomerID
-	left join {0}.dbo.LV_Company with (nolock) on cmp_ID = cus_CompanyID
-	left join {0}.dbo.LV_OrderType with (nolock) on ort_ID = ord_TypeID
-	left join {0}.dbo.LV_ProgressStatus with(nolock) on pst_ID = ord_StatusID
-	left join {0}.dbo.LV_Messages with(nolock) on msg_code = pst_MessageCode and  msg_languageID = 4
-	where 
-		vs.s_in = 0
-		and vs.s_date between {1} and {2}", depositor.LvBase, DateTime.Parse(reportParams["PeriodBegin"]), DateTime.Parse(reportParams["PeriodEnd"]));
+	        ) a1 
+	        left join {0}.dbo.LV_Customer with(nolock) on cus_ID = ord_CustomerID
+	        left join {0}.dbo.LV_Company with (nolock) on cmp_ID = cus_CompanyID
+	        left join {0}.dbo.LV_OrderType with (nolock) on ort_ID = ord_TypeID
+	        left join {0}.dbo.LV_ProgressStatus with(nolock) on pst_ID = ord_StatusID
+	        left join {0}.dbo.LV_Messages with(nolock) on msg_code = pst_MessageCode and  msg_languageID = 4
+	        where 
+		        vs.s_in = 0
+		        and vs.s_date between '{1}' and '{2}'", depositor.LvBase, DateTime.Parse(reportParams["PeriodBegin"]), DateTime.Parse(reportParams["PeriodEnd"])));
+
+
+            queryOut.Add(String.Format(@"	select 
+				vs.shp_id ShpId, so.id OrdId, so.lv_order_id,  vs.s_date ShpDate, 
+				vs.slot_time SlotTime,
+				vs.s_in, N'вход' InOut, so.lv_order_code OrdLVCode, vs.sp_condition ShpSpecialCond, 
+				vs.gate_name GateName,cmp_ShortName KlientName,
+				cast(rct_ProgressID as nvarchar(11)) + N' - ' + isnull(msg_Greek, N'') OrderStatus,
+				(       case         when a1.lsk_CUQuantity <> 0 then cast(cast(round(cast(a1.lsk_CUQuantity as numeric(10, 2)) / rci_ExpQuantity * 100, 2) as numeric(10, 2)) as varchar(7)) + N'%'        end       ) PrcReady,      
+				(       case         when a1.lsk_CUQuantity <> 0 then cast(a1.lsk_CUQuantity as numeric(10, 2)) / rci_ExpQuantity        end      ) DoneShare,      
+				vs.s_comment ShpComment, so.comment OrdComment,
+				vs.driver_phone ShpDriverPhone,vs.driver_fio ShpDriverFio,vs.tc_name TransportCompanyName, 
+                vs.transport_type_name TransportTypeName,
+				vs.vehicle_number ShpVehicleNumber, vs.trailer_number ShpTrailerNumber,
+				vs.attorney_number ShpAttorneyNumber, vs.attorney_date ShpAttorneyDate,
+				vs.submission_time ShpSubmissionTime, 
+				vs.start_time ShpStartTime, vs.end_time ShpEndTimePlan, vs.leave_time ShpEndTimeFact,
+				vs.delay_reason_name ShpDelayReasonName, vs.delay_comment ShpDelayComment,
+				vs.forwarder_fio,
+				 rtt_Code + N' - ' + rtt_Description OrdLVType,
+				 vs.stamp_number ShpStampNumber, 
+                vs.supplier_name ShpSupplierName
+	        from 
+			v_shipments vs with(nolock)
+			left join shipment_orders so on (vs.shp_id = so.shipment_id) 
+			left join {0}.dbo.LV_Receipt with(nolock) on rct_ID = so.lv_order_id
+			left join {0}.dbo.LV_Supplier with(nolock) on spl_ID = rct_SupplierID
+			left join {0}.dbo.LV_Company with (nolock) on cmp_ID = spl_CompanyID
+			left join {0}.dbo.LV_ReceiptType with (nolock) on rtt_ID = rct_TypeID
+			left join {0}.dbo.LV_ProgressStatus with(nolock) on pst_ID = rct_ProgressID
+			left join {0}.dbo.LV_Messages with(nolock) on msg_code = pst_MessageCode and msg_languageID = 4
+			left join (
+					    select 
+						    rct_id		
+						    ,sum(rci_ExpQuantity) as rci_ExpQuantity
+						    ,sum(rci_ActQuantity) as rci_ActQuantity
+						    ,a.lsk_CUQuantity
+					    from {0}.dbo.LV_Receipt with(nolock)
+					    inner join {0}.dbo.LV_ReceiptItem with (nolock) on rci_ReceiptID = rct_ID 
+					    inner join (  
+									    SELECT log_ReceiptID, sum(lsk_CUQuantity) as lsk_CUQuantity
+									    FROM 
+											    {0}.[dbo].[LV_LogStock]
+											    inner join {0}.dbo.LV_Log  on  log_ID = lsk_LogID  
+									    group by log_ReceiptID
+								    ) a on log_ReceiptID = rci_ReceiptID 
+					    group by rct_id,lsk_CUQuantity 
+		            ) a1 on a1.rct_id = LV_Receipt.rct_ID
+	        where 
+            vs.s_in = 1
+            and vs.s_date between '{1}' and '{2}'", depositor.LvBase, DateTime.Parse(reportParams["PeriodBegin"]), DateTime.Parse(reportParams["PeriodEnd"])));
+
+
+            queryOut.Add(String.Format(@"select m.id ShpId, mi.id OrdId, mi.TklLVID lv_order_id, m.m_date ShpDate,
+				(case m.sp_condition when 0 then ts.slot_time else m.special_time end) SlotTime,
+				cast(NULL as bit) s_in, N'перем' InOut, tkl_Code OrdLVCode, m.sp_condition ShpSpecialCond, 
+				cast(NULL as nvarchar(8)) GateName,
+				(case when m.def_customer = 0 then d.name else N'BAXI' end) KlientName,
+				isnull(pst_Code, N'') + N' - ' + isnull(msg_Greek, N'') OrderStatus,
+				(case when CntDone <> 0 then cast(cast(round(cast(CntDone as numeric(10, 2)) / CntOverall * 100, 2) as numeric(10, 2)) as varchar(6)) + N'%' end) PrcReady,
+				(case when CntDone <> 0 then cast(CntDone as numeric(10, 2)) / CntOverall end) DoneShare,    
+				m.comment ShpComment, cast(NULL as varchar(500)) OrdComment,
+				cast(NULL as varchar(30)) ShpDriverPhone,m.performer ShpDriverFio,cast(NULL as varchar(80)) TransportCompanyName, 
+				cast(NULL as varchar(80)) TransportTypeName, cast(NULL as varchar(20)) ShpVehicleNumber, 
+				cast(NULL as varchar(20)) ShpTrailerNumber,cast(NULL as varchar(30)) ShpAttorneyNumber, cast(NULL as date) ShpAttorneyDate,
+				cast(NULL as datetime) ShpSubmissionTime, cast(NULL as datetime) ShpStartTime, cast(NULL as datetime) ShpEndTimePlan, 
+				cast(NULL as datetime) ShpEndTimeFact,cast(NULL as varchar(254)) ShpDelayReasonName, cast(NULL as varchar(200)) ShpDelayComment,
+				cast(NULL as varchar(80)) forwarder_fio, cast(NULL as varchar(77)) OrdLVType, cast(NULL as varchar(25)) ShpStampNumber,
+				null ShpSupplierName
+            from movement m with(nolock)
+            left join movement_item mi with(nolock) on mi.movement_id = m.id
+            left join depositors d with(nolock) on d.id = mi.depositor_id
+            left join time_slot ts with(nolock) on ts.id = m.time_slot_id
+            left join delay_reasons dr with(nolock) on dr.id = m.delay_reasons_id
+            left join {0}.dbo.LV_TaskList with(nolock) on tkl_ID = mi.TklLVID
+            left join {0}.dbo.LV_ProgressStatus with(nolock) on pst_ID = tkl_StatusID
+            left join {0}.dbo.LV_Messages with(nolock) on msg_code = pst_MessageCode and msg_languageID = 4
+            outer apply
+            (
+	            select cast(min(tsk_ActualTime) as smalldatetime) ldg_Began, cast(max(tsk_ActualTime) as smalldatetime) ldg_Ended,
+	            sum(case when tsk_StatusID in (3, 4) then 1 else 0 end) CntDone, count(*) CntOverall
+	            from {0}.dbo.LV_Task with(nolock)
+	            where tsk_TaskListID = mi.TklLVID
+            ) a1
+
+            where 
+               m.m_date between '{1}' and '{2}'", depositor.LvBase, DateTime.Parse(reportParams["PeriodBegin"]), DateTime.Parse(reportParams["PeriodEnd"])));
+
+            queryOut.Add(String.Concat(queryOut[0]," union all ", Environment.NewLine,
+                queryOut[1], " union all ", Environment.NewLine,
+                queryOut[2]));
+
             #endregion
 
             int[] colNumber = new int[columnOrder.Count];
@@ -1877,7 +1978,7 @@ namespace Planning
             wait.SetText("Формирование отчета: получение данных....");
 
             Excel.Range range;
-            int ShpType = int.Parse(reportParams["ShpType"]) - 1;
+            int ShpType = int.Parse(reportParams["ShpType"]);
 
 
 
@@ -1885,7 +1986,7 @@ namespace Planning
 
 
             SqlHandle sql = new SqlHandle(Common.BuildConnectionString(ConnectionParams.ServerName, ConnectionParams.BaseName, ConnectionParams.UserName, ConnectionParams.Pwd));
-            sql.SqlStatement = queryOut;
+            sql.SqlStatement = queryOut[ShpType];
             sql.Connect();
             //sql.TypeCommand = CommandType.StoredProcedure;
             sql.IsResultSet = true;
