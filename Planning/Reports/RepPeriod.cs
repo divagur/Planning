@@ -34,6 +34,11 @@ namespace Planning
 
         private void btnOk_Click(object sender, EventArgs e)
         {
+            if (String.IsNullOrEmpty(edPeriodBegin.Text))
+            {
+                Common.ShowError("Не указана дата начала периода формирования отчета","Ошибка параметров отчета");
+                return;
+            }
             _reportParams["PeriodBegin"] = edPeriodBegin.Text;
             _reportParams["PeriodEnd"] = edPeriodEnd.Text;
             _reportParams["ShpType"] = cbType.SelectedIndex.ToString();

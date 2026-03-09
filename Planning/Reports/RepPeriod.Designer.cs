@@ -238,6 +238,6 @@ namespace Planning
         private System.Windows.Forms.Button btnCalendarOk;
         private System.Windows.Forms.DateTimePicker dtSpecialTime;
         private System.Windows.Forms.MonthCalendar monthCalendarSpecial;
-        private System.Windows.Forms.ComboBox cbType;
+        public System.Windows.Forms.ComboBox cbType;
     }
 }

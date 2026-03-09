@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -89,6 +90,20 @@ namespace Planning.DataLayer
                 throw new Exception(ex.Message);
             }
             return result;
+        }
+
+        public void SqlExecute(string SqlText)
+        {
+
+            try
+            {
+                dbConnection.Execute(SqlText);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
         }
     }
 }

@@ -27,7 +27,7 @@ namespace Planning.DataLayer
         }
         public Shipment GetByLvOrderCode(string LvOrderCode)
         {
-            ShipmentDataAdapter shipmentDataAdapter = new ShipmentDataAdapter();
+            ShipmentLogViewDataAdapter shipmentDataAdapter = new ShipmentLogViewDataAdapter();
             string sql = dataAdapter.GetSelectItemSql() + $@"join shipment_orders so on so.shipment_id = {shipmentDataAdapter.Table}.id
                     where so.lv_order_code = @lvOrderCode";
             Shipment item = null;

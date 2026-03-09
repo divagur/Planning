@@ -33,9 +33,9 @@ namespace Planning
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainFormEx));
-            BrightIdeasSoftware.HeaderStateStyle headerStateStyle4 = new BrightIdeasSoftware.HeaderStateStyle();
-            BrightIdeasSoftware.HeaderStateStyle headerStateStyle5 = new BrightIdeasSoftware.HeaderStateStyle();
-            BrightIdeasSoftware.HeaderStateStyle headerStateStyle6 = new BrightIdeasSoftware.HeaderStateStyle();
+            BrightIdeasSoftware.HeaderStateStyle headerStateStyle1 = new BrightIdeasSoftware.HeaderStateStyle();
+            BrightIdeasSoftware.HeaderStateStyle headerStateStyle2 = new BrightIdeasSoftware.HeaderStateStyle();
+            BrightIdeasSoftware.HeaderStateStyle headerStateStyle3 = new BrightIdeasSoftware.HeaderStateStyle();
             this.menuMain = new System.Windows.Forms.MenuStrip();
             this.mtiFile = new System.Windows.Forms.ToolStripMenuItem();
             this.miSettings = new System.Windows.Forms.ToolStripMenuItem();
@@ -173,10 +173,10 @@ namespace Planning
             this.menuItemDictWarehouse = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemDictCustomPosts = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemReport = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemReportPeriodV2 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemReportPeriod = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemReportStatistic = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemReportTC = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuItemReportPeriodV2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemAdd = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemCalcOrderVolume = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemCurrentTask = new System.Windows.Forms.ToolStripMenuItem();
@@ -189,6 +189,7 @@ namespace Planning
             this.tmUpdate = new System.Windows.Forms.Timer(this.components);
             this.simpleItemStyle1 = new BrightIdeasSoftware.SimpleItemStyle();
             this.baseRenderer1 = new BrightIdeasSoftware.BaseRenderer();
+            this.menuItemRatingCarriers = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMain.SuspendLayout();
             this.statusStrip2.SuspendLayout();
             this.tabForms.SuspendLayout();
@@ -395,13 +396,13 @@ namespace Planning
             // miCalcOrderVolume
             // 
             this.miCalcOrderVolume.Name = "miCalcOrderVolume";
-            this.miCalcOrderVolume.Size = new System.Drawing.Size(248, 22);
+            this.miCalcOrderVolume.Size = new System.Drawing.Size(249, 22);
             this.miCalcOrderVolume.Text = "Рассчет объема заказа";
             // 
             // miCurrentTask
             // 
             this.miCurrentTask.Name = "miCurrentTask";
-            this.miCurrentTask.Size = new System.Drawing.Size(248, 22);
+            this.miCurrentTask.Size = new System.Drawing.Size(249, 22);
             this.miCurrentTask.Text = "Текущие операционные задачи";
             // 
             // statusStrip2
@@ -1295,10 +1296,10 @@ namespace Planning
             // 
             // headerFormatStyle1
             // 
-            this.headerFormatStyle1.Hot = headerStateStyle4;
-            headerStateStyle5.FrameWidth = 2F;
-            this.headerFormatStyle1.Normal = headerStateStyle5;
-            this.headerFormatStyle1.Pressed = headerStateStyle6;
+            this.headerFormatStyle1.Hot = headerStateStyle1;
+            headerStateStyle2.FrameWidth = 2F;
+            this.headerFormatStyle1.Normal = headerStateStyle2;
+            this.headerFormatStyle1.Pressed = headerStateStyle3;
             // 
             // imageListMain16
             // 
@@ -1526,41 +1527,43 @@ namespace Planning
             // toolStripMenuItemReport
             // 
             this.toolStripMenuItemReport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemReportPeriodV2,
             this.menuItemReportPeriod,
             this.menuItemReportStatistic,
             this.menuItemReportTC,
-            this.menuItemReportPeriodV2});
+            this.menuItemRatingCarriers});
             this.toolStripMenuItemReport.Name = "toolStripMenuItemReport";
             this.toolStripMenuItemReport.Size = new System.Drawing.Size(189, 22);
             this.toolStripMenuItemReport.Text = "Отчеты";
             // 
+            // menuItemReportPeriodV2
+            // 
+            this.menuItemReportPeriodV2.Name = "menuItemReportPeriodV2";
+            this.menuItemReportPeriodV2.Size = new System.Drawing.Size(198, 22);
+            this.menuItemReportPeriodV2.Text = "Отгрузки за период";
+            this.menuItemReportPeriodV2.Click += new System.EventHandler(this.menuItemReportPeriodV2_Click);
+            // 
             // menuItemReportPeriod
             // 
             this.menuItemReportPeriod.Name = "menuItemReportPeriod";
-            this.menuItemReportPeriod.Size = new System.Drawing.Size(196, 22);
-            this.menuItemReportPeriod.Text = "Отгрузки за период";
+            this.menuItemReportPeriod.Size = new System.Drawing.Size(198, 22);
+            this.menuItemReportPeriod.Text = "Отгрузки за период v1";
+            this.menuItemReportPeriod.Visible = false;
             this.menuItemReportPeriod.Click += new System.EventHandler(this.menuItemReportPeriod_Click);
             // 
             // menuItemReportStatistic
             // 
             this.menuItemReportStatistic.Name = "menuItemReportStatistic";
-            this.menuItemReportStatistic.Size = new System.Drawing.Size(196, 22);
+            this.menuItemReportStatistic.Size = new System.Drawing.Size(198, 22);
             this.menuItemReportStatistic.Text = "Статистика за период";
             this.menuItemReportStatistic.Click += new System.EventHandler(this.menuItemReportStatistic_Click);
             // 
             // menuItemReportTC
             // 
             this.menuItemReportTC.Name = "menuItemReportTC";
-            this.menuItemReportTC.Size = new System.Drawing.Size(196, 22);
+            this.menuItemReportTC.Size = new System.Drawing.Size(198, 22);
             this.menuItemReportTC.Text = "Отчёт по ТС";
             this.menuItemReportTC.Click += new System.EventHandler(this.menuItemReportTC_Click);
-            // 
-            // menuItemReportPeriodV2
-            // 
-            this.menuItemReportPeriodV2.Name = "menuItemReportPeriodV2";
-            this.menuItemReportPeriodV2.Size = new System.Drawing.Size(196, 22);
-            this.menuItemReportPeriodV2.Text = "Отгрузки за период v2";
-            this.menuItemReportPeriodV2.Click += new System.EventHandler(this.menuItemReportPeriodV2_Click);
             // 
             // toolStripMenuItemAdd
             // 
@@ -1575,14 +1578,14 @@ namespace Planning
             // menuItemCalcOrderVolume
             // 
             this.menuItemCalcOrderVolume.Name = "menuItemCalcOrderVolume";
-            this.menuItemCalcOrderVolume.Size = new System.Drawing.Size(248, 22);
+            this.menuItemCalcOrderVolume.Size = new System.Drawing.Size(249, 22);
             this.menuItemCalcOrderVolume.Text = "Расчет объема заказа";
             this.menuItemCalcOrderVolume.Click += new System.EventHandler(this.menuItemCalcOrderVolume_Click);
             // 
             // menuItemCurrentTask
             // 
             this.menuItemCurrentTask.Name = "menuItemCurrentTask";
-            this.menuItemCurrentTask.Size = new System.Drawing.Size(248, 22);
+            this.menuItemCurrentTask.Size = new System.Drawing.Size(249, 22);
             this.menuItemCurrentTask.Text = "Текущие операционные задачи";
             this.menuItemCurrentTask.Click += new System.EventHandler(this.menuItemCurrentTask_Click);
             // 
@@ -1658,6 +1661,13 @@ namespace Planning
             // tmUpdate
             // 
             this.tmUpdate.Tick += new System.EventHandler(this.tmUpdate_Tick);
+            // 
+            // menuItemRatingCarriers
+            // 
+            this.menuItemRatingCarriers.Name = "menuItemRatingCarriers";
+            this.menuItemRatingCarriers.Size = new System.Drawing.Size(198, 22);
+            this.menuItemRatingCarriers.Text = "Рейтинг перевозчиков";
+            this.menuItemRatingCarriers.Click += new System.EventHandler(this.menuItemRatingCarriers_Click);
             // 
             // MainFormEx
             // 
@@ -1848,5 +1858,6 @@ namespace Planning
         private System.Windows.Forms.ToolStripMenuItem mciOrderDetail;
         private BrightIdeasSoftware.FlagRenderer flagRenderer1;
         private System.Windows.Forms.ToolStripMenuItem menuItemReportPeriodV2;
+        private System.Windows.Forms.ToolStripMenuItem menuItemRatingCarriers;
     }
 }

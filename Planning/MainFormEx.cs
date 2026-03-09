@@ -38,6 +38,7 @@ namespace Planning
         const int REPORT_STATISTIC = 102;
         const int REPORT_TC = 103;
         const int REPORT_PERIOD_V2 = 104;
+        const int REPORT_RATING_CARRIER = 105;
 
         bool isWindowMaximized = false;
         Point offset;
@@ -1349,9 +1350,120 @@ namespace Planning
                 case REPORT_PERIOD_V2:
                     ShowReportPeriodV2(reportParams);
                     break;
+                case REPORT_RATING_CARRIER:
+                    ShowReportRatingCarriers(reportParams);
+                    break;
                 default:
                     break;
             }
+        }
+
+        private void ShowReportRatingCarriers(ReportParams reportParams)
+        {
+
+            SettingReport settingReport = GetReportSetting("Отчет по рейтингу перевозчиков");
+            if (settingReport == null)
+            {
+                MessageBox.Show("Не задан шаблон", "Ошибка при формировании отчета", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            ExcelPrint excel;
+            Excel.Range range;
+            try
+            {
+
+                excel = new ExcelPrint(settingReport.TemplatePath);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка при формировании отчета", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            miRepTC.Enabled = false;
+            frmProgressBar wait = new frmProgressBar(0, 100);
+            wait.TopLevel = true;
+            wait.TopMost = true;
+            wait.Show();
+            wait.SetText("Формирование отчета: получение данных....");
+
+
+            SqlHandle sql = new SqlHandle(Common.BuildConnectionString(ConnectionParams.ServerName, ConnectionParams.BaseName, ConnectionParams.UserName, ConnectionParams.Pwd));
+            sql.SqlStatement = "SP_PL_ReportTC";
+            sql.Connect();
+            sql.TypeCommand = CommandType.StoredProcedure;
+            sql.IsResultSet = true;
+
+            DateTime beginDate;
+            DateTime endDate;
+
+            DateTime? beginDateN = null;
+            DateTime? endDateN = null;
+
+
+            if (DateTime.TryParse(reportParams["PeriodBegin"], out beginDate))
+                beginDateN = (DateTime?)beginDate;
+
+            if (DateTime.TryParse(reportParams["PeriodEnd"], out endDate))
+                endDateN = (DateTime?)endDate;
+
+
+            sql.AddCommandParametr(new SqlParameter { ParameterName = "@From", Value = beginDateN });
+            sql.AddCommandParametr(new SqlParameter { ParameterName = "@Till", Value = endDateN });
+            bool success = sql.Execute();
+
+            if (!success)
+            {
+                MessageBox.Show(sql.LastError, "Ошибка при выборке данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            if (!sql.HasRows())
+            {
+                MessageBox.Show("Нет данных для формирования отчета", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            excel.SetValue(1, 1, 2, "Данные по ТС за период с " + reportParams["PeriodBegin"] + " по " + reportParams["PeriodEnd"] + ". Опоздание (часы, минуты), с учетом допуска +20 мин");
+            wait.SetRange(0, sql.DataSet.Tables[0].Rows.Count);
+            wait.SetPosition(1);
+            wait.SetText("Формирование отчета: вывод данных....");
+
+
+
+
+            int rowIdx = 0;
+            Char separator = System.Globalization.CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator[0];
+            string[,] printRow = new string[1, sql.DataSet.Tables[0].Columns.Count];
+            foreach (DataRow r in sql.DataSet.Tables[0].Rows)
+            {
+
+                for (int colIdx = 0; colIdx < sql.DataSet.Tables[0].Columns.Count; colIdx++)
+                {
+                    string value = r[colIdx].ToString();
+                    if (colIdx == 8)
+                    {
+
+                        value = value == "" ? "" : Decimal.Parse(r[colIdx].ToString().Replace(',', separator)).ToString().Replace(separator, ',');
+                    }
+
+                    printRow[0, colIdx] = value;
+                }
+                excel.SetRowValues(1, rowIdx + 5, sql.DataSet.Tables[0].Columns.Count, printRow);
+                rowIdx++;
+                wait.SetPosition(rowIdx);
+            }
+
+
+            range = excel.SelectCells(1, 1, 5, sql.DataSet.Tables[0].Columns.Count, rowIdx + 4);
+            range.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
+            range.Borders.Item[Excel.XlBordersIndex.xlEdgeLeft].Weight = Excel.XlBorderWeight.xlMedium;
+            range.Borders.Item[Excel.XlBordersIndex.xlEdgeTop].Weight = Excel.XlBorderWeight.xlMedium;
+            range.Borders.Item[Excel.XlBordersIndex.xlEdgeRight].Weight = Excel.XlBorderWeight.xlMedium;
+            range.Borders.Item[Excel.XlBordersIndex.xlEdgeBottom].Weight = Excel.XlBorderWeight.xlMedium;
+            excel.Visible = true;
+            wait.Close();
+            miRepTC.Enabled = true;
+
         }
 
         private void ShowReportTC(ReportParams reportParams)
@@ -1770,13 +1882,11 @@ namespace Planning
             }
             List<String> queryOut = new List<string>();
 
-            /*
-             
-                Все - 0
-                Выход - 1
-                Вход - 2
-                Перемещение - 3
-             */
+            DateTime periodBegin = DateTime.Parse(reportParams["PeriodBegin"]);
+            DateTime periodEnd = String.IsNullOrEmpty(reportParams["PeriodEnd"])?periodBegin:DateTime.Parse(reportParams["PeriodEnd"]);
+            
+
+
             #region Запросы
 
             queryOut.Add(String.Format(@"select vs.shp_id ShpId, so.id OrdId, so.lv_order_id, vs.s_date ShpDate, 
@@ -1854,7 +1964,7 @@ namespace Planning
 	        left join {0}.dbo.LV_Messages with(nolock) on msg_code = pst_MessageCode and  msg_languageID = 4
 	        where 
 		        vs.s_in = 0
-		        and vs.s_date between '{1}' and '{2}'", depositor.LvBase, DateTime.Parse(reportParams["PeriodBegin"]), DateTime.Parse(reportParams["PeriodEnd"])));
+		        and vs.s_date between '{1}' and '{2}'", depositor.LvBase, periodBegin, periodEnd));
 
 
             queryOut.Add(String.Format(@"	select 
@@ -1905,7 +2015,7 @@ namespace Planning
 		            ) a1 on a1.rct_id = LV_Receipt.rct_ID
 	        where 
             vs.s_in = 1
-            and vs.s_date between '{1}' and '{2}'", depositor.LvBase, DateTime.Parse(reportParams["PeriodBegin"]), DateTime.Parse(reportParams["PeriodEnd"])));
+            and vs.s_date between '{1}' and '{2}'", depositor.LvBase, periodBegin, periodEnd));
 
 
             queryOut.Add(String.Format(@"select m.id ShpId, mi.id OrdId, mi.TklLVID lv_order_id, m.m_date ShpDate,
@@ -1941,7 +2051,7 @@ namespace Planning
             ) a1
 
             where 
-               m.m_date between '{1}' and '{2}'", depositor.LvBase, DateTime.Parse(reportParams["PeriodBegin"]), DateTime.Parse(reportParams["PeriodEnd"])));
+               m.m_date between '{1}' and '{2}'", depositor.LvBase, periodBegin, periodEnd));
 
             queryOut.Add(String.Concat(queryOut[0]," union all ", Environment.NewLine,
                 queryOut[1], " union all ", Environment.NewLine,
@@ -1988,12 +2098,7 @@ namespace Planning
             SqlHandle sql = new SqlHandle(Common.BuildConnectionString(ConnectionParams.ServerName, ConnectionParams.BaseName, ConnectionParams.UserName, ConnectionParams.Pwd));
             sql.SqlStatement = queryOut[ShpType];
             sql.Connect();
-            //sql.TypeCommand = CommandType.StoredProcedure;
             sql.IsResultSet = true;
-            object shpType = null;
-            if (ShpType >= 0)
-                shpType = ShpType;
-
 
             bool success = sql.Execute();
 
@@ -2007,11 +2112,7 @@ namespace Planning
 
             DataSet dataSet = sql.DataSet;
 
-
-            //SqlDataReader dataRows = GetShipment(edCurrDay.Value, null, null, null);
-
-
-            excel.SetValue(1, 6, 2, "Данные за период с " + reportParams["PeriodBegin"] + " по " + reportParams["PeriodEnd"]);
+            excel.SetValue(1, 6, 2, "Данные за период с " + periodBegin + " по " + periodEnd);
 
 
             wait.SetRange(0, dataSet.Tables[0].Rows.Count);
@@ -2297,6 +2398,16 @@ namespace Planning
         private void contextMenuMain_Opening(object sender, CancelEventArgs e)
         {
 
+        }
+
+        private void menuItemRatingCarriers_Click(object sender, EventArgs e)
+        {
+            ReportParams reportParams = new ReportParams();
+            RepTC repTC = new RepTC(reportParams);
+            if (repTC.ShowDialog() == DialogResult.OK)
+            {
+                ShowReport(REPORT_RATING_CARRIER, reportParams);
+            }
         }
     }
 }
