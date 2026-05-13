@@ -17,20 +17,23 @@ namespace Planning.DataLayer
             {
                 case EditState.New:
                     return $@"INSERT INTO {Table} (order_id, shipment_id, order_type, comment, is_binding, manual_load, manual_unload, pallet_amount, binding_id, 
-                                                    lv_order_id, lv_order_code, shipping_places_number, order_weight, is_edm) 
+                                                    lv_order_id, lv_order_code, shipping_places_number, order_weight, is_edm,
+                                                    last_modify_user,last_modify_date) 
                                     values(
                                             @{nameof(ShipmentOrder.OrderId)},@{nameof(ShipmentOrder.ShipmentId)},@{nameof(ShipmentOrder.OrderType)},@{nameof(ShipmentOrder.Comment)},
                                             @{nameof(ShipmentOrder.IsBinding)}, @{nameof(ShipmentOrder.ManualLoad)},@{nameof(ShipmentOrder.ManualUnload)},
                                             @{nameof(ShipmentOrder.PalletAmount)},@{nameof(ShipmentOrder.BindingId)}, @{nameof(ShipmentOrder.LvOrderId)},
                                             @{nameof(ShipmentOrder.LvOrderCode)},@{nameof(ShipmentOrder.ShippingPlacesNumber)},@{nameof(ShipmentOrder.OrderWeight)},
-                                            @{nameof(ShipmentOrder.IsEdm)})";
+                                            @{nameof(ShipmentOrder.IsEdm)},
+                                            @{nameof(ShipmentOrder.LastModifyUser)},@{nameof(ShipmentOrder.LastModifyDate)})";
                 case EditState.Edit:
                     return $@"update {Table} set order_id = @{nameof(ShipmentOrder.OrderId)}, shipment_id = @{ nameof(ShipmentOrder.ShipmentId)}, 
                             order_type = @{ nameof(ShipmentOrder.OrderType)}, comment = @{ nameof(ShipmentOrder.Comment)}, is_binding = @{ nameof(ShipmentOrder.IsBinding)}, 
                             manual_load = @{ nameof(ShipmentOrder.ManualLoad)}, manual_unload = @{ nameof(ShipmentOrder.ManualUnload)}, pallet_amount = @{ nameof(ShipmentOrder.PalletAmount)}, 
                             binding_id = @{ nameof(ShipmentOrder.BindingId)}, lv_order_id = @{ nameof(ShipmentOrder.LvOrderId)}, lv_order_code = @{ nameof(ShipmentOrder.LvOrderCode)}, 
                             shipping_places_number = @{nameof(ShipmentOrder.ShippingPlacesNumber)}, order_weight = @{ nameof(ShipmentOrder.OrderWeight)}, 
-                            is_edm = @{nameof(ShipmentOrder.IsEdm)}
+                            is_edm = @{nameof(ShipmentOrder.IsEdm)},
+                            last_modify_user = @{nameof(ShipmentOrder.LastModifyUser)},last_modify_date = @{nameof(ShipmentOrder.LastModifyDate)}
                         where id = @Id";
                 case EditState.Delete:
                     return $"delete from {Table} where id = @Id";
@@ -49,7 +52,8 @@ namespace Planning.DataLayer
                             manual_load as { nameof(ShipmentOrder.ManualLoad)}, manual_unload as { nameof(ShipmentOrder.ManualUnload)}, pallet_amount as { nameof(ShipmentOrder.PalletAmount)}, 
                             binding_id as { nameof(ShipmentOrder.BindingId)}, lv_order_id as { nameof(ShipmentOrder.LvOrderId)}, lv_order_code as { nameof(ShipmentOrder.LvOrderCode)}, 
                             shipping_places_number as { nameof(ShipmentOrder.ShippingPlacesNumber)}, order_weight as { nameof(ShipmentOrder.OrderWeight)}, 
-                            is_edm as {nameof(ShipmentOrder.IsEdm)}
+                            is_edm as {nameof(ShipmentOrder.IsEdm)},
+                            last_modify_user as {nameof(ShipmentOrder.LastModifyUser)},last_modify_date as {nameof(ShipmentOrder.LastModifyDate)}
 
             from 
 	                    {Table}

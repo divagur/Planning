@@ -33,9 +33,9 @@ namespace Planning
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainFormEx));
-            BrightIdeasSoftware.HeaderStateStyle headerStateStyle1 = new BrightIdeasSoftware.HeaderStateStyle();
-            BrightIdeasSoftware.HeaderStateStyle headerStateStyle2 = new BrightIdeasSoftware.HeaderStateStyle();
-            BrightIdeasSoftware.HeaderStateStyle headerStateStyle3 = new BrightIdeasSoftware.HeaderStateStyle();
+            BrightIdeasSoftware.HeaderStateStyle headerStateStyle4 = new BrightIdeasSoftware.HeaderStateStyle();
+            BrightIdeasSoftware.HeaderStateStyle headerStateStyle5 = new BrightIdeasSoftware.HeaderStateStyle();
+            BrightIdeasSoftware.HeaderStateStyle headerStateStyle6 = new BrightIdeasSoftware.HeaderStateStyle();
             this.menuMain = new System.Windows.Forms.MenuStrip();
             this.mtiFile = new System.Windows.Forms.ToolStripMenuItem();
             this.miSettings = new System.Windows.Forms.ToolStripMenuItem();
@@ -177,6 +177,7 @@ namespace Planning
             this.menuItemReportPeriod = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemReportStatistic = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemReportTC = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemRatingCarriers = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemAdd = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemCalcOrderVolume = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemCurrentTask = new System.Windows.Forms.ToolStripMenuItem();
@@ -189,7 +190,7 @@ namespace Planning
             this.tmUpdate = new System.Windows.Forms.Timer(this.components);
             this.simpleItemStyle1 = new BrightIdeasSoftware.SimpleItemStyle();
             this.baseRenderer1 = new BrightIdeasSoftware.BaseRenderer();
-            this.menuItemRatingCarriers = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemDictTimeDelayKPI = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMain.SuspendLayout();
             this.statusStrip2.SuspendLayout();
             this.tabForms.SuspendLayout();
@@ -396,13 +397,13 @@ namespace Planning
             // miCalcOrderVolume
             // 
             this.miCalcOrderVolume.Name = "miCalcOrderVolume";
-            this.miCalcOrderVolume.Size = new System.Drawing.Size(249, 22);
+            this.miCalcOrderVolume.Size = new System.Drawing.Size(248, 22);
             this.miCalcOrderVolume.Text = "Рассчет объема заказа";
             // 
             // miCurrentTask
             // 
             this.miCurrentTask.Name = "miCurrentTask";
-            this.miCurrentTask.Size = new System.Drawing.Size(249, 22);
+            this.miCurrentTask.Size = new System.Drawing.Size(248, 22);
             this.miCurrentTask.Text = "Текущие операционные задачи";
             // 
             // statusStrip2
@@ -1296,10 +1297,10 @@ namespace Planning
             // 
             // headerFormatStyle1
             // 
-            this.headerFormatStyle1.Hot = headerStateStyle1;
-            headerStateStyle2.FrameWidth = 2F;
-            this.headerFormatStyle1.Normal = headerStateStyle2;
-            this.headerFormatStyle1.Pressed = headerStateStyle3;
+            this.headerFormatStyle1.Hot = headerStateStyle4;
+            headerStateStyle5.FrameWidth = 2F;
+            this.headerFormatStyle1.Normal = headerStateStyle5;
+            this.headerFormatStyle1.Pressed = headerStateStyle6;
             // 
             // imageListMain16
             // 
@@ -1382,7 +1383,7 @@ namespace Planning
             this.toolStripMenuItemAdd,
             this.toolStripMenuItemAdmin});
             this.contextMenuMain.Name = "contextMenuMain";
-            this.contextMenuMain.Size = new System.Drawing.Size(190, 114);
+            this.contextMenuMain.Size = new System.Drawing.Size(190, 136);
             this.contextMenuMain.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuMain_Opening);
             // 
             // toolStripMenuItemFile
@@ -1422,7 +1423,8 @@ namespace Planning
             this.menuItemDictTransportType,
             this.menuItemDictTransportView,
             this.menuItemDictWarehouse,
-            this.menuItemDictCustomPosts});
+            this.menuItemDictCustomPosts,
+            this.menuItemDictTimeDelayKPI});
             this.toolStripMenuItemDict.Name = "toolStripMenuItemDict";
             this.toolStripMenuItemDict.Size = new System.Drawing.Size(189, 22);
             this.toolStripMenuItemDict.Text = "Справочники";
@@ -1430,7 +1432,7 @@ namespace Planning
             // menuItemDictTimeSlot
             // 
             this.menuItemDictTimeSlot.Name = "menuItemDictTimeSlot";
-            this.menuItemDictTimeSlot.Size = new System.Drawing.Size(230, 22);
+            this.menuItemDictTimeSlot.Size = new System.Drawing.Size(292, 22);
             this.menuItemDictTimeSlot.Tag = "TimeSlot";
             this.menuItemDictTimeSlot.Text = "Тайм слоты";
             this.menuItemDictTimeSlot.Click += new System.EventHandler(this.menuItemDictTimeSlot_Click);
@@ -1438,7 +1440,7 @@ namespace Planning
             // menuItemDictDepositor
             // 
             this.menuItemDictDepositor.Name = "menuItemDictDepositor";
-            this.menuItemDictDepositor.Size = new System.Drawing.Size(230, 22);
+            this.menuItemDictDepositor.Size = new System.Drawing.Size(292, 22);
             this.menuItemDictDepositor.Tag = "Depositor";
             this.menuItemDictDepositor.Text = "Депозиторы";
             this.menuItemDictDepositor.Click += new System.EventHandler(this.menuItemDictDepositor_Click);
@@ -1446,7 +1448,7 @@ namespace Planning
             // menuItemDictOpersType
             // 
             this.menuItemDictOpersType.Name = "menuItemDictOpersType";
-            this.menuItemDictOpersType.Size = new System.Drawing.Size(230, 22);
+            this.menuItemDictOpersType.Size = new System.Drawing.Size(292, 22);
             this.menuItemDictOpersType.Tag = "OperType";
             this.menuItemDictOpersType.Text = "Типы операций";
             this.menuItemDictOpersType.Visible = false;
@@ -1455,7 +1457,7 @@ namespace Planning
             // menuItemDictDelayReasons
             // 
             this.menuItemDictDelayReasons.Name = "menuItemDictDelayReasons";
-            this.menuItemDictDelayReasons.Size = new System.Drawing.Size(230, 22);
+            this.menuItemDictDelayReasons.Size = new System.Drawing.Size(292, 22);
             this.menuItemDictDelayReasons.Tag = "DelayReasons";
             this.menuItemDictDelayReasons.Text = "Причины задержки";
             this.menuItemDictDelayReasons.Click += new System.EventHandler(this.menuItemDictDelayReasons_Click);
@@ -1463,7 +1465,7 @@ namespace Planning
             // menuItemDictGates
             // 
             this.menuItemDictGates.Name = "menuItemDictGates";
-            this.menuItemDictGates.Size = new System.Drawing.Size(230, 22);
+            this.menuItemDictGates.Size = new System.Drawing.Size(292, 22);
             this.menuItemDictGates.Tag = "Gate";
             this.menuItemDictGates.Text = "Ворота";
             this.menuItemDictGates.Click += new System.EventHandler(this.menuItemDictGates_Click);
@@ -1471,7 +1473,7 @@ namespace Planning
             // menuItemDictTC
             // 
             this.menuItemDictTC.Name = "menuItemDictTC";
-            this.menuItemDictTC.Size = new System.Drawing.Size(230, 22);
+            this.menuItemDictTC.Size = new System.Drawing.Size(292, 22);
             this.menuItemDictTC.Tag = "TC";
             this.menuItemDictTC.Text = "Справочник ТК";
             this.menuItemDictTC.Click += new System.EventHandler(this.menuItemDictTC_Click);
@@ -1479,7 +1481,7 @@ namespace Planning
             // menuItemDoctSupplier
             // 
             this.menuItemDoctSupplier.Name = "menuItemDoctSupplier";
-            this.menuItemDoctSupplier.Size = new System.Drawing.Size(230, 22);
+            this.menuItemDoctSupplier.Size = new System.Drawing.Size(292, 22);
             this.menuItemDoctSupplier.Tag = "Supplier";
             this.menuItemDoctSupplier.Text = "Поставщики";
             this.menuItemDoctSupplier.Click += new System.EventHandler(this.menuItemDoctSupplier_Click);
@@ -1487,7 +1489,7 @@ namespace Planning
             // menuItemDictAttributes
             // 
             this.menuItemDictAttributes.Name = "menuItemDictAttributes";
-            this.menuItemDictAttributes.Size = new System.Drawing.Size(230, 22);
+            this.menuItemDictAttributes.Size = new System.Drawing.Size(292, 22);
             this.menuItemDictAttributes.Tag = "Attr";
             this.menuItemDictAttributes.Text = "Аттрибуты";
             this.menuItemDictAttributes.Click += new System.EventHandler(this.menuItemDictAttributes_Click);
@@ -1495,7 +1497,7 @@ namespace Planning
             // menuItemDictTransportType
             // 
             this.menuItemDictTransportType.Name = "menuItemDictTransportType";
-            this.menuItemDictTransportType.Size = new System.Drawing.Size(230, 22);
+            this.menuItemDictTransportType.Size = new System.Drawing.Size(292, 22);
             this.menuItemDictTransportType.Tag = "TransporType";
             this.menuItemDictTransportType.Text = "Типы транспортных средств";
             this.menuItemDictTransportType.Click += new System.EventHandler(this.menuItemDictTransportType_Click);
@@ -1503,7 +1505,7 @@ namespace Planning
             // menuItemDictTransportView
             // 
             this.menuItemDictTransportView.Name = "menuItemDictTransportView";
-            this.menuItemDictTransportView.Size = new System.Drawing.Size(230, 22);
+            this.menuItemDictTransportView.Size = new System.Drawing.Size(292, 22);
             this.menuItemDictTransportView.Tag = "TransporView";
             this.menuItemDictTransportView.Text = "Виды транспорта";
             this.menuItemDictTransportView.Click += new System.EventHandler(this.menuItemDictTransportView_Click);
@@ -1511,7 +1513,7 @@ namespace Planning
             // menuItemDictWarehouse
             // 
             this.menuItemDictWarehouse.Name = "menuItemDictWarehouse";
-            this.menuItemDictWarehouse.Size = new System.Drawing.Size(230, 22);
+            this.menuItemDictWarehouse.Size = new System.Drawing.Size(292, 22);
             this.menuItemDictWarehouse.Tag = "Warehouse";
             this.menuItemDictWarehouse.Text = "Склады";
             this.menuItemDictWarehouse.Click += new System.EventHandler(this.menuItemDictWarehouse_Click);
@@ -1519,7 +1521,7 @@ namespace Planning
             // menuItemDictCustomPosts
             // 
             this.menuItemDictCustomPosts.Name = "menuItemDictCustomPosts";
-            this.menuItemDictCustomPosts.Size = new System.Drawing.Size(230, 22);
+            this.menuItemDictCustomPosts.Size = new System.Drawing.Size(292, 22);
             this.menuItemDictCustomPosts.Tag = "CustomPost";
             this.menuItemDictCustomPosts.Text = "Таможенные посты";
             this.menuItemDictCustomPosts.Click += new System.EventHandler(this.menuItemDictCustomPosts_Click);
@@ -1565,6 +1567,13 @@ namespace Planning
             this.menuItemReportTC.Text = "Отчёт по ТС";
             this.menuItemReportTC.Click += new System.EventHandler(this.menuItemReportTC_Click);
             // 
+            // menuItemRatingCarriers
+            // 
+            this.menuItemRatingCarriers.Name = "menuItemRatingCarriers";
+            this.menuItemRatingCarriers.Size = new System.Drawing.Size(198, 22);
+            this.menuItemRatingCarriers.Text = "Рейтинг перевозчиков";
+            this.menuItemRatingCarriers.Click += new System.EventHandler(this.menuItemRatingCarriers_Click);
+            // 
             // toolStripMenuItemAdd
             // 
             this.toolStripMenuItemAdd.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -1578,14 +1587,14 @@ namespace Planning
             // menuItemCalcOrderVolume
             // 
             this.menuItemCalcOrderVolume.Name = "menuItemCalcOrderVolume";
-            this.menuItemCalcOrderVolume.Size = new System.Drawing.Size(249, 22);
+            this.menuItemCalcOrderVolume.Size = new System.Drawing.Size(248, 22);
             this.menuItemCalcOrderVolume.Text = "Расчет объема заказа";
             this.menuItemCalcOrderVolume.Click += new System.EventHandler(this.menuItemCalcOrderVolume_Click);
             // 
             // menuItemCurrentTask
             // 
             this.menuItemCurrentTask.Name = "menuItemCurrentTask";
-            this.menuItemCurrentTask.Size = new System.Drawing.Size(249, 22);
+            this.menuItemCurrentTask.Size = new System.Drawing.Size(248, 22);
             this.menuItemCurrentTask.Text = "Текущие операционные задачи";
             this.menuItemCurrentTask.Click += new System.EventHandler(this.menuItemCurrentTask_Click);
             // 
@@ -1662,12 +1671,12 @@ namespace Planning
             // 
             this.tmUpdate.Tick += new System.EventHandler(this.tmUpdate_Tick);
             // 
-            // menuItemRatingCarriers
+            // menuItemDictTimeDelayKPI
             // 
-            this.menuItemRatingCarriers.Name = "menuItemRatingCarriers";
-            this.menuItemRatingCarriers.Size = new System.Drawing.Size(198, 22);
-            this.menuItemRatingCarriers.Text = "Рейтинг перевозчиков";
-            this.menuItemRatingCarriers.Click += new System.EventHandler(this.menuItemRatingCarriers_Click);
+            this.menuItemDictTimeDelayKPI.Name = "menuItemDictTimeDelayKPI";
+            this.menuItemDictTimeDelayKPI.Size = new System.Drawing.Size(292, 22);
+            this.menuItemDictTimeDelayKPI.Text = "Критерии KPI ТК по времени опоздания";
+            this.menuItemDictTimeDelayKPI.Click += new System.EventHandler(this.menuItemDictTimeDelayKPI_Click);
             // 
             // MainFormEx
             // 
@@ -1859,5 +1868,6 @@ namespace Planning
         private BrightIdeasSoftware.FlagRenderer flagRenderer1;
         private System.Windows.Forms.ToolStripMenuItem menuItemReportPeriodV2;
         private System.Windows.Forms.ToolStripMenuItem menuItemRatingCarriers;
+        private System.Windows.Forms.ToolStripMenuItem menuItemDictTimeDelayKPI;
     }
 }

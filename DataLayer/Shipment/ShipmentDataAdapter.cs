@@ -20,7 +20,8 @@ namespace Planning.DataLayer
                                                     vehicle_number, trailer_number, attorney_number,attorney_date, submission_time, start_time, end_time,
                                                     leave_time, delay_reasons_id, delay_comment, depositor_id, is_courier, forwarder_fio, stamp_number, 
                                                     attorney_issued, s_in, special_time, is_add_lv,transport_company_id, transport_type_id,supplier_id, custom_post_id,
-                                                    warehouse_id, transport_view_id) 
+                                                    warehouse_id, transport_view_id,
+                                                    last_modify_user,last_modify_date) 
                                     values(
                                             @{nameof(Shipment.LvId)},@{nameof(Shipment.TimeSlotId)},@{nameof(Shipment.SDate)},@{nameof(Shipment.SComment)},@{nameof(Shipment.OComment)},
                                             @{nameof(Shipment.GateId)},@{nameof(Shipment.SpCondition)},@{nameof(Shipment.DriverPhone)},@{nameof(Shipment.DriverFio)},
@@ -29,7 +30,8 @@ namespace Planning.DataLayer
                                             @{nameof(Shipment.DelayReasonsId)},@{nameof(Shipment.DelayComment)},@{nameof(Shipment.DepositorId)},@{nameof(Shipment.IsCourier)},
                                             @{nameof(Shipment.ForwarderFio)},@{nameof(Shipment.StampNumber)},@{nameof(Shipment.AttorneyIssued)},@{nameof(Shipment.ShIn)},
                                             @{nameof(Shipment.SpecialTime)},@{nameof(Shipment.IsAddLv)},@{nameof(Shipment.TransportCompanyId)},@{nameof(Shipment.TransportTypeId)},
-                                            @{nameof(Shipment.SupplierId)},@{nameof(Shipment.CustomPostId)},@{nameof(Shipment.WarehouseId)},@{nameof(Shipment.TransportViewId)}
+                                            @{nameof(Shipment.SupplierId)},@{nameof(Shipment.CustomPostId)},@{nameof(Shipment.WarehouseId)},@{nameof(Shipment.TransportViewId)},
+                                            @{nameof(Shipment.LastModifyUser)},@{nameof(Shipment.LastModifyDate)}
                                         )";
                 case EditState.Edit:
                     return $@"update {Table} set lv_id = @{nameof(Shipment.LvId)},time_slot_id = @{nameof(Shipment.TimeSlotId)},
@@ -43,7 +45,8 @@ namespace Planning.DataLayer
                                             stamp_number = @{nameof(Shipment.StampNumber)},attorney_issued = @{nameof(Shipment.AttorneyIssued)},s_in = @{nameof(Shipment.ShIn)},
                                             special_time = @{nameof(Shipment.SpecialTime)},is_add_lv = @{nameof(Shipment.IsAddLv)},transport_company_id = @{nameof(Shipment.TransportCompanyId)},
                                             transport_type_id = @{nameof(Shipment.TransportTypeId)},supplier_id = @{nameof(Shipment.SupplierId)}, custom_post_id = @{nameof(Shipment.CustomPostId)}
-                                            , warehouse_id = @{nameof(Shipment.WarehouseId)}, transport_view_id = @{nameof(Shipment.TransportViewId)}
+                                            , warehouse_id = @{nameof(Shipment.WarehouseId)}, transport_view_id = @{nameof(Shipment.TransportViewId)},
+                                            last_modify_user = @{nameof(Shipment.LastModifyUser)},last_modify_date = @{nameof(Shipment.LastModifyDate)}
                         where id = @Id";
                 case EditState.Delete:
                     return $"delete from {Table} where id = @Id";
@@ -68,7 +71,9 @@ namespace Planning.DataLayer
                         stamp_number as {nameof(Shipment.StampNumber)},attorney_issued as {nameof(Shipment.AttorneyIssued)},s_in as {nameof(Shipment.ShIn)},
                         special_time as {nameof(Shipment.SpecialTime)},is_add_lv as {nameof(Shipment.IsAddLv)},transport_company_id as {nameof(Shipment.TransportCompanyId)},
                         transport_type_id as {nameof(Shipment.TransportTypeId)},supplier_id as {nameof(Shipment.SupplierId)},
-                        custom_post_id as {nameof(Shipment.CustomPostId)},warehouse_id as {nameof(Shipment.WarehouseId)}, transport_view_id as {nameof(Shipment.TransportViewId)}
+                        custom_post_id as {nameof(Shipment.CustomPostId)},warehouse_id as {nameof(Shipment.WarehouseId)}, 
+                        transport_view_id as {nameof(Shipment.TransportViewId)},
+                        last_modify_user as {nameof(Shipment.LastModifyUser)},last_modify_date as {nameof(Shipment.LastModifyDate)}
                     from 
 	                    {Table}
                     ";

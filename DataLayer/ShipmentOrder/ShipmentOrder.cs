@@ -23,6 +23,8 @@ namespace Planning.DataLayer
         int? _shippingPlacesNumber;
         decimal? _orderWeight;
         bool? _isEdm;
+        string _lastModifyUser = ConnectionParams.UserLogin;
+        DateTime? _lastModifyDate = DateTime.Now;
 
         public string OrderId
         {
@@ -201,6 +203,34 @@ namespace Planning.DataLayer
                 if (!_isEdm.Equals(value))
                 {
                     _isEdm = value;
+                    Edit();
+
+                }
+            }
+        }
+
+        public string LastModifyUser
+        {
+            get => _lastModifyUser;
+            set
+            {
+
+                if (_lastModifyUser == null || !_lastModifyUser.Equals(value))
+                {
+                    _lastModifyUser = value;
+                    Edit();
+
+                }
+            }
+        }
+        public DateTime? LastModifyDate
+        {
+            get => _lastModifyDate;
+            set
+            {
+                if (!_lastModifyDate.Equals(value))
+                {
+                    _lastModifyDate = value;
                     Edit();
 
                 }

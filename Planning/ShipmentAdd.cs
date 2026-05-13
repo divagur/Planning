@@ -122,7 +122,7 @@ namespace Planning
             ShipmentOrderRepository shipmentOrderRepository = new ShipmentOrderRepository();
             //ShipmentOrderPartRepository shipmentOrderPartRepository = new ShipmentOrderPartRepository();
 
-            List<DataLayer.ShipmentOrder> shipmentOrders = shipmentOrderRepository.GetShipmentOrders(_shipment.Id);
+            List<ShipmentOrder> shipmentOrders = shipmentOrderRepository.GetShipmentOrders(_shipment.Id);
 //            List<DataLayer.ShipmentOrderPart> shipmentOrderParts = shipmentOrderPartRepository.GetShipmentOrderParts(shipmentOrders.Select(o => o.Id).ToList());
             foreach (var order in shipmentOrders)
             {
@@ -134,7 +134,7 @@ namespace Planning
         private void ClearMovement()
         {
             MovementItemRepository movementItemRepository = new MovementItemRepository();
-            List<DataLayer.MovementItem> movementItems = movementItemRepository.GetByMovementId(_movement.Id);
+            List<MovementItem> movementItems = movementItemRepository.GetByMovementId(_movement.Id);
 
             foreach (var item in movementItems)
             {
@@ -157,7 +157,7 @@ namespace Planning
             {
                 _shipmentAddResult.IsShipment = true;
 
-                _shipment = new DataLayer.Shipment();
+                _shipment = new Shipment();
                 _shipment.SDate = dtSDate.Value;
                 _shipment.ShIn = cmbType.Text == "Вход" ? true : false;
                 _shipment.DepositorId = GetSelectedDepositorId();
@@ -166,6 +166,10 @@ namespace Planning
                 //bool isAddLv = false;
                 _shipment.TransportViewId = GetTransportViewId(Common.PlanningConfig.DefaultTransportViewName);
                 _shipment.WarehouseId = GetWarehouseId(Common.PlanningConfig.DefaultWarehouseCode);
+                
+                //_shipment.LastModifyDate = DateTime.Now;
+                //_shipment.LastModifyUser = Common.CurrentUser.Login;
+
                 StringBuilder shipmentComment = new StringBuilder();
                 ShipmentRepository shipmentRepository = new ShipmentRepository();
                 ShipmentOrderRepository shipmentOrderRepository = new ShipmentOrderRepository();
@@ -195,7 +199,7 @@ namespace Planning
                     ShipmentOrder shipmentOrder = shipmentOrders.FirstOrDefault(o => o.LvOrderId == lvOrderId);
                     if (shipmentOrder == null)
                     {
-                        shipmentOrder = new DataLayer.ShipmentOrder();
+                        shipmentOrder = new ShipmentOrder();
                         shipmentOrder.ShipmentId = _shipment.Id;
                         shipmentOrder.OrderId = tblShipmentItem.Rows[i].Cells["colItemId"].Value.ToString();
                         shipmentOrder.LvOrderId = (int?)tblShipmentItem.Rows[i].Cells["colLVOrdId"].Value;
@@ -204,6 +208,9 @@ namespace Planning
                                 (bool?)tblShipmentItem.Rows[i].Cells["colItemIsEDM"].Value : null;
                         shipmentOrder.IsBinding = true;
                         shipmentOrder.Comment = GetStringValueFromObject(tblShipmentItem.Rows[i].Cells["colItemWarehouseComment"].Value);
+                        //shipmentOrder.LastModifyDate = DateTime.Now;
+                        //shipmentOrder.LastModifyUser = Common.CurrentUser.Login;
+
                         shipmentComment.AppendLine(GetStringValueFromObject(tblShipmentItem.Rows[i].Cells["colItemOperatorComment"].Value));
                         //isAddLv = true;
 
@@ -226,6 +233,8 @@ namespace Planning
                         shipmentOrderPart.OsLvCode = tblShipmentItem.Rows[i].Cells["colItemOstCode"].Value.ToString();
                         shipmentOrderPart.OsLvId = (tblShipmentItem.Rows[i].Cells["colItemOstId"].Value as int?);
                         shipmentOrderPart.IsBinding = true;
+                        //shipmentOrderPart.LastModifyDate = DateTime.Now;
+                        //shipmentOrderPart.LastModifyUser = Common.CurrentUser.Login;
 
                         if (!shipmentOrderPartRepository.Save(shipmentOrderPart))
                         {
@@ -244,9 +253,11 @@ namespace Planning
             else if (cmbType.SelectedIndex ==2)
             {
                 _shipmentAddResult.IsShipment = false;
-                _movement = _shipmentAddResult.Result!=null?(DataLayer.Movement)_shipmentAddResult.Result: new DataLayer.Movement();
+                _movement = _shipmentAddResult.Result!=null?(Movement)_shipmentAddResult.Result: new Movement();
                 _movement.MDate = dtSDate.Value;
                 _movement.TimeSlotId = GetSelectedTimeSlotId();
+                //_movement.LastModifyDate = DateTime.Now;
+                //_movement.LastModifyUser = Common.CurrentUser.Login;
 
                 if (_movement.Id != 0)
                 {
@@ -265,10 +276,12 @@ namespace Planning
 
                 for (int i = 0; i < tblShipmentItem.RowCount; i++)
                 {
-                    MovementItem movementItem = new DataLayer.MovementItem();
+                    MovementItem movementItem = new MovementItem();
                     movementItem.MovementId = _movement.Id;
                     movementItem.DepositorId = GetSelectedDepositorId();
                     movementItem.TklLVID = int.Parse(tblShipmentItem.Rows[i].Cells["colLVOrdId"].Value.ToString());
+                    //movementItem.LastModifyDate = DateTime.Now;
+                    //movementItem.LastModifyUser = Common.CurrentUser.Login;
                     //_movement.MovementItems.Add(movementItem);
 
                     if (!movementItemRepository.Save(movementItem))

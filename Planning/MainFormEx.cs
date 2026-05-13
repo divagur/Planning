@@ -1361,12 +1361,119 @@ namespace Planning
         private void ShowReportRatingCarriers(ReportParams reportParams)
         {
 
-            SettingReport settingReport = GetReportSetting("Отчет по рейтингу перевозчиков");
+            SettingReport settingReport = GetReportSetting("Рейтинг перевозчиков");
             if (settingReport == null)
             {
                 MessageBox.Show("Не задан шаблон", "Ошибка при формировании отчета", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
+            DepositorRepository depositorRepository = new DepositorRepository();
+            Depositor depositor = depositorRepository.GetById(1);
+            if (depositor == null || String.IsNullOrEmpty(depositor.LvBase))
+            {
+                Common.ShowInformation("Не найдена база данных депозитора", "Предупреждение");
+                return;
+            }
+
+            List<String> queryOut = new List<string>();
+
+
+            DateTime periodBegin = DateTime.Parse(reportParams["PeriodBegin"]);
+            DateTime periodEnd = String.IsNullOrEmpty(reportParams["PeriodEnd"]) ? periodBegin : DateTime.Parse(reportParams["PeriodEnd"]);
+            int ShpType = int.Parse(reportParams["ShpType"]);
+
+            #region Запросы
+
+            queryOut.Add(String.Format(@"select distinct isnull(cmp_ShortName,'') KlientName, N'выход' InOut, vs.s_date ShpDate, vs.tc_name TransportCompanyName,vs.shp_id ShpId,
+				cast(vs.s_date as datetime)+ cast(vs.slot_time as datetime) PlanDate,
+				vs.submission_time ShpSubmissionTime,vs.start_time ShpStartTime,
+				vs.end_time ShpEndTimePlan, vs.leave_time ShpEndTimeFact,
+				DATEDIFF(minute, vs.submission_time, cast(vs.s_date as datetime)+ cast(vs.slot_time as datetime)) DelayMinutes,
+				(select  kpi
+					from
+					(
+					select 
+							case when prev_minutes_delay is null then -1000000 else prev_minutes_delay end prev_minutes_delay,
+							minutes_delay, kpi
+					from
+					(
+					select lag(minutes_delay, 1) OVER (ORDER BY minutes_delay) AS prev_minutes_delay,
+					minutes_delay, kpi
+					from 
+                            (
+			                    select minutes_delay, kpi
+			                    from transport_company_kpi_delay
+			                    union all
+			                    select 100000, 10
+		                    )transport_company_kpi_delay
+
+                    )t 
+					)tt
+					where
+						DATEDIFF(minute, vs.submission_time, cast(vs.s_date as datetime)+ cast(vs.slot_time as datetime)) > prev_minutes_delay 
+						and DATEDIFF(minute, vs.submission_time, cast(vs.s_date as datetime)+ cast(vs.slot_time as datetime))<= minutes_delay 
+	            ) kpi
+		        from 
+			        v_shipments vs with(nolock)
+			        left join shipment_orders so on (vs.shp_id = so.shipment_id) 
+			        left join shipment_order_parts sop on sop.sh_order_id = so.id
+			        left join {0}.dbo.LV_Order with(nolock) on ord_ID = so.lv_order_id 
+	                left join {0}.dbo.LV_Customer with(nolock) on cus_ID = ord_CustomerID
+	                left join {0}.dbo.LV_Company with (nolock) on cmp_ID = cus_CompanyID
+	                where 
+		                vs.s_in =0
+                        and vs.tc_name is not null
+		                and vs.s_date between '{1}' and '{2}'", depositor.LvBase, periodBegin, periodEnd));
+
+
+            queryOut.Add(String.Format(@"select distinct isnull(cmp_ShortName,'') KlientName, N'выход' InOut, vs.s_date ShpDate, vs.tc_name TransportCompanyName,vs.shp_id ShpId,
+				cast(vs.s_date as datetime)+ cast(vs.slot_time as datetime) PlanDate,
+				vs.submission_time ShpSubmissionTime,vs.start_time ShpStartTime,
+				vs.end_time ShpEndTimePlan, vs.leave_time ShpEndTimeFact,
+				DATEDIFF(minute, vs.submission_time, cast(vs.s_date as datetime)+ cast(vs.slot_time as datetime)) DelayMinutes,
+				(select  kpi
+					from
+					(
+					select 
+							case when prev_minutes_delay is null then -1000000 else prev_minutes_delay end prev_minutes_delay,
+							minutes_delay, kpi
+					from
+					(
+					select lag(minutes_delay, 1) OVER (ORDER BY minutes_delay) AS prev_minutes_delay,
+					minutes_delay, kpi
+					from 
+                            (
+			                    select minutes_delay, kpi
+			                    from transport_company_kpi_delay
+			                    union all
+			                    select 100000, 10
+		                    )transport_company_kpi_delay
+
+                    )t 
+					)tt
+					where
+						DATEDIFF(minute, vs.submission_time, cast(vs.s_date as datetime)+ cast(vs.slot_time as datetime)) > prev_minutes_delay 
+						and DATEDIFF(minute, vs.submission_time, cast(vs.s_date as datetime)+ cast(vs.slot_time as datetime))<= minutes_delay 
+	            ) kpi
+		        from 
+			        v_shipments vs with(nolock)
+			        left join shipment_orders so on (vs.shp_id = so.shipment_id) 
+			        left join shipment_order_parts sop on sop.sh_order_id = so.id
+			        left join {0}.dbo.LV_Receipt with(nolock) on rct_ID = so.lv_order_id
+			        left join {0}.dbo.LV_Supplier with(nolock) on spl_ID = rct_SupplierID
+			        left join {0}.dbo.LV_Company with (nolock) on cmp_ID = spl_CompanyID
+	                where 
+		                vs.s_in =1
+		                and vs.s_date between '{1}' and '{2}'", depositor.LvBase, periodBegin, periodEnd));
+
+
+            
+
+            queryOut.Add(String.Concat(queryOut[0], " union all ", Environment.NewLine,queryOut[1]));
+
+            #endregion
+
 
             ExcelPrint excel;
             Excel.Range range;
@@ -1390,76 +1497,162 @@ namespace Planning
 
 
             SqlHandle sql = new SqlHandle(Common.BuildConnectionString(ConnectionParams.ServerName, ConnectionParams.BaseName, ConnectionParams.UserName, ConnectionParams.Pwd));
-            sql.SqlStatement = "SP_PL_ReportTC";
+            sql.SqlStatement = queryOut[ShpType];
             sql.Connect();
-            sql.TypeCommand = CommandType.StoredProcedure;
             sql.IsResultSet = true;
 
-            DateTime beginDate;
-            DateTime endDate;
-
-            DateTime? beginDateN = null;
-            DateTime? endDateN = null;
-
-
-            if (DateTime.TryParse(reportParams["PeriodBegin"], out beginDate))
-                beginDateN = (DateTime?)beginDate;
-
-            if (DateTime.TryParse(reportParams["PeriodEnd"], out endDate))
-                endDateN = (DateTime?)endDate;
-
-
-            sql.AddCommandParametr(new SqlParameter { ParameterName = "@From", Value = beginDateN });
-            sql.AddCommandParametr(new SqlParameter { ParameterName = "@Till", Value = endDateN });
             bool success = sql.Execute();
 
             if (!success)
             {
-                MessageBox.Show(sql.LastError, "Ошибка при выборке данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Common.ShowError(sql.LastError, "Ошибка");
+                return;
             }
+
+
 
             if (!sql.HasRows())
             {
                 MessageBox.Show("Нет данных для формирования отчета", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            excel.SetValue(1, 1, 2, "Данные по ТС за период с " + reportParams["PeriodBegin"] + " по " + reportParams["PeriodEnd"] + ". Опоздание (часы, минуты), с учетом допуска +20 мин");
+            excel.SetValue(1, 1, 4, "Данные по за период с " + reportParams["PeriodBegin"] + " по " + reportParams["PeriodEnd"] );
+
+       
+
             wait.SetRange(0, sql.DataSet.Tables[0].Rows.Count);
             wait.SetPosition(1);
             wait.SetText("Формирование отчета: вывод данных....");
 
+            DataTable kpiTable = new DataTable();
+            kpiTable.Columns.Add("TransportCompany", Type.GetType("System.String"));
+            kpiTable.Columns.Add("Kpi_tc", Type.GetType("System.Decimal")).DefaultValue = 0;
+            kpiTable.Columns.Add("Kpi_Count", Type.GetType("System.Int32")).DefaultValue = 0;
+            
+            TransportCompanyKpiDelayRepository companyKpiDelayRepository = new TransportCompanyKpiDelayRepository();
+            List<TransportCompanyKpiDelay> transportCompanyKpiDelays = companyKpiDelayRepository.GetAll();
+            foreach (var item in transportCompanyKpiDelays)
+            {
+                kpiTable.Columns.Add($"Col_{item.Kpi}", Type.GetType("System.Int32")).DefaultValue = 0;
+            }
+            kpiTable.Columns.Add($"Col_10", Type.GetType("System.Int32")).DefaultValue = 0;
 
 
-
-            int rowIdx = 0;
+            int rowIdx = 8;
             Char separator = System.Globalization.CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator[0];
-            string[,] printRow = new string[1, sql.DataSet.Tables[0].Columns.Count];
+            string[,] printRow = new string[1, sql.DataSet.Tables[0].Columns.Count-1];
             foreach (DataRow r in sql.DataSet.Tables[0].Rows)
             {
-
-                for (int colIdx = 0; colIdx < sql.DataSet.Tables[0].Columns.Count; colIdx++)
+                
+                for (int colIdx = 0; colIdx < sql.DataSet.Tables[0].Columns.Count-1; colIdx++)
                 {
+                    Type type =  sql.DataSet.Tables[0].Columns[colIdx].DataType;
+                    object obValue = r[colIdx];
                     string value = r[colIdx].ToString();
-                    if (colIdx == 8)
+                    if (colIdx == 10 && !String.IsNullOrEmpty(value))
                     {
-
-                        value = value == "" ? "" : Decimal.Parse(r[colIdx].ToString().Replace(',', separator)).ToString().Replace(separator, ',');
+                        value = Common.MinutesToTimeSpan(int.Parse(value));
                     }
-
                     printRow[0, colIdx] = value;
                 }
-                excel.SetRowValues(1, rowIdx + 5, sql.DataSet.Tables[0].Columns.Count, printRow);
+                excel.SetRowValues(1, rowIdx + 1, sql.DataSet.Tables[0].Columns.Count-1, printRow);
+                excel.SetValue(1, 12, rowIdx + 1, String.IsNullOrEmpty(r[11].ToString())?0:int.Parse(r[11].ToString()));
+
                 rowIdx++;
+                string tc = r["TransportCompanyName"].ToString();
+                DataRow[] findRows = kpiTable.Select($"TransportCompany = '{r["TransportCompanyName"].ToString()}'");
+
+                DataRow kpiTableRow = null;// findRows.Count() == 0? kpiTable.NewRow(): findRows;
+
+                if (findRows.Count() == 0)
+                {
+                    kpiTableRow = kpiTable.NewRow();
+                    kpiTableRow["TransportCompany"] = r["TransportCompanyName"].ToString();
+                    kpiTableRow["Kpi_tc"] = 0;
+                    kpiTableRow["Kpi_Count"] = 1;
+                    kpiTable.Rows.Add(kpiTableRow);
+
+                }
+                else
+                {
+                    kpiTableRow = findRows[0];
+                }
+                if (!String.IsNullOrEmpty(r["kpi"].ToString()))
+                {
+                    string colName = $"Col_{r["kpi"].ToString()}";
+                    int kpiValue = kpiTableRow[colName] == null?0:(int)kpiTableRow[colName];
+                    kpiTableRow[colName] = ++kpiValue;
+                    kpiTableRow["Kpi_Count"] = (int)kpiTableRow["Kpi_Count"] + kpiValue;
+
+                    decimal rowPrcSum = 0;
+                    for (int i = 3; i < kpiTable.Columns.Count;i++)
+                    {
+                        string s = kpiTable.Columns[i].ColumnName.Substring(4, kpiTable.Columns[i].ColumnName.Length - 4);
+                        decimal prct = decimal.Parse(kpiTable.Columns[i].ColumnName.Substring(4, kpiTable.Columns[i].ColumnName.Length - 4))/100;
+                        rowPrcSum = rowPrcSum + (int)kpiTableRow[i] * prct;
+                    }
+                    
+                    kpiTableRow["Kpi_tc"] = rowPrcSum / (int)kpiTableRow["Kpi_Count"];
+                }
+
+
                 wait.SetPosition(rowIdx);
             }
 
 
-            range = excel.SelectCells(1, 1, 5, sql.DataSet.Tables[0].Columns.Count, rowIdx + 4);
+            range = excel.SelectCells(1, 1, 8, sql.DataSet.Tables[0].Columns.Count+1, rowIdx);
             range.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
             range.Borders.Item[Excel.XlBordersIndex.xlEdgeLeft].Weight = Excel.XlBorderWeight.xlMedium;
             range.Borders.Item[Excel.XlBordersIndex.xlEdgeTop].Weight = Excel.XlBorderWeight.xlMedium;
             range.Borders.Item[Excel.XlBordersIndex.xlEdgeRight].Weight = Excel.XlBorderWeight.xlMedium;
             range.Borders.Item[Excel.XlBordersIndex.xlEdgeBottom].Weight = Excel.XlBorderWeight.xlMedium;
+            excel.SetCellsFormat(1, 12, 8, 12, rowIdx, "0;%");
+            int colKpiIdx = 3;
+            foreach (var item in transportCompanyKpiDelays)
+            {
+                //excel.SetValue(2, colKpiIdx + 1, 1, $"{item.Kpi.ToString()}%");
+                excel.SetValue(2, colKpiIdx + 1, 1, (decimal)item.Kpi/100);              
+                excel.SetValue(2, colKpiIdx + 1, 2, Common.MinutesToTimeSpan((int)item.MinutesDelay));
+
+                
+                colKpiIdx++;
+            }
+            excel.SetValue(2, colKpiIdx + 1, 1, (decimal)10 / 100);
+            
+            excel.SetValue(2, colKpiIdx + 1, 2, Common.MinutesToTimeSpan(1440));
+            colKpiIdx++;
+
+            excel.SetCellsFormat(2, 4, 1, colKpiIdx , 1, "0%");
+            excel.SetCellsBgColor(2,1,1, colKpiIdx, 2, 12611584);
+            //excel.SetCellBgColor(2, colKpiIdx + 1, 2, 12611584);
+            object[,] printRowKpi = new object[1, kpiTable.Columns.Count];
+            rowIdx = 2;
+            
+            foreach (DataRow r in kpiTable.Rows)
+            {
+                for (int colIdx = 0; colIdx < kpiTable.Columns.Count; colIdx++)
+                {
+                    /*
+                    if (colIdx ==0)
+                    {
+                        printRowKpi[0, colIdx] = r[colIdx].ToString();
+                    }*/
+                    
+                    printRowKpi[0, colIdx] = r[colIdx];
+                }
+                excel.SetRowValues(2, rowIdx + 1, kpiTable.Columns.Count, printRowKpi);                
+
+                rowIdx++;
+            }
+            
+            excel.SetCellsFormat(2, 4, 2, 4 + transportCompanyKpiDelays.Count,2, "h:mm;@");
+            excel.SetCellsFormat(2, 3, 3, transportCompanyKpiDelays.Count+2, rowIdx, "0");
+            excel.SetCellsFormat(2, 2, 3, 2, rowIdx, "0.00%");
+
+            excel.SetCellsBorder(2, 1, 1, transportCompanyKpiDelays.Count + 4, rowIdx, XlBorderWeight.xlThin);
+            excel.SetCellsBorder(2, 1, 1, transportCompanyKpiDelays.Count + 4, 2, XlBorderWeight.xlMedium);
+            
+
             excel.Visible = true;
             wait.Close();
             miRepTC.Enabled = true;
@@ -1816,6 +2009,8 @@ namespace Planning
 
             int rowIdx = 0;
 
+            
+
             string[,] printRow = new string[1, columnOrder.Count];
             foreach (DataRow r in dataSet.Tables[0].Rows)
             {
@@ -1856,6 +2051,9 @@ namespace Planning
             range.Borders.Item[Excel.XlBordersIndex.xlEdgeTop].Weight = Excel.XlBorderWeight.xlMedium;
             range.Borders.Item[Excel.XlBordersIndex.xlEdgeRight].Weight = Excel.XlBorderWeight.xlMedium;
             range.Borders.Item[Excel.XlBordersIndex.xlEdgeBottom].Weight = Excel.XlBorderWeight.xlMedium;
+
+
+
             excel.Visible = true;
             wait.Close();
             miRepPeriod.Enabled = true;
@@ -2403,11 +2601,21 @@ namespace Planning
         private void menuItemRatingCarriers_Click(object sender, EventArgs e)
         {
             ReportParams reportParams = new ReportParams();
-            RepTC repTC = new RepTC(reportParams);
-            if (repTC.ShowDialog() == DialogResult.OK)
+            RepPeriod frmRepParam = new RepPeriod(reportParams);
+            frmRepParam.cbType.Items.RemoveAt(2);
+
+            if (frmRepParam.ShowDialog() == DialogResult.OK)
             {
                 ShowReport(REPORT_RATING_CARRIER, reportParams);
             }
+        }
+
+        private void menuItemDictTimeDelayKPI_Click(object sender, EventArgs e)
+        {
+            TransportCompanyKpiDelayForm frmTransportCompanyKpiDelay = new TransportCompanyKpiDelayForm();
+            SetFormPrivalage(frmTransportCompanyKpiDelay, "TC");
+            AddFormTab(frmTransportCompanyKpiDelay, "Критерии KPI ТК");
+
         }
     }
 }

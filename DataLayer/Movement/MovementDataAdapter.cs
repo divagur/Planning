@@ -17,17 +17,21 @@ namespace Planning.DataLayer
             {
                 case EditState.New:
                     return $@"INSERT INTO {Table} (m_date, time_slot_id, priority, comment, delay_reasons_id, delay_comment, performer, 
-                                                    def_customer, sp_condition, special_time) 
+                                                    def_customer, sp_condition, special_time,
+                                                    last_modify_user,last_modify_date) 
                                     values(
                                             @{nameof(Movement.MDate)},@{nameof(Movement.TimeSlotId)},@{nameof(Movement.Priority)},@{nameof(Movement.Comment)},@{nameof(Movement.DelayReasonsId)},
                                             @{nameof(Movement.DelayComment)},@{nameof(Movement.Performer)},@{nameof(Movement.DefCustomer)},@{nameof(Movement.SpCondition)},
-                                            @{nameof(Movement.SpecialTime)}
+                                            @{nameof(Movement.SpecialTime)},
+                                            @{nameof(Movement.LastModifyUser)},@{nameof(Movement.LastModifyDate)}
                                         )";
                 case EditState.Edit:
                     return $@"update {Table} set m_date = @{nameof(Movement.MDate)}, time_slot_id = @{nameof(Movement.TimeSlotId)}, priority = @{nameof(Movement.Priority)}, 
                                                     comment = @{nameof(Movement.Comment)}, delay_reasons_id = @{nameof(Movement.DelayReasonsId)}, 
                                                     delay_comment = @{nameof(Movement.DelayComment)}, performer = @{nameof(Movement.Performer)}, 
-                                                    def_customer = @{nameof(Movement.DefCustomer)}, sp_condition = @{nameof(Movement.SpCondition)}, special_time = @{nameof(Movement.SpecialTime)}
+                                                    def_customer = @{nameof(Movement.DefCustomer)}, sp_condition = @{nameof(Movement.SpCondition)}, 
+                                                    special_time = @{nameof(Movement.SpecialTime)},
+                                                    last_modify_user = @{nameof(Movement.LastModifyUser)},last_modify_date = @{nameof(Movement.LastModifyDate)},
                         where id = @Id";
                 case EditState.Delete:
                     return $"delete from {Table} where id = @Id";
@@ -43,7 +47,8 @@ namespace Planning.DataLayer
 	                    id as {nameof(Movement.Id)}, m_date as {nameof(Movement.MDate)}, time_slot_id as {nameof(Movement.TimeSlotId)}, priority as {nameof(Movement.Priority)}, 
                         comment as {nameof(Movement.Comment)}, delay_reasons_id as {nameof(Movement.DelayReasonsId)}, delay_comment as {nameof(Movement.DelayComment)}, 
                         performer as {nameof(Movement.Performer)}, def_customer as {nameof(Movement.DefCustomer)}, sp_condition as {nameof(Movement.SpCondition)}, 
-                        special_time as {nameof(Movement.SpecialTime)}
+                        special_time as {nameof(Movement.SpecialTime)}, 
+                        last_modify_user as {nameof(Movement.LastModifyUser)}, last_modify_date as {nameof(Movement.LastModifyDate)}
                     from 
 	                    {Table}
                     ";

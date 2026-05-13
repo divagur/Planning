@@ -12,5 +12,6 @@ namespace Planning.Kernel
         public static string BaseName;
         public static string UserName;
         public static string Pwd;
+        public static string UserLogin;
     }
 }

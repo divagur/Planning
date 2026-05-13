@@ -1,4 +1,7 @@
-﻿using System;
+﻿using DocumentFormat.OpenXml.Drawing.Spreadsheet;
+using DocumentFormat.OpenXml.Spreadsheet;
+using Microsoft.Office.Interop.Excel;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -117,6 +120,7 @@ namespace Planning
         {
             Excel.Range range = SelectCells(Sheet, ColFrom, RowFrom, ColTo, RowTo);
             range.Merge(Type.Missing);
+
         }
 
         public void SetValues(int Sheet, int ColFrom, int RowFrom, int ColTo, int RowTo, object[,] Values)
@@ -184,5 +188,30 @@ namespace Planning
             printRange.NumberFormat = Format;
             
         }
+
+        public void SetCellBgColor(int Sheet, int Col, int Row, int color)
+        {
+
+            _cells = SelectCells(Sheet, Col, Row, Col, Row);
+            _cells.Interior.Color = color;
+        }
+        public void SetCellsBgColor(int Sheet, int ColFrom, int RowFrom, int ColTo, int RowTo, int color)
+        {
+
+            _cells = SelectCells(Sheet, ColFrom, RowFrom, ColTo, RowTo);
+            _cells.Interior.Color = color;
+        }
+        public void SetCellsBorder(int Sheet, int ColFrom, int RowFrom, int ColTo, int RowTo, XlBorderWeight BorderWeight)
+        {
+
+            Excel.Range range = SelectCells(Sheet, ColFrom, RowFrom, ColTo, RowTo);
+            range.Borders.LineStyle = XlLineStyle.xlContinuous;
+            range.Borders.Item[XlBordersIndex.xlEdgeLeft].Weight = BorderWeight;
+            range.Borders.Item[XlBordersIndex.xlEdgeTop].Weight = BorderWeight;
+            range.Borders.Item[XlBordersIndex.xlEdgeRight].Weight = BorderWeight;
+            range.Borders.Item[Excel.XlBordersIndex.xlEdgeBottom].Weight = BorderWeight;
+        }
+
+
     }
 }

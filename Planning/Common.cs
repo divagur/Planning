@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Planning.Kernel;
+using System.Text.RegularExpressions;
 namespace Planning
 {
     public static class Common
@@ -103,5 +104,28 @@ namespace Planning
         {
             MessageBox.Show(Text, Caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
+
+        public static string MinutesToTimeSpan(int minutes)
+        {
+            TimeSpan spWorkMin = TimeSpan.FromMinutes(minutes);
+            //return string.Format("{0}:{1}", (int)spWorkMin.TotalHours == 0 ? "00" : spWorkMin.TotalHours.ToString(), spWorkMin.Minutes == 0 ? "00" : spWorkMin.Minutes.ToString());
+            int hoursResult = Math.Abs(minutes) / 60;
+            int minutesResult = Math.Abs(minutes) % 60;
+            return string.Format("{2}{0}:{1}", hoursResult < 10 ? $"0{hoursResult.ToString()}" : hoursResult.ToString(), minutesResult < 10 ? $"0{minutesResult.ToString()}" : minutesResult.ToString(),
+                minutes<0?"-":"");
+        }
+
+        public static int TimeSpanToMinutes(string timeSpan)
+        {
+            if (!Regex.IsMatch(timeSpan, "^\\d{1,4}:\\d{1,2}"))
+            {
+                return 0;
+            }
+
+            string[] splitTime = timeSpan.Split(':');
+
+            return int.Parse(splitTime[0]) * 60 + int.Parse(splitTime[1]);
+        }
+
     }
 }

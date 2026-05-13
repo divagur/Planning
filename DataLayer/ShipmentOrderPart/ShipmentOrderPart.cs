@@ -18,6 +18,8 @@ namespace Planning.DataLayer
         int? _palletAmount;
         int? _shippingPlacesNumber;
         decimal? _orderPartWeight;
+        string _lastModifyUser = ConnectionParams.UserLogin;
+        DateTime? _lastModifyDate = DateTime.Now;
         /*
                   
         [shipping_places_number], [order_part_weight]
@@ -139,6 +141,32 @@ namespace Planning.DataLayer
                 }
             }
         }
+        public string LastModifyUser
+        {
+            get => _lastModifyUser;
+            set
+            {
 
+                if (_lastModifyUser == null || !_lastModifyUser.Equals(value))
+                {
+                    _lastModifyUser = value;
+                    Edit();
+
+                }
+            }
+        }
+        public DateTime? LastModifyDate
+        {
+            get => _lastModifyDate;
+            set
+            {
+                if (!_lastModifyDate.Equals(value))
+                {
+                    _lastModifyDate = value;
+                    Edit();
+
+                }
+            }
+        }
     }
 }

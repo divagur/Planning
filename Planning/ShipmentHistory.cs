@@ -57,7 +57,7 @@ namespace Planning
             else
             {
                 UserRepository userRepository = new UserRepository();
-                List<DataLayer.User> users = userRepository.GetAll();
+                List<User> users = userRepository.GetAll();
 
                 cmbUser.Items.AddRange(users.ToArray());
             }

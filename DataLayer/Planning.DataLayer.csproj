@@ -104,6 +104,9 @@
     <Compile Include="ShipmentOrderLog\ShipmentOrderLogRepository.cs" />
     <Compile Include="SqlExecuter\SqlProcExecutor.cs" />
     <Compile Include="SqlExecuter\SqlProcParam.cs" />
+    <Compile Include="TransportCompanyKpiDelay\TransportCompanyKpiDelay.cs" />
+    <Compile Include="TransportCompanyKpiDelay\TransportCompanyKpiDelayDataAdapter.cs" />
+    <Compile Include="TransportCompanyKpiDelay\TransportCompanyKpiDelayRepository.cs" />
     <Compile Include="UserGroupLnk\UserGroupLnk.cs" />
     <Compile Include="UserGroupLnk\UserGroupLnkDataAdapter.cs" />
     <Compile Include="UserGroupLnk\UserGroupLnkRepository.cs" />

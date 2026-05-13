@@ -62,7 +62,6 @@ namespace Planning
             // 
             this.edName.Location = new System.Drawing.Point(101, 6);
             this.edName.Name = "edName";
-            this.edName.ReadOnly = true;
             this.edName.Size = new System.Drawing.Size(288, 20);
             this.edName.TabIndex = 1;
             // 

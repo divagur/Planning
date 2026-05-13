@@ -31,6 +31,7 @@ namespace Planning
             }
 
             Common.CurrentUser = user;
+            ConnectionParams.UserLogin = user.Login;
             Common.setting.LastLogin = edUserName.Text;
             //Common.setting.Password = Common.CalculateHashGOST(edPassword.Text);
             DialogResult = DialogResult.OK;
@@ -55,6 +56,7 @@ namespace Planning
                 Common.CurrentUser = userRepository.GetByDomainUserName(System.Security.Principal.WindowsIdentity.GetCurrent().Name);
                 if (Common.CurrentUser != null && Common.CurrentUser.IsWinAuth != null && (bool)Common.CurrentUser.IsWinAuth)
                 {
+                    ConnectionParams.UserLogin = Common.CurrentUser.Login;
                     DialogResult = DialogResult.OK;
                     Close();
                 }

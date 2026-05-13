@@ -45,17 +45,6 @@
             this.tvStep = new System.Windows.Forms.TreeView();
             this.imlStep = new System.Windows.Forms.ImageList(this.components);
             this.pnRight = new System.Windows.Forms.Panel();
-            this.pnCurrentStep = new System.Windows.Forms.Panel();
-            this.tblCurrTaskView = new System.Windows.Forms.DataGridView();
-            this.lvVisibleCol = new System.Windows.Forms.ListView();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.edFontSize = new System.Windows.Forms.NumericUpDown();
-            this.label9 = new System.Windows.Forms.Label();
-            this.btnBgColor = new System.Windows.Forms.Button();
-            this.btnFontSettings = new System.Windows.Forms.Button();
-            this.btnFontColor = new System.Windows.Forms.Button();
-            this.label8 = new System.Windows.Forms.Label();
-            this.edTaskUpdateInterval = new System.Windows.Forms.NumericUpDown();
             this.pnReport = new System.Windows.Forms.Panel();
             this.tblReports = new System.Windows.Forms.DataGridView();
             this.colRepId = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -74,15 +63,17 @@
             this.edShipmentTemplate = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.pnConnect = new System.Windows.Forms.Panel();
-            this.edPassword = new System.Windows.Forms.TextBox();
-            this.edUser = new System.Windows.Forms.TextBox();
-            this.edBase = new System.Windows.Forms.TextBox();
-            this.edServer = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.pnCurrentStep = new System.Windows.Forms.Panel();
+            this.tblCurrTaskView = new System.Windows.Forms.DataGridView();
+            this.lvVisibleCol = new System.Windows.Forms.ListView();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.edFontSize = new System.Windows.Forms.NumericUpDown();
+            this.label9 = new System.Windows.Forms.Label();
+            this.btnBgColor = new System.Windows.Forms.Button();
+            this.btnFontSettings = new System.Windows.Forms.Button();
+            this.btnFontColor = new System.Windows.Forms.Button();
+            this.label8 = new System.Windows.Forms.Label();
+            this.edTaskUpdateInterval = new System.Windows.Forms.NumericUpDown();
             this.pnVolumeCalcStep = new System.Windows.Forms.Panel();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.txtImportColAmount = new System.Windows.Forms.TextBox();
@@ -103,6 +94,15 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.btnAddTmplt = new System.Windows.Forms.ToolStripButton();
             this.btnDelTmplt = new System.Windows.Forms.ToolStripButton();
+            this.pnConnect = new System.Windows.Forms.Panel();
+            this.edPassword = new System.Windows.Forms.TextBox();
+            this.edUser = new System.Windows.Forms.TextBox();
+            this.edBase = new System.Windows.Forms.TextBox();
+            this.edServer = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.pbFooter = new System.Windows.Forms.Panel();
             this.btnClose = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
@@ -112,20 +112,20 @@
             this.colorDialog = new System.Windows.Forms.ColorDialog();
             this.fontDialog = new System.Windows.Forms.FontDialog();
             this.pnRight.SuspendLayout();
+            this.pnReport.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tblReports)).BeginInit();
+            this.toolStrip2.SuspendLayout();
             this.pnCurrentStep.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tblCurrTaskView)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.edFontSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.edTaskUpdateInterval)).BeginInit();
-            this.pnReport.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tblReports)).BeginInit();
-            this.toolStrip2.SuspendLayout();
-            this.pnConnect.SuspendLayout();
             this.pnVolumeCalcStep.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tblTemplateConstant)).BeginInit();
             this.toolStrip1.SuspendLayout();
+            this.pnConnect.SuspendLayout();
             this.pbFooter.SuspendLayout();
             this.pbBack.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -187,6 +187,202 @@
             this.pnRight.Name = "pnRight";
             this.pnRight.Size = new System.Drawing.Size(1224, 519);
             this.pnRight.TabIndex = 2;
+            // 
+            // pnReport
+            // 
+            this.pnReport.Controls.Add(this.tblReports);
+            this.pnReport.Controls.Add(this.toolStrip2);
+            this.pnReport.Controls.Add(this.btnRepPeriodTemplate);
+            this.pnReport.Controls.Add(this.edRepPeriodTemplate);
+            this.pnReport.Controls.Add(this.label7);
+            this.pnReport.Controls.Add(this.btnReceiptDlg);
+            this.pnReport.Controls.Add(this.btnShipmentDlg);
+            this.pnReport.Controls.Add(this.edReceiptTemplate);
+            this.pnReport.Controls.Add(this.edShipmentTemplate);
+            this.pnReport.Controls.Add(this.label6);
+            this.pnReport.Controls.Add(this.label5);
+            this.pnReport.Location = new System.Drawing.Point(6, 175);
+            this.pnReport.Name = "pnReport";
+            this.pnReport.Size = new System.Drawing.Size(597, 306);
+            this.pnReport.TabIndex = 2;
+            // 
+            // tblReports
+            // 
+            this.tblReports.AllowUserToAddRows = false;
+            this.tblReports.AllowUserToDeleteRows = false;
+            this.tblReports.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.tblReports.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colRepId,
+            this.colRepName,
+            this.colRepTemplatePath});
+            this.tblReports.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tblReports.Location = new System.Drawing.Point(0, 25);
+            this.tblReports.Name = "tblReports";
+            this.tblReports.ReadOnly = true;
+            this.tblReports.RowHeadersVisible = false;
+            this.tblReports.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.tblReports.Size = new System.Drawing.Size(597, 281);
+            this.tblReports.TabIndex = 6;
+            this.tblReports.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.tblReports_CellMouseDoubleClick);
+            // 
+            // colRepId
+            // 
+            this.colRepId.DataPropertyName = "Id";
+            this.colRepId.HeaderText = "Код";
+            this.colRepId.Name = "colRepId";
+            this.colRepId.ReadOnly = true;
+            this.colRepId.Visible = false;
+            // 
+            // colRepName
+            // 
+            this.colRepName.DataPropertyName = "Name";
+            this.colRepName.HeaderText = "Наименование";
+            this.colRepName.Name = "colRepName";
+            this.colRepName.ReadOnly = true;
+            this.colRepName.Width = 250;
+            // 
+            // colRepTemplatePath
+            // 
+            this.colRepTemplatePath.DataPropertyName = "TemplatePath";
+            this.colRepTemplatePath.HeaderText = "Шаблон";
+            this.colRepTemplatePath.Name = "colRepTemplatePath";
+            this.colRepTemplatePath.ReadOnly = true;
+            this.colRepTemplatePath.Width = 500;
+            // 
+            // toolStrip2
+            // 
+            this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tbRepAdd,
+            this.tbRepEdit,
+            this.tbRepDel});
+            this.toolStrip2.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip2.Name = "toolStrip2";
+            this.toolStrip2.Size = new System.Drawing.Size(597, 25);
+            this.toolStrip2.TabIndex = 7;
+            this.toolStrip2.Text = "toolStrip2";
+            // 
+            // tbRepAdd
+            // 
+            this.tbRepAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbRepAdd.Image = global::Planning.Properties.Resources.Add;
+            this.tbRepAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbRepAdd.Name = "tbRepAdd";
+            this.tbRepAdd.Size = new System.Drawing.Size(23, 22);
+            this.tbRepAdd.Text = "toolStripButton1";
+            this.tbRepAdd.ToolTipText = "Добавить отчет";
+            this.tbRepAdd.Click += new System.EventHandler(this.tbRepAdd_Click);
+            // 
+            // tbRepEdit
+            // 
+            this.tbRepEdit.BackColor = System.Drawing.Color.Transparent;
+            this.tbRepEdit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbRepEdit.Image = global::Planning.Properties.Resources.Edit;
+            this.tbRepEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbRepEdit.Name = "tbRepEdit";
+            this.tbRepEdit.Size = new System.Drawing.Size(23, 22);
+            this.tbRepEdit.Text = "toolStripButton2";
+            this.tbRepEdit.ToolTipText = "Редактировать отчет";
+            this.tbRepEdit.Click += new System.EventHandler(this.tbRepEdit_Click);
+            // 
+            // tbRepDel
+            // 
+            this.tbRepDel.BackColor = System.Drawing.Color.Transparent;
+            this.tbRepDel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbRepDel.Image = global::Planning.Properties.Resources.Delete;
+            this.tbRepDel.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbRepDel.Name = "tbRepDel";
+            this.tbRepDel.Size = new System.Drawing.Size(23, 22);
+            this.tbRepDel.Text = "toolStripButton3";
+            this.tbRepDel.ToolTipText = "Удалить отчет";
+            this.tbRepDel.Visible = false;
+            this.tbRepDel.Click += new System.EventHandler(this.tbRepDel_Click);
+            // 
+            // btnRepPeriodTemplate
+            // 
+            this.btnRepPeriodTemplate.Location = new System.Drawing.Point(550, 266);
+            this.btnRepPeriodTemplate.Name = "btnRepPeriodTemplate";
+            this.btnRepPeriodTemplate.Size = new System.Drawing.Size(27, 20);
+            this.btnRepPeriodTemplate.TabIndex = 5;
+            this.btnRepPeriodTemplate.Text = "...";
+            this.btnRepPeriodTemplate.UseVisualStyleBackColor = true;
+            this.btnRepPeriodTemplate.Visible = false;
+            this.btnRepPeriodTemplate.Click += new System.EventHandler(this.btnShipmentDlg_Click);
+            // 
+            // edRepPeriodTemplate
+            // 
+            this.edRepPeriodTemplate.Location = new System.Drawing.Point(12, 267);
+            this.edRepPeriodTemplate.Name = "edRepPeriodTemplate";
+            this.edRepPeriodTemplate.Size = new System.Drawing.Size(532, 20);
+            this.edRepPeriodTemplate.TabIndex = 4;
+            this.edRepPeriodTemplate.Visible = false;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(9, 251);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(108, 13);
+            this.label7.TabIndex = 3;
+            this.label7.Text = "Отгрузки за период";
+            this.label7.Visible = false;
+            // 
+            // btnReceiptDlg
+            // 
+            this.btnReceiptDlg.Location = new System.Drawing.Point(550, 215);
+            this.btnReceiptDlg.Name = "btnReceiptDlg";
+            this.btnReceiptDlg.Size = new System.Drawing.Size(27, 20);
+            this.btnReceiptDlg.TabIndex = 2;
+            this.btnReceiptDlg.Text = "...";
+            this.btnReceiptDlg.UseVisualStyleBackColor = true;
+            this.btnReceiptDlg.Visible = false;
+            this.btnReceiptDlg.Click += new System.EventHandler(this.btnShipmentDlg_Click);
+            // 
+            // btnShipmentDlg
+            // 
+            this.btnShipmentDlg.Location = new System.Drawing.Point(550, 167);
+            this.btnShipmentDlg.Name = "btnShipmentDlg";
+            this.btnShipmentDlg.Size = new System.Drawing.Size(27, 20);
+            this.btnShipmentDlg.TabIndex = 2;
+            this.btnShipmentDlg.Text = "...";
+            this.btnShipmentDlg.UseVisualStyleBackColor = true;
+            this.btnShipmentDlg.Visible = false;
+            this.btnShipmentDlg.Click += new System.EventHandler(this.btnShipmentDlg_Click);
+            // 
+            // edReceiptTemplate
+            // 
+            this.edReceiptTemplate.Location = new System.Drawing.Point(12, 216);
+            this.edReceiptTemplate.Name = "edReceiptTemplate";
+            this.edReceiptTemplate.Size = new System.Drawing.Size(532, 20);
+            this.edReceiptTemplate.TabIndex = 1;
+            this.edReceiptTemplate.Visible = false;
+            // 
+            // edShipmentTemplate
+            // 
+            this.edShipmentTemplate.Location = new System.Drawing.Point(12, 167);
+            this.edShipmentTemplate.Name = "edShipmentTemplate";
+            this.edShipmentTemplate.Size = new System.Drawing.Size(532, 20);
+            this.edShipmentTemplate.TabIndex = 1;
+            this.edShipmentTemplate.Visible = false;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(9, 200);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(122, 13);
+            this.label6.TabIndex = 0;
+            this.label6.Text = "Шаблон листа прихода";
+            this.label6.Visible = false;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(9, 151);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(129, 13);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "Шаблон листа отгрузки ";
+            this.label5.Visible = false;
             // 
             // pnCurrentStep
             // 
@@ -354,284 +550,6 @@
             0,
             0,
             0});
-            // 
-            // pnReport
-            // 
-            this.pnReport.Controls.Add(this.tblReports);
-            this.pnReport.Controls.Add(this.toolStrip2);
-            this.pnReport.Controls.Add(this.btnRepPeriodTemplate);
-            this.pnReport.Controls.Add(this.edRepPeriodTemplate);
-            this.pnReport.Controls.Add(this.label7);
-            this.pnReport.Controls.Add(this.btnReceiptDlg);
-            this.pnReport.Controls.Add(this.btnShipmentDlg);
-            this.pnReport.Controls.Add(this.edReceiptTemplate);
-            this.pnReport.Controls.Add(this.edShipmentTemplate);
-            this.pnReport.Controls.Add(this.label6);
-            this.pnReport.Controls.Add(this.label5);
-            this.pnReport.Location = new System.Drawing.Point(6, 175);
-            this.pnReport.Name = "pnReport";
-            this.pnReport.Size = new System.Drawing.Size(597, 306);
-            this.pnReport.TabIndex = 2;
-            // 
-            // tblReports
-            // 
-            this.tblReports.AllowUserToAddRows = false;
-            this.tblReports.AllowUserToDeleteRows = false;
-            this.tblReports.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.tblReports.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colRepId,
-            this.colRepName,
-            this.colRepTemplatePath});
-            this.tblReports.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tblReports.Location = new System.Drawing.Point(0, 25);
-            this.tblReports.Name = "tblReports";
-            this.tblReports.ReadOnly = true;
-            this.tblReports.RowHeadersVisible = false;
-            this.tblReports.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.tblReports.Size = new System.Drawing.Size(597, 281);
-            this.tblReports.TabIndex = 6;
-            this.tblReports.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.tblReports_CellMouseDoubleClick);
-            // 
-            // colRepId
-            // 
-            this.colRepId.DataPropertyName = "Id";
-            this.colRepId.HeaderText = "Код";
-            this.colRepId.Name = "colRepId";
-            this.colRepId.ReadOnly = true;
-            this.colRepId.Visible = false;
-            // 
-            // colRepName
-            // 
-            this.colRepName.DataPropertyName = "Name";
-            this.colRepName.HeaderText = "Наименование";
-            this.colRepName.Name = "colRepName";
-            this.colRepName.ReadOnly = true;
-            this.colRepName.Width = 250;
-            // 
-            // colRepTemplatePath
-            // 
-            this.colRepTemplatePath.DataPropertyName = "TemplatePath";
-            this.colRepTemplatePath.HeaderText = "Шаблон";
-            this.colRepTemplatePath.Name = "colRepTemplatePath";
-            this.colRepTemplatePath.ReadOnly = true;
-            this.colRepTemplatePath.Width = 500;
-            // 
-            // toolStrip2
-            // 
-            this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tbRepAdd,
-            this.tbRepEdit,
-            this.tbRepDel});
-            this.toolStrip2.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(597, 25);
-            this.toolStrip2.TabIndex = 7;
-            this.toolStrip2.Text = "toolStrip2";
-            // 
-            // tbRepAdd
-            // 
-            this.tbRepAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tbRepAdd.Image = global::Planning.Properties.Resources.Add;
-            this.tbRepAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tbRepAdd.Name = "tbRepAdd";
-            this.tbRepAdd.Size = new System.Drawing.Size(23, 22);
-            this.tbRepAdd.Text = "toolStripButton1";
-            this.tbRepAdd.ToolTipText = "Добавить отчет";
-            this.tbRepAdd.Visible = false;
-            this.tbRepAdd.Click += new System.EventHandler(this.tbRepAdd_Click);
-            // 
-            // tbRepEdit
-            // 
-            this.tbRepEdit.BackColor = System.Drawing.Color.Transparent;
-            this.tbRepEdit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tbRepEdit.Image = global::Planning.Properties.Resources.Edit;
-            this.tbRepEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tbRepEdit.Name = "tbRepEdit";
-            this.tbRepEdit.Size = new System.Drawing.Size(23, 22);
-            this.tbRepEdit.Text = "toolStripButton2";
-            this.tbRepEdit.ToolTipText = "Редактировать отчет";
-            this.tbRepEdit.Click += new System.EventHandler(this.tbRepEdit_Click);
-            // 
-            // tbRepDel
-            // 
-            this.tbRepDel.BackColor = System.Drawing.Color.Transparent;
-            this.tbRepDel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tbRepDel.Image = global::Planning.Properties.Resources.Delete;
-            this.tbRepDel.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tbRepDel.Name = "tbRepDel";
-            this.tbRepDel.Size = new System.Drawing.Size(23, 22);
-            this.tbRepDel.Text = "toolStripButton3";
-            this.tbRepDel.ToolTipText = "Удалить отчет";
-            this.tbRepDel.Visible = false;
-            this.tbRepDel.Click += new System.EventHandler(this.tbRepDel_Click);
-            // 
-            // btnRepPeriodTemplate
-            // 
-            this.btnRepPeriodTemplate.Location = new System.Drawing.Point(550, 266);
-            this.btnRepPeriodTemplate.Name = "btnRepPeriodTemplate";
-            this.btnRepPeriodTemplate.Size = new System.Drawing.Size(27, 20);
-            this.btnRepPeriodTemplate.TabIndex = 5;
-            this.btnRepPeriodTemplate.Text = "...";
-            this.btnRepPeriodTemplate.UseVisualStyleBackColor = true;
-            this.btnRepPeriodTemplate.Visible = false;
-            this.btnRepPeriodTemplate.Click += new System.EventHandler(this.btnShipmentDlg_Click);
-            // 
-            // edRepPeriodTemplate
-            // 
-            this.edRepPeriodTemplate.Location = new System.Drawing.Point(12, 267);
-            this.edRepPeriodTemplate.Name = "edRepPeriodTemplate";
-            this.edRepPeriodTemplate.Size = new System.Drawing.Size(532, 20);
-            this.edRepPeriodTemplate.TabIndex = 4;
-            this.edRepPeriodTemplate.Visible = false;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(9, 251);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(108, 13);
-            this.label7.TabIndex = 3;
-            this.label7.Text = "Отгрузки за период";
-            this.label7.Visible = false;
-            // 
-            // btnReceiptDlg
-            // 
-            this.btnReceiptDlg.Location = new System.Drawing.Point(550, 215);
-            this.btnReceiptDlg.Name = "btnReceiptDlg";
-            this.btnReceiptDlg.Size = new System.Drawing.Size(27, 20);
-            this.btnReceiptDlg.TabIndex = 2;
-            this.btnReceiptDlg.Text = "...";
-            this.btnReceiptDlg.UseVisualStyleBackColor = true;
-            this.btnReceiptDlg.Visible = false;
-            this.btnReceiptDlg.Click += new System.EventHandler(this.btnShipmentDlg_Click);
-            // 
-            // btnShipmentDlg
-            // 
-            this.btnShipmentDlg.Location = new System.Drawing.Point(550, 167);
-            this.btnShipmentDlg.Name = "btnShipmentDlg";
-            this.btnShipmentDlg.Size = new System.Drawing.Size(27, 20);
-            this.btnShipmentDlg.TabIndex = 2;
-            this.btnShipmentDlg.Text = "...";
-            this.btnShipmentDlg.UseVisualStyleBackColor = true;
-            this.btnShipmentDlg.Visible = false;
-            this.btnShipmentDlg.Click += new System.EventHandler(this.btnShipmentDlg_Click);
-            // 
-            // edReceiptTemplate
-            // 
-            this.edReceiptTemplate.Location = new System.Drawing.Point(12, 216);
-            this.edReceiptTemplate.Name = "edReceiptTemplate";
-            this.edReceiptTemplate.Size = new System.Drawing.Size(532, 20);
-            this.edReceiptTemplate.TabIndex = 1;
-            this.edReceiptTemplate.Visible = false;
-            // 
-            // edShipmentTemplate
-            // 
-            this.edShipmentTemplate.Location = new System.Drawing.Point(12, 167);
-            this.edShipmentTemplate.Name = "edShipmentTemplate";
-            this.edShipmentTemplate.Size = new System.Drawing.Size(532, 20);
-            this.edShipmentTemplate.TabIndex = 1;
-            this.edShipmentTemplate.Visible = false;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(9, 200);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(122, 13);
-            this.label6.TabIndex = 0;
-            this.label6.Text = "Шаблон листа прихода";
-            this.label6.Visible = false;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(9, 151);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(129, 13);
-            this.label5.TabIndex = 0;
-            this.label5.Text = "Шаблон листа отгрузки ";
-            this.label5.Visible = false;
-            // 
-            // pnConnect
-            // 
-            this.pnConnect.Controls.Add(this.edPassword);
-            this.pnConnect.Controls.Add(this.edUser);
-            this.pnConnect.Controls.Add(this.edBase);
-            this.pnConnect.Controls.Add(this.edServer);
-            this.pnConnect.Controls.Add(this.label4);
-            this.pnConnect.Controls.Add(this.label3);
-            this.pnConnect.Controls.Add(this.label2);
-            this.pnConnect.Controls.Add(this.label1);
-            this.pnConnect.Location = new System.Drawing.Point(6, 22);
-            this.pnConnect.Name = "pnConnect";
-            this.pnConnect.Size = new System.Drawing.Size(375, 127);
-            this.pnConnect.TabIndex = 1;
-            this.pnConnect.Visible = false;
-            // 
-            // edPassword
-            // 
-            this.edPassword.Location = new System.Drawing.Point(84, 81);
-            this.edPassword.Name = "edPassword";
-            this.edPassword.PasswordChar = '*';
-            this.edPassword.Size = new System.Drawing.Size(177, 20);
-            this.edPassword.TabIndex = 18;
-            // 
-            // edUser
-            // 
-            this.edUser.Location = new System.Drawing.Point(84, 55);
-            this.edUser.Name = "edUser";
-            this.edUser.Size = new System.Drawing.Size(177, 20);
-            this.edUser.TabIndex = 16;
-            // 
-            // edBase
-            // 
-            this.edBase.Location = new System.Drawing.Point(84, 30);
-            this.edBase.Name = "edBase";
-            this.edBase.Size = new System.Drawing.Size(256, 20);
-            this.edBase.TabIndex = 14;
-            // 
-            // edServer
-            // 
-            this.edServer.Location = new System.Drawing.Point(84, 3);
-            this.edServer.Name = "edServer";
-            this.edServer.Size = new System.Drawing.Size(256, 20);
-            this.edServer.TabIndex = 12;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 84);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(45, 13);
-            this.label4.TabIndex = 19;
-            this.label4.Text = "Пароль";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 58);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(80, 13);
-            this.label3.TabIndex = 17;
-            this.label3.Text = "Пользователь";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 33);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(72, 13);
-            this.label2.TabIndex = 15;
-            this.label2.Text = "База данных";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 6);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(44, 13);
-            this.label1.TabIndex = 13;
-            this.label1.Text = "Сервер";
             // 
             // pnVolumeCalcStep
             // 
@@ -854,6 +772,87 @@
             this.btnDelTmplt.ToolTipText = "Удалить шаблон";
             this.btnDelTmplt.Click += new System.EventHandler(this.btnDelTmplt_Click);
             // 
+            // pnConnect
+            // 
+            this.pnConnect.Controls.Add(this.edPassword);
+            this.pnConnect.Controls.Add(this.edUser);
+            this.pnConnect.Controls.Add(this.edBase);
+            this.pnConnect.Controls.Add(this.edServer);
+            this.pnConnect.Controls.Add(this.label4);
+            this.pnConnect.Controls.Add(this.label3);
+            this.pnConnect.Controls.Add(this.label2);
+            this.pnConnect.Controls.Add(this.label1);
+            this.pnConnect.Location = new System.Drawing.Point(6, 22);
+            this.pnConnect.Name = "pnConnect";
+            this.pnConnect.Size = new System.Drawing.Size(375, 127);
+            this.pnConnect.TabIndex = 1;
+            this.pnConnect.Visible = false;
+            // 
+            // edPassword
+            // 
+            this.edPassword.Location = new System.Drawing.Point(84, 81);
+            this.edPassword.Name = "edPassword";
+            this.edPassword.PasswordChar = '*';
+            this.edPassword.Size = new System.Drawing.Size(177, 20);
+            this.edPassword.TabIndex = 18;
+            // 
+            // edUser
+            // 
+            this.edUser.Location = new System.Drawing.Point(84, 55);
+            this.edUser.Name = "edUser";
+            this.edUser.Size = new System.Drawing.Size(177, 20);
+            this.edUser.TabIndex = 16;
+            // 
+            // edBase
+            // 
+            this.edBase.Location = new System.Drawing.Point(84, 30);
+            this.edBase.Name = "edBase";
+            this.edBase.Size = new System.Drawing.Size(256, 20);
+            this.edBase.TabIndex = 14;
+            // 
+            // edServer
+            // 
+            this.edServer.Location = new System.Drawing.Point(84, 3);
+            this.edServer.Name = "edServer";
+            this.edServer.Size = new System.Drawing.Size(256, 20);
+            this.edServer.TabIndex = 12;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(6, 84);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(45, 13);
+            this.label4.TabIndex = 19;
+            this.label4.Text = "Пароль";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 58);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(80, 13);
+            this.label3.TabIndex = 17;
+            this.label3.Text = "Пользователь";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 33);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(72, 13);
+            this.label2.TabIndex = 15;
+            this.label2.Text = "База данных";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 6);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(44, 13);
+            this.label1.TabIndex = 13;
+            this.label1.Text = "Сервер";
+            // 
             // pbFooter
             // 
             this.pbFooter.Controls.Add(this.btnClose);
@@ -931,19 +930,17 @@
             this.Text = "Настройки";
             this.Load += new System.EventHandler(this.SettingsWizard_Load);
             this.pnRight.ResumeLayout(false);
+            this.pnReport.ResumeLayout(false);
+            this.pnReport.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tblReports)).EndInit();
+            this.toolStrip2.ResumeLayout(false);
+            this.toolStrip2.PerformLayout();
             this.pnCurrentStep.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.tblCurrTaskView)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.edFontSize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.edTaskUpdateInterval)).EndInit();
-            this.pnReport.ResumeLayout(false);
-            this.pnReport.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tblReports)).EndInit();
-            this.toolStrip2.ResumeLayout(false);
-            this.toolStrip2.PerformLayout();
-            this.pnConnect.ResumeLayout(false);
-            this.pnConnect.PerformLayout();
             this.pnVolumeCalcStep.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
@@ -952,6 +949,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.tblTemplateConstant)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            this.pnConnect.ResumeLayout(false);
+            this.pnConnect.PerformLayout();
             this.pbFooter.ResumeLayout(false);
             this.pbBack.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);

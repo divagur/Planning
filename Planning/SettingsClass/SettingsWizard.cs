@@ -14,8 +14,8 @@ namespace Planning
     {
         private List<Panel> steps = new List<Panel>();
         Settings _settings;
-        List<DictColumn> CurrentTaskCols = new List<DictColumn>();
-        List<string> CurrentTaskColsVisible = new List<string>();
+        //List<DictColumn> CurrentTaskCols = new List<DictColumn>();
+        //List<string> CurrentTaskColsVisible = new List<string>();
         BindingList<VolumeCalcConstant> bindingListVolumeCalcConstant;
         BindingSource sourceVolumeCalcConstant;
 
@@ -313,7 +313,7 @@ namespace Planning
 
             SettingReport settingReport = new SettingReport();
             Random random = new Random();
-            settingReport.Id = random.Next().ToString();
+            settingReport.Id = (_settings.Reports.Count + 1).ToString();//random.Next().ToString();
 
             ReportSettingEdit reportSettingEdit = new ReportSettingEdit(settingReport);
             if (reportSettingEdit.ShowDialog() == DialogResult.OK)

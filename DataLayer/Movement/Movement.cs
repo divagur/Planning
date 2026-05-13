@@ -20,6 +20,8 @@ namespace Planning.DataLayer
         bool? _spCondition;
         TimeSpan? _specialTime;
         TimeSlot _timeSlot;
+        string _lastModifyUser = ConnectionParams.UserLogin;
+        DateTime? _lastModifyDate = DateTime.Now;
 
         public DateTime MDate
         {
@@ -173,6 +175,32 @@ namespace Planning.DataLayer
                 return _timeSlot;
             }
         }
+        public string LastModifyUser
+        {
+            get => _lastModifyUser;
+            set
+            {
 
+                if (_lastModifyUser == null || !_lastModifyUser.Equals(value))
+                {
+                    _lastModifyUser = value;
+                    Edit();
+
+                }
+            }
+        }
+        public DateTime? LastModifyDate
+        {
+            get => _lastModifyDate;
+            set
+            {
+                if (!_lastModifyDate.Equals(value))
+                {
+                    _lastModifyDate = value;
+                    Edit();
+
+                }
+            }
+        }
     }
 }

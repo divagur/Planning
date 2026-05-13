@@ -116,6 +116,7 @@ namespace Planning
                 _shipmentOrder.LvOrderId = order.LVID;
                 int? DepositorLVId = _shipment.DepositorId;
                 _shipmentOrder.IsBinding = true;
+                _shipmentOrder.Comment = order.WarehouseComment;
                 LvSelectOrderRepository lvSelectOrderRepository = new LvSelectOrderRepository();
                 List<LvSelectOrder> OrderParts = lvSelectOrderRepository.GetAll(0,0,DepositorLVId, order.LVID,0);
                 
