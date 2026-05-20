@@ -408,7 +408,7 @@ namespace Planning
                 return true;
             }
         }
-        public ShipmenEdit(DataLayer.Shipment shipment, bool isNew = false)
+        public ShipmenEdit(Shipment shipment, bool isNew = false)
         {
             
             InitializeComponent();
@@ -470,7 +470,7 @@ namespace Planning
                 return;
 
             frmShipmentLog = new frmShipmentHistory(ItemId, IsShipment);
-            frmShipmentLog.Populate();
+            //frmShipmentLog.Populate();
             frmShipmentLog.TopLevel = false;
             frmShipmentLog.Visible = true;
             frmShipmentLog.FormBorderStyle = FormBorderStyle.None;
@@ -546,6 +546,7 @@ namespace Planning
 
                 _shipmentOrders.Add(shipmentOrder);
                 tblShipmentOrders.DataSource = _shipmentOrders;
+                edShipmentComment.Text = _shipment.SComment;
                 //PopulateOrderPart();
             }
             UpdateOrderDataSource();
@@ -557,12 +558,13 @@ namespace Planning
         {
             if (tblShipmentOrders.CurrentCell == null)
                 return;
-            DataLayer.ShipmentOrder shipmentOrder = GetSelectedShipmentOrder();
+            ShipmentOrder shipmentOrder = GetSelectedShipmentOrder();
             var frmShipmentOrderEdit = new ShipmentOrderEdit(_shipment, shipmentOrder, _shipmentOrderParts);
             
             frmShipmentOrderEdit.ShowDialog();
             if (frmShipmentOrderEdit.DialogResult == DialogResult.Cancel)
                 return;
+            edShipmentComment.Text = _shipment.SComment;
             UpdateOrderDataSource();
             tblShipmentOrders.Refresh();
         }

@@ -91,6 +91,7 @@ namespace Planning
             _shipmentOrder.LvOrderCode = txtOrderId.Text;
             _shipmentOrder.OrderType = txtOrderType.Text;
             _shipmentOrder.Comment = txtOrderComment.Text;
+           
             _shipmentOrder.IsEdm = cbIsEDM.Checked;
             _shipmentOrder.ManualLoad = GetNumber(txtManualLoad);
             _shipmentOrder.ManualUnload = GetNumber(txtManualUnload);
@@ -112,11 +113,13 @@ namespace Planning
                 var order = (LvSelectOrder)selectResult.Result;
 
                 txtOrderId.Text = order.LVCode;
+                txtOrderComment.Text = order.WarehouseComment;
                 cbIsEDM.Checked = order.IsEDM ==null?false: (bool)order.IsEDM;
                 _shipmentOrder.LvOrderId = order.LVID;
                 int? DepositorLVId = _shipment.DepositorId;
                 _shipmentOrder.IsBinding = true;
                 _shipmentOrder.Comment = order.WarehouseComment;
+                _shipment.SComment = String.Concat(_shipment.SComment.Trim(), String.IsNullOrEmpty(_shipment.SComment.Trim())?"":Environment.NewLine,order.OperatorComment);//
                 LvSelectOrderRepository lvSelectOrderRepository = new LvSelectOrderRepository();
                 List<LvSelectOrder> OrderParts = lvSelectOrderRepository.GetAll(0,0,DepositorLVId, order.LVID,0);
                 

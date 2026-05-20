@@ -33,9 +33,9 @@ namespace Planning
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainFormEx));
-            BrightIdeasSoftware.HeaderStateStyle headerStateStyle4 = new BrightIdeasSoftware.HeaderStateStyle();
-            BrightIdeasSoftware.HeaderStateStyle headerStateStyle5 = new BrightIdeasSoftware.HeaderStateStyle();
-            BrightIdeasSoftware.HeaderStateStyle headerStateStyle6 = new BrightIdeasSoftware.HeaderStateStyle();
+            BrightIdeasSoftware.HeaderStateStyle headerStateStyle1 = new BrightIdeasSoftware.HeaderStateStyle();
+            BrightIdeasSoftware.HeaderStateStyle headerStateStyle2 = new BrightIdeasSoftware.HeaderStateStyle();
+            BrightIdeasSoftware.HeaderStateStyle headerStateStyle3 = new BrightIdeasSoftware.HeaderStateStyle();
             this.menuMain = new System.Windows.Forms.MenuStrip();
             this.mtiFile = new System.Windows.Forms.ToolStripMenuItem();
             this.miSettings = new System.Windows.Forms.ToolStripMenuItem();
@@ -172,6 +172,7 @@ namespace Planning
             this.menuItemDictTransportView = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemDictWarehouse = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemDictCustomPosts = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemDictTimeDelayKPI = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemReport = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemReportPeriodV2 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemReportPeriod = new System.Windows.Forms.ToolStripMenuItem();
@@ -190,7 +191,6 @@ namespace Planning
             this.tmUpdate = new System.Windows.Forms.Timer(this.components);
             this.simpleItemStyle1 = new BrightIdeasSoftware.SimpleItemStyle();
             this.baseRenderer1 = new BrightIdeasSoftware.BaseRenderer();
-            this.menuItemDictTimeDelayKPI = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMain.SuspendLayout();
             this.statusStrip2.SuspendLayout();
             this.tabForms.SuspendLayout();
@@ -562,6 +562,7 @@ namespace Planning
             this.tblShipments.View = System.Windows.Forms.View.Details;
             this.tblShipments.AfterSorting += new System.EventHandler<BrightIdeasSoftware.AfterSortingEventArgs>(this.tblShipments_AfterSorting);
             this.tblShipments.ButtonClick += new System.EventHandler<BrightIdeasSoftware.CellClickEventArgs>(this.tblShipments_ButtonClick);
+            this.tblShipments.CellToolTipShowing += new System.EventHandler<BrightIdeasSoftware.ToolTipShowingEventArgs>(this.tblShipments_CellToolTipShowing);
             this.tblShipments.FormatCell += new System.EventHandler<BrightIdeasSoftware.FormatCellEventArgs>(this.tblShipments_FormatCell);
             this.tblShipments.FormatRow += new System.EventHandler<BrightIdeasSoftware.FormatRowEventArgs>(this.tblShipments_FormatRow);
             this.tblShipments.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.tblShipments_ColumnClick);
@@ -1297,10 +1298,10 @@ namespace Planning
             // 
             // headerFormatStyle1
             // 
-            this.headerFormatStyle1.Hot = headerStateStyle4;
-            headerStateStyle5.FrameWidth = 2F;
-            this.headerFormatStyle1.Normal = headerStateStyle5;
-            this.headerFormatStyle1.Pressed = headerStateStyle6;
+            this.headerFormatStyle1.Hot = headerStateStyle1;
+            headerStateStyle2.FrameWidth = 2F;
+            this.headerFormatStyle1.Normal = headerStateStyle2;
+            this.headerFormatStyle1.Pressed = headerStateStyle3;
             // 
             // imageListMain16
             // 
@@ -1383,7 +1384,7 @@ namespace Planning
             this.toolStripMenuItemAdd,
             this.toolStripMenuItemAdmin});
             this.contextMenuMain.Name = "contextMenuMain";
-            this.contextMenuMain.Size = new System.Drawing.Size(190, 136);
+            this.contextMenuMain.Size = new System.Drawing.Size(190, 114);
             this.contextMenuMain.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuMain_Opening);
             // 
             // toolStripMenuItemFile
@@ -1525,6 +1526,13 @@ namespace Planning
             this.menuItemDictCustomPosts.Tag = "CustomPost";
             this.menuItemDictCustomPosts.Text = "Таможенные посты";
             this.menuItemDictCustomPosts.Click += new System.EventHandler(this.menuItemDictCustomPosts_Click);
+            // 
+            // menuItemDictTimeDelayKPI
+            // 
+            this.menuItemDictTimeDelayKPI.Name = "menuItemDictTimeDelayKPI";
+            this.menuItemDictTimeDelayKPI.Size = new System.Drawing.Size(292, 22);
+            this.menuItemDictTimeDelayKPI.Text = "Критерии KPI ТК по времени опоздания";
+            this.menuItemDictTimeDelayKPI.Click += new System.EventHandler(this.menuItemDictTimeDelayKPI_Click);
             // 
             // toolStripMenuItemReport
             // 
@@ -1670,13 +1678,6 @@ namespace Planning
             // tmUpdate
             // 
             this.tmUpdate.Tick += new System.EventHandler(this.tmUpdate_Tick);
-            // 
-            // menuItemDictTimeDelayKPI
-            // 
-            this.menuItemDictTimeDelayKPI.Name = "menuItemDictTimeDelayKPI";
-            this.menuItemDictTimeDelayKPI.Size = new System.Drawing.Size(292, 22);
-            this.menuItemDictTimeDelayKPI.Text = "Критерии KPI ТК по времени опоздания";
-            this.menuItemDictTimeDelayKPI.Click += new System.EventHandler(this.menuItemDictTimeDelayKPI_Click);
             // 
             // MainFormEx
             // 

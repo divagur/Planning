@@ -18,7 +18,7 @@ namespace Planning
         ShipmentOrder _shipmentOrder;
         List<ShipmentOrderPart> _shipmentOrderParts;
 
-        //Planning.DataLayer.Shipment _shipment;
+        //Shipment _shipment;
         bool _isOrderParts;
         int? _LVOrderId;
         int? _depositorId;
@@ -31,7 +31,7 @@ namespace Planning
         //LVOrder_Manager Order_Manager = new LVOrder_Manager();
         //List<LVOrder> listOrders;
         //public ChooseOrder(ShipmentAddResult selectedResult, Planning.DataLayer.Shipment shipment, bool isOrderParts = false, int? LVOrderId = null)
-        public ChooseOrder(ShipmentAddResult selectedResult,int? ShipmentId, int? DepositorId, bool? IsShIn, ShipmentOrder shipmentOrder,
+        public ChooseOrder(ShipmentAddResult selectedResult, int? shipmentId, int? DepositorId, bool? IsShIn, ShipmentOrder shipmentOrder,
                     bool isOrderParts = false, int? LVOrderId = null)
         {
             InitializeComponent();
@@ -41,7 +41,7 @@ namespace Planning
             _shipmentOrder = shipmentOrder;
             _isOrderParts = isOrderParts;
             _LVOrderId = LVOrderId;
-            _shipmentId = ShipmentId;
+            _shipmentId = shipmentId;
             if (!isOrderParts)
                 colOstCode.Visible = false;
             PopulateOrders();

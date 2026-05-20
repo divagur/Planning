@@ -1384,12 +1384,12 @@ namespace Planning
             int ShpType = int.Parse(reportParams["ShpType"]);
 
             #region Запросы
-
+            //
             queryOut.Add(String.Format(@"select distinct isnull(cmp_ShortName,'') KlientName, N'выход' InOut, vs.s_date ShpDate, vs.tc_name TransportCompanyName,vs.shp_id ShpId,
 				cast(vs.s_date as datetime)+ cast(vs.slot_time as datetime) PlanDate,
 				vs.submission_time ShpSubmissionTime,vs.start_time ShpStartTime,
 				vs.end_time ShpEndTimePlan, vs.leave_time ShpEndTimeFact,
-				DATEDIFF(minute, vs.submission_time, cast(vs.s_date as datetime)+ cast(vs.slot_time as datetime)) DelayMinutes,
+				DATEDIFF(minute, cast(vs.s_date as datetime)+ cast(vs.slot_time as datetime),vs.submission_time) DelayMinutes,
 				(select  kpi
 					from
 					(
@@ -1411,8 +1411,8 @@ namespace Planning
                     )t 
 					)tt
 					where
-						DATEDIFF(minute, vs.submission_time, cast(vs.s_date as datetime)+ cast(vs.slot_time as datetime)) > prev_minutes_delay 
-						and DATEDIFF(minute, vs.submission_time, cast(vs.s_date as datetime)+ cast(vs.slot_time as datetime))<= minutes_delay 
+						DATEDIFF(minute, cast(vs.s_date as datetime)+ cast(vs.slot_time as datetime),vs.submission_time) > prev_minutes_delay 
+						and DATEDIFF(minute, cast(vs.s_date as datetime)+ cast(vs.slot_time as datetime),vs.submission_time)<= minutes_delay 
 	            ) kpi
 		        from 
 			        v_shipments vs with(nolock)
@@ -1424,14 +1424,14 @@ namespace Planning
 	                where 
 		                vs.s_in =0
                         and vs.tc_name is not null
-		                and vs.s_date between '{1}' and '{2}'", depositor.LvBase, periodBegin, periodEnd));
+		                and vs.s_date between @ReportStart and @ReportEnd", depositor.LvBase));
 
 
             queryOut.Add(String.Format(@"select distinct isnull(cmp_ShortName,'') KlientName, N'выход' InOut, vs.s_date ShpDate, vs.tc_name TransportCompanyName,vs.shp_id ShpId,
 				cast(vs.s_date as datetime)+ cast(vs.slot_time as datetime) PlanDate,
 				vs.submission_time ShpSubmissionTime,vs.start_time ShpStartTime,
 				vs.end_time ShpEndTimePlan, vs.leave_time ShpEndTimeFact,
-				DATEDIFF(minute, vs.submission_time, cast(vs.s_date as datetime)+ cast(vs.slot_time as datetime)) DelayMinutes,
+				DATEDIFF(minute, cast(vs.s_date as datetime)+ cast(vs.slot_time as datetime),vs.submission_time) DelayMinutes,
 				(select  kpi
 					from
 					(
@@ -1453,8 +1453,8 @@ namespace Planning
                     )t 
 					)tt
 					where
-						DATEDIFF(minute, vs.submission_time, cast(vs.s_date as datetime)+ cast(vs.slot_time as datetime)) > prev_minutes_delay 
-						and DATEDIFF(minute, vs.submission_time, cast(vs.s_date as datetime)+ cast(vs.slot_time as datetime))<= minutes_delay 
+						DATEDIFF(minute, cast(vs.s_date as datetime)+ cast(vs.slot_time as datetime),vs.submission_time) > prev_minutes_delay 
+						and DATEDIFF(minute, cast(vs.s_date as datetime)+ cast(vs.slot_time as datetime),vs.submission_time)<= minutes_delay 
 	            ) kpi
 		        from 
 			        v_shipments vs with(nolock)
@@ -1465,7 +1465,7 @@ namespace Planning
 			        left join {0}.dbo.LV_Company with (nolock) on cmp_ID = spl_CompanyID
 	                where 
 		                vs.s_in =1
-		                and vs.s_date between '{1}' and '{2}'", depositor.LvBase, periodBegin, periodEnd));
+		                and vs.s_date between @ReportStart and @ReportEnd", depositor.LvBase));
 
 
             
@@ -1498,6 +1498,8 @@ namespace Planning
 
             SqlHandle sql = new SqlHandle(Common.BuildConnectionString(ConnectionParams.ServerName, ConnectionParams.BaseName, ConnectionParams.UserName, ConnectionParams.Pwd));
             sql.SqlStatement = queryOut[ShpType];
+            sql.AddCommandParametr(new SqlParameter("ReportStart", periodBegin));
+            sql.AddCommandParametr(new SqlParameter("ReportEnd", periodEnd));
             sql.Connect();
             sql.IsResultSet = true;
 
@@ -1514,6 +1516,7 @@ namespace Planning
             if (!sql.HasRows())
             {
                 MessageBox.Show("Нет данных для формирования отчета", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                wait.Close();
                 return;
             }
             excel.SetValue(1, 1, 4, "Данные по за период с " + reportParams["PeriodBegin"] + " по " + reportParams["PeriodEnd"] );
@@ -1569,7 +1572,7 @@ namespace Planning
                     kpiTableRow = kpiTable.NewRow();
                     kpiTableRow["TransportCompany"] = r["TransportCompanyName"].ToString();
                     kpiTableRow["Kpi_tc"] = 0;
-                    kpiTableRow["Kpi_Count"] = 1;
+                    kpiTableRow["Kpi_Count"] = 0;
                     kpiTable.Rows.Add(kpiTableRow);
 
                 }
@@ -1582,7 +1585,9 @@ namespace Planning
                     string colName = $"Col_{r["kpi"].ToString()}";
                     int kpiValue = kpiTableRow[colName] == null?0:(int)kpiTableRow[colName];
                     kpiTableRow[colName] = ++kpiValue;
-                    kpiTableRow["Kpi_Count"] = (int)kpiTableRow["Kpi_Count"] + kpiValue;
+                    kpiTableRow["Kpi_Count"] = (int)kpiTableRow["Kpi_Count"] + 1;
+
+                    int kpiCount = (int)kpiTableRow["Kpi_Count"];
 
                     decimal rowPrcSum = 0;
                     for (int i = 3; i < kpiTable.Columns.Count;i++)
@@ -2616,6 +2621,16 @@ namespace Planning
             SetFormPrivalage(frmTransportCompanyKpiDelay, "TC");
             AddFormTab(frmTransportCompanyKpiDelay, "Критерии KPI ТК");
 
+        }
+
+        private void tblShipments_CellToolTipShowing(object sender, ToolTipShowingEventArgs e)
+        {
+            if (e.Column.Name == "colComment" || e.Column.Name == "colOrderComment")
+            {
+
+                e.Text = e.SubItem.Text;
+            }
+                
         }
     }
 }
