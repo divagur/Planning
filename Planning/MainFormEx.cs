@@ -2625,12 +2625,32 @@ namespace Planning
 
         private void tblShipments_CellToolTipShowing(object sender, ToolTipShowingEventArgs e)
         {
+            /*
             if (e.Column.Name == "colComment" || e.Column.Name == "colOrderComment")
             {
 
                 e.Text = e.SubItem.Text;
             }
+              */
+            string toolTipText = e.SubItem.Text;
+            if (e.Column.Name == "colDoneShare" && !String.IsNullOrEmpty(e.SubItem.Text))
+            {
                 
+                decimal pct = Math.Truncate(Decimal.Parse(e.SubItem.Text) * 100);
+                toolTipText = String.Concat(pct.ToString(), "%");
+            }
+            else if (e.Column.Name == "colDirection")
+            {
+                switch (toolTipText)
+                {
+                    case "In": toolTipText = "Вход";break;
+                    case "Out": toolTipText = "Выход"; break;
+                    case "Move": toolTipText = "Перемещение"; break;
+                    default:
+                        break;
+                }
+            }
+            e.Text = toolTipText;
         }
     }
 }

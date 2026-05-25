@@ -73,7 +73,7 @@ namespace Planning.DataLayer
                         transport_type_id as {nameof(Shipment.TransportTypeId)},supplier_id as {nameof(Shipment.SupplierId)},
                         custom_post_id as {nameof(Shipment.CustomPostId)},warehouse_id as {nameof(Shipment.WarehouseId)}, 
                         transport_view_id as {nameof(Shipment.TransportViewId)},
-                        last_modify_user as {nameof(Shipment.LastModifyUser)},last_modify_date as {nameof(Shipment.LastModifyDate)}
+                        {Table}.last_modify_user as {nameof(Shipment.LastModifyUser)},{Table}.last_modify_date as {nameof(Shipment.LastModifyDate)}
                     from 
 	                    {Table}
                     ";

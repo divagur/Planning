@@ -53,7 +53,7 @@ namespace Planning.DataLayer
                             binding_id as { nameof(ShipmentOrder.BindingId)}, lv_order_id as { nameof(ShipmentOrder.LvOrderId)}, lv_order_code as { nameof(ShipmentOrder.LvOrderCode)}, 
                             shipping_places_number as { nameof(ShipmentOrder.ShippingPlacesNumber)}, order_weight as { nameof(ShipmentOrder.OrderWeight)}, 
                             is_edm as {nameof(ShipmentOrder.IsEdm)},
-                            last_modify_user as {nameof(ShipmentOrder.LastModifyUser)},last_modify_date as {nameof(ShipmentOrder.LastModifyDate)}
+                            {Table}.last_modify_user as {nameof(ShipmentOrder.LastModifyUser)},{Table}.last_modify_date as {nameof(ShipmentOrder.LastModifyDate)}
 
             from 
 	                    {Table}

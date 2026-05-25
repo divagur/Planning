@@ -46,7 +46,7 @@ namespace Planning.DataLayer
                             os_lvcode as { nameof(ShipmentOrderPart.OsLvCode)}, is_binding as { nameof(ShipmentOrderPart.IsBinding)}, 
                             manual_load as { nameof(ShipmentOrderPart.ManualLoad)}, manual_unload as { nameof(ShipmentOrderPart.ManualUnload)}, pallet_amount as { nameof(ShipmentOrderPart.PalletAmount)},                             
                             shipping_places_number as { nameof(ShipmentOrderPart.ShippingPlacesNumber)}, order_part_weight as { nameof(ShipmentOrderPart.OrderPartWeight)},
-                            last_modify_user as {nameof(ShipmentOrderPart.LastModifyUser)},last_modify_date as {nameof(ShipmentOrderPart.LastModifyDate)}
+                            {Table}.last_modify_user as {nameof(ShipmentOrderPart.LastModifyUser)},{Table}.last_modify_date as {nameof(ShipmentOrderPart.LastModifyDate)}
             from 
 	                    {Table}
                     ";
