@@ -45,6 +45,7 @@ namespace Planning
             this.dtSpecialTime = new System.Windows.Forms.DateTimePicker();
             this.monthCalendarSpecial = new System.Windows.Forms.MonthCalendar();
             this.cbType = new System.Windows.Forms.ComboBox();
+            this.btnShowParam = new System.Windows.Forms.Button();
             this.pnGetDateTime.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -194,11 +195,23 @@ namespace Planning
             this.cbType.Size = new System.Drawing.Size(155, 21);
             this.cbType.TabIndex = 2;
             // 
+            // btnShowParam
+            // 
+            this.btnShowParam.Image = global::Planning.Properties.Resources.view_detailed_2595;
+            this.btnShowParam.Location = new System.Drawing.Point(11, 110);
+            this.btnShowParam.Name = "btnShowParam";
+            this.btnShowParam.Size = new System.Drawing.Size(27, 22);
+            this.btnShowParam.TabIndex = 37;
+            this.btnShowParam.UseVisualStyleBackColor = true;
+            this.btnShowParam.Visible = false;
+            this.btnShowParam.Click += new System.EventHandler(this.btnShowParam_Click);
+            // 
             // RepPeriod
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(258, 139);
+            this.Controls.Add(this.btnShowParam);
             this.Controls.Add(this.pnGetDateTime);
             this.Controls.Add(this.btnPeriodEnd);
             this.Controls.Add(this.edPeriodEnd);
@@ -239,5 +252,6 @@ namespace Planning
         private System.Windows.Forms.DateTimePicker dtSpecialTime;
         private System.Windows.Forms.MonthCalendar monthCalendarSpecial;
         public System.Windows.Forms.ComboBox cbType;
+        private System.Windows.Forms.Button btnShowParam;
     }
 }

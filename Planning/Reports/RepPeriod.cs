@@ -104,5 +104,19 @@ namespace Planning
             DialogResult = DialogResult.Cancel;
             Close();
         }
+
+        private void btnShowParam_Click(object sender, EventArgs e)
+        {
+            frmLog frmLog = new frmLog();
+            frmLog.Text = "Параметры отчета";
+            
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.AppendLine("Параметры:");
+            stringBuilder.AppendLine($"Начало: {edPeriodBegin.Text}");
+            stringBuilder.AppendLine($"Окончание: {edPeriodEnd.Text}");
+            stringBuilder.AppendLine($"Тип отгрузки: {cbType.Text}");
+
+            frmLog.ShowDialog();
+        }
     }
 }

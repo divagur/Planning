@@ -799,6 +799,10 @@ namespace Planning
         }
         private bool SearchBy(bool FromBegin,string SearchText)//,  Predicate<int> condition)
         {
+            if (tblShipments.Items.Count <=0)
+            {
+                return  false;
+            }
             int startRow = FromBegin ? 0 : tblShipments.SelectedIndex + 1;
             tblShipments.SelectedObjects = null;
             //var item = tblShipments.Objects.FirstOrDefault(o => ((ShipmentMain)o).OrdLVCode == SearchText);
@@ -815,7 +819,7 @@ namespace Planning
                 tblShipments.Invalidate();
                 tblShipments.Refresh();
             }
-
+            
              ListViewItem listViewItem = tblShipments.FindItemWithText(SearchText, true, startRow);
             if (listViewItem != null)
             {
@@ -1385,7 +1389,8 @@ namespace Planning
 
             #region Запросы
             //
-            queryOut.Add(String.Format(@"select distinct isnull(cmp_ShortName,'') KlientName, N'выход' InOut, vs.s_date ShpDate, vs.tc_name TransportCompanyName,vs.shp_id ShpId,
+            queryOut.Add(String.Format(@"select distinct isnull(cmp_ShortName,'') KlientName, N'выход' InOut, 
+                vs.s_date ShpDate, vs.tc_name TransportCompanyName,vs.shp_id ShpId,
 				cast(vs.s_date as datetime)+ cast(vs.slot_time as datetime) PlanDate,
 				vs.submission_time ShpSubmissionTime,vs.start_time ShpStartTime,
 				vs.end_time ShpEndTimePlan, vs.leave_time ShpEndTimeFact,
@@ -1427,7 +1432,8 @@ namespace Planning
 		                and vs.s_date between @ReportStart and @ReportEnd", depositor.LvBase));
 
 
-            queryOut.Add(String.Format(@"select distinct isnull(cmp_ShortName,'') KlientName, N'выход' InOut, vs.s_date ShpDate, vs.tc_name TransportCompanyName,vs.shp_id ShpId,
+            queryOut.Add(String.Format(@"select distinct isnull(cmp_ShortName,'') KlientName, N'вход' InOut, vs.s_date ShpDate, 
+                        vs.tc_name TransportCompanyName,vs.shp_id ShpId,
 				cast(vs.s_date as datetime)+ cast(vs.slot_time as datetime) PlanDate,
 				vs.submission_time ShpSubmissionTime,vs.start_time ShpStartTime,
 				vs.end_time ShpEndTimePlan, vs.leave_time ShpEndTimeFact,
@@ -1474,6 +1480,22 @@ namespace Planning
 
             #endregion
 
+            //************************************
+           /*
+            frmLog frmLog = new frmLog();
+            frmLog.Text = "Параметры отчета";
+
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.AppendLine("Параметры:");
+            stringBuilder.AppendLine($"Начало: {reportParams["PeriodBegin"]}");
+            stringBuilder.AppendLine($"Окончание: {reportParams["PeriodEnd"]}");
+            stringBuilder.AppendLine($"Тип отгрузки: {reportParams["ShpType"]}");
+            stringBuilder.AppendLine($"Запрос: ");
+            stringBuilder.AppendLine($"Тип отгрузки: {queryOut[ShpType]}");
+            frmLog.edLog.Text = stringBuilder.ToString();
+            frmLog.ShowDialog();
+           */
+            //************************************
 
             ExcelPrint excel;
             Excel.Range range;

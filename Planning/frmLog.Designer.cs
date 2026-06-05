@@ -29,6 +29,7 @@ namespace Planning
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmLog));
             this.edLog = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
@@ -49,6 +50,7 @@ namespace Planning
             this.ClientSize = new System.Drawing.Size(1037, 609);
             this.Controls.Add(this.edLog);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmLog";
             this.Text = "Лог";
             this.ResumeLayout(false);
@@ -58,6 +60,6 @@ namespace Planning
 
         #endregion
 
-        private System.Windows.Forms.TextBox edLog;
+        public System.Windows.Forms.TextBox edLog;
     }
 }
