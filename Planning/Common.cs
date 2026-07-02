@@ -127,5 +127,28 @@ namespace Planning
             return int.Parse(splitTime[0]) * 60 + int.Parse(splitTime[1]);
         }
 
+        public static void PopulateComboBoxWarehouse(ComboBox comboBox, string DefaultCode= "",bool SetDefaultValue = false )
+        {
+            WarehouseRepository warehouseRepository = new WarehouseRepository();
+            List<Warehouse> warehouses = warehouseRepository.GetAll();
+
+            
+            comboBox.Items.Clear();
+            foreach (var item in warehouses)
+            {
+                comboBox.Items.Add(item);
+                if (SetDefaultValue && item.Code == DefaultCode)
+                {
+                    comboBox.SelectedItem = item;
+                }
+            }
+
+            comboBox.Format += (sender, e) => e.Value = ((Warehouse)e.ListItem).Name;
+        }
+
+        private static void ComboBox_Format(object sender, ListControlConvertEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

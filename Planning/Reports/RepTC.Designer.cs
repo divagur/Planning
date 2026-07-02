@@ -35,16 +35,18 @@ namespace Planning
             this.label1 = new System.Windows.Forms.Label();
             this.btnPeriodEnd = new System.Windows.Forms.Button();
             this.btnPeriodBegin = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.cbWarehouse = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(153, 66);
+            this.btnClose.Location = new System.Drawing.Point(151, 117);
             this.btnClose.TabIndex = 3;
             // 
             // btnOk
             // 
-            this.btnOk.Location = new System.Drawing.Point(51, 66);
+            this.btnOk.Location = new System.Drawing.Point(49, 117);
             this.btnOk.TabIndex = 2;
             // 
             // edPeriodEnd
@@ -99,10 +101,30 @@ namespace Planning
             this.btnPeriodBegin.UseVisualStyleBackColor = true;
             this.btnPeriodBegin.Click += new System.EventHandler(this.btnPeriodBegin_Click);
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(12, 79);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(38, 13);
+            this.label4.TabIndex = 15;
+            this.label4.Text = "Склад";
+            // 
+            // cbWarehouse
+            // 
+            this.cbWarehouse.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbWarehouse.FormattingEnabled = true;
+            this.cbWarehouse.Location = new System.Drawing.Point(93, 76);
+            this.cbWarehouse.Name = "cbWarehouse";
+            this.cbWarehouse.Size = new System.Drawing.Size(155, 21);
+            this.cbWarehouse.TabIndex = 16;
+            // 
             // RepTC
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.ClientSize = new System.Drawing.Size(259, 97);
+            this.ClientSize = new System.Drawing.Size(259, 152);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.cbWarehouse);
             this.Controls.Add(this.btnPeriodEnd);
             this.Controls.Add(this.edPeriodEnd);
             this.Controls.Add(this.btnPeriodBegin);
@@ -118,6 +140,8 @@ namespace Planning
             this.Controls.SetChildIndex(this.btnPeriodBegin, 0);
             this.Controls.SetChildIndex(this.edPeriodEnd, 0);
             this.Controls.SetChildIndex(this.btnPeriodEnd, 0);
+            this.Controls.SetChildIndex(this.cbWarehouse, 0);
+            this.Controls.SetChildIndex(this.label4, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -131,5 +155,7 @@ namespace Planning
         private System.Windows.Forms.TextBox edPeriodBegin;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label4;
+        public System.Windows.Forms.ComboBox cbWarehouse;
     }
 }

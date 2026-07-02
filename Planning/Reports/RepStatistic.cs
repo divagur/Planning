@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Planning.DataLayer;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -14,6 +15,7 @@ namespace Planning
             :base(reportParams)
         {
             InitializeComponent();
+            Common.PopulateComboBoxWarehouse(cbWarehouse, Common.PlanningConfig.DefaultWarehouseCode, true);
         }
 
         private void InitParams()
@@ -26,6 +28,8 @@ namespace Planning
                 cmbMonthEnd.SelectedIndex = 11;
             if (edAdmCoeff.Text == "")
                 edAdmCoeff.Text = "20";
+
+            
         }
 
 
@@ -36,6 +40,7 @@ namespace Planning
             _reportParams["MonthBegin"] = String.Format("{0}{1}",cmbMonthBegin.SelectedIndex<9?"0":"",(cmbMonthBegin.SelectedIndex+1).ToString());
             _reportParams["MonthEnd"] = String.Format("{0}{1}", cmbMonthEnd.SelectedIndex < 9 ? "0":"" , (cmbMonthEnd.SelectedIndex+1).ToString());
             _reportParams["AdmCoeff"] = edAdmCoeff.Text ;
+            _reportParams["WarehouseId"] = (cbWarehouse.SelectedItem as Warehouse).Id.ToString();
         }
 
         private void edYear_MouseEnter(object sender, EventArgs e)

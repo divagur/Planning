@@ -25,6 +25,8 @@ using Font = System.Drawing.Font;
 using Point = System.Drawing.Point;
 using SpreadsheetLight;
 using DocumentFormat.OpenXml.Packaging;
+using System.Globalization;
+using DocumentFormat.OpenXml.Bibliography;
 
 
 
@@ -1386,7 +1388,7 @@ namespace Planning
             DateTime periodBegin = DateTime.Parse(reportParams["PeriodBegin"]);
             DateTime periodEnd = String.IsNullOrEmpty(reportParams["PeriodEnd"]) ? periodBegin : DateTime.Parse(reportParams["PeriodEnd"]);
             int ShpType = int.Parse(reportParams["ShpType"]);
-
+            int warehouseId = int.Parse(reportParams["WarehouseId"]);
             #region Запросы
             //
             queryOut.Add(String.Format(@"select distinct isnull(cmp_ShortName,'') KlientName, N'выход' InOut, 
@@ -1428,8 +1430,9 @@ namespace Planning
 	                left join {0}.dbo.LV_Company with (nolock) on cmp_ID = cus_CompanyID
 	                where 
 		                vs.s_in =0
+                        and vs.warehouse_id = {1}
                         and vs.tc_name is not null
-		                and vs.s_date between @ReportStart and @ReportEnd", depositor.LvBase));
+		                and vs.s_date between @ReportStart and @ReportEnd", depositor.LvBase, warehouseId));
 
 
             queryOut.Add(String.Format(@"select distinct isnull(cmp_ShortName,'') KlientName, N'вход' InOut, vs.s_date ShpDate, 
@@ -1471,7 +1474,8 @@ namespace Planning
 			        left join {0}.dbo.LV_Company with (nolock) on cmp_ID = spl_CompanyID
 	                where 
 		                vs.s_in =1
-		                and vs.s_date between @ReportStart and @ReportEnd", depositor.LvBase));
+                        and vs.warehouse_id = {1}
+		                and vs.s_date between @ReportStart and @ReportEnd", depositor.LvBase, warehouseId));
 
 
             
@@ -1736,9 +1740,12 @@ namespace Planning
             if (DateTime.TryParse(reportParams["PeriodEnd"], out endDate))
                 endDateN = (DateTime?)endDate;
 
+            string warehouseName = reportParams["WarehouseName"];
+
 
             sql.AddCommandParametr(new SqlParameter { ParameterName = "@From", Value = beginDateN });
             sql.AddCommandParametr(new SqlParameter { ParameterName = "@Till", Value = endDateN });
+            sql.AddCommandParametr(new SqlParameter { ParameterName = "@WarehouseName", Value = warehouseName });
             bool success = sql.Execute();
 
             if (!success)
@@ -1831,6 +1838,7 @@ namespace Planning
             string monthBegin = reportParams["MonthBegin"];
             string monthEnd = reportParams["MonthEnd"];
             string admCoef = reportParams["AdmCoeff"];
+            string warehouseId = reportParams["WarehouseId"];
 
             string dateBegin = String.Format("01.{0}.{1}", monthBegin, year);
             string dateEnd = String.Format("{0}.{1}.{2}", DateTime.DaysInMonth(Int32.Parse(year), Int32.Parse(monthEnd)), monthEnd, year);
@@ -1843,7 +1851,8 @@ namespace Planning
 			            from shipments s1			
 				            join shipment_orders so1 on s1.id = so1.shipment_id
 			            where 
-				            s1.submission_time is not null
+                            s1.warehouse_id = {3}
+				            and s1.submission_time is not null
 				            and YEAR(s_date) = t.s_year
 				            and MONTH(s_date) =t.s_month		
 		            ) s_count, 
@@ -1896,12 +1905,13 @@ namespace Planning
                     from shipments s
 	                    join time_slot ts on s.time_slot_id = ts.id
                     where 
-                        s.submission_time is not null
+                        s.warehouse_id = {3}
+                        and s.submission_time is not null
 	                    and s_date >= convert(datetime,'{1}', 104)
 	                    and s_date <=convert(datetime,'{2}', 104)
                 ) t on t.s_month = m.m_id
                 group by t.s_year,m.m_id, m.m_name,t.s_month
-                order by m.m_id", admCoef, dateBegin, dateEnd);
+                order by m.m_id", admCoef, dateBegin, dateEnd, warehouseId);
             sql.Connect();
             sql.TypeCommand = CommandType.Text;
             sql.IsResultSet = true;
@@ -1961,6 +1971,8 @@ namespace Planning
             //"DepCode",
             int[] colNumber = new int[columnOrder.Count];
 
+            MessageBox.Show("Получение параметров", "Лог", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
             SettingReport settingReport = GetReportSetting("Отгрузки за период");
             if (settingReport == null)
             {
@@ -2003,7 +2015,12 @@ namespace Planning
             object shpType = null;
             if (ShpType >= 0)
                 shpType = ShpType;
+            MessageBox.Show("Формирование параметра Дата начала", "Лог", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
             sql.AddCommandParametr(new SqlParameter { ParameterName = "@From", Value = DateTime.Parse(reportParams["PeriodBegin"]) });
+
+            MessageBox.Show("Формирование параметра Дата окончания", "Лог", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
             sql.AddCommandParametr(new SqlParameter { ParameterName = "@Till", Value = DateTime.Parse(reportParams["PeriodEnd"]) });
             sql.AddCommandParametr(new SqlParameter { ParameterName = "@In", Value = shpType });
             sql.AddCommandParametr(new SqlParameter { ParameterName = "@ShpId", Value = null });
@@ -2106,11 +2123,15 @@ namespace Planning
                 return;
             }
             List<String> queryOut = new List<string>();
+            String strDateFormat = "dd.MM.yyyy";//"yyyy-MM-dd";
 
-            DateTime periodBegin = DateTime.Parse(reportParams["PeriodBegin"]);
-            DateTime periodEnd = String.IsNullOrEmpty(reportParams["PeriodEnd"])?periodBegin:DateTime.Parse(reportParams["PeriodEnd"]);
+            DateTime periodBegin = DateTime.ParseExact(reportParams["PeriodBegin"],strDateFormat,CultureInfo.CurrentCulture);
             
-
+            DateTime periodEnd = String.IsNullOrEmpty(reportParams["PeriodEnd"])?periodBegin:DateTime.ParseExact(reportParams["PeriodEnd"], strDateFormat, CultureInfo.CurrentCulture);
+            int ShpType = int.Parse(reportParams["ShpType"]);
+            int warehouseId = int.Parse(reportParams["WarehouseId"]);
+            string periodBeginFormat = periodBegin.ToString("yyyy.MM.dd");
+            string periodEndFormat = periodEnd.ToString("yyyy.MM.dd");
 
             #region Запросы
 
@@ -2189,7 +2210,8 @@ namespace Planning
 	        left join {0}.dbo.LV_Messages with(nolock) on msg_code = pst_MessageCode and  msg_languageID = 4
 	        where 
 		        vs.s_in = 0
-		        and vs.s_date between '{1}' and '{2}'", depositor.LvBase, periodBegin, periodEnd));
+                and vs.warehouse_id = {3}
+		        and vs.s_date between '{1}' and '{2}'", depositor.LvBase, periodBeginFormat, periodEndFormat, warehouseId));
 
 
             queryOut.Add(String.Format(@"	select 
@@ -2240,7 +2262,8 @@ namespace Planning
 		            ) a1 on a1.rct_id = LV_Receipt.rct_ID
 	        where 
             vs.s_in = 1
-            and vs.s_date between '{1}' and '{2}'", depositor.LvBase, periodBegin, periodEnd));
+            and vs.warehouse_id = {3}
+            and vs.s_date between '{1}' and '{2}'", depositor.LvBase, periodBeginFormat, periodEndFormat, warehouseId));
 
 
             queryOut.Add(String.Format(@"select m.id ShpId, mi.id OrdId, mi.TklLVID lv_order_id, m.m_date ShpDate,
@@ -2276,13 +2299,31 @@ namespace Planning
             ) a1
 
             where 
-               m.m_date between '{1}' and '{2}'", depositor.LvBase, periodBegin, periodEnd));
+               m.m_date between '{1}' and '{2}'", depositor.LvBase, periodBeginFormat, periodEndFormat));
 
             queryOut.Add(String.Concat(queryOut[0]," union all ", Environment.NewLine,
                 queryOut[1], " union all ", Environment.NewLine,
                 queryOut[2]));
 
             #endregion
+
+            //************************************
+            /*
+             frmLog frmLog = new frmLog();
+             frmLog.Text = "Параметры отчета";
+
+             StringBuilder stringBuilder = new StringBuilder();
+             stringBuilder.AppendLine("Параметры:");
+            stringBuilder.AppendLine($"CultureInfo: {CultureInfo.CurrentCulture.DateTimeFormat.}");
+            stringBuilder.AppendLine($"Начало: {reportParams["PeriodBegin"]}");
+             stringBuilder.AppendLine($"Окончание: {reportParams["PeriodEnd"]}");
+             stringBuilder.AppendLine($"Тип отгрузки: {reportParams["ShpType"]}");
+             stringBuilder.AppendLine($"Запрос: ");
+             stringBuilder.AppendLine($"Тип отгрузки: {queryOut[ShpType]}");
+             frmLog.edLog.Text = stringBuilder.ToString();
+             frmLog.ShowDialog();
+            */
+            //************************************
 
             int[] colNumber = new int[columnOrder.Count];
 
@@ -2313,7 +2354,7 @@ namespace Planning
             wait.SetText("Формирование отчета: получение данных....");
 
             Excel.Range range;
-            int ShpType = int.Parse(reportParams["ShpType"]);
+            
 
 
 
@@ -2325,6 +2366,7 @@ namespace Planning
             sql.Connect();
             sql.IsResultSet = true;
 
+ 
             bool success = sql.Execute();
 
             if (!success)

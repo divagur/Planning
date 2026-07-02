@@ -53,7 +53,7 @@ namespace Planning.Service.InvoiceData
             shipment.ShIn = true;
             shipment.DepositorId = 1;
             shipment.IsAddLv = false;
-            shipment.TrailerNumber = invoiceProduction.TrailerNumber;
+            shipment.TrailerNumber = String.IsNullOrEmpty(invoiceProduction.ContainerNumber) || invoiceProduction.ContainerNumber == "Уточняется" ? invoiceProduction.TrailerNumber : invoiceProduction.ContainerNumber;
             shipment.VehicleNumber = invoiceProduction.TruckNumber;
             shipment.DriverFio = invoiceProduction.Driver;           
             shipment.WarehouseId = Common.GetWarehouseId(invoiceProduction.RecipientCode, connectionString);

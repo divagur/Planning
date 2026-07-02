@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Planning.DataLayer;
 
 namespace Planning
 {
@@ -42,6 +43,7 @@ namespace Planning
             _reportParams["PeriodBegin"] = edPeriodBegin.Text;
             _reportParams["PeriodEnd"] = edPeriodEnd.Text;
             _reportParams["ShpType"] = cbType.SelectedIndex.ToString();
+            _reportParams["WarehouseId"] = (cbWarehouse.SelectedItem as Warehouse).Id.ToString();
             DialogResult = DialogResult.OK;
             Close();
         }
@@ -79,6 +81,11 @@ namespace Planning
             btnPeriodBegin.Tag = edPeriodBegin;
             btnPeriodEnd.Tag = edPeriodEnd;
             cbType.SelectedIndex = 0;
+
+            Common.PopulateComboBoxWarehouse(cbWarehouse, Common.PlanningConfig.DefaultWarehouseCode, true);
+            
+
+            
         }
 
         private void btnCalendarCancel_Click(object sender, EventArgs e)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Planning.DataLayer;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,6 +17,7 @@ namespace Planning
             InitializeComponent();
             btnPeriodBegin.Tag = edPeriodBegin;
             btnPeriodEnd.Tag = edPeriodEnd;
+            Common.PopulateComboBoxWarehouse(cbWarehouse, Common.PlanningConfig.DefaultWarehouseCode, true);
         }
 
         private void btnPeriodBegin_Click(object sender, EventArgs e)
@@ -30,6 +32,7 @@ namespace Planning
         {
             _reportParams["PeriodBegin"] = edPeriodBegin.Text;
             _reportParams["PeriodEnd"] = edPeriodEnd.Text;
+            _reportParams["WarehouseName"] = (cbWarehouse.SelectedItem as Warehouse).Name;
         }
     }
 }

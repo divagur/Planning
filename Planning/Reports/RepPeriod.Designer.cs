@@ -46,6 +46,8 @@ namespace Planning
             this.monthCalendarSpecial = new System.Windows.Forms.MonthCalendar();
             this.cbType = new System.Windows.Forms.ComboBox();
             this.btnShowParam = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.cbWarehouse = new System.Windows.Forms.ComboBox();
             this.pnGetDateTime.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -78,7 +80,7 @@ namespace Planning
             // 
             // btnOk
             // 
-            this.btnOk.Location = new System.Drawing.Point(44, 109);
+            this.btnOk.Location = new System.Drawing.Point(45, 149);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(96, 23);
             this.btnOk.TabIndex = 3;
@@ -88,7 +90,7 @@ namespace Planning
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(153, 109);
+            this.btnClose.Location = new System.Drawing.Point(154, 149);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(96, 23);
             this.btnClose.TabIndex = 4;
@@ -198,7 +200,7 @@ namespace Planning
             // btnShowParam
             // 
             this.btnShowParam.Image = global::Planning.Properties.Resources.view_detailed_2595;
-            this.btnShowParam.Location = new System.Drawing.Point(11, 110);
+            this.btnShowParam.Location = new System.Drawing.Point(12, 150);
             this.btnShowParam.Name = "btnShowParam";
             this.btnShowParam.Size = new System.Drawing.Size(27, 22);
             this.btnShowParam.TabIndex = 37;
@@ -206,11 +208,29 @@ namespace Planning
             this.btnShowParam.Visible = false;
             this.btnShowParam.Click += new System.EventHandler(this.btnShowParam_Click);
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(12, 108);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(38, 13);
+            this.label4.TabIndex = 2;
+            this.label4.Text = "Склад";
+            // 
+            // cbWarehouse
+            // 
+            this.cbWarehouse.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbWarehouse.FormattingEnabled = true;
+            this.cbWarehouse.Location = new System.Drawing.Point(94, 105);
+            this.cbWarehouse.Name = "cbWarehouse";
+            this.cbWarehouse.Size = new System.Drawing.Size(155, 21);
+            this.cbWarehouse.TabIndex = 2;
+            // 
             // RepPeriod
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(258, 139);
+            this.ClientSize = new System.Drawing.Size(258, 184);
             this.Controls.Add(this.btnShowParam);
             this.Controls.Add(this.pnGetDateTime);
             this.Controls.Add(this.btnPeriodEnd);
@@ -219,9 +239,11 @@ namespace Planning
             this.Controls.Add(this.edPeriodBegin);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnOk);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.cbWarehouse);
             this.Controls.Add(this.cbType);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -253,5 +275,7 @@ namespace Planning
         private System.Windows.Forms.MonthCalendar monthCalendarSpecial;
         public System.Windows.Forms.ComboBox cbType;
         private System.Windows.Forms.Button btnShowParam;
+        private System.Windows.Forms.Label label4;
+        public System.Windows.Forms.ComboBox cbWarehouse;
     }
 }

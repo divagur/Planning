@@ -1384,7 +1384,7 @@ namespace Planning
             this.toolStripMenuItemAdd,
             this.toolStripMenuItemAdmin});
             this.contextMenuMain.Name = "contextMenuMain";
-            this.contextMenuMain.Size = new System.Drawing.Size(190, 114);
+            this.contextMenuMain.Size = new System.Drawing.Size(190, 136);
             this.contextMenuMain.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuMain_Opening);
             // 
             // toolStripMenuItemFile

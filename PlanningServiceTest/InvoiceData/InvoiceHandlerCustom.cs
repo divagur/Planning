@@ -75,7 +75,7 @@ namespace PlanningServiceTest.InvoiceData
             shipment.ShIn = true;
             shipment.DepositorId = 1;
             shipment.IsAddLv = false;
-            shipment.TrailerNumber = invoiceCustom.TrailerNumber;
+            shipment.TrailerNumber = String.IsNullOrEmpty(invoiceCustom.ContainerNumber)&& invoiceCustom.ContainerNumber != "Уточняется"? invoiceCustom.ContainerNumber:invoiceCustom.TrailerNumber;
             shipment.VehicleNumber = invoiceCustom.TruckNumber;
             shipment.DriverFio = invoiceCustom.Driver;
             shipment.WarehouseId = Common.GetWarehouseId(invoiceCustom.RecipientCode, connectionString);
